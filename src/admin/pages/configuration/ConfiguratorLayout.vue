@@ -228,7 +228,7 @@ const loadConfig = async () => {
 const loadConfigName = async () => {
   try {
     const response = await api.getConfigs('?per_page=100&order=DESC&page=1');
-    const configs = Array.isArray(response?.data) ? response.data : [];
+    const configs = Array.isArray(response?.items) ? response.items : [];
     const current = configs.find((item) => String(item?.id) === String(configId.value));
     adminConfigName.value = current?.name || '';
   } catch (error) {

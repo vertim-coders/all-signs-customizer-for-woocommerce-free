@@ -425,14 +425,22 @@ const fetchGoogleFonts = async () => {
 
 const fetchConfigFonts = async () => {
   const config = await api.getConfig(configID.value);
-  const text = config?.data?.settings?.customizerSign?.text || config?.settings?.customizerSign?.text || {};
+  const text = config?.settings?.customizerSign?.text || {};
   textSettings.value = { ...textSettings.value, ...text };
+};
+
+const fetchSelectedFonts = async () => {
+  const result = await api.getRequiredOptionFonts(configID.value);
+  const items = Array.isArray(result?.items) ? result.items : [];
+  textSettings.value.selectedFonts = items.map(normalizeId);
 };
 
 const fetchData = async () => {
   isFetching.value = true;
   try {
-    await Promise.all([fetchFonts(), fetchConfigFonts(), fetchGoogleFonts()]);
+    await Promise.all([fetchFonts(), fetchGoogleFonts()]);
+    await fetchConfigFonts();
+    await fetchSelectedFonts();
   } finally {
     isFetching.value = false;
   }
@@ -482,16 +490,11 @@ const addExistingFont = async () => {
   const targetFont = normalizeFontRow(managedFonts.value[targetIndex], targetIndex);
   const targetKey = getFontIdentity(targetFont);
   if (!targetKey) return;
-  textSettings.value.selectedFonts = [
-    ...selectedIds.value
-      .map((id) => Number(id))
-      .filter((id) => {
-        const row = normalizeFontRow(managedFonts.value[id], id);
-        return row && getFontIdentity(row) !== targetKey;
-      }),
-    targetIndex,
-  ];
-  await saveFonts();
+  const result = await api.addRequiredOptionFontItem(configID.value, targetIndex);
+  if (result?.success) {
+    toastMessage(result.message || __("Font successfully added", "all-signs-options-pro"));
+  }
+  await fetchSelectedFonts();
   resetForm();
 };
 
@@ -538,16 +541,11 @@ const saveFontForm = async () => {
       const targetFont = normalizeFontRow(managedFonts.value[targetIndex], targetIndex);
       const targetKey = getFontIdentity(targetFont);
       const alreadySelected = selectedFontRows.value.some((font) => getFontIdentity(font) === targetKey);
-      textSettings.value.selectedFonts = [
-        ...selectedIds.value
-          .map((id) => Number(id))
-          .filter((id) => {
-            const row = normalizeFontRow(managedFonts.value[id], id);
-            return row && getFontIdentity(row) !== targetKey;
-          }),
-        targetIndex,
-      ];
-      await saveFonts();
+      const result = await api.addRequiredOptionFontItem(configID.value, targetIndex);
+      if (result?.success) {
+        toastMessage(result.message || __("Font successfully added", "all-signs-options-pro"));
+      }
+      await fetchSelectedFonts();
       if (alreadySelected) {
         toastMessage(__("This font is already added to this configuration", "all-signs-options-pro"));
       }
@@ -574,18 +572,21 @@ const editSelectedFont = (font) => {
 };
 
 const removeFont = async (fontId) => {
-  textSettings.value.selectedFonts = selectedIds.value.filter((id) => Number(id) !== Number(fontId));
-  await saveFonts();
+  const result = await api.deleteRequiredOptionFontItem(configID.value, fontId);
+  if (result?.success) {
+    toastMessage(result.message || __("Font successfully deleted", "all-signs-options-pro"));
+  }
+  await fetchSelectedFonts();
 };
 
 const setDefaultFont = async (fontId) => {
   const currentIds = selectedIds.value.map((id) => Number(id));
   if (currentIds[0] === Number(fontId)) return;
-  textSettings.value.selectedFonts = [
-    Number(fontId),
-    ...currentIds.filter((id) => id !== Number(fontId)),
-  ];
-  await saveFonts();
+  const result = await api.updateRequiredOptionFontItem(configID.value, fontId, 0);
+  if (result?.success) {
+    toastMessage(result.message || __("Font successfully updated", "all-signs-options-pro"));
+  }
+  await fetchSelectedFonts();
 };
 
 const dragStartFont = (index) => {
@@ -598,8 +599,11 @@ const dropFont = async (targetIndex) => {
   const [moved] = orderedIds.splice(draggedFontIndex.value, 1);
   orderedIds.splice(targetIndex, 0, moved);
   draggedFontIndex.value = null;
-  textSettings.value.selectedFonts = orderedIds;
-  await saveFonts();
+  const result = await api.updateRequiredOptionFontItem(configID.value, moved, targetIndex);
+  if (result?.success) {
+    toastMessage(result.message || __("Font successfully updated", "all-signs-options-pro"));
+  }
+  await fetchSelectedFonts();
 };
 
 const setAddMode = (mode) => {

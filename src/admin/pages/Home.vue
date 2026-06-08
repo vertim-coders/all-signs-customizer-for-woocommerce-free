@@ -363,7 +363,7 @@ onMounted(async () => {
 
   try {
     const res = await api.getConfigs('?per_page=4&order=DESC&page=1')
-    recentConfigs.value = Array.isArray(res?.data) ? res.data.slice(0, 4) : []
+    recentConfigs.value = Array.isArray(res?.items) ? res.items.slice(0, 4) : []
   } catch(_) {}
 })
 

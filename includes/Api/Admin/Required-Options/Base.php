@@ -233,14 +233,97 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
     {
         $meta = $this->get_meta($config_id);
         $meta['requiredOptions'] = $required_options;
-        return ConfigSchemaNormalizer::save_meta($config_id, $meta);
+        global $wpdb;
+
+        $serialized_meta = maybe_serialize($meta);
+        $updated = $wpdb->update(
+            $wpdb->postmeta,
+            array('meta_value' => $serialized_meta),
+            array(
+                'post_id' => $config_id,
+                'meta_key' => 'asowp-configs-meta',
+            ),
+            array('%s'),
+            array('%d', '%s')
+        );
+
+        if ($updated === false) {
+            return false;
+        }
+
+        if ($updated === 0) {
+            $existing = $wpdb->get_var(
+                $wpdb->prepare(
+                    "SELECT meta_value FROM {$wpdb->postmeta} WHERE post_id = %d AND meta_key = %s LIMIT 1",
+                    $config_id,
+                    'asowp-configs-meta'
+                )
+            );
+
+            if ($existing === null) {
+                $added = add_post_meta($config_id, 'asowp-configs-meta', $meta, true);
+                if ($added === false) {
+                    return false;
+                }
+            }
+        }
+
+        clean_post_cache($config_id);
+
+        $current_meta = $this->get_meta($config_id);
+        $current_required_options = isset($current_meta['requiredOptions']) && is_array($current_meta['requiredOptions'])
+            ? $current_meta['requiredOptions']
+            : array();
+
+        return serialize($current_required_options) === serialize($required_options);
+    }
+
+    protected function save_raw_meta(int $config_id, array $meta)
+    {
+        global $wpdb;
+
+        $serialized_meta = maybe_serialize($meta);
+        $updated = $wpdb->update(
+            $wpdb->postmeta,
+            array('meta_value' => $serialized_meta),
+            array(
+                'post_id' => $config_id,
+                'meta_key' => 'asowp-configs-meta',
+            ),
+            array('%s'),
+            array('%d', '%s')
+        );
+
+        if ($updated === false) {
+            return false;
+        }
+
+        if ($updated === 0) {
+            $existing = $wpdb->get_var(
+                $wpdb->prepare(
+                    "SELECT meta_value FROM {$wpdb->postmeta} WHERE post_id = %d AND meta_key = %s LIMIT 1",
+                    $config_id,
+                    'asowp-configs-meta'
+                )
+            );
+
+            if ($existing === null) {
+                $added = add_post_meta($config_id, 'asowp-configs-meta', $meta, true);
+                if ($added === false) {
+                    return false;
+                }
+            }
+        }
+
+        clean_post_cache($config_id);
+        return true;
     }
 
     protected function get_required_options(int $config_id): array
     {
-        $normalized = $this->get_normalized_meta($config_id);
-        $required_options = isset($normalized['requiredOptions']) && is_array($normalized['requiredOptions'])
-            ? $normalized['requiredOptions']
+        $meta = $this->get_meta($config_id);
+        $required_options = isset($meta['requiredOptions']) && is_array($meta['requiredOptions'])
+            ? $meta['requiredOptions']
             : array();
 
         return $required_options;
@@ -351,6 +434,98 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
         return is_array($section_value) ? $section_value : $this->simple_section_default($section);
     }
 
+    protected function section_items_key(string $section): string
+    {
+        $map = array(
+            'sizes' => 'items',
+            'colors' => 'items',
+            'shapes' => 'items',
+            'fixing-methods' => 'items',
+            'pricing' => 'priceOptions',
+            'fonts' => 'items',
+            'pricings' => 'items',
+            'borders' => 'items',
+        );
+
+        return isset($map[$section]) ? $map[$section] : 'items';
+    }
+
+    protected function section_item_list(array $required_options, string $section): array
+    {
+        $section_value = $this->section_value($required_options, $section, $this->simple_section_default($section));
+        if (!is_array($section_value)) {
+            return array();
+        }
+
+        if ($section === 'shapes' || $section === 'fixing-methods') {
+            return array_values($section_value);
+        }
+        if ($section === 'pricing') {
+            return isset($section_value['priceOptions']) && is_array($section_value['priceOptions'])
+                ? array_values($section_value['priceOptions'])
+                : array();
+        }
+
+        $key = $this->section_items_key($section);
+        return isset($section_value[$key]) && is_array($section_value[$key])
+            ? array_values($section_value[$key])
+            : array();
+    }
+
+    protected function section_value_with_items(array $required_options, string $section, array $items): array
+    {
+        $section_value = $this->section_value($required_options, $section, $this->simple_section_default($section));
+        $items = array_values($items);
+
+        if ($section === 'shapes' || $section === 'fixing-methods') {
+            return $items;
+        }
+        if ($section === 'pricing') {
+            if (!is_array($section_value)) {
+                $section_value = $this->simple_section_default($section);
+            }
+            $section_value['priceOptions'] = $items;
+            return $section_value;
+        }
+
+        if (!is_array($section_value)) {
+            $section_value = $this->simple_section_default($section);
+        }
+
+        $section_value[$this->section_items_key($section)] = $items;
+        return $section_value;
+    }
+
+    protected function ensure_single_default_item(array $items, string $default_key = 'isDefault'): array
+    {
+        if (empty($items)) {
+            return $items;
+        }
+
+        $default_index = null;
+        foreach ($items as $index => $item) {
+            if (!empty($item[$default_key])) {
+                $default_index = $index;
+                break;
+            }
+        }
+
+        if ($default_index === null) {
+            $default_index = 0;
+        }
+
+        foreach ($items as $index => $item) {
+            $items[$index][$default_key] = $index === $default_index;
+        }
+
+        return $items;
+    }
+
+    protected function section_items_match(array $actual, array $expected): bool
+    {
+        return json_encode(array_values($actual)) === json_encode(array_values($expected));
+    }
+
     protected function set_section_items(array $required_options, string $section, $value): array
     {
         $required_options[$section] = $value;
@@ -450,7 +625,6 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
         $required_options = $this->get_required_options($config_id);
         $sizes = $this->get_section_items($required_options, 'sizes');
         $shapes = $this->get_section_items($required_options, 'shapes');
-        $normalized = $this->get_normalized_meta($config_id);
 
         return array(
             'items' => is_array($value) ? array_values($value) : array(),

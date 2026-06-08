@@ -65,11 +65,11 @@
                 </td>
                 <td class="asowp-py-2.5 asowp-px-3">
                   <div class="asowp-flex asowp-items-center asowp-gap-3">
-                    <button @click="selectMaterialSize(key, sz)" class="asowp-inline-flex asowp-items-center asowp-gap-1 asowp-px-2 asowp-py-1 asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-rounded-md asowp-text-[#303030] asowp-text-[12px] asowp-font-bold hover:asowp-bg-[#f7f8fa] asowp-cursor-pointer">
+                    <button @click="selectSize(key, sz)" class="asowp-inline-flex asowp-items-center asowp-gap-1 asowp-px-2 asowp-py-1 asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-rounded-md asowp-text-[#303030] asowp-text-[12px] asowp-font-bold hover:asowp-bg-[#f7f8fa] asowp-cursor-pointer">
                       <Edit2Icon class="asowp-w-3.5 asowp-h-3.5" />
                       {{ __('Edit', 'all-signs-options-pro') }}
                     </button>
-                    <button @click="selectMaterialSize(key, sz, true)" class="asowp-inline-flex asowp-items-center asowp-gap-1 asowp-bg-transparent asowp-border-none asowp-text-[#8e1f0b] asowp-text-[12px] asowp-font-bold hover:asowp-text-[#641707] asowp-cursor-pointer">
+                    <button @click="selectSize(key, sz, true)" class="asowp-inline-flex asowp-items-center asowp-gap-1 asowp-bg-transparent asowp-border-none asowp-text-[#8e1f0b] asowp-text-[12px] asowp-font-bold hover:asowp-text-[#641707] asowp-cursor-pointer">
                       <Trash2Icon class="asowp-w-3.5 asowp-h-3.5" />
                       {{ __('Delete', 'all-signs-options-pro') }}
                     </button>
@@ -258,7 +258,7 @@
       <div class="asowp-size-editor-actions asowp-mt-5 asowp-pt-5 asowp-border-t asowp-border-solid asowp-border-[#dfe3e8] asowp-flex asowp-justify-end asowp-gap-3">
         <button @click="back" class="asowp-px-5 asowp-py-2 asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c1c4c7] asowp-rounded-lg asowp-text-[14px] asowp-font-[700] asowp-text-[#111827] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7]">{{ __('Cancel', 'all-signs-options-pro') }}</button>
         <button
-          @click="isEdit ? updateSizeInMaterialSize() : addMaterialSize()"
+          @click="isEdit ? updateSizeInSize() : addSize()"
           :disabled="!canSaveSize || isLoading"
           class="asowp-primary-button asowp-px-5 asowp-py-2 asowp-bg-[#007a72] asowp-text-white asowp-border-none asowp-rounded-lg asowp-text-[14px] asowp-font-[900] asowp-cursor-pointer hover:asowp-bg-[#00645f] disabled:asowp-bg-[#d8d8d8] disabled:asowp-cursor-not-allowed"
         >
@@ -270,7 +270,7 @@
     <!-- Save Page Changes (Sticky Footer) -->
     <div v-if="!isNewSize" class="asowp-flex asowp-justify-end asowp-mt-[-52px] asowp-mr-5">
       <button
-        @click="updateMaterialSize"
+        @click="updateSize"
         :disabled="isLoading"
         class="asowp-px-3 asowp-py-1.5 asowp-bg-[#007a72] asowp-text-white asowp-text-[12px] asowp-font-[900] asowp-border-none asowp-rounded-md asowp-cursor-pointer hover:asowp-bg-[#00645f] disabled:asowp-opacity-50"
       >
@@ -289,7 +289,7 @@
         <p class="asowp-text-[14px] asowp-text-[#616161] asowp-mb-6">{{ sprintf(__('Are you sure you want to delete "%s"?', 'all-signs-options-pro'), size.label) }}</p>
         <div class="asowp-flex asowp-gap-3">
           <button @click="closeModal" class="asowp-flex-1 asowp-py-2 asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c1c4c7] asowp-rounded-xl asowp-text-[13px] asowp-font-bold asowp-cursor-pointer">{{ __('Cancel', 'all-signs-options-pro') }}</button>
-          <button @click="deleteMaterialSize" class="asowp-flex-1 asowp-py-2 asowp-bg-[#8e1f0b] asowp-text-white asowp-border-none asowp-rounded-xl asowp-text-[13px] asowp-font-bold asowp-cursor-pointer">{{ __('Delete', 'all-signs-options-pro') }}</button>
+          <button @click="deleteSize" class="asowp-flex-1 asowp-py-2 asowp-bg-[#8e1f0b] asowp-text-white asowp-border-none asowp-rounded-xl asowp-text-[13px] asowp-font-bold asowp-cursor-pointer">{{ __('Delete', 'all-signs-options-pro') }}</button>
         </div>
       </div>
     </div>
@@ -472,7 +472,7 @@ const normalizeSizes = () => {
   ensureDefaultSize();
 };
 
-const fetchMaterialSizes = async () => {
+const fetchSizes = async () => {
   isFetching.value = true;
   try {
     const result = await api.getRequiredOptionSizes(configID.value);
@@ -486,7 +486,7 @@ const fetchMaterialSizes = async () => {
   } finally { isFetching.value = false; }
 };
 
-const updateMaterialSize = async () => {
+const updateSize = async () => {
   isLoading.value = true;
   try {
     const res = await api.updateRequiredOptionSizes(configID.value, getSizesPayload());
@@ -494,42 +494,89 @@ const updateMaterialSize = async () => {
       toastMessage(res.message);
       isNewSize.value = false;
       openModal.value = false;
-      await fetchMaterialSizes();
+      await fetchSizes();
     }
   } finally { isLoading.value = false; }
 };
 
-const addMaterialSize = async () => {
+const addSize = async () => {
   if (size.value.label.trim()) {
-    const hasDefault = sizes.value.items.some((item) => item.isDefault);
-    sizes.value.items.push({ ...size.value, isDefault: !hasDefault });
-    await updateMaterialSize();
+    isLoading.value = true;
+    try {
+      const payload = { ...size.value };
+      payload.isDefault = !sizes.value.items.some((item) => item.isDefault);
+      const res = await api.addRequiredOptionSizeItem(configID.value, payload);
+      console.log(res, "response")
+      if (res?.success) {
+        toastMessage(res.message);
+        isNewSize.value = false;
+        openModal.value = false;
+        await fetchSizes();
+      } else {
+        toastMessage(res?.message || __("Unable to add size", "all-signs-options-pro"), "warning");
+      }
+    } finally {
+      isLoading.value = false;
+    }
   }
 };
 
-const updateSizeInMaterialSize = async () => {
+const updateSizeInSize = async () => {
   if (size.value.label.trim()) {
-    sizes.value.items[sizeId.value] = { ...size.value };
-    await updateMaterialSize();
+    isLoading.value = true;
+    try {
+      const res = await api.updateRequiredOptionSizeItem(configID.value, sizeId.value, size.value);
+      if (res?.success) {
+        toastMessage(res.message);
+        isNewSize.value = false;
+        openModal.value = false;
+        await fetchSizes();
+      } else {
+        toastMessage(res?.message || __("Unable to update size", "all-signs-options-pro"), "warning");
+      }
+    } finally {
+      isLoading.value = false;
+    }
   }
 };
 
-const deleteMaterialSize = async () => {
-  sizes.value.items.splice(sizeId.value, 1);
-  ensureDefaultSize();
-  await updateMaterialSize();
+const deleteSize = async () => {
+  isLoading.value = true;
+  try {
+    const res = await api.deleteRequiredOptionSizeItem(configID.value, sizeId.value);
+    if (res?.success) {
+      toastMessage(res.message);
+      isNewSize.value = false;
+      openModal.value = false;
+      await fetchSizes();
+    } else {
+      toastMessage(res?.message || __("Unable to delete size", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
-const selectMaterialSize = (id, sz, isDeleting = false) => {
+const selectSize = (id, sz, isDeleting = false) => {
   sizeId.value = id;
   size.value = { ...sz };
   if (isDeleting) openModal.value = true;
   else { isEdit.value = true; isNewSize.value = true; }
 };
 
-const selectDefault = (key) => {
-  sizes.value.items.forEach((s, i) => s.isDefault = i === key);
-  updateMaterialSize();
+const selectDefault = async (key) => {
+  isLoading.value = true;
+  try {
+    const res = await api.setRequiredOptionSizeDefault(configID.value, key);
+    if (res?.success) {
+      toastMessage(res.message);
+      await fetchSizes();
+    } else {
+      toastMessage(res?.message || __("Unable to update default size", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const dragStart = (key) => {
@@ -542,7 +589,7 @@ const dropSize = (targetIndex) => {
   sizes.value.items.splice(targetIndex, 0, moved);
   draggedSizeIndex.value = null;
   ensureDefaultSize();
-  updateMaterialSize();
+  updateSize();
 };
 
 const newSize = () => {
@@ -565,7 +612,7 @@ const handleDeleteThickness = (k) => {
   syncThicknessValues();
 };
 
-onMounted(fetchMaterialSizes);
+onMounted(fetchSizes);
 </script>
 
 <style scoped>

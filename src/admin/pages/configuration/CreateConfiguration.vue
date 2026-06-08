@@ -939,7 +939,7 @@ const finalCreate = async () => {
 onMounted(async () => {
   if (props.isEdit) wizard.value.step = 4;
   const res = await api.getUnassignedProducts({ per_page: 100 });
-  wooProductsOptions.value = (res?.data || []).map(p => ({
+  wooProductsOptions.value = (Array.isArray(res) ? res : []).map(p => ({
     value: p.id,
     label: cleanProductTitle(p.title),
     image: p.image,

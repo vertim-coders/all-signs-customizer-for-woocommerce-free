@@ -358,23 +358,59 @@ const updateBorders = async () => {
 };
 
 const addBorders = async () => {
-  const nextBorder = normalizeBorder(border.value);
-  if (!borders.value.allBorders.length) nextBorder.isDefault = true;
-  borders.value.allBorders.push(nextBorder);
-  await updateBorders();
+  isLoading.value = true;
+  try {
+    const payload = normalizeBorder(border.value);
+    payload.isDefault = !borders.value.allBorders.length;
+    const res = await api.addRequiredOptionBorderItem(configID.value, payload);
+    if (res?.success) {
+      toastMessage(res.message);
+      isNewBorder.value = false;
+      isEdit.value = false;
+      await fetchMaterialBorders();
+    } else {
+      toastMessage(res?.message || __("Unable to add border", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const updateMaterialBorders = async () => {
   if (borderId.value === null) return;
-  borders.value.allBorders[borderId.value] = normalizeBorder(border.value);
-  await updateBorders();
+  isLoading.value = true;
+  try {
+    const res = await api.updateRequiredOptionBorderItem(configID.value, borderId.value, normalizeBorder(border.value));
+    if (res?.success) {
+      toastMessage(res.message);
+      isNewBorder.value = false;
+      isEdit.value = false;
+      await fetchMaterialBorders();
+    } else {
+      toastMessage(res?.message || __("Unable to update border", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const deleteBorders = async () => {
   if (borderId.value === null) return;
-  borders.value.allBorders.splice(borderId.value, 1);
   openModal.value = false;
-  await updateBorders();
+  isLoading.value = true;
+  try {
+    const res = await api.deleteRequiredOptionBorderItem(configID.value, borderId.value);
+    if (res?.success) {
+      toastMessage(res.message);
+      isNewBorder.value = false;
+      isEdit.value = false;
+      await fetchMaterialBorders();
+    } else {
+      toastMessage(res?.message || __("Unable to delete border", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const selectMaterialBorder = (id, bd, isDeleting = false) => {
@@ -389,10 +425,17 @@ const selectMaterialBorder = (id, bd, isDeleting = false) => {
 };
 
 const selectDefault = async (key) => {
-  borders.value.allBorders.forEach((item, index) => {
-    item.isDefault = index === key;
-  });
-  await updateBorders();
+  isLoading.value = true;
+  try {
+    const payload = normalizeBorder(JSON.parse(JSON.stringify(borders.value.allBorders[key] || {})));
+    payload.isDefault = true;
+    const res = await api.updateRequiredOptionBorderItem(configID.value, key, payload);
+    if (res?.success) {
+      await fetchMaterialBorders();
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const newBorder = () => {

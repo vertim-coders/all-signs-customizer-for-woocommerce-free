@@ -203,7 +203,7 @@ const fetchConfigs = async (p = page.value) => {
   isFetching.value = true;
   try {
     const res = await api.getConfigs(`?per_page=${CONFIGS_PER_PAGE}&order=DESC&page=${p}`);
-    configs.value = Array.isArray(res?.data) ? res.data : [];
+    configs.value = Array.isArray(res?.items) ? res.items : [];
     totalPages.value = Number(res?.totalPages || 0);
     totalConfigsFound.value = Number(res?.totalConfigsFound || 0);
     page.value = p;

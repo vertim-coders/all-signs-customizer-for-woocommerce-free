@@ -231,8 +231,8 @@ const fetchMaterialShapes = async () => {
   try {
     const res = await api.getRequiredOptionShapes(configID.value);
     if (!res.message) {
-      manageShapes.value = res.data?.shapes?.manageShapes || [];
-      shapes.value = (res.data?.shapes?.items || []).map(normalizeShape);
+      manageShapes.value = res.manageShapes || [];
+      shapes.value = (res.items || []).map(normalizeShape);
     }
   } finally {
     isFetching.value = false;
@@ -258,23 +258,59 @@ const updateShapes = async () => {
 };
 
 const addShapes = async () => {
-  const nextShape = normalizeShape(shape.value);
-  if (!shapes.value.length) nextShape.isDefault = true;
-  shapes.value.push(nextShape);
-  await updateShapes();
+  isLoading.value = true;
+  try {
+    const payload = normalizeShape(shape.value);
+    payload.isDefault = !shapes.value.length;
+    const res = await api.addRequiredOptionShapeItem(configID.value, payload);
+    if (res?.success) {
+      toastMessage(res.message);
+      isNewShape.value = false;
+      isEdit.value = false;
+      await fetchMaterialShapes();
+    } else {
+      toastMessage(res?.message || __("Unable to add shape", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const updateMaterialShapes = async () => {
   if (shapeId.value === null) return;
-  shapes.value[shapeId.value] = normalizeShape(shape.value);
-  await updateShapes();
+  isLoading.value = true;
+  try {
+    const res = await api.updateRequiredOptionShapeItem(configID.value, shapeId.value, normalizeShape(shape.value));
+    if (res?.success) {
+      toastMessage(res.message);
+      isNewShape.value = false;
+      isEdit.value = false;
+      await fetchMaterialShapes();
+    } else {
+      toastMessage(res?.message || __("Unable to update shape", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const deleteShapes = async () => {
   if (shapeId.value === null) return;
-  shapes.value.splice(shapeId.value, 1);
   openModal.value = false;
-  await updateShapes();
+  isLoading.value = true;
+  try {
+    const res = await api.deleteRequiredOptionShapeItem(configID.value, shapeId.value);
+    if (res?.success) {
+      toastMessage(res.message);
+      isNewShape.value = false;
+      isEdit.value = false;
+      await fetchMaterialShapes();
+    } else {
+      toastMessage(res?.message || __("Unable to delete shape", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const selectMaterialShape = (id, sh, isDeleting = false) => {
@@ -289,10 +325,17 @@ const selectMaterialShape = (id, sh, isDeleting = false) => {
 };
 
 const selectDefault = async (key) => {
-  shapes.value.forEach((sh, index) => {
-    sh.isDefault = index === key;
-  });
-  await updateShapes();
+  isLoading.value = true;
+  try {
+    const payload = normalizeShape(JSON.parse(JSON.stringify(shapes.value[key] || {})));
+    payload.isDefault = true;
+    const res = await api.updateRequiredOptionShapeItem(configID.value, key, payload);
+    if (res?.success) {
+      await fetchMaterialShapes();
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const newShape = () => {

@@ -37,9 +37,9 @@
               <template v-else>
                 <tr
                   v-for="(item, key) in pricingSettings.priceOptions"
-                  :key="key"
+                  :key="getPricingItemId(item, key)"
                   class="asowp-pricing-row asowp-border-b asowp-border-solid asowp-border-[#eceff2] last:asowp-border-b-0"
-                  @click="editPricing(key)"
+                  @click="editPricing(getPricingItemId(item, key))"
                 >
                   <td class="asowp-py-2.5 asowp-px-3">
                     <span class="asowp-text-[13px] asowp-font-[900] asowp-text-[#303030]">
@@ -51,19 +51,19 @@
                   </td>
                   <td class="asowp-py-2.5 asowp-px-3">
                     <div class="asowp-pricing-actions-menu" @click.stop>
-                      <button @click="toggleActions(key)" class="asowp-ellipsis-button" :aria-label="__('Pricing actions', 'all-signs-options-pro')">
+                      <button @click="toggleActions(getPricingItemId(item, key))" class="asowp-ellipsis-button" :aria-label="__('Pricing actions', 'all-signs-options-pro')">
                         <MoreHorizontalIcon class="asowp-w-4 asowp-h-4" />
                       </button>
-                      <div v-if="openActionIndex === key" class="asowp-actions-popover">
-                        <button @click="editPricing(key)">
+                      <div v-if="openActionIndex === getPricingItemId(item, key)" class="asowp-actions-popover">
+                        <button @click="editPricing(getPricingItemId(item, key))">
                           <Edit2Icon class="asowp-w-3.5 asowp-h-3.5" />
                           {{ __('Edit', 'all-signs-options-pro') }}
                         </button>
-                        <button @click="duplicatePricing(key)">
+                        <button @click="duplicatePricing(getPricingItemId(item, key))">
                           <CopyIcon class="asowp-w-3.5 asowp-h-3.5" />
                           {{ __('Duplicate', 'all-signs-options-pro') }}
                         </button>
-                        <button class="is-danger" @click="deletePricing(key)">
+                        <button class="is-danger" @click="deletePricing(getPricingItemId(item, key))">
                           <Trash2Icon class="asowp-w-3.5 asowp-h-3.5" />
                           {{ __('Delete', 'all-signs-options-pro') }}
                         </button>
@@ -274,13 +274,13 @@ const isFetching = ref(true);
 const isLoading = ref(false);
 const showForm = ref(false);
 const editingIndex = ref(null);
+const editingPricingId = ref(null);
 const rangeModalOpen = ref(false);
 const editingRangeIndex = ref(null);
 const openActionIndex = ref(null);
 
 const measurementUnit = ref("mm");
 const currencySymbol = ref("$");
-const pricingsData = ref({});
 const pricingSettings = ref({ label: "Pricing", description: "", priceOptions: [] });
 
 const emptyPricing = () => ({
@@ -367,25 +367,20 @@ const normalizeCustomPricing = (value = {}) => ({
     : [],
 });
 
-const normalizePricingOption = (item = {}) => ({
+const getPricingItemId = (item = {}, index = 0) => String(item?.id || `pricing-${index + 1}`);
+
+const normalizePricingOption = (item = {}, index = 0) => ({
+  id: getPricingItemId(item, index),
   label: String(item.label || ""),
   customPricing: normalizeCustomPricing(item.customPricing || item.customSizePricing || item.pricings || {}),
 });
 
-const buildFallbackPricing = () => ({
-  label: "Default pricing",
-  customPricing: normalizeCustomPricing(),
-});
-
-const normalizePricingSettings = () => {
-  const stored = pricingsData.value?.pricing || {};
+const normalizePricingSettings = (stored = {}) => {
   const storedOptions = Array.isArray(stored.priceOptions) ? stored.priceOptions : [];
   pricingSettings.value = {
     label: String(stored.label || "Pricing"),
     description: String(stored.description || ""),
-    priceOptions: storedOptions.length
-      ? storedOptions.map(normalizePricingOption)
-      : [buildFallbackPricing()],
+    priceOptions: storedOptions.map((item, index) => normalizePricingOption(item, index)),
   };
 };
 
@@ -394,44 +389,28 @@ const fetchPricing = async () => {
   try {
     const result = await api.getRequiredOptionPricings(configID.value);
     if (result) {
-      pricingsData.value = result;
-      normalizePricingSettings();
+      normalizePricingSettings(result);
     }
   } finally {
     isFetching.value = false;
   }
 };
 
-const persistPricing = async () => {
-  isLoading.value = true;
-  try {
-    const nextSizes = {
-      ...pricingsData.value,
-      pricing: {
-        label: pricingSettings.value.label,
-        description: pricingSettings.value.description,
-        priceOptions: pricingSettings.value.priceOptions,
-      },
-    };
-    const res = await api.updateRequiredOptionPricings(configID.value, nextSizes);
-    if (res?.success) {
-      pricingsData.value = nextSizes;
-      toastMessage(res.message);
-    }
-  } finally {
-    isLoading.value = false;
-  }
-};
-
 const addPricing = () => {
   editingIndex.value = null;
+  editingPricingId.value = null;
   editingPricing.value = emptyPricing();
   showForm.value = true;
 };
 
-const editPricing = (index) => {
+const findPricingIndex = (itemId) => pricingSettings.value.priceOptions.findIndex((item, index) => getPricingItemId(item, index) === String(itemId));
+
+const editPricing = (itemId) => {
   openActionIndex.value = null;
+  const index = findPricingIndex(itemId);
+  if (index < 0) return;
   editingIndex.value = index;
+  editingPricingId.value = getPricingItemId(pricingSettings.value.priceOptions[index], index);
   editingPricing.value = JSON.parse(JSON.stringify(pricingSettings.value.priceOptions[index]));
   showForm.value = true;
 };
@@ -439,36 +418,68 @@ const editPricing = (index) => {
 const closeForm = () => {
   showForm.value = false;
   editingIndex.value = null;
+  editingPricingId.value = null;
   editingPricing.value = emptyPricing();
 };
 
 const savePricing = async () => {
   if (!canSavePricing.value) return;
-  const next = normalizePricingOption(editingPricing.value);
-  if (editingIndex.value === null) {
-    pricingSettings.value.priceOptions.push(next);
-  } else {
-    pricingSettings.value.priceOptions[editingIndex.value] = next;
+  isLoading.value = true;
+  try {
+    const next = normalizePricingOption(editingPricing.value, editingIndex.value === null ? pricingSettings.value.priceOptions.length : editingIndex.value);
+    const result = editingPricingId.value
+      ? await api.updateRequiredOptionPricingItem(configID.value, editingPricingId.value, next)
+      : await api.addRequiredOptionPricingItem(configID.value, next);
+    if (result?.success) {
+      toastMessage(result.message);
+      await fetchPricing();
+      closeForm();
+    } else {
+      toastMessage(result?.message || __("Unable to save pricing", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
   }
-  await persistPricing();
-  closeForm();
 };
 
-const duplicatePricing = async (index) => {
+const duplicatePricing = async (itemId) => {
   openActionIndex.value = null;
+  const index = findPricingIndex(itemId);
+  if (index < 0) return;
   const copy = JSON.parse(JSON.stringify(pricingSettings.value.priceOptions[index]));
+  delete copy.id;
   copy.label = copy.label ? `${copy.label} (copy)` : sprintf(__('Pricing %d', 'all-signs-options-pro'), pricingSettings.value.priceOptions.length + 1);
-  pricingSettings.value.priceOptions.splice(index + 1, 0, copy);
-  await persistPricing();
+  isLoading.value = true;
+  try {
+    const result = await api.addRequiredOptionPricingItem(configID.value, copy);
+    if (result?.success) {
+      toastMessage(result.message);
+      await fetchPricing();
+    } else {
+      toastMessage(result?.message || __("Unable to duplicate pricing", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
-const deletePricing = async (index) => {
+const deletePricing = async (itemId) => {
   openActionIndex.value = null;
-  pricingSettings.value.priceOptions.splice(index, 1);
-  if (!pricingSettings.value.priceOptions.length) {
-    pricingSettings.value.priceOptions.push(buildFallbackPricing());
+  const index = findPricingIndex(itemId);
+  if (index < 0) return;
+  const pricingId = getPricingItemId(pricingSettings.value.priceOptions[index], index);
+  isLoading.value = true;
+  try {
+    const result = await api.deleteRequiredOptionPricingItem(configID.value, pricingId);
+    if (result?.success) {
+      toastMessage(result.message);
+      await fetchPricing();
+    } else {
+      toastMessage(result?.message || __("Unable to delete pricing", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
   }
-  await persistPricing();
 };
 
 const toggleActions = (index) => {

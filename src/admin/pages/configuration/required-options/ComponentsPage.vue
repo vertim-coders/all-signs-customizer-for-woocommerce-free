@@ -281,7 +281,7 @@ const config = ref(String(route.params.config ?? '').replace(/-/g,' '));
             return additionalMaterials;
         }
 
-        const legacyData = configData?.data || {};
+        const legacyData = configData || {};
         if (Array.isArray(legacyData?.materials)) {
             return legacyData.materials;
         }

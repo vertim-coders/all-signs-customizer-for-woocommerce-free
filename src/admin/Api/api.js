@@ -7,11 +7,15 @@ const api = {
   //function related to configuration
   getConfigs: async (url = "") => {
     const configs = await axios.get(asowp_api_url + "/configs/" + url);
-    return configs.data;
+    return {
+      items: configs.data?.data ?? [],
+      totalPages: configs.data?.totalPages ?? 0,
+      totalConfigsFound: configs.data?.totalConfigsFound ?? 0,
+    };
   },
   getConfig: async (id) => {
     const config = await axios.get(asowp_api_url + "/configs/" + id);
-    return config.data;
+    return config.data?.data ?? config.data;
   },
   getPreviewConfig: async (id) => {
     const config = await axios.get(
@@ -43,7 +47,7 @@ const api = {
       "/woocommerce-products/unassigned" +
       (query ? `?${query}` : "");
     const res = await axios.get(url);
-    return res.data;
+    return res.data?.data ?? res.data;
   },
 
   getHomeStats: async (params = {}) => {
@@ -301,7 +305,7 @@ const api = {
 
   getManageCliparts: async () => {
     const Managecliparts = await axios.get(asowp_api_url + "/manage-cliparts");
-    return Managecliparts.data;
+    return Managecliparts.data?.data ?? Managecliparts.data;
   },
   addManageClipart: async (manageclipart) => {
     const state = await axios.post(
@@ -421,7 +425,48 @@ const api = {
         configId +
         "/required-options/shapes"
     );
-    return result.data;
+    return result.data?.data?.shapes ?? result.data;
+  },
+  addRequiredOptionShapeItem: async (configId, shape) => {
+    const add = await axios.post(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/shapes/items",
+      shape
+    );
+    return add.data;
+  },
+  getRequiredOptionShapeItem: async (configId, itemId) => {
+    const result = await axios.get(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/shapes/items/" +
+        itemId
+    );
+    return result.data?.data?.shape ?? result.data;
+  },
+  updateRequiredOptionShapeItem: async (configId, itemId, shape) => {
+    const edit = await axios.put(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/shapes/items/" +
+        itemId,
+      shape
+    );
+    return edit.data;
+  },
+  deleteRequiredOptionShapeItem: async (configId, itemId) => {
+    const del = await axios.delete(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/shapes/items/" +
+        itemId
+    );
+    return del.data;
   },
   //Function related to sizes
   updateRequiredOptionSizes: async (configId, sizes) => {
@@ -441,7 +486,59 @@ const api = {
         configId +
         "/required-options/sizes"
     );
-    return result.data;
+    return result.data?.data?.sizes ?? result.data;
+  },
+  addRequiredOptionSizeItem: async (configId, size) => {
+    const add = await axios.post(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/sizes/items",
+      size
+    );
+    return add.data;
+  },
+  getRequiredOptionSizeItem: async (configId, itemId) => {
+    const result = await axios.get(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/sizes/items/" +
+        itemId
+    );
+    return result.data?.data?.size ?? result.data;
+  },
+  updateRequiredOptionSizeItem: async (configId, itemId, size) => {
+    const edit = await axios.put(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/sizes/items/" +
+        itemId,
+      size
+    );
+    return edit.data;
+  },
+  setRequiredOptionSizeDefault: async (configId, itemId) => {
+    const edit = await axios.put(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/sizes/items/" +
+        itemId +
+        "/default"
+    );
+    return edit.data;
+  },
+  deleteRequiredOptionSizeItem: async (configId, itemId) => {
+    const del = await axios.delete(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/sizes/items/" +
+        itemId
+    );
+    return del.data;
   },
   //Function related to pricings
   getRequiredOptionPricings: async (configId) => {
@@ -451,7 +548,27 @@ const api = {
         configId +
         "/required-options/pricings"
     );
-    return result.data;
+    return result.data?.data?.pricing ?? result.data;
+  },
+  addRequiredOptionPricingItem: async (configId, pricing) => {
+    const add = await axios.post(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/pricings/items",
+      pricing
+    );
+    return add.data;
+  },
+  getRequiredOptionPricingItem: async (configId, itemId) => {
+    const result = await axios.get(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/pricings/items/" +
+        encodeURIComponent(itemId)
+    );
+    return result.data?.data?.pricing ?? result.data;
   },
   updateRequiredOptionsPricing: async (configId, pricingId, pricing) => {
     const edit = await axios.put(
@@ -460,6 +577,17 @@ const api = {
         configId +
         "/required-options/pricings/" +
         pricingId,
+      pricing
+    );
+    return edit.data;
+  },
+  updateRequiredOptionPricingItem: async (configId, itemId, pricing) => {
+    const edit = await axios.put(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/pricings/items/" +
+        encodeURIComponent(itemId),
       pricing
     );
     return edit.data;
@@ -474,6 +602,16 @@ const api = {
     );
     return del.data;
   },
+  deleteRequiredOptionPricingItem: async (configId, itemId) => {
+    const del = await axios.delete(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/pricings/items/" +
+        encodeURIComponent(itemId)
+    );
+    return del.data;
+  },
   addRequiredOptionsPricing: async (configId, pricing) => {
     const add = await axios.post(
       asowp_api_url +
@@ -483,6 +621,46 @@ const api = {
       pricing
     );
     return add.data;
+  },
+  getRequiredOptionFonts: async (configId) => {
+    const result = await axios.get(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/fonts"
+    );
+    return result.data?.data?.fonts ?? result.data;
+  },
+  addRequiredOptionFontItem: async (configId, fontId) => {
+    const add = await axios.post(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/fonts/items",
+      { font_id: fontId }
+    );
+    return add.data;
+  },
+  updateRequiredOptionFontItem: async (configId, fontId, position) => {
+    const edit = await axios.put(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/fonts/items/" +
+        encodeURIComponent(fontId),
+      { position }
+    );
+    return edit.data;
+  },
+  deleteRequiredOptionFontItem: async (configId, fontId) => {
+    const del = await axios.delete(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/fonts/items/" +
+        encodeURIComponent(fontId)
+    );
+    return del.data;
   },
   //Function related to colors
   updateRequiredOptionColors: async (configId, colors) => {
@@ -502,7 +680,48 @@ const api = {
         configId +
         "/required-options/colors"
     );
-    return result.data;
+    return result.data?.data?.colors ?? result.data;
+  },
+  addRequiredOptionColorItem: async (configId, color) => {
+    const add = await axios.post(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/colors/items",
+      color
+    );
+    return add.data;
+  },
+  getRequiredOptionColorItem: async (configId, itemId) => {
+    const result = await axios.get(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/colors/items/" +
+        itemId
+    );
+    return result.data?.data?.color ?? result.data;
+  },
+  updateRequiredOptionColorItem: async (configId, itemId, color) => {
+    const edit = await axios.put(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/colors/items/" +
+        itemId,
+      color
+    );
+    return edit.data;
+  },
+  deleteRequiredOptionColorItem: async (configId, itemId) => {
+    const del = await axios.delete(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/colors/items/" +
+        itemId
+    );
+    return del.data;
   },
 
   //Function related to borders
@@ -523,7 +742,48 @@ const api = {
         configId +
         "/required-options/borders"
     );
-    return result.data;
+    return result.data?.data?.borders ?? result.data;
+  },
+  addRequiredOptionBorderItem: async (configId, border) => {
+    const add = await axios.post(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/borders/items",
+      border
+    );
+    return add.data;
+  },
+  getRequiredOptionBorderItem: async (configId, itemId) => {
+    const result = await axios.get(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/borders/items/" +
+        itemId
+    );
+    return result.data?.data?.border ?? result.data;
+  },
+  updateRequiredOptionBorderItem: async (configId, itemId, border) => {
+    const edit = await axios.put(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/borders/items/" +
+        itemId,
+      border
+    );
+    return edit.data;
+  },
+  deleteRequiredOptionBorderItem: async (configId, itemId) => {
+    const del = await axios.delete(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/borders/items/" +
+        itemId
+    );
+    return del.data;
   },
   //Function related to fixing methods
   updateRequiredOptionFixingMethods: async (configId, fixingMethods) => {
@@ -543,7 +803,48 @@ const api = {
         configId +
         "/required-options/fixing-methods"
     );
-    return result.data;
+    return result.data?.data?.fixingMethods ?? result.data;
+  },
+  addRequiredOptionFixingMethodItem: async (configId, fixingMethod) => {
+    const add = await axios.post(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/fixing-methods/items",
+      fixingMethod
+    );
+    return add.data;
+  },
+  getRequiredOptionFixingMethodItem: async (configId, itemId) => {
+    const result = await axios.get(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/fixing-methods/items/" +
+        itemId
+    );
+    return result.data?.data?.fixingMethod ?? result.data;
+  },
+  updateRequiredOptionFixingMethodItem: async (configId, itemId, fixingMethod) => {
+    const edit = await axios.put(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/fixing-methods/items/" +
+        itemId,
+      fixingMethod
+    );
+    return edit.data;
+  },
+  deleteRequiredOptionFixingMethodItem: async (configId, itemId) => {
+    const del = await axios.delete(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/fixing-methods/items/" +
+        itemId
+    );
+    return del.data;
   },
   // create additional options component
   addRequiredOptionComponent: async (configId, component) => {
