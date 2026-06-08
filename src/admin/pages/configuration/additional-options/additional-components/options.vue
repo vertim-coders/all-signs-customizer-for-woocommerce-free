@@ -164,7 +164,7 @@ const additionalOption = ref({
 
 onMounted(async () => {
   isFetching.value = true;
-  await Promise.all([fetchMaterialColors(), fetchMaterialOptions()]);
+  await Promise.all([fetchColors(), fetchComponentOptions()]);
   isFetching.value = false;
 });
 
@@ -182,8 +182,8 @@ const normalizeOption = (option = {}) => ({
   ...option,
 });
 
-const fetchMaterialOptions = async () => {
-  const result = await api.getMaterialSimpleAdditionalOptionsItems(configID.value, materialId.value, additionalOptionId.value);
+const fetchComponentOptions = async () => {
+  const result = await api.getAdditionalOptionItems(configID.value, materialId.value, additionalOptionId.value);
   const data = result?.data ?? result;
   additionalOption.value = {
     title: '',
@@ -195,8 +195,8 @@ const fetchMaterialOptions = async () => {
   };
 };
 
-const fetchMaterialColors = async () => {
-  const result = await api.getMaterialSimpleColors(configID.value, materialId.value);
+const fetchColors = async () => {
+  const result = await api.getAdditionalOptionColors(configID.value, materialId.value);
   if (!result.message && Array.isArray(result.allColors)) {
     materialColors.value = result.allColors.map(color => ({
       name: color.name,
@@ -258,7 +258,7 @@ const saveComponent = async () => {
   }
 
   isLoading.value = true;
-  const result = await api.updateMaterialSimpleAdditionalOption(
+  const result = await api.updateAdditionalOption(
     configID.value,
     materialId.value,
     additionalOptionId.value,

@@ -593,7 +593,7 @@ const normalizeSizes = () => {
 const fetchMaterialSizes = async () => {
   isFetching.value = true;
   try {
-    const result = await api.getMaterialSimpleSizes(configID.value, materialId.value);
+    const result = await api.getRequiredOptionSizes(configID.value);
     if (result?.materialSizes) {
       sizes.value = result.materialSizes;
       normalizeSizes();
@@ -607,7 +607,7 @@ const fetchMaterialSizes = async () => {
 const updateMaterialSize = async () => {
   isLoading.value = true;
   try {
-    const res = await api.updateMaterialSimpleSizes(configID.value, materialId.value, getSizesPayload());
+    const res = await api.updateRequiredOptionSizes(configID.value, getSizesPayload());
     if (res.success) {
       toastMessage(res.message);
       isNewSize.value = false;

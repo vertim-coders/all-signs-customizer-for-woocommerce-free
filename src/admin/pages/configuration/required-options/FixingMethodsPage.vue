@@ -238,8 +238,8 @@ const props = defineProps({
 const configID = ref(route.params.configId);
 const materialId = computed(() => props.materialId ?? route.query.materialIndex ?? route.params.materialId ?? 0);
 
-const MaterialSimpleSizes = ref([]);
-const MaterialSimpleShapes = ref([]);
+const fixingMethodSizes = ref([]);
+const fixingMethodShapes = ref([]);
 const isFetching = ref(true);
 const isNewFixing = ref(false);
 const isLoading = ref(false);
@@ -267,7 +267,7 @@ const availableManagedMethods = computed(() => manageFixingMethods.value
     return !fixingMethods.value.some((fx) => Number(fx.fixingMethodId) === method.value);
   }));
 
-const getExclusionOptions = (type) => (type === "sizes" ? MaterialSimpleSizes.value : MaterialSimpleShapes.value)
+const getExclusionOptions = (type) => (type === "sizes" ? fixingMethodSizes.value : fixingMethodShapes.value)
   .map((option) => ({
     label: option.name,
     value: option.value,
@@ -311,9 +311,9 @@ const exclusionSummaryLabels = (field, type, fallback, prefix) => {
 };
 
 const fetchMaterialShapes = async () => {
-  const res = await api.getMaterialSimpleShapes(configID.value, materialId.value);
+  const res = await api.getRequiredOptionShapes(configID.value);
   if (!res.message && res.materialShapes) {
-    MaterialSimpleShapes.value = res.materialShapes.map((shape) => ({
+    fixingMethodShapes.value = res.materialShapes.map((shape) => ({
       name: res.manageShapes?.[shape.shapeId]?.name || "Shape",
       value: shape.shapeId,
     }));
@@ -323,8 +323,8 @@ const fetchMaterialShapes = async () => {
 const fetchMaterialFixingMethods = async () => {
   isFetching.value = true;
   try {
-    const res = await api.getMaterialSimpleFixingMethods(configID.value, materialId.value);
-    MaterialSimpleSizes.value = (res.materialSizes || []).map((size, index) => ({ name: size.label, value: index }));
+    const res = await api.getRequiredOptionFixingMethods(configID.value);
+    fixingMethodSizes.value = (res.materialSizes || []).map((size, index) => ({ name: size.label, value: index }));
     if (!res.message) {
       fixingMethods.value = (res.materialFixingMethods || []).map((fx) => ({
         isDefault: Boolean(fx.isDefault),
@@ -344,7 +344,7 @@ const updateFixingMethods = async () => {
   if (isLoading.value) return;
   isLoading.value = true;
   try {
-    const res = await api.updateMaterialSimpleFixingMethods(configID.value, materialId.value, fixingMethods.value);
+    const res = await api.updateRequiredOptionFixingMethods(configID.value, fixingMethods.value);
     if (res?.success) {
       toastMessage(res.message);
       isNewFixing.value = false;

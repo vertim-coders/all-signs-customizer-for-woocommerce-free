@@ -1,5 +1,6 @@
 const webpack = require("webpack");
 const path = require("path");
+const fs = require("fs");
 const { VueLoaderPlugin } = require("vue-loader");
 const TerserJSPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -18,6 +19,22 @@ var entryPoint = {
 };
 
 var exportPath = path.resolve(__dirname, "./assets/js");
+
+const cleanGeneratedAssets = () => {
+  for (const relPath of ["./assets/js", "./assets/css"]) {
+    const target = path.resolve(__dirname, relPath);
+    if (!fs.existsSync(target)) {
+      continue;
+    }
+
+    for (const entry of fs.readdirSync(target)) {
+      const fullPath = path.join(target, entry);
+      fs.rmSync(fullPath, { recursive: true, force: true });
+    }
+  }
+};
+
+cleanGeneratedAssets();
 
 // Enviroment flag
 var plugins = [];
@@ -146,22 +163,28 @@ module.exports = {
         ],
       },
       {
-        test: /\.png$/,
-        use: [
-          {
-            loader: "url-loader",
-            options: {
-              mimetype: "image/png",
-            },
-          },
-        ],
+        test: /\.(png|jpe?g|gif|webp|ico)$/i,
+        use: {
+          loader: "file-loader",
+          options: {
+            name: "[name].[ext]",
+            outputPath: "../images",
+            publicPath: (url, resourcePath) => {
+              if (resourcePath.includes("node_modules")) {
+                return url;
+              }
+              const rel = path.relative(path.dirname(resourcePath), __dirname);
+              return path.posix.join(rel, "assets/images", url).replace(/\\/g, "/");
+            }
+          }
+        },
       },
       {
           test: /\.svg$/,
           use: {
             loader: "file-loader",
             options: {
-              name: "[name].[hash:8].[ext]",
+              name: "[name].[ext]",
               outputPath: "../icons",
               publicPath: (url, resourcePath) => {
                 if (resourcePath.includes("node_modules")) {

@@ -392,7 +392,7 @@ const normalizePricingSettings = () => {
 const fetchPricing = async () => {
   isFetching.value = true;
   try {
-    const result = await api.getMaterialSimpleSizes(configID.value, materialId.value);
+    const result = await api.getRequiredOptionSizes(configID.value);
     if (result?.materialSizes) {
       materialSizes.value = result.materialSizes;
       measurementUnit.value = String(result.measurementUnit || "mm");
@@ -419,7 +419,7 @@ const persistPricing = async () => {
         priceOptions: pricingSettings.value.priceOptions,
       },
     };
-    const res = await api.updateMaterialSimpleSizes(configID.value, materialId.value, nextSizes);
+    const res = await api.updateRequiredOptionSizes(configID.value, nextSizes);
     if (res?.success) {
       materialSizes.value = nextSizes;
       toastMessage(res.message);

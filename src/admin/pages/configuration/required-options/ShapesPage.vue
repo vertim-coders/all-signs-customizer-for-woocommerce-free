@@ -229,7 +229,7 @@ const normalizeShape = (item) => ({
 const fetchMaterialShapes = async () => {
   isFetching.value = true;
   try {
-    const res = await api.getMaterialSimpleShapes(configID.value, materialId.value);
+    const res = await api.getRequiredOptionShapes(configID.value);
     if (!res.message) {
       manageShapes.value = res.manageShapes || [];
       shapes.value = (res.materialShapes || []).map(normalizeShape);
@@ -243,7 +243,7 @@ const updateShapes = async () => {
   if (isLoading.value) return;
   isLoading.value = true;
   try {
-    const res = await api.updateMaterialSimpleShapes(configID.value, materialId.value, shapes.value);
+    const res = await api.updateRequiredOptionShapes(configID.value, shapes.value);
     if (res?.success) {
       toastMessage(res.message);
       isNewShape.value = false;

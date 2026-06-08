@@ -1,0 +1,936 @@
+<?php
+namespace ASOWP\Api\Admin\Required_Options;
+
+use ASOWP\Support\ConfigSchemaNormalizer;
+use WP_REST_Controller;
+
+/**
+ * REST API handler for config-level required options.
+ */
+class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
+{
+    public function __construct()
+    {
+        $this->namespace = 'asowp/v1';
+        $this->rest_base = '/configs';
+    }
+
+    protected function register_components_routes(string $base_route): void
+    {
+        register_rest_route(
+            $this->namespace,
+            $base_route . '/components',
+            array(
+                array(
+                    'methods' => \WP_REST_Server::READABLE,
+                    'callback' => array($this, 'get_components'),
+                    'permission_callback' => array($this, 'permissions_check'),
+                    'args' => array(
+                        'config_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                    ),
+                ),
+                array(
+                    'methods' => \WP_REST_Server::CREATABLE,
+                    'callback' => array($this, 'create_component'),
+                    'permission_callback' => array($this, 'permissions_check'),
+                    'args' => array(
+                        'config_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                    ),
+                ),
+            )
+        );
+
+        register_rest_route(
+            $this->namespace,
+            $base_route . '/components/update',
+            array(
+                array(
+                    'methods' => \WP_REST_Server::EDITABLE,
+                    'callback' => array($this, 'update_components'),
+                    'permission_callback' => array($this, 'permissions_check'),
+                    'args' => array(
+                        'config_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                    ),
+                ),
+            )
+        );
+
+        register_rest_route(
+            $this->namespace,
+            $base_route . '/components/(?P<component_id>\d+)',
+            array(
+                array(
+                    'methods' => \WP_REST_Server::READABLE,
+                    'callback' => array($this, 'get_component'),
+                    'permission_callback' => array($this, 'permissions_check'),
+                    'args' => array(
+                        'config_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'component_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                    ),
+                ),
+                array(
+                    'methods' => \WP_REST_Server::EDITABLE,
+                    'callback' => array($this, 'update_component'),
+                    'permission_callback' => array($this, 'permissions_check'),
+                    'args' => array(
+                        'config_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'component_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                    ),
+                ),
+                array(
+                    'methods' => \WP_REST_Server::DELETABLE,
+                    'callback' => array($this, 'delete_component'),
+                    'permission_callback' => array($this, 'permissions_check'),
+                    'args' => array(
+                        'config_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'component_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                    ),
+                ),
+            )
+        );
+
+        register_rest_route(
+            $this->namespace,
+            $base_route . '/components/(?P<component_id>\d+)/options',
+            array(
+                array(
+                    'methods' => \WP_REST_Server::READABLE,
+                    'callback' => array($this, 'get_component_options'),
+                    'permission_callback' => array($this, 'permissions_check'),
+                    'args' => array(
+                        'config_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'component_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                    ),
+                ),
+                array(
+                    'methods' => \WP_REST_Server::CREATABLE,
+                    'callback' => array($this, 'create_option'),
+                    'permission_callback' => array($this, 'permissions_check'),
+                    'args' => array(
+                        'config_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'component_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                    ),
+                ),
+            )
+        );
+
+        register_rest_route(
+            $this->namespace,
+            $base_route . '/components/(?P<component_id>\d+)/options/(?P<option_id>\d+)',
+            array(
+                array(
+                    'methods' => \WP_REST_Server::READABLE,
+                    'callback' => array($this, 'get_option'),
+                    'permission_callback' => array($this, 'permissions_check'),
+                    'args' => array(
+                        'config_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'component_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'option_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                    ),
+                ),
+                array(
+                    'methods' => \WP_REST_Server::EDITABLE,
+                    'callback' => array($this, 'update_option'),
+                    'permission_callback' => array($this, 'permissions_check'),
+                    'args' => array(
+                        'config_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'component_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'option_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                    ),
+                ),
+                array(
+                    'methods' => \WP_REST_Server::DELETABLE,
+                    'callback' => array($this, 'delete_option'),
+                    'permission_callback' => array($this, 'permissions_check'),
+                    'args' => array(
+                        'config_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'component_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'option_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                    ),
+                ),
+            )
+        );
+    }
+
+    protected function get_meta(int $config_id): array
+    {
+        $meta = get_post_meta($config_id, 'asowp-configs-meta', true);
+        return is_array($meta) ? $meta : array();
+    }
+
+    protected function get_normalized_meta(int $config_id): array
+    {
+        return ConfigSchemaNormalizer::normalize_meta($this->get_meta($config_id));
+    }
+
+    protected function save_required_options(int $config_id, array $required_options)
+    {
+        $meta = $this->get_meta($config_id);
+        $meta['requiredOptions'] = $required_options;
+        return ConfigSchemaNormalizer::save_meta($config_id, $meta);
+    }
+
+    protected function get_required_options(int $config_id): array
+    {
+        $normalized = $this->get_normalized_meta($config_id);
+        $required_options = isset($normalized['requiredOptions']) && is_array($normalized['requiredOptions'])
+            ? $normalized['requiredOptions']
+            : array();
+
+        return $required_options;
+    }
+
+    protected function section_value(array $required_options, string $section, $default)
+    {
+        return array_key_exists($section, $required_options) ? $required_options[$section] : $default;
+    }
+
+    protected function section_response_key(string $section): string
+    {
+        $map = array(
+            'sizes' => 'materialSizes',
+            'colors' => 'colors',
+            'shapes' => 'materialShapes',
+            'fixing-methods' => 'materialFixingMethods',
+            'pricing' => 'pricing',
+            'borders' => 'materialBorders',
+            'materials' => 'materialOptions',
+        );
+
+        return isset($map[$section]) ? $map[$section] : $section;
+    }
+
+    protected function simple_section_default(string $section)
+    {
+        switch ($section) {
+            case 'sizes':
+                return array(
+                    'settings' => array('title' => 'Sizes', 'description' => ''),
+                    'customSize' => array(
+                        'active' => false,
+                        'showPredefinedSizes' => true,
+                        'width' => array('label' => 'Width', 'min' => 0, 'max' => 0),
+                        'height' => array('label' => 'Height', 'min' => 0, 'max' => 0),
+                        'pricings' => array('type' => 'unit', 'unit' => array('basePrice' => 0, 'surface' => 0, 'charPrice' => 0), 'range' => array()),
+                    ),
+                    'thickness' => array('active' => false, 'values' => array(), 'items' => array()),
+                    'allSizes' => array(),
+                );
+            case 'colors':
+                return array(
+                    'customColors' => array('active' => true, 'label' => 'Custom Colors', 'prevImg' => ''),
+                    'allColors' => array(),
+                );
+            case 'borders':
+                return array(
+                    'settings' => array(
+                        'borderColorsLabel' => 'Borders Colors',
+                        'colors' => array(),
+                        'enableBorderWidth' => true,
+                        'enableBorderColor' => true,
+                        'customColorsPrevImg' => '',
+                    ),
+                    'allBorders' => array(),
+                );
+            case 'pricing':
+                return array(
+                    'label' => 'Pricing',
+                    'description' => '',
+                    'priceOptions' => array(),
+                );
+            case 'materials':
+                return array(
+                    'label' => 'Materials',
+                    'description' => '',
+                    'items' => array(),
+                );
+            case 'components':
+                return array(
+                    'label' => 'Additional Components',
+                    'description' => '',
+                    'items' => array(),
+                );
+            default:
+                return array();
+        }
+    }
+
+    protected function get_section_items(array $required_options, string $section): array
+    {
+        $section_value = $this->section_value($required_options, $section, $this->simple_section_default($section));
+        if ($section === 'shapes' || $section === 'fixing-methods') {
+            return is_array($section_value) ? array_values($section_value) : array();
+        }
+        if ($section === 'materials' || $section === 'components') {
+            return is_array($section_value) && isset($section_value['items']) && is_array($section_value['items'])
+                ? array_values($section_value['items'])
+                : array();
+        }
+        return is_array($section_value) ? $section_value : $this->simple_section_default($section);
+    }
+
+    protected function set_section_items(array $required_options, string $section, $value): array
+    {
+        $required_options[$section] = $value;
+        return $required_options;
+    }
+
+    protected function get_section($request, string $section, string $response_key, ?callable $response_callback = null)
+    {
+        $config_id = absint($request->get_param('config_id'));
+        if (!$config_id) {
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-options-pro')));
+        }
+
+        $required_options = $this->get_required_options($config_id);
+        $value = $this->get_section_items($required_options, $section);
+
+        if ($response_callback) {
+            return call_user_func($response_callback, $config_id, $value, $required_options);
+        }
+
+        return rest_ensure_response(array($response_key => $value));
+    }
+
+    protected function update_section($request, string $section)
+    {
+        $config_id = absint($request->get_param('config_id'));
+        if (!$config_id) {
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-options-pro')));
+        }
+
+        $payload = json_decode($request->get_body(), true);
+        if (!is_array($payload)) {
+            $payload = array();
+        }
+
+        $required_options = $this->get_required_options($config_id);
+        $current = $this->get_section_items($required_options, $section);
+        if ($current === $payload) {
+            return rest_ensure_response(array('success' => 'same', 'message' => __('No change was observed', 'all-signs-options-pro')));
+        }
+
+        $required_options = $this->set_section_items($required_options, $section, $payload);
+        $update = $this->save_required_options($config_id, $required_options);
+
+        if ($update === true) {
+            return rest_ensure_response(array('success' => true, 'message' => sprintf(__('Required option %s successfully updated', 'all-signs-options-pro'), $section)));
+        }
+
+        return rest_ensure_response(array('success' => false, 'message' => sprintf(__('Required option %s has not been updated', 'all-signs-options-pro'), $section)));
+    }
+
+    protected function sizes_response(int $config_id, $value): array
+    {
+        $normalized = $this->get_normalized_meta($config_id);
+        $measurement_unit = self::deep_value($normalized, array('settings', 'customizerSign', 'customizerOptions', 'measurementUnit'), 'mm');
+
+        return array(
+            'materialSizes' => $value,
+            'measurementUnit' => $measurement_unit,
+        );
+    }
+
+    protected function shapes_response(int $config_id, $value): array
+    {
+        return array(
+            'materialShapes' => is_array($value) ? array_values($value) : array(),
+            'manageShapes' => get_option('asowp_all_shapes', array()),
+        );
+    }
+
+    protected function fixing_methods_response(int $config_id, $value): array
+    {
+        $required_options = $this->get_required_options($config_id);
+        $sizes = $this->get_section_items($required_options, 'sizes');
+        $shapes = $this->get_section_items($required_options, 'shapes');
+        $normalized = $this->get_normalized_meta($config_id);
+
+        return array(
+            'materialFixingMethods' => is_array($value) ? array_values($value) : array(),
+            'manageFixingMethods' => get_option('asowp_all_fixingMethods', array()),
+            'materialSizes' => isset($sizes['allSizes']) && is_array($sizes['allSizes']) ? $sizes['allSizes'] : array(),
+            'materialShapes' => is_array($shapes) ? array_values($shapes) : array(),
+            'measurementUnit' => self::deep_value($normalized, array('settings', 'customizerSign', 'customizerOptions', 'measurementUnit'), 'mm'),
+        );
+    }
+
+    protected function borders_response(int $config_id, $value): array
+    {
+        $required_options = $this->get_required_options($config_id);
+        $sizes = $this->get_section_items($required_options, 'sizes');
+        $shapes = $this->get_section_items($required_options, 'shapes');
+
+        return array(
+            'materialBorders' => $value,
+            'manageBorders' => get_option('asowp_all_borders', array()),
+            'materialSizes' => isset($sizes['allSizes']) && is_array($sizes['allSizes']) ? $sizes['allSizes'] : array(),
+            'materialShapes' => is_array($shapes) ? array_values($shapes) : array(),
+        );
+    }
+
+    protected function materials_response(int $config_id, $value): array
+    {
+        return is_array($value) && isset($value['items']) && is_array($value['items']) ? array_values($value['items']) : array();
+    }
+
+    protected function get_config_forced_material_type(int $config_id): string
+    {
+        $normalized = $this->get_normalized_meta($config_id);
+        $material_type = self::deep_value($normalized, array('materialType'), 'simple');
+
+        return $material_type === 'advance' ? 'advance' : 'simple';
+    }
+
+    protected function normalize_material(array $material, int $index = 0, int $config_id = 0): array
+    {
+        $forced_type = $config_id ? $this->get_config_forced_material_type($config_id) : null;
+
+        return array(
+            'name' => isset($material['name']) ? $material['name'] : (isset($material['label']) ? $material['label'] : ''),
+            'description' => isset($material['description']) ? $material['description'] : '',
+            'icon' => isset($material['icon']) ? $material['icon'] : (isset($material['image']) ? $material['image'] : ''),
+            'previewImg' => isset($material['previewImg']) ? $material['previewImg'] : (isset($material['icon']) ? $material['icon'] : ''),
+            'type' => $forced_type ? $forced_type : (isset($material['type']) ? $material['type'] : 'simple'),
+            'active' => isset($material['active']) ? (bool) $material['active'] : true,
+            'isDefault' => isset($material['isDefault']) ? (bool) $material['isDefault'] : $index === 0,
+            'pricingId' => isset($material['pricingId']) ? $material['pricingId'] : '',
+            'additionalPrice' => isset($material['additionalPrice']) ? (float) $material['additionalPrice'] : 0,
+            'excludeComponentIds' => isset($material['excludeComponentIds']) && is_array($material['excludeComponentIds']) ? array_values($material['excludeComponentIds']) : array(),
+            'materialKey' => isset($material['materialKey']) ? $material['materialKey'] : (isset($material['sourceMaterialId']) ? $material['sourceMaterialId'] : ''),
+            'sourceMaterialId' => isset($material['sourceMaterialId']) ? $material['sourceMaterialId'] : (isset($material['materialKey']) ? $material['materialKey'] : ''),
+            'data' => isset($material['data']) && is_array($material['data']) ? $material['data'] : array(),
+        );
+    }
+
+    protected function materials_section_default(): array
+    {
+        return array(
+            'label' => 'Materials',
+            'description' => '',
+            'items' => array(),
+        );
+    }
+
+    protected function get_materials_items(array $required_options): array
+    {
+        $materials = $this->section_value($required_options, 'materials', $this->materials_section_default());
+
+        return is_array($materials) && isset($materials['items']) && is_array($materials['items'])
+            ? array_values($materials['items'])
+            : array();
+    }
+
+    protected function save_materials_items(int $config_id, array $materials)
+    {
+        $required_options = $this->get_required_options($config_id);
+        $required_options['materials'] = array(
+            'label' => 'Materials',
+            'description' => '',
+            'items' => array_values($materials),
+        );
+
+        return $this->save_required_options($config_id, $required_options);
+    }
+
+    protected function normalize_component(array $component, int $index = 0): array
+    {
+        return array(
+            'title' => isset($component['title']) ? $component['title'] : (isset($component['name']) ? $component['name'] : ''),
+            'name' => isset($component['name']) ? $component['name'] : (isset($component['label']) ? $component['label'] : ''),
+            'description' => isset($component['description']) ? $component['description'] : '',
+            'icon' => isset($component['icon']) ? $component['icon'] : '',
+            'options' => isset($component['options']) && is_array($component['options']) ? array_values($component['options']) : array(),
+            'isDefault' => isset($component['isDefault']) ? (bool) $component['isDefault'] : $index === 0,
+        );
+    }
+
+    protected function normalize_component_option(array $option, int $index = 0): array
+    {
+        $option['isDefault'] = isset($option['isDefault']) ? (bool) $option['isDefault'] : $index === 0;
+        return $option;
+    }
+
+    protected static function deep_value($array, array $path, $default = null)
+    {
+        $current = $array;
+        foreach ($path as $segment) {
+            if (!is_array($current) || !array_key_exists($segment, $current)) {
+                return $default;
+            }
+            $current = $current[$segment];
+        }
+        return $current;
+    }
+
+    public function get_materials($request)
+    {
+        $config_id = absint($request->get_param('config_id'));
+        if (!$config_id) {
+            return rest_ensure_response(array('message' => __('No Configuration found', 'all-signs-options-pro')));
+        }
+
+        $required_options = $this->get_required_options($config_id);
+        return rest_ensure_response($this->get_materials_items($required_options));
+    }
+
+    public function get_materials_material($request)
+    {
+        $config_id = absint($request->get_param('config_id'));
+        $material_id = absint($request->get_param('material_id'));
+
+        if (!$config_id) {
+            return rest_ensure_response(array('message' => __('No Configuration found', 'all-signs-options-pro')));
+        }
+
+        $required_options = $this->get_required_options($config_id);
+        $materials = $this->get_materials_items($required_options);
+        if (!isset($materials[$material_id])) {
+            return rest_ensure_response(array('message' => __('No materials component found', 'all-signs-options-pro')));
+        }
+
+        return rest_ensure_response($this->normalize_material($materials[$material_id], $material_id, $config_id));
+    }
+
+    public function create_materials_material($request)
+    {
+        $config_id = absint($request->get_param('config_id'));
+        if (!$config_id) {
+            return rest_ensure_response(array('message' => __('No Configuration found', 'all-signs-options-pro')));
+        }
+
+        $required_options = $this->get_required_options($config_id);
+        $materials = $this->get_materials_items($required_options);
+        $new_material = json_decode($request->get_body(), true);
+        $new_material = is_array($new_material) ? $this->normalize_material($new_material, count($materials), $config_id) : array();
+
+        if (empty($materials)) {
+            $new_material['isDefault'] = true;
+        } elseif (!array_reduce($materials, function ($carry, $item) {
+            return $carry || !empty($item['isDefault']);
+        }, false)) {
+            $materials[0]['isDefault'] = true;
+        }
+
+        $materials[] = $new_material;
+        $update = $this->save_materials_items($config_id, $materials);
+
+        return rest_ensure_response($update === true
+            ? array('success' => true, 'message' => __('Materiel component successfully added', 'all-signs-options-pro'))
+            : array('success' => false, 'message' => __('Materiel component has not been added', 'all-signs-options-pro')));
+    }
+
+    public function update_materials_material($request)
+    {
+        $config_id = absint($request->get_param('config_id'));
+        $material_id = absint($request->get_param('material_id'));
+        if (!$config_id) {
+            return rest_ensure_response(array('message' => __('No Configuration found', 'all-signs-options-pro')));
+        }
+
+        $required_options = $this->get_required_options($config_id);
+        $materials = $this->get_materials_items($required_options);
+        $material = json_decode($request->get_body(), true);
+        $material = is_array($material) ? $this->normalize_material($material, $material_id, $config_id) : array();
+
+        if (!isset($materials[$material_id])) {
+            return rest_ensure_response(array('success' => false, 'message' => __('Materiel component has not been edited', 'all-signs-options-pro')));
+        }
+
+        $old_material = $materials[$material_id];
+        if ($old_material === $material) {
+            return rest_ensure_response(array('success' => 'same', 'message' => __('No change was observed', 'all-signs-options-pro')));
+        }
+
+        $target_active = isset($material['active']) ? (bool) $material['active'] : true;
+        $active_count = 0;
+        foreach ($materials as $idx => $existing) {
+            if ($idx === $material_id) {
+                continue;
+            }
+            if (!empty($existing['active'])) {
+                $active_count++;
+            }
+        }
+
+        $current_active = isset($old_material['active']) ? (bool) $old_material['active'] : true;
+        if ($current_active && !$target_active && $active_count <= 0) {
+            return rest_ensure_response(array('success' => false, 'message' => __('At least one material must remain active', 'all-signs-options-pro')));
+        }
+
+        $materials[$material_id] = array_merge($old_material, $material);
+        if (!empty($materials[$material_id]['isDefault'])) {
+            foreach ($materials as $idx => $existing) {
+                if ($idx !== $material_id) {
+                    $materials[$idx]['isDefault'] = false;
+                }
+            }
+        }
+
+        $update = $this->save_materials_items($config_id, $materials);
+
+        return rest_ensure_response($update === true
+            ? array('success' => true, 'message' => __('Materiel component successfully edited', 'all-signs-options-pro'))
+            : array('success' => false, 'message' => __('Materiel component has not been edited', 'all-signs-options-pro')));
+    }
+
+    public function delete_materials_material($request)
+    {
+        $config_id = absint($request->get_param('config_id'));
+        $material_id = absint($request->get_param('material_id'));
+        if (!$config_id) {
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-options-pro')));
+        }
+
+        $required_options = $this->get_required_options($config_id);
+        $materials = $this->get_materials_items($required_options);
+
+        if (!isset($materials[$material_id])) {
+            return rest_ensure_response(array('success' => false, 'message' => __('No materials component found', 'all-signs-options-pro')));
+        }
+
+        if (count($materials) <= 1) {
+            return rest_ensure_response(array('success' => false, 'message' => __('At least one material must remain', 'all-signs-options-pro')));
+        }
+
+        $target_active = isset($materials[$material_id]['active']) ? (bool) $materials[$material_id]['active'] : true;
+        $active_remaining = 0;
+        foreach ($materials as $idx => $existing) {
+            if ($idx === $material_id) {
+                continue;
+            }
+            if (!empty($existing['active'])) {
+                $active_remaining++;
+            }
+        }
+        if ($target_active && $active_remaining < 1) {
+            return rest_ensure_response(array('success' => false, 'message' => __('At least one active material must remain', 'all-signs-options-pro')));
+        }
+
+        array_splice($materials, $material_id, 1);
+        $update = $this->save_materials_items($config_id, $materials);
+
+        return rest_ensure_response($update === true
+            ? array('success' => true, 'message' => __('Component successfully deleted', 'all-signs-options-pro'))
+            : array('success' => false, 'message' => __('Component has not been deleted', 'all-signs-options-pro')));
+    }
+
+    public function get_components($request)
+    {
+        $config_id = absint($request->get_param('config_id'));
+        if (!$config_id) {
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-options-pro')));
+        }
+
+        $required_options = $this->get_required_options($config_id);
+        $components = $this->get_section_items($required_options, 'components');
+
+        return rest_ensure_response(array(
+            'data' => is_array($components) ? array_values($components) : array(),
+            'manageShapes' => get_option('asowp_all_shapes', array()),
+            'manageFixingMethods' => get_option('asowp_all_fixingMethods', array()),
+        ));
+    }
+
+    public function create_component($request)
+    {
+        $config_id = absint($request->get_param('config_id'));
+        if (!$config_id) {
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-options-pro')));
+        }
+
+        $required_options = $this->get_required_options($config_id);
+        $components = $this->get_section_items($required_options, 'components');
+        $new_component = json_decode($request->get_body(), true);
+        $new_component = is_array($new_component) ? $this->normalize_component($new_component, count($components)) : array();
+
+        if (empty($components)) {
+            $new_component['isDefault'] = true;
+        } elseif (!array_reduce($components, function ($carry, $item) {
+            return $carry || !empty($item['isDefault']);
+        }, false)) {
+            $components[0]['isDefault'] = true;
+        }
+
+        $components[] = $new_component;
+        $required_options = $this->set_section_items($required_options, 'components', array('items' => $components, 'label' => 'Additional Components', 'description' => ''));
+        $update = $this->save_required_options($config_id, $required_options);
+
+        return rest_ensure_response($update === true
+            ? array('success' => true, 'message' => __('Component successfully added', 'all-signs-options-pro'))
+            : array('success' => false, 'message' => __('Component has not been added', 'all-signs-options-pro')));
+    }
+
+    public function update_components($request)
+    {
+        $config_id = absint($request->get_param('config_id'));
+        if (!$config_id) {
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-options-pro')));
+        }
+
+        $required_options = $this->get_required_options($config_id);
+        $components = json_decode($request->get_body(), true);
+        $components = is_array($components) ? array_values($components) : array();
+        $current = $this->get_section_items($required_options, 'components');
+        if ($current === $components) {
+            return rest_ensure_response(array('success' => 'same', 'message' => __('No change observed in components', 'all-signs-options-pro')));
+        }
+
+        $required_options = $this->set_section_items($required_options, 'components', array('items' => $components, 'label' => 'Additional Components', 'description' => ''));
+        $update = $this->save_required_options($config_id, $required_options);
+
+        return rest_ensure_response($update === true
+            ? array('success' => true, 'message' => __('Components successfully updated', 'all-signs-options-pro'))
+            : array('success' => false, 'message' => __('Components have not been updated', 'all-signs-options-pro')));
+    }
+
+    public function get_component($request)
+    {
+        $config_id = absint($request->get_param('config_id'));
+        $component_id = absint($request->get_param('component_id'));
+        $required_options = $this->get_required_options($config_id);
+        $components = $this->get_section_items($required_options, 'components');
+        $component = isset($components[$component_id]) ? $components[$component_id] : null;
+
+        if (!$component) {
+            return rest_ensure_response(array('message' => __('No materials component found', 'all-signs-options-pro')));
+        }
+
+        return rest_ensure_response($component);
+    }
+
+    public function get_component_options($request)
+    {
+        $config_id = absint($request->get_param('config_id'));
+        $component_id = absint($request->get_param('component_id'));
+        $required_options = $this->get_required_options($config_id);
+        $components = $this->get_section_items($required_options, 'components');
+        $component = isset($components[$component_id]) ? $components[$component_id] : null;
+
+        return rest_ensure_response(array(
+            'manageShapes' => get_option('asowp_all_shapes', array()),
+            'manageFixingMethods' => get_option('asowp_all_fixingMethods', array()),
+            'component' => $component,
+            'message' => $component ? __('No Material Component Options Found', 'all-signs-options-pro') : __('No materials component found', 'all-signs-options-pro'),
+        ));
+    }
+
+    public function update_component($request)
+    {
+        $config_id = absint($request->get_param('config_id'));
+        $component_id = absint($request->get_param('component_id'));
+        $required_options = $this->get_required_options($config_id);
+        $components = $this->get_section_items($required_options, 'components');
+        $component = json_decode($request->get_body(), true);
+        $component = is_array($component) ? $this->normalize_component($component, $component_id) : array();
+
+        if (!isset($components[$component_id])) {
+            return rest_ensure_response(array('success' => false, 'message' => __('Materiel component has not been edited', 'all-signs-options-pro')));
+        }
+
+        if ($components[$component_id] === $component) {
+            return rest_ensure_response(array('success' => 'same', 'message' => __('No change was observed', 'all-signs-options-pro')));
+        }
+
+        $components[$component_id] = $component;
+        $required_options = $this->set_section_items($required_options, 'components', array('items' => $components, 'label' => 'Additional Components', 'description' => ''));
+        $update = $this->save_required_options($config_id, $required_options);
+
+        return rest_ensure_response($update === true
+            ? array('success' => true, 'message' => __('Component successfully edited', 'all-signs-options-pro'))
+            : array('success' => false, 'message' => __('Component has not been edited', 'all-signs-options-pro')));
+    }
+
+    public function delete_component($request)
+    {
+        $config_id = absint($request->get_param('config_id'));
+        $component_id = absint($request->get_param('component_id'));
+        $required_options = $this->get_required_options($config_id);
+        $components = $this->get_section_items($required_options, 'components');
+
+        if (!isset($components[$component_id])) {
+            return rest_ensure_response(array('success' => false, 'message' => __('No materials component found', 'all-signs-options-pro')));
+        }
+
+        array_splice($components, $component_id, 1);
+        $required_options = $this->set_section_items($required_options, 'components', array('items' => $components, 'label' => 'Additional Components', 'description' => ''));
+        $update = $this->save_required_options($config_id, $required_options);
+
+        return rest_ensure_response($update === true
+            ? array('success' => true, 'message' => __('Component successfully deleted', 'all-signs-options-pro'))
+            : array('success' => false, 'message' => __('Component has not been deleted', 'all-signs-options-pro')));
+    }
+
+    public function create_option($request)
+    {
+        $config_id = absint($request->get_param('config_id'));
+        $component_id = absint($request->get_param('component_id'));
+        $required_options = $this->get_required_options($config_id);
+        $components = $this->get_section_items($required_options, 'components');
+        $option = json_decode($request->get_body(), true);
+        $option = is_array($option) ? $this->normalize_component_option($option, 0) : array();
+
+        if (!isset($components[$component_id])) {
+            return rest_ensure_response(array('success' => false, 'message' => __('No materials component found', 'all-signs-options-pro')));
+        }
+
+        if (!isset($components[$component_id]['options']) || !is_array($components[$component_id]['options'])) {
+            $components[$component_id]['options'] = array();
+        }
+
+        if (empty($components[$component_id]['options'])) {
+            $option['isDefault'] = true;
+        } elseif (!array_reduce($components[$component_id]['options'], function ($carry, $item) {
+            return $carry || !empty($item['isDefault']);
+        }, false)) {
+            $components[$component_id]['options'][0]['isDefault'] = true;
+        }
+
+        $components[$component_id]['options'][] = $option;
+        $required_options = $this->set_section_items($required_options, 'components', array('items' => $components, 'label' => 'Additional Components', 'description' => ''));
+        $update = $this->save_required_options($config_id, $required_options);
+
+        return rest_ensure_response($update === true
+            ? array('success' => true, 'message' => __('Component option successfully added', 'all-signs-options-pro'))
+            : array('success' => false, 'message' => __('Component option has not been added', 'all-signs-options-pro')));
+    }
+
+    public function get_option($request)
+    {
+        $config_id = absint($request->get_param('config_id'));
+        $component_id = absint($request->get_param('component_id'));
+        $option_id = absint($request->get_param('option_id'));
+        $required_options = $this->get_required_options($config_id);
+        $components = $this->get_section_items($required_options, 'components');
+
+        if (!isset($components[$component_id]['options'][$option_id])) {
+            return rest_ensure_response(array('message' => __('No materials component found', 'all-signs-options-pro')));
+        }
+
+        return rest_ensure_response($components[$component_id]['options'][$option_id]);
+    }
+
+    public function update_option($request)
+    {
+        $config_id = absint($request->get_param('config_id'));
+        $component_id = absint($request->get_param('component_id'));
+        $option_id = absint($request->get_param('option_id'));
+        $required_options = $this->get_required_options($config_id);
+        $components = $this->get_section_items($required_options, 'components');
+        $option = json_decode($request->get_body(), true);
+        $option = is_array($option) ? $this->normalize_component_option($option, $option_id) : array();
+
+        if (!isset($components[$component_id]['options'][$option_id])) {
+            return rest_ensure_response(array('success' => false, 'message' => __('Materiel component option has not been edited', 'all-signs-options-pro')));
+        }
+
+        if ($components[$component_id]['options'][$option_id] === $option) {
+            return rest_ensure_response(array('success' => 'same', 'message' => __('No change was observed', 'all-signs-options-pro')));
+        }
+
+        $components[$component_id]['options'][$option_id] = $option;
+        $required_options = $this->set_section_items($required_options, 'components', array('items' => $components, 'label' => 'Additional Components', 'description' => ''));
+        $update = $this->save_required_options($config_id, $required_options);
+
+        return rest_ensure_response($update === true
+            ? array('success' => true, 'message' => __('Component option successfully edited', 'all-signs-options-pro'))
+            : array('success' => false, 'message' => __('Component option has not been edited', 'all-signs-options-pro')));
+    }
+
+    public function delete_option($request)
+    {
+        $config_id = absint($request->get_param('config_id'));
+        $component_id = absint($request->get_param('component_id'));
+        $option_id = absint($request->get_param('option_id'));
+        $required_options = $this->get_required_options($config_id);
+        $components = $this->get_section_items($required_options, 'components');
+
+        if (!isset($components[$component_id]['options'][$option_id])) {
+            return rest_ensure_response(array('success' => false, 'message' => __('No materials component found', 'all-signs-options-pro')));
+        }
+
+        array_splice($components[$component_id]['options'], $option_id, 1);
+        $required_options = $this->set_section_items($required_options, 'components', array('items' => $components, 'label' => 'Additional Components', 'description' => ''));
+        $update = $this->save_required_options($config_id, $required_options);
+
+        return rest_ensure_response($update === true
+            ? array('success' => true, 'message' => __('Material Component option successfully deleted', 'all-signs-options-pro'))
+            : array('success' => false, 'message' => __('Material Component option has not been deleted', 'all-signs-options-pro')));
+    }
+
+    public function permissions_check($request)
+    {
+        return true;
+    }
+
+    public function get_collection_params()
+    {
+        return array();
+    }
+}

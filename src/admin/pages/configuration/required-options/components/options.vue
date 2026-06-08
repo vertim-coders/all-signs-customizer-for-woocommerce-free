@@ -373,7 +373,7 @@ const isEdit = ref(false);
 
 onMounted(async() => {
     isFetching.value = true;
-    await fetchMaterialAdvanceOptions();
+    await fetchComponentOptions();
 });
 
 watch(
@@ -387,7 +387,7 @@ watch(
     isNewOption.value = false;
     isEdit.value = false;
     isFetching.value = true;
-    await fetchMaterialAdvanceOptions();
+    await fetchComponentOptions();
     isFetching.value = false;
   }
 );
@@ -407,8 +407,8 @@ const goBackToComponents = () => {
         query: materialId.value > 0 ? { materialIndex: materialId.value } : {},
     });
 }
-const fetchMaterialAdvanceOptions = async () => {
-    const result = await api.getMaterialAdvanceComponentOptions(configId.value,materialId.value,componentId.value);
+const fetchComponentOptions = async () => {
+    const result = await api.getRequiredOptionComponentOptions(configId.value,materialId.value,componentId.value);
     shapes.value = result.manageShapes.map((sh,key)=>{
         return {name:sh.name,value:key,icon:sh.icon};
     });
@@ -428,9 +428,9 @@ const fetchMaterialAdvanceOptions = async () => {
 
 const addNewOption = async () => {
     isLoading.value = true;
-    const result = await api.addMaterialAdvanceComponentOption(configId.value,materialId.value,componentId.value,option.value);
+    const result = await api.addRequiredOptionComponentOption(configId.value,materialId.value,componentId.value,option.value);
     if(result.success){
-        await fetchMaterialAdvanceOptions();
+        await fetchComponentOptions();
         isLoading.value = false;
         toastMessage(result.message);
         isNewOption.value = false;
@@ -478,9 +478,9 @@ const addNewOption = async () => {
 }
 const updateOption = async () => {
     isLoading.value = true;
-    const result = await api.updateMaterialAdvanceComponentOption(configId.value,materialId.value,componentId.value,optionId.value,option.value);
+    const result = await api.updateRequiredOptionComponentOption(configId.value,materialId.value,componentId.value,optionId.value,option.value);
     if(result.success){
-        await fetchMaterialAdvanceOptions();
+        await fetchComponentOptions();
         isLoading.value = false;
         if(result.success == true){
             toastMessage(result.message);
@@ -536,9 +536,9 @@ const updateOption = async () => {
 }
 const deleteOption = async () => {
     isLoading.value = true;
-    const result = await api.deleteMaterialAdvanceComponentOption(configId.value,materialId.value,componentId.value,optionId.value);
+    const result = await api.deleteRequiredOptionComponentOption(configId.value,materialId.value,componentId.value,optionId.value);
     if(result.success){
-        await fetchMaterialAdvanceOptions();
+        await fetchComponentOptions();
         isLoading.value = false;
         toastMessage(result.message);
         closeModal();
@@ -686,9 +686,9 @@ const back = () => {
     }
 }
 
-const updateComponentAdvance = async () => {
+const updateComponent = async () => {
         isLoading.value = true;
-        const result = await api.updateMaterialAdvanceComponent(configId.value,materialId.value,componentId.value,componentAdvance.value);
+        const result = await api.updateRequiredOptionComponent(configId.value,materialId.value,componentId.value,componentAdvance.value);
         if(result.success){
             if(result.success == true ) {
                 toastMessage(result.message);
@@ -711,6 +711,6 @@ const selectDefault = async(key) =>{
             componentAdvance.value.options[i].isDefault = false;
         }
     }
-    await updateComponentAdvance();
+    await updateComponent();
 }
 </script>

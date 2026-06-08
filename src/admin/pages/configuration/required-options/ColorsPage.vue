@@ -358,13 +358,13 @@ const normalizeColors = (raw) => {
 const fetchMaterialColors = async () => {
   isFetching.value = true;
   try {
-    const res = await api.getMaterialSimpleColors(configID.value, materialId.value);
+    const res = await api.getRequiredOptionColors(configID.value);
     const normalized = normalizeColors(res);
     const shouldPersistMigration = normalized.changed;
     delete normalized.changed;
     colors.value = normalized;
     if (shouldPersistMigration) {
-      await api.updateMaterialSimpleColors(configID.value, materialId.value, colors.value);
+      await api.updateRequiredOptionColors(configID.value, colors.value);
     }
   } finally {
     isFetching.value = false;
@@ -375,7 +375,7 @@ const updateMaterialColor = async () => {
   if (isLoading.value) return;
   isLoading.value = true;
   try {
-    const res = await api.updateMaterialSimpleColors(configID.value, materialId.value, colors.value);
+    const res = await api.updateRequiredOptionColors(configID.value, colors.value);
     if (res?.success) {
       toastMessage(res.message);
       isNewColor.value = false;

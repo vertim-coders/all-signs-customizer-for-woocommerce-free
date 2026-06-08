@@ -1,6 +1,6 @@
 ﻿<template>
     <div class="asowp-mt-4">
-        <div class="asowp-space-y-1"  v-if="!isNewComponentAdvance">
+        <div class="asowp-space-y-1"  v-if="!isNewComponent">
             <!-- <div class="asowp-bg-white asowp-border-solid asowp-border-2 asowp-rounded-[10px] asowp-p-2 asowp-border-[#D1D1D1] asowp-space-x-1 asowp-px-4 asowp-py-4 asowp-flex">
                 <div v-if="config.trim() != ''" class="asowp-font-bold asowp-text-[16px]">
                     {{config}}
@@ -17,7 +17,7 @@
             <div class="asowp-bg-white asowp-border-solid asowp-border-2 asowp-rounded-[10px] asowp-p-2 asowp-border-[#D1D1D1]">
                 <div class="asowp-flex asowp-justify-end asowp-space-x-2 asowp-w-4/4 asowp-bg-[#F8F9FB] asowp-text-[12px] asowp-px-4 asowp-py-4 asowp-pb-2">
                 
-                    <button :disabled="isLoading" :class="`${isLoading ? 'asowp-opacity-50 asowp-cursor-not-allowed' : '' } asowp-flex asowp-w-fit asowp-h-fit asowp-rounded asowp-bg-[#016464] asowp-px-4 asowp-space-x-2 asowp-p-1.5 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-cursor-pointer`" @click="newComponentAdvance">
+                    <button :disabled="isLoading" :class="`${isLoading ? 'asowp-opacity-50 asowp-cursor-not-allowed' : '' } asowp-flex asowp-w-fit asowp-h-fit asowp-rounded asowp-bg-[#016464] asowp-px-4 asowp-space-x-2 asowp-p-1.5 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-cursor-pointer`" @click="newComponent">
                         <svg class="asowp-w-5 asowp-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="plus-lg">
                             <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
@@ -60,7 +60,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr v-if="componentAdvances.length == 0 && !isFetching">
+                            <tr v-if="components.length == 0 && !isFetching">
                                 <td colspan="5">
                                     <div class="asowp-bg-white asowp-border-solid asowp-border asowp-border-[#D1D1D1] asowp-flex asowp-flex-col asowp-space-y-12 asowp-justify-center asowp-items-center asowp-py-10 asowp-h-[150px]">
                                         <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-justify-center asowp-items-center">
@@ -70,29 +70,29 @@
                                 </td>
                             </tr>
                             <tr
-                                v-for="(componentAdvance,key) in componentAdvances"
+                                v-for="(component,key) in components"
                                 :key="key"
                                 class="asowp-border-t-0 asowp-border-l-0 asowp-border-r-0 asowp-border-b-2 asowp-border-solid asowp-border-[#f0f0f1] asowp-cursor-pointer hover:asowp-bg-gray-50"
-                                @click="goToOptions(componentAdvance, key)"
+                                @click="goToOptions(component, key)"
                             >
                                 <td class="asowp-px-6 asowp-py-2 asowp-flex asowp-justify-center asowp-space-x-2">
                                     <span class="asowp-w-5 asowp-h-5 asowp-p-1 asowp-px-1 asowp-flex asowp-justify-center asowp-rounded-full asowp-bg-[#f0f0f1] asowp-border asowp-border-solid asowp-border-black ">
-                                        <span class="asowp-text-[12px]">{{getInitials(componentAdvance.name)}}</span> 
+                                        <span class="asowp-text-[12px]">{{getInitials(component.name)}}</span> 
                                     </span>
                                     <span class="asowp-py-1 asowp-text-[14px]">
-                                        {{componentAdvance.name}}
+                                        {{component.name}}
                                     </span>
                                 </td>
                                 <td class="asowp-px-6 asowp-py-2 asowp-text-center asowp-text-[11px]">
-                                    {{componentAdvance.description}}
+                                    {{component.description}}
                                 </td>
                                 <td class="asowp-px-6 asowp-justify-center asowp-translate-y-1">
-                                    <img v-if="componentAdvance.icon.trim() != ''" class="asowp-w-10 asowp-h-10" :src="componentAdvance.icon" />
+                                    <img v-if="component.icon.trim() != ''" class="asowp-w-10 asowp-h-10" :src="component.icon" />
                                 </td>
                                 <td class="asowp-pl-10 asowp-py-2 asowp-justify-center" @click.stop>
                                     <span class="asowp-w-fit asowp-flex asowp-items-center asowp-translate-x-5 asowp-translate-y-0.5">
                                         <label for="asowp-toggle" @click.stop="!isLoading?selectDefault(key):''" class="asowp-cursor-pointer asowp-bg-[#F8F8FF] asowp-border-[1px] asowp-border-solid asowp-border-black asowp-w-6 asowp-h-0.5 asowp-rounded-full asowp-p-1">
-                                            <div :class="{'asowp-translate-x-[100%]': componentAdvances[key].isDefault, 'asowp-bg-active': componentAdvances[key].isDefault }" class="asowp-toggle-dot asowp-w-2.5 asowp-h-2.5 asowp-duration-100 -asowp-translate-y-[8px] -asowp-translate-x-2 asowp-border-[4px] asowp-border-solid asowp-border-[#008000] asowp-bg-[#D9D9D9] asowp-rounded-full asowp-shadow-md asowp-transform"></div>
+                                            <div :class="{'asowp-translate-x-[100%]': components[key].isDefault, 'asowp-bg-active': components[key].isDefault }" class="asowp-toggle-dot asowp-w-2.5 asowp-h-2.5 asowp-duration-100 -asowp-translate-y-[8px] -asowp-translate-x-2 asowp-border-[4px] asowp-border-solid asowp-border-[#008000] asowp-bg-[#D9D9D9] asowp-rounded-full asowp-shadow-md asowp-transform"></div>
                                         </label>
                                     </span>
                                 </td>
@@ -117,19 +117,19 @@
                                         >
                                             <button
                                                 class="asowp-bg-transparent asowp-border-none asowp-cursor-pointer asowp-w-full asowp-px-3 asowp-py-2 asowp-text-left hover:asowp-bg-gray-100"
-                                                @click="goToOptions(componentAdvance, key)"
+                                                @click="goToOptions(component, key)"
                                             >
                                                 {{ __("Manage options", "all-signs-options-pro") }}
                                             </button>
                                             <button
                                                 class="asowp-bg-transparent asowp-border-none asowp-cursor-pointer asowp-w-full asowp-px-3 asowp-py-2 asowp-text-left hover:asowp-bg-gray-100"
-                                                @click="() => { selectComponentAdvance(key, componentAdvance); closeAllParams(); }"
+                                                @click="() => { selectComponent(key, component); closeAllParams(); }"
                                             >
                                                 {{ __("Edit", "all-signs-options-pro") }}
                                             </button>
                                             <button
                                                 class="asowp-bg-transparent asowp-border-none asowp-cursor-pointer asowp-w-full asowp-px-3 asowp-py-2 asowp-text-left hover:asowp-bg-gray-100 asowp-text-red-700"
-                                                @click="() => { selectComponentAdvance(key, componentAdvance, true); closeAllParams(); }"
+                                                @click="() => { selectComponent(key, component, true); closeAllParams(); }"
                                             >
                                                 {{ __("Delete", "all-signs-options-pro") }}
                                             </button>
@@ -142,7 +142,7 @@
                 </div>
             </div>
         </div>
-        <div class="asowp-space-y-1 asowp-bg-white asowp-border-solid asowp-border-2 asowp-rounded-[10px] asowp-p-2 asowp-border-[#D1D1D1]" v-if="isNewComponentAdvance">
+        <div class="asowp-space-y-1 asowp-bg-white asowp-border-solid asowp-border-2 asowp-rounded-[10px] asowp-p-2 asowp-border-[#D1D1D1]" v-if="isNewComponent">
             <div class="asowp-text-[16px] asowp-font-bold asowp-px-1 asowp-py-2 ">
                 {{ __("Add component", "all-signs-options-pro") }}
             </div>
@@ -151,21 +151,21 @@
                 <div class="asowp-flex asowp-justify-between asowp-space-x-2 asowp-py-4">
                     <div class="asowp-w-[50%] asowp-space-y-2 asowp-flex asowp-flex-col asowp-text-[14px]">
                         <label for="" class="asowp-font-normal">{{ __("Title", "all-signs-options-pro") }}</label>
-                        <input type="text" v-model="componentAdvance.name" class="asowp-rounded asowp-w-full asowp-h-[35px]" style="border-radius: 5px !important;">
+                        <input type="text" v-model="component.name" class="asowp-rounded asowp-w-full asowp-h-[35px]" style="border-radius: 5px !important;">
                     </div>
                     <div class="asowp-w-[50%] asowp-space-y-2 asowp-flex asowp-flex-col asowp-text-[12px]">
                         <label for="" class="asowp-font-normal">{{ __("Description", "all-signs-options-pro") }}</label>
-                        <input type="text" v-model="componentAdvance.description" class="asowp-rounded asowp-w-full asowp-h-[35px]" style="border-radius: 5px !important;">
+                        <input type="text" v-model="component.description" class="asowp-rounded asowp-w-full asowp-h-[35px]" style="border-radius: 5px !important;">
                     </div>
                 </div>
                 <div class="asowp-space-y-2 asowp-flex asowp-flex-col asowp-text-[12px]">
                     <label for="" class="asowp-font-normal">{{ __("Upload icon", "all-signs-options-pro") }}</label>
                     <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-w-full">
                         <div class="asowp-flex asowp-space-x-2 asowp-border asowp-border-solid asowp-rounded-[5px] asowp-border-[#000] asowp-p-1">
-                            <button @click="selectComponentAdvanceIcon" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-2 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __("upload Icon", "all-signs-options-pro") }}</button>
+                            <button @click="selectComponentIcon" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-2 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __("upload Icon", "all-signs-options-pro") }}</button>
                             <div :class="`asowp-relative asowp-w-[82px] asowp-h-[30px] asowp-rounded-md asowp-overflow-hidden`">
-                                    <img v-if="componentAdvance.icon != ''" :src="componentAdvance.icon" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
-                                    <button v-if="componentAdvance.icon != ''" @click="()=>{componentAdvance.icon = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none`">
+                                    <img v-if="component.icon != ''" :src="component.icon" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
+                                    <button v-if="component.icon != ''" @click="()=>{component.icon = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none`">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                         </svg>
@@ -190,13 +190,13 @@
                     </button>
                 </div>
                 <div class="asowp-bg-[#016464] asowp-rounded" v-if="isEdit">
-                    <button @click="updateComponentAdvance" :class="`asowp-rounded asowp-flex ${!isLoading ? 'asowp-bg-amber-400 ' :'asowp-bg-amber-500'} asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-px-8 asowp-text-white asowp-p-2 asowp-border-none asowp-opacity-90 hover:asowp-border-none hover:asowp-text-white hover:asowp-opacity-100 asowp-cursor-pointer`">
+                    <button @click="updateComponent" :class="`asowp-rounded asowp-flex ${!isLoading ? 'asowp-bg-amber-400 ' :'asowp-bg-amber-500'} asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-px-8 asowp-text-white asowp-p-2 asowp-border-none asowp-opacity-90 hover:asowp-border-none hover:asowp-text-white hover:asowp-opacity-100 asowp-cursor-pointer`">
                         <img src="@/../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
                         <div class="asowp-font-semibold asowp-text-[16px]">{{ __("Update", "all-signs-options-pro") }}</div>
                     </button>
                 </div>
                 <div class="asowp-bg-[#016464] asowp-rounded" v-if="!isEdit">
-                    <button @click="addComponentAdvance" class="asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-8 asowp-p-2.5 asowp-rounded asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
+                    <button @click="addComponent" class="asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-8 asowp-p-2.5 asowp-rounded asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
                         <div class="asowp-translate-y-1">
                             <img src="@/../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
                             <svg v-if="!isLoading" class="asowp-w-4 asowp-h-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -224,8 +224,8 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                         </svg>
                         <h3 class="asowp-mb-5 asowp-text-lg asowp-font-normal asowp-text-gray-500 dark:text-gray-400">{{ __("Are you sure you want to delete this component advance?", "all-signs-options-pro") }}</h3>
-                        <input v-model="componentAdvance.name" readonly class="asowp-rounded asowp-w-full asowp-h-[35px] asowp-text-center asowp-p-4 asowp-my-2 asowp-border-none" />
-                        <button @click="deleteComponentAdvance" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-text-white ${!isLoading ? 'asowp-bg-red-600 asowp-cursor-pointer' :'asowp-bg-red-700 asowp-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none asowp-my-2 asowp-border-none  focus:ring-red-300 dark:focus:ring-red-800 asowp-font-medium asowp-rounded-lg asowp-text-sm asowp-inline-flex asowp-items-center asowp-px-5 asowp-py-2.5 asowp-text-center`">
+                        <input v-model="component.name" readonly class="asowp-rounded asowp-w-full asowp-h-[35px] asowp-text-center asowp-p-4 asowp-my-2 asowp-border-none" />
+                        <button @click="deleteComponent" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-text-white ${!isLoading ? 'asowp-bg-red-600 asowp-cursor-pointer' :'asowp-bg-red-700 asowp-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none asowp-my-2 asowp-border-none  focus:ring-red-300 dark:focus:ring-red-800 asowp-font-medium asowp-rounded-lg asowp-text-sm asowp-inline-flex asowp-items-center asowp-px-5 asowp-py-2.5 asowp-text-center`">
                             <img src="@/../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
                             {{ __("Yes, I'm sure", "all-signs-options-pro") }}
                         </button>
@@ -258,17 +258,17 @@ const config = ref(String(route.params.config ?? '').replace(/-/g,' '));
     const material = ref(String(route.params.material ?? 'material').replace(/-/g,' '));
         const materialId = ref(route.query.materialIndex ?? route.params.materialId ?? null);
     const isFetching = ref(false);
-    const isNewComponentAdvance = ref(false);
+    const isNewComponent = ref(false);
     const isLoading = ref(false);
-    const componentAdvances = ref([]);
-    const componentAdvanceId = ref(null);
+    const components = ref([]);
+    const selectedComponentId = ref(null);
     const showParams = ref([]);
     const dropdownPositions = ref([]);
 
     const isEdit = ref(false);
     const openModal = ref(false);
     const noComponentAdvancesFound = ref('');
-    const componentAdvance = ref({
+    const component = ref({
         name:"",
         description:"",
         icon:"",
@@ -331,7 +331,7 @@ const config = ref(String(route.params.config ?? '').replace(/-/g,' '));
     onMounted(async ()=>{
         isFetching.value = true;
         await resolveMaterialId();
-        await fetchMaterialComponentAdvances();
+        await fetchComponents();
         isFetching.value = false;
         document.addEventListener('click', closeAllParams);
     });
@@ -342,11 +342,11 @@ const config = ref(String(route.params.config ?? '').replace(/-/g,' '));
         materialId.value = v?.[0] ?? v?.[1] ?? null;
         await resolveMaterialId();
         material.value = String(route.params.material ?? 'material').replace(/-/g,' ');
-        componentAdvanceId.value = null;
-        isNewComponentAdvance.value = false;
+        selectedComponentId.value = null;
+        isNewComponent.value = false;
         isEdit.value = false;
         isFetching.value = true;
-        await fetchMaterialComponentAdvances();
+        await fetchComponents();
         isFetching.value = false;
       }
     );
@@ -364,37 +364,37 @@ const config = ref(String(route.params.config ?? '').replace(/-/g,' '));
         })
     }
 
-    const fetchMaterialComponentAdvances = async () => {
-        const material = await api.getMaterial(configId.value, materialId.value);
+    const fetchComponents = async () => {
+        const response = await api.getRequiredOptionComponents(configId.value);
 
-        if (!material?.message) {
-            const comps = Array.isArray(material?.data) ? material.data : [];
-            componentAdvances.value = comps;
+        if (!response?.message) {
+            const comps = Array.isArray(response) ? response : Array.isArray(response?.data) ? response.data : [];
+            components.value = comps;
             showParams.value = comps.map(() => false);
             dropdownPositions.value = comps.map(() => ({ top: null, left: null }));
             noComponentAdvancesFound.value = comps.length === 0 ? "No data Found" : "";
         } else {
-            noComponentAdvancesFound.value = material.message;
-            componentAdvances.value = [];
+            noComponentAdvancesFound.value = response.message;
+            components.value = [];
             showParams.value = [];
             dropdownPositions.value = [];
         }
     };
 
-    const updateComponentAdvance = async () => {
+    const updateComponent = async () => {
         isLoading.value = true;
-        const result = await api.updateMaterialAdvanceComponent(configId.value,materialId.value,componentAdvanceId.value,componentAdvance.value);
+        const result = await api.updateRequiredOptionComponent(configId.value,materialId.value,selectedComponentId.value,component.value);
         if(result.success){
-            await fetchMaterialComponentAdvances();
+            await fetchComponents();
             if(result.success == true ) {
                 toastMessage(result.message);
             }else{
                 toastMessage(result.message,"warning");
             }
             isLoading.value = false;
-            isNewComponentAdvance.value = false;
+            isNewComponent.value = false;
             openModal.value = false;
-            componentAdvance.value = {
+            component.value = {
                 name:"",
                 description:"",
                 icon:"",
@@ -403,9 +403,9 @@ const config = ref(String(route.params.config ?? '').replace(/-/g,' '));
         }else{
             isLoading.value = false;
             toastMessage(result.message,"error");
-            isNewComponentAdvance.value = false;
+            isNewComponent.value = false;
             openModal.value = false;
-            componentAdvance.value = {
+            component.value = {
                 name:"",
                 description:"",
                 icon:"",
@@ -414,11 +414,11 @@ const config = ref(String(route.params.config ?? '').replace(/-/g,' '));
         }
     };
 
-    const updateMaterialAdvanceComponents= async () =>{
+    const updateComponents = async () =>{
         isLoading.value = true;
-        const result = await api.updateMaterialAdvanceComponents(configId.value,materialId.value,componentAdvances.value);
+        const result = await api.updateRequiredOptionComponents(configId.value,materialId.value,components.value);
         if(result.success){
-            await fetchMaterialComponentAdvances();
+            await fetchComponents();
             if(result.success == true ) {
                 toastMessage(result.message);
             }else{
@@ -433,29 +433,29 @@ const config = ref(String(route.params.config ?? '').replace(/-/g,' '));
         }
     }
 
-    const selectComponentAdvance = (id,sz,isDeleting=false) => {
+    const selectComponent = (id,selectedComponent,isDeleting=false) => {
         if(isDeleting){
-            componentAdvanceId.value = id;
-            componentAdvance.value = sz;
+            selectedComponentId.value = id;
+            component.value = selectedComponent;
             closeModal();
         }else{
-            componentAdvance.value = sz;
-            componentAdvanceId.value = id;
+            component.value = selectedComponent;
+            selectedComponentId.value = id;
             isEdit.value = true;
-            isNewComponentAdvance.value = true;
+            isNewComponent.value = true;
         }
     };
 
-    const addComponentAdvance = async () => {
+    const addComponent = async () => {
         isLoading.value = true;
-        const result = await api.addMaterialAdvanceComponent(configId.value,materialId.value,componentAdvance.value);
+        const result = await api.addRequiredOptionComponent(configId.value,materialId.value,component.value);
         if(result.success){
-            await fetchMaterialComponentAdvances();
+            await fetchComponents();
             isLoading.value = false;
             toastMessage(result.message);
-            isNewComponentAdvance.value = false;
+            isNewComponent.value = false;
             openModal.value = false;
-            componentAdvance.value = {
+            component.value = {
                 name:"",
                 description:"",
                 icon:"",
@@ -464,9 +464,9 @@ const config = ref(String(route.params.config ?? '').replace(/-/g,' '));
         }else{
             isLoading.value = false;
             toastMessage(result.message,"error");
-            isNewComponentAdvance.value = false;
+            isNewComponent.value = false;
             openModal.value = false;
-            componentAdvance.value = {
+            component.value = {
                 name:"",
                 description:"",
                 icon:"",
@@ -476,16 +476,16 @@ const config = ref(String(route.params.config ?? '').replace(/-/g,' '));
     };
     
 
-    const deleteComponentAdvance = async () => {
+    const deleteComponent = async () => {
         isLoading.value = true;
-        const result = await api.deleteMaterialAdvanceComponent(configId.value,materialId.value,componentAdvanceId.value);
+        const result = await api.deleteRequiredOptionComponent(configId.value,materialId.value,selectedComponentId.value);
         if(result.success){
-            await fetchMaterialComponentAdvances();
+            await fetchComponents();
             isLoading.value = false;
             toastMessage(result.message);
-            isNewComponentAdvance.value = false;
+            isNewComponent.value = false;
             openModal.value = false;
-            componentAdvance.value = {
+            component.value = {
                 name:"",
                 description:"",
                 icon:"",
@@ -494,9 +494,9 @@ const config = ref(String(route.params.config ?? '').replace(/-/g,' '));
         }else{
             isLoading.value = false;
             toastMessage(result.message,"error");
-            isNewComponentAdvance.value = false;
+            isNewComponent.value = false;
             openModal.value = false;
-            componentAdvance.value = {
+            component.value = {
                 name:"",
                 description:"",
                 icon:"",
@@ -505,11 +505,11 @@ const config = ref(String(route.params.config ?? '').replace(/-/g,' '));
         }
     };
 
-    const newComponentAdvance = () =>{
-        isNewComponentAdvance.value = true;
+    const newComponent = () =>{
+        isNewComponent.value = true;
     }
     const back = () =>{
-        isNewComponentAdvance.value = false;
+        isNewComponent.value = false;
     };
 
 
@@ -524,7 +524,7 @@ const config = ref(String(route.params.config ?? '').replace(/-/g,' '));
         openModal.value = !openModal.value;
     };
 
-    const selectComponentAdvanceIcon = async(e) => { 
+    const selectComponentIcon = async(e) => { 
         e.preventDefault();
         var uploader = wp.media(
             {
@@ -543,7 +543,7 @@ const config = ref(String(route.params.config ?? '').replace(/-/g,' '));
                         function (attachment) {
                             attachment = attachment.toJSON();
                             if (attachment.type == "image") {
-                                componentAdvance.value.icon = (attachment.url);
+                                component.value.icon = (attachment.url);
                             }
                         }
                     );
@@ -580,12 +580,12 @@ const closeAllParams = () => {
     };
 
 const selectDefault = async(key) =>{
-    componentAdvances.value[key].isDefault = true;
-    for(let i=0; i<componentAdvances.value.length; i++){
+    components.value[key].isDefault = true;
+    for(let i=0; i<components.value.length; i++){
         if(i != key ){
-            componentAdvances.value[i].isDefault = false;
+            components.value[i].isDefault = false;
         }
     }
-await updateMaterialAdvanceComponents();
+await updateComponents();
 }
 </script>

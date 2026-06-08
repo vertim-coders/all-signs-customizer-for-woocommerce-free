@@ -5,6 +5,9 @@
 <script setup>
 import {computed, onMounted, ref} from 'vue';
 import { useRoute } from 'vue-router';
+import '@/frontend/utils/tailwindcss.min.js';
+import '../../assets/utilities/fabric.min.js';
+import '../../assets/utilities/hammerjs.js';
 
 const activateProduct = ref(!isNaN(asowp_data.caches) && parseInt(asowp_data.caches) > 1704067200? true : false);
 const frontendReady = ref(false);
@@ -26,8 +29,6 @@ onMounted(async() => {
 });
 
 const loadFrontendDependencies = async () => {
-    await import('@/frontend/utils/tailwindcss.min.js');
-
     window.tailwind = window.tailwind || {};
     window.tailwind.config = {
         prefix: 'asowp-',
@@ -60,17 +61,6 @@ const loadFrontendDependencies = async () => {
         }
     };
 
-    if (currentPage === 'configurator') {
-        await Promise.all([
-            import('../../assets/utilities/fabric.min.js'),
-            import('../../assets/utilities/hammerjs.js'),
-        ]);
-        return;
-    }
-
-    if (currentPage === 'admin' && !window.fabric && !globalThis.fabric) {
-        await import('../../assets/utilities/fabric.min.js');
-    }
 };
 </script>
 

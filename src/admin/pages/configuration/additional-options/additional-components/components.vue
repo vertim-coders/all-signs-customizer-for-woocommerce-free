@@ -100,7 +100,7 @@
           type="button"
           class="asowp-additional-primary"
           :disabled="isLoading"
-          @click="updateMaterialAdditionalOption"
+          @click="updateAdditionalOption"
         >
           {{ isLoading ? 'Saving...' : 'Save additional component' }}
         </button>
@@ -109,7 +109,7 @@
           type="button"
           class="asowp-additional-primary"
           :disabled="isLoading"
-          @click="addMaterialAdditionalOption"
+          @click="addAdditionalOption"
         >
           {{ isLoading ? 'Saving...' : 'Save additional component' }}
         </button>
@@ -168,7 +168,7 @@ const emptyLabel = ref(false);
 
 onMounted(async () => {
   isFetching.value = true;
-  await fetchMaterialAdditionalOptions();
+  await fetchAdditionalOptions();
   isFetching.value = false;
 });
 
@@ -193,8 +193,8 @@ const resetAdditionalOption = () => {
   };
 };
 
-const fetchMaterialAdditionalOptions = async () => {
-  const result = await api.getMaterialSimpleAdditionalOptions(configID.value, materialId.value);
+const fetchAdditionalOptions = async () => {
+  const result = await api.getAdditionalOptions(configID.value, materialId.value);
   if (!result.message) {
     additionalOptions.value = result;
   } else {
@@ -203,7 +203,7 @@ const fetchMaterialAdditionalOptions = async () => {
   }
 };
 
-const updateMaterialAdditionalOption = async () => {
+const updateAdditionalOption = async () => {
   if (additionalOption.value.title.trim() === '') {
     emptyLabel.value = true;
     toastMessage('Title must not be empty', 'warning');
@@ -212,7 +212,7 @@ const updateMaterialAdditionalOption = async () => {
 
   isLoading.value = true;
   emptyLabel.value = false;
-  const result = await api.updateMaterialSimpleAdditionalOption(
+  const result = await api.updateAdditionalOption(
     configID.value,
     materialId.value,
     additionalOptionId.value,
@@ -220,7 +220,7 @@ const updateMaterialAdditionalOption = async () => {
   );
 
   if (result.success) {
-    await fetchMaterialAdditionalOptions();
+    await fetchAdditionalOptions();
     toastMessage(result.message);
     back();
   } else {
@@ -247,7 +247,7 @@ const selectAdditionalOption = (id, selected, isDeleting = false) => {
   }
 };
 
-const addMaterialAdditionalOption = async () => {
+const addAdditionalOption = async () => {
   if (additionalOption.value.title.trim() === '') {
     emptyLabel.value = true;
     toastMessage('Title must not be empty', 'warning');
@@ -256,10 +256,10 @@ const addMaterialAdditionalOption = async () => {
 
   isLoading.value = true;
   emptyLabel.value = false;
-  const result = await api.addMaterialSimpleAdditionalOption(configID.value, materialId.value, additionalOption.value);
+  const result = await api.addAdditionalOption(configID.value, materialId.value, additionalOption.value);
 
   if (result.success) {
-    await fetchMaterialAdditionalOptions();
+    await fetchAdditionalOptions();
     toastMessage(result.message);
     back();
   } else {
@@ -270,9 +270,9 @@ const addMaterialAdditionalOption = async () => {
 
 const deleteAdditionalOption = async () => {
   isLoading.value = true;
-  const result = await api.deleteMaterialSimpleAdditionalOption(configID.value, materialId.value, additionalOptionId.value);
+  const result = await api.deleteAdditionalOption(configID.value, materialId.value, additionalOptionId.value);
   if (result.success) {
-    await fetchMaterialAdditionalOptions();
+    await fetchAdditionalOptions();
     toastMessage(result.message);
     openModal.value = false;
     resetAdditionalOption();

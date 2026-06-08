@@ -132,14 +132,6 @@ const router = createRouter({
           component: PricingsPage,
         },
         {
-          path: "required-options/pricings",
-          redirect: (to) => ({
-            name: "pricing",
-            params: { configId: to.params.configId },
-            query: to.query,
-          }),
-        },
-        {
           path: "required-options/fonts",
           name: "fonts",
           component: FontsPage,
