@@ -341,7 +341,7 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
             'colors' => 'colors',
             'shapes' => 'shapes',
             'fixing-methods' => 'fixingMethods',
-            'pricing' => 'pricing',
+            'pricings' => 'pricings',
             'borders' => 'borders',
             'materials' => 'materials',
             'components' => 'components',
@@ -397,11 +397,11 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
                     ),
                     'allBorders' => array(),
                 );
-            case 'pricing':
+            case 'pricings':
                 return array(
                     'label' => 'Pricing',
                     'description' => '',
-                    'priceOptions' => array(),
+                    'items' => array(),
                 );
             case 'materials':
                 return array(
@@ -441,7 +441,6 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
             'colors' => 'items',
             'shapes' => 'items',
             'fixing-methods' => 'items',
-            'pricing' => 'priceOptions',
             'fonts' => 'items',
             'pricings' => 'items',
             'borders' => 'items',
@@ -460,9 +459,9 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
         if ($section === 'shapes' || $section === 'fixing-methods') {
             return array_values($section_value);
         }
-        if ($section === 'pricing') {
-            return isset($section_value['priceOptions']) && is_array($section_value['priceOptions'])
-                ? array_values($section_value['priceOptions'])
+        if ($section === 'pricings') {
+            return isset($section_value['items']) && is_array($section_value['items'])
+                ? array_values($section_value['items'])
                 : array();
         }
 
@@ -480,11 +479,11 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
         if ($section === 'shapes' || $section === 'fixing-methods') {
             return $items;
         }
-        if ($section === 'pricing') {
+        if ($section === 'pricings') {
             if (!is_array($section_value)) {
                 $section_value = $this->simple_section_default($section);
             }
-            $section_value['priceOptions'] = $items;
+            $section_value['items'] = $items;
             return $section_value;
         }
 

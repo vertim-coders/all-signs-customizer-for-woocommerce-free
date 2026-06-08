@@ -127,8 +127,8 @@ const router = createRouter({
           component: ShapesPage,
         },
         {
-          path: "required-options/pricing",
-          name: "pricing",
+          path: "required-options/pricings",
+          name: "pricings",
           component: PricingsPage,
         },
         {

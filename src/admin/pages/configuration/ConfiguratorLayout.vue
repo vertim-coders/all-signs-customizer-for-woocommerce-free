@@ -268,11 +268,11 @@ const groups = computed(() => {
     ? [
         { label: __('Fonts', 'all-signs-options-pro'), path: `${basePath}/required-options/fonts`, icon: icons.fonts },
         { label: __('Components', 'all-signs-options-pro'), path: `${basePath}/required-options/components`, icon: icons.components },
-        { label: __('Pricing', 'all-signs-options-pro'), path: `${basePath}/required-options/pricing`, icon: icons.pricing },
+        { label: __('Pricing', 'all-signs-options-pro'), path: `${basePath}/required-options/pricings`, icon: icons.pricing },
       ]
     : [
         { label: __('Sizes', 'all-signs-options-pro'), path: `${basePath}/required-options/sizes`, icon: icons.sizes },
-        { label: __('Pricing', 'all-signs-options-pro'), path: `${basePath}/required-options/pricing`, icon: icons.pricing },
+        { label: __('Pricing', 'all-signs-options-pro'), path: `${basePath}/required-options/pricings`, icon: icons.pricing },
         { label: __('Fonts', 'all-signs-options-pro'), path: `${basePath}/required-options/fonts`, icon: icons.fonts },
         { label: __('Colors', 'all-signs-options-pro'), path: `${basePath}/required-options/colors`, icon: icons.colors },
         { label: __('Fixing Methods', 'all-signs-options-pro'), path: `${basePath}/required-options/fixing-methods`, icon: icons.fixing },

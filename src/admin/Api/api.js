@@ -548,7 +548,7 @@ const api = {
         configId +
         "/required-options/pricings"
     );
-    return result.data?.data?.pricing ?? result.data;
+    return result.data;
   },
   addRequiredOptionPricingItem: async (configId, pricing) => {
     const add = await axios.post(

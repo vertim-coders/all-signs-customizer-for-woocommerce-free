@@ -129,7 +129,7 @@ class ASOWP_Api_Required_Options_Pricings extends ASOWP_Api_Required_Options_Bas
 
     private function get_pricing_items(array $required_options): array
     {
-        $items = $this->section_item_list($required_options, 'pricing');
+        $items = $this->section_item_list($required_options, 'pricings');
         $normalized = array();
 
         foreach ($items as $index => $item) {
@@ -160,7 +160,7 @@ class ASOWP_Api_Required_Options_Pricings extends ASOWP_Api_Required_Options_Bas
             $normalized_items[] = $this->normalize_pricing_item(is_array($item) ? $item : array(), $index);
         }
 
-        $required_options = $this->set_section_items($required_options, 'pricing', $this->section_value_with_items($required_options, 'pricing', $normalized_items));
+        $required_options = $this->set_section_items($required_options, 'pricings', $this->section_value_with_items($required_options, 'pricings', $normalized_items));
         return $this->save_required_options($config_id, $required_options);
     }
 
@@ -177,17 +177,17 @@ class ASOWP_Api_Required_Options_Pricings extends ASOWP_Api_Required_Options_Bas
         }
 
         $required_options = $this->get_required_options($config_id);
-        $value = $this->section_value($required_options, 'pricing', $this->simple_section_default('pricing'));
+        $value = $this->section_value($required_options, 'pricings', $this->simple_section_default('pricings'));
         if (is_array($value)) {
-            $value['priceOptions'] = $this->get_pricing_items($required_options);
+            $value['items'] = $this->get_pricing_items($required_options);
         }
 
-        return rest_ensure_response($this->section_response_payload('pricing', $value));
+        return rest_ensure_response($this->section_response_payload('pricings', $value));
     }
 
     public function update_pricing($request)
     {
-        return $this->update_section($request, 'pricing');
+        return $this->update_section($request, 'pricings');
     }
 
     public function get_pricing_item($request)

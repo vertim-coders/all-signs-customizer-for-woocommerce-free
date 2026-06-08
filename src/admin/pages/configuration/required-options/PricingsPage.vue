@@ -36,7 +36,7 @@
               </tr>
               <template v-else>
                 <tr
-                  v-for="(item, key) in pricingSettings.priceOptions"
+                  v-for="(item, key) in pricingSettings.items"
                   :key="getPricingItemId(item, key)"
                   class="asowp-pricing-row asowp-border-b asowp-border-solid asowp-border-[#eceff2] last:asowp-border-b-0"
                   @click="editPricing(getPricingItemId(item, key))"
@@ -281,7 +281,7 @@ const openActionIndex = ref(null);
 
 const measurementUnit = ref("mm");
 const currencySymbol = ref("$");
-const pricingSettings = ref({ label: "Pricing", description: "", priceOptions: [] });
+const pricingSettings = ref({ label: "Pricing", description: "", items: [] });
 
 const emptyPricing = () => ({
   label: "",
@@ -376,11 +376,11 @@ const normalizePricingOption = (item = {}, index = 0) => ({
 });
 
 const normalizePricingSettings = (stored = {}) => {
-  const storedOptions = Array.isArray(stored.priceOptions) ? stored.priceOptions : [];
+  const storedOptions = Array.isArray(stored.items) ? stored.items : [];
   pricingSettings.value = {
     label: String(stored.label || "Pricing"),
     description: String(stored.description || ""),
-    priceOptions: storedOptions.map((item, index) => normalizePricingOption(item, index)),
+    items: storedOptions.map((item, index) => normalizePricingOption(item, index)),
   };
 };
 
@@ -403,15 +403,15 @@ const addPricing = () => {
   showForm.value = true;
 };
 
-const findPricingIndex = (itemId) => pricingSettings.value.priceOptions.findIndex((item, index) => getPricingItemId(item, index) === String(itemId));
+const findPricingIndex = (itemId) => pricingSettings.value.items.findIndex((item, index) => getPricingItemId(item, index) === String(itemId));
 
 const editPricing = (itemId) => {
   openActionIndex.value = null;
   const index = findPricingIndex(itemId);
   if (index < 0) return;
   editingIndex.value = index;
-  editingPricingId.value = getPricingItemId(pricingSettings.value.priceOptions[index], index);
-  editingPricing.value = JSON.parse(JSON.stringify(pricingSettings.value.priceOptions[index]));
+  editingPricingId.value = getPricingItemId(pricingSettings.value.items[index], index);
+  editingPricing.value = JSON.parse(JSON.stringify(pricingSettings.value.items[index]));
   showForm.value = true;
 };
 
@@ -426,7 +426,7 @@ const savePricing = async () => {
   if (!canSavePricing.value) return;
   isLoading.value = true;
   try {
-    const next = normalizePricingOption(editingPricing.value, editingIndex.value === null ? pricingSettings.value.priceOptions.length : editingIndex.value);
+    const next = normalizePricingOption(editingPricing.value, editingIndex.value === null ? pricingSettings.value.items.length : editingIndex.value);
     const result = editingPricingId.value
       ? await api.updateRequiredOptionPricingItem(configID.value, editingPricingId.value, next)
       : await api.addRequiredOptionPricingItem(configID.value, next);
@@ -446,9 +446,9 @@ const duplicatePricing = async (itemId) => {
   openActionIndex.value = null;
   const index = findPricingIndex(itemId);
   if (index < 0) return;
-  const copy = JSON.parse(JSON.stringify(pricingSettings.value.priceOptions[index]));
+  const copy = JSON.parse(JSON.stringify(pricingSettings.value.items[index]));
   delete copy.id;
-  copy.label = copy.label ? `${copy.label} (copy)` : sprintf(__('Pricing %d', 'all-signs-options-pro'), pricingSettings.value.priceOptions.length + 1);
+  copy.label = copy.label ? `${copy.label} (copy)` : sprintf(__('Pricing %d', 'all-signs-options-pro'), pricingSettings.value.items.length + 1);
   isLoading.value = true;
   try {
     const result = await api.addRequiredOptionPricingItem(configID.value, copy);
@@ -467,7 +467,7 @@ const deletePricing = async (itemId) => {
   openActionIndex.value = null;
   const index = findPricingIndex(itemId);
   if (index < 0) return;
-  const pricingId = getPricingItemId(pricingSettings.value.priceOptions[index], index);
+  const pricingId = getPricingItemId(pricingSettings.value.items[index], index);
   isLoading.value = true;
   try {
     const result = await api.deleteRequiredOptionPricingItem(configID.value, pricingId);
