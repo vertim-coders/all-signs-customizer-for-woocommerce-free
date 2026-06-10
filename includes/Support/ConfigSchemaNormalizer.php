@@ -18,12 +18,12 @@ class ConfigSchemaNormalizer
             self::array_value($legacy_data, 'settings', self::array_value($meta, 'settings', array()))
         );
 
-        $product_type = self::first_string(array(
+        $product_type = self::sanitize_product_type(self::first_string(array(
             self::array_value($meta, 'productType'),
             self::array_value($settings, 'productType'),
             self::array_value($settings, 'productFamilySlug'),
             self::array_value($template, 'productType'),
-        ), 'signs-panels');
+        ), 'signs-panels'));
 
         $pricing_mode = self::first_string(array(
             self::array_value($meta, 'pricingMode'),
@@ -41,6 +41,29 @@ class ConfigSchemaNormalizer
             isset($template['requiredOptions']) && is_array($template['requiredOptions']) ? $template['requiredOptions'] : array(),
             self::array_value($meta, 'requiredOptions', self::array_value($legacy_data, 'requiredOptions', array()))
         );
+        $required_options = self::repair_required_options_sections($required_options);
+        
+        // --- NOUVELLE LOGIQUE : Dynamisation des IDs ---
+        $slug = function($val) {
+            $val = trim($val);
+            $val = mb_strtolower($val, 'UTF-8');
+            $val = preg_replace('/[^a-z0-9]+/u', '-', $val);
+            return trim($val, '-');
+        };
+
+        if (isset($required_options['sizes']['items'])) {
+            foreach ($required_options['sizes']['items'] as &$s) {
+                $descriptor = isset($s['label']) ? $slug($s['label']) : 'custom';
+                $s['id'] = 'size-' . $slug($product_type) . '-' . $descriptor;
+            }
+        }
+        if (isset($required_options['colors']['items'])) {
+            foreach ($required_options['colors']['items'] as &$c) {
+                $name = isset($c['name']) ? $c['name'] : 'item';
+                $c['id'] = 'color-' . $slug($product_type) . '-' . $slug($name);
+            }
+        }
+        // ------------------------------------------------
 
         $meta_additional_options = self::array_value($meta, 'additionalOptions', self::array_value($legacy_data, 'additionalOptions', array()));
         $additional_options = self::deep_merge(
@@ -143,7 +166,6 @@ class ConfigSchemaNormalizer
             'settings' => $normalized['settings'],
             'requiredOptions' => $normalized['requiredOptions'],
             'additionalOptions' => $normalized['additionalOptions'],
-            'data' => $normalized['data'],
         );
     }
 
@@ -158,11 +180,22 @@ class ConfigSchemaNormalizer
             return self::$shopify_template;
         }
 
-        $file = defined('ASOWP_PATH') ? ASOWP_PATH . '/json-shopify' : dirname(__DIR__, 2) . '/json-shopify';
-        if (is_readable($file)) {
+        $base_path = defined('ASOWP_PATH') ? ASOWP_PATH : dirname(__DIR__, 2);
+        $files = array(
+            $base_path . '/shopify-json',
+            $base_path . '/json-shopify',
+        );
+
+        foreach ($files as $file) {
+            if (!is_readable($file)) {
+                continue;
+            }
+
             $decoded = json_decode((string) file_get_contents($file), true);
-            self::$shopify_template = is_array($decoded) ? $decoded : array();
-            return self::$shopify_template;
+            if (is_array($decoded)) {
+                self::$shopify_template = $decoded;
+                return self::$shopify_template;
+            }
         }
 
         self::$shopify_template = array();
@@ -200,6 +233,10 @@ class ConfigSchemaNormalizer
             );
 
             foreach ($map as $legacy_key => $target_key) {
+                if (self::required_option_has_items(self::array_value($required_options, $target_key, array()))) {
+                    continue;
+                }
+
                 $option = self::array_value($material, $legacy_key, null);
                 if (!is_array($option)) {
                     $material_data = self::array_value($material, 'data', array());
@@ -219,7 +256,7 @@ class ConfigSchemaNormalizer
 
             $material_data = self::array_value($material, 'data', array());
             $text = self::array_value($material, 'text', self::array_value($material, 'textImages', self::array_value($material_data, 'textImages', null)));
-            if (is_array($text) && isset($required_options['fonts']) && is_array($required_options['fonts'])) {
+            if (is_array($text) && isset($required_options['fonts']) && is_array($required_options['fonts']) && !self::required_option_has_items($required_options['fonts'])) {
                 $selected_fonts = self::array_value($text, 'selectedFonts', array());
                 if (is_array($selected_fonts) && !empty($selected_fonts)) {
                     $required_options['fonts']['items'] = array_values(array_map(function ($font, $index) {
@@ -417,7 +454,7 @@ class ConfigSchemaNormalizer
                 }
                 break;
             case 'borders':
-                $items = self::array_value($option, 'allBorders', $option);
+                $items = self::array_value($option, 'items', self::array_value($option, 'allBorders', $option));
                 if (is_array($items)) {
                     $target['items'] = self::normalize_border_items($items);
                 }
@@ -547,7 +584,7 @@ class ConfigSchemaNormalizer
         $material_option_map = array(
             'sizes' => array('legacy' => 'sizes', 'items' => 'allSizes'),
             'shapes' => array('legacy' => 'shapes', 'items' => 'allShapes'),
-            'borders' => array('legacy' => 'borders', 'items' => 'allBorders'),
+            'borders' => array('legacy' => 'borders', 'items' => 'items'),
             'fixingMethods' => array('legacy' => 'fixingMethods', 'items' => 'allFixingMethods'),
         );
 
@@ -577,8 +614,94 @@ class ConfigSchemaNormalizer
         if (isset($required_options['borders']['items']) && is_array($required_options['borders']['items'])) {
             $required_options['borders']['items'] = self::normalize_border_items($required_options['borders']['items']);
         }
+        if (isset($required_options['borders']['allBorders'])) {
+            unset($required_options['borders']['allBorders']);
+        }
 
         return $required_options;
+    }
+
+    private static function repair_required_options_sections(array $required_options): array
+    {
+        $item_keys = array(
+            'sizes' => 'items',
+            'colors' => 'items',
+            'shapes' => 'items',
+            'borders' => 'items',
+            'fixingMethods' => 'items',
+            'fonts' => 'items',
+            'pricing' => 'priceOptions',
+        );
+
+        foreach ($item_keys as $section_key => $items_key) {
+            if (!isset($required_options[$section_key]) || !is_array($required_options[$section_key])) {
+                continue;
+            }
+
+            $section = $required_options[$section_key];
+            $items = isset($section[$items_key]) && is_array($section[$items_key])
+                ? array_values($section[$items_key])
+                : array();
+
+            if (empty($items)) {
+                $items = self::collect_items_from_numeric_section_keys($section, $items_key);
+            }
+
+            foreach ($section as $key => $value) {
+                if (is_int($key) || ctype_digit((string) $key)) {
+                    unset($section[$key]);
+                }
+            }
+
+            $section[$items_key] = array_values($items);
+            $required_options[$section_key] = $section;
+        }
+
+        return $required_options;
+    }
+
+    private static function collect_items_from_numeric_section_keys(array $section, string $items_key): array
+    {
+        $items = array();
+        foreach ($section as $key => $value) {
+            if (!(is_int($key) || ctype_digit((string) $key)) || !is_array($value)) {
+                continue;
+            }
+
+            if (isset($value[$items_key]) && is_array($value[$items_key])) {
+                foreach ($value[$items_key] as $item) {
+                    if (is_array($item)) {
+                        $items[] = $item;
+                    }
+                }
+                continue;
+            }
+
+            if (self::is_list($value)) {
+                foreach ($value as $item) {
+                    if (is_array($item)) {
+                        $items[] = $item;
+                    }
+                }
+                continue;
+            }
+
+            if (self::looks_like_option_item($value)) {
+                $items[] = $value;
+            }
+        }
+
+        return $items;
+    }
+
+    private static function looks_like_option_item(array $value): bool
+    {
+        foreach (array('id', 'label', 'name', 'shapeId', 'manageBorderId', 'manageFixingMethodId', 'managedFontId', 'customPricing') as $key) {
+            if (array_key_exists($key, $value)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static function ensure_required_fonts(array $required_options, array $settings, array $template_required): array
@@ -982,5 +1105,23 @@ class ConfigSchemaNormalizer
     {
         $value = sanitize_text_field((string) $value);
         return in_array($value, array('simple', 'advance', 'layers'), true) ? $value : 'simple';
+    }
+
+    private static function sanitize_product_type($value): string
+    {
+        $value = strtolower(trim(str_replace(array('_', ' '), '-', sanitize_text_field((string) $value))));
+        $map = array(
+            'signboard' => 'signs-panels',
+            'signboards' => 'signs-panels',
+            'signs-panel' => 'signs-panels',
+            'signs-panels' => 'signs-panels',
+            'signs-and-panels' => 'signs-panels',
+            'banner' => 'banners',
+            'banners' => 'banners',
+            'sticker' => 'stickers',
+            'stickers' => 'stickers',
+        );
+
+        return isset($map[$value]) ? $map[$value] : 'signs-panels';
     }
 }

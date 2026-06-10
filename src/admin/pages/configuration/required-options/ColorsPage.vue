@@ -33,12 +33,12 @@
                   <Loader2Icon class="asowp-w-7 asowp-h-7 asowp-text-[#007a72] asowp-animate-spin asowp-mx-auto" />
                 </td>
               </tr>
-              <tr v-else-if="colors.allColors.length === 0">
+              <tr v-else-if="colors.items.length === 0">
                 <td colspan="5" class="asowp-text-center asowp-py-8 asowp-text-[13px] asowp-text-[#616161]">
                   {{ __("No colors configured.", "all-signs-options-pro") }}
                 </td>
               </tr>
-              <tr v-for="(col, key) in colors.allColors" :key="key">
+              <tr v-for="(col, key) in colors.items" :key="key">
                 <td>
                   <div class="asowp-color-preview" :style="getPreviewStyle(col)">
                     <img v-if="col.pattern?.active && col.pattern?.url" :src="col.pattern.url" :alt="col.name" />
@@ -230,21 +230,14 @@
 
 <script setup>
 import api from "@/admin/Api/api";
-import { computed, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import toastMessage from "@/admin/utils/functions";
 import { Edit2Icon, Loader2Icon, PlusIcon, Trash2Icon } from "lucide-vue-next";
 import { __, sprintf } from "@wordpress/i18n";
 
 const route = useRoute();
-const props = defineProps({
-  materialId: {
-    type: [String, Number],
-    default: 0,
-  },
-});
 const configID = ref(route.params.configId);
-const materialId = computed(() => props.materialId ?? route.query.materialIndex ?? route.params.materialId ?? 0);
 
 const isFetching = ref(true);
 const isNewColor = ref(false);
@@ -255,7 +248,7 @@ const colorId = ref(null);
 
 const defaultColors = () => ({
   customColors: { active: true, label: "Custom Colors", prevImg: "" },
-  allColors: [],
+  items: [],
 });
 
 const defaultColor = () => ({
@@ -305,8 +298,8 @@ const inferColorHex = (item) => {
   const textHex = String(item?.textColor?.codeHex || "").trim();
   const patternHex = String(item?.pattern?.codeHex || "").trim();
   const colorName = inferColorName(item).toLowerCase();
-  if (!isTransparentValue(patternHex)) return patternHex;
   if (!isTransparentValue(textHex)) return textHex;
+  if (!isTransparentValue(patternHex)) return patternHex;
   return namedColorHex[colorName] || "#ffffff";
 };
 
@@ -339,10 +332,10 @@ const migrateLegacyColor = (item) => {
 };
 
 const normalizeColors = (raw) => {
-  const source = raw?.allColors ? raw : raw?.colors?.allColors ? raw.colors : defaultColors();
+  const source = raw?.items ? raw : raw?.colors?.items ? raw.colors : defaultColors();
   let changed = false;
-  const allColors = Array.isArray(source.allColors)
-    ? source.allColors.map((item) => {
+  const items = Array.isArray(source.items)
+    ? source.items.map((item) => {
       const result = migrateLegacyColor(item);
       if (result.changed) changed = true;
       return result.color;
@@ -351,20 +344,20 @@ const normalizeColors = (raw) => {
   return {
     changed,
     customColors: { ...defaultColors().customColors, ...(source.customColors || {}) },
-    allColors,
+    items,
   };
 };
 
 const fetchMaterialColors = async () => {
   isFetching.value = true;
   try {
-    const res = await api.getMaterialSimpleColors(configID.value, materialId.value);
+    const res = await api.getRequiredOptionColors(configID.value);
     const normalized = normalizeColors(res);
     const shouldPersistMigration = normalized.changed;
     delete normalized.changed;
     colors.value = normalized;
     if (shouldPersistMigration) {
-      await api.updateMaterialSimpleColors(configID.value, materialId.value, colors.value);
+      await api.updateRequiredOptionColors(configID.value, colors.value);
     }
   } finally {
     isFetching.value = false;
@@ -375,7 +368,7 @@ const updateMaterialColor = async () => {
   if (isLoading.value) return;
   isLoading.value = true;
   try {
-    const res = await api.updateMaterialSimpleColors(configID.value, materialId.value, colors.value);
+    const res = await api.updateRequiredOptionColors(configID.value, colors.value);
     if (res?.success) {
       toastMessage(res.message);
       isNewColor.value = false;
@@ -390,20 +383,56 @@ const updateMaterialColor = async () => {
 
 const addMaterialColor = async () => {
   if (!color.value.name.trim()) return;
-  colors.value.allColors.push({ ...color.value });
-  await updateMaterialColor();
+  isLoading.value = true;
+  try {
+    const res = await api.addRequiredOptionColorItem(configID.value, color.value);
+    if (res?.success) {
+      toastMessage(res.message);
+      isNewColor.value = false;
+      isEdit.value = false;
+      await fetchMaterialColors();
+    } else {
+      toastMessage(res?.message || __("Unable to add color", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const updateColorInMaterialColor = async () => {
   if (!color.value.name.trim()) return;
-  colors.value.allColors[colorId.value] = { ...color.value };
-  await updateMaterialColor();
+  isLoading.value = true;
+  try {
+    const res = await api.updateRequiredOptionColorItem(configID.value, colorId.value, color.value);
+    if (res?.success) {
+      toastMessage(res.message);
+      isNewColor.value = false;
+      isEdit.value = false;
+      await fetchMaterialColors();
+    } else {
+      toastMessage(res?.message || __("Unable to update color", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const deleteMaterialColor = async () => {
-  colors.value.allColors.splice(colorId.value, 1);
   openModal.value = false;
-  await updateMaterialColor();
+  isLoading.value = true;
+  try {
+    const res = await api.deleteRequiredOptionColorItem(configID.value, colorId.value);
+    if (res?.success) {
+      toastMessage(res.message);
+      isNewColor.value = false;
+      isEdit.value = false;
+      await fetchMaterialColors();
+    } else {
+      toastMessage(res?.message || __("Unable to delete color", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const selectMaterialColor = (id, col, isDeleting = false) => {
@@ -417,8 +446,17 @@ const selectMaterialColor = (id, col, isDeleting = false) => {
 };
 
 const selectDefault = async (key) => {
-  colors.value.allColors.forEach((item, index) => item.isDefault = index === key);
-  await updateMaterialColor();
+  isLoading.value = true;
+  try {
+    const res = await api.setRequiredOptionDefault(configID.value, "colors", key);
+    if (res?.success) {
+      await fetchMaterialColors();
+    } else {
+      toastMessage(res?.message || __("Unable to update default color", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const newColor = () => {

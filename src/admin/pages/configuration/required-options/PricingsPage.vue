@@ -36,8 +36,8 @@
               </tr>
               <template v-else>
                 <tr
-                  v-for="(item, key) in pricingSettings.priceOptions"
-                  :key="key"
+                  v-for="(item, key) in pricingSettings.items"
+                  :key="getPricingItemId(item, key)"
                   class="asowp-pricing-row asowp-border-b asowp-border-solid asowp-border-[#eceff2] last:asowp-border-b-0"
                   @click="editPricing(key)"
                 >
@@ -175,7 +175,7 @@
                 </div>
               </div>
               <p>
-                {{ sprintf(__('Applied from %s to %s %s. Surface equivalent: %s to %s %s.', 'all-signs-options-pro'), rangeStart(key), range.size, measurementUnit, rangeSurfaceStart(key), rangeSurface(range.size), surfaceUnitLabel) }}
+                {{ sprintf(__('Applied from %s to %s %s.', 'all-signs-options-pro'), rangeStart(key), range.surface, surfaceUnitLabel) }}
               </p>
               <p>
                 {{ __('Base price:', 'all-signs-options-pro') }}
@@ -211,8 +211,8 @@
           </div>
           <div class="asowp-range-modal-body">
             <div class="asowp-pricing-field">
-              <label>{{ sprintf(__('Size (%s)', 'all-signs-options-pro'), measurementUnit) }}</label>
-              <input type="number" v-model.number="rangeDraft.size">
+              <label>{{ sprintf(__('Surface (%s)', 'all-signs-options-pro'), surfaceUnitLabel) }}</label>
+              <input type="number" v-model.number="rangeDraft.surface">
               <p>{{ rangeHelpText }}</p>
             </div>
             <div class="asowp-pricing-field">
@@ -261,31 +261,25 @@ import { CopyIcon, Edit2Icon, Loader2Icon, MoreHorizontalIcon, PlusIcon, Trash2I
 import { __, sprintf } from "@wordpress/i18n";
 
 const route = useRoute();
-const props = defineProps({
-  materialId: {
-    type: [String, Number],
-    default: 0,
-  },
-});
 const configID = ref(route.params.configId);
-const materialId = computed(() => props.materialId ?? route.query.materialIndex ?? route.params.materialId ?? 0);
 
 const isFetching = ref(true);
 const isLoading = ref(false);
 const showForm = ref(false);
 const editingIndex = ref(null);
+const editingPricingId = ref(null);
 const rangeModalOpen = ref(false);
 const editingRangeIndex = ref(null);
 const openActionIndex = ref(null);
 
 const measurementUnit = ref("mm");
 const currencySymbol = ref("$");
-const materialSizes = ref({});
-const pricingSettings = ref({ label: "Pricing", description: "", priceOptions: [] });
+const pricingSettings = ref({ label: "Pricing", description: "", items: [] });
 
 const emptyPricing = () => ({
   label: "",
   customPricing: {
+    type: "range",
     rangePricingPerUnit: false,
     shippingMethod: "per-surface",
     divisorVolumetric: 5000,
@@ -300,22 +294,22 @@ const rangeDraft = ref(emptyRange());
 const surfaceUnitLabel = computed(() => `${measurementUnit.value}²`);
 const canSavePricing = computed(() => editingPricing.value.label.trim().length > 0);
 
-const rangeStart = (index) => index === 0 ? 0 : Number(editingPricing.value.customPricing.range[index - 1]?.size || 0);
-const rangeSurface = (size) => Number(size || 0) * Number(size || 0);
+const rangeStart = (index) => index === 0 ? 0 : Number(editingPricing.value.customPricing.range[index - 1]?.surface || 0);
+const rangeSurface = (surface) => Number(surface || 0);
 const rangeSurfaceStart = (index) => rangeSurface(rangeStart(index));
 
 const rangeHelpText = computed(() => {
   const start = editingRangeIndex.value === null
-    ? Number(editingPricing.value.customPricing.range.at(-1)?.size || 0)
+    ? Number(editingPricing.value.customPricing.range.at(-1)?.surface || 0)
     : rangeStart(editingRangeIndex.value);
   return sprintf(
     __('This range applies from %s to %s %s. Surface equivalent: %s to %s %s.', 'all-signs-options-pro'),
     start,
-    Number(rangeDraft.value.size || 0),
-    measurementUnit.value,
-    rangeSurface(start),
-    rangeSurface(rangeDraft.value.size),
-    surfaceUnitLabel.value
+        Number(rangeDraft.value.surface || 0),
+        measurementUnit.value,
+        rangeSurface(start),
+        rangeSurface(rangeDraft.value.surface),
+        surfaceUnitLabel.value
   );
 });
 
@@ -330,7 +324,7 @@ const shippingInputLabel = computed(() => {
 
 function emptyRange(startSize = 0) {
   return {
-    size: Number(startSize) + 1,
+    surface: Number(startSize) + 1,
     basePrice: 0,
     charPrice: 0,
     shippingPrice: 0,
@@ -346,6 +340,7 @@ const toNumber = (value, fallback = 0) => {
 };
 
 const normalizeCustomPricing = (value = {}) => ({
+  type: value.type === "unit" ? "unit" : "range",
   rangePricingPerUnit: Boolean(value.rangePricingPerUnit),
   shippingMethod: value.shippingMethod === "per-weight" ? "per-weight" : "per-surface",
   divisorVolumetric: toNumber(value.divisorVolumetric, 5000),
@@ -356,7 +351,7 @@ const normalizeCustomPricing = (value = {}) => ({
   },
   range: Array.isArray(value.range)
     ? value.range.map((item) => ({
-        size: toNumber(item?.size ?? item?.surface, 0),
+        surface: toNumber(item?.surface ?? item?.size, 0),
         basePrice: toNumber(item?.basePrice, 0),
         charPrice: toNumber(item?.charPrice, 0),
         shippingPrice: toNumber(item?.shippingPrice ?? item?.pricePerSqCm, 0),
@@ -367,114 +362,121 @@ const normalizeCustomPricing = (value = {}) => ({
     : [],
 });
 
-const normalizePricingOption = (item = {}) => ({
+const getPricingItemId = (item = {}, index = 0) => String(item?.id || `pricing-${index + 1}`);
+
+const normalizePricingOption = (item = {}, index = 0) => ({
+  id: getPricingItemId(item, index),
   label: String(item.label || ""),
   customPricing: normalizeCustomPricing(item.customPricing || item.customSizePricing || item.pricings || {}),
 });
 
-const buildFallbackPricing = () => ({
-  label: "Default pricing",
-  customPricing: normalizeCustomPricing(materialSizes.value?.customSize?.pricings || {}),
-});
-
-const normalizePricingSettings = () => {
-  const stored = materialSizes.value?.pricing || {};
+const normalizePricingSettings = (stored = {}) => {
   const storedOptions = Array.isArray(stored.priceOptions) ? stored.priceOptions : [];
   pricingSettings.value = {
     label: String(stored.label || "Pricing"),
     description: String(stored.description || ""),
-    priceOptions: storedOptions.length
-      ? storedOptions.map(normalizePricingOption)
-      : [buildFallbackPricing()],
+    items: storedOptions.map((item, index) => normalizePricingOption(item, index)),
   };
 };
 
 const fetchPricing = async () => {
   isFetching.value = true;
   try {
-    const result = await api.getMaterialSimpleSizes(configID.value, materialId.value);
-    if (result?.materialSizes) {
-      materialSizes.value = result.materialSizes;
-      measurementUnit.value = String(result.measurementUnit || "mm");
-      normalizePricingSettings();
+    const result = await api.getRequiredOptionPricings(configID.value);
+    if (result) {
+      normalizePricingSettings(result);
     }
   } finally {
     isFetching.value = false;
   }
 };
 
-const persistPricing = async () => {
-  isLoading.value = true;
-  try {
-    const primary = pricingSettings.value.priceOptions[0] || buildFallbackPricing();
-    const nextSizes = {
-      ...materialSizes.value,
-      customSize: {
-        ...(materialSizes.value.customSize || {}),
-        pricings: primary.customPricing,
-      },
-      pricing: {
-        label: pricingSettings.value.label,
-        description: pricingSettings.value.description,
-        priceOptions: pricingSettings.value.priceOptions,
-      },
-    };
-    const res = await api.updateMaterialSimpleSizes(configID.value, materialId.value, nextSizes);
-    if (res?.success) {
-      materialSizes.value = nextSizes;
-      toastMessage(res.message);
-    }
-  } finally {
-    isLoading.value = false;
-  }
-};
-
 const addPricing = () => {
   editingIndex.value = null;
+  editingPricingId.value = null;
   editingPricing.value = emptyPricing();
   showForm.value = true;
 };
 
-const editPricing = (index) => {
+const normalizePricingIndex = (index) => {
+  const parsed = Number(index);
+  return Number.isInteger(parsed) && parsed >= 0 ? parsed : -1;
+};
+
+const editPricing = (itemIndex) => {
   openActionIndex.value = null;
+  const index = normalizePricingIndex(itemIndex);
+  if (index < 0) return;
   editingIndex.value = index;
-  editingPricing.value = JSON.parse(JSON.stringify(pricingSettings.value.priceOptions[index]));
+  editingPricingId.value = index;
+  editingPricing.value = JSON.parse(JSON.stringify(pricingSettings.value.items[index]));
   showForm.value = true;
 };
 
 const closeForm = () => {
   showForm.value = false;
   editingIndex.value = null;
+  editingPricingId.value = null;
   editingPricing.value = emptyPricing();
 };
 
 const savePricing = async () => {
   if (!canSavePricing.value) return;
-  const next = normalizePricingOption(editingPricing.value);
-  if (editingIndex.value === null) {
-    pricingSettings.value.priceOptions.push(next);
-  } else {
-    pricingSettings.value.priceOptions[editingIndex.value] = next;
+  isLoading.value = true;
+  try {
+    const next = normalizePricingOption(editingPricing.value, editingIndex.value === null ? pricingSettings.value.items.length : editingIndex.value);
+    const result = editingIndex.value !== null
+      ? await api.updateRequiredOptionPricingItem(configID.value, editingIndex.value, next)
+      : await api.addRequiredOptionPricingItem(configID.value, next);
+    if (result?.success) {
+      toastMessage(result.message);
+      await fetchPricing();
+      closeForm();
+    } else {
+      toastMessage(result?.message || __("Unable to save pricing", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
   }
-  await persistPricing();
-  closeForm();
 };
 
-const duplicatePricing = async (index) => {
+const duplicatePricing = async (itemIndex) => {
   openActionIndex.value = null;
-  const copy = JSON.parse(JSON.stringify(pricingSettings.value.priceOptions[index]));
-  copy.label = copy.label ? `${copy.label} (copy)` : sprintf(__('Pricing %d', 'all-signs-options-pro'), pricingSettings.value.priceOptions.length + 1);
-  pricingSettings.value.priceOptions.splice(index + 1, 0, copy);
-  await persistPricing();
+  const index = normalizePricingIndex(itemIndex);
+  if (index < 0) return;
+  const copy = JSON.parse(JSON.stringify(pricingSettings.value.items[index]));
+  delete copy.id;
+  copy.label = copy.label ? `${copy.label} (copy)` : sprintf(__('Pricing %d', 'all-signs-options-pro'), pricingSettings.value.items.length + 1);
+  isLoading.value = true;
+  try {
+    const result = await api.addRequiredOptionPricingItem(configID.value, copy);
+    if (result?.success) {
+      toastMessage(result.message);
+      await fetchPricing();
+    } else {
+      toastMessage(result?.message || __("Unable to duplicate pricing", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
-const deletePricing = async (index) => {
+const deletePricing = async (itemIndex) => {
   openActionIndex.value = null;
-  pricingSettings.value.priceOptions.splice(index, 1);
-  if (!pricingSettings.value.priceOptions.length) {
-    pricingSettings.value.priceOptions.push(buildFallbackPricing());
+  const index = normalizePricingIndex(itemIndex);
+  if (index < 0) return;
+  isLoading.value = true;
+  try {
+    const result = await api.deleteRequiredOptionPricingItem(configID.value, index);
+    if (result?.success) {
+      toastMessage(result.message);
+      await fetchPricing();
+    } else {
+      toastMessage(result?.message || __("Unable to delete pricing", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
   }
-  await persistPricing();
 };
 
 const toggleActions = (index) => {
@@ -502,7 +504,7 @@ const switchClass = (active) => [
 const openRangeModal = (index = null) => {
   editingRangeIndex.value = index;
   if (index === null) {
-    rangeDraft.value = emptyRange(editingPricing.value.customPricing.range.at(-1)?.size || 0);
+    rangeDraft.value = emptyRange(editingPricing.value.customPricing.range.at(-1)?.surface || 0);
   } else {
     rangeDraft.value = { ...editingPricing.value.customPricing.range[index] };
   }
@@ -517,6 +519,7 @@ const closeRangeModal = () => {
 
 const saveRange = () => {
   const normalized = { ...emptyRange(), ...rangeDraft.value };
+  editingPricing.value.customPricing.type = "range";
   if (editingRangeIndex.value === null) {
     editingPricing.value.customPricing.range.push(normalized);
   } else {

@@ -38,12 +38,12 @@
                   <Loader2Icon class="asowp-w-7 asowp-h-7 asowp-text-[#007a72] asowp-animate-spin asowp-mx-auto" />
                 </td>
               </tr>
-              <tr v-else-if="borders.allBorders.length === 0">
+              <tr v-else-if="borders.items.length === 0">
                 <td colspan="5" class="asowp-text-center asowp-py-8 asowp-text-[13px] asowp-text-[#616161]">
                   {{ __("No borders configured.", "all-signs-options-pro") }}
                 </td>
               </tr>
-              <tr v-for="(bd, key) in borders.allBorders" :key="`${bd.manageBorderId}-${key}`">
+              <tr v-for="(bd, key) in borders.items" :key="`${bd.manageBorderId}-${key}`">
                 <td>
                   <div class="asowp-preview-box">
                     <img v-if="getManagedBorder(bd)?.icon" :src="getManagedBorder(bd).icon" :alt="getManagedBorder(bd).name" />
@@ -194,7 +194,7 @@
         <label class="asowp-field-block">
           <span class="asowp-form-label">{{ __("Exclude sizes", "all-signs-options-pro") }}</span>
           <select v-model="border.excludeSizes" multiple class="asowp-form-input asowp-multi-input">
-            <option v-for="size in MaterialSimpleSizes" :key="size.value" :value="size.value">{{ size.name }}</option>
+            <option v-for="size in borderSizes" :key="size.value" :value="size.value">{{ size.name }}</option>
           </select>
           <span class="asowp-help-text">{{ __("Hide this border for selected sizes.", "all-signs-options-pro") }}</span>
           <span class="asowp-help-text">{{ exclusionSummary(border.excludeSizes, __("No sizes excluded.", "all-signs-options-pro")) }}</span>
@@ -203,7 +203,7 @@
         <label class="asowp-field-block">
           <span class="asowp-form-label">{{ __("Exclude shapes", "all-signs-options-pro") }}</span>
           <select v-model="border.excludeShapes" multiple class="asowp-form-input asowp-multi-input">
-            <option v-for="shape in MaterialSimpleShapes" :key="shape.value" :value="shape.value">{{ shape.name }}</option>
+            <option v-for="shape in borderShapes" :key="shape.value" :value="shape.value">{{ shape.name }}</option>
           </select>
           <span class="asowp-help-text">{{ __("Hide this border for shapes that do not support it.", "all-signs-options-pro") }}</span>
           <span class="asowp-help-text">{{ exclusionSummary(border.excludeShapes, __("No shapes excluded.", "all-signs-options-pro")) }}</span>
@@ -241,14 +241,7 @@ import { __ } from "@wordpress/i18n";
 
 const route = useRoute();
 const router = useRouter();
-const props = defineProps({
-  materialId: {
-    type: [String, Number],
-    default: 0,
-  },
-});
 const configID = ref(route.params.configId);
-const materialId = computed(() => props.materialId ?? route.query.materialIndex ?? route.params.materialId ?? 0);
 
 const defaultSettings = () => ({
   borderColorsLabel: "Borders Colors",
@@ -275,10 +268,10 @@ const borderId = ref(null);
 const colorDragIndex = ref(null);
 const colorDropIndex = ref(null);
 
-const borders = ref({ settings: defaultSettings(), allBorders: [] });
+const borders = ref({ settings: defaultSettings(), items: [] });
 const manageBorders = ref([]);
-const MaterialSimpleSizes = ref([]);
-const MaterialSimpleShapes = ref([]);
+const borderSizes = ref([]);
+const borderShapes = ref([]);
 const border = ref(createBorder());
 
 const normalizeArray = (value) => Array.isArray(value) ? value : [];
@@ -290,7 +283,7 @@ const availableManagedBorders = computed(() => manageBorders.value
   .map((item, index) => ({ ...item, value: index }))
   .filter((item) => {
     if (item.value === Number(border.value.manageBorderId)) return true;
-    return !borders.value.allBorders.some((bd) => Number(bd.manageBorderId) === item.value);
+    return !borders.value.items.some((bd) => Number(bd.manageBorderId) === item.value);
   }));
 
 const normalizeBorder = (item) => ({
@@ -312,9 +305,9 @@ const normalizeSettings = (settings = {}) => ({
 });
 
 const fetchMaterialShapes = async () => {
-  const res = await api.getMaterialSimpleShapes(configID.value, materialId.value);
-  if (!res.message && res.materialShapes) {
-    MaterialSimpleShapes.value = res.materialShapes.map((item) => ({
+  const res = await api.getRequiredOptionShapes(configID.value);
+  if (!res.message && res.items) {
+    borderShapes.value = res.items.map((item) => ({
       name: res.manageShapes?.[item.shapeId]?.name || "Shape",
       value: item.shapeId,
     }));
@@ -324,14 +317,15 @@ const fetchMaterialShapes = async () => {
 const fetchMaterialBorders = async () => {
   isFetching.value = true;
   try {
-    const res = await api.getMaterialSimpleBorders(configID.value, materialId.value);
-    if (res?.materialBorders) {
+    const res = await api.getRequiredOptionBorders(configID.value);
+    if (res) {
+      const bordersData = res;
       borders.value = {
-        settings: normalizeSettings(res.materialBorders.settings),
-        allBorders: normalizeArray(res.materialBorders.allBorders).map(normalizeBorder),
+        settings: normalizeSettings(bordersData.settings),
+        items: normalizeArray(bordersData.items).map(normalizeBorder),
       };
-      manageBorders.value = res.manageBorders || [];
-      MaterialSimpleSizes.value = (res.materialSizes || []).map((item, index) => ({ name: item.label, value: index }));
+      manageBorders.value = bordersData.manageBorders || [];
+      borderSizes.value = (bordersData.sizes || []).map((item, index) => ({ name: item.label, value: index }));
     }
   } finally {
     isFetching.value = false;
@@ -342,7 +336,7 @@ const updateBorders = async () => {
   if (isLoading.value) return;
   isLoading.value = true;
   try {
-    const res = await api.updateMaterialSimpleBorders(configID.value, materialId.value, borders.value);
+    const res = await api.updateRequiredOptionBorders(configID.value, borders.value);
     if (res?.success) {
       toastMessage(res.message);
       isNewBorder.value = false;
@@ -357,23 +351,59 @@ const updateBorders = async () => {
 };
 
 const addBorders = async () => {
-  const nextBorder = normalizeBorder(border.value);
-  if (!borders.value.allBorders.length) nextBorder.isDefault = true;
-  borders.value.allBorders.push(nextBorder);
-  await updateBorders();
+  isLoading.value = true;
+  try {
+    const payload = normalizeBorder(border.value);
+    payload.isDefault = !borders.value.items.length;
+    const res = await api.addRequiredOptionBorderItem(configID.value, payload);
+    if (res?.success) {
+      toastMessage(res.message);
+      isNewBorder.value = false;
+      isEdit.value = false;
+      await fetchMaterialBorders();
+    } else {
+      toastMessage(res?.message || __("Unable to add border", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const updateMaterialBorders = async () => {
   if (borderId.value === null) return;
-  borders.value.allBorders[borderId.value] = normalizeBorder(border.value);
-  await updateBorders();
+  isLoading.value = true;
+  try {
+    const res = await api.updateRequiredOptionBorderItem(configID.value, borderId.value, normalizeBorder(border.value));
+    if (res?.success) {
+      toastMessage(res.message);
+      isNewBorder.value = false;
+      isEdit.value = false;
+      await fetchMaterialBorders();
+    } else {
+      toastMessage(res?.message || __("Unable to update border", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const deleteBorders = async () => {
   if (borderId.value === null) return;
-  borders.value.allBorders.splice(borderId.value, 1);
   openModal.value = false;
-  await updateBorders();
+  isLoading.value = true;
+  try {
+    const res = await api.deleteRequiredOptionBorderItem(configID.value, borderId.value);
+    if (res?.success) {
+      toastMessage(res.message);
+      isNewBorder.value = false;
+      isEdit.value = false;
+      await fetchMaterialBorders();
+    } else {
+      toastMessage(res?.message || __("Unable to delete border", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const selectMaterialBorder = (id, bd, isDeleting = false) => {
@@ -388,10 +418,17 @@ const selectMaterialBorder = (id, bd, isDeleting = false) => {
 };
 
 const selectDefault = async (key) => {
-  borders.value.allBorders.forEach((item, index) => {
-    item.isDefault = index === key;
-  });
-  await updateBorders();
+  isLoading.value = true;
+  try {
+    const res = await api.setRequiredOptionDefault(configID.value, "borders", key);
+    if (res?.success) {
+      await fetchMaterialBorders();
+    } else {
+      toastMessage(res?.message || __("Unable to update default border", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const newBorder = () => {

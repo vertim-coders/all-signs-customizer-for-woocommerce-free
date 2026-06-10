@@ -287,8 +287,10 @@ const getProductFamilySlug = (config) => {
   );
   if (explicit) return explicit;
 
-  const materials = Array.isArray(data?.materials) ? data.materials : [];
-  const names = materials.map(item => normalizeValue(item?.name));
+  const materials = Array.isArray(config?.additionalOptions?.materials?.items)
+    ? config.additionalOptions.materials.items
+    : (Array.isArray(data?.materials) ? data.materials : []);
+  const names = materials.map(item => normalizeValue(item?.label || item?.name || item?.materialKey));
   if (names.some(name => ['fabric', 'mesh', 'banner-vinyl'].includes(name))) return 'banners';
   if (names.some(name => ['paper', 'pvc', 'film', 'sticker-vinyl'].includes(name))) return 'stickers';
   if (names.some(name => ['acrylic', 'aluminium', 'aluminum', 'brass', 'eco-friendly', 'magnet', 'photo-paper', 'plastic', 'stainless-steel', 'vinyl', 'wood'].includes(name))) return 'signs-panels';
@@ -363,7 +365,7 @@ onMounted(async () => {
 
   try {
     const res = await api.getConfigs('?per_page=4&order=DESC&page=1')
-    recentConfigs.value = Array.isArray(res?.data) ? res.data.slice(0, 4) : []
+    recentConfigs.value = Array.isArray(res?.items) ? res.items.slice(0, 4) : []
   } catch(_) {}
 })
 

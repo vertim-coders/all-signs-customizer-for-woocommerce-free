@@ -228,7 +228,7 @@ const loadConfig = async () => {
 const loadConfigName = async () => {
   try {
     const response = await api.getConfigs('?per_page=100&order=DESC&page=1');
-    const configs = Array.isArray(response?.data) ? response.data : [];
+    const configs = Array.isArray(response?.items) ? response.items : [];
     const current = configs.find((item) => String(item?.id) === String(configId.value));
     adminConfigName.value = current?.name || '';
   } catch (error) {
@@ -268,12 +268,11 @@ const groups = computed(() => {
     ? [
         { label: __('Fonts', 'all-signs-options-pro'), path: `${basePath}/required-options/fonts`, icon: icons.fonts },
         { label: __('Components', 'all-signs-options-pro'), path: `${basePath}/required-options/components`, icon: icons.components },
-        { label: __('Pricing', 'all-signs-options-pro'), path: `${basePath}/required-options/pricing`, icon: icons.pricing },
-        { label: __('Materials', 'all-signs-options-pro'), path: `${basePath}/required-options/materials`, icon: icons.materials },
+        { label: __('Pricings', 'all-signs-options-pro'), path: `${basePath}/required-options/pricings`, icon: icons.pricing },
       ]
     : [
         { label: __('Sizes', 'all-signs-options-pro'), path: `${basePath}/required-options/sizes`, icon: icons.sizes },
-        { label: __('Pricing', 'all-signs-options-pro'), path: `${basePath}/required-options/pricing`, icon: icons.pricing },
+        { label: __('Pricings', 'all-signs-options-pro'), path: `${basePath}/required-options/pricings`, icon: icons.pricing },
         { label: __('Fonts', 'all-signs-options-pro'), path: `${basePath}/required-options/fonts`, icon: icons.fonts },
         { label: __('Colors', 'all-signs-options-pro'), path: `${basePath}/required-options/colors`, icon: icons.colors },
         { label: __('Fixing Methods', 'all-signs-options-pro'), path: `${basePath}/required-options/fixing-methods`, icon: icons.fixing },

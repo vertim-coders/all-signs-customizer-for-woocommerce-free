@@ -187,9 +187,12 @@ const fetchMaterials = async () => {
   isFetching.value = true;
   try {
     const rawMaterials = await api.getMaterials(configID.value);
-    materials.value = Array.isArray(rawMaterials) ? rawMaterials.map((m, index) => ({
+    const items = Array.isArray(rawMaterials?.items)
+      ? rawMaterials.items
+      : [];
+    materials.value = Array.isArray(items) ? items.map((m, index) => ({
       ...m,
-      sourceIndex: Number.isInteger(Number(m?.sourceIndex)) ? Number(m.sourceIndex) : index,
+      id: String(m?.id || m?.materialKey || `material-${index + 1}`),
       name: String(m?.name || m?.label || ""),
       icon: m?.icon || m?.image || m?.previewImg || "",
       isDefault: Boolean(m?.isDefault),
@@ -223,7 +226,7 @@ const updateMaterial = async () => {
   isLoading.value = true;
   try {
     const current = materials.value[editingIndex.value] || {};
-    const result = await api.updateMaterial(configID.value, current.sourceIndex ?? editingIndex.value, { ...current, ...newMaterial.value });
+    const result = await api.updateMaterial(configID.value, editingIndex.value, { ...current, ...newMaterial.value });
     if (result?.success || result?.success === "same") {
       await fetchMaterials();
       toastMessage(result.message || __("Material updated", "all-signs-options-pro"));
@@ -261,8 +264,7 @@ const deleteMaterial = async () => {
   if (editingIndex.value === null) return;
   isLoading.value = true;
   try {
-    const current = materials.value[editingIndex.value] || {};
-    const result = await api.deleteMaterial(configID.value, current.sourceIndex ?? editingIndex.value);
+    const result = await api.deleteMaterial(configID.value, editingIndex.value);
     if (result?.success) {
       openModal.value = false;
       await fetchMaterials();
@@ -280,7 +282,7 @@ const selectDefault = async (index) => {
   if (!current || current.isDefault || isLoading.value) return;
   isLoading.value = true;
   try {
-    const result = await api.updateMaterial(configID.value, current.sourceIndex ?? index, { ...current, isDefault: true });
+    const result = await api.setRequiredOptionDefault(configID.value, "materials", index);
     if (result?.success || result?.success === "same") {
       await fetchMaterials();
       toastMessage(result.message || __("Default material updated", "all-signs-options-pro"));

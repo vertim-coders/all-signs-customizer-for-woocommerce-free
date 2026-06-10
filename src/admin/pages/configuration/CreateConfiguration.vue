@@ -752,17 +752,38 @@ const clearArraysDeep = (value) => {
 const slugify = (value) => String(value || 'configuration').trim().toLowerCase().replace(/\s+/g, '-');
 
 const buildConfigData = () => {
-  const demo = configurationDemoData?.[0]?.data || {};
+  const demoIndex = wizard.value.selectedDemoIndex || 0;
+  const demo = configurationDemoData?.[demoIndex]?.data || {};
   const baseMaterial = demo.materials?.[0] || {};
   const selectedMaterials = wizard.value.selectedMaterials.length
     ? wizard.value.selectedMaterials
     : filteredMaterials.value.slice(0, 1).map((material) => material.id);
+  
+  const productType = wizard.value.productType;
+  const slug = (val) => slugify(val);
+
+  const generateSizeId = (size, type) => `size-${slug(type)}-${slug(size.label || 'custom')}`;
+  const generateColorId = (color, type) => `color-${slug(type)}-${slug(color.name || 'item')}`;
 
   const buildMaterials = (withStarterData = false) => selectedMaterials.map((materialId, index) => {
     const material = availableMaterials.value.find(item => item.id === materialId);
-    const sourceMaterial = withStarterData
+    let sourceMaterial = withStarterData
       ? stripIdsDeep(baseMaterial)
       : clearArraysDeep(stripIdsDeep(baseMaterial));
+
+    // Dynamic ID regeneration
+    if (sourceMaterial.data?.sizes?.allSizes) {
+      sourceMaterial.data.sizes.allSizes = sourceMaterial.data.sizes.allSizes.map(s => ({
+        ...s,
+        id: generateSizeId(s, productType)
+      }));
+    }
+    if (sourceMaterial.data?.colors?.allColors) {
+      sourceMaterial.data.colors.allColors = sourceMaterial.data.colors.allColors.map(c => ({
+        ...c,
+        id: generateColorId(c, productType)
+      }));
+    }
 
     return {
       ...sourceMaterial,
@@ -788,6 +809,19 @@ const buildConfigData = () => {
 
   if (wizard.value.includeDemo) {
     const demoPayload = stripIdsDeep(demo);
+    
+    // Also regenerate for the base demo payload if included
+    if (demoPayload.materials) {
+      demoPayload.materials = demoPayload.materials.map(m => ({
+        ...m,
+        data: {
+          ...m.data,
+          sizes: m.data?.sizes ? { ...m.data.sizes, allSizes: m.data.sizes.allSizes?.map(s => ({ ...s, id: generateSizeId(s, productType) })) } : m.data.sizes,
+          colors: m.data?.colors ? { ...m.data.colors, allColors: m.data.colors.allColors?.map(c => ({ ...c, id: generateColorId(c, productType) })) } : m.data.colors
+        }
+      }));
+    }
+
     return {
       ...demoPayload,
       settings: {
@@ -942,7 +976,7 @@ const finalCreate = async () => {
 onMounted(async () => {
   if (props.isEdit) wizard.value.step = 4;
   const res = await api.getUnassignedProducts({ per_page: 100 });
-  wooProductsOptions.value = (res?.data || []).map(p => ({
+  wooProductsOptions.value = (Array.isArray(res) ? res : []).map(p => ({
     value: p.id,
     label: cleanProductTitle(p.title),
     image: p.image,

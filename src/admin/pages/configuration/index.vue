@@ -203,7 +203,7 @@ const fetchConfigs = async (p = page.value) => {
   isFetching.value = true;
   try {
     const res = await api.getConfigs(`?per_page=${CONFIGS_PER_PAGE}&order=DESC&page=${p}`);
-    configs.value = Array.isArray(res?.data) ? res.data : [];
+    configs.value = Array.isArray(res?.items) ? res.items : [];
     totalPages.value = Number(res?.totalPages || 0);
     totalConfigsFound.value = Number(res?.totalConfigsFound || 0);
     page.value = p;
@@ -248,8 +248,10 @@ const getProductFamilySlug = (config) => {
   );
   if (explicit) return explicit;
 
-  const materials = Array.isArray(data?.materials) ? data.materials : [];
-  const names = materials.map(item => normalizeValue(item?.name));
+  const materials = Array.isArray(config?.additionalOptions?.materials?.items)
+    ? config.additionalOptions.materials.items
+    : (Array.isArray(data?.materials) ? data.materials : []);
+  const names = materials.map(item => normalizeValue(item?.label || item?.name || item?.materialKey));
   if (names.some(name => ['fabric', 'mesh', 'banner-vinyl'].includes(name))) return 'banners';
   if (names.some(name => ['paper', 'pvc', 'film', 'sticker-vinyl'].includes(name))) return 'stickers';
   if (names.some(name => ['acrylic', 'aluminium', 'aluminum', 'brass', 'eco-friendly', 'magnet', 'photo-paper', 'plastic', 'stainless-steel', 'vinyl', 'wood'].includes(name))) return 'signs-panels';

@@ -1,9 +1,9 @@
-<template>
+﻿<template>
     <div class="asowp-mt-4">
         <div class="asowp-translate-y-3 asowp-space-y-1 asowp-bg-white asowp-border-solid asowp-border-2 asowp-rounded-[10px] asowp-p-2 asowp-border-[#D1D1D1]" v-if="!isNewOption">
             <div class="asowp-flex asowp-justify-end asowp-space-x-2 asowp-w-4/4 asowp-bg-[#F8F9FB] asowp-text-[12px] asowp-px-4 asowp-py-4 asowp-pb-2">
                 <button class="asowp-bg-transparent asowp-border-none asowp-text-[#016464] asowp-font-semibold asowp-cursor-pointer" @click="goBackToComponents">
-                    {{ __("← Back to components", "all-signs-options-pro") }}
+                    {{ __("â† Back to components", "all-signs-options-pro") }}
                 </button>
                 <button v-if="!isFetching" class="asowp-flex asowp-w-fit asowp-h-fit asowp-rounded asowp-bg-[#016464] asowp-px-4 asowp-space-x-2 asowp-p-1.5 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-cursor-pointer" @click="openOptionForm">
                     <svg class="asowp-w-5 asowp-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -329,8 +329,6 @@ const slugify = (value) =>
 const configId = ref(route.params.configId);
 import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 const config = ref(String(route.params.config ?? '').replace(/-/g," "));
-const materialId = ref(route.query.materialIndex ?? route.params.materialId ?? 0);
-const material = ref(String(route.params.material ?? 'material').replace(/-/g," "));
 const componentId = ref(route.params.componentId);
 const componentName = ref(String(route.params.component ?? '').replace(/-/g," "));
 const componentAdvance = ref({
@@ -373,64 +371,52 @@ const isEdit = ref(false);
 
 onMounted(async() => {
     isFetching.value = true;
-    await fetchMaterialAdvanceOptions();
+    await fetchComponentOptions();
 });
 
 watch(
-  () => [route.query.materialIndex, route.params.materialId, route.params.componentId],
-  async ([queryMaterialIndex, routeMaterialId, compId]) => {
-    materialId.value = queryMaterialIndex ?? routeMaterialId ?? 0;
+  () => [route.params.configId, route.params.componentId],
+  async ([nextConfigId, compId]) => {
+    configId.value = nextConfigId;
     componentId.value = compId;
-    material.value = String(route.params.material ?? 'material').replace(/-/g," ");
     config.value = String(route.params.config ?? '').replace(/-/g," ");
     componentName.value = String(route.params.component ?? '').replace(/-/g," ");
     isNewOption.value = false;
     isEdit.value = false;
     isFetching.value = true;
-    await fetchMaterialAdvanceOptions();
+    await fetchComponentOptions();
     isFetching.value = false;
   }
 );
 
 const goToMaterials = ()=>{
     router.push({ name: 'materials', params: { configId: configId.value } });
-    return;
-    router.push({ name: 'materials', params: { configId: configId.value } }).then(() => {
-    // Recharger la page après la navigation
-    window.location.reload()
-    })
 }
 const goBackToComponents = () => {
     router.push({
         name: 'required-components',
         params: { configId: configId.value },
-        query: materialId.value > 0 ? { materialIndex: materialId.value } : {},
     });
 }
-const fetchMaterialAdvanceOptions = async () => {
-    const result = await api.getMaterialAdvanceComponentOptions(configId.value,materialId.value,componentId.value);
-    shapes.value = result.manageShapes.map((sh,key)=>{
+const fetchComponentOptions = async () => {
+    const result = await api.getRequiredOptionComponentOptions(configId.value, componentId.value);
+    const componentOptions = result;
+    shapes.value = (componentOptions?.manageShapes || []).map((sh,key)=>{
         return {name:sh.name,value:key,icon:sh.icon};
     });
-    fixingMethods.value = result.manageFixingMethods.map((fx,key)=>{
+    fixingMethods.value = (componentOptions?.manageFixingMethods || []).map((fx,key)=>{
         return {name:fx.name,value:key,icon:fx.icon};
     });
-    if(result.component){
-        componentAdvance.value = result.component;
-        noOptionsFound.value = result.message;
-        isFetching.value = false;
-    }else{
-        componentAdvance.value = result.component;
-        noOptionsFound.value = result.message;
-        isFetching.value = false;
-    }
+    componentAdvance.value = componentOptions?.component;
+    noOptionsFound.value = result.message;
+    isFetching.value = false;
 }
 
 const addNewOption = async () => {
     isLoading.value = true;
-    const result = await api.addMaterialAdvanceComponentOption(configId.value,materialId.value,componentId.value,option.value);
+    const result = await api.addRequiredOptionComponentOption(configId.value, componentId.value, option.value);
     if(result.success){
-        await fetchMaterialAdvanceOptions();
+        await fetchComponentOptions();
         isLoading.value = false;
         toastMessage(result.message);
         isNewOption.value = false;
@@ -478,9 +464,9 @@ const addNewOption = async () => {
 }
 const updateOption = async () => {
     isLoading.value = true;
-    const result = await api.updateMaterialAdvanceComponentOption(configId.value,materialId.value,componentId.value,optionId.value,option.value);
+    const result = await api.updateRequiredOptionComponentOption(configId.value, componentId.value, optionId.value, option.value);
     if(result.success){
-        await fetchMaterialAdvanceOptions();
+        await fetchComponentOptions();
         isLoading.value = false;
         if(result.success == true){
             toastMessage(result.message);
@@ -536,9 +522,9 @@ const updateOption = async () => {
 }
 const deleteOption = async () => {
     isLoading.value = true;
-    const result = await api.deleteMaterialAdvanceComponentOption(configId.value,materialId.value,componentId.value,optionId.value);
+    const result = await api.deleteRequiredOptionComponentOption(configId.value, componentId.value, optionId.value);
     if(result.success){
-        await fetchMaterialAdvanceOptions();
+        await fetchComponentOptions();
         isLoading.value = false;
         toastMessage(result.message);
         closeModal();
@@ -686,9 +672,9 @@ const back = () => {
     }
 }
 
-const updateComponentAdvance = async () => {
+const updateComponent = async () => {
         isLoading.value = true;
-        const result = await api.updateMaterialAdvanceComponent(configId.value,materialId.value,componentId.value,componentAdvance.value);
+        const result = await api.updateRequiredOptionComponent(configId.value, componentId.value, componentAdvance.value);
         if(result.success){
             if(result.success == true ) {
                 toastMessage(result.message);
@@ -711,6 +697,6 @@ const selectDefault = async(key) =>{
             componentAdvance.value.options[i].isDefault = false;
         }
     }
-    await updateComponentAdvance();
+    await updateComponent();
 }
 </script>

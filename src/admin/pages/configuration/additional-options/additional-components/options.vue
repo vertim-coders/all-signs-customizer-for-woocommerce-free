@@ -132,7 +132,7 @@
 </template>
 
 <script setup>
-import { computed, defineComponent, h, onMounted, ref } from 'vue';
+import { defineComponent, h, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import api from '@/admin/Api/api';
 import toastMessage from '@/admin/utils/functions';
@@ -140,15 +140,7 @@ import { ChevronDownIcon, ChevronUpIcon, Loader2Icon, PlusIcon, Trash2Icon } fro
 
 const route = useRoute();
 const router = useRouter();
-const props = defineProps({
-  materialId: {
-    type: [String, Number],
-    default: 0,
-  },
-});
-
 const configID = ref(route.params.configId);
-const materialId = computed(() => props.materialId ?? route.query.materialIndex ?? route.params.materialId ?? 0);
 const additionalOptionId = ref(route.params.additionalOptionID);
 
 const isFetching = ref(true);
@@ -164,7 +156,7 @@ const additionalOption = ref({
 
 onMounted(async () => {
   isFetching.value = true;
-  await Promise.all([fetchMaterialColors(), fetchMaterialOptions()]);
+  await Promise.all([fetchColors(), fetchComponentOptions()]);
   isFetching.value = false;
 });
 
@@ -182,25 +174,27 @@ const normalizeOption = (option = {}) => ({
   ...option,
 });
 
-const fetchMaterialOptions = async () => {
-  const result = await api.getMaterialSimpleAdditionalOptionsItems(configID.value, materialId.value, additionalOptionId.value);
-  const data = result?.data ?? result;
+const fetchComponentOptions = async () => {
+  const result = await api.getAdditionalOptionItems(configID.value, additionalOptionId.value);
   additionalOption.value = {
     title: '',
     description: '',
     icon: '',
     options: [],
-    ...data,
-    options: Array.isArray(data?.options) ? data.options.map(normalizeOption) : [],
+    ...result,
+    options: Array.isArray(result?.options) ? result.options.map(normalizeOption) : [],
   };
 };
 
-const fetchMaterialColors = async () => {
-  const result = await api.getMaterialSimpleColors(configID.value, materialId.value);
-  if (!result.message && Array.isArray(result.allColors)) {
-    materialColors.value = result.allColors.map(color => ({
-      name: color.name,
-      codeHex: color?.pattern?.codeHex || '#ffffff',
+const fetchColors = async () => {
+  const result = await api.getRequiredOptionColors(configID.value);
+  const items = Array.isArray(result?.items)
+    ? result.items
+    : (Array.isArray(result?.data?.colors?.items) ? result.data.colors.items : []);
+  if (items.length) {
+    materialColors.value = items.map(color => ({
+      name: color.name || color.label || color.title || '',
+      codeHex: color?.pattern?.codeHex || color?.codeHex || color?.hex || '#ffffff',
     }));
   }
 };
@@ -258,9 +252,8 @@ const saveComponent = async () => {
   }
 
   isLoading.value = true;
-  const result = await api.updateMaterialSimpleAdditionalOption(
+  const result = await api.updateAdditionalOption(
     configID.value,
-    materialId.value,
     additionalOptionId.value,
     additionalOption.value,
   );
@@ -280,7 +273,6 @@ const goBack = () => {
     params: {
       configId: configID.value,
     },
-    query: materialId.value > 0 ? { materialIndex: materialId.value } : {},
   });
 };
 

@@ -229,17 +229,10 @@ import { __ } from "@wordpress/i18n";
 
 const route = useRoute();
 const router = useRouter();
-const props = defineProps({
-  materialId: {
-    type: [String, Number],
-    default: 0,
-  },
-});
 const configID = ref(route.params.configId);
-const materialId = computed(() => props.materialId ?? route.query.materialIndex ?? route.params.materialId ?? 0);
 
-const MaterialSimpleSizes = ref([]);
-const MaterialSimpleShapes = ref([]);
+const fixingMethodSizes = ref([]);
+const fixingMethodShapes = ref([]);
 const isFetching = ref(true);
 const isNewFixing = ref(false);
 const isLoading = ref(false);
@@ -267,7 +260,7 @@ const availableManagedMethods = computed(() => manageFixingMethods.value
     return !fixingMethods.value.some((fx) => Number(fx.fixingMethodId) === method.value);
   }));
 
-const getExclusionOptions = (type) => (type === "sizes" ? MaterialSimpleSizes.value : MaterialSimpleShapes.value)
+const getExclusionOptions = (type) => (type === "sizes" ? fixingMethodSizes.value : fixingMethodShapes.value)
   .map((option) => ({
     label: option.name,
     value: option.value,
@@ -311,9 +304,9 @@ const exclusionSummaryLabels = (field, type, fallback, prefix) => {
 };
 
 const fetchMaterialShapes = async () => {
-  const res = await api.getMaterialSimpleShapes(configID.value, materialId.value);
-  if (!res.message && res.materialShapes) {
-    MaterialSimpleShapes.value = res.materialShapes.map((shape) => ({
+  const res = await api.getRequiredOptionShapes(configID.value);
+  if (!res.message && res.items) {
+    fixingMethodShapes.value = res.items.map((shape) => ({
       name: res.manageShapes?.[shape.shapeId]?.name || "Shape",
       value: shape.shapeId,
     }));
@@ -323,17 +316,18 @@ const fetchMaterialShapes = async () => {
 const fetchMaterialFixingMethods = async () => {
   isFetching.value = true;
   try {
-    const res = await api.getMaterialSimpleFixingMethods(configID.value, materialId.value);
-    MaterialSimpleSizes.value = (res.materialSizes || []).map((size, index) => ({ name: size.label, value: index }));
-    if (!res.message) {
-      fixingMethods.value = (res.materialFixingMethods || []).map((fx) => ({
+    const res = await api.getRequiredOptionFixingMethods(configID.value);
+    const fixingMethodsData = res;
+    fixingMethodSizes.value = (fixingMethodsData?.sizes || []).map((size, index) => ({ name: size.label, value: index }));
+    if (!res.message && fixingMethodsData) {
+      fixingMethods.value = (fixingMethodsData.items || []).map((fx) => ({
         isDefault: Boolean(fx.isDefault),
         fixingMethodId: Number(fx.fixingMethodId ?? -1),
         excludeSizes: normalizeArray(fx.excludeSizes),
         excludeShapes: normalizeArray(fx.excludeShapes),
         additionalPrice: Number(fx.additionalPrice || 0),
       }));
-      manageFixingMethods.value = res.manageFixingMethods || [];
+      manageFixingMethods.value = fixingMethodsData.manageFixingMethods || [];
     }
   } finally {
     isFetching.value = false;
@@ -344,7 +338,7 @@ const updateFixingMethods = async () => {
   if (isLoading.value) return;
   isLoading.value = true;
   try {
-    const res = await api.updateMaterialSimpleFixingMethods(configID.value, materialId.value, fixingMethods.value);
+    const res = await api.updateRequiredOptionFixingMethods(configID.value, fixingMethods.value);
     if (res?.success) {
       toastMessage(res.message);
       isNewFixing.value = false;
@@ -359,19 +353,58 @@ const updateFixingMethods = async () => {
 };
 
 const addFixingMethods = async () => {
-  fixingMethods.value.push({ ...fixingMethod.value });
-  await updateFixingMethods();
+  isLoading.value = true;
+  try {
+    const payload = { ...fixingMethod.value, isDefault: !fixingMethods.value.length };
+    const res = await api.addRequiredOptionFixingMethodItem(configID.value, payload);
+    if (res?.success) {
+      toastMessage(res.message);
+      isNewFixing.value = false;
+      isEdit.value = false;
+      await fetchMaterialFixingMethods();
+    } else {
+      toastMessage(res?.message || __("Unable to add fixing method", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const updateMaterialFixingMethods = async () => {
-  fixingMethods.value[fixingMethodId.value] = { ...fixingMethod.value };
-  await updateFixingMethods();
+  if (fixingMethodId.value === null) return;
+  isLoading.value = true;
+  try {
+    const res = await api.updateRequiredOptionFixingMethodItem(configID.value, fixingMethodId.value, { ...fixingMethod.value });
+    if (res?.success) {
+      toastMessage(res.message);
+      isNewFixing.value = false;
+      isEdit.value = false;
+      await fetchMaterialFixingMethods();
+    } else {
+      toastMessage(res?.message || __("Unable to update fixing method", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const deleteFixingMethods = async () => {
-  fixingMethods.value.splice(fixingMethodId.value, 1);
   openModal.value = false;
-  await updateFixingMethods();
+  if (fixingMethodId.value === null) return;
+  isLoading.value = true;
+  try {
+    const res = await api.deleteRequiredOptionFixingMethodItem(configID.value, fixingMethodId.value);
+    if (res?.success) {
+      toastMessage(res.message);
+      isNewFixing.value = false;
+      isEdit.value = false;
+      await fetchMaterialFixingMethods();
+    } else {
+      toastMessage(res?.message || __("Unable to delete fixing method", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const selectMaterialFixingMethod = (id, fx, isDeleting = false) => {
@@ -391,8 +424,17 @@ const selectMaterialFixingMethod = (id, fx, isDeleting = false) => {
 };
 
 const selectDefault = async (key) => {
-  fixingMethods.value.forEach((fx, index) => fx.isDefault = index === key);
-  await updateFixingMethods();
+  isLoading.value = true;
+  try {
+    const res = await api.setRequiredOptionDefault(configID.value, "fixing-methods", key);
+    if (res?.success) {
+      await fetchMaterialFixingMethods();
+    } else {
+      toastMessage(res?.message || __("Unable to update default fixing method", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const newFixing = () => {

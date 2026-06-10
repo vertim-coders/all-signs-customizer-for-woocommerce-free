@@ -172,14 +172,7 @@ import { __ } from "@wordpress/i18n";
 
 const route = useRoute();
 const router = useRouter();
-const props = defineProps({
-  materialId: {
-    type: [String, Number],
-    default: 0,
-  },
-});
 const configID = ref(route.params.configId);
-const materialId = computed(() => props.materialId ?? route.query.materialIndex ?? route.params.materialId ?? 0);
 
 const isFetching = ref(true);
 const isNewShape = ref(false);
@@ -229,10 +222,10 @@ const normalizeShape = (item) => ({
 const fetchMaterialShapes = async () => {
   isFetching.value = true;
   try {
-    const res = await api.getMaterialSimpleShapes(configID.value, materialId.value);
+    const res = await api.getRequiredOptionShapes(configID.value);
     if (!res.message) {
       manageShapes.value = res.manageShapes || [];
-      shapes.value = (res.materialShapes || []).map(normalizeShape);
+      shapes.value = (res.items || []).map(normalizeShape);
     }
   } finally {
     isFetching.value = false;
@@ -243,7 +236,7 @@ const updateShapes = async () => {
   if (isLoading.value) return;
   isLoading.value = true;
   try {
-    const res = await api.updateMaterialSimpleShapes(configID.value, materialId.value, shapes.value);
+    const res = await api.updateRequiredOptionShapes(configID.value, shapes.value);
     if (res?.success) {
       toastMessage(res.message);
       isNewShape.value = false;
@@ -258,23 +251,59 @@ const updateShapes = async () => {
 };
 
 const addShapes = async () => {
-  const nextShape = normalizeShape(shape.value);
-  if (!shapes.value.length) nextShape.isDefault = true;
-  shapes.value.push(nextShape);
-  await updateShapes();
+  isLoading.value = true;
+  try {
+    const payload = normalizeShape(shape.value);
+    payload.isDefault = !shapes.value.length;
+    const res = await api.addRequiredOptionShapeItem(configID.value, payload);
+    if (res?.success) {
+      toastMessage(res.message);
+      isNewShape.value = false;
+      isEdit.value = false;
+      await fetchMaterialShapes();
+    } else {
+      toastMessage(res?.message || __("Unable to add shape", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const updateMaterialShapes = async () => {
   if (shapeId.value === null) return;
-  shapes.value[shapeId.value] = normalizeShape(shape.value);
-  await updateShapes();
+  isLoading.value = true;
+  try {
+    const res = await api.updateRequiredOptionShapeItem(configID.value, shapeId.value, normalizeShape(shape.value));
+    if (res?.success) {
+      toastMessage(res.message);
+      isNewShape.value = false;
+      isEdit.value = false;
+      await fetchMaterialShapes();
+    } else {
+      toastMessage(res?.message || __("Unable to update shape", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const deleteShapes = async () => {
   if (shapeId.value === null) return;
-  shapes.value.splice(shapeId.value, 1);
   openModal.value = false;
-  await updateShapes();
+  isLoading.value = true;
+  try {
+    const res = await api.deleteRequiredOptionShapeItem(configID.value, shapeId.value);
+    if (res?.success) {
+      toastMessage(res.message);
+      isNewShape.value = false;
+      isEdit.value = false;
+      await fetchMaterialShapes();
+    } else {
+      toastMessage(res?.message || __("Unable to delete shape", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const selectMaterialShape = (id, sh, isDeleting = false) => {
@@ -289,10 +318,17 @@ const selectMaterialShape = (id, sh, isDeleting = false) => {
 };
 
 const selectDefault = async (key) => {
-  shapes.value.forEach((sh, index) => {
-    sh.isDefault = index === key;
-  });
-  await updateShapes();
+  isLoading.value = true;
+  try {
+    const res = await api.setRequiredOptionDefault(configID.value, "shapes", key);
+    if (res?.success) {
+      await fetchMaterialShapes();
+    } else {
+      toastMessage(res?.message || __("Unable to update default shape", "all-signs-options-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const newShape = () => {

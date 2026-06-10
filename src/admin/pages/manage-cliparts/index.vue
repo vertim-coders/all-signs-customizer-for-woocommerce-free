@@ -109,7 +109,7 @@ const fetchGroups = async () => {
   isFetching.value = true;
   try {
     const result = await api.getManageCliparts();
-    clipartsGroups.value = Array.isArray(result?.data) ? result.data : [];
+    clipartsGroups.value = Array.isArray(result) ? result : [];
     syncGroupRouteState();
   } finally {
     isFetching.value = false;

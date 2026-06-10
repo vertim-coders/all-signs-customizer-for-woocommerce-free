@@ -7,11 +7,15 @@ const api = {
   //function related to configuration
   getConfigs: async (url = "") => {
     const configs = await axios.get(asowp_api_url + "/configs/" + url);
-    return configs.data;
+    return {
+      items: configs.data?.data ?? [],
+      totalPages: configs.data?.totalPages ?? 0,
+      totalConfigsFound: configs.data?.totalConfigsFound ?? 0,
+    };
   },
   getConfig: async (id) => {
     const config = await axios.get(asowp_api_url + "/configs/" + id);
-    return config.data;
+    return config.data?.data ?? config.data;
   },
   getPreviewConfig: async (id) => {
     const config = await axios.get(
@@ -43,7 +47,7 @@ const api = {
       "/woocommerce-products/unassigned" +
       (query ? `?${query}` : "");
     const res = await axios.get(url);
-    return res.data;
+    return res.data?.data ?? res.data;
   },
 
   getHomeStats: async (params = {}) => {
@@ -77,41 +81,101 @@ const api = {
     return quote.data;
   },
 
-  //function related to maretials
+  // function related to required materials
 
   updateMaterial: async (configId, materialId, material) => {
     const edit = await axios.put(
-      asowp_api_url + "/configs/" + configId + "/materials/" + materialId,
+      asowp_api_url + "/configs/" + configId + "/additional-options/materials/items/" + materialId,
       material
     );
     return edit.data;
   },
   getMaterials: async (configId) => {
     const material = await axios.get(
-      asowp_api_url + "/configs/" + configId + "/materials"
+      asowp_api_url + "/configs/" + configId + "/additional-options/materials"
     );
     return material.data;
   },
   getMaterial: async (configId, materialId) => {
     const material = await axios.get(
-      asowp_api_url + "/configs/" + configId + "/materials/" + materialId
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/additional-options/materials/items/" +
+        materialId
     );
     return material.data;
   },
+  addMaterial: async (configId, material) => {
+    const add = await axios.post(
+      asowp_api_url + "/configs/" + configId + "/additional-options/materials",
+      material
+    );
+    return add.data;
+  },
   deleteMaterial: async (configId, materialId) => {
     const del = await axios.delete(
-      asowp_api_url + "/configs/" + configId + "/materials/" + materialId
+      asowp_api_url + "/configs/" + configId + "/additional-options/materials/items/" + materialId
     );
     return del.data;
   },
-  addMaterial: async (configId, material) => {
+  setDefaultMaterial: async (configId, materialId) => {
+    const def = await axios.put(
+      asowp_api_url + "/configs/" + configId + "/additional-options/materials/items/" + materialId + "/default"
+    );
+    return def.data;
+  },
+  // function related to additional components within a material
+  getAdditionalOptions: async (configId) => {
+    const additionalOptions = await axios.get(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/additional-options/components"
+    );
+    return additionalOptions.data;
+  },
+  addAdditionalOption: async (configId, additionalOption) => {
     const post = await axios.post(
-      asowp_api_url + "/configs/" + configId + "/materials",
-      material
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/additional-options/components",
+      additionalOption
     );
     return post.data;
   },
-
+  getAdditionalOptionItems: async (configId, additionalOptionId) => {
+    const additionalOption = await axios.get(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/additional-options/components/items/" +
+        additionalOptionId
+    );
+    return additionalOption.data?.data ?? additionalOption.data;
+  },
+  updateAdditionalOption: async (configId, additionalOptionId, additionalOption) => {
+    const edit = await axios.put(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/additional-options/components/items/" +
+        additionalOptionId,
+      additionalOption
+    );
+    return edit.data;
+  },
+  deleteAdditionalOption: async (configId, additionalOptionId) => {
+    const del = await axios.delete(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/additional-options/components/items/" +
+        additionalOptionId
+    );
+    return del.data;
+  },
   //function related to Manage font
   getGoogleFonts: async () => {
     const fonts = await axios.get(asowp_api_url + "/google-fonts");
@@ -179,7 +243,7 @@ const api = {
 
   getManageCliparts: async () => {
     const Managecliparts = await axios.get(asowp_api_url + "/manage-cliparts");
-    return Managecliparts.data;
+    return Managecliparts.data?.data ?? Managecliparts.data;
   },
   addManageClipart: async (manageclipart) => {
     const state = await axios.post(
@@ -279,316 +343,546 @@ const api = {
     return deleteColor.data;
   },
 
-  //Function related to Material Simple
+  //Function related to required options
 
   //Function related to shapes
-  updateMaterialSimpleShapes: async (configId, materialId, shapes) => {
+  updateRequiredOptionShapes: async (configId, shapes) => {
     const edit = await axios.put(
       asowp_api_url +
         "/configs/" +
         configId +
-        "/materials/" +
-        materialId +
-        "/shapes/",
+        "/required-options/shapes",
       shapes
     );
     return edit.data;
   },
-  getMaterialSimpleShapes: async (configId, materialId) => {
+  getRequiredOptionShapes: async (configId) => {
     const result = await axios.get(
       asowp_api_url +
         "/configs/" +
         configId +
-        "/materials/" +
-        materialId +
-        "/shapes"
+        "/required-options/shapes"
     );
-    return result.data;
+    return result.data?.data?.shapes ?? result.data;
   },
-  //Function related to sizes
-  updateMaterialSimpleSizes: async (configId, materialId, sizes) => {
+  addRequiredOptionShapeItem: async (configId, shape) => {
+    const add = await axios.post(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/shapes/items",
+      shape
+    );
+    return add.data;
+  },
+  getRequiredOptionShapeItem: async (configId, itemId) => {
+    const result = await axios.get(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/shapes/items/" +
+        itemId
+    );
+    return result.data?.data?.shape ?? result.data;
+  },
+  updateRequiredOptionShapeItem: async (configId, itemId, shape) => {
     const edit = await axios.put(
       asowp_api_url +
         "/configs/" +
         configId +
-        "/materials/" +
-        materialId +
-        "/sizes/",
+        "/required-options/shapes/items/" +
+        itemId,
+      shape
+    );
+    return edit.data;
+  },
+  deleteRequiredOptionShapeItem: async (configId, itemId) => {
+    const del = await axios.delete(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/shapes/items/" +
+        itemId
+    );
+    return del.data;
+  },
+  //Function related to sizes
+  updateRequiredOptionSizes: async (configId, sizes) => {
+    const edit = await axios.put(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/sizes",
       sizes
     );
     return edit.data;
   },
-  getMaterialSimpleSizes: async (configId, materialId) => {
+  getRequiredOptionSizes: async (configId) => {
     const result = await axios.get(
       asowp_api_url +
         "/configs/" +
         configId +
-        "/materials/" +
-        materialId +
-        "/sizes"
+        "/required-options/sizes"
     );
-    return result.data;
+    return result.data?.data?.sizes ?? result.data;
   },
-  //Function related to colors
-  updateMaterialSimpleColors: async (configId, materialId, colors) => {
+  addRequiredOptionSizeItem: async (configId, size) => {
+    const add = await axios.post(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/sizes/items",
+      size
+    );
+    return add.data;
+  },
+  getRequiredOptionSizeItem: async (configId, itemId) => {
+    const result = await axios.get(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/sizes/items/" +
+        itemId
+    );
+    return result.data?.data?.size ?? result.data;
+  },
+  updateRequiredOptionSizeItem: async (configId, itemId, size) => {
     const edit = await axios.put(
       asowp_api_url +
         "/configs/" +
         configId +
-        "/materials/" +
-        materialId +
-        "/colors/",
+        "/required-options/sizes/items/" +
+        itemId,
+      size
+    );
+    return edit.data;
+  },
+  setRequiredOptionSizeDefault: async (configId, itemId) => {
+    const edit = await axios.put(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/sizes/items/" +
+        itemId +
+        "/default"
+    );
+    return edit.data;
+  },
+  deleteRequiredOptionSizeItem: async (configId, itemId) => {
+    const del = await axios.delete(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/sizes/items/" +
+        itemId
+    );
+    return del.data;
+  },
+  //Function related to pricings
+  getRequiredOptionPricings: async (configId) => {
+    const result = await axios.get(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/pricings"
+    );
+    return result.data?.data?.pricing ?? result.data;
+  },
+  updateRequiredOptionPricings: async (configId, pricings) => {
+    const edit = await axios.put(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/pricings",
+      pricings
+    );
+    return edit.data;
+  },
+  setRequiredOptionDefault: async (configId, section, itemId) => {
+    const edit = await axios.put(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/" +
+        section +
+        "/items/" +
+        itemId +
+        "/default"
+    );
+    return edit.data;
+  },
+  addRequiredOptionPricingItem: async (configId, pricing) => {
+    const add = await axios.post(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/pricings/items",
+      pricing
+    );
+    return add.data;
+  },
+  getRequiredOptionPricingItem: async (configId, itemId) => {
+    const result = await axios.get(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/pricings/items/" +
+        itemId
+    );
+    return result.data?.data?.pricing ?? result.data;
+  },
+  updateRequiredOptionPricingItem: async (configId, itemId, pricing) => {
+    const edit = await axios.put(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/pricings/items/" +
+        itemId,
+      pricing
+    );
+    return edit.data;
+  },
+  deleteRequiredOptionPricingItem: async (configId, itemId) => {
+    const del = await axios.delete(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/pricings/items/" +
+        itemId
+    );
+    return del.data;
+  },
+  updateRequiredOptionFonts: async (configId, fonts) => {
+    const edit = await axios.put(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/fonts",
+      fonts
+    );
+    return edit.data;
+  },
+  getRequiredOptionFonts: async (configId) => {
+    const result = await axios.get(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/fonts"
+    );
+    return result.data?.data?.fonts ?? result.data;
+  },
+  addRequiredOptionFontItem: async (configId, fontId) => {
+    const add = await axios.post(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/fonts/items",
+      { font_id: fontId }
+    );
+    return add.data;
+  },
+  updateRequiredOptionFontItem: async (configId, itemId, position) => {
+    const edit = await axios.put(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/fonts/items/" +
+        itemId,
+      { position }
+    );
+    return edit.data;
+  },
+  setRequiredOptionFontDefault: async (configId, itemId) => {
+    const edit = await axios.put(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/fonts/items/" +
+        itemId +
+        "/default"
+    );
+    return edit.data;
+  },
+  deleteRequiredOptionFontItem: async (configId, itemId) => {
+    const del = await axios.delete(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/fonts/items/" +
+        itemId
+    );
+    return del.data;
+  },
+  //Function related to colors
+  updateRequiredOptionColors: async (configId, colors) => {
+    const edit = await axios.put(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/colors",
       colors
     );
     return edit.data;
   },
-  getMaterialSimpleColors: async (configId, materialId) => {
+  getRequiredOptionColors: async (configId) => {
     const result = await axios.get(
       asowp_api_url +
         "/configs/" +
         configId +
-        "/materials/" +
-        materialId +
-        "/colors"
+        "/required-options/colors"
     );
-    return result.data;
+    return result.data?.data?.colors ?? result.data;
   },
-  //Function related to textImages
-  updateMaterialSimpleTextImages: async (configId, materialId, textImages) => {
+  addRequiredOptionColorItem: async (configId, color) => {
+    const add = await axios.post(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/colors/items",
+      color
+    );
+    return add.data;
+  },
+  getRequiredOptionColorItem: async (configId, itemId) => {
+    const result = await axios.get(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/colors/items/" +
+        itemId
+    );
+    return result.data?.data?.color ?? result.data;
+  },
+  updateRequiredOptionColorItem: async (configId, itemId, color) => {
     const edit = await axios.put(
       asowp_api_url +
         "/configs/" +
         configId +
-        "/materials/" +
-        materialId +
-        "/text-images/",
-      textImages
+        "/required-options/colors/items/" +
+        itemId,
+      color
     );
     return edit.data;
   },
-  getMaterialSimpleTextImages: async (configId, materialId) => {
-    const result = await axios.get(
+  deleteRequiredOptionColorItem: async (configId, itemId) => {
+    const del = await axios.delete(
       asowp_api_url +
         "/configs/" +
         configId +
-        "/materials/" +
-        materialId +
-        "/text-images"
+        "/required-options/colors/items/" +
+        itemId
     );
-    return result.data;
-  }
-  ,
-  //Function related to discounts
-  updateMaterialSimpleDiscount: async (configId, materialId, textImages) => {
-    const edit = await axios.put(
-      asowp_api_url +
-        "/configs/" +
-        configId +
-        "/materials/" +
-        materialId +
-        "/discounts/",
-      textImages
-    );
-    return edit.data;
+    return del.data;
   },
-  getMaterialSimpleDiscounts: async (configId, materialId) => {
-    const result = await axios.get(
-      asowp_api_url +
-        "/configs/" +
-        configId +
-        "/materials/" +
-        materialId +
-        "/discounts"
-    );
-    return result.data;
-  },
+
   //Function related to borders
-  updateMaterialSimpleBorders: async (configId, materialId, borders) => {
+  updateRequiredOptionBorders: async (configId, borders) => {
     const edit = await axios.put(
       asowp_api_url +
         "/configs/" +
         configId +
-        "/materials/" +
-        materialId +
-        "/borders/",
+        "/required-options/borders",
       borders
     );
     return edit.data;
   },
-  getMaterialSimpleBorders: async (configId, materialId) => {
+  getRequiredOptionBorders: async (configId) => {
     const result = await axios.get(
       asowp_api_url +
         "/configs/" +
         configId +
-        "/materials/" +
-        materialId +
-        "/borders"
+        "/required-options/borders"
     );
-    return result.data;
+    return result.data?.data?.borders ?? result.data;
   },
-  //Function related to fixing methods
-  updateMaterialSimpleFixingMethods: async (
-    configId,
-    materialId,
-    fixingMethods
-  ) => {
+  addRequiredOptionBorderItem: async (configId, border) => {
+    const add = await axios.post(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/borders/items",
+      border
+    );
+    return add.data;
+  },
+  getRequiredOptionBorderItem: async (configId, itemId) => {
+    const result = await axios.get(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/borders/items/" +
+        itemId
+    );
+    return result.data?.data?.border ?? result.data;
+  },
+  updateRequiredOptionBorderItem: async (configId, itemId, border) => {
     const edit = await axios.put(
       asowp_api_url +
         "/configs/" +
         configId +
-        "/materials/" +
-        materialId +
-        "/fixing-methods/",
+        "/required-options/borders/items/" +
+        itemId,
+      border
+    );
+    return edit.data;
+  },
+  deleteRequiredOptionBorderItem: async (configId, itemId) => {
+    const del = await axios.delete(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/borders/items/" +
+        itemId
+    );
+    return del.data;
+  },
+  //Function related to fixing methods
+  updateRequiredOptionFixingMethods: async (configId, fixingMethods) => {
+    const edit = await axios.put(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/fixing-methods",
       fixingMethods
     );
     return edit.data;
   },
-  getMaterialSimpleFixingMethods: async (configId, materialId) => {
+  getRequiredOptionFixingMethods: async (configId) => {
     const result = await axios.get(
       asowp_api_url +
         "/configs/" +
         configId +
-        "/materials/" +
-        materialId +
-        "/fixing-methods"
+        "/required-options/fixing-methods"
     );
-    return result.data;
+    return result.data?.data?.fixingMethods ?? result.data;
+  },
+  addRequiredOptionFixingMethodItem: async (configId, fixingMethod) => {
+    const add = await axios.post(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/fixing-methods/items",
+      fixingMethod
+    );
+    return add.data;
+  },
+  getRequiredOptionFixingMethodItem: async (configId, itemId) => {
+    const result = await axios.get(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/fixing-methods/items/" +
+        itemId
+    );
+    return result.data?.data?.fixingMethod ?? result.data;
+  },
+  updateRequiredOptionFixingMethodItem: async (configId, itemId, fixingMethod) => {
+    const edit = await axios.put(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/fixing-methods/items/" +
+        itemId,
+      fixingMethod
+    );
+    return edit.data;
+  },
+  deleteRequiredOptionFixingMethodItem: async (configId, itemId) => {
+    const del = await axios.delete(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/fixing-methods/items/" +
+        itemId
+    );
+    return del.data;
   },
   // create additional options component
-  addMaterialSimpleAdditionalOption: async (
-    configId,
-    materialId,
-    component
-  ) => {
+  addRequiredOptionComponent: async (configId, component) => {
     const post = await axios.post(
       asowp_api_url +
         "/configs/" +
         configId +
-        "/materials/" +
-        materialId +
-        "/additional-options",
+        "/required-options/components",
       component
     );
     return post.data;
   },
-  getMaterialSimpleAdditionalOptions: async (configId, materialId) => {
+  getRequiredOptionComponents: async (configId) => {
     const material = await axios.get(
       asowp_api_url +
         "/configs/" +
         configId +
-        "/materials/" +
-        materialId +
-        "/additional-options"
+        "/required-options/components"
     );
-    return material.data;
+    return material.data?.data?.components ?? material.data;
   },
-  updateMaterialSimpleAdditionalOption: async (
-    configId,
-    materialId,
-    componentId,
-    component
-  ) => {
+  updateRequiredOptionComponent: async (configId, componentId, component) => {
     const material = await axios.put(
       asowp_api_url +
         "/configs/" +
         configId +
-        "/materials/" +
-        materialId +
-        "/additional-options/" +
+        "/required-options/components/items/" +
         componentId,
       component
     );
     return material.data;
   },
-  deleteMaterialSimpleAdditionalOption: async (
-    configId,
-    materialId,
-    componentId
-  ) => {
+  deleteRequiredOptionComponent: async (configId, componentId) => {
     const material = await axios.delete(
       asowp_api_url +
         "/configs/" +
         configId +
-        "/materials/" +
-        materialId +
-        "/additional-options/" +
+        "/required-options/components/items/" +
         componentId
     );
     return material.data;
   },
   // Additional Options component options
-  addMaterialSimpleAdditionalOptionsItem: async (
-    config,
-    material,
-    component,
-    option
-  ) => {
+  addRequiredOptionComponentOption: async (config, component, option) => {
     const post = await axios.post(
       asowp_api_url +
         "/configs/" +
         config +
-        "/materials/" +
-        material +
-        "/additional-options/" +
+        "/required-options/components/items/" +
         component +
-        "/new-option",
+        "/options",
       option
     );
     return post.data;
   },
-  getMaterialSimpleAdditionalOptionsItems: async (
-    configId,
-    materialId,
-    componentId
-  ) => {
+  getRequiredOptionComponentOptions: async (configId, componentId) => {
     const material = await axios.get(
       asowp_api_url +
         "/configs/" +
         configId +
-        "/materials/" +
-        materialId +
-        "/additional-options/" +
-        componentId
+        "/required-options/components/items/" +
+        componentId +
+        "/options"
     );
-    return material.data;
+    return material.data?.data?.componentOptions ?? material.data;
   },
-  updateMaterialSimpleAdditionalOptionsItem: async (
-    configId,
-    materialId,
-    componentId,
-    optionId,
-    option
-  ) => {
+  updateRequiredOptionComponentOption: async (configId, componentId, optionId, option) => {
     const material = await axios.put(
       asowp_api_url +
         "/configs/" +
         configId +
-        "/materials/" +
-        materialId +
-        "/additional-options/" +
+        "/required-options/components/items/" +
         componentId +
-        "/" +
+        "/options/" +
         optionId,
       option
     );
     return material.data;
   },
-  deleteMaterialSimpleAdditionalOptionsItem: async (
-    configId,
-    materialId,
-    componentId,
-    optionId,
-    option
-  ) => {
+  deleteRequiredOptionComponentOption: async (configId, componentId, optionId, option) => {
     const material = await axios.delete(
       asowp_api_url +
         "/configs/" +
         configId +
-        "/materials/" +
-        materialId +
-        "/additional-options/" +
+        "/required-options/components/items/" +
         componentId +
-        "/" +
+        "/options/" +
         optionId,
       option
     );
@@ -596,159 +890,15 @@ const api = {
   },
 
   //Function related to Material with component
-  updateMaterialAdvanceComponents: async (configId, materialId, components) => {
-    const post = await axios.post(
+  updateRequiredOptionComponents: async (configId, components) => {
+    const post = await axios.put(
       asowp_api_url +
         "/configs/" +
         configId +
-        "/materials/" +
-        materialId +
-        "/components/update",
+        "/required-options/components",
       components
     );
     return post.data;
-  },
-  // create component
-  addMaterialAdvanceComponent: async (configId, materialId, component) => {
-    const post = await axios.post(
-      asowp_api_url +
-        "/configs/" +
-        configId +
-        "/materials/" +
-        materialId +
-        "/components",
-      component
-    );
-    return post.data;
-  },
-  getMaterialAdvanceComponent: async (configId, materialId) => {
-    const material = await axios.get(
-      asowp_api_url + "/configs/" + configId + "/materials/" + materialId + "/"
-    );
-    return material.data;
-  },
-  updateMaterialAdvanceComponent: async (
-    configId,
-    materialId,
-    componentId,
-    component
-  ) => {
-    const material = await axios.put(
-      asowp_api_url +
-        "/configs/" +
-        configId +
-        "/materials/" +
-        materialId +
-        "/components/" +
-        componentId,
-      component
-    );
-    return material.data;
-  },
-  deleteMaterialAdvanceComponent: async (configId, materialId, componentId) => {
-    const material = await axios.delete(
-      asowp_api_url +
-        "/configs/" +
-        configId +
-        "/materials/" +
-        materialId +
-        "/components/" +
-        componentId
-    );
-    return material.data;
-  },
-  // Material Advance Options
-  getMaterialAdvanceComponentOptions: async (config, material, component) => {
-    const options = await axios.get(
-      asowp_api_url +
-        "/configs/" +
-        config +
-        "/materials/" +
-        material +
-        "/components/" +
-        component
-    );
-    return options.data;
-  },
-  addMaterialAdvanceComponentOption: async (
-    config,
-    material,
-    component,
-    option
-  ) => {
-    const post = await axios.post(
-      asowp_api_url +
-        "/configs/" +
-        config +
-        "/materials/" +
-        material +
-        "/components/" +
-        component +
-        "/new-option",
-      option
-    );
-    return post.data;
-  },
-  getMaterialAdvanceComponentOption: async (
-    configId,
-    materialId,
-    componentId,
-    optionId
-  ) => {
-    const material = await axios.get(
-      asowp_api_url +
-        "/configs/" +
-        configId +
-        "/materials/" +
-        materialId +
-        "/components/" +
-        componentId +
-        "/" +
-        optionId
-    );
-    return material.data;
-  },
-  updateMaterialAdvanceComponentOption: async (
-    configId,
-    materialId,
-    componentId,
-    optionId,
-    option
-  ) => {
-    const material = await axios.put(
-      asowp_api_url +
-        "/configs/" +
-        configId +
-        "/materials/" +
-        materialId +
-        "/components/" +
-        componentId +
-        "/" +
-        optionId,
-      option
-    );
-    return material.data;
-  },
-  deleteMaterialAdvanceComponentOption: async (
-    configId,
-    materialId,
-    componentId,
-    optionId,
-    option
-  ) => {
-    const material = await axios.delete(
-      asowp_api_url +
-        "/configs/" +
-        configId +
-        "/materials/" +
-        materialId +
-        "/components/" +
-        componentId +
-        "/" +
-        optionId,
-      option
-    );
-    return material.data;
   },
   //shapes routes
   getGlobalShapes: async () => {
@@ -1022,20 +1172,20 @@ const api = {
   //custom additional
   getCustomAdditionals: async (config) => {
     const CustomAdditionals = await axios.get(
-      asowp_api_url + "/configs/" + config + "/custom-additionals"
+      asowp_api_url + "/configs/" + config + "/additional-options/inputs"
     );
     return CustomAdditionals.data;
   },
   updateCustomAdditionals: async (config, CustomAdditionals) => {
-    const state = await axios.post(
-      asowp_api_url + "/configs/" + config + "/custom-additionals/update",
+    const state = await axios.put(
+      asowp_api_url + "/configs/" + config + "/additional-options/inputs",
       CustomAdditionals
     );
     return state.data;
   },
   addCustomAdditional: async (config, CustomAdditional) => {
     const state = await axios.post(
-      asowp_api_url + "/configs/" + config + "/custom-additionals",
+      asowp_api_url + "/configs/" + config + "/additional-options/inputs",
       CustomAdditional
     );
     return state.data;
@@ -1045,11 +1195,11 @@ const api = {
     CustomAdditionalId,
     CustomAdditional
   ) => {
-    const state = await axios.post(
+    const state = await axios.put(
       asowp_api_url +
         "/configs/" +
         config +
-        "/custom-additionals/" +
+        "/additional-options/inputs/items/" +
         CustomAdditionalId,
       CustomAdditional
     );
@@ -1060,7 +1210,7 @@ const api = {
       asowp_api_url +
         "/configs/" +
         config +
-        "/custom-additionals/" +
+        "/additional-options/inputs/items/" +
         CustomAdditionalId
     );
     return CustomAdditional.data;
@@ -1070,7 +1220,7 @@ const api = {
       asowp_api_url +
         "/configs/" +
         config +
-        "/custom-additionals/" +
+        "/additional-options/inputs/items/" +
         CustomAdditionalId
     );
     return CustomAdditional.data;

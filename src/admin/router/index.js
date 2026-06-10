@@ -127,17 +127,9 @@ const router = createRouter({
           component: ShapesPage,
         },
         {
-          path: "required-options/pricing",
-          name: "pricing",
-          component: PricingsPage,
-        },
-        {
           path: "required-options/pricings",
-          redirect: (to) => ({
-            name: "pricing",
-            params: { configId: to.params.configId },
-            query: to.query,
-          }),
+          name: "pricings",
+          component: PricingsPage,
         },
         {
           path: "required-options/fonts",
