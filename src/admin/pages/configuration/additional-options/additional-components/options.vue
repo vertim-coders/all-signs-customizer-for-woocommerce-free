@@ -97,9 +97,15 @@
           <div class="asowp-component-grid asowp-component-grid-2">
             <label class="asowp-component-field">
               <span>Exclude colors</span>
-              <select v-model="item.excludeColors" multiple>
-                <option v-for="color in materialColors" :key="color.name" :value="color.name">{{ color.name }}</option>
-              </select>
+              <Multiselect
+                v-model="item.excludeColors"
+                mode="multiple"
+                :options="materialColors"
+                label="name"
+                valueProp="name"
+                trackBy="name"
+                placeholder=""
+              />
               <small>No color exclusion.</small>
             </label>
             <div class="asowp-component-surface">
@@ -136,6 +142,7 @@ import { defineComponent, h, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import api from '@/admin/Api/api';
 import toastMessage from '@/admin/utils/functions';
+import Multiselect from '@vueform/multiselect';
 import { ChevronDownIcon, ChevronUpIcon, Loader2Icon, PlusIcon, Trash2Icon } from 'lucide-vue-next';
 
 const route = useRoute();

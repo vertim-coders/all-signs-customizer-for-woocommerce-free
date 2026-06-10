@@ -40,7 +40,7 @@ class ASOWP_Api_Customs_Additionals_Components extends ASOWP_Api_Customs_Additio
 
         register_rest_route(
             $this->namespace,
-            $base_route . '/(?P<component_id>[^/]+)',
+            $base_route . '/items/(?P<component_id>[^/]+)',
             array(
                 array(
                     'methods' => WP_REST_Server::READABLE,
@@ -92,7 +92,7 @@ class ASOWP_Api_Customs_Additionals_Components extends ASOWP_Api_Customs_Additio
 
         register_rest_route(
             $this->namespace,
-            $base_route . '/(?P<component_id>[^/]+)/options',
+            $base_route . '/items/(?P<component_id>[^/]+)/options',
             array(
                 array(
                     'methods' => WP_REST_Server::READABLE,
@@ -129,7 +129,7 @@ class ASOWP_Api_Customs_Additionals_Components extends ASOWP_Api_Customs_Additio
 
         register_rest_route(
             $this->namespace,
-            $base_route . '/(?P<component_id>[^/]+)/options/(?P<option_id>[^/]+)',
+            $base_route . '/items/(?P<component_id>[^/]+)/options/(?P<option_id>[^/]+)',
             array(
                 array(
                     'methods' => WP_REST_Server::READABLE,

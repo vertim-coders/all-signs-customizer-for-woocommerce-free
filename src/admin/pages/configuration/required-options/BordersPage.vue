@@ -193,18 +193,30 @@
 
         <label class="asowp-field-block">
           <span class="asowp-form-label">{{ __("Exclude sizes", "all-signs-options-pro") }}</span>
-          <select v-model="border.excludeSizes" multiple class="asowp-form-input asowp-multi-input">
-            <option v-for="size in borderSizes" :key="size.value" :value="size.value">{{ size.name }}</option>
-          </select>
+          <Multiselect
+            v-model="border.excludeSizes"
+            mode="multiple"
+            :options="borderSizes"
+            label="name"
+            valueProp="value"
+            trackBy="name"
+            placeholder=""
+          />
           <span class="asowp-help-text">{{ __("Hide this border for selected sizes.", "all-signs-options-pro") }}</span>
           <span class="asowp-help-text">{{ exclusionSummary(border.excludeSizes, __("No sizes excluded.", "all-signs-options-pro")) }}</span>
         </label>
 
         <label class="asowp-field-block">
           <span class="asowp-form-label">{{ __("Exclude shapes", "all-signs-options-pro") }}</span>
-          <select v-model="border.excludeShapes" multiple class="asowp-form-input asowp-multi-input">
-            <option v-for="shape in borderShapes" :key="shape.value" :value="shape.value">{{ shape.name }}</option>
-          </select>
+          <Multiselect
+            v-model="border.excludeShapes"
+            mode="multiple"
+            :options="borderShapes"
+            label="name"
+            valueProp="value"
+            trackBy="name"
+            placeholder=""
+          />
           <span class="asowp-help-text">{{ __("Hide this border for shapes that do not support it.", "all-signs-options-pro") }}</span>
           <span class="asowp-help-text">{{ exclusionSummary(border.excludeShapes, __("No shapes excluded.", "all-signs-options-pro")) }}</span>
         </label>
@@ -236,6 +248,7 @@ import api from "@/admin/Api/api";
 import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import toastMessage from "@/admin/utils/functions";
+import Multiselect from "@vueform/multiselect";
 import { Edit2Icon, GripVerticalIcon, Loader2Icon, PlusIcon, SquareIcon, Trash2Icon } from "lucide-vue-next";
 import { __ } from "@wordpress/i18n";
 

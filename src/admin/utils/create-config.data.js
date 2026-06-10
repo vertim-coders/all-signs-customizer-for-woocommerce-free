@@ -26819,6 +26819,109 @@ const configurationDemoData = [
   },
 ];
 
+const demoColorHexByName = {
+  black: "#000000",
+  blue: "#004f86",
+  brown: "#523d2a",
+  cyan: "#0891b2",
+  gold: "#e9a956",
+  gray: "#4f5756",
+  grey: "#4f5756",
+  green: "#009251",
+  lime: "#65a30d",
+  orange: "#e15616",
+  pink: "#bc4077",
+  purple: "#554585",
+  red: "#c4271d",
+  silver: "#b3b3b3",
+  transparent: "#ffffff",
+  white: "#ffffff",
+  yellow: "#fee900",
+};
+
+const isDemoTransparentValue = (value) => {
+  const normalized = String(value || "").trim().toLowerCase();
+  return !normalized || normalized === "transparent" || normalized === "rgba(0,0,0,0)" || normalized === "rgba(0, 0, 0, 0)" || normalized === "#eeeeee";
+};
+
+const demoColorName = (item) => {
+  const candidates = [
+    item?.name,
+    item?.label,
+    item?.textColor?.name,
+  ];
+  return String(candidates.find((value) => {
+    const normalized = String(value || "").trim().toLowerCase();
+    return normalized && normalized !== "transparent";
+  }) || "").trim().toLowerCase();
+};
+
+const normalizeDemoColorItem = (item) => {
+  if (!item || typeof item !== "object") return item;
+
+  const normalized = { ...item };
+  const colorName = demoColorName(normalized);
+  const mappedHex = demoColorHexByName[colorName] || "";
+
+  if (normalized.pattern && typeof normalized.pattern === "object") {
+    const patternHex = String(normalized.pattern.codeHex || "").trim();
+    if (!normalized.pattern.active || isDemoTransparentValue(patternHex)) {
+      normalized.pattern = {
+        ...normalized.pattern,
+        codeHex: mappedHex || patternHex || normalized.textColor?.codeHex || "#ffffff",
+      };
+    }
+  }
+
+  if (normalized.textColor && typeof normalized.textColor === "object") {
+    const textColorName = String(normalized.textColor.name || "").trim().toLowerCase();
+    const textMappedHex = demoColorHexByName[textColorName];
+    if (textMappedHex && isDemoTransparentValue(normalized.textColor.codeHex)) {
+      normalized.textColor = {
+        ...normalized.textColor,
+        codeHex: textMappedHex,
+      };
+    }
+  }
+
+  return normalized;
+};
+
+const normalizeDemoColorBranch = (value) => {
+  if (Array.isArray(value)) {
+    return value.map((item) => normalizeDemoColorBranch(item));
+  }
+
+  if (!value || typeof value !== "object") {
+    return value;
+  }
+
+  const normalized = { ...value };
+
+  if (normalized.colors && typeof normalized.colors === "object") {
+    const colors = { ...normalized.colors };
+    if (Array.isArray(colors.allColors)) {
+      colors.allColors = colors.allColors.map((item) => normalizeDemoColorItem(item));
+    }
+    if (Array.isArray(colors.items)) {
+      colors.items = colors.items.map((item) => normalizeDemoColorItem(item));
+    }
+    normalized.colors = colors;
+  }
+
+  Object.keys(normalized).forEach((key) => {
+    if (key !== "colors") {
+      normalized[key] = normalizeDemoColorBranch(normalized[key]);
+    }
+  });
+
+  return normalized;
+};
+
+for (let index = 0; index < configurationDemoData.length; index += 1) {
+  configurationDemoData[index] = normalizeDemoColorBranch(configurationDemoData[index]);
+}
+
 const fontData = [
   {
     id: 8,

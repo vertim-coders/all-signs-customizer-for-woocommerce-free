@@ -644,8 +644,20 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
 
     protected function shapes_response(int $config_id, $value): array
     {
+        $items = array();
+        if (is_array($value) && isset($value['items']) && is_array($value['items'])) {
+            $items = array_values(array_map(function ($shape) {
+                if (!is_array($shape)) {
+                    return array();
+                }
+
+                unset($shape['enablePricingBySurface']);
+                return $shape;
+            }, $value['items']));
+        }
+
         return array(
-            'items' => is_array($value) && isset($value['items']) && is_array($value['items']) ? array_values($value['items']) : array(),
+            'items' => $items,
             'manageShapes' => get_option('asowp_all_shapes', array()),
         );
     }
@@ -1323,7 +1335,10 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
     {
         $name = isset($color['name']) ? (string) $color['name'] : '';
         $label = isset($color['label']) ? (string) $color['label'] : '';
-        $codeHex = isset($color['textColor']['codeHex']) ? (string) $color['textColor']['codeHex'] : '';
+        $codeHex = isset($color['pattern']['codeHex']) ? (string) $color['pattern']['codeHex'] : '';
+        if ($codeHex === '' && isset($color['textColor']['codeHex'])) {
+            $codeHex = (string) $color['textColor']['codeHex'];
+        }
         $fallback = $name ?: $label ?: $codeHex ?: 'color';
 
         $type = !empty($productType) ? $this->slugify($productType, 'color') : 'item';

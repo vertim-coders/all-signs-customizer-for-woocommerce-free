@@ -136,21 +136,13 @@ class ASOWP_Api_Required_Options_Fonts extends ASOWP_Api_Required_Options_Base
         $value['label'] = isset($value['label']) ? (string) $value['label'] : 'Fonts';
         $value['description'] = isset($value['description']) ? (string) $value['description'] : '';
 
-        $font_ids = array();
-        foreach ($items as $item) {
-            if (isset($item['managedFontId']) && $item['managedFontId'] !== null) {
-                $font_ids[] = (int) $item['managedFontId'];
-            }
-        }
-
         return array(
             'success' => true,
             'data' => array(
                 'fonts' => array(
                     'label' => $value['label'],
                     'description' => $value['description'],
-                    'items' => $font_ids,
-                    'fontItems' => $items,
+                    'items' => $items,
                 ),
             ),
         );
@@ -165,6 +157,37 @@ class ASOWP_Api_Required_Options_Fonts extends ASOWP_Api_Required_Options_Base
 
         $payload = json_decode($request->get_body(), true);
         $payload = is_array($payload) ? $payload : array();
+
+        if (isset($payload['items']) && is_array($payload['items'])) {
+            $managed_fonts = $this->get_managed_fonts();
+            $payload['items'] = array_values(array_map(function ($item) use ($managed_fonts) {
+                $item = is_array($item) ? $item : array();
+                $font_id = isset($item['managedFontId']) ? (int) $item['managedFontId'] : null;
+                $managed = ($font_id !== null && isset($managed_fonts[$font_id]) && is_array($managed_fonts[$font_id])) ? $managed_fonts[$font_id] : array();
+
+                $label = isset($item['label']) && $item['label'] !== ''
+                    ? (string) $item['label']
+                    : (isset($managed['label']) && $managed['label'] !== '' ? (string) $managed['label'] : (isset($managed['name']) ? (string) $managed['name'] : ''));
+
+                $url = isset($item['url']) && $item['url'] !== ''
+                    ? (string) $item['url']
+                    : (isset($managed['url']) && $managed['url'] !== '' ? (string) $managed['url'] : '');
+
+                $preview = isset($item['previewImg']) && $item['previewImg'] !== ''
+                    ? (string) $item['previewImg']
+                    : (isset($managed['previewImg']) && $managed['previewImg'] !== '' ? (string) $managed['previewImg'] : (isset($managed['preview']) ? (string) $managed['preview'] : ''));
+
+                return array(
+                    'id' => isset($item['id']) && $item['id'] !== '' ? (string) $item['id'] : $this->generate_font_id($item, 0),
+                    'label' => $label,
+                    'url' => $url,
+                    'previewImg' => $preview,
+                    'isGoogleFont' => isset($item['isGoogleFont']) ? (bool) $item['isGoogleFont'] : (isset($managed['isGoogleFont']) ? (bool) $managed['isGoogleFont'] : false),
+                    'isDefault' => !empty($item['isDefault']),
+                    'managedFontId' => $font_id,
+                );
+            }, $payload['items']));
+        }
 
         return $this->update_section_payload($config_id, 'fonts', $payload);
     }
@@ -331,15 +354,24 @@ class ASOWP_Api_Required_Options_Fonts extends ASOWP_Api_Required_Options_Base
             $label = 'Font ' . ((int) $index + 1);
         }
 
-        $item = array(
-            'label' => $label,
-            'isDefault' => $index === 0,
-            'managedFontId' => is_numeric($font_id) ? (int) $font_id : null,
-        );
+        $url = '';
+        if (isset($font['url']) && $font['url'] !== '') {
+            $url = (string) $font['url'];
+        }
+
+        $preview_img = '';
+        if (isset($font['previewImg']) && $font['previewImg'] !== '') {
+            $preview_img = (string) $font['previewImg'];
+        } elseif (isset($font['preview']) && $font['preview'] !== '') {
+            $preview_img = (string) $font['preview'];
+        }
 
         return array(
-            'id' => $this->generate_font_id($item, $index),
+            'id' => $this->generate_font_id(array('label' => $label, 'managedFontId' => is_numeric($font_id) ? (int) $font_id : null), $index),
             'label' => $label,
+            'url' => $url,
+            'previewImg' => $preview_img,
+            'isGoogleFont' => isset($font['isGoogleFont']) ? (bool) $font['isGoogleFont'] : false,
             'isDefault' => $index === 0,
             'managedFontId' => is_numeric($font_id) ? (int) $font_id : null,
         );

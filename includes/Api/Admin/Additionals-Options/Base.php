@@ -25,14 +25,50 @@ class ASOWP_Api_Customs_Additionals_Base extends WP_REST_Controller
 
     protected function save_meta(int $config_id, array $meta)
     {
-        return ConfigSchemaNormalizer::save_meta($config_id, $meta);
+        global $wpdb;
+
+        $serialized_meta = maybe_serialize($meta);
+        $updated = $wpdb->update(
+            $wpdb->postmeta,
+            array('meta_value' => $serialized_meta),
+            array(
+                'post_id' => $config_id,
+                'meta_key' => 'asowp-configs-meta',
+            ),
+            array('%s'),
+            array('%d', '%s')
+        );
+
+        if ($updated === false) {
+            return false;
+        }
+
+        if ($updated === 0) {
+            $existing = $wpdb->get_var(
+                $wpdb->prepare(
+                    "SELECT meta_value FROM {$wpdb->postmeta} WHERE post_id = %d AND meta_key = %s LIMIT 1",
+                    $config_id,
+                    'asowp-configs-meta'
+                )
+            );
+
+            if ($existing === null) {
+                $added = add_post_meta($config_id, 'asowp-configs-meta', $meta, true);
+                if ($added === false) {
+                    return false;
+                }
+            }
+        }
+
+        clean_post_cache($config_id);
+        return true;
     }
 
     protected function get_additional_options(int $config_id): array
     {
-        $normalized = $this->get_normalized_meta($config_id);
-        $additional_options = isset($normalized['additionalOptions']) && is_array($normalized['additionalOptions'])
-            ? $normalized['additionalOptions']
+        $meta = $this->get_meta($config_id);
+        $additional_options = isset($meta['additionalOptions']) && is_array($meta['additionalOptions'])
+            ? $meta['additionalOptions']
             : array();
 
         return $additional_options;

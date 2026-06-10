@@ -40,7 +40,7 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
 
         register_rest_route(
             $this->namespace,
-            $base_route . '/(?P<material_id>[^/]+)',
+            $base_route . '/items/(?P<material_id>[^/]+)',
             array(
                 array(
                     'methods' => WP_REST_Server::READABLE,
@@ -75,6 +75,28 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
                 array(
                     'methods' => WP_REST_Server::DELETABLE,
                     'callback' => array($this, 'delete_material'),
+                    'permission_callback' => array($this, 'get_config_permissions_check'),
+                    'args' => array(
+                        'config_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'material_id' => array(
+                            'type' => 'string',
+                            'required' => true,
+                        ),
+                    ),
+                ),
+            )
+        );
+
+        register_rest_route(
+            $this->namespace,
+            $base_route . '/items/(?P<material_id>[^/]+)/default',
+            array(
+                array(
+                    'methods' => WP_REST_Server::EDITABLE,
+                    'callback' => array($this, 'set_default_material'),
                     'permission_callback' => array($this, 'get_config_permissions_check'),
                     'args' => array(
                         'config_id' => array(
@@ -175,6 +197,15 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
 
         $materials = $this->get_section_items($config_id, 'materials');
         $payload['id'] = isset($payload['id']) && $payload['id'] !== '' ? (string) $payload['id'] : 'material-' . (count($materials) + 1);
+        $payload['label'] = trim((string) ($payload['label'] ?? $payload['name'] ?? ''));
+        $payload['image'] = (string) ($payload['image'] ?? $payload['icon'] ?? '');
+        $payload['previewImg'] = (string) ($payload['previewImg'] ?? $payload['image'] ?? $payload['icon'] ?? '');
+        $payload['popupImg'] = (string) ($payload['popupImg'] ?? '');
+        $payload['popupImage'] = (string) ($payload['popupImage'] ?? $payload['popupImg'] ?? '');
+        $payload['active'] = isset($payload['active']) ? (bool) $payload['active'] : true;
+        $payload['sourceIndex'] = isset($payload['sourceIndex']) ? absint($payload['sourceIndex']) : count($materials);
+        $payload['excludeComponentIds'] = isset($payload['excludeComponentIds']) && is_array($payload['excludeComponentIds']) ? array_values($payload['excludeComponentIds']) : array();
+        unset($payload['type']);
         $materials[] = $payload;
 
         $saved = $this->set_section_items($config_id, 'materials', $materials, 'Materials', '');
@@ -209,6 +240,15 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
         }
 
         $payload['id'] = isset($payload['id']) && $payload['id'] !== '' ? (string) $payload['id'] : (isset($materials[$index]['id']) ? $materials[$index]['id'] : $material_id);
+        $payload['label'] = trim((string) ($payload['label'] ?? $payload['name'] ?? ($materials[$index]['label'] ?? $materials[$index]['name'] ?? '')));
+        $payload['image'] = (string) ($payload['image'] ?? $payload['icon'] ?? ($materials[$index]['image'] ?? $materials[$index]['icon'] ?? ''));
+        $payload['previewImg'] = (string) ($payload['previewImg'] ?? $payload['image'] ?? $payload['icon'] ?? ($materials[$index]['previewImg'] ?? $materials[$index]['image'] ?? $materials[$index]['icon'] ?? ''));
+        $payload['popupImg'] = (string) ($payload['popupImg'] ?? ($materials[$index]['popupImg'] ?? ''));
+        $payload['popupImage'] = (string) ($payload['popupImage'] ?? $payload['popupImg'] ?? ($materials[$index]['popupImage'] ?? ''));
+        $payload['active'] = isset($payload['active']) ? (bool) $payload['active'] : (isset($materials[$index]['active']) ? (bool) $materials[$index]['active'] : true);
+        $payload['sourceIndex'] = isset($payload['sourceIndex']) ? absint($payload['sourceIndex']) : (isset($materials[$index]['sourceIndex']) ? absint($materials[$index]['sourceIndex']) : $index);
+        $payload['excludeComponentIds'] = isset($payload['excludeComponentIds']) && is_array($payload['excludeComponentIds']) ? array_values($payload['excludeComponentIds']) : (isset($materials[$index]['excludeComponentIds']) && is_array($materials[$index]['excludeComponentIds']) ? array_values($materials[$index]['excludeComponentIds']) : array());
+        unset($payload['type']);
         $materials[$index] = $payload;
 
         $saved = $this->set_section_items($config_id, 'materials', $materials, 'Materials', '');
@@ -253,6 +293,46 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
         }
 
         return rest_ensure_response(array('success' => false, 'message' => __('Material has not been deleted', 'all-signs-options-pro')));
+    }
+
+    public function set_default_material($request)
+    {
+        $config_id = absint($request->get_param('config_id'));
+        $material_id = (string) $request->get_param('material_id');
+        $materials = $this->get_section_items($config_id, 'materials');
+        $index = $this->find_item_index($materials, $material_id);
+
+        if ($index === null) {
+            return rest_ensure_response(array('success' => false, 'message' => __('Material not found', 'all-signs-options-pro')));
+        }
+
+        $current = isset($materials[$index]['isDefault']) ? (bool) $materials[$index]['isDefault'] : false;
+        if ($current) {
+            return rest_ensure_response(array(
+                'success' => true,
+                'success_state' => 'same',
+                'message' => __('Material already default', 'all-signs-options-pro'),
+            ));
+        }
+
+        foreach ($materials as $idx => $material) {
+            $materials[$idx]['isDefault'] = $idx === $index;
+        }
+
+        $saved = $this->set_section_items($config_id, 'materials', $materials, 'Materials', '');
+        if ($saved === true) {
+            return rest_ensure_response(array(
+                'success' => true,
+                'message' => __('Material default successfully updated', 'all-signs-options-pro'),
+                'data' => array(
+                    'materials' => array(
+                        'items' => array_values($materials),
+                    ),
+                ),
+            ));
+        }
+
+        return rest_ensure_response(array('success' => false, 'message' => __('Material default has not been updated', 'all-signs-options-pro')));
     }
 
     public function get_material_colors($request)

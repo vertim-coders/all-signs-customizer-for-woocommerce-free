@@ -1,7 +1,6 @@
 <?php
 namespace ASOWP\Api\Admin\Additionals_Options;
 
-use ASOWP\Support\ConfigSchemaNormalizer;
 use WP_Error;
 use WP_Post;
 use WP_Query;
@@ -73,7 +72,7 @@ class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Customs_Additionals_
         );
         register_rest_route(
             $this->namespace,
-            '/' . $this->rest_base . "/(?P<input_id>\d+)",
+            '/' . $this->rest_base . "/items/(?P<input_id>\d+)",
             array(
                 array(
                     'methods' => \WP_REST_Server::READABLE,
@@ -136,15 +135,6 @@ class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Customs_Additionals_
             if (isset($data_additional_options['inputs']) && is_array($data_additional_options['inputs'])) {
                 return $data_additional_options['inputs'];
             }
-
-            if (isset($data_additional_options['inputs']['items']) && is_array($data_additional_options['inputs']['items'])) {
-                return $data_additional_options['inputs'];
-            }
-        }
-
-        $normalized = ConfigSchemaNormalizer::normalize_meta($meta_value);
-        if (isset($normalized['additionalOptions']['inputs']) && is_array($normalized['additionalOptions']['inputs'])) {
-            return $normalized['additionalOptions']['inputs'];
         }
 
         return array();
@@ -276,7 +266,7 @@ class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Customs_Additionals_
                 $meta_value = $this->ensure_inputs_section($meta_value);
                 $meta_value["data"]["additionalOptions"]["inputs"]["items"][] = $input;
 
-                $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
+                $response = $this->save_meta((int) $id, $meta_value);
 
                 if ($response) {
                     return rest_ensure_response(["success" => true, "message" => __("Option added successfuly", "all-signs-options-pro")]);
@@ -300,14 +290,14 @@ class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Customs_Additionals_
             $post = get_post($id);
             if ($post) {
                 $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
-                $meta_value = $this->ensure_inputs_section($meta_value);
-                $current_inputs = $meta_value["data"]["additionalOptions"]["inputs"]["items"] ?? array();
-                if ($current_inputs == $inputs) {
-                    return rest_ensure_response(["success" => "same", "message" => __("No change observe on additionnals options", "all-signs-options-pro")]);
-                } else {
-                    $meta_value["data"]["additionalOptions"]["inputs"]["items"] = array_values(is_array($inputs) ? $inputs : array());
+                    $meta_value = $this->ensure_inputs_section($meta_value);
+                    $current_inputs = $meta_value["data"]["additionalOptions"]["inputs"]["items"] ?? array();
+                    if ($current_inputs == $inputs) {
+                        return rest_ensure_response(["success" => "same", "message" => __("No change observe on additionnals options", "all-signs-options-pro")]);
+                    } else {
+                        $meta_value["data"]["additionalOptions"]["inputs"]["items"] = array_values(is_array($inputs) ? $inputs : array());
 
-                    $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
+                    $response = $this->save_meta((int) $id, $meta_value);
 
                     if ($response) {
                         return rest_ensure_response(["success" => true, "message" => __("Additonnals Option successfully sorted", "all-signs-options-pro")]);
@@ -348,7 +338,7 @@ class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Customs_Additionals_
                         } else {
                             $inputs[$input_id] = $input;
                             $meta_value["data"]["additionalOptions"]["inputs"]["items"] = array_values($inputs);
-                            $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
+                            $response = $this->save_meta((int) $id, $meta_value);
 
                             if ($response) {
                                 return rest_ensure_response(["success" => true, "message" => __("Option updated successfully", "all-signs-options-pro")]);
@@ -394,7 +384,7 @@ class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Customs_Additionals_
 
                     $meta_value["data"]["additionalOptions"]["inputs"]["items"] = array_values($inputs);
 
-                    $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
+                    $response = $this->save_meta((int) $id, $meta_value);
 
                     if ($response) {
                         return rest_ensure_response(["success" => true, "message" => __("Option deleted successfully", "all-signs-options-pro")]);

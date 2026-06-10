@@ -30,18 +30,17 @@
                 <th>{{ __("Label", "all-signs-options-pro") }}</th>
                 <th>{{ __("Price", "all-signs-options-pro") }}</th>
                 <th>{{ __("Default", "all-signs-options-pro") }}</th>
-                <th>{{ __("Surface pricing", "all-signs-options-pro") }}</th>
                 <th>{{ __("Actions", "all-signs-options-pro") }}</th>
               </tr>
             </thead>
             <tbody>
               <tr v-if="isFetching">
-                <td colspan="7" class="asowp-text-center asowp-py-8">
+                <td colspan="6" class="asowp-text-center asowp-py-8">
                   <Loader2Icon class="asowp-w-7 asowp-h-7 asowp-text-[#007a72] asowp-animate-spin asowp-mx-auto" />
                 </td>
               </tr>
               <tr v-else-if="shapes.length === 0">
-                <td colspan="7" class="asowp-text-center asowp-py-8 asowp-text-[13px] asowp-text-[#616161]">
+                <td colspan="6" class="asowp-text-center asowp-py-8 asowp-text-[13px] asowp-text-[#616161]">
                   {{ __("No shapes configured.", "all-signs-options-pro") }}
                 </td>
               </tr>
@@ -71,7 +70,6 @@
                     <span class="asowp-toggle-label">{{ __("Yes", "all-signs-options-pro") }}</span>
                   </div>
                 </td>
-                <td>{{ sh.enablePricingBySurface ? __("Yes", "all-signs-options-pro") : __("No", "all-signs-options-pro") }}</td>
                 <td>
                   <div class="asowp-flex asowp-items-center asowp-gap-3">
                     <button type="button" @click="selectMaterialShape(key, sh)" class="asowp-outline-button">
@@ -121,16 +119,6 @@
         <label class="asowp-field-block">
           <span class="asowp-form-label">{{ __("Additional price", "all-signs-options-pro") }}</span>
           <input type="number" v-model="shape.additionalPrice" class="asowp-form-input" />
-        </label>
-
-        <div class="asowp-field-block asowp-flex asowp-items-center asowp-gap-2">
-          <span class="asowp-form-label asowp-m-0">{{ __("Pricing by surface", "all-signs-options-pro") }}</span>
-          <button type="button" @click="shape.enablePricingBySurface = !shape.enablePricingBySurface" :class="['asowp-toggle', shape.enablePricingBySurface ? 'is-active' : '']"><span></span></button>
-        </div>
-
-        <label v-if="shape.enablePricingBySurface" class="asowp-field-block">
-          <span class="asowp-form-label">{{ __("Surface for this price", "all-signs-options-pro") }}</span>
-          <input type="number" v-model="shape.surface" class="asowp-form-input" />
         </label>
 
         <div v-if="selectedManagedShape?.value === 'cut-to-shape'" class="asowp-cut-shape-fields">
@@ -191,7 +179,6 @@ function createShape(shapeIdValue = -1) {
     isDefault: false,
     shapeId: shapeIdValue,
     additionalPrice: 0,
-    enablePricingBySurface: false,
     surface: 0,
     shapeSize: { small: 20, medium: 40, large: 60 },
   };
@@ -214,7 +201,7 @@ const normalizeShape = (item) => ({
   isDefault: Boolean(item?.isDefault),
   shapeId: Number(item?.shapeId ?? -1),
   additionalPrice: Number(item?.additionalPrice || 0),
-  enablePricingBySurface: Boolean(item?.enablePricingBySurface),
+  enablePricingBySurface: false,
   surface: Number(item?.surface || 0),
   shapeSize: { small: 20, medium: 40, large: 60, ...(item?.shapeSize || {}) },
 });
@@ -254,6 +241,7 @@ const addShapes = async () => {
   isLoading.value = true;
   try {
     const payload = normalizeShape(shape.value);
+    delete payload.enablePricingBySurface;
     payload.isDefault = !shapes.value.length;
     const res = await api.addRequiredOptionShapeItem(configID.value, payload);
     if (res?.success) {
@@ -273,7 +261,9 @@ const updateMaterialShapes = async () => {
   if (shapeId.value === null) return;
   isLoading.value = true;
   try {
-    const res = await api.updateRequiredOptionShapeItem(configID.value, shapeId.value, normalizeShape(shape.value));
+    const payload = normalizeShape(shape.value);
+    delete payload.enablePricingBySurface;
+    const res = await api.updateRequiredOptionShapeItem(configID.value, shapeId.value, payload);
     if (res?.success) {
       toastMessage(res.message);
       isNewShape.value = false;

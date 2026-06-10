@@ -179,7 +179,7 @@ class ASOWP_Api_Required_Options_Shapes extends ASOWP_Api_Required_Options_Base
             return rest_ensure_response(array('success' => false, 'message' => __('Shape not found', 'all-signs-options-pro')));
         }
 
-        return rest_ensure_response(array('success' => true, 'data' => array('shape' => $shapes[$item_id])));
+        return rest_ensure_response(array('success' => true, 'data' => array('shape' => $this->sanitize_shape_item($shapes[$item_id]))));
     }
 
         public function add_shape_item($request)
@@ -200,7 +200,7 @@ class ASOWP_Api_Required_Options_Shapes extends ASOWP_Api_Required_Options_Base
         $required_options = $this->get_required_options($config_id);
         $shapes = $this->section_item_list($required_options, 'shapes');
         $payload['isDefault'] = isset($payload['isDefault']) ? (bool) $payload['isDefault'] : empty($shapes);
-        $shapes[] = $payload;
+        $shapes[] = $this->sanitize_shape_item($payload);
         $shapes = $this->ensure_single_default_item($shapes);
         $required_options = $this->set_section_items($required_options, 'shapes', $this->section_value_with_items($required_options, 'shapes', $shapes));
         $saved = $this->save_required_options($config_id, $required_options);
@@ -227,7 +227,7 @@ class ASOWP_Api_Required_Options_Shapes extends ASOWP_Api_Required_Options_Base
             return rest_ensure_response(array('success' => false, 'message' => __('Shape not found', 'all-signs-options-pro')));
         }
 
-        $shapes[$item_id] = array_merge($shapes[$item_id], $payload);
+        $shapes[$item_id] = $this->sanitize_shape_item(array_merge($shapes[$item_id], $payload));
         $shapes = $this->ensure_single_default_item($shapes);
         $required_options = $this->set_section_items($required_options, 'shapes', $this->section_value_with_items($required_options, 'shapes', $shapes));
         $saved = $this->save_required_options($config_id, $required_options);
@@ -259,5 +259,11 @@ class ASOWP_Api_Required_Options_Shapes extends ASOWP_Api_Required_Options_Base
         return rest_ensure_response($saved === true
             ? array('success' => true, 'message' => __('Shape successfully deleted', 'all-signs-options-pro'), 'data' => array('items' => array_values($shapes)))
             : array('success' => false, 'message' => __('Shape has not been deleted', 'all-signs-options-pro')));
+    }
+
+    private function sanitize_shape_item(array $shape): array
+    {
+        unset($shape['enablePricingBySurface']);
+        return $shape;
     }
 }

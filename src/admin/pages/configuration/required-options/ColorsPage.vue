@@ -22,7 +22,7 @@
               <tr>
                 <th>{{ __("Preview", "all-signs-options-pro") }}</th>
                 <th>{{ __("Name", "all-signs-options-pro") }}</th>
-                <th>{{ __("Text color", "all-signs-options-pro") }}</th>
+                <th>{{ __("Background color", "all-signs-options-pro") }}</th>
                 <th>{{ __("Default", "all-signs-options-pro") }}</th>
                 <th>{{ __("Actions", "all-signs-options-pro") }}</th>
               </tr>
@@ -45,7 +45,7 @@
                   </div>
                 </td>
                 <td class="asowp-row-strong">{{ col.name }}</td>
-                <td>{{ col.textColor?.active ? col.textColor?.name || col.name : col.name }}</td>
+                <td class="asowp-font-mono">{{ inferColorHex(col) }}</td>
                 <td>
                   <div class="asowp-inline-flex asowp-items-center asowp-gap-2">
                     <span class="asowp-toggle-label">{{ __("No", "all-signs-options-pro") }}</span>
@@ -270,12 +270,17 @@ const namedColorHex = {
   gray: "#6b7280",
   green: "#16a34a",
   grey: "#6b7280",
+  lime: "#65a30d",
   orange: "#f97316",
+  pink: "#bc4077",
   red: "#dc2626",
+  purple: "#554585",
   silver: "#c0c0c0",
   transparent: "#ffffff",
   white: "#ffffff",
   yellow: "#eab308",
+  brown: "#523d2a",
+  cyan: "#0891b2",
 };
 
 const isTransparentValue = (value) => {
@@ -295,11 +300,9 @@ const inferColorName = (item) => {
 };
 
 const inferColorHex = (item) => {
-  const textHex = String(item?.textColor?.codeHex || "").trim();
   const patternHex = String(item?.pattern?.codeHex || "").trim();
   const colorName = inferColorName(item).toLowerCase();
-  if (!isTransparentValue(textHex)) return textHex;
-  if (!isTransparentValue(patternHex)) return patternHex;
+  if (!isTransparentValue(patternHex) && patternHex !== "#eeeeee") return patternHex;
   return namedColorHex[colorName] || "#ffffff";
 };
 
@@ -319,6 +322,11 @@ const migrateLegacyColor = (item) => {
   }
 
   if (!normalized.pattern.active && isTransparentValue(normalized.pattern.codeHex)) {
+    normalized.pattern.codeHex = inferColorHex(normalized);
+    changed = true;
+  }
+
+  if (!normalized.pattern.active && String(normalized.pattern.codeHex || "").trim().toLowerCase() === "#eeeeee") {
     normalized.pattern.codeHex = inferColorHex(normalized);
     changed = true;
   }

@@ -344,8 +344,7 @@ const selectedIds = computed(() => {
 const selectedFontRows = ref([]);
 
 const availableFontRows = computed(() => {
-  const selectedKeys = new Set(selectedFontRows.value.map(getFontIdentity).filter(Boolean));
-  return fontRows.value.filter((font) => !selectedKeys.has(getFontIdentity(font)));
+  return fontRows.value;
 });
 
 const filteredGoogleFonts = computed(() => {
@@ -397,7 +396,11 @@ const syncPreviewStyle = (css) => {
 
 const fetchFonts = async () => {
   const result = await api.getManagefonts();
-  managedFonts.value = Array.isArray(result) ? result : [];
+  managedFonts.value = Array.isArray(result)
+    ? result
+    : Array.isArray(result?.items)
+      ? result.items
+      : Object.values(result || {}).filter((item) => item && typeof item === "object");
 };
 
 const fetchGoogleFonts = async () => {
@@ -427,7 +430,7 @@ const fetchConfigFonts = async () => {
 const fetchSelectedFonts = async () => {
   const result = await api.getRequiredOptionFonts(configID.value);
   if (result) {
-    const items = Array.isArray(result.fontItems) ? result.fontItems : [];
+    const items = Array.isArray(result.items) ? result.items : Array.isArray(result.fontItems) ? result.fontItems : [];
     selectedFontRows.value = items.map((item) => {
       const mId = Number(item.managedFontId);
       const managed = managedFonts.value[mId] || {};
@@ -436,8 +439,8 @@ const fetchSelectedFonts = async () => {
         id: item.id || mId,
         managedFontId: mId,
         label: item.label || managed.label || `Font ${mId}`,
-        url: managed.url || '',
-        previewImg: managed.previewImg || managed.preview || '',
+        url: item.url || managed.url || '',
+        previewImg: item.previewImg || managed.previewImg || managed.preview || '',
         isGoogleFont: Boolean(managed.isGoogleFont),
         isDefault: Boolean(item.isDefault),
       };
@@ -463,7 +466,12 @@ const saveFonts = async () => {
       label: textSettings.value.fontsLabel,
       description: textSettings.value.fontsDescription,
       items: selectedFontRows.value.map((font, index) => ({
+        id: font.id,
+        label: font.label,
         managedFontId: Number(font.managedFontId ?? font.id),
+        url: font.url || '',
+        previewImg: font.previewImg || '',
+        isGoogleFont: Boolean(font.isGoogleFont),
         isDefault: index === 0,
       })),
     });
@@ -508,6 +516,12 @@ const addExistingFont = async () => {
   const targetFont = normalizeFontRow(managedFonts.value[targetIndex], targetIndex);
   const targetKey = getFontIdentity(targetFont);
   if (!targetKey) return;
+  const alreadySelected = selectedFontRows.value.some((font) => getFontIdentity(font) === targetKey);
+  if (alreadySelected) {
+    toastMessage(__("This font is already added to this configuration", "all-signs-options-pro"));
+    resetForm();
+    return;
+  }
   const result = await api.addRequiredOptionFontItem(configID.value, targetIndex);
   if (result?.success) {
     toastMessage(result.message || __("Font successfully added", "all-signs-options-pro"));
@@ -559,14 +573,16 @@ const saveFontForm = async () => {
       const targetFont = normalizeFontRow(managedFonts.value[targetIndex], targetIndex);
       const targetKey = getFontIdentity(targetFont);
       const alreadySelected = selectedFontRows.value.some((font) => getFontIdentity(font) === targetKey);
+      if (alreadySelected) {
+        toastMessage(__("This font is already added to this configuration", "all-signs-options-pro"));
+        resetForm();
+        return;
+      }
       const result = await api.addRequiredOptionFontItem(configID.value, targetIndex);
       if (result?.success) {
         toastMessage(result.message || __("Font successfully added", "all-signs-options-pro"));
       }
       await fetchSelectedFonts();
-      if (alreadySelected) {
-        toastMessage(__("This font is already added to this configuration", "all-signs-options-pro"));
-      }
       resetForm();
       return;
     }
