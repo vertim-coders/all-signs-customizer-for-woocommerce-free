@@ -21,6 +21,37 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
         $this->namespace = 'asowp/v1';
         $this->rest_base = 'configs/(?P<config_id>\d+)/settings/language-images';
     }
+
+    private function get_normalized_meta(int $config_id): array
+    {
+        $meta = get_post_meta($config_id, 'asowp-configs-meta', true);
+        return ConfigSchemaNormalizer::normalize_meta(is_array($meta) ? $meta : array());
+    }
+
+    private function get_language_images_from_meta(array $meta): array
+    {
+        return isset($meta['settings']['languageImages']) && is_array($meta['settings']['languageImages'])
+            ? $meta['settings']['languageImages']
+            : array();
+    }
+
+    private function save_language_images_section(int $config_id, string $section, array $section_options)
+    {
+        $meta = $this->get_normalized_meta($config_id);
+        if (!isset($meta['settings']) || !is_array($meta['settings'])) {
+            $meta['settings'] = array();
+        }
+        if (!isset($meta['settings']['languageImages']) || !is_array($meta['settings']['languageImages'])) {
+            $meta['settings']['languageImages'] = array();
+        }
+
+        if (isset($meta['settings']['languageImages'][$section]) && $meta['settings']['languageImages'][$section] == $section_options) {
+            return 'same';
+        }
+
+        $meta['settings']['languageImages'][$section] = $section_options;
+        return ConfigSchemaNormalizer::save_meta($config_id, $meta);
+    }
     /**
      * Register the routes
      *
@@ -115,26 +146,6 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
         );
     }
 
-    private function ensure_language_images_meta($meta_value)
-    {
-        if (!is_array($meta_value)) {
-            $meta_value = array();
-        }
-
-        if (!isset($meta_value["data"]) || !is_array($meta_value["data"])) {
-            $meta_value["data"] = array();
-        }
-
-        if (!isset($meta_value["data"]["settings"]) || !is_array($meta_value["data"]["settings"])) {
-            $meta_value["data"]["settings"] = array();
-        }
-
-        if (!isset($meta_value["data"]["settings"]["languageImages"]) || !is_array($meta_value["data"]["settings"]["languageImages"])) {
-            $meta_value["data"]["settings"]["languageImages"] = array();
-        }
-
-        return $meta_value;
-    }
     /**
      * Get all language images settings
      * @param \WP_REST_Request $request Full details about the request.
@@ -146,12 +157,13 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
         if ($id != 0) {
             $post = get_post($id);
             if ($post) {
-                $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
+                $meta_value = $this->get_normalized_meta((int) $id);
                 if (empty($meta_value)) {
                     return rest_ensure_response(["message" => "No Settings found"]);
                 } else {
-                    if (isset($meta_value["data"]["settings"]["languageImages"])) {
-                        return rest_ensure_response($meta_value["data"]["settings"]["languageImages"]);
+                    $language_images = $this->get_language_images_from_meta($meta_value);
+                    if (!empty($language_images)) {
+                        return rest_ensure_response($language_images);
                     }
                     return rest_ensure_response(["message" => __("No language Images Settings found", "all-signs-options-pro")]);
                 }
@@ -174,20 +186,14 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
         if ($id != 0) {
             $post = get_post($id);
             if ($post) {
-                $meta_value = $this->ensure_language_images_meta(get_post_meta($id, 'asowp-configs-meta', true));
-
-                if (!isset($meta_value["data"]["settings"]["languageImages"]['main']) || $meta_value["data"]["settings"]["languageImages"]['main'] != $main_options) {
-                    $meta_value["data"]["settings"]["languageImages"]['main'] = $main_options;
-
-                    $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
-
-                    if ($response) {
-                        return rest_ensure_response(["success" => true, "message" => __("Main options in language Images settings updated successfully", "all-signs-options-pro")]);
-                    } else {
-                        return rest_ensure_response(["success" => false, "message" => __("Update Main options in language Images settings failed", "all-signs-options-pro")]);
-                    }
-                } else {
+                $response = $this->save_language_images_section((int) $id, 'main', is_array($main_options) ? $main_options : array());
+                if ($response === 'same') {
                     return rest_ensure_response(["success" => "same", "message" => __("No change observed in Main options in language Images settings failed", "all-signs-options-pro")]);
+                }
+                if ($response) {
+                    return rest_ensure_response(["success" => true, "message" => __("Main options in language Images settings updated successfully", "all-signs-options-pro")]);
+                } else {
+                    return rest_ensure_response(["success" => false, "message" => __("Update Main options in language Images settings failed", "all-signs-options-pro")]);
                 }
             } else {
                 return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
@@ -208,20 +214,14 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
         if ($id != 0) {
             $post = get_post($id);
             if ($post) {
-                $meta_value = $this->ensure_language_images_meta(get_post_meta($id, 'asowp-configs-meta', true));
-
-                if (!isset($meta_value["data"]["settings"]["languageImages"]['uploadDesign']) || $meta_value["data"]["settings"]["languageImages"]['uploadDesign'] != $customizer_options) {
-                    $meta_value["data"]["settings"]["languageImages"]['uploadDesign'] = $customizer_options;
-
-                    $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
-
-                    if ($response) {
-                        return rest_ensure_response(["success" => true, "message" => __("Customizer Design options in language Images settings updated successfully", "all-signs-options-pro")]);
-                    } else {
-                        return rest_ensure_response(["success" => false, "message" => __("Update Customizer Design options in language Images settings failed", "all-signs-options-pro")]);
-                    }
-                } else {
+                $response = $this->save_language_images_section((int) $id, 'uploadDesign', is_array($customizer_options) ? $customizer_options : array());
+                if ($response === 'same') {
                     return rest_ensure_response(["success" => "same", "message" => __("No change observed in Customizer Design options in language Images settings", "all-signs-options-pro")]);
+                }
+                if ($response) {
+                    return rest_ensure_response(["success" => true, "message" => __("Customizer Design options in language Images settings updated successfully", "all-signs-options-pro")]);
+                } else {
+                    return rest_ensure_response(["success" => false, "message" => __("Update Customizer Design options in language Images settings failed", "all-signs-options-pro")]);
                 }
             } else {
                 return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
@@ -242,20 +242,14 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
         if ($id != 0) {
             $post = get_post($id);
             if ($post) {
-                $meta_value = $this->ensure_language_images_meta(get_post_meta($id, 'asowp-configs-meta', true));
-
-                if (!isset($meta_value["data"]["settings"]["languageImages"]['visualizer']) || $meta_value["data"]["settings"]["languageImages"]['visualizer'] != $visualizer_options) {
-                    $meta_value["data"]["settings"]["languageImages"]['visualizer'] = $visualizer_options;
-
-                    $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
-
-                    if ($response) {
-                        return rest_ensure_response(["success" => true, "message" => __("Visualizer options in language Images settings updated successfully", "all-signs-options-pro")]);
-                    } else {
-                        return rest_ensure_response(["success" => false, "message" => __("update Visualizer options in language Images settings failed", "all-signs-options-pro")]);
-                    }
-                } else {
+                $response = $this->save_language_images_section((int) $id, 'visualizer', is_array($visualizer_options) ? $visualizer_options : array());
+                if ($response === 'same') {
                     return rest_ensure_response(["success" => "same", "message" => __("No change observed in Visualizer options in language Images", "all-signs-options-pro")]);
+                }
+                if ($response) {
+                    return rest_ensure_response(["success" => true, "message" => __("Visualizer options in language Images settings updated successfully", "all-signs-options-pro")]);
+                } else {
+                    return rest_ensure_response(["success" => false, "message" => __("update Visualizer options in language Images settings failed", "all-signs-options-pro")]);
                 }
             } else {
                 return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
@@ -276,19 +270,14 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
         if ($id != 0) {
             $post = get_post($id);
             if ($post) {
-                $meta_value = $this->ensure_language_images_meta(get_post_meta($id, 'asowp-configs-meta', true));
-
-                if (!isset($meta_value["data"]["settings"]["languageImages"]['images']) || $meta_value["data"]["settings"]["languageImages"]['images'] != $image_options) {
-                    $meta_value["data"]["settings"]["languageImages"]['images'] = $image_options;
-                    $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
-
-                    if ($response) {
-                        return rest_ensure_response(["success" => true, "message" => __("Images options in language Images settings updated successfully", "all-signs-options-pro")]);
-                    } else {
-                        return rest_ensure_response(["success" => false, "message" => __("Update Images options in language Images settings failed", "all-signs-options-pro")]);
-                    }
-                } else {
+                $response = $this->save_language_images_section((int) $id, 'images', is_array($image_options) ? $image_options : array());
+                if ($response === 'same') {
                     return rest_ensure_response(["success" => "same", "message" => __("No change observed in Images options in language Images settings", "all-signs-options-pro")]);
+                }
+                if ($response) {
+                    return rest_ensure_response(["success" => true, "message" => __("Images options in language Images settings updated successfully", "all-signs-options-pro")]);
+                } else {
+                    return rest_ensure_response(["success" => false, "message" => __("Update Images options in language Images settings failed", "all-signs-options-pro")]);
                 }
             } else {
                 return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);

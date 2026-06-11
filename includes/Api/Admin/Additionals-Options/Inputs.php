@@ -50,7 +50,18 @@ class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Customs_Additionals_
                             'required' => true,
                         )
                     ),
-                )
+                ),
+                array(
+                    'methods' => \WP_REST_Server::EDITABLE,
+                    'callback' => array($this, 'update_inputs'),
+                    'permission_callback' => array($this, 'get_config_permissions_check'),
+                    'args' => array(
+                        'config_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        )
+                    ),
+                ),
             )
         );
         register_rest_route(
@@ -130,6 +141,11 @@ class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Customs_Additionals_
             return array();
         }
 
+        $additional_options = $meta_value['additionalOptions'] ?? null;
+        if (is_array($additional_options) && isset($additional_options['inputs']) && is_array($additional_options['inputs'])) {
+            return $additional_options['inputs'];
+        }
+
         $data_additional_options = $meta_value['data']['additionalOptions'] ?? null;
         if (is_array($data_additional_options)) {
             if (isset($data_additional_options['inputs']) && is_array($data_additional_options['inputs'])) {
@@ -158,12 +174,8 @@ class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Customs_Additionals_
     private function ensure_inputs_section($meta_value): array
     {
         $meta_value = is_array($meta_value) ? $meta_value : array();
-        if (!isset($meta_value['data']) || !is_array($meta_value['data'])) {
-            $meta_value['data'] = array();
-        }
-
-        if (!isset($meta_value['data']['additionalOptions']) || !is_array($meta_value['data']['additionalOptions'])) {
-            $meta_value['data']['additionalOptions'] = array();
+        if (!isset($meta_value['additionalOptions']) || !is_array($meta_value['additionalOptions'])) {
+            $meta_value['additionalOptions'] = array();
         }
 
         $section = $this->get_inputs_section($meta_value);
@@ -187,7 +199,7 @@ class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Customs_Additionals_
             $section['description'] = '';
         }
 
-        $meta_value['data']['additionalOptions']['inputs'] = $section;
+        $meta_value['additionalOptions']['inputs'] = $section;
         return $meta_value;
     }
 
@@ -264,7 +276,7 @@ class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Customs_Additionals_
             if ($post) {
                 $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
                 $meta_value = $this->ensure_inputs_section($meta_value);
-                $meta_value["data"]["additionalOptions"]["inputs"]["items"][] = $input;
+                $meta_value["additionalOptions"]["inputs"]["items"][] = $input;
 
                 $response = $this->save_meta((int) $id, $meta_value);
 
@@ -291,11 +303,11 @@ class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Customs_Additionals_
             if ($post) {
                 $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
                     $meta_value = $this->ensure_inputs_section($meta_value);
-                    $current_inputs = $meta_value["data"]["additionalOptions"]["inputs"]["items"] ?? array();
+                    $current_inputs = $meta_value["additionalOptions"]["inputs"]["items"] ?? array();
                     if ($current_inputs == $inputs) {
                         return rest_ensure_response(["success" => "same", "message" => __("No change observe on additionnals options", "all-signs-options-pro")]);
                     } else {
-                        $meta_value["data"]["additionalOptions"]["inputs"]["items"] = array_values(is_array($inputs) ? $inputs : array());
+                        $meta_value["additionalOptions"]["inputs"]["items"] = array_values(is_array($inputs) ? $inputs : array());
 
                     $response = $this->save_meta((int) $id, $meta_value);
 
@@ -330,14 +342,14 @@ class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Customs_Additionals_
                 $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
                 if (!empty($meta_value)) {
                     $meta_value = $this->ensure_inputs_section($meta_value);
-                    $inputs = $meta_value["data"]["additionalOptions"]["inputs"]["items"] ?? array();
+                    $inputs = $meta_value["additionalOptions"]["inputs"]["items"] ?? array();
 
                     if (isset($inputs[$input_id])) {
                         if ($inputs[$input_id] == $input) {
                             return rest_ensure_response(["success" => true, "message" => __("No change observed in option", "all-signs-options-pro")]);
                         } else {
                             $inputs[$input_id] = $input;
-                            $meta_value["data"]["additionalOptions"]["inputs"]["items"] = array_values($inputs);
+                            $meta_value["additionalOptions"]["inputs"]["items"] = array_values($inputs);
                             $response = $this->save_meta((int) $id, $meta_value);
 
                             if ($response) {
@@ -377,12 +389,12 @@ class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Customs_Additionals_
             if ($post) {
                 $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
                 $meta_value = $this->ensure_inputs_section($meta_value);
-                if (!empty($meta_value["data"]["additionalOptions"]["inputs"]["items"])) {
-                    $inputs = $meta_value["data"]["additionalOptions"]["inputs"]["items"];
+                if (!empty($meta_value["additionalOptions"]["inputs"]["items"])) {
+                    $inputs = $meta_value["additionalOptions"]["inputs"]["items"];
 
                     array_splice($inputs, $input_id, 1);
 
-                    $meta_value["data"]["additionalOptions"]["inputs"]["items"] = array_values($inputs);
+                    $meta_value["additionalOptions"]["inputs"]["items"] = array_values($inputs);
 
                     $response = $this->save_meta((int) $id, $meta_value);
 

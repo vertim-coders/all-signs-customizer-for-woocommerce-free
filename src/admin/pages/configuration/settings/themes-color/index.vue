@@ -129,10 +129,9 @@ import { CheckIcon, ChevronDownIcon, ChevronUpIcon, Loader2Icon } from 'lucide-v
 import { __ } from '@wordpress/i18n';
 import api from '@/admin/Api/api';
 import toastMessage from '@/admin/utils/functions';
-import defaultSkinImage from '../../../../../../assets/images/skin-default.png';
-import couffoSkinImage from '../../../../../../assets/images/skin-couffo.png';
 
 const loadingIcon = `${String(window?.asowp_data?.assets_url || "").replace(/\/$/, "")}/icons/ic_loading.svg`;
+const adminImageUrl = (path) => `${String(window?.asowp_data?.assets_url || "").replace(/\/$/, "")}/images/${path}`;
 
 const route = useRoute();
 const configId = ref(route.params.configId);
@@ -285,8 +284,8 @@ const DEFAULT_THEME_SETTINGS = {
 };
 
 const themeSkins = [
-  { title: __('Default Skin', 'all-signs-options-pro'), value: 'default', image: defaultSkinImage },
-  { title: __('Couffo Skin', 'all-signs-options-pro'), value: 'couffo', image: couffoSkinImage },
+  { title: __('Default Skin', 'all-signs-options-pro'), value: 'default', image: adminImageUrl('skin-default.png') },
+  { title: __('Couffo Skin', 'all-signs-options-pro'), value: 'couffo', image: adminImageUrl('skin-couffo.png') },
 ];
 
 const colorGroups = [

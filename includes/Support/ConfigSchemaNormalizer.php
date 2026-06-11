@@ -15,7 +15,7 @@ class ConfigSchemaNormalizer
 
         $settings = self::deep_merge(
             isset($template['settings']) && is_array($template['settings']) ? $template['settings'] : array(),
-            self::array_value($legacy_data, 'settings', self::array_value($meta, 'settings', array()))
+            self::array_value($meta, 'settings', self::array_value($legacy_data, 'settings', array()))
         );
 
         $product_type = self::sanitize_product_type(self::first_string(array(
@@ -68,7 +68,7 @@ class ConfigSchemaNormalizer
         $meta_additional_options = self::array_value($meta, 'additionalOptions', self::array_value($legacy_data, 'additionalOptions', array()));
         $additional_options = self::deep_merge(
             isset($template['additionalOptions']) && is_array($template['additionalOptions']) ? $template['additionalOptions'] : array(),
-            is_array($meta_additional_options) && !self::is_list($meta_additional_options) ? self::remove_numeric_keys($meta_additional_options) : array()
+            is_array($meta_additional_options) && !self::is_list($meta_additional_options) ? self::remove_numeric_root_keys($meta_additional_options) : array()
         );
 
         $legacy_materials = self::resolve_wizard_materials(
@@ -77,14 +77,21 @@ class ConfigSchemaNormalizer
             $product_type,
             $material_type
         );
+        $has_saved_materials = isset($additional_options['materials']['items'])
+            && is_array($additional_options['materials']['items'])
+            && !empty($additional_options['materials']['items']);
+
         if (is_array($legacy_materials) && !empty($legacy_materials)) {
             $additional_options['materials'] = self::normalize_materials_option(
                 isset($additional_options['materials']) && is_array($additional_options['materials']) ? $additional_options['materials'] : array(),
-                $legacy_materials,
+                $has_saved_materials ? $additional_options['materials']['items'] : $legacy_materials,
                 $material_type
             );
             $legacy_components = self::components_from_legacy_materials($legacy_materials);
-            if (!empty($legacy_components)) {
+            $has_saved_components = isset($additional_options['components']['items'])
+                && is_array($additional_options['components']['items'])
+                && !empty($additional_options['components']['items']);
+            if (!empty($legacy_components) && !$has_saved_components) {
                 $additional_options['components'] = self::normalize_components_option(
                     isset($additional_options['components']) && is_array($additional_options['components']) ? $additional_options['components'] : array(),
                     $legacy_components
@@ -145,7 +152,30 @@ class ConfigSchemaNormalizer
             'additionalOptions' => $normalized['additionalOptions'],
         );
 
-        return self::canonicalize_to_template($schema, $template);
+        $canonical = self::canonicalize_to_template($schema, $template);
+        $raw_materials = self::raw_additional_materials_option($meta, $normalized['materialType']);
+        if ($raw_materials !== null) {
+            if (!isset($canonical['additionalOptions']) || !is_array($canonical['additionalOptions'])) {
+                $canonical['additionalOptions'] = array();
+            }
+            $canonical['additionalOptions']['materials'] = $raw_materials;
+        }
+        $raw_components = self::raw_additional_components_option($meta);
+        if ($raw_components !== null) {
+            if (!isset($canonical['additionalOptions']) || !is_array($canonical['additionalOptions'])) {
+                $canonical['additionalOptions'] = array();
+            }
+            $canonical['additionalOptions']['components'] = $raw_components;
+        }
+        $raw_inputs = self::raw_additional_inputs_option($meta);
+        if ($raw_inputs !== null) {
+            if (!isset($canonical['additionalOptions']) || !is_array($canonical['additionalOptions'])) {
+                $canonical['additionalOptions'] = array();
+            }
+            $canonical['additionalOptions']['inputs'] = $raw_inputs;
+        }
+
+        return $canonical;
     }
 
     public static function to_admin_payload(int $id, $meta): array
@@ -200,6 +230,64 @@ class ConfigSchemaNormalizer
 
         self::$shopify_template = array();
         return self::$shopify_template;
+    }
+
+    private static function raw_additional_materials_option(array $meta, string $material_type)
+    {
+        $additional_options = self::array_value($meta, 'additionalOptions', array());
+        if (
+            !is_array($additional_options)
+            || !isset($additional_options['materials'])
+            || !is_array($additional_options['materials'])
+            || !isset($additional_options['materials']['items'])
+            || !is_array($additional_options['materials']['items'])
+        ) {
+            return null;
+        }
+
+        return self::normalize_materials_option(
+            $additional_options['materials'],
+            $additional_options['materials']['items'],
+            $material_type
+        );
+    }
+
+    private static function raw_additional_components_option(array $meta)
+    {
+        $additional_options = self::array_value($meta, 'additionalOptions', array());
+        if (
+            !is_array($additional_options)
+            || !isset($additional_options['components'])
+            || !is_array($additional_options['components'])
+            || !isset($additional_options['components']['items'])
+            || !is_array($additional_options['components']['items'])
+        ) {
+            return null;
+        }
+
+        return self::normalize_components_option(
+            $additional_options['components'],
+            $additional_options['components']['items']
+        );
+    }
+
+    private static function raw_additional_inputs_option(array $meta)
+    {
+        $additional_options = self::array_value($meta, 'additionalOptions', array());
+        if (
+            !is_array($additional_options)
+            || !isset($additional_options['inputs'])
+            || !is_array($additional_options['inputs'])
+            || !isset($additional_options['inputs']['items'])
+            || !is_array($additional_options['inputs']['items'])
+        ) {
+            return null;
+        }
+
+        return self::normalize_inputs_option(
+            $additional_options['inputs'],
+            $additional_options['inputs']['items']
+        );
     }
 
     private static function legacy_data_from_meta(array $meta): array
@@ -997,6 +1085,7 @@ class ConfigSchemaNormalizer
                 'title' => self::first_string(array(self::array_value($component, 'title'), self::array_value($component, 'name')), 'Component'),
                 'options' => is_array(self::array_value($component, 'options', array())) ? array_values(self::array_value($component, 'options', array())) : array(),
                 'description' => self::first_string(array(self::array_value($component, 'description')), ''),
+                'isDefault' => (bool) self::array_value($component, 'isDefault', false),
                 'rulesByMaterial' => is_array(self::array_value($component, 'rulesByMaterial', array())) ? self::array_value($component, 'rulesByMaterial', array()) : array(),
             );
         }, $components, array_keys($components))));
@@ -1074,6 +1163,18 @@ class ConfigSchemaNormalizer
                 continue;
             }
             $result[$key] = is_array($item) ? self::remove_numeric_keys($item) : $item;
+        }
+        return $result;
+    }
+
+    private static function remove_numeric_root_keys(array $value): array
+    {
+        $result = array();
+        foreach ($value as $key => $item) {
+            if (is_int($key) || ctype_digit((string) $key)) {
+                continue;
+            }
+            $result[$key] = $item;
         }
         return $result;
     }

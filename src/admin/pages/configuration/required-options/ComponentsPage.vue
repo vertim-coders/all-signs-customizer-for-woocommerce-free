@@ -80,7 +80,7 @@
                                         <span class="asowp-text-[12px]">{{getInitials(component.name)}}</span> 
                                     </span>
                                     <span class="asowp-py-1 asowp-text-[14px]">
-                                        {{component.name}}
+                                        {{component.name || component.title}}
                                     </span>
                                 </td>
                                 <td class="asowp-px-6 asowp-py-2 asowp-text-center asowp-text-[11px]">
@@ -224,7 +224,7 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                         </svg>
                         <h3 class="asowp-mb-5 asowp-text-lg asowp-font-normal asowp-text-gray-500 dark:text-gray-400">{{ __("Are you sure you want to delete this component advance?", "all-signs-options-pro") }}</h3>
-                        <input v-model="component.name" readonly class="asowp-rounded asowp-w-full asowp-h-[35px] asowp-text-center asowp-p-4 asowp-my-2 asowp-border-none" />
+                        <input :value="component.name || component.title" readonly class="asowp-rounded asowp-w-full asowp-h-[35px] asowp-text-center asowp-p-4 asowp-my-2 asowp-border-none" />
                         <button @click="deleteComponent" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-text-white ${!isLoading ? 'asowp-bg-red-600 asowp-cursor-pointer' :'asowp-bg-red-700 asowp-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none asowp-my-2 asowp-border-none  focus:ring-red-300 dark:focus:ring-red-800 asowp-font-medium asowp-rounded-lg asowp-text-sm asowp-inline-flex asowp-items-center asowp-px-5 asowp-py-2.5 asowp-text-center`">
                             <img src="@/../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
                             {{ __("Yes, I'm sure", "all-signs-options-pro") }}
@@ -308,7 +308,11 @@ const config = ref(String(route.params.config ?? '').replace(/-/g,' '));
             const comps = Array.isArray(response?.items)
                 ? response.items
                 : [];
-            components.value = comps;
+            components.value = comps.map((item) => ({
+                ...item,
+                name: item?.name || item?.title || '',
+                title: item?.title || item?.name || '',
+            }));
             showParams.value = comps.map(() => false);
             dropdownPositions.value = comps.map(() => ({ top: null, left: null }));
             noComponentAdvancesFound.value = comps.length === 0 ? "No data Found" : "";
@@ -322,7 +326,10 @@ const config = ref(String(route.params.config ?? '').replace(/-/g,' '));
 
     const updateComponent = async () => {
         isLoading.value = true;
-        const result = await api.updateRequiredOptionComponent(configId.value, selectedComponentId.value, component.value);
+        const result = await api.updateRequiredOptionComponent(configId.value, selectedComponentId.value, {
+            ...component.value,
+            title: component.value.title || component.value.name,
+        });
         if(result.success){
             await fetchComponents();
             if(result.success == true ) {
@@ -387,7 +394,10 @@ const config = ref(String(route.params.config ?? '').replace(/-/g,' '));
 
     const addComponent = async () => {
         isLoading.value = true;
-        const result = await api.addRequiredOptionComponent(configId.value, component.value);
+        const result = await api.addRequiredOptionComponent(configId.value, {
+            ...component.value,
+            title: component.value.title || component.value.name,
+        });
         if(result.success){
             await fetchComponents();
             isLoading.value = false;
@@ -453,7 +463,7 @@ const config = ref(String(route.params.config ?? '').replace(/-/g,' '));
 
 
     const getInitials = (str) => {
-        const words = str.split(' ');
+        const words = String(str || '').split(' ');
         const initials = words.map(word => word.trim().charAt(0).toUpperCase());
         const result = initials.join('');
         return result;
@@ -512,7 +522,7 @@ const closeAllParams = () => {
             name: 'required-component-options',
             params: {
                 configId: configId.value,
-                componentId: idx,
+                componentId: component.id || idx,
             },
         });
     };

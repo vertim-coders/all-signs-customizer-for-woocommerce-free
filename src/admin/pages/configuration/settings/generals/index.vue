@@ -189,8 +189,8 @@
             <div class="asowp-field">
               <span>{{ __('Allowed upload formats', 'all-signs-options-pro') }}</span>
               <div class="asowp-chip-box">
-                <span v-for="format in uploadDesign.allowedFormats" :key="format" class="asowp-chip">{{ format }} <button type="button" @click="removeChip(uploadDesign.allowedFormats, format)">x</button></span>
-                <select class="asowp-chip-select" @change="addChip(uploadDesign.allowedFormats, $event)">
+                <span v-for="format in upload.allowedFormats" :key="format" class="asowp-chip">{{ format }} <button type="button" @click="removeChip(upload.allowedFormats, format)">x</button></span>
+                <select class="asowp-chip-select" @change="addChip(upload.allowedFormats, $event)">
                   <option value="">{{ __('Select allowed upload formats', 'all-signs-options-pro') }}</option>
                   <option v-for="format in uploadFormatOptions" :key="format" :value="format">{{ format }}</option>
                 </select>
@@ -200,11 +200,11 @@
             <div class="asowp-two-columns">
               <label class="asowp-field">
                 <span>{{ __('Maximum upload size (MB)', 'all-signs-options-pro') }}</span>
-                <input v-model.number="uploadDesign.maxUploadSize" class="asowp-shopify-input" type="number">
+                <input v-model.number="upload.maxUploadSize" class="asowp-shopify-input" type="number">
               </label>
               <label class="asowp-field">
                 <span>{{ __('Maximum upload number', 'all-signs-options-pro') }}</span>
-                <input v-model.number="uploadDesign.maxUploadNumber" class="asowp-shopify-input" type="number">
+                <input v-model.number="upload.maxUploadNumber" class="asowp-shopify-input" type="number">
               </label>
             </div>
             <div class="asowp-toggle-row">
@@ -212,11 +212,11 @@
                 <strong>{{ __('Zip output files', 'all-signs-options-pro') }}</strong>
                 <p>{{ __('Package customer uploads in a zip file when needed.', 'all-signs-options-pro') }}</p>
               </div>
-              <label class="asowp-switch"><input type="checkbox" v-model="uploadDesign.zipOutputFiles"><span></span></label>
+              <label class="asowp-switch"><input type="checkbox" v-model="upload.zipFiles.active"><span></span></label>
             </div>
             <div class="asowp-save-row">
-              <button type="button" class="asowp-shopify-button-primary asowp-general-save" :disabled="savingSection === 'uploadDesign'" @click="saveGenericSection('uploadDesign', uploadDesign)">
-                <Loader2Icon v-if="savingSection === 'uploadDesign'" class="asowp-spin" />
+              <button type="button" class="asowp-shopify-button-primary asowp-general-save" :disabled="savingSection === 'upload'" @click="saveUpload">
+                <Loader2Icon v-if="savingSection === 'upload'" class="asowp-spin" />
                 {{ __('Save Upload', 'all-signs-options-pro') }}
               </button>
             </div>
@@ -498,11 +498,15 @@ const defaultOutput = () => ({
   designComposition: true,
 });
 
-const defaultUploadDesign = () => ({
+const defaultUpload = () => ({
   allowedFormats: ['JPG', 'JPEG', 'PNG', 'GIF', 'BMP', 'TIFF', 'WEBP', 'PSD', 'AI', 'SVG', 'EPS', 'PDF'],
+  allowFormat: 'jpg,jpeg,png,gif,bmp,tiff,webp,psd,ai,svg,eps,pdf',
   maxUploadSize: 5000,
   maxUploadNumber: 5,
-  zipOutputFiles: false,
+  zipFiles: {
+    active: false,
+    zipOutFolderPrefix: 'aso_',
+  },
 });
 
 const defaultQuantityLimits = () => ({
@@ -541,7 +545,7 @@ const defaultSimpleOptions = () => ({
 const product = ref(defaultProduct());
 const mode = ref(defaultMode());
 const output = ref(defaultOutput());
-const uploadDesign = ref(defaultUploadDesign());
+const upload = ref(defaultUpload());
 const quantityLimits = ref(defaultQuantityLimits());
 const discount = ref(defaultDiscount());
 const mobile = ref(defaultMobile());
@@ -644,10 +648,36 @@ const normalizeList = (value, fallback = []) => {
   return [...fallback];
 };
 
-const normalizeUploadDesign = (raw = {}) => ({
-  ...defaultUploadDesign(),
-  ...raw,
-  allowedFormats: normalizeList(raw.allowedFormats, defaultUploadDesign().allowedFormats),
+const normalizeUpload = (raw = {}) => {
+  const defaults = defaultUpload();
+  const allowedFormats = normalizeList(raw.allowedFormats || raw.allowFormat, defaults.allowedFormats)
+    .map((format) => String(format).toUpperCase());
+
+  return {
+    ...defaults,
+    ...raw,
+    allowedFormats,
+    allowFormat: allowedFormats.map((format) => format.toLowerCase()).join(','),
+    maxUploadSize: Number(raw.maxUploadSize ?? defaults.maxUploadSize),
+    maxUploadNumber: Number(raw.maxUploadNumber ?? defaults.maxUploadNumber),
+    zipFiles: {
+      ...defaults.zipFiles,
+      ...(raw.zipFiles || {}),
+      active: Boolean(raw.zipFiles?.active ?? raw.zipOutputFiles ?? defaults.zipFiles.active),
+    },
+  };
+};
+
+const serializeUpload = () => ({
+  zipFiles: {
+    ...upload.value.zipFiles,
+    active: Boolean(upload.value.zipFiles?.active),
+  },
+  allowFormat: normalizeList(upload.value.allowedFormats, defaultUpload().allowedFormats)
+    .map((format) => String(format).toLowerCase())
+    .join(','),
+  maxUploadSize: Number(upload.value.maxUploadSize || 0),
+  maxUploadNumber: Number(upload.value.maxUploadNumber || 0),
 });
 
 const normalizeRequestQuote = (raw = {}) => ({
@@ -667,7 +697,7 @@ const fetchGeneralSettings = async () => {
   product.value = nextProduct;
   mode.value = normalizeMode(result.mode || {});
   output.value = normalizeOutput(result.output || {});
-  uploadDesign.value = normalizeUploadDesign(result.uploadDesign || {});
+  upload.value = normalizeUpload(result.upload || result.uploadDesign || {});
   quantityLimits.value = { ...defaultQuantityLimits(), ...(result.quantityLimits || {}) };
   discount.value = { ...defaultDiscount(), ...(result.discount || {}) };
   mobile.value = { ...defaultMobile(), ...(result.mobile || {}) };
@@ -737,6 +767,15 @@ const saveOutput = async () => {
   savingSection.value = 'output';
   try {
     await handleSaveResponse(await api.updateGeneralOutput(configId.value, output.value));
+  } finally {
+    savingSection.value = '';
+  }
+};
+
+const saveUpload = async () => {
+  savingSection.value = 'upload';
+  try {
+    await handleSaveResponse(await api.updateGeneralSection(configId.value, 'upload', serializeUpload()));
   } finally {
     savingSection.value = '';
   }

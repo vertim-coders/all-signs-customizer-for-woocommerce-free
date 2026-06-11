@@ -21,6 +21,35 @@ class ASOWP_Api_Theme_color_Settings extends WP_REST_Controller
         $this->namespace = 'asowp/v1';
         $this->rest_base = 'configs/(?P<config_id>\d+)/settings/theme-colors';
     }
+
+    private function get_normalized_meta(int $config_id): array
+    {
+        $meta = get_post_meta($config_id, 'asowp-configs-meta', true);
+        return ConfigSchemaNormalizer::normalize_meta(is_array($meta) ? $meta : array());
+    }
+
+    private function get_theme_colors_from_meta(array $meta): array
+    {
+        return isset($meta['settings']['themeColors']) && is_array($meta['settings']['themeColors'])
+            ? $meta['settings']['themeColors']
+            : array();
+    }
+
+    private function save_theme_colors(int $config_id, array $theme_colors)
+    {
+        $meta = $this->get_normalized_meta($config_id);
+        if (!isset($meta['settings']) || !is_array($meta['settings'])) {
+            $meta['settings'] = array();
+        }
+
+        $current_theme_colors = $this->get_theme_colors_from_meta($meta);
+        if ($current_theme_colors == $theme_colors) {
+            return 'same';
+        }
+
+        $meta['settings']['themeColors'] = $theme_colors;
+        return ConfigSchemaNormalizer::save_meta($config_id, $meta);
+    }
     /**
      * Register the routes
      *
@@ -68,13 +97,13 @@ class ASOWP_Api_Theme_color_Settings extends WP_REST_Controller
         if ($id != 0) {
             $post = get_post($id);
             if ($post) {
-                $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
+                $meta_value = $this->get_normalized_meta((int) $id);
                 if (empty($meta_value)) {
                     return rest_ensure_response(["message" => "No Settings found"]);
                 } else {
-                    if (isset($meta_value["data"]["settings"]["themeColors"])) {
-
-                        return rest_ensure_response($meta_value["data"]["settings"]["themeColors"]);
+                    $theme_colors = $this->get_theme_colors_from_meta($meta_value);
+                    if (!empty($theme_colors)) {
+                        return rest_ensure_response($theme_colors);
                     }
                     return rest_ensure_response(["message" => __("No Theme color Settings found", "all-signs-options-pro")]);
                 }
@@ -95,31 +124,14 @@ class ASOWP_Api_Theme_color_Settings extends WP_REST_Controller
         if ($id != 0) {
             $post = get_post($id);
             if ($post) {
-                $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
-                if (!is_array($meta_value)) {
-                    $meta_value = array();
-                }
-                if (!isset($meta_value["data"]) || !is_array($meta_value["data"])) {
-                    $meta_value["data"] = array();
-                }
-                if (!isset($meta_value["data"]["settings"]) || !is_array($meta_value["data"]["settings"])) {
-                    $meta_value["data"]["settings"] = array();
-                }
-
-                $current_theme_colors = isset($meta_value["data"]["settings"]["themeColors"]) && is_array($meta_value["data"]["settings"]["themeColors"])
-                    ? $meta_value["data"]["settings"]["themeColors"]
-                    : array();
-
-                if ($theme_colors != $current_theme_colors) {
-                    $meta_value["data"]["settings"]["themeColors"] = $theme_colors;
-                    $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
-                    if ($response) {
-                        return rest_ensure_response(["success" => true, "message" => __("Theme Colors update successfully settings added successfully", "all-signs-options-pro")]);
-                    } else {
-                        return rest_ensure_response(["success" => false, "message" => __("Add Theme Colors update successfully settings failed", "all-signs-options-pro")]);
-                    }
-                } else {
+                $response = $this->save_theme_colors((int) $id, $theme_colors);
+                if ($response === 'same') {
                     return rest_ensure_response(["success" => "same", "message" => __("No change observed in theme colors", "all-signs-options-pro")]);
+                }
+                if ($response) {
+                    return rest_ensure_response(["success" => true, "message" => __("Theme Colors update successfully settings added successfully", "all-signs-options-pro")]);
+                } else {
+                    return rest_ensure_response(["success" => false, "message" => __("Add Theme Colors update successfully settings failed", "all-signs-options-pro")]);
                 }
             } else {
                 return rest_ensure_response(["success" => false, "message" => __(" Theme color ID invalid", "all-signs-options-pro")]);

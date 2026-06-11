@@ -35,6 +35,17 @@ class ASOWP_Api_Customs_Additionals_Components extends ASOWP_Api_Customs_Additio
                         ),
                     ),
                 ),
+                array(
+                    'methods' => WP_REST_Server::EDITABLE,
+                    'callback' => array($this, 'update_components'),
+                    'permission_callback' => array($this, 'get_config_permissions_check'),
+                    'args' => array(
+                        'config_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                    ),
+                ),
             )
         );
 
@@ -297,6 +308,36 @@ class ASOWP_Api_Customs_Additionals_Components extends ASOWP_Api_Customs_Additio
         }
 
         return rest_ensure_response(array('success' => false, 'message' => __('Component has not been added', 'all-signs-options-pro')));
+    }
+
+    public function update_components($request)
+    {
+        $config_id = absint($request->get_param('config_id'));
+        $payload = json_decode($request->get_body(), true);
+        if (!is_array($payload)) {
+            $payload = array();
+        }
+
+        $components = array_values($payload);
+        foreach ($components as $index => $component) {
+            if (!is_array($component)) {
+                unset($components[$index]);
+                continue;
+            }
+            $components[$index]['id'] = isset($component['id']) && $component['id'] !== ''
+                ? (string) $component['id']
+                : 'component-' . ($index + 1);
+            $components[$index]['options'] = isset($component['options']) && is_array($component['options'])
+                ? array_values($component['options'])
+                : array();
+        }
+
+        $saved = $this->save_components_items($config_id, array_values($components));
+        if ($saved === true) {
+            return rest_ensure_response(array('success' => true, 'message' => __('Components successfully updated', 'all-signs-options-pro')));
+        }
+
+        return rest_ensure_response(array('success' => false, 'message' => __('Components have not been updated', 'all-signs-options-pro')));
     }
 
     public function update_component($request)

@@ -248,9 +248,8 @@ import {
 import { defineComponent, h, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import { __, sprintf } from "@wordpress/i18n";
-import textNormalImg from "@/../assets/images/text-types/text-normal.png";
-import textNeonImg from "@/../assets/images/text-types/text-neon.png";
-import text3dImg from "@/../assets/images/text-types/text-3d.png";
+
+const adminImageUrl = (path) => `${String(window?.asowp_data?.assets_url || "").replace(/\/$/, "")}/images/${path}`;
 
 const ToggleRow = defineComponent({
   props: {
@@ -365,9 +364,9 @@ const mergeTextData = (data) => {
 const text = ref(defaultText());
 
 const textTypeOptions = [
-  { value: "normal", label: "NORMAL", image: textNormalImg },
-  { value: "neon", label: "NEON", image: textNeonImg },
-  { value: "3D", label: "3D", image: text3dImg },
+  { value: "normal", label: "NORMAL", image: adminImageUrl("text-types/text-normal.png") },
+  { value: "neon", label: "NEON", image: adminImageUrl("text-types/text-neon.png") },
+  { value: "3D", label: "3D", image: adminImageUrl("text-types/text-3d.png") },
 ];
 
 const textOptionControls = [

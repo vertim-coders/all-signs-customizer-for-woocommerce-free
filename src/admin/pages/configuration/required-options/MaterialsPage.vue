@@ -23,18 +23,19 @@
                 <th class="asowp-py-2 asowp-px-3 asowp-text-left asowp-text-[11px] asowp-font-bold asowp-text-[#6b7280]">{{ __('Preview', 'all-signs-options-pro') }}</th>
                 <th class="asowp-py-2 asowp-px-3 asowp-text-left asowp-text-[11px] asowp-font-bold asowp-text-[#6b7280]">{{ __('Label', 'all-signs-options-pro') }}</th>
                 <th class="asowp-py-2 asowp-px-3 asowp-text-left asowp-text-[11px] asowp-font-bold asowp-text-[#6b7280]">{{ __('Price', 'all-signs-options-pro') }}</th>
+                <th class="asowp-py-2 asowp-px-3 asowp-text-left asowp-text-[11px] asowp-font-bold asowp-text-[#6b7280]">{{ __('Pricing', 'all-signs-options-pro') }}</th>
                 <th class="asowp-py-2 asowp-px-3 asowp-text-center asowp-text-[11px] asowp-font-bold asowp-text-[#6b7280]">{{ __('Default', 'all-signs-options-pro') }}</th>
                 <th class="asowp-py-2 asowp-px-3 asowp-text-left asowp-text-[11px] asowp-font-bold asowp-text-[#6b7280]">{{ __('Actions', 'all-signs-options-pro') }}</th>
               </tr>
             </thead>
             <tbody>
               <tr v-if="isFetching">
-                <td colspan="5" class="asowp-py-8 asowp-text-center">
+                <td colspan="6" class="asowp-py-8 asowp-text-center">
                   <Loader2Icon class="asowp-w-7 asowp-h-7 asowp-text-[#007a72] asowp-animate-spin asowp-mx-auto" />
                 </td>
               </tr>
               <tr v-else-if="materials.length === 0">
-                <td colspan="5" class="asowp-py-8 asowp-text-center asowp-text-[13px] asowp-text-[#616161]">
+                <td colspan="6" class="asowp-py-8 asowp-text-center asowp-text-[13px] asowp-text-[#616161]">
                   {{ __('No materials found', 'all-signs-options-pro') }}
                 </td>
               </tr>
@@ -51,8 +52,9 @@
                 </td>
                 <td class="asowp-py-2.5 asowp-px-3 asowp-text-[13px] asowp-font-[900] asowp-text-[#303030]">{{ getMaterialLabel(material) }}</td>
                 <td class="asowp-py-2.5 asowp-px-3 asowp-text-[13px] asowp-text-[#303030]">{{ Number(material?.additionalPrice || 0) }}</td>
-                <td class="asowp-py-2.5 asowp-px-3 asowp-text-center">
-                  <div class="asowp-inline-flex asowp-items-center asowp-gap-2">
+                <td class="asowp-py-2.5 asowp-px-3 asowp-text-[13px] asowp-text-[#303030]">{{ getPricingLabel(material) }}</td>
+                <td class="asowp-materials-default-cell asowp-py-2.5 asowp-px-3">
+                  <div class="asowp-materials-default-control asowp-inline-flex asowp-items-center asowp-gap-2">
                     <span class="asowp-text-[12px] asowp-text-[#616161]">{{ __('No', 'all-signs-options-pro') }}</span>
                     <button
                       type="button"
@@ -210,6 +212,11 @@ const newMaterial = ref({
 
 const getMaterialPreview = (material) => material?.previewImg || material?.image || material?.icon || "";
 const getMaterialLabel = (material) => material?.label || material?.name || material?.title || "";
+const getPricingLabel = (material) => {
+  const pricingId = String(material?.pricingId || "");
+  if (!pricingId) return __("No pricing selected", "all-signs-options-pro");
+  return pricingOptions.value.find((pricing) => String(pricing.id) === pricingId)?.label || __("No pricing selected", "all-signs-options-pro");
+};
 const displayFileName = (value = "") => {
   const file = String(value || "").split("?")[0].split("#")[0];
   if (!file) return "";
@@ -462,6 +469,8 @@ onMounted(async () => {
 .asowp-materials-table { border: 0 !important; }
 .asowp-materials-table th { padding: 9px 12px; border-top: 0 !important; border-bottom: 0 !important; color: #616161; font-size: 11px; line-height: 16px; font-weight: 700; text-align: left; }
 .asowp-materials-table td { padding: 8px 12px; border-top: 0 !important; border-bottom: 0 !important; color: #303030; font-size: 12px; line-height: 18px; text-align: left; }
+.asowp-materials-table .asowp-materials-default-cell { text-align: center; }
+.asowp-materials-default-control { justify-content: center; width: 100%; }
 .asowp-materials-table tbody tr { border-bottom: 1px solid #e5e7eb !important; }
 .asowp-materials-table tbody tr:last-child { border-bottom: 0 !important; }
 .asowp-outline-button, .asowp-secondary-button, .asowp-primary-button, .asowp-danger-button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 30px; padding: 6px 11px; border-radius: 7px; font-size: 12px; line-height: 16px; font-weight: 800; cursor: pointer; }
