@@ -13,9 +13,8 @@ const devMode = process.env.NODE_ENV !== "production";
 // Naming and path settings
 var appName = "app";
 var entryPoint = {
-  frontend: ["./src/frontend/main.js", "./src/frontend/scss/frontend.scss"],
   admin: ["./src/admin/main.js", "./src/admin/scss/admin.scss"],
-  style: ['./src/global/scss/style.scss'],
+  style: ["./src/global/scss/style.scss"],
 };
 
 var exportPath = path.resolve(__dirname, "./assets/js");
@@ -44,8 +43,8 @@ plugins.push(
   new MiniCssExtractPlugin({
     filename: "../css/[name].css",
     chunkFilename: "../css/[id].css",
-    ignoreOrder: false
-  })
+    ignoreOrder: false,
+  }),
 );
 
 if (devMode) {
@@ -58,7 +57,7 @@ plugins.push(
     __VUE_OPTIONS_API__: false,
     __VUE_PROD_DEVTOOLS__: false,
   }),
-)
+);
 
 // enable live reload with browser-sync
 // set your WordPress site URL in config.json
@@ -94,22 +93,21 @@ module.exports = {
     clean: true,
   },
   externals: {
-    jquery: 'jQuery',
-    underscore: '_',
-    backbone: 'Backbone',
-    '@wordpress/i18n': 'wp.i18n'
+    jquery: "jQuery",
+    underscore: "_",
+    backbone: "Backbone",
+    "@wordpress/i18n": "wp.i18n",
   },
   resolve: {
     fallback: {
       // "fs": require.resolve("browserify-fs"),
       // "path": require.resolve("path-browserify")
-      "fs": false,
-      "path": false
+      fs: false,
+      path: false,
     },
     alias: {
       vue$: "vue/dist/vue.esm-bundler.js",
       "@": path.resolve("./src/"),
-      frontend: path.resolve("./src/frontend/"),
       admin: path.resolve("./src/admin/"),
     },
     modules: [
@@ -151,15 +149,15 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          'vue-style-loader', 
+          "vue-style-loader",
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-                esModule: false,
+              esModule: false,
             },
-          }, 
-          'css-loader', 
-          'sass-loader'
+          },
+          "css-loader",
+          "sass-loader",
         ],
       },
       {
@@ -174,28 +172,32 @@ module.exports = {
                 return url;
               }
               const rel = path.relative(path.dirname(resourcePath), __dirname);
-              return path.posix.join(rel, "assets/images", url).replace(/\\/g, "/");
-            }
-          }
+              return path.posix
+                .join(rel, "assets/images", url)
+                .replace(/\\/g, "/");
+            },
+          },
         },
       },
       {
-          test: /\.svg$/,
-          use: {
-            loader: "file-loader",
-            options: {
-              name: "[name].[ext]",
-              outputPath: "../icons",
-              publicPath: (url, resourcePath) => {
-                if (resourcePath.includes("node_modules")) {
-                  return url;
-                }
-                const rel = path.relative(path.dirname(resourcePath), __dirname);
-                return path.posix.join(rel, "assets/icons", url).replace(/\\/g, "/");
+        test: /\.svg$/,
+        use: {
+          loader: "file-loader",
+          options: {
+            name: "[name].[ext]",
+            outputPath: "../icons",
+            publicPath: (url, resourcePath) => {
+              if (resourcePath.includes("node_modules")) {
+                return url;
               }
-            }
+              const rel = path.relative(path.dirname(resourcePath), __dirname);
+              return path.posix
+                .join(rel, "assets/icons", url)
+                .replace(/\\/g, "/");
+            },
           },
         },
+      },
       {
         test: /\.css$/,
         use: [
@@ -204,7 +206,7 @@ module.exports = {
             options: {
               publicPath: (resourcePath, context) => {
                 return path.relative(path.dirname(resourcePath), context) + "/";
-              }
+              },
             },
           },
           "css-loader",

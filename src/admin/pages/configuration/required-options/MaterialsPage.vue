@@ -176,6 +176,7 @@ import api from "@/admin/Api/api";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import toastMessage from "@/admin/utils/functions";
+import { adminImageUrl } from "@/admin/utils/admin-assets";
 import { Edit2Icon, Loader2Icon, PlusIcon, Trash2Icon } from "lucide-vue-next";
 import { __, sprintf } from "@wordpress/i18n";
 
@@ -210,7 +211,28 @@ const newMaterial = ref({
   excludeComponentIds: [],
 });
 
-const getMaterialPreview = (material) => material?.previewImg || material?.image || material?.icon || "";
+const resolveMaterialImageUrl = (value = "") => {
+  const image = String(Array.isArray(value) ? value[0] : value || "").trim();
+  if (!image) return "";
+  if (/^(https?:)?\/\//i.test(image) || image.startsWith("data:")) return image;
+
+  const normalized = image.replace(/\\/g, "/").replace(/^\/+/, "");
+  if (
+    normalized.startsWith("images/") ||
+    normalized.startsWith("create-config/") ||
+    normalized.startsWith("aso_default_files/")
+  ) {
+    return adminImageUrl(normalized);
+  }
+
+  if (normalized.includes("wp-content/") || normalized.startsWith("wordpressWork/")) {
+    return image.startsWith("/") ? image : `/${normalized}`;
+  }
+
+  return adminImageUrl(normalized);
+};
+
+const getMaterialPreview = (material) => resolveMaterialImageUrl(material?.previewImg || material?.image || material?.icon || "");
 const getMaterialLabel = (material) => material?.label || material?.name || material?.title || "";
 const getPricingLabel = (material) => {
   const pricingId = String(material?.pricingId || "");

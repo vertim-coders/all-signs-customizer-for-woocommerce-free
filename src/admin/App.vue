@@ -38,7 +38,7 @@
 <script setup>
 import {computed, onMounted, ref} from 'vue';
 import { useRoute } from 'vue-router';
-import '@/frontend/utils/tailwindcss.min.js'
+import '@/admin/utils/tailwindcss.min.js'
 import Sidebar from './pages/components/sidebar.vue'
 import Headerbar from './pages/components/headerbar.vue';
 import NotFound from "@/admin/pages/NotFound/index.vue";

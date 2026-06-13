@@ -2837,10 +2837,10 @@ body #ascwo-backend-app button.ascwo-primary-button * {
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/vue-loader/dist/index.js??ruleSet[1].rules[8].use[0]!./src/admin/pages/configuration/required-options/FontsPage.vue?vue&type=style&index=0&id=20d9ee71&scoped=true&lang=css ***!
   \**********************************************************************************************************************************************************************************************************************************************************************************************/
 
-.asowp-fonts-panel[data-v-20d9ee71] {
+.ascwo-fonts-panel[data-v-20d9ee71] {
   color: #303030;
 }
-.asowp-font-preview-box[data-v-20d9ee71] {
+.ascwo-font-preview-box[data-v-20d9ee71] {
   width: 58px;
   height: 36px;
   border: 1px solid #d0d5dd;
@@ -2851,32 +2851,32 @@ body #ascwo-backend-app button.ascwo-primary-button * {
   justify-content: center;
   overflow: hidden;
 }
-.asowp-fonts-list-table[data-v-20d9ee71],
-.asowp-fonts-list-table thead[data-v-20d9ee71],
-.asowp-fonts-list-table tbody[data-v-20d9ee71],
-.asowp-fonts-list-table tr[data-v-20d9ee71],
-.asowp-fonts-list-table th[data-v-20d9ee71],
-.asowp-fonts-list-table td[data-v-20d9ee71] {
+.ascwo-fonts-list-table[data-v-20d9ee71],
+.ascwo-fonts-list-table thead[data-v-20d9ee71],
+.ascwo-fonts-list-table tbody[data-v-20d9ee71],
+.ascwo-fonts-list-table tr[data-v-20d9ee71],
+.ascwo-fonts-list-table th[data-v-20d9ee71],
+.ascwo-fonts-list-table td[data-v-20d9ee71] {
   border-left: 0 !important;
   border-right: 0 !important;
   outline: 0 !important;
   box-shadow: none !important;
 }
-.asowp-fonts-list-table[data-v-20d9ee71] {
+.ascwo-fonts-list-table[data-v-20d9ee71] {
   border: 0 !important;
 }
-.asowp-fonts-list-table th[data-v-20d9ee71],
-.asowp-fonts-list-table td[data-v-20d9ee71] {
+.ascwo-fonts-list-table th[data-v-20d9ee71],
+.ascwo-fonts-list-table td[data-v-20d9ee71] {
   border-top: 0 !important;
   border-bottom: 0 !important;
 }
-.asowp-fonts-list-table tbody tr[data-v-20d9ee71] {
+.ascwo-fonts-list-table tbody tr[data-v-20d9ee71] {
   border-bottom: 1px solid #e5e7eb !important;
 }
-.asowp-fonts-list-table tbody tr[data-v-20d9ee71]:last-child {
+.ascwo-fonts-list-table tbody tr[data-v-20d9ee71]:last-child {
   border-bottom: 0 !important;
 }
-.asowp-selected-badge[data-v-20d9ee71] {
+.ascwo-selected-badge[data-v-20d9ee71] {
   display: inline-flex;
   align-items: center;
   min-height: 20px;
@@ -2888,7 +2888,7 @@ body #ascwo-backend-app button.ascwo-primary-button * {
   line-height: 14px;
   font-weight: 700;
 }
-.asowp-toggle[data-v-20d9ee71] {
+.ascwo-toggle[data-v-20d9ee71] {
   width: 38px;
   height: 22px;
   padding: 0;
@@ -2899,7 +2899,7 @@ body #ascwo-backend-app button.ascwo-primary-button * {
   cursor: pointer;
   transition: background 120ms ease;
 }
-.asowp-toggle span[data-v-20d9ee71] {
+.ascwo-toggle span[data-v-20d9ee71] {
   width: 18px;
   height: 18px;
   border-radius: 999px;
@@ -2910,13 +2910,13 @@ body #ascwo-backend-app button.ascwo-primary-button * {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
   transition: transform 120ms ease;
 }
-.asowp-toggle.is-active[data-v-20d9ee71] {
+.ascwo-toggle.is-active[data-v-20d9ee71] {
   background: #007a72;
 }
-.asowp-toggle.is-active span[data-v-20d9ee71] {
+.ascwo-toggle.is-active span[data-v-20d9ee71] {
   transform: translateX(16px);
 }
-.asowp-remove-button[data-v-20d9ee71] {
+.ascwo-remove-button[data-v-20d9ee71] {
   display: inline-flex;
   align-items: center;
   gap: 5px;
@@ -2930,23 +2930,23 @@ body #ascwo-backend-app button.ascwo-primary-button * {
   font-weight: 800;
   cursor: pointer;
 }
-.asowp-remove-button[data-v-20d9ee71]:hover {
+.ascwo-remove-button[data-v-20d9ee71]:hover {
   background: #f6f6f7;
   color: #8e1f0b;
 }
-.asowp-form-label[data-v-20d9ee71] {
+.ascwo-form-label[data-v-20d9ee71] {
   display: block;
   margin-bottom: 4px;
   font-size: 12px;
   line-height: 16px;
   color: #303030;
 }
-.asowp-create-font-section[data-v-20d9ee71] {
+.ascwo-create-font-section[data-v-20d9ee71] {
   margin-top: 20px;
   padding-top: 20px;
   border-top: 1px solid #e1e3e5;
 }
-.asowp-form-input[data-v-20d9ee71] {
+.ascwo-form-input[data-v-20d9ee71] {
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
@@ -2960,20 +2960,20 @@ body #ascwo-backend-app button.ascwo-primary-button * {
   line-height: 20px;
   box-shadow: none;
 }
-.asowp-form-input[data-v-20d9ee71]:focus {
+.ascwo-form-input[data-v-20d9ee71]:focus {
   outline: 2px solid #005bd3;
   outline-offset: 1px;
   border-color: #8c9196;
   box-shadow: none;
 }
-.asowp-help-text[data-v-20d9ee71] {
+.ascwo-help-text[data-v-20d9ee71] {
   display: block;
   margin-top: 3px;
   color: #616161;
   font-size: 12px;
   line-height: 16px;
 }
-.asowp-file-input[data-v-20d9ee71] {
+.ascwo-file-input[data-v-20d9ee71] {
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
@@ -2985,7 +2985,7 @@ body #ascwo-backend-app button.ascwo-primary-button * {
   background: #fff;
   overflow: hidden;
 }
-.asowp-file-input input[data-v-20d9ee71] {
+.ascwo-file-input input[data-v-20d9ee71] {
   box-sizing: border-box;
   flex: 1;
   min-width: 0;
@@ -2997,11 +2997,11 @@ body #ascwo-backend-app button.ascwo-primary-button * {
   font-size: 13px;
   background: transparent;
 }
-.asowp-file-input input[data-v-20d9ee71]:focus {
+.ascwo-file-input input[data-v-20d9ee71]:focus {
   outline: none;
   box-shadow: none;
 }
-.asowp-file-button[data-v-20d9ee71] {
+.ascwo-file-button[data-v-20d9ee71] {
   margin-left: 5px;
   min-height: 32px;
   padding: 6px 12px;
@@ -3014,11 +3014,11 @@ body #ascwo-backend-app button.ascwo-primary-button * {
   font-weight: 800;
   cursor: pointer;
 }
-.asowp-file-button[data-v-20d9ee71]:hover {
+.ascwo-file-button[data-v-20d9ee71]:hover {
   background: #00645f;
   color: #fff;
 }
-.asowp-search-input[data-v-20d9ee71] {
+.ascwo-search-input[data-v-20d9ee71] {
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
@@ -3031,11 +3031,11 @@ body #ascwo-backend-app button.ascwo-primary-button * {
   padding: 0 12px;
   background: #fff;
 }
-.asowp-search-input[data-v-20d9ee71]:focus-within {
+.ascwo-search-input[data-v-20d9ee71]:focus-within {
   outline: 2px solid #005bd3;
   outline-offset: 1px;
 }
-.asowp-search-input input[data-v-20d9ee71] {
+.ascwo-search-input input[data-v-20d9ee71] {
   box-sizing: border-box;
   flex: 1;
   min-width: 0;
@@ -3048,11 +3048,11 @@ body #ascwo-backend-app button.ascwo-primary-button * {
   font-size: 13px;
   color: #303030;
 }
-.asowp-search-input input[data-v-20d9ee71]:focus {
+.ascwo-search-input input[data-v-20d9ee71]:focus {
   outline: none;
   box-shadow: none;
 }
-.asowp-google-dropdown[data-v-20d9ee71] {
+.ascwo-google-dropdown[data-v-20d9ee71] {
   box-sizing: border-box;
   position: absolute;
   left: 0;
@@ -3068,11 +3068,11 @@ body #ascwo-backend-app button.ascwo-primary-button * {
   background: #fff;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
 }
-.asowp-google-font-picker[data-v-20d9ee71] {
+.ascwo-google-font-picker[data-v-20d9ee71] {
   width: 100%;
   max-width: 100%;
 }
-.asowp-google-dropdown button[data-v-20d9ee71] {
+.ascwo-google-dropdown button[data-v-20d9ee71] {
   width: 100%;
   display: block;
   padding: 9px 12px;
@@ -3085,18 +3085,18 @@ body #ascwo-backend-app button.ascwo-primary-button * {
   text-align: left;
   cursor: pointer;
 }
-.asowp-google-dropdown button[data-v-20d9ee71]:hover,
-.asowp-google-dropdown button[data-v-20d9ee71]:first-child {
+.ascwo-google-dropdown button[data-v-20d9ee71]:hover,
+.ascwo-google-dropdown button[data-v-20d9ee71]:first-child {
   background: #e8e8e8;
   color: #303030;
 }
-.asowp-google-empty[data-v-20d9ee71] {
+.ascwo-google-empty[data-v-20d9ee71] {
   padding: 10px 12px;
   color: #616161;
   font-size: 12px;
 }
-.asowp-primary-button[data-v-20d9ee71],
-.asowp-secondary-button[data-v-20d9ee71] {
+.ascwo-primary-button[data-v-20d9ee71],
+.ascwo-secondary-button[data-v-20d9ee71] {
   min-height: 32px;
   padding: 6px 12px;
   border-radius: 7px;
@@ -3105,26 +3105,26 @@ body #ascwo-backend-app button.ascwo-primary-button * {
   font-weight: 800;
   cursor: pointer;
 }
-.asowp-primary-button[data-v-20d9ee71] {
+.ascwo-primary-button[data-v-20d9ee71] {
   border: 0;
   background: #007a72;
   color: #fff;
 }
-.asowp-primary-button[data-v-20d9ee71]:hover {
+.ascwo-primary-button[data-v-20d9ee71]:hover {
   background: #00645f;
   color: #fff;
 }
-.asowp-primary-button[data-v-20d9ee71]:disabled {
+.ascwo-primary-button[data-v-20d9ee71]:disabled {
   background: #d8d8d8;
   color: #fff;
   cursor: not-allowed;
 }
-.asowp-secondary-button[data-v-20d9ee71] {
+.ascwo-secondary-button[data-v-20d9ee71] {
   border: 1px solid #c9cccf;
   background: #fff;
   color: #303030;
 }
-.asowp-secondary-button[data-v-20d9ee71]:hover {
+.ascwo-secondary-button[data-v-20d9ee71]:hover {
   background: #f6f6f7;
   color: #303030;
 }
@@ -8773,6 +8773,26 @@ to {
 .ascwo-request-quotes-layout {
     grid-template-columns: 1fr;
 }
+}
+
+/*!*******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/vue-loader/dist/index.js??ruleSet[1].rules[8].use[0]!./src/admin/pages/preview/index.vue?vue&type=style&index=0&id=eb253f12&lang=css ***!
+  \*******************************************************************************************************************************************************************************************************************************************************/
+
+.ascwo-admin-preview-shell {
+    height: 100vh;
+}
+.ascwo-admin-preview-content {
+    height: calc(100vh - 58px);
+}
+.ascwo-preview-configurator {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+}
+.ascwo-preview-configurator :deep(.ascwo-configurator-container) {
+    height: 100%;
+    min-height: 0;
 }
 
 /*!**********************************************************************************************************************************************************************************************************************************************!*\

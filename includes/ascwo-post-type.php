@@ -13,6 +13,7 @@ class ASCWO_Post_Type
 		add_filter('init', array($this, 'ascwo_add_design_page_rewrite_rules'), 99);
 		add_filter('init', array($this, 'ascwo_add_template_page_rewrite_rules'), 99);
 		add_filter('query_vars', array($this, 'ascwo_add_query_vars'));
+		add_filter('redirect_canonical', array($this, 'prevent_ascwo_canonical_redirect'), 10, 2);
 		add_action('template_redirect', array($this, 'redirect_if_no_product_id'));
 	}
 
@@ -147,6 +148,24 @@ class ASCWO_Post_Type
 	{
 		global $wp_query;
 		$page_settings = get_option("ascwo_config_page");
+		$design_product_id = $this->get_design_product_id_from_request();
+		$template_product_id = $this->get_template_product_id_from_request();
+		$design_template_id = is_array($design_product_id) ? $design_product_id['template_id'] : '';
+		$design_product_id = is_array($design_product_id) ? $design_product_id['product_id'] : $design_product_id;
+		$template_template_id = is_array($template_product_id) ? $template_product_id['template_id'] : '';
+		$template_product_id = is_array($template_product_id) ? $template_product_id['product_id'] : $template_product_id;
+		if ($design_product_id && !isset($wp_query->query_vars['ascwo-product-id'])) {
+			$wp_query->query_vars['ascwo-product-id'] = $design_product_id;
+		}
+		if (!empty($design_template_id) && !isset($wp_query->query_vars['ascwo-tplid'])) {
+			$wp_query->query_vars['ascwo-tplid'] = $design_template_id;
+		}
+		if ($template_product_id && !isset($wp_query->query_vars['ascwo-product-id'])) {
+			$wp_query->query_vars['ascwo-product-id'] = $template_product_id;
+		}
+		if (!empty($template_template_id) && !isset($wp_query->query_vars['ascwo-tplid'])) {
+			$wp_query->query_vars['ascwo-tplid'] = $template_template_id;
+		}
 		if ((get_the_ID() == $page_settings["configuratorPage"]) && is_page($page_settings["configuratorPage"])) {
 			if (!isset($wp_query->query_vars['ascwo-product-id'])) {
 				ob_start();
@@ -156,7 +175,8 @@ class ASCWO_Post_Type
 						<?php echo esc_html__("All Signs Customizer for WooCommerce Warning", "all-signs-customizer-for-woocommerce-pro") ?>
 					</div>
 					<div>
-						<p><?php echo esc_html__("You are trying to access the personalization page without the personalized button of a product to be personalized. 
+						<p>
+							<?php echo esc_html__("You are trying to access the personalization page without the personalized button of a product to be personalized. 
 						This page should only be accessible using one of the customization buttons. 
 						If you don't like this procedure, don't define this page as a personalization page and use the short code to display the configurator.", "all-signs-customizer-for-woocommerce-pro"); ?>
 						</p>
@@ -180,7 +200,8 @@ class ASCWO_Post_Type
 						<?php echo esc_html__("All Signs Customizer for WooCommerce Warning", "all-signs-customizer-for-woocommerce-pro") ?>
 					</div>
 					<div>
-						<p><?php echo esc_html__("You are trying to access the template page without a product to customize. 
+						<p>
+							<?php echo esc_html__("You are trying to access the template page without a product to customize. 
 						This page should only be accessible by using one of the template buttons. 
 						If you don't like this procedure, don't define this page as a template page and use the short code for template.", "all-signs-customizer-for-woocommerce-pro"); ?>
 						</p>
@@ -202,6 +223,19 @@ class ASCWO_Post_Type
 
 		// If no configuration page is set, or the setting is invalid, do nothing.
 		if (empty($page_settings) || !is_array($page_settings) || !isset($page_settings["configuratorPage"]) || empty($page_settings["configuratorPage"])) {
+			return;
+		}
+
+		$design_product_id = $this->get_design_product_id_from_request();
+		if ($design_product_id) {
+			$design_template_id = is_array($design_product_id) ? $design_product_id['template_id'] : '';
+			$design_product_id = is_array($design_product_id) ? $design_product_id['product_id'] : $design_product_id;
+			if (!isset($wp_query->query_vars['ascwo-product-id'])) {
+				$wp_query->query_vars['ascwo-product-id'] = $design_product_id;
+			}
+			if (!empty($design_template_id) && !isset($wp_query->query_vars['ascwo-tplid'])) {
+				$wp_query->query_vars['ascwo-tplid'] = $design_template_id;
+			}
 			return;
 		}
 
@@ -251,6 +285,57 @@ class ASCWO_Post_Type
 		}
 	}
 
+	private function get_design_product_id_from_request()
+	{
+		return $this->get_product_id_from_request_segment('ascwo-design');
+	}
+
+	private function get_template_product_id_from_request()
+	{
+		return $this->get_product_id_from_request_segment('ascwo-templates');
+	}
+
+	private function get_product_id_from_request_segment($segment)
+	{
+		$request_uri = isset($_SERVER['REQUEST_URI']) ? (string) wp_unslash($_SERVER['REQUEST_URI']) : '';
+		$path = trim((string) wp_parse_url($request_uri, PHP_URL_PATH), '/');
+		if ($path === '') {
+			return 0;
+		}
+
+		$pattern = '#(?:^|/)' . preg_quote($segment, '#') . '/([^/]+)(?:/([^/]+))?/?$#';
+		if (!preg_match($pattern, $path, $matches)) {
+			return 0;
+		}
+
+		$product_id = absint($matches[1] ?? 0);
+		if (!$product_id) {
+			return 0;
+		}
+
+		if (!empty($matches[2])) {
+			return array(
+				'product_id' => $product_id,
+				'template_id' => sanitize_text_field($matches[2]),
+			);
+		}
+
+		return $product_id;
+	}
+
+	public function prevent_ascwo_canonical_redirect($redirect_url, $requested_url)
+	{
+		$path = trim((string) wp_parse_url((string) $requested_url, PHP_URL_PATH), '/');
+		if (
+			preg_match('#(?:^|/)ascwo-design/[^/]+(?:/[^/]+)?/?$#', $path)
+			|| preg_match('#(?:^|/)ascwo-templates/[^/]+(?:/[^/]+)?/?$#', $path)
+		) {
+			return false;
+		}
+
+		return $redirect_url;
+	}
+
 	public function ascwo_add_query_vars($a_vars)
 	{
 		$a_vars[] = 'ascwo-product-id';
@@ -269,20 +354,19 @@ class ASCWO_Post_Type
 			$ascwo_page_id = $page_settings["configuratorPage"];
 			$ascwo_page = get_post($ascwo_page_id);
 			if (is_object($ascwo_page)) {
-				$raw_slug = get_permalink($ascwo_page->ID);
-				$home_url = home_url('/');
-				$slug = trim(str_replace($home_url, '', $raw_slug), '/');
+				$slug = trim(get_page_uri($ascwo_page->ID), '/');
+				$match_slug = '(?:index\.php/)?' . preg_quote($slug, '#');
 
 
 				add_rewrite_rule(
-					$slug . '/ascwo-design/([^/]+)/([^/]+)/?$',
+					$match_slug . '/ascwo-design/([^/]+)/([^/]+)/?$',
 					'index.php?pagename=' . $slug . '&ascwo-product-id=$matches[1]&ascwo-tplid=$matches[2]',
 					'top'
 				);
 
 
 				add_rewrite_rule(
-					$slug . '/ascwo-design/([^/]+)/?$',
+					$match_slug . '/ascwo-design/([^/]+)/?$',
 					'index.php?pagename=' . $slug . '&ascwo-product-id=$matches[1]',
 					'top'
 				);
@@ -300,18 +384,17 @@ class ASCWO_Post_Type
 			$ascwo_page_id = $page_settings["templatePage"];
 			$ascwo_page = get_post($ascwo_page_id);
 			if (is_object($ascwo_page)) {
-				$raw_slug = get_permalink($ascwo_page->ID);
-				$home_url = home_url('/');
-				$slug = trim(str_replace($home_url, '', $raw_slug), '/');
+				$slug = trim(get_page_uri($ascwo_page->ID), '/');
+				$match_slug = '(?:index\.php/)?' . preg_quote($slug, '#');
 
 				add_rewrite_rule(
-					$slug . '/ascwo-templates/([^/]+)/([^/]+)/?$',
+					$match_slug . '/ascwo-templates/([^/]+)/([^/]+)/?$',
 					'index.php?pagename=' . $slug . '&ascwo-product-id=$matches[1]&ascwo-tplid=$matches[2]',
 					'top'
 				);
 
 				add_rewrite_rule(
-					$slug . '/ascwo-templates/([^/]+)/?$',
+					$match_slug . '/ascwo-templates/([^/]+)/?$',
 					'index.php?pagename=' . $slug . '&ascwo-product-id=$matches[1]',
 					'top'
 				);

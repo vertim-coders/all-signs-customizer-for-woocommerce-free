@@ -1,24 +1,24 @@
 ﻿<template>
-  <div class="asowp-fonts-panel asowp-space-y-3">
+  <div class="ascwo-fonts-panel ascwo-space-y-3">
     <template v-if="!showForm">
-      <section class="asowp-bg-white asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#dfe3e8] asowp-shadow-sm">
-        <div class="asowp-p-4 asowp-flex asowp-items-center asowp-justify-between asowp-gap-4">
+      <section class="ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-shadow-sm">
+        <div class="ascwo-p-4 ascwo-flex ascwo-items-center ascwo-justify-between ascwo-gap-4">
           <div>
-            <h2 class="asowp-text-[16px] asowp-leading-6 asowp-font-[900] asowp-text-[#303030] asowp-m-0">{{ __('Fonts', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
-            <p class="asowp-text-[12px] asowp-leading-4 asowp-text-[#616161] asowp-m-0">{{ __('These are the fonts available to customers in this config.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+            <h2 class="ascwo-text-[16px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ __('Fonts', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
+            <p class="ascwo-text-[12px] ascwo-leading-4 ascwo-text-[#616161] ascwo-m-0">{{ __('These are the fonts available to customers in this config.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
           </div>
-          <div class="asowp-flex asowp-items-center asowp-gap-2">
-            <span class="asowp-selected-badge">{{ sprintf(__('%s selected', 'all-signs-customizer-for-woocommerce-pro'), selectedFontRows.length) }}</span>
+          <div class="ascwo-flex ascwo-items-center ascwo-gap-2">
+            <span class="ascwo-selected-badge">{{ sprintf(__('%s selected', 'all-signs-customizer-for-woocommerce-pro'), selectedFontRows.length) }}</span>
             <button
               @click="openAddForm"
-              class="asowp-inline-flex asowp-items-center asowp-gap-2 asowp-px-3 asowp-py-1.5 asowp-bg-[#007a72] asowp-text-white asowp-text-[12px] asowp-leading-4 asowp-font-[900] asowp-border-none asowp-rounded-md asowp-cursor-pointer hover:asowp-bg-[#00645f]"
+              class="ascwo-inline-flex ascwo-items-center ascwo-gap-2 ascwo-px-3 ascwo-py-1.5 ascwo-bg-[#007a72] ascwo-text-white ascwo-text-[12px] ascwo-leading-4 ascwo-font-[900] ascwo-border-none ascwo-rounded-md ascwo-cursor-pointer hover:ascwo-bg-[#00645f]"
             >
-              <PlusIcon class="asowp-w-4 asowp-h-4" />
+              <PlusIcon class="ascwo-w-4 ascwo-h-4" />
               {{ __('Add fonts', 'all-signs-customizer-for-woocommerce-pro') }}
             </button>
             <button
               @click="goToManageFonts"
-              class="asowp-inline-flex asowp-items-center asowp-px-3 asowp-py-1.5 asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-rounded-md asowp-text-[12px] asowp-leading-4 asowp-font-[900] asowp-text-[#303030] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7]"
+              class="ascwo-inline-flex ascwo-items-center ascwo-px-3 ascwo-py-1.5 ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-rounded-md ascwo-text-[12px] ascwo-leading-4 ascwo-font-[900] ascwo-text-[#303030] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7]"
             >
               {{ __('Manage fonts', 'all-signs-customizer-for-woocommerce-pro') }}
             </button>
@@ -26,74 +26,74 @@
         </div>
       </section>
 
-      <section class="asowp-bg-white asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#dfe3e8] asowp-shadow-sm">
-        <div class="asowp-p-4">
-          <h3 class="asowp-text-[14px] asowp-font-[900] asowp-text-[#303030] asowp-mt-0 asowp-mb-3">{{ __('Fonts List', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
+      <section class="ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-shadow-sm">
+        <div class="ascwo-p-4">
+          <h3 class="ascwo-text-[14px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-3">{{ __('Fonts List', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
 
-          <div v-if="isFetching" class="asowp-table-loader-cell asowp-py-8 asowp-text-center">
-            <Loader2Icon class="asowp-table-loader-icon asowp-w-7 asowp-h-7" />
+          <div v-if="isFetching" class="ascwo-table-loader-cell ascwo-py-8 ascwo-text-center">
+            <Loader2Icon class="ascwo-table-loader-icon ascwo-w-7 ascwo-h-7" />
           </div>
 
-          <div v-else-if="selectedFontRows.length === 0" class="asowp-py-8 asowp-text-center asowp-border asowp-border-dashed asowp-border-[#dfe3e8] asowp-rounded-lg">
-            <p class="asowp-text-[13px] asowp-font-[900] asowp-text-[#303030] asowp-m-0">{{ __('No fonts added to this config yet', 'all-signs-customizer-for-woocommerce-pro') }}</p>
-            <p class="asowp-text-[12px] asowp-text-[#616161] asowp-mt-1 asowp-mb-3">{{ __('Add only the fonts this config should expose to customers.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
-            <button @click="openAddForm" class="asowp-inline-flex asowp-items-center asowp-gap-1 asowp-px-3 asowp-py-1.5 asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-rounded-md asowp-text-[12px] asowp-font-[900] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7]">
-              <PlusIcon class="asowp-w-4 asowp-h-4" />
+          <div v-else-if="selectedFontRows.length === 0" class="ascwo-py-8 ascwo-text-center ascwo-border ascwo-border-dashed ascwo-border-[#dfe3e8] ascwo-rounded-lg">
+            <p class="ascwo-text-[13px] ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ __('No fonts added to this config yet', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+            <p class="ascwo-text-[12px] ascwo-text-[#616161] ascwo-mt-1 ascwo-mb-3">{{ __('Add only the fonts this config should expose to customers.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+            <button @click="openAddForm" class="ascwo-inline-flex ascwo-items-center ascwo-gap-1 ascwo-px-3 ascwo-py-1.5 ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-rounded-md ascwo-text-[12px] ascwo-font-[900] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7]">
+              <PlusIcon class="ascwo-w-4 ascwo-h-4" />
               {{ __('Add fonts', 'all-signs-customizer-for-woocommerce-pro') }}
             </button>
           </div>
 
-          <div v-else class="asowp-overflow-visible">
-            <table class="asowp-fonts-list-table asowp-w-full asowp-border-collapse">
-              <thead class="asowp-bg-[#f6f6f7]">
+          <div v-else class="ascwo-overflow-visible">
+            <table class="ascwo-fonts-list-table ascwo-w-full ascwo-border-collapse">
+              <thead class="ascwo-bg-[#f6f6f7]">
                 <tr>
-                  <th class="asowp-w-10 asowp-py-2 asowp-px-3"></th>
-                  <th class="asowp-py-2 asowp-px-3 asowp-text-left asowp-text-[11px] asowp-font-bold asowp-text-[#6b7280]">{{ __('Preview', 'all-signs-customizer-for-woocommerce-pro') }}</th>
-                  <th class="asowp-py-2 asowp-px-3 asowp-text-left asowp-text-[11px] asowp-font-bold asowp-text-[#6b7280]">{{ __('Label', 'all-signs-customizer-for-woocommerce-pro') }}</th>
-                  <th class="asowp-py-2 asowp-px-3 asowp-text-center asowp-text-[11px] asowp-font-bold asowp-text-[#6b7280]">{{ __('Default', 'all-signs-customizer-for-woocommerce-pro') }}</th>
-                  <th class="asowp-py-2 asowp-px-3 asowp-text-left asowp-text-[11px] asowp-font-bold asowp-text-[#6b7280]">{{ __('Actions', 'all-signs-customizer-for-woocommerce-pro') }}</th>
+                  <th class="ascwo-w-10 ascwo-py-2 ascwo-px-3"></th>
+                  <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Preview', 'all-signs-customizer-for-woocommerce-pro') }}</th>
+                  <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Label', 'all-signs-customizer-for-woocommerce-pro') }}</th>
+                  <th class="ascwo-py-2 ascwo-px-3 ascwo-text-center ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Default', 'all-signs-customizer-for-woocommerce-pro') }}</th>
+                  <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Actions', 'all-signs-customizer-for-woocommerce-pro') }}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr
                   v-for="(font, index) in selectedFontRows"
                   :key="font.id"
-                  class="asowp-border-b asowp-border-solid asowp-border-[#e5e7eb] hover:asowp-bg-[#f7f8fa]"
+                  class="ascwo-border-b ascwo-border-solid ascwo-border-[#e5e7eb] hover:ascwo-bg-[#f7f8fa]"
                   draggable="true"
                   @dragstart="dragStartFont(index)"
                   @dragover.prevent
                   @drop="dropFont(index)"
                 >
-                  <td class="asowp-py-2.5 asowp-px-3 asowp-text-[#6b7280]">
-                    <GripVerticalIcon class="asowp-w-4 asowp-h-4 asowp-cursor-grab" />
+                  <td class="ascwo-py-2.5 ascwo-px-3 ascwo-text-[#6b7280]">
+                    <GripVerticalIcon class="ascwo-w-4 ascwo-h-4 ascwo-cursor-grab" />
                   </td>
-                  <td class="asowp-py-2.5 asowp-px-3">
-                    <div v-if="font.previewImg" class="asowp-font-preview-box">
-                      <img :src="font.previewImg" :alt="font.label" class="asowp-w-full asowp-h-full asowp-object-cover asowp-rounded-md" />
+                  <td class="ascwo-py-2.5 ascwo-px-3">
+                    <div v-if="font.previewImg" class="ascwo-font-preview-box">
+                      <img :src="font.previewImg" :alt="font.label" class="ascwo-w-full ascwo-h-full ascwo-object-cover ascwo-rounded-md" />
                     </div>
-                    <div v-else class="asowp-font-preview-box">
-                      <span :style="{ fontFamily: getPreviewFamily(font) }" class="asowp-text-[20px] asowp-leading-5 asowp-text-[#303030]">Ag</span>
+                    <div v-else class="ascwo-font-preview-box">
+                      <span :style="{ fontFamily: getPreviewFamily(font) }" class="ascwo-text-[20px] ascwo-leading-5 ascwo-text-[#303030]">Ag</span>
                     </div>
                   </td>
-                  <td class="asowp-py-2.5 asowp-px-3 asowp-text-[13px] asowp-leading-5 asowp-font-[900] asowp-text-[#303030]">
+                  <td class="ascwo-py-2.5 ascwo-px-3 ascwo-text-[13px] ascwo-leading-5 ascwo-font-[900] ascwo-text-[#303030]">
                     {{ font.label }}
                   </td>
-                  <td class="asowp-py-2.5 asowp-px-3 asowp-text-center">
-                    <div class="asowp-inline-flex asowp-items-center asowp-gap-2">
-                      <span class="asowp-text-[12px] asowp-text-[#616161]">{{ __('No', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                  <td class="ascwo-py-2.5 ascwo-px-3 ascwo-text-center">
+                    <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
+                      <span class="ascwo-text-[12px] ascwo-text-[#616161]">{{ __('No', 'all-signs-customizer-for-woocommerce-pro') }}</span>
                       <button
                         @click="setDefaultFont(index)"
-                        :class="['asowp-toggle', font.isDefault ? 'is-active' : '']"
+                        :class="['ascwo-toggle', font.isDefault ? 'is-active' : '']"
                         :aria-label="__('Set default font', 'all-signs-customizer-for-woocommerce-pro')"
                       >
                         <span></span>
                       </button>
-                      <span class="asowp-text-[12px] asowp-text-[#616161]">{{ __('Yes', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                      <span class="ascwo-text-[12px] ascwo-text-[#616161]">{{ __('Yes', 'all-signs-customizer-for-woocommerce-pro') }}</span>
                     </div>
                   </td>
-                  <td class="asowp-py-2.5 asowp-px-3 asowp-text-left">
-                    <button @click="removeFont(index)" class="asowp-remove-button">
-                      <TrashIcon class="asowp-w-4 asowp-h-4" />
+                  <td class="ascwo-py-2.5 ascwo-px-3 ascwo-text-left">
+                    <button @click="removeFont(index)" class="ascwo-remove-button">
+                      <TrashIcon class="ascwo-w-4 ascwo-h-4" />
                       {{ __('Remove', 'all-signs-customizer-for-woocommerce-pro') }}
                     </button>
                   </td>
@@ -104,22 +104,22 @@
         </div>
       </section>
 
-      <section class="asowp-bg-white asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#dfe3e8] asowp-shadow-sm">
-        <div class="asowp-p-4">
-          <h3 class="asowp-text-[14px] asowp-font-[900] asowp-text-[#303030] asowp-mt-0 asowp-mb-0">{{ __('Fonts Settings', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
-          <p class="asowp-text-[12px] asowp-leading-4 asowp-text-[#616161] asowp-mt-0 asowp-mb-3">{{ __('Keep the title and description used for the fonts section.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
-          <div class="asowp-space-y-3">
-            <label class="asowp-block">
-              <span class="asowp-form-label">{{ __('Title', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-              <input v-model="textSettings.fontsLabel" class="asowp-form-input" autocomplete="off" />
+      <section class="ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-shadow-sm">
+        <div class="ascwo-p-4">
+          <h3 class="ascwo-text-[14px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-0">{{ __('Fonts Settings', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
+          <p class="ascwo-text-[12px] ascwo-leading-4 ascwo-text-[#616161] ascwo-mt-0 ascwo-mb-3">{{ __('Keep the title and description used for the fonts section.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+          <div class="ascwo-space-y-3">
+            <label class="ascwo-block">
+              <span class="ascwo-form-label">{{ __('Title', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <input v-model="textSettings.fontsLabel" class="ascwo-form-input" autocomplete="off" />
             </label>
-            <label class="asowp-block">
-              <span class="asowp-form-label">{{ __('Description', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-              <input v-model="textSettings.fontsDescription" class="asowp-form-input" autocomplete="off" />
+            <label class="ascwo-block">
+              <span class="ascwo-form-label">{{ __('Description', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <input v-model="textSettings.fontsDescription" class="ascwo-form-input" autocomplete="off" />
             </label>
           </div>
-          <div class="asowp-flex asowp-justify-end asowp-mt-4">
-            <button @click="saveFonts" :disabled="isLoading" class="asowp-primary-button">
+          <div class="ascwo-flex ascwo-justify-end ascwo-mt-4">
+            <button @click="saveFonts" :disabled="isLoading" class="ascwo-primary-button">
               {{ isLoading ? __('Saving...', 'all-signs-customizer-for-woocommerce-pro') : __('Save fonts', 'all-signs-customizer-for-woocommerce-pro') }}
             </button>
           </div>
@@ -128,49 +128,49 @@
     </template>
 
     <template v-else>
-      <section class="asowp-bg-white asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#dfe3e8] asowp-shadow-sm">
-        <div class="asowp-p-4 asowp-flex asowp-items-center asowp-justify-between asowp-gap-4">
+      <section class="ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-shadow-sm">
+        <div class="ascwo-p-4 ascwo-flex ascwo-items-center ascwo-justify-between ascwo-gap-4">
           <div>
-            <h2 class="asowp-text-[20px] asowp-leading-6 asowp-font-[900] asowp-text-[#303030] asowp-m-0">{{ __('Add Fonts', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
-            <p class="asowp-text-[12px] asowp-leading-4 asowp-text-[#616161] asowp-m-0">{{ __('Add an existing font from the shared library or create a new one here.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+            <h2 class="ascwo-text-[20px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ __('Add Fonts', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
+            <p class="ascwo-text-[12px] ascwo-leading-4 ascwo-text-[#616161] ascwo-m-0">{{ __('Add an existing font from the shared library or create a new one here.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
           </div>
-          <button @click="resetForm" class="asowp-secondary-button">{{ __('Back to fonts', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+          <button @click="resetForm" class="ascwo-secondary-button">{{ __('Back to fonts', 'all-signs-customizer-for-woocommerce-pro') }}</button>
         </div>
       </section>
 
-      <section class="asowp-bg-white asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#dfe3e8] asowp-shadow-sm">
-        <div class="asowp-p-4 asowp-space-y-5">
+      <section class="ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-shadow-sm">
+        <div class="ascwo-p-4 ascwo-space-y-5">
           <div v-if="formMode !== 'edit'">
-            <h3 class="asowp-text-[14px] asowp-font-[900] asowp-text-[#303030] asowp-mt-0 asowp-mb-3">{{ __('Add existing fonts', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
-            <label class="asowp-block">
-              <span class="asowp-form-label">{{ __('Fonts', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-              <select v-model="selectedExistingFontId" class="asowp-form-input">
+            <h3 class="ascwo-text-[14px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-3">{{ __('Add existing fonts', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
+            <label class="ascwo-block">
+              <span class="ascwo-form-label">{{ __('Fonts', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <select v-model="selectedExistingFontId" class="ascwo-form-input">
                 <option value="">{{ __('Select fonts', 'all-signs-customizer-for-woocommerce-pro') }}</option>
                 <option v-for="font in availableFontRows" :key="font.id" :value="font.id">{{ font.label }}</option>
               </select>
-              <span class="asowp-help-text">{{ __('Add one or many fonts already available in your shared library.', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span class="ascwo-help-text">{{ __('Add one or many fonts already available in your shared library.', 'all-signs-customizer-for-woocommerce-pro') }}</span>
             </label>
-            <div class="asowp-flex asowp-justify-end asowp-mt-3">
-              <button @click="addExistingFont" :disabled="selectedExistingFontId === ''" class="asowp-primary-button">{{ __('Add selected fonts', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+            <div class="ascwo-flex ascwo-justify-end ascwo-mt-3">
+              <button @click="addExistingFont" :disabled="selectedExistingFontId === ''" class="ascwo-primary-button">{{ __('Add selected fonts', 'all-signs-customizer-for-woocommerce-pro') }}</button>
             </div>
           </div>
 
-          <div :class="formMode !== 'edit' ? 'asowp-create-font-section' : ''">
-            <h3 class="asowp-text-[14px] asowp-font-[900] asowp-text-[#303030] asowp-mt-0 asowp-mb-3">{{ formMode === 'edit' ? __('Font details', 'all-signs-customizer-for-woocommerce-pro') : __('Create and add a new font', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
-            <div class="asowp-space-y-3">
-              <div class="asowp-flex asowp-items-center asowp-gap-5">
-                <label class="asowp-inline-flex asowp-items-center asowp-gap-2 asowp-text-[13px] asowp-text-[#303030]">
+          <div :class="formMode !== 'edit' ? 'ascwo-create-font-section' : ''">
+            <h3 class="ascwo-text-[14px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-3">{{ formMode === 'edit' ? __('Font details', 'all-signs-customizer-for-woocommerce-pro') : __('Create and add a new font', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
+            <div class="ascwo-space-y-3">
+              <div class="ascwo-flex ascwo-items-center ascwo-gap-5">
+                <label class="ascwo-inline-flex ascwo-items-center ascwo-gap-2 ascwo-text-[13px] ascwo-text-[#303030]">
                   {{ __('Google font', 'all-signs-customizer-for-woocommerce-pro') }}
-                  <button @click="setAddMode('google')" :class="['asowp-toggle', fontForm.isGoogleFont ? 'is-active' : '']"><span></span></button>
+                  <button @click="setAddMode('google')" :class="['ascwo-toggle', fontForm.isGoogleFont ? 'is-active' : '']"><span></span></button>
                 </label>
-                <label class="asowp-inline-flex asowp-items-center asowp-gap-2 asowp-text-[13px] asowp-text-[#303030]">
+                <label class="ascwo-inline-flex ascwo-items-center ascwo-gap-2 ascwo-text-[13px] ascwo-text-[#303030]">
                   {{ __('Upload font', 'all-signs-customizer-for-woocommerce-pro') }}
-                  <button @click="setAddMode('upload')" :class="['asowp-toggle', !fontForm.isGoogleFont ? 'is-active' : '']"><span></span></button>
+                  <button @click="setAddMode('upload')" :class="['ascwo-toggle', !fontForm.isGoogleFont ? 'is-active' : '']"><span></span></button>
                 </label>
               </div>
-              <div v-if="fontForm.isGoogleFont" class="asowp-google-font-picker">
-                <label class="asowp-block asowp-relative">
-                  <div v-if="showGoogleDropdown" class="asowp-google-dropdown">
+              <div v-if="fontForm.isGoogleFont" class="ascwo-google-font-picker">
+                <label class="ascwo-block ascwo-relative">
+                  <div v-if="showGoogleDropdown" class="ascwo-google-dropdown">
                     <button
                       v-for="font in filteredGoogleFonts"
                       :key="font.family"
@@ -179,13 +179,13 @@
                     >
                       {{ font.family }}
                     </button>
-                    <div v-if="filteredGoogleFonts.length === 0" class="asowp-google-empty">
+                    <div v-if="filteredGoogleFonts.length === 0" class="ascwo-google-empty">
                       {{ __('No fonts found', 'all-signs-customizer-for-woocommerce-pro') }}
                     </div>
                   </div>
-                  <span class="asowp-form-label">{{ __('Search Google Fonts', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-                  <div class="asowp-search-input">
-                    <SearchIcon class="asowp-w-4 asowp-h-4 asowp-text-[#6b7280]" />
+                  <span class="ascwo-form-label">{{ __('Search Google Fonts', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                  <div class="ascwo-search-input">
+                    <SearchIcon class="ascwo-w-4 ascwo-h-4 ascwo-text-[#6b7280]" />
                     <input
                       v-model="googleFontSearch"
                       @focus="showGoogleDropdown = true"
@@ -195,29 +195,29 @@
                   </div>
                 </label>
 
-                <label v-if="selectedGoogleFont?.variants?.length" class="asowp-block">
-                  <span class="asowp-form-label">{{ __('Font Variant', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-                  <select v-model="selectedGoogleVariant" @change="applyGoogleVariant" class="asowp-form-input">
+                <label v-if="selectedGoogleFont?.variants?.length" class="ascwo-block">
+                  <span class="ascwo-form-label">{{ __('Font Variant', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                  <select v-model="selectedGoogleVariant" @change="applyGoogleVariant" class="ascwo-form-input">
                     <option v-for="variant in selectedGoogleFont.variants" :key="variant" :value="variant">{{ variant }}</option>
                   </select>
                 </label>
               </div>
 
-              <label v-else class="asowp-block">
-                <span class="asowp-form-label">{{ __('Upload font file', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-                <div class="asowp-file-input">
-                  <button @click.prevent="selectFontFile" class="asowp-file-button">{{ __('Upload font file', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+              <label v-else class="ascwo-block">
+                <span class="ascwo-form-label">{{ __('Upload font file', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                <div class="ascwo-file-input">
+                  <button @click.prevent="selectFontFile" class="ascwo-file-button">{{ __('Upload font file', 'all-signs-customizer-for-woocommerce-pro') }}</button>
                   <input v-model="fontForm.url" autocomplete="off" />
                 </div>
-                <span class="asowp-help-text">{{ __('.ttf or .otf font file.', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                <span class="ascwo-help-text">{{ __('.ttf or .otf font file.', 'all-signs-customizer-for-woocommerce-pro') }}</span>
               </label>
-              <label class="asowp-block">
-                <span class="asowp-form-label">{{ __('Label', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-                <input v-model="fontForm.label" class="asowp-form-input" autocomplete="off" />
+              <label class="ascwo-block">
+                <span class="ascwo-form-label">{{ __('Label', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                <input v-model="fontForm.label" class="ascwo-form-input" autocomplete="off" />
               </label>
             </div>
-            <div class="asowp-flex asowp-justify-end asowp-gap-2 asowp-mt-4">
-              <button @click="saveFontForm" :disabled="isSavingFontForm || !fontForm.label.trim() || !fontForm.url.trim()" class="asowp-primary-button">
+            <div class="ascwo-flex ascwo-justify-end ascwo-gap-2 ascwo-mt-4">
+              <button @click="saveFontForm" :disabled="isSavingFontForm || !fontForm.label.trim() || !fontForm.url.trim()" class="ascwo-primary-button">
                 {{
                   isSavingFontForm
                     ? __('Creating...', 'all-signs-customizer-for-woocommerce-pro')
@@ -358,7 +358,7 @@ const filteredGoogleFonts = computed(() => {
 
 const cssUrl = (url) => String(url || "").replace(/\\/g, "\\\\").replace(/'/g, "\\'");
 
-const getPreviewFamilyName = (font) => `asowp_config_font_${font.id}`;
+const getPreviewFamilyName = (font) => `ascwo_config_font_${font.id}`;
 
 const getPreviewFamily = (font) => `'${getPreviewFamilyName(font)}'`;
 
@@ -388,7 +388,7 @@ const fontPreviewCss = computed(() =>
 const syncPreviewStyle = (css) => {
   if (!previewStyleElement) {
     previewStyleElement = document.createElement("style");
-    previewStyleElement.setAttribute("data-asowp-font-preview", "simple-fonts");
+    previewStyleElement.setAttribute("data-ascwo-font-preview", "simple-fonts");
     document.head.appendChild(previewStyleElement);
   }
   previewStyleElement.textContent = css || "";
@@ -688,7 +688,7 @@ const selectFontFile = () => {
 };
 
 const closeGoogleDropdown = (event) => {
-  if (!event.target?.closest?.(".asowp-google-font-picker")) {
+  if (!event.target?.closest?.(".ascwo-google-font-picker")) {
     showGoogleDropdown.value = false;
   }
 };
@@ -708,11 +708,11 @@ watch(fontPreviewCss, syncPreviewStyle, { immediate: true });
 </script>
 
 <style scoped>
-.asowp-fonts-panel {
+.ascwo-fonts-panel {
   color: #303030;
 }
 
-.asowp-font-preview-box {
+.ascwo-font-preview-box {
   width: 58px;
   height: 36px;
   border: 1px solid #d0d5dd;
@@ -724,37 +724,37 @@ watch(fontPreviewCss, syncPreviewStyle, { immediate: true });
   overflow: hidden;
 }
 
-.asowp-fonts-list-table,
-.asowp-fonts-list-table thead,
-.asowp-fonts-list-table tbody,
-.asowp-fonts-list-table tr,
-.asowp-fonts-list-table th,
-.asowp-fonts-list-table td {
+.ascwo-fonts-list-table,
+.ascwo-fonts-list-table thead,
+.ascwo-fonts-list-table tbody,
+.ascwo-fonts-list-table tr,
+.ascwo-fonts-list-table th,
+.ascwo-fonts-list-table td {
   border-left: 0 !important;
   border-right: 0 !important;
   outline: 0 !important;
   box-shadow: none !important;
 }
 
-.asowp-fonts-list-table {
+.ascwo-fonts-list-table {
   border: 0 !important;
 }
 
-.asowp-fonts-list-table th,
-.asowp-fonts-list-table td {
+.ascwo-fonts-list-table th,
+.ascwo-fonts-list-table td {
   border-top: 0 !important;
   border-bottom: 0 !important;
 }
 
-.asowp-fonts-list-table tbody tr {
+.ascwo-fonts-list-table tbody tr {
   border-bottom: 1px solid #e5e7eb !important;
 }
 
-.asowp-fonts-list-table tbody tr:last-child {
+.ascwo-fonts-list-table tbody tr:last-child {
   border-bottom: 0 !important;
 }
 
-.asowp-selected-badge {
+.ascwo-selected-badge {
   display: inline-flex;
   align-items: center;
   min-height: 20px;
@@ -767,7 +767,7 @@ watch(fontPreviewCss, syncPreviewStyle, { immediate: true });
   font-weight: 700;
 }
 
-.asowp-toggle {
+.ascwo-toggle {
   width: 38px;
   height: 22px;
   padding: 0;
@@ -779,7 +779,7 @@ watch(fontPreviewCss, syncPreviewStyle, { immediate: true });
   transition: background 120ms ease;
 }
 
-.asowp-toggle span {
+.ascwo-toggle span {
   width: 18px;
   height: 18px;
   border-radius: 999px;
@@ -791,15 +791,15 @@ watch(fontPreviewCss, syncPreviewStyle, { immediate: true });
   transition: transform 120ms ease;
 }
 
-.asowp-toggle.is-active {
+.ascwo-toggle.is-active {
   background: #007a72;
 }
 
-.asowp-toggle.is-active span {
+.ascwo-toggle.is-active span {
   transform: translateX(16px);
 }
 
-.asowp-remove-button {
+.ascwo-remove-button {
   display: inline-flex;
   align-items: center;
   gap: 5px;
@@ -814,12 +814,12 @@ watch(fontPreviewCss, syncPreviewStyle, { immediate: true });
   cursor: pointer;
 }
 
-.asowp-remove-button:hover {
+.ascwo-remove-button:hover {
   background: #f6f6f7;
   color: #8e1f0b;
 }
 
-.asowp-form-label {
+.ascwo-form-label {
   display: block;
   margin-bottom: 4px;
   font-size: 12px;
@@ -827,13 +827,13 @@ watch(fontPreviewCss, syncPreviewStyle, { immediate: true });
   color: #303030;
 }
 
-.asowp-create-font-section {
+.ascwo-create-font-section {
   margin-top: 20px;
   padding-top: 20px;
   border-top: 1px solid #e1e3e5;
 }
 
-.asowp-form-input {
+.ascwo-form-input {
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
@@ -848,14 +848,14 @@ watch(fontPreviewCss, syncPreviewStyle, { immediate: true });
   box-shadow: none;
 }
 
-.asowp-form-input:focus {
+.ascwo-form-input:focus {
   outline: 2px solid #005bd3;
   outline-offset: 1px;
   border-color: #8c9196;
   box-shadow: none;
 }
 
-.asowp-help-text {
+.ascwo-help-text {
   display: block;
   margin-top: 3px;
   color: #616161;
@@ -863,7 +863,7 @@ watch(fontPreviewCss, syncPreviewStyle, { immediate: true });
   line-height: 16px;
 }
 
-.asowp-file-input {
+.ascwo-file-input {
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
@@ -876,7 +876,7 @@ watch(fontPreviewCss, syncPreviewStyle, { immediate: true });
   overflow: hidden;
 }
 
-.asowp-file-input input {
+.ascwo-file-input input {
   box-sizing: border-box;
   flex: 1;
   min-width: 0;
@@ -889,12 +889,12 @@ watch(fontPreviewCss, syncPreviewStyle, { immediate: true });
   background: transparent;
 }
 
-.asowp-file-input input:focus {
+.ascwo-file-input input:focus {
   outline: none;
   box-shadow: none;
 }
 
-.asowp-file-button {
+.ascwo-file-button {
   margin-left: 5px;
   min-height: 32px;
   padding: 6px 12px;
@@ -908,12 +908,12 @@ watch(fontPreviewCss, syncPreviewStyle, { immediate: true });
   cursor: pointer;
 }
 
-.asowp-file-button:hover {
+.ascwo-file-button:hover {
   background: #00645f;
   color: #fff;
 }
 
-.asowp-search-input {
+.ascwo-search-input {
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
@@ -927,12 +927,12 @@ watch(fontPreviewCss, syncPreviewStyle, { immediate: true });
   background: #fff;
 }
 
-.asowp-search-input:focus-within {
+.ascwo-search-input:focus-within {
   outline: 2px solid #005bd3;
   outline-offset: 1px;
 }
 
-.asowp-search-input input {
+.ascwo-search-input input {
   box-sizing: border-box;
   flex: 1;
   min-width: 0;
@@ -946,12 +946,12 @@ watch(fontPreviewCss, syncPreviewStyle, { immediate: true });
   color: #303030;
 }
 
-.asowp-search-input input:focus {
+.ascwo-search-input input:focus {
   outline: none;
   box-shadow: none;
 }
 
-.asowp-google-dropdown {
+.ascwo-google-dropdown {
   box-sizing: border-box;
   position: absolute;
   left: 0;
@@ -968,12 +968,12 @@ watch(fontPreviewCss, syncPreviewStyle, { immediate: true });
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
 }
 
-.asowp-google-font-picker {
+.ascwo-google-font-picker {
   width: 100%;
   max-width: 100%;
 }
 
-.asowp-google-dropdown button {
+.ascwo-google-dropdown button {
   width: 100%;
   display: block;
   padding: 9px 12px;
@@ -987,20 +987,20 @@ watch(fontPreviewCss, syncPreviewStyle, { immediate: true });
   cursor: pointer;
 }
 
-.asowp-google-dropdown button:hover,
-.asowp-google-dropdown button:first-child {
+.ascwo-google-dropdown button:hover,
+.ascwo-google-dropdown button:first-child {
   background: #e8e8e8;
   color: #303030;
 }
 
-.asowp-google-empty {
+.ascwo-google-empty {
   padding: 10px 12px;
   color: #616161;
   font-size: 12px;
 }
 
-.asowp-primary-button,
-.asowp-secondary-button {
+.ascwo-primary-button,
+.ascwo-secondary-button {
   min-height: 32px;
   padding: 6px 12px;
   border-radius: 7px;
@@ -1010,30 +1010,30 @@ watch(fontPreviewCss, syncPreviewStyle, { immediate: true });
   cursor: pointer;
 }
 
-.asowp-primary-button {
+.ascwo-primary-button {
   border: 0;
   background: #007a72;
   color: #fff;
 }
 
-.asowp-primary-button:hover {
+.ascwo-primary-button:hover {
   background: #00645f;
   color: #fff;
 }
 
-.asowp-primary-button:disabled {
+.ascwo-primary-button:disabled {
   background: #d8d8d8;
   color: #fff;
   cursor: not-allowed;
 }
 
-.asowp-secondary-button {
+.ascwo-secondary-button {
   border: 1px solid #c9cccf;
   background: #fff;
   color: #303030;
 }
 
-.asowp-secondary-button:hover {
+.ascwo-secondary-button:hover {
   background: #f6f6f7;
   color: #303030;
 }

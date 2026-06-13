@@ -240,20 +240,18 @@ class ASCWO_Frontend
                             'description' => get_post_field('post_content', $configId),
                             'icon' => $config['icon'],
                             'popImg' => $config['popImg'],
-                            'data' => $config['data']
+                            'data' => $frontend_data
                         ];
-                        $config_fonts = $config['data']['settings']['customizerSign']['text']['selectedFonts'];
-                        $config_cliparts = $config['data']['settings']['customizerSign']['images']['enableClipart'] == true ? $config['data']['settings']['customizerSign']['images']['enableClipart']['selectedClipartGroups'] : [];
-
-                        $visibleFonts = [];
-                        foreach ($config_fonts as $font) {
-                            if (isset($all_fonts[$font])) {
-                                $visibleFonts[] = $all_fonts[$font];
-                            }
-                        }
+                        $visibleFonts = ConfigSchemaNormalizer::to_frontend_fonts($config_meta, is_array($all_fonts) ? $all_fonts : []);
+                        $enable_clipart = isset($frontend_data['settings']['customizerSign']['images']['enableClipart'])
+                            ? $frontend_data['settings']['customizerSign']['images']['enableClipart']
+                            : false;
+                        $config_cliparts = is_array($enable_clipart) && isset($enable_clipart['selectedClipartGroups']) && is_array($enable_clipart['selectedClipartGroups'])
+                            ? $enable_clipart['selectedClipartGroups']
+                            : [];
 
                         $this->includes_config_fonts($visibleFonts);
-                        $this->include_custom_css($config['data']['settings']['themeColors']['customCSS']);
+                        $this->include_custom_css(isset($frontend_data['settings']['themeColors']['customCSS']) ? $frontend_data['settings']['themeColors']['customCSS'] : '');
 
                         $visibleCliparts = [];
                         foreach ($config_cliparts as $part) {
@@ -288,7 +286,7 @@ class ASCWO_Frontend
                         }
 
                         $ASO = [
-                            'skin' => $config['data']['settings']['themeColors']['skin'],
+                            'skin' => isset($frontend_data['settings']['themeColors']['skin']) ? $frontend_data['settings']['themeColors']['skin'] : 'default',
                             'productID' => $productid,
                             'currentConfig' => $configData,
                             'managesData' => $all_manages,
@@ -318,8 +316,8 @@ class ASCWO_Frontend
                             'author' => ASCWO_ID
                         ]);
                         ?>
-                        <div class="ascwo-frontend-app ascwo-configurator-container" data-ascwo-page="configurator"></div>
-                        <?php
+                                                <div class="ascwo-frontend-app ascwo-configurator-container" data-ascwo-page="configurator"></div>
+                                                <?php
                     }
                 }
             }
@@ -362,76 +360,76 @@ class ASCWO_Frontend
                     $page_settings = get_option("ascwo_config_page", []);
                     $this->enqueue_frontend_app_assets();
                     ?>
-                    <div id="ascwo-templates-loader">
-                        <div class="ascwo-templates-skeleton-grid">
-                            <div class="ascwo-skeleton-card">
-                                <div class="ascwo-skeleton ascwo-skeleton-image"></div>
-                                <div class="ascwo-skeleton-body">
-                                    <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--lg"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--md"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--sm"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-button"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-button"></div>
-                                </div>
-                            </div>
-                            <div class="ascwo-skeleton-card">
-                                <div class="ascwo-skeleton ascwo-skeleton-image"></div>
-                                <div class="ascwo-skeleton-body">
-                                    <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--lg"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--md"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--sm"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-button"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-button"></div>
-                                </div>
-                            </div>
-                            <div class="ascwo-skeleton-card">
-                                <div class="ascwo-skeleton ascwo-skeleton-image"></div>
-                                <div class="ascwo-skeleton-body">
-                                    <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--lg"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--md"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--sm"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-button"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-button"></div>
-                                </div>
-                            </div>
-                            <div class="ascwo-skeleton-card">
-                                <div class="ascwo-skeleton ascwo-skeleton-image"></div>
-                                <div class="ascwo-skeleton-body">
-                                    <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--lg"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--md"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--sm"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-button"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-button"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ascwo-frontend-app ascwo-templates" data-ascwo-page="templates"></div>
-                    <?php
-                    wp_localize_script('ascwo-frontend', 'ascwo_templates', [
-                        "data" => $templates,
-                        "categories" => $categories,
-                        "productId" => $productid,
-                        "grid_cols" => $cols,
-                        'regularPrice' => trim($product_price) !== '' ? $product_price : 0,
-                        'thousandSep' => wc_get_price_thousand_separator(),
-                        'decimalSep' => wc_get_price_decimal_separator(),
-                        'decimals' => wc_get_price_decimals(),
-                        'nbDecimals' => wc_get_price_decimals(),
-                        'currencySymbol' => html_entity_decode(get_woocommerce_currency_symbol()),
-                        'currency_pos' => get_option('woocommerce_currency_pos'),
-                        "buttons" => isset($page_settings['buttons']) && is_array($page_settings['buttons']) ? $page_settings['buttons'] : [],
-                        "frontend_nonce" => wp_create_nonce('ascwo_add_to_cart_after_custom'),
-                        "design_page_url" => $ascwo_product->get_design_page_url(),
-                    ]);
-                    wp_localize_script('ascwo-frontend', 'ascwo_data', [
-                        "rest_url" => get_rest_url() . "ascwo/v1",
-                        'ajax_url' => esc_url(admin_url('admin-ajax.php')),
-                        "caches" => function_exists('ascwo_get_license_cache_timestamp') ? \ascwo_get_license_cache_timestamp() : 0,
-                        "page" => "templates",
-                        "site_url" => urlencode(get_site_url()),
-                        "author" => ASCWO_ID
-                    ]);
+                                        <div id="ascwo-templates-loader">
+                                            <div class="ascwo-templates-skeleton-grid">
+                                                <div class="ascwo-skeleton-card">
+                                                    <div class="ascwo-skeleton ascwo-skeleton-image"></div>
+                                                    <div class="ascwo-skeleton-body">
+                                                        <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--lg"></div>
+                                                        <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--md"></div>
+                                                        <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--sm"></div>
+                                                        <div class="ascwo-skeleton ascwo-skeleton-button"></div>
+                                                        <div class="ascwo-skeleton ascwo-skeleton-button"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="ascwo-skeleton-card">
+                                                    <div class="ascwo-skeleton ascwo-skeleton-image"></div>
+                                                    <div class="ascwo-skeleton-body">
+                                                        <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--lg"></div>
+                                                        <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--md"></div>
+                                                        <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--sm"></div>
+                                                        <div class="ascwo-skeleton ascwo-skeleton-button"></div>
+                                                        <div class="ascwo-skeleton ascwo-skeleton-button"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="ascwo-skeleton-card">
+                                                    <div class="ascwo-skeleton ascwo-skeleton-image"></div>
+                                                    <div class="ascwo-skeleton-body">
+                                                        <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--lg"></div>
+                                                        <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--md"></div>
+                                                        <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--sm"></div>
+                                                        <div class="ascwo-skeleton ascwo-skeleton-button"></div>
+                                                        <div class="ascwo-skeleton ascwo-skeleton-button"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="ascwo-skeleton-card">
+                                                    <div class="ascwo-skeleton ascwo-skeleton-image"></div>
+                                                    <div class="ascwo-skeleton-body">
+                                                        <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--lg"></div>
+                                                        <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--md"></div>
+                                                        <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--sm"></div>
+                                                        <div class="ascwo-skeleton ascwo-skeleton-button"></div>
+                                                        <div class="ascwo-skeleton ascwo-skeleton-button"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ascwo-frontend-app ascwo-templates" data-ascwo-page="templates"></div>
+                                        <?php
+                                        wp_localize_script('ascwo-frontend', 'ascwo_templates', [
+                                            "data" => $templates,
+                                            "categories" => $categories,
+                                            "productId" => $productid,
+                                            "grid_cols" => $cols,
+                                            'regularPrice' => trim($product_price) !== '' ? $product_price : 0,
+                                            'thousandSep' => wc_get_price_thousand_separator(),
+                                            'decimalSep' => wc_get_price_decimal_separator(),
+                                            'decimals' => wc_get_price_decimals(),
+                                            'nbDecimals' => wc_get_price_decimals(),
+                                            'currencySymbol' => html_entity_decode(get_woocommerce_currency_symbol()),
+                                            'currency_pos' => get_option('woocommerce_currency_pos'),
+                                            "buttons" => isset($page_settings['buttons']) && is_array($page_settings['buttons']) ? $page_settings['buttons'] : [],
+                                            "frontend_nonce" => wp_create_nonce('ascwo_add_to_cart_after_custom'),
+                                            "design_page_url" => $ascwo_product->get_design_page_url(),
+                                        ]);
+                                        wp_localize_script('ascwo-frontend', 'ascwo_data', [
+                                            "rest_url" => get_rest_url() . "ascwo/v1",
+                                            'ajax_url' => esc_url(admin_url('admin-ajax.php')),
+                                            "caches" => function_exists('ascwo_get_license_cache_timestamp') ? \ascwo_get_license_cache_timestamp() : 0,
+                                            "page" => "templates",
+                                            "site_url" => urlencode(get_site_url()),
+                                            "author" => ASCWO_ID
+                                        ]);
                 }
             }
         }
