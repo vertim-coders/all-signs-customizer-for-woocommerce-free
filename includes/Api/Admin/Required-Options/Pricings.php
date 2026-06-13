@@ -113,9 +113,9 @@ class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Bas
     {
         return array(
             'mode' => '',
-            'label' => 'Pricing',
+            'label' => 'Pricings',
             'description' => '',
-            'priceOptions' => array(),
+            'items' => array(),
         );
     }
 
@@ -159,9 +159,9 @@ class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Bas
 
     private function get_pricing_items(array $required_options): array
     {
-        $pricing = $this->section_value($required_options, 'pricing', $this->pricing_section_default());
-        if (is_array($pricing) && isset($pricing['priceOptions']) && is_array($pricing['priceOptions'])) {
-            $items = array_values($pricing['priceOptions']);
+        $pricing = $this->section_value($required_options, 'pricings', $this->pricing_section_default());
+        if (is_array($pricing) && isset($pricing['items']) && is_array($pricing['items'])) {
+            $items = array_values($pricing['items']);
         } else {
             $items = array();
         }
@@ -188,14 +188,13 @@ class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Bas
             $normalized_items[] = $this->normalize_pricing_item(is_array($item) ? $item : array(), $index);
         }
 
-        $pricing = $this->section_value($required_options, 'pricing', $this->pricing_section_default());
+        $pricing = $this->section_value($required_options, 'pricings', $this->pricing_section_default());
         if (!is_array($pricing)) {
             $pricing = $this->pricing_section_default();
         }
-        $pricing['priceOptions'] = $normalized_items;
-        unset($pricing['items']);
-        $required_options['pricing'] = $pricing;
-        unset($required_options['pricings']);
+        $pricing['items'] = $normalized_items;
+        $required_options['pricings'] = $pricing;
+        unset($required_options['pricing']);
 
         return $this->save_required_options($config_id, $required_options);
     }
@@ -213,13 +212,12 @@ class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Bas
         }
 
         $required_options = $this->get_required_options($config_id);
-        $value = $this->section_value($required_options, 'pricing', $this->pricing_section_default());
+        $value = $this->section_value($required_options, 'pricings', $this->pricing_section_default());
         if (is_array($value)) {
-            $value['priceOptions'] = $this->get_pricing_items($required_options);
-            unset($value['items']);
+            $value['items'] = $this->get_pricing_items($required_options);
         }
 
-        return rest_ensure_response($this->section_response_payload('pricing', $value));
+        return rest_ensure_response($this->section_response_payload('pricings', $value));
     }
 
     public function update_pricing($request)
@@ -231,24 +229,23 @@ class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Bas
 
         $payload = json_decode($request->get_body(), true);
         $payload = is_array($payload) ? $payload : array();
-        $items = isset($payload['priceOptions']) && is_array($payload['priceOptions'])
-            ? $payload['priceOptions']
+        $items = isset($payload['items']) && is_array($payload['items'])
+            ? $payload['items']
             : array();
 
         $pricing = array_merge($this->pricing_section_default(), $payload);
-        $pricing['priceOptions'] = array();
+        $pricing['items'] = array();
         foreach (array_values($items) as $index => $item) {
-            $pricing['priceOptions'][] = $this->normalize_pricing_item(is_array($item) ? $item : array(), $index);
+            $pricing['items'][] = $this->normalize_pricing_item(is_array($item) ? $item : array(), $index);
         }
-        unset($pricing['items']);
 
         $required_options = $this->get_required_options($config_id);
-        $required_options['pricing'] = $pricing;
-        unset($required_options['pricings']);
+        $required_options['pricings'] = $pricing;
+        unset($required_options['pricing']);
         $saved = $this->save_required_options($config_id, $required_options);
 
         return rest_ensure_response($saved === true
-            ? array('success' => true, 'message' => __('Pricing successfully saved', 'all-signs-customizer-for-woocommerce-pro'), 'data' => array('pricing' => $pricing))
+            ? array('success' => true, 'message' => __('Pricing successfully saved', 'all-signs-customizer-for-woocommerce-pro'), 'data' => array('pricings' => $pricing))
             : array('success' => false, 'message' => __('Pricing has not been saved', 'all-signs-customizer-for-woocommerce-pro')));
     }
 

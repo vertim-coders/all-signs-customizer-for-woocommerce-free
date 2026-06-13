@@ -245,7 +245,7 @@ import {
   ChevronUpIcon,
   Trash2Icon,
 } from "lucide-vue-next";
-import { defineComponent, h, onMounted, ref } from "vue";
+import { defineComponent, h, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { __, sprintf } from "@wordpress/i18n";
 
@@ -380,8 +380,23 @@ const textOptionControls = [
   { key: "enableTextAlignment", label: "Text Alignment", icon: "", className: "is-align" },
 ];
 
+const loadTextSettings = async () => {
+  try {
+    const result = await api.getCustomizerSignsSettings(configId.value);
+    text.value = mergeTextData(result?.text || props.data || {});
+  } catch (_error) {
+    text.value = mergeTextData(props.data || {});
+  }
+};
+
 onMounted(() => {
-  text.value = mergeTextData(props.data || {});
+  loadTextSettings();
+});
+
+watch(() => props.data, (data) => {
+  if (data) {
+    text.value = mergeTextData(data);
+  }
 });
 
 const togglePanel = (key) => {

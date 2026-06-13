@@ -26,14 +26,23 @@ class ASCWO_Api_Customizer_Sign_Settings extends WP_REST_Controller
         $meta = get_post_meta($config_id, 'ascwo-configs-meta', true);
         $meta = is_array($meta) ? $meta : array();
         $meta['settings'] = isset($meta['settings']) && is_array($meta['settings']) ? $meta['settings'] : array();
+        if (empty($meta['settings']) && isset($meta['data']['settings']) && is_array($meta['data']['settings'])) {
+            $meta['settings'] = $meta['data']['settings'];
+        }
         return $meta;
     }
 
     private function get_customizer_sign_from_meta(array $meta): array
     {
-        return isset($meta['settings']['customizerSign']) && is_array($meta['settings']['customizerSign'])
-            ? $meta['settings']['customizerSign']
-            : array();
+        if (isset($meta['settings']['customizerSign']) && is_array($meta['settings']['customizerSign'])) {
+            return $meta['settings']['customizerSign'];
+        }
+
+        if (isset($meta['data']['settings']['customizerSign']) && is_array($meta['data']['settings']['customizerSign'])) {
+            return $meta['data']['settings']['customizerSign'];
+        }
+
+        return array();
     }
 
     private function save_customizer_sign_section(int $config_id, string $section, array $section_options)
@@ -45,12 +54,25 @@ class ASCWO_Api_Customizer_Sign_Settings extends WP_REST_Controller
         if (!isset($meta['settings']['customizerSign']) || !is_array($meta['settings']['customizerSign'])) {
             $meta['settings']['customizerSign'] = array();
         }
+        if (!isset($meta['data']) || !is_array($meta['data'])) {
+            $meta['data'] = array();
+        }
+        if (!isset($meta['data']['settings']) || !is_array($meta['data']['settings'])) {
+            $meta['data']['settings'] = array();
+        }
+        if (!isset($meta['data']['settings']['customizerSign']) || !is_array($meta['data']['settings']['customizerSign'])) {
+            $meta['data']['settings']['customizerSign'] = array();
+        }
 
-        if (isset($meta['settings']['customizerSign'][$section]) && $meta['settings']['customizerSign'][$section] == $section_options) {
+        if (
+            isset($meta['settings']['customizerSign'][$section]) && $meta['settings']['customizerSign'][$section] == $section_options
+            && isset($meta['data']['settings']['customizerSign'][$section]) && $meta['data']['settings']['customizerSign'][$section] == $section_options
+        ) {
             return 'same';
         }
 
         $meta['settings']['customizerSign'][$section] = $section_options;
+        $meta['data']['settings']['customizerSign'][$section] = $section_options;
         return update_post_meta($config_id, 'ascwo-configs-meta', $meta);
     }
     /**

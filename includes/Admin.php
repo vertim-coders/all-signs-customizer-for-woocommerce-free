@@ -69,16 +69,16 @@ class ASCWO_Admin
             wp_enqueue_editor();
         }
 
-        wp_enqueue_script('ascwo-runtime', ASCWO_ASSETS . '/js/runtime.js', [], filemtime(ASCWO_PATH . '/assets/js/runtime.js'), true);
-        wp_enqueue_script('ascwo-vendor', ASCWO_ASSETS . '/js/vendors.js', [], filemtime(ASCWO_PATH . '/assets/js/vendors.js'), true);
+        wp_enqueue_script('ascwo-runtime', ASCWO_ASSETS . '/js/runtime.js', [], ASCWO_VERSION, true);
+        wp_enqueue_script('ascwo-vendor', ASCWO_ASSETS . '/js/vendors.js', [], ASCWO_VERSION, true);
 
-        wp_enqueue_style('ascwo-admin', ASCWO_ASSETS . '/css/admin.css', false, filemtime(ASCWO_PATH . '/assets/css/admin.css'));
-        wp_enqueue_style('ascwo-frontend', ASCWO_ASSETS . '/css/frontend.css', false, filemtime(ASCWO_PATH . '/assets/css/frontend.css'));
+        wp_enqueue_style('ascwo-admin', ASCWO_ASSETS . '/css/admin.css', false, ASCWO_VERSION);
+        wp_enqueue_style('ascwo-frontend', ASCWO_ASSETS . '/css/frontend.css', false, ASCWO_VERSION);
 
-        wp_enqueue_script('ascwo-admin', ASCWO_ASSETS . '/js/admin.js', ['jquery', 'ascwo-vendor', 'ascwo-runtime', 'wp-i18n', 'editor'], filemtime(ASCWO_PATH . '/assets/js/admin.js'), true);
+        wp_enqueue_script('ascwo-admin', ASCWO_ASSETS . '/js/admin.js', ['jquery', 'ascwo-vendor', 'ascwo-runtime', 'wp-i18n', 'editor'], ASCWO_VERSION, true);
         wp_set_script_translations('ascwo-admin', "all-signs-customizer-for-woocommerce-pro");
-        wp_enqueue_script('ascwo-fabric', ASCWO_ASSETS . '/utilities/fabric.min.js', [], filemtime(ASCWO_PATH . '/assets/utilities/fabric.min.js'), true);
-        wp_enqueue_script('ascwo-frontend', ASCWO_ASSETS . '/js/frontend.js', ['jquery', 'ascwo-vendor', 'ascwo-runtime', 'ascwo-fabric'], filemtime(ASCWO_PATH . '/assets/js/frontend.js'), true);
+        wp_enqueue_script('ascwo-fabric', ASCWO_ASSETS . '/utilities/fabric.min.js', [], ASCWO_VERSION, true);
+        wp_enqueue_script('ascwo-frontend', ASCWO_ASSETS . '/js/frontend.js', ['jquery', 'ascwo-vendor', 'ascwo-runtime', 'ascwo-fabric'], ASCWO_VERSION, true);
 
         wp_enqueue_style('ascwo-toast', ASCWO_ASSETS . '/utilities/toast.min.css', false, ASCWO_VERSION);
         wp_enqueue_script('ascwo-toast', ASCWO_ASSETS . '/utilities/toast.min.js', [], ASCWO_VERSION, true);

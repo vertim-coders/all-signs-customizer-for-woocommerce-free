@@ -947,6 +947,7 @@ const finalCreate = async () => {
         materialType: wizard.value.materialType,
         icon: newConfig.value.icon,
         popImg: '',
+        ...data,
         data,
         product_ids: selectedWooProductIds.value,
      });

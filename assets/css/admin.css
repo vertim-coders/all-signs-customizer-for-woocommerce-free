@@ -3773,6 +3773,7 @@ body #ascwo-backend-app button.ascwo-primary-button * {
   border: 0;
   border-radius: 999px;
   background: #d8dee8;
+  cursor: pointer;
   transition: background 0.15s ease;
 }
 .ascwo-image-switch span {
@@ -3801,6 +3802,7 @@ body #ascwo-backend-app button.ascwo-primary-button * {
   font-weight: 800;
   line-height: 1;
   text-decoration: none;
+  cursor: pointer;
 }
 .ascwo-image-primary,
 .ascwo-image-primary:hover,
@@ -4118,6 +4120,7 @@ body #ascwo-backend-app button.ascwo-primary-button * {
   border: 0;
   border-radius: 999px;
   background: #d8dee8;
+  cursor: pointer;
   transition: background 0.15s ease;
 }
 .ascwo-sign-part-switch span {

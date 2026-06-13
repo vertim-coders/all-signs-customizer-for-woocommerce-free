@@ -157,17 +157,6 @@ class ASCWO_Api_Required_Options extends ASCWO_Api_Required_Options_Base
                 }
             }
 
-            // Migrate materials IDs
-            if (isset($meta['requiredOptions']['materials']['items']) && is_array($meta['requiredOptions']['materials']['items'])) {
-                foreach ($meta['requiredOptions']['materials']['items'] as $index => $material) {
-                    $new_id = $this->generate_material_id($material, $index);
-                    if ($material['id'] !== $new_id) {
-                        $meta['requiredOptions']['materials']['items'][$index]['id'] = $new_id;
-                        $changed = true;
-                    }
-                }
-            }
-
             // Also migrate additionalOptions->materials
             if (isset($meta['additionalOptions']['materials']['items']) && is_array($meta['additionalOptions']['materials']['items'])) {
                 foreach ($meta['additionalOptions']['materials']['items'] as $index => $material) {

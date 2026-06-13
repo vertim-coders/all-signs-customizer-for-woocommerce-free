@@ -475,7 +475,7 @@ const api = {
     const result = await axios.get(
       ascwo_api_url + "/configs/" + configId + "/required-options/pricings",
     );
-    return result.data?.data?.pricing ?? result.data;
+    return result.data?.data?.pricings ?? result.data;
   },
   updateRequiredOptionPricings: async (configId, pricings) => {
     const edit = await axios.put(

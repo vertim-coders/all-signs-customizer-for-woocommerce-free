@@ -20,7 +20,11 @@ class ASCWO_Api_Customs_Additionals_Base extends WP_REST_Controller
     protected function get_normalized_meta(int $config_id): array
     {
         $meta = $this->get_meta($config_id);
+        $meta['data'] = isset($meta['data']) && is_array($meta['data']) ? $meta['data'] : array();
         $meta['additionalOptions'] = isset($meta['additionalOptions']) && is_array($meta['additionalOptions']) ? $meta['additionalOptions'] : array();
+        if (empty($meta['additionalOptions']) && isset($meta['data']['additionalOptions']) && is_array($meta['data']['additionalOptions'])) {
+            $meta['additionalOptions'] = $meta['data']['additionalOptions'];
+        }
         return $meta;
     }
 
@@ -71,6 +75,9 @@ class ASCWO_Api_Customs_Additionals_Base extends WP_REST_Controller
         $additional_options = isset($meta['additionalOptions']) && is_array($meta['additionalOptions'])
             ? $meta['additionalOptions']
             : array();
+        if (empty($additional_options) && isset($meta['data']['additionalOptions']) && is_array($meta['data']['additionalOptions'])) {
+            $additional_options = $meta['data']['additionalOptions'];
+        }
 
         return $additional_options;
     }

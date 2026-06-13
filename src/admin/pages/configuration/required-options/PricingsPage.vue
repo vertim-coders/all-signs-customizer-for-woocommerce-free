@@ -367,13 +367,13 @@ const getPricingItemId = (item = {}, index = 0) => String(item?.id || `pricing-$
 const normalizePricingOption = (item = {}, index = 0) => ({
   id: getPricingItemId(item, index),
   label: String(item.label || ""),
-  customPricing: normalizeCustomPricing(item.customPricing || item.customSizePricing || item.pricings || {}),
+  customPricing: normalizeCustomPricing(item.customPricing || {}),
 });
 
 const normalizePricingSettings = (stored = {}) => {
-  const storedOptions = Array.isArray(stored.priceOptions) ? stored.priceOptions : [];
+  const storedOptions = Array.isArray(stored.items) ? stored.items : [];
   pricingSettings.value = {
-    label: String(stored.label || "Pricing"),
+    label: String(stored.label || "Pricings"),
     description: String(stored.description || ""),
     items: storedOptions.map((item, index) => normalizePricingOption(item, index)),
   };

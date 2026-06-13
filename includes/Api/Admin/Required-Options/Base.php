@@ -219,7 +219,11 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
     protected function get_normalized_meta(int $config_id): array
     {
         $meta = $this->get_meta($config_id);
+        $meta['data'] = isset($meta['data']) && is_array($meta['data']) ? $meta['data'] : array();
         $meta['requiredOptions'] = isset($meta['requiredOptions']) && is_array($meta['requiredOptions']) ? $meta['requiredOptions'] : array();
+        if (empty($meta['requiredOptions']) && isset($meta['data']['requiredOptions']) && is_array($meta['data']['requiredOptions'])) {
+            $meta['requiredOptions'] = $meta['data']['requiredOptions'];
+        }
         return $meta;
     }
 
@@ -300,7 +304,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
     {
         $map = array(
             'fixing-methods' => 'fixingMethods',
-            'pricing' => 'pricing',
+            'pricing' => 'pricings',
         );
 
         return isset($map[$section]) ? $map[$section] : $section;
@@ -313,7 +317,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             'colors' => 'colors',
             'shapes' => 'shapes',
             'fixing-methods' => 'fixingMethods',
-            'pricing' => 'pricing',
+            'pricing' => 'pricings',
             'borders' => 'borders',
             'materials' => 'materials',
             'components' => 'components',
@@ -387,9 +391,9 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             case 'pricing':
                 return array(
                     'mode' => '',
-                    'label' => 'Pricing',
+                    'label' => 'Pricings',
                     'description' => '',
-                    'priceOptions' => array(),
+                    'items' => array(),
                 );
             case 'materials':
                 return array(
@@ -433,7 +437,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             'shapes' => 'items',
             'fixing-methods' => 'items',
             'fonts' => 'items',
-            'pricing' => 'priceOptions',
+            'pricing' => 'items',
             'borders' => 'items',
         );
 
@@ -745,9 +749,11 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         );
     }
 
-    protected function get_materials_items(array $required_options): array
+    protected function get_materials_items(array $additional_options): array
     {
-        $materials = $this->section_value($required_options, 'materials', $this->materials_section_default());
+        $materials = array_key_exists('materials', $additional_options) && is_array($additional_options['materials'])
+            ? $additional_options['materials']
+            : $this->materials_section_default();
 
         return is_array($materials) && isset($materials['items']) && is_array($materials['items'])
             ? array_values($materials['items'])
@@ -756,14 +762,19 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
 
     protected function save_materials_items(int $config_id, array $materials)
     {
-        $required_options = $this->get_required_options($config_id);
-        $required_options['materials'] = array(
+        $meta = $this->get_meta($config_id);
+        $additional_options = isset($meta['additionalOptions']) && is_array($meta['additionalOptions'])
+            ? $meta['additionalOptions']
+            : array();
+
+        $additional_options['materials'] = array(
             'label' => 'Materials',
             'description' => '',
             'items' => array_values($materials),
         );
 
-        return $this->save_required_options($config_id, $required_options);
+        $meta['additionalOptions'] = $additional_options;
+        return $this->save_raw_meta($config_id, $meta);
     }
 
     protected function normalize_component(array $component, int $index = 0): array
@@ -803,8 +814,13 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        $required_options = $this->get_required_options($config_id);
-        $materials = $this->section_value($required_options, 'materials', $this->materials_section_default());
+        $meta = $this->get_meta($config_id);
+        $additional_options = isset($meta['additionalOptions']) && is_array($meta['additionalOptions'])
+            ? $meta['additionalOptions']
+            : array();
+        $materials = array_key_exists('materials', $additional_options) && is_array($additional_options['materials'])
+            ? $additional_options['materials']
+            : $this->materials_section_default();
 
         return rest_ensure_response($this->section_response_payload('materials', $materials));
     }
@@ -818,8 +834,11 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             return rest_ensure_response(array('message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        $required_options = $this->get_required_options($config_id);
-        $materials = $this->get_materials_items($required_options);
+        $meta = $this->get_meta($config_id);
+        $additional_options = isset($meta['additionalOptions']) && is_array($meta['additionalOptions'])
+            ? $meta['additionalOptions']
+            : array();
+        $materials = $this->get_materials_items($additional_options);
         if (!isset($materials[$material_id])) {
             return rest_ensure_response(array('success' => false, 'message' => __('No materials component found', 'all-signs-customizer-for-woocommerce-pro')));
         }
@@ -839,8 +858,11 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             return rest_ensure_response(array('message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        $required_options = $this->get_required_options($config_id);
-        $materials = $this->get_materials_items($required_options);
+        $meta = $this->get_meta($config_id);
+        $additional_options = isset($meta['additionalOptions']) && is_array($meta['additionalOptions'])
+            ? $meta['additionalOptions']
+            : array();
+        $materials = $this->get_materials_items($additional_options);
         $new_material = json_decode($request->get_body(), true);
         $new_material = is_array($new_material) ? $this->normalize_material($new_material, count($materials), $config_id) : array();
 
@@ -878,8 +900,11 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             return rest_ensure_response(array('message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        $required_options = $this->get_required_options($config_id);
-        $materials = $this->get_materials_items($required_options);
+        $meta = $this->get_meta($config_id);
+        $additional_options = isset($meta['additionalOptions']) && is_array($meta['additionalOptions'])
+            ? $meta['additionalOptions']
+            : array();
+        $materials = $this->get_materials_items($additional_options);
         $material = json_decode($request->get_body(), true);
         $material = is_array($material) ? $this->normalize_material($material, $material_id, $config_id) : array();
 
@@ -940,8 +965,11 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        $required_options = $this->get_required_options($config_id);
-        $materials = $this->get_materials_items($required_options);
+        $meta = $this->get_meta($config_id);
+        $additional_options = isset($meta['additionalOptions']) && is_array($meta['additionalOptions'])
+            ? $meta['additionalOptions']
+            : array();
+        $materials = $this->get_materials_items($additional_options);
 
         if (!isset($materials[$material_id])) {
             return rest_ensure_response(array('success' => false, 'message' => __('No materials component found', 'all-signs-customizer-for-woocommerce-pro')));

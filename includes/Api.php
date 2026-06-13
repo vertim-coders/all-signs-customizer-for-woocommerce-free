@@ -62,10 +62,10 @@ class Api extends WP_REST_Controller
         if (!class_exists(__NAMESPACE__ . '\Api\Admin\ASCWO_Api_Home_Stats')) {
             require_once __DIR__ . '/Api/Admin/Home-Stats.php';
         }
-        if (!class_exists(__NAMESPACE__ . '\Api\Admin\ASOWP_Api_Request_Quotes')) {
+        if (!class_exists(__NAMESPACE__ . '\Api\Admin\ASCWO_Api_Request_Quotes')) {
             require_once __DIR__ . '/Api/Admin/Request-Quotes.php';
         }
-        if (!class_exists(__NAMESPACE__ . '\Api\Admin\Required_Options\ASOWP_Api_Required_Options')) {
+        if (!class_exists(__NAMESPACE__ . '\Api\Admin\Required_Options\ASCWO_Api_Required_Options')) {
             require_once __DIR__ . '/Api/Admin/Required-Options/Required-Options.php';
         }
         if (!class_exists(__NAMESPACE__ . '\Api\Admin\Globals_Settings')) {
@@ -101,22 +101,22 @@ class Api extends WP_REST_Controller
      */
     public function register_routes()
     {
-        (new ASOWP_Api_Configs())->register_routes();
-        (new ASOWP_Api_Manage_fonts())->register_routes();
-        (new ASOWP_Api_Manage_cliparts())->register_routes();
-        (new ASOWP_Api_WooCommerce_Products())->register_routes();
-        (new ASOWP_Api_Home_Stats())->register_routes();
-        (new ASOWP_Api_Request_Quotes())->register_routes();
-        (new ASOWP_Api_Required_Options())->register_routes();
-        (new ASOWP_Api_GoogleFonts())->register_routes();
-        (new ASOWP_Api_Additional_Options())->register_routes();
-        (new ASOWP_Api_Globals_Settings())->register_route();
-        (new ASOWP_Api_General_Settings())->register_routes();
-        (new ASOWP_Api_Customizer_Sign_Settings())->register_routes();
-        (new ASOWP_Api_Language_Images_Settings())->register_routes();
-        (new ASOWP_Api_Theme_color_Settings())->register_routes();
-        (new ASOWP_Api_Templates_Categories())->register_routes();
-        (new ASOWP_Api_Templates())->register_routes();
+        (new ASCWO_Api_Configs())->register_routes();
+        (new ASCWO_Api_Manage_fonts())->register_routes();
+        (new ASCWO_Api_Manage_cliparts())->register_routes();
+        (new ASCWO_Api_WooCommerce_Products())->register_routes();
+        (new ASCWO_Api_Home_Stats())->register_routes();
+        (new ASCWO_Api_Request_Quotes())->register_routes();
+        (new ASCWO_Api_Required_Options())->register_routes();
+        (new ASCWO_Api_GoogleFonts())->register_routes();
+        (new ASCWO_Api_Additional_Options())->register_routes();
+        (new ASCWO_Api_Globals_Settings())->register_route();
+        (new ASCWO_Api_General_Settings())->register_routes();
+        (new ASCWO_Api_Customizer_Sign_Settings())->register_routes();
+        (new ASCWO_Api_Language_Images_Settings())->register_routes();
+        (new ASCWO_Api_Theme_color_Settings())->register_routes();
+        (new ASCWO_Api_Templates_Categories())->register_routes();
+        (new ASCWO_Api_Templates())->register_routes();
     }
 
 }

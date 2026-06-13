@@ -86,7 +86,7 @@
 <script setup>
 import api from '@/admin/Api/api';
 import toastMessage from '@/admin/utils/functions';
-import { defineComponent, h, ref, watch } from 'vue';
+import { defineComponent, h, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 const props = defineProps({
@@ -135,6 +135,17 @@ watch(() => props.data, (data) => {
   mergeSettings(data || {});
 }, {
   immediate: true,
+});
+
+onMounted(async () => {
+  try {
+    const result = await api.getCustomizerSignsSettings(configId.value);
+    if (result && !result.message) {
+      mergeSettings(result.signPart || {});
+    }
+  } catch (_error) {
+    // keep local defaults when the fetch fails
+  }
 });
 
 const updateSignPartSettings = async () => {
@@ -351,6 +362,7 @@ const SwitchControl = defineComponent({
   border: 0;
   border-radius: 999px;
   background: #d8dee8;
+  cursor: pointer;
   transition: background 0.15s ease;
 }
 

@@ -54,6 +54,17 @@ class ASCWO_Api_Configs extends WP_REST_Controller
         return 'simple';
     }
 
+    private function pick_config_payload_section(array $params, array $data_payload, string $key, $default = array())
+    {
+        if (isset($params[$key]) && $params[$key] !== array()) {
+            return $params[$key];
+        }
+        if (isset($data_payload[$key]) && $data_payload[$key] !== array()) {
+            return $data_payload[$key];
+        }
+        return $default;
+    }
+
     private function get_product_assigned_config_id(int $product_id): int
     {
         $meta = get_post_meta($product_id, 'product-ascwo-metas', true);
@@ -276,10 +287,16 @@ class ASCWO_Api_Configs extends WP_REST_Controller
         if (isset($params['product_ids']) && is_array($params['product_ids'])) {
             $product_ids = $params['product_ids'];
         }
-        if (isset($params["data"])) {
-            $params["data"] = $this->sanitize_config_data($params["data"]);
-        }
+        $data_payload = isset($params["data"]) && is_array($params["data"]) ? $this->sanitize_config_data($params["data"]) : array();
         $material_type = isset($params['materialType']) ? $this->sanitize_material_type($params['materialType']) : 'simple';
+        if (!$material_type && isset($data_payload['materialType'])) {
+            $material_type = $this->sanitize_material_type($data_payload['materialType']);
+        }
+        $settings = $this->pick_config_payload_section($params, $data_payload, 'settings', array());
+        $required_options = $this->pick_config_payload_section($params, $data_payload, 'requiredOptions', array());
+        $additional_options = $this->pick_config_payload_section($params, $data_payload, 'additionalOptions', array());
+        $product_type = isset($params['productType']) ? $params['productType'] : (isset($data_payload['productType']) ? $data_payload['productType'] : 'signs-panels');
+        $pricing_mode = isset($params['pricingMode']) ? $params['pricingMode'] : (isset($data_payload['pricingMode']) ? $data_payload['pricingMode'] : 'frame-fit');
         $data = [
             'post_title' => $params["name"],
             'post_content' => $params["description"],
@@ -290,7 +307,7 @@ class ASCWO_Api_Configs extends WP_REST_Controller
             ],
             'post_status' => 'publish'
         ];
-        if (isset($params["data"]) && !empty($params["data"])) {
+        if (!empty($data_payload) || !empty($required_options) || !empty($additional_options) || !empty($settings)) {
             $post_id = wp_insert_post($data);
             if ($post_id != 0 && !is_wp_error($post_id)) {
                 $meta = array(
@@ -299,12 +316,12 @@ class ASCWO_Api_Configs extends WP_REST_Controller
                     "icon" => isset($params["icon"]) ? $params["icon"] : '',
                     "popImg" => isset($params["popImg"]) ? $params["popImg"] : '',
                     "materialType" => $material_type,
-                    "productType" => isset($params["productType"]) ? $params["productType"] : 'signs-panels',
-                    "pricingMode" => isset($params["pricingMode"]) ? $params["pricingMode"] : 'frame-fit',
-                    "settings" => isset($params["settings"]) && is_array($params["settings"]) ? $params["settings"] : array(),
-                    "requiredOptions" => isset($params["requiredOptions"]) && is_array($params["requiredOptions"]) ? $params["requiredOptions"] : array(),
-                    "additionalOptions" => isset($params["additionalOptions"]) && is_array($params["additionalOptions"]) ? $params["additionalOptions"] : array(),
-                    "data" => $params["data"],
+                    "productType" => $product_type,
+                    "pricingMode" => $pricing_mode,
+                    "settings" => is_array($settings) ? $settings : array(),
+                    "requiredOptions" => is_array($required_options) ? $required_options : array(),
+                    "additionalOptions" => is_array($additional_options) ? $additional_options : array(),
+                    "data" => $data_payload,
                 );
                 update_post_meta((int) $post_id, 'ascwo-configs-meta', $meta);
                 update_post_meta($post_id, "ascwo-templates", []);
@@ -337,6 +354,15 @@ class ASCWO_Api_Configs extends WP_REST_Controller
         if ($id != 0) {
             $meta_value = get_post_meta($id, 'ascwo-configs-meta', true);
             if (is_array($meta_value) && !empty($meta_value)) {
+                if (isset($meta_value['data']) && is_array($meta_value['data'])) {
+                    foreach (array('settings', 'requiredOptions', 'additionalOptions', 'productType', 'pricingMode', 'materialType') as $section_key) {
+                        if (!isset($meta_value[$section_key]) || $meta_value[$section_key] === array() || $meta_value[$section_key] === '') {
+                            if (isset($meta_value['data'][$section_key])) {
+                                $meta_value[$section_key] = $meta_value['data'][$section_key];
+                            }
+                        }
+                    }
+                }
                 return rest_ensure_response(array_merge(
                     array(
                         'id' => (int) $id,
@@ -430,9 +456,7 @@ class ASCWO_Api_Configs extends WP_REST_Controller
     {
         $params = json_decode($request->get_body(), true);
         $post_id = $request->get_param('config_id');
-        if (isset($params["data"])) {
-            $params["data"] = $this->sanitize_config_data($params["data"]);
-        }
+        $data_payload = isset($params["data"]) && is_array($params["data"]) ? $this->sanitize_config_data($params["data"]) : array();
         $existing_post = get_post($post_id);
         $existing_meta = get_post_meta($post_id, 'ascwo-configs-meta', true);
         $args = array(
@@ -444,7 +468,13 @@ class ASCWO_Api_Configs extends WP_REST_Controller
         $updatePosts = wp_update_post($args);
         $meta = get_post_meta($post_id, 'ascwo-configs-meta', true);
         if (!is_wp_error($updatePosts)) {
-            $data_payload = isset($params["data"]) && is_array($params["data"]) ? $params["data"] : (isset($meta['data']) && is_array($meta['data']) ? $meta['data'] : array());
+            $existing_data = isset($meta['data']) && is_array($meta['data']) ? $meta['data'] : array();
+            if (!empty($data_payload)) {
+                $existing_data = $data_payload;
+            }
+            $settings = isset($params["settings"]) && is_array($params["settings"]) ? $params["settings"] : (isset($existing_data["settings"]) && is_array($existing_data["settings"]) ? $existing_data["settings"] : array());
+            $required_options = isset($params["requiredOptions"]) && is_array($params["requiredOptions"]) ? $params["requiredOptions"] : (isset($existing_data["requiredOptions"]) && is_array($existing_data["requiredOptions"]) ? $existing_data["requiredOptions"] : array());
+            $additional_options = isset($params["additionalOptions"]) && is_array($params["additionalOptions"]) ? $params["additionalOptions"] : (isset($existing_data["additionalOptions"]) && is_array($existing_data["additionalOptions"]) ? $existing_data["additionalOptions"] : array());
             $material_type = isset($params['materialType'])
                 ? $this->sanitize_material_type($params['materialType'])
                 : (isset($meta['materialType']) ? $this->sanitize_material_type($meta['materialType']) : 'simple');
@@ -454,12 +484,12 @@ class ASCWO_Api_Configs extends WP_REST_Controller
                 "icon" => isset($params["icon"]) ? $params["icon"] : (is_array($existing_meta) && isset($existing_meta["icon"]) ? $existing_meta["icon"] : ''),
                 "popImg" => isset($params["popImg"]) ? $params["popImg"] : (is_array($existing_meta) && isset($existing_meta["popImg"]) ? $existing_meta["popImg"] : ''),
                 "materialType" => $material_type,
-                "data" => $data_payload,
-                "settings" => isset($params["settings"]) ? $params["settings"] : (isset($meta["settings"]) ? $meta["settings"] : array()),
+                "data" => $existing_data,
+                "settings" => $settings,
                 "productType" => isset($params["productType"]) ? $params["productType"] : (isset($meta["productType"]) ? $meta["productType"] : null),
                 "pricingMode" => isset($params["pricingMode"]) ? $params["pricingMode"] : (isset($meta["pricingMode"]) ? $meta["pricingMode"] : null),
-                "requiredOptions" => isset($params["requiredOptions"]) ? $params["requiredOptions"] : (isset($meta["requiredOptions"]) ? $meta["requiredOptions"] : array()),
-                "additionalOptions" => isset($params["additionalOptions"]) ? $params["additionalOptions"] : (isset($meta["additionalOptions"]) ? $meta["additionalOptions"] : array()),
+                "requiredOptions" => $required_options,
+                "additionalOptions" => $additional_options,
             );
             update_post_meta((int) $post_id, 'ascwo-configs-meta', $data);
             if (isset($params['product_ids']) && is_array($params['product_ids'])) {
@@ -571,6 +601,15 @@ class ASCWO_Api_Configs extends WP_REST_Controller
                 $id = get_the_ID();
                 $meta = get_post_meta($id, 'ascwo-configs-meta', true);
                 $meta = is_array($meta) ? $meta : array();
+                if (isset($meta['data']) && is_array($meta['data'])) {
+                    foreach (array('settings', 'requiredOptions', 'additionalOptions', 'productType', 'pricingMode', 'materialType') as $section_key) {
+                        if (!isset($meta[$section_key]) || $meta[$section_key] === array() || $meta[$section_key] === '') {
+                            if (isset($meta['data'][$section_key])) {
+                                $meta[$section_key] = $meta['data'][$section_key];
+                            }
+                        }
+                    }
+                }
                 $post_data = array_merge(
                     array(
                         'id' => (int) $id,

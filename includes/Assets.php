@@ -84,32 +84,34 @@ class Assets
         $scripts = [
             'ascwo-runtime' => [
                 'src' => ASCWO_ASSETS . '/js/runtime.js',
-                'version' => filemtime(ASCWO_PATH . '/assets/js/runtime.js'),
+                'version' => ASCWO_VERSION,
                 'in_footer' => true
             ],
             'ascwo-vendor' => [
                 'src' => ASCWO_ASSETS . '/js/vendors.js',
-                'version' => filemtime(ASCWO_PATH . '/assets/js/vendors.js'),
+                'version' => ASCWO_VERSION,
                 'in_footer' => true
             ],
             'ascwo-frontend' => [
                 'src' => ASCWO_ASSETS . '/js/frontend.js',
                 'deps' => ['jquery', 'ascwo-vendor', 'ascwo-runtime'],
-                'version' => filemtime(ASCWO_PATH . '/assets/js/frontend.js'),
+                'version' => ASCWO_VERSION,
                 'in_footer' => true
             ],
             'ascwo-admin' => [
                 'src' => ASCWO_ASSETS . '/js/admin.js',
                 'deps' => ['jquery', 'ascwo-vendor', 'ascwo-runtime'],
-                'version' => filemtime(ASCWO_PATH . '/assets/js/admin.js'),
+                'version' => ASCWO_VERSION,
                 'in_footer' => true
             ],
             'ascwo-omodal' => [
                 'src' => ASCWO_ASSETS . '/utilities/modal.min.js',
+                'version' => ASCWO_VERSION,
                 'in_footer' => true
             ],
             'ascwo-fabric' => [
                 'src' => ASCWO_ASSETS . '/utilities/fabric.min.js',
+                'version' => ASCWO_VERSION,
                 'in_footer' => true
             ],
             'ascwo-paper' => [

@@ -230,7 +230,7 @@
 import api from '@/admin/Api/api';
 import toastMessage from '@/admin/utils/functions';
 import { adminImageUrl } from '@/admin/utils/admin-assets';
-import { defineComponent, h, ref, watch } from 'vue';
+import { defineComponent, h, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { Trash2Icon } from 'lucide-vue-next';
 
@@ -343,6 +343,17 @@ watch(() => props.data, (data) => {
   }
 }, {
   immediate: true,
+});
+
+onMounted(async () => {
+  try {
+    const result = await api.getCustomizerSignsSettings(configId.value);
+    if (result && !result.message) {
+      mergeSettings(result.images || {});
+    }
+  } catch (_error) {
+    // keep the existing local state if the fetch fails
+  }
 });
 
 const addColor = () => {
@@ -737,6 +748,7 @@ const FilterItem = defineComponent({
   border: 0;
   border-radius: 999px;
   background: #d8dee8;
+  cursor: pointer;
   transition: background 0.15s ease;
 }
 
@@ -769,6 +781,7 @@ const FilterItem = defineComponent({
   font-weight: 800;
   line-height: 1;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .ascwo-image-primary,
