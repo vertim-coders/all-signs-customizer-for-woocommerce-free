@@ -1,10 +1,12 @@
 <template>
-    <router-view v-if="canRenderFrontend"/>
+    <Home v-if="canRenderAdminPreview"/>
+    <router-view v-else-if="canRenderFrontend"/>
 </template>
 
 <script setup>
 import {computed, onMounted, ref} from 'vue';
 import { useRoute } from 'vue-router';
+import Home from '@/frontend/pages/Home.vue';
 import '@/frontend/utils/tailwindcss.min.js';
 import '../../assets/utilities/fabric.min.js';
 import '../../assets/utilities/hammerjs.js';
@@ -13,8 +15,14 @@ const activateProduct = ref(!isNaN(asowp_data.caches) && parseInt(asowp_data.cac
 const frontendReady = ref(false);
 const currentPage = window.asowp_data?.page || '';
 const route = useRoute();
+const hasAdminPreviewMount = computed(() => Boolean(document.querySelector('#asowp-frontend-app[data-asowp-preview-config-id]')));
+const canRenderAdminPreview = computed(() => frontendReady.value && currentPage === 'admin' && hasAdminPreviewMount.value);
 const canRenderFrontend = computed(() => {
-    const isAdminPreview = currentPage === 'admin' && (route.name === 'preview-back' || route.name === 'template-maker');
+    const isAdminPreview = currentPage === 'admin' && (
+        route.name === 'preview-back' ||
+        route.name === 'template-maker' ||
+        hasAdminPreviewMount.value
+    );
     return frontendReady.value && (activateProduct.value || isAdminPreview);
 });
 

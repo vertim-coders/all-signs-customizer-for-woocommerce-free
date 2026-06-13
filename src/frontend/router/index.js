@@ -11,6 +11,7 @@ const router = createRouter({
     },
     {
       path: "/configs/:config/preview/:configId",
+      alias: "/configuration/:configId/preview",
       name: "preview-back",
       component: Home,
     },

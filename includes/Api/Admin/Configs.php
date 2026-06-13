@@ -346,8 +346,9 @@ class ASOWP_Api_Configs extends WP_REST_Controller
     public function get_preview_config_data($request)
     {
         $configId = $request->get_param('config_id');
-        $config = get_post_meta($configId, "asowp-configs-meta", true);
-        $config = ConfigSchemaNormalizer::normalize_meta($config);
+        $config_meta = get_post_meta($configId, "asowp-configs-meta", true);
+        $config = ConfigSchemaNormalizer::normalize_meta($config_meta);
+        $frontend_data = ConfigSchemaNormalizer::to_frontend_data($config_meta);
         $material_type = isset($config['materialType']) ? $this->sanitize_material_type($config['materialType']) : 'simple';
         $pageSettings = get_option("asowp_config_page", [])["others"];
         $all_cliparts_groups = get_option("asowp-manages-cliparts", []);
@@ -362,24 +363,16 @@ class ASOWP_Api_Configs extends WP_REST_Controller
             "icon" => $config["icon"],
             "popImg" => $config["popImg"],
             "materialType" => $material_type,
-            "data" => $config["data"]
+            "data" => $frontend_data
         ];
-        $config_fonts = isset($config["data"]["settings"]["customizerSign"]["text"]["selectedFonts"]) && is_array($config["data"]["settings"]["customizerSign"]["text"]["selectedFonts"])
-            ? $config["data"]["settings"]["customizerSign"]["text"]["selectedFonts"]
-            : [];
-        $enable_clipart = isset($config["data"]["settings"]["customizerSign"]["images"]["enableClipart"])
-            ? $config["data"]["settings"]["customizerSign"]["images"]["enableClipart"]
+        $visibleFonts = ConfigSchemaNormalizer::to_frontend_fonts($config_meta, is_array($all_fonts) ? $all_fonts : []);
+        $enable_clipart = isset($frontend_data["settings"]["customizerSign"]["images"]["enableClipart"])
+            ? $frontend_data["settings"]["customizerSign"]["images"]["enableClipart"]
             : false;
         $config_cliparts = is_array($enable_clipart) && isset($enable_clipart["selectedClipartGroups"]) && is_array($enable_clipart["selectedClipartGroups"])
             ? $enable_clipart["selectedClipartGroups"]
             : [];
 
-        $visibleFonts = [];
-        foreach ($config_fonts as $font) {
-            if (isset($all_fonts[$font])) {
-                $visibleFonts[] = $all_fonts[$font];
-            }
-        }
         $visibleCliparts = [];
         foreach ($config_cliparts as $part) {
             if (isset($all_cliparts_groups[$part])) {
@@ -398,7 +391,7 @@ class ASOWP_Api_Configs extends WP_REST_Controller
         ];
 
         $preview_data = array(
-            'skin' => isset($config["data"]["settings"]['themeColors']['skin']) ? $config["data"]["settings"]['themeColors']['skin'] : $config['settings']['themeColors']['skin'],
+            'skin' => isset($frontend_data["settings"]['themeColors']['skin']) ? $frontend_data["settings"]['themeColors']['skin'] : (isset($config['settings']['themeColors']['skin']) ? $config['settings']['themeColors']['skin'] : 'default'),
             'currentConfig' => $configData,
             "managesData" => $all_manages,
             'regularPrice' => 0,
@@ -410,6 +403,10 @@ class ASOWP_Api_Configs extends WP_REST_Controller
             'currency_pos' => get_option('woocommerce_currency_pos'),
             "fixing_methods_url" => ASOWP_ASSETS . '/images/fixing-methodes',
             "borders_url" => ASOWP_ASSETS . '/images/borders',
+            "templates" => [
+                "designFromTemplate" => false,
+                "template" => []
+            ],
             "frontend_nonce" => wp_create_nonce('asowp_add_to_cart_after_custom')
         );
         return rest_ensure_response($preview_data);

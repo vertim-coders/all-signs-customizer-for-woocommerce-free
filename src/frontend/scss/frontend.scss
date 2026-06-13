@@ -5,6 +5,10 @@
   height: 100vh;
   min-height: 100vh;
 }
+#asowp-frontend-app.asowp-preview-configurator .asowp-configurator-container {
+  height: 100%;
+  min-height: 0;
+}
 .asowp-configurator-container:empty {
   height: 0;
   min-height: 0;
@@ -72,6 +76,33 @@
   .asowp-inputImage p {
     margin-left: 5px !important;
     margin-right: 5px !important;
+  }
+
+  .asowp-config-recap .asowp-scrollBar > div {
+    gap: 12px;
+  }
+
+  @media (max-width: 768px) {
+    .asowp-config-recap .asowp-scrollBar > div {
+      flex-direction: column !important;
+      align-items: stretch !important;
+      justify-content: flex-start !important;
+      text-align: left !important;
+    }
+
+    .asowp-config-recap .asowp-scrollBar > div > div,
+    .asowp-config-recap .asowp-scrollBar > div > p {
+      width: 100% !important;
+      max-width: 100% !important;
+      align-items: flex-start !important;
+      justify-content: flex-start !important;
+      text-align: left !important;
+    }
+
+    .asowp-config-recap .asowp-scrollBar > div .asowp-full-center {
+      justify-content: flex-start !important;
+      flex-wrap: wrap !important;
+    }
   }
 }
 #asowp-showPreview{

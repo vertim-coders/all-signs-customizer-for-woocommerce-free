@@ -3171,6 +3171,8 @@ body #asowp-backend-app button.asowp-primary-button * {
 }
 .asowp-materials-table td[data-v-0b1174ce] { padding: 8px 12px; border-top: 0 !important; border-bottom: 0 !important; color: #303030; font-size: 12px; line-height: 18px; text-align: left;
 }
+.asowp-materials-table .asowp-materials-default-heading[data-v-0b1174ce] { text-align: center;
+}
 .asowp-materials-table .asowp-materials-default-cell[data-v-0b1174ce] { text-align: center;
 }
 .asowp-materials-default-control[data-v-0b1174ce] { justify-content: center; width: 100%;
@@ -8773,6 +8775,26 @@ to {
 .asowp-request-quotes-layout {
     grid-template-columns: 1fr;
 }
+}
+
+/*!*******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/vue-loader/dist/index.js??ruleSet[1].rules[8].use[0]!./src/admin/pages/preview/index.vue?vue&type=style&index=0&id=eb253f12&lang=css ***!
+  \*******************************************************************************************************************************************************************************************************************************************************/
+
+.asowp-admin-preview-shell {
+    height: 100vh;
+}
+.asowp-admin-preview-content {
+    height: calc(100vh - 58px);
+}
+.asowp-preview-configurator {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+}
+.asowp-preview-configurator :deep(.asowp-configurator-container) {
+    height: 100%;
+    min-height: 0;
 }
 
 /*!**********************************************************************************************************************************************************************************************************************************************!*\

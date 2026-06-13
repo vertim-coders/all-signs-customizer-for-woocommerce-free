@@ -1,6 +1,7 @@
 <?php
 namespace ASOWP;
 
+use ASOWP\Support\ConfigSchemaNormalizer;
 use ASOWP_Product_Config;
 
 /**
@@ -198,7 +199,9 @@ class ASOWP_Frontend
             if (!empty($meta) && isset($meta[$productid]['config-id'])) {
                 $configId = $meta[$productid]['config-id'];
                 if ($configId != 0) {
-                    $config = get_post_meta($configId, "asowp-configs-meta", true);
+                    $config_meta = get_post_meta($configId, "asowp-configs-meta", true);
+                    $config = ConfigSchemaNormalizer::normalize_meta($config_meta);
+                    $frontend_data = ConfigSchemaNormalizer::to_frontend_data($config_meta);
                     $page_settings = get_option("asowp_config_page", []);
                     $pageSettings = isset($page_settings['others']) && is_array($page_settings['others']) ? $page_settings['others'] : [];
                     $all_cliparts_groups = get_option("asowp-manages-cliparts", []);
@@ -240,20 +243,18 @@ class ASOWP_Frontend
                             'description' => get_post_field('post_content', $configId),
                             'icon' => $config['icon'],
                             'popImg' => $config['popImg'],
-                            'data' => $config['data']
+                            'data' => $frontend_data
                         ];
-                        $config_fonts = $config['data']['settings']['customizerSign']['text']['selectedFonts'];
-                        $config_cliparts = $config['data']['settings']['customizerSign']['images']['enableClipart'] == true ? $config['data']['settings']['customizerSign']['images']['enableClipart']['selectedClipartGroups'] : [];
-
-                        $visibleFonts = [];
-                        foreach ($config_fonts as $font) {
-                            if (isset($all_fonts[$font])) {
-                                $visibleFonts[] = $all_fonts[$font];
-                            }
-                        }
+                        $visibleFonts = ConfigSchemaNormalizer::to_frontend_fonts($config_meta, is_array($all_fonts) ? $all_fonts : []);
+                        $enable_clipart = isset($frontend_data['settings']['customizerSign']['images']['enableClipart'])
+                            ? $frontend_data['settings']['customizerSign']['images']['enableClipart']
+                            : false;
+                        $config_cliparts = is_array($enable_clipart) && isset($enable_clipart['selectedClipartGroups']) && is_array($enable_clipart['selectedClipartGroups'])
+                            ? $enable_clipart['selectedClipartGroups']
+                            : [];
 
                         $this->includes_config_fonts($visibleFonts);
-                        $this->include_custom_css($config['data']['settings']['themeColors']['customCSS']);
+                        $this->include_custom_css(isset($frontend_data['settings']['themeColors']['customCSS']) ? $frontend_data['settings']['themeColors']['customCSS'] : '');
 
                         $visibleCliparts = [];
                         foreach ($config_cliparts as $part) {
@@ -288,7 +289,7 @@ class ASOWP_Frontend
                         }
 
                         $ASO = [
-                            'skin' => $config['data']['settings']['themeColors']['skin'],
+                            'skin' => isset($frontend_data['settings']['themeColors']['skin']) ? $frontend_data['settings']['themeColors']['skin'] : 'default',
                             'productID' => $productid,
                             'currentConfig' => $configData,
                             'managesData' => $all_manages,
@@ -319,6 +320,14 @@ class ASOWP_Frontend
                         ]);
                         ?>
                         <div class="asowp-frontend-app asowp-configurator-container" data-asowp-page="configurator"></div>
+                        <script>
+                            window.setTimeout(function () {
+                                var loader = document.getElementById('asowp-configurator-loader');
+                                if (loader) {
+                                    loader.remove();
+                                }
+                            }, 2500);
+                        </script>
                         <?php
                     }
                 }

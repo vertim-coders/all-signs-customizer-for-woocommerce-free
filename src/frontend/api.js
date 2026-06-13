@@ -5,6 +5,13 @@ const asowpApiUrl = asowp_data.rest_url;
 const frontendApi = {
   getPreviewConfig: async (id) => {
     const response = await axios.get(`${asowpApiUrl}/configs/${id}/preview`);
+    if (typeof response.data === "string") {
+      try {
+        return JSON.parse(response.data);
+      } catch (error) {
+        return response.data;
+      }
+    }
     return response.data;
   },
   getTemplate: async (configId, templateId) => {

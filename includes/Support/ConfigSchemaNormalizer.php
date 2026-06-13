@@ -199,9 +199,437 @@ class ConfigSchemaNormalizer
         );
     }
 
+    public static function to_frontend_data($meta): array
+    {
+        $normalized = self::normalize_meta($meta);
+        $data = is_array($normalized['data']) ? $normalized['data'] : array();
+
+        $data['settings'] = self::frontend_settings($normalized['settings'], $normalized['requiredOptions']);
+        $data['additionalOptions'] = self::frontend_additional_options($data, $normalized['additionalOptions']);
+        $data['materials'] = self::frontend_materials($data, $normalized);
+
+        return $data;
+    }
+
+    public static function to_frontend_fonts($meta, array $managed_fonts): array
+    {
+        $normalized = self::normalize_meta($meta);
+        $font_items = isset($normalized['requiredOptions']['fonts']['items']) && is_array($normalized['requiredOptions']['fonts']['items'])
+            ? array_values($normalized['requiredOptions']['fonts']['items'])
+            : array();
+
+        if (empty($font_items)) {
+            $selected_fonts = isset($normalized['settings']['customizerSign']['text']['selectedFonts']) && is_array($normalized['settings']['customizerSign']['text']['selectedFonts'])
+                ? $normalized['settings']['customizerSign']['text']['selectedFonts']
+                : array();
+            $font_items = array_map(function ($font_id) {
+                return array('managedFontId' => $font_id);
+            }, $selected_fonts);
+        }
+
+        $fonts = array();
+        foreach ($font_items as $index => $font) {
+            if (!is_array($font)) {
+                continue;
+            }
+
+            $managed_id = self::array_value($font, 'managedFontId', null);
+            $managed = is_numeric($managed_id) && isset($managed_fonts[(int) $managed_id]) && is_array($managed_fonts[(int) $managed_id])
+                ? $managed_fonts[(int) $managed_id]
+                : array();
+
+            $label = self::first_string(array(
+                self::array_value($font, 'label'),
+                self::array_value($managed, 'label'),
+                self::array_value($managed, 'name'),
+                self::array_value($managed, 'family'),
+            ), 'Font ' . ($index + 1));
+
+            $fonts[] = array_merge($managed, array(
+                'id' => self::first_string(array(self::array_value($font, 'id')), 'font-' . ($index + 1)),
+                'label' => $label,
+                'name' => $label,
+                'family' => $label,
+                'url' => self::first_string(array(
+                    self::array_value($font, 'url'),
+                    self::array_value($managed, 'url'),
+                ), ''),
+                'previewImg' => self::first_string(array(
+                    self::array_value($font, 'previewImg'),
+                    self::array_value($managed, 'previewImg'),
+                    self::array_value($managed, 'preview'),
+                ), ''),
+                'isGoogleFont' => (bool) self::array_value($font, 'isGoogleFont', self::array_value($managed, 'isGoogleFont', false)),
+                'isDefault' => (bool) self::array_value($font, 'isDefault', $index === 0),
+                'managedFontId' => is_numeric($managed_id) ? (int) $managed_id : $managed_id,
+            ));
+        }
+
+        return $fonts;
+    }
+
     public static function save_meta(int $post_id, $meta)
     {
         return update_post_meta($post_id, 'asowp-configs-meta', self::normalize_meta($meta));
+    }
+
+    private static function frontend_materials(array $data, array $normalized): array
+    {
+        $legacy_materials = isset($data['materials']) && is_array($data['materials'])
+            ? array_values($data['materials'])
+            : array();
+        $canonical_materials = isset($normalized['additionalOptions']['materials']['items']) && is_array($normalized['additionalOptions']['materials']['items'])
+            ? array_values($normalized['additionalOptions']['materials']['items'])
+            : array();
+
+        $source_materials = !empty($canonical_materials) ? $canonical_materials : $legacy_materials;
+        $materials = array();
+        foreach (array_values($source_materials) as $index => $material) {
+            if (!is_array($material)) {
+                continue;
+            }
+
+            $legacy = self::find_canonical_material($legacy_materials, $material);
+            $canonical = !empty($canonical_materials) ? $material : array();
+
+            $material = self::deep_merge($legacy, $canonical);
+            $material['name'] = self::first_string(array(
+                self::array_value($material, 'name'),
+                self::array_value($material, 'label'),
+            ), 'Material');
+            $material['label'] = self::first_string(array(
+                self::array_value($material, 'label'),
+                self::array_value($material, 'name'),
+            ), $material['name']);
+            $image = self::first_string(array(
+                self::array_value($material, 'previewImg'),
+                self::array_value($material, 'image'),
+                self::array_value($material, 'icon'),
+            ), '');
+            $material['icon'] = self::shopify_asset_url(self::first_string(array(self::array_value($material, 'icon'), $image), ''));
+            $material['image'] = self::shopify_asset_url(self::first_string(array(self::array_value($material, 'image'), $image), ''));
+            $material['previewImg'] = self::shopify_asset_url(self::first_string(array(self::array_value($material, 'previewImg'), $image), ''));
+            $material['popImg'] = self::shopify_asset_url(self::first_string(array(
+                self::array_value($material, 'popImg'),
+                self::array_value($material, 'popupImg'),
+                self::array_value($material, 'popupImage'),
+            ), ''));
+            $material['popupImg'] = self::shopify_asset_url(self::first_string(array(
+                self::array_value($material, 'popupImg'),
+                self::array_value($material, 'popImg'),
+                self::array_value($material, 'popupImage'),
+            ), ''));
+            $material['data'] = self::frontend_material_data(
+                isset($material['data']) && is_array($material['data']) ? $material['data'] : array(),
+                $normalized,
+                $material
+            );
+
+            $materials[] = $material;
+        }
+
+        return $materials;
+    }
+
+    private static function find_canonical_material(array $materials, array $legacy): array
+    {
+        $legacy_ids = array_filter(array_map('strval', array(
+            self::array_value($legacy, 'id'),
+            self::array_value($legacy, 'materialKey'),
+            self::array_value($legacy, 'sourceMaterialId'),
+        )));
+
+        foreach ($materials as $material) {
+            if (!is_array($material)) {
+                continue;
+            }
+            $candidate_ids = array_filter(array_map('strval', array(
+                self::array_value($material, 'id'),
+                self::array_value($material, 'materialKey'),
+                self::array_value($material, 'sourceMaterialId'),
+            )));
+            if (!empty(array_intersect($legacy_ids, $candidate_ids))) {
+                return $material;
+            }
+        }
+
+        return array();
+    }
+
+    private static function frontend_material_data(array $material_data, array $normalized, array $material = array()): array
+    {
+        $required = isset($normalized['requiredOptions']) && is_array($normalized['requiredOptions'])
+            ? $normalized['requiredOptions']
+            : array();
+
+        $material_data['sizes'] = self::frontend_required_option(
+            isset($material_data['sizes']) && is_array($material_data['sizes']) ? $material_data['sizes'] : array(),
+            self::array_value($required, 'sizes', array()),
+            'allSizes'
+        );
+        $material_data['sizes'] = self::apply_material_pricing_to_sizes($material_data['sizes'], $material, $required);
+        $material_data['colors'] = self::frontend_required_option(
+            isset($material_data['colors']) && is_array($material_data['colors']) ? $material_data['colors'] : array(),
+            self::array_value($required, 'colors', array()),
+            'allColors'
+        );
+        $material_data['shapes'] = self::frontend_required_option(
+            isset($material_data['shapes']) && is_array($material_data['shapes']) ? $material_data['shapes'] : array(),
+            self::array_value($required, 'shapes', array()),
+            'allShapes'
+        )['allShapes'];
+        $material_data['borders'] = self::frontend_required_option(
+            isset($material_data['borders']) && is_array($material_data['borders']) ? $material_data['borders'] : array(),
+            self::array_value($required, 'borders', array()),
+            'allBorders'
+        );
+        $material_data['fixingMethods'] = self::frontend_required_option(
+            isset($material_data['fixingMethods']) && is_array($material_data['fixingMethods']) ? $material_data['fixingMethods'] : array(),
+            self::array_value($required, 'fixingMethods', array()),
+            'allFixingMethod'
+        )['allFixingMethod'];
+
+        if (!isset($material_data['textImages']) || !is_array($material_data['textImages'])) {
+            $material_data['textImages'] = array(
+                'enableText' => true,
+                'enableImage' => true,
+                'enableQrCode' => true,
+            );
+        }
+
+        $components = isset($normalized['additionalOptions']['components']['items']) && is_array($normalized['additionalOptions']['components']['items'])
+            ? array_values($normalized['additionalOptions']['components']['items'])
+            : array();
+        if (!isset($material_data['additionalOptions']) || !is_array($material_data['additionalOptions'])) {
+            $material_data['additionalOptions'] = $components;
+        }
+
+        return $material_data;
+    }
+
+    private static function apply_material_pricing_to_sizes(array $sizes, array $material, array $required): array
+    {
+        $items = isset($sizes['allSizes']) && is_array($sizes['allSizes'])
+            ? array_values($sizes['allSizes'])
+            : array();
+
+        if (empty($items)) {
+            return $sizes;
+        }
+
+        $pricing = self::find_material_pricing($material, $required);
+        $custom_pricing = is_array($pricing) ? self::array_value($pricing, 'customPricing', array()) : array();
+        if (!is_array($custom_pricing) || empty($custom_pricing)) {
+            return $sizes;
+        }
+
+        $additional_price = (float) self::array_value($material, 'additionalPrice', 0);
+        $sizes['allSizes'] = array_map(function ($size) use ($custom_pricing, $additional_price) {
+            if (!is_array($size)) {
+                return $size;
+            }
+
+            $surface = self::size_surface($size);
+            $settings = self::pricing_settings_for_surface($custom_pricing, $surface);
+            if (empty($settings)) {
+                return $size;
+            }
+
+            $base_price = (float) self::array_value($settings, 'basePrice', 0);
+            if ($additional_price !== 0.0) {
+                $base_price += $additional_price;
+            }
+
+            $size['basePrice'] = $base_price;
+            $size['charPrice'] = (float) self::array_value($settings, 'charPrice', 0);
+            $size['surface'] = $surface;
+            $size['textNumber'] = self::array_value($size, 'textNumber', 0);
+            $size['maxTextChar'] = self::array_value($settings, 'maxTextChar', self::array_value($size, 'maxTextChar', -1));
+            $size['startPriceAtChar'] = self::array_value($settings, 'startPriceAtChar', self::array_value($size, 'startPriceAtChar', 0));
+            if (isset($settings['perRange'])) {
+                $size['perRange'] = (bool) $settings['perRange'];
+            }
+
+            return $size;
+        }, $items);
+
+        return $sizes;
+    }
+
+    private static function find_material_pricing(array $material, array $required): array
+    {
+        $pricing_options = isset($required['pricing']['priceOptions']) && is_array($required['pricing']['priceOptions'])
+            ? array_values($required['pricing']['priceOptions'])
+            : array();
+        if (empty($pricing_options)) {
+            return array();
+        }
+
+        $pricing_id = self::first_string(array(self::array_value($material, 'pricingId')), '');
+        foreach ($pricing_options as $pricing) {
+            if (!is_array($pricing)) {
+                continue;
+            }
+            if ($pricing_id !== '' && (string) self::array_value($pricing, 'id', '') === $pricing_id) {
+                return $pricing;
+            }
+        }
+
+        return is_array($pricing_options[0]) ? $pricing_options[0] : array();
+    }
+
+    private static function pricing_settings_for_surface(array $custom_pricing, float $surface): array
+    {
+        $type = self::first_string(array(self::array_value($custom_pricing, 'type')), 'unit');
+        if ($type === 'range') {
+            $ranges = self::array_value($custom_pricing, 'range', array());
+            if (!is_array($ranges) || empty($ranges)) {
+                return array();
+            }
+
+            $selected = end($ranges);
+            foreach ($ranges as $range) {
+                if (!is_array($range)) {
+                    continue;
+                }
+                $range_surface = (float) self::array_value($range, 'surface', 0);
+                if ($range_surface > 0 && $surface <= $range_surface) {
+                    $selected = $range;
+                    break;
+                }
+            }
+
+            if (!is_array($selected)) {
+                return array();
+            }
+
+            $per_unit = (bool) self::array_value($custom_pricing, 'rangePricingPerUnit', false);
+            $selected_surface = (float) self::array_value($selected, 'surface', 0);
+            $base_price = (float) self::array_value($selected, 'basePrice', 0);
+
+            return array(
+                'basePrice' => $per_unit && $selected_surface > 0 ? $base_price / $selected_surface : $base_price,
+                'charPrice' => (float) self::array_value($selected, 'charPrice', 0),
+                'perRange' => $per_unit,
+                'maxTextChar' => -1,
+                'startPriceAtChar' => 0,
+            );
+        }
+
+        $unit = self::array_value($custom_pricing, 'unit', array());
+        if (!is_array($unit)) {
+            return array();
+        }
+
+        $unit_surface = (float) self::array_value($unit, 'surface', 0);
+        $unit_base_price = (float) self::array_value($unit, 'basePrice', 0);
+
+        return array(
+            'basePrice' => $unit_surface > 0 ? ($surface * $unit_base_price) / $unit_surface : $unit_base_price,
+            'charPrice' => (float) self::array_value($unit, 'charPrice', 0),
+            'maxTextChar' => -1,
+            'startPriceAtChar' => 0,
+        );
+    }
+
+    private static function size_surface(array $size): float
+    {
+        $surface = (float) self::array_value($size, 'surface', 0);
+        if ($surface > 0) {
+            return $surface;
+        }
+
+        $width = (float) self::array_value($size, 'width', 0);
+        $height = (float) self::array_value($size, 'height', 0);
+
+        return $width > 0 && $height > 0 ? $width * $height : 0;
+    }
+
+    private static function frontend_required_option(array $legacy, array $canonical, string $items_key): array
+    {
+        $items = isset($canonical['items']) && is_array($canonical['items'])
+            ? array_values($canonical['items'])
+            : array();
+        $items = array_map(function ($item) {
+            if (!is_array($item)) {
+                return $item;
+            }
+
+            $item['popImg'] = self::first_string(array(
+                self::array_value($item, 'popImg'),
+                self::array_value($item, 'popupImg'),
+                self::array_value($item, 'popupImage'),
+            ), '');
+            $item['popupImg'] = self::first_string(array(
+                self::array_value($item, 'popupImg'),
+                self::array_value($item, 'popImg'),
+                self::array_value($item, 'popupImage'),
+            ), '');
+
+            return $item;
+        }, $items);
+
+        $merged = self::deep_merge($legacy, $canonical);
+        $merged[$items_key] = $items;
+        unset($merged['items']);
+
+        return $merged;
+    }
+
+    private static function frontend_additional_options(array $data, array $additional_options): array
+    {
+        if (isset($data['additionalOptions']) && is_array($data['additionalOptions']) && self::is_list($data['additionalOptions'])) {
+            return array_values($data['additionalOptions']);
+        }
+
+        $inputs = isset($additional_options['inputs']['items']) && is_array($additional_options['inputs']['items'])
+            ? array_values($additional_options['inputs']['items'])
+            : array();
+
+        return $inputs;
+    }
+
+    private static function frontend_settings(array $settings, array $required_options): array
+    {
+        $font_items = isset($required_options['fonts']['items']) && is_array($required_options['fonts']['items'])
+            ? array_values($required_options['fonts']['items'])
+            : array();
+
+        if (empty($font_items)) {
+            return $settings;
+        }
+
+        if (!isset($settings['customizerSign']) || !is_array($settings['customizerSign'])) {
+            $settings['customizerSign'] = array();
+        }
+        if (!isset($settings['customizerSign']['text']) || !is_array($settings['customizerSign']['text'])) {
+            $settings['customizerSign']['text'] = array();
+        }
+
+        $selected_fonts = array();
+        foreach ($font_items as $font) {
+            if (!is_array($font)) {
+                continue;
+            }
+
+            $font_id = self::array_value($font, 'managedFontId', null);
+            if ($font_id === null || $font_id === '') {
+                $font_id = self::array_value($font, 'fontId', null);
+            }
+            if ($font_id === null || $font_id === '') {
+                $font_id = self::array_value($font, 'id', null);
+            }
+
+            if ($font_id !== null && $font_id !== '') {
+                $selected_fonts[] = is_numeric($font_id) ? (int) $font_id : (string) $font_id;
+            }
+        }
+
+        if (!empty($selected_fonts)) {
+            $settings['customizerSign']['text']['selectedFonts'] = array_values(array_unique($selected_fonts));
+        }
+
+        return $settings;
     }
 
     private static function shopify_template(): array
@@ -483,12 +911,23 @@ class ConfigSchemaNormalizer
 
     private static function shopify_asset_url(string $path): string
     {
-        $path = ltrim($path, '/');
-        if ($path === '') {
+        $raw_path = trim($path);
+        if ($raw_path === '') {
             return '';
         }
-        if (preg_match('/^(https?:)?\/\//i', $path) || strpos($path, 'data:') === 0) {
-            return $path;
+        if (preg_match('/^(https?:)?\/\//i', $raw_path) || strpos($raw_path, 'data:') === 0) {
+            return $raw_path;
+        }
+        if (strpos($raw_path, '/wp-content/') !== false) {
+            return $raw_path;
+        }
+
+        $path = ltrim($raw_path, '/');
+        if (strpos($path, 'images/shopify/') === 0) {
+            $path = substr($path, strlen('images/shopify/'));
+        }
+        if (strpos($path, 'images/') === 0) {
+            $path = substr($path, strlen('images/'));
         }
 
         $base = defined('ASOWP_ASSETS') ? ASOWP_ASSETS : '';

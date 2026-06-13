@@ -63,6 +63,9 @@ class Api extends WP_REST_Controller {
         if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASOWP_Api_Home_Stats'  ) ) {
             require_once __DIR__ . '/Api/Admin/Home-Stats.php';
         }
+        if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASOWP_Api_Request_Quotes'  ) ) {
+            require_once __DIR__ . '/Api/Admin/Request-Quotes.php';
+        }
         if ( !class_exists( __NAMESPACE__ . '\Api\Admin\Required_Options\ASOWP_Api_Required_Options'  ) ) {
             require_once __DIR__ . '/Api/Admin/Required-Options/Required-Options.php';
         }
@@ -103,6 +106,7 @@ class Api extends WP_REST_Controller {
         (new ASOWP_Api_Manage_cliparts())->register_routes();
         (new ASOWP_Api_WooCommerce_Products())->register_routes();
         (new ASOWP_Api_Home_Stats())->register_routes();
+        (new ASOWP_Api_Request_Quotes())->register_routes();
         (new ASOWP_Api_Required_Options())->register_routes();
         (new ASOWP_Api_GoogleFonts())->register_routes();
         (new ASOWP_Api_Additional_Options())->register_routes();

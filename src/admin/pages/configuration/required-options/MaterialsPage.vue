@@ -24,7 +24,7 @@
                 <th class="asowp-py-2 asowp-px-3 asowp-text-left asowp-text-[11px] asowp-font-bold asowp-text-[#6b7280]">{{ __('Label', 'all-signs-options-pro') }}</th>
                 <th class="asowp-py-2 asowp-px-3 asowp-text-left asowp-text-[11px] asowp-font-bold asowp-text-[#6b7280]">{{ __('Price', 'all-signs-options-pro') }}</th>
                 <th class="asowp-py-2 asowp-px-3 asowp-text-left asowp-text-[11px] asowp-font-bold asowp-text-[#6b7280]">{{ __('Pricing', 'all-signs-options-pro') }}</th>
-                <th class="asowp-py-2 asowp-px-3 asowp-text-center asowp-text-[11px] asowp-font-bold asowp-text-[#6b7280]">{{ __('Default', 'all-signs-options-pro') }}</th>
+                <th class="asowp-materials-default-heading asowp-py-2 asowp-px-3 asowp-text-center asowp-text-[11px] asowp-font-bold asowp-text-[#6b7280]">{{ __('Default', 'all-signs-options-pro') }}</th>
                 <th class="asowp-py-2 asowp-px-3 asowp-text-left asowp-text-[11px] asowp-font-bold asowp-text-[#6b7280]">{{ __('Actions', 'all-signs-options-pro') }}</th>
               </tr>
             </thead>
@@ -176,6 +176,7 @@ import api from "@/admin/Api/api";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import toastMessage from "@/admin/utils/functions";
+import { shopifyImageUrl } from "@/admin/utils/shopify-assets";
 import { Edit2Icon, Loader2Icon, PlusIcon, Trash2Icon } from "lucide-vue-next";
 import { __, sprintf } from "@wordpress/i18n";
 
@@ -210,7 +211,28 @@ const newMaterial = ref({
   excludeComponentIds: [],
 });
 
-const getMaterialPreview = (material) => material?.previewImg || material?.image || material?.icon || "";
+const resolveMaterialImageUrl = (value = "") => {
+  const image = String(Array.isArray(value) ? value[0] : value || "").trim();
+  if (!image) return "";
+  if (/^(https?:)?\/\//i.test(image) || image.startsWith("data:")) return image;
+
+  const normalized = image.replace(/\\/g, "/").replace(/^\/+/, "");
+  if (
+    normalized.startsWith("images/") ||
+    normalized.startsWith("create-config/") ||
+    normalized.startsWith("aso_default_files/")
+  ) {
+    return shopifyImageUrl(normalized);
+  }
+
+  if (normalized.includes("wp-content/") || normalized.startsWith("wordpressWork/")) {
+    return image.startsWith("/") ? image : `/${normalized}`;
+  }
+
+  return shopifyImageUrl(normalized);
+};
+
+const getMaterialPreview = (material) => resolveMaterialImageUrl(material?.previewImg || material?.image || material?.icon || "");
 const getMaterialLabel = (material) => material?.label || material?.name || material?.title || "";
 const getPricingLabel = (material) => {
   const pricingId = String(material?.pricingId || "");
@@ -469,6 +491,7 @@ onMounted(async () => {
 .asowp-materials-table { border: 0 !important; }
 .asowp-materials-table th { padding: 9px 12px; border-top: 0 !important; border-bottom: 0 !important; color: #616161; font-size: 11px; line-height: 16px; font-weight: 700; text-align: left; }
 .asowp-materials-table td { padding: 8px 12px; border-top: 0 !important; border-bottom: 0 !important; color: #303030; font-size: 12px; line-height: 18px; text-align: left; }
+.asowp-materials-table .asowp-materials-default-heading { text-align: center; }
 .asowp-materials-table .asowp-materials-default-cell { text-align: center; }
 .asowp-materials-default-control { justify-content: center; width: 100%; }
 .asowp-materials-table tbody tr { border-bottom: 1px solid #e5e7eb !important; }

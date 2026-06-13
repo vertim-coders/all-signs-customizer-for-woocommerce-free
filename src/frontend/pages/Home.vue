@@ -8,12 +8,13 @@
   <Templates v-else-if="isTemplates"/>
   <Default v-else-if="skin == 'default'" :config="configData" :manage="manageData" :currency="currencySymbol" :template="templateData" />
   <Couffo v-else-if="skin == 'couffo'" :config="configData" :manage="manageData" :currency="currencySymbol" :template="templateData" />
+  <div v-else class="asowp-hidden"></div>
  
   <!-- <Modal v-if="skin == 'mono'" :config="configData" :manage="manageData" :currency="currencySymbol" :template="templateData" /> -->
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 import { useRoute } from "vue-router";
 import api from "@/frontend/api";
 import Default from "./configurateur/Default/index.vue";
@@ -28,18 +29,39 @@ var currencySymbol = ref("");
 var templateData = ref({});
 const isTemplates = ref(false);
 const loadError = ref('');
+
+const removeInitialLoaders = () => {
+  document.querySelectorAll("#asowp-configurator-loader, #asowp-templates-loader").forEach((loader) => loader.remove());
+};
+
+const getAdminPreviewConfigId = () => {
+  const mount = document.querySelector("#asowp-frontend-app[data-asowp-preview-config-id]");
+  return mount?.dataset?.asowpPreviewConfigId || "";
+};
+
+const revealFrontend = async () => {
+  await nextTick();
+  window.setTimeout(removeInitialLoaders, 0);
+};
+
 onMounted(async() => {
   try {
-    if(route.name == 'preview-back' || route.name == 'template-maker'){
-      const result = await api.getPreviewConfig(route.params.configId);
+    const adminPreviewConfigId = getAdminPreviewConfigId();
+    if(route.name == 'preview-back' || route.name == 'template-maker' || adminPreviewConfigId){
+      const result = await api.getPreviewConfig(route.params.configId || adminPreviewConfigId);
       asowp_configurator_data = result;
       skin.value = result.skin;
       configData.value = result.currentConfig;
       manageData.value = result.managesData;
       currencySymbol.value = result.currencySymbol;
+      templateData.value = result.templates || {
+        designFromTemplate: false,
+        template: {},
+      };
       const style = document.createElement('style')
-      for (let index = 0; index < result.managesData.fonts.length; index++) {
-        const font = result.managesData.fonts[index];
+      const fonts = result.managesData && Array.isArray(result.managesData.fonts) ? result.managesData.fonts : [];
+      for (let index = 0; index < fonts.length; index++) {
+        const font = fonts[index];
         const url = font.url.replace('http://', '//');
         style.innerHTML += `@font-face { font-family: ${font.label.replace(/ /,'-')}; src: url(${url}) format('truetype'); }`
       }
@@ -48,6 +70,7 @@ onMounted(async() => {
         style.innerHTML += result.currentConfig.data.settings.themeColors.customCSS;
       }
       document.head.appendChild(style);
+      await revealFrontend();
 
     }else{
       if(asowp_data.page == 'configurator'){
@@ -56,8 +79,10 @@ onMounted(async() => {
         manageData.value = asowp_configurator_data.managesData;
         currencySymbol.value = asowp_configurator_data.currencySymbol
         templateData.value = asowp_configurator_data.templates
+        await revealFrontend();
       }else {
         isTemplates.value = true;
+        await revealFrontend();
       }
     }
   } catch (error) {
@@ -65,6 +90,7 @@ onMounted(async() => {
     loadError.value = asowp_data.page === 'admin'
       ? 'Unable to load the configurator preview.'
       : 'Unable to load the configurator.';
+    await revealFrontend();
   }
 });
 
