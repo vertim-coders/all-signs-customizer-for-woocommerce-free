@@ -1,16 +1,16 @@
 <template>
-    <div class="asowp-space-y-2 asowp-translate-y-10">
+    <div class="ascwo-space-y-2 ascwo-translate-y-10">
         <div class="">
-            <div class="asowp-bg-[#F8F9FB] asowp-border-solid asowp-border-[1px] asowp-border-t-0 asowp-border-[#DDDDDD] asowp-px-8">
-                <div class="asowp-grid asowp-grid-cols-3 asowp-gap-4 asowp-py-4">   
-                    <div class="asowp-flex asowp-flex-col asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __('Reset all', 'all-signs-options-pro') }}</label>
-                        <div class="asowp-flex asowp-w-full asowp-space-x-2">
-                            <button @click="selectResetAllIcon" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __('Upload Icon', 'all-signs-options-pro') }}</button>
-                            <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
-                                <img v-if="images.resetAllIcon != ''" :src="images.resetAllIcon" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
-                                <button v-if="images.resetAllIcon != ''" @click="()=>{images.resetAllIcon = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none asowp-cursor-pointer`">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
+            <div class="ascwo-bg-[#F8F9FB] ascwo-border-solid ascwo-border-[1px] ascwo-border-t-0 ascwo-border-[#DDDDDD] ascwo-px-8">
+                <div class="ascwo-grid ascwo-grid-cols-3 ascwo-gap-4 ascwo-py-4">   
+                    <div class="ascwo-flex ascwo-flex-col ascwo-space-y-2">
+                        <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __('Reset all', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                        <div class="ascwo-flex ascwo-w-full ascwo-space-x-2">
+                            <button @click="selectResetAllIcon" class="ascwo-bg-[#016464] ascwo-border-none ascwo-w-fit ascwo-h-fit ascwo-p-4 ascwo-rounded ascwo-px-4 ascwo-text-white ascwo-opacity-90 hover:ascwo-opacity-100 ascwo-text-[10px] ascwo-cursor-pointer">{{ __('Upload Icon', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                            <div :class="`ascwo-relative ascwo-w-[82px] ascwo-h-[49px] ascwo-rounded-md ascwo-overflow-hidden`">
+                                <img v-if="images.resetAllIcon != ''" :src="images.resetAllIcon" alt="" class="ascwo-absolute ascwo-w-full ascwo-h-full">
+                                <button v-if="images.resetAllIcon != ''" @click="()=>{images.resetAllIcon = ''}" :class="`ascwo-bg-[#016464] ascwo-absolute ascwo-bottom-0 ascwo-right-0 ascwo-text-white ascwo-p-1 ascwo-rounded-tl-lg ascwo-border-none ascwo-cursor-pointer`">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                     </svg>
                                 </button>
@@ -18,70 +18,70 @@
                         </div>
 
                     </div>
-                    <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[11px] asowp-text-[#444444]">
-                        <label class="">{{ __('Change Undo Icon', 'all-signs-options-pro') }}</label>
-                        <div class="asowp-w-full asowp-flex asowp-space-x-2">
-                            <button @click="selectUndoIcon" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __('Upload Icon', 'all-signs-options-pro') }}</button>
-                            <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
-                                <img v-if="images.undoIcon != ''" :src="images.undoIcon" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
-                                <button v-if="images.undoIcon != ''" @click="()=>{images.undoIcon = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none asowp-cursor-pointer`">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
+                    <div class="ascwo-flex ascwo-flex-col ascwo-space-y-2 ascwo-text-[11px] ascwo-text-[#444444]">
+                        <label class="">{{ __('Change Undo Icon', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                        <div class="ascwo-w-full ascwo-flex ascwo-space-x-2">
+                            <button @click="selectUndoIcon" class="ascwo-bg-[#016464] ascwo-border-none ascwo-w-fit ascwo-h-fit ascwo-p-4 ascwo-rounded ascwo-px-4 ascwo-text-white ascwo-opacity-90 hover:ascwo-opacity-100 ascwo-text-[10px] ascwo-cursor-pointer">{{ __('Upload Icon', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                            <div :class="`ascwo-relative ascwo-w-[82px] ascwo-h-[49px] ascwo-rounded-md ascwo-overflow-hidden`">
+                                <img v-if="images.undoIcon != ''" :src="images.undoIcon" alt="" class="ascwo-absolute ascwo-w-full ascwo-h-full">
+                                <button v-if="images.undoIcon != ''" @click="()=>{images.undoIcon = ''}" :class="`ascwo-bg-[#016464] ascwo-absolute ascwo-bottom-0 ascwo-right-0 ascwo-text-white ascwo-p-1 ascwo-rounded-tl-lg ascwo-border-none ascwo-cursor-pointer`">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                     </svg>
                                 </button>
                             </div>
                         </div>
                     </div>
-                    <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[11px] asowp-text-[#444444]">
-                        <label class="">{{ __('Change Redo Icon', 'all-signs-options-pro') }}</label>
-                        <div class="asowp-w-full asowp-flex asowp-space-x-2">
-                            <button @click="selectRedoIcon" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __('Upload Icon', 'all-signs-options-pro') }}</button>
-                            <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
-                                <img v-if="images.redoIcon != ''" :src="images.redoIcon" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
-                                <button v-if="images.redoIcon != ''" @click="()=>{images.redoIcon = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none asowp-cursor-pointer`">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
+                    <div class="ascwo-flex ascwo-flex-col ascwo-space-y-2 ascwo-text-[11px] ascwo-text-[#444444]">
+                        <label class="">{{ __('Change Redo Icon', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                        <div class="ascwo-w-full ascwo-flex ascwo-space-x-2">
+                            <button @click="selectRedoIcon" class="ascwo-bg-[#016464] ascwo-border-none ascwo-w-fit ascwo-h-fit ascwo-p-4 ascwo-rounded ascwo-px-4 ascwo-text-white ascwo-opacity-90 hover:ascwo-opacity-100 ascwo-text-[10px] ascwo-cursor-pointer">{{ __('Upload Icon', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                            <div :class="`ascwo-relative ascwo-w-[82px] ascwo-h-[49px] ascwo-rounded-md ascwo-overflow-hidden`">
+                                <img v-if="images.redoIcon != ''" :src="images.redoIcon" alt="" class="ascwo-absolute ascwo-w-full ascwo-h-full">
+                                <button v-if="images.redoIcon != ''" @click="()=>{images.redoIcon = ''}" :class="`ascwo-bg-[#016464] ascwo-absolute ascwo-bottom-0 ascwo-right-0 ascwo-text-white ascwo-p-1 ascwo-rounded-tl-lg ascwo-border-none ascwo-cursor-pointer`">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                     </svg>
                                 </button>
                             </div>
                         </div>
                     </div>
-                    <div class="asowp-flex asowp-flex-col asowp-w-full asowp-space-y-2 asowp-text-[11px] asowp-text-[#444444">
-                        <label class="">{{ __('Change icon Preview', 'all-signs-options-pro') }}</label>
-                        <div class="asowp-w-full asowp-flex asowp-space-x-2">
-                            <button @click="selectChangeIconPreview" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __('Upload Icon', 'all-signs-options-pro') }}</button>
-                            <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
-                                <img v-if="images.changeIconPreview != ''" :src="images.changeIconPreview" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
-                                <button v-if="images.changeIconPreview != ''" @click="()=>{images.changeIconPreview = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none asowp-cursor-pointer`">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
+                    <div class="ascwo-flex ascwo-flex-col ascwo-w-full ascwo-space-y-2 ascwo-text-[11px] ascwo-text-[#444444">
+                        <label class="">{{ __('Change icon Preview', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                        <div class="ascwo-w-full ascwo-flex ascwo-space-x-2">
+                            <button @click="selectChangeIconPreview" class="ascwo-bg-[#016464] ascwo-border-none ascwo-w-fit ascwo-h-fit ascwo-p-4 ascwo-rounded ascwo-px-4 ascwo-text-white ascwo-opacity-90 hover:ascwo-opacity-100 ascwo-text-[10px] ascwo-cursor-pointer">{{ __('Upload Icon', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                            <div :class="`ascwo-relative ascwo-w-[82px] ascwo-h-[49px] ascwo-rounded-md ascwo-overflow-hidden`">
+                                <img v-if="images.changeIconPreview != ''" :src="images.changeIconPreview" alt="" class="ascwo-absolute ascwo-w-full ascwo-h-full">
+                                <button v-if="images.changeIconPreview != ''" @click="()=>{images.changeIconPreview = ''}" :class="`ascwo-bg-[#016464] ascwo-absolute ascwo-bottom-0 ascwo-right-0 ascwo-text-white ascwo-p-1 ascwo-rounded-tl-lg ascwo-border-none ascwo-cursor-pointer`">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                     </svg>
                                 </button>
                             </div>
                         </div>
                     </div>
-                    <div class="asowp-flex asowp-flex-col asowp-w-full asowp-space-y-2 asowp-text-[11px] asowp-text-[#444444">
-                        <label class="">{{ __('Change icon Help', 'all-signs-options-pro') }}</label>
-                        <div class="asowp-w-full asowp-flex asowp-space-x-2">
-                            <button @click="selectChangeIconHelp" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __('Upload Icon', 'all-signs-options-pro') }}</button>
-                            <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
-                                <img v-if="images.changeIconHelp != ''" :src="images.changeIconHelp" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
-                                <button v-if="images.changeIconHelp != ''" @click="()=>{images.changeIconHelp = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none asowp-cursor-pointer`">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
+                    <div class="ascwo-flex ascwo-flex-col ascwo-w-full ascwo-space-y-2 ascwo-text-[11px] ascwo-text-[#444444">
+                        <label class="">{{ __('Change icon Help', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                        <div class="ascwo-w-full ascwo-flex ascwo-space-x-2">
+                            <button @click="selectChangeIconHelp" class="ascwo-bg-[#016464] ascwo-border-none ascwo-w-fit ascwo-h-fit ascwo-p-4 ascwo-rounded ascwo-px-4 ascwo-text-white ascwo-opacity-90 hover:ascwo-opacity-100 ascwo-text-[10px] ascwo-cursor-pointer">{{ __('Upload Icon', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                            <div :class="`ascwo-relative ascwo-w-[82px] ascwo-h-[49px] ascwo-rounded-md ascwo-overflow-hidden`">
+                                <img v-if="images.changeIconHelp != ''" :src="images.changeIconHelp" alt="" class="ascwo-absolute ascwo-w-full ascwo-h-full">
+                                <button v-if="images.changeIconHelp != ''" @click="()=>{images.changeIconHelp = ''}" :class="`ascwo-bg-[#016464] ascwo-absolute ascwo-bottom-0 ascwo-right-0 ascwo-text-white ascwo-p-1 ascwo-rounded-tl-lg ascwo-border-none ascwo-cursor-pointer`">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                     </svg>
                                 </button>
                             </div>
                         </div>
                     </div>
-                    <div class="asowp-flex asowp-flex-col asowp-w-full asowp-space-y-2 asowp-text-[11px] asowp-text-[#444444]">
-                        <label class="">{{ __('Change Download icon', 'all-signs-options-pro') }}</label>
-                        <div class="asowp-flex asowp-w-full asowp-space-x-2">
-                            <button @click="selectChangeIconDownload" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __('Upload icon', 'all-signs-options-pro') }}</button>
-                            <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
-                                <img v-if="images.changeIconDownload != ''" :src="images.changeIconDownload" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
-                                <button v-if="images.changeIconDownload != ''" @click="()=>{images.changeIconDownload = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none asowp-cursor-pointer`">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
+                    <div class="ascwo-flex ascwo-flex-col ascwo-w-full ascwo-space-y-2 ascwo-text-[11px] ascwo-text-[#444444]">
+                        <label class="">{{ __('Change Download icon', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                        <div class="ascwo-flex ascwo-w-full ascwo-space-x-2">
+                            <button @click="selectChangeIconDownload" class="ascwo-bg-[#016464] ascwo-border-none ascwo-w-fit ascwo-h-fit ascwo-p-4 ascwo-rounded ascwo-px-4 ascwo-text-white ascwo-opacity-90 hover:ascwo-opacity-100 ascwo-text-[10px] ascwo-cursor-pointer">{{ __('Upload icon', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                            <div :class="`ascwo-relative ascwo-w-[82px] ascwo-h-[49px] ascwo-rounded-md ascwo-overflow-hidden`">
+                                <img v-if="images.changeIconDownload != ''" :src="images.changeIconDownload" alt="" class="ascwo-absolute ascwo-w-full ascwo-h-full">
+                                <button v-if="images.changeIconDownload != ''" @click="()=>{images.changeIconDownload = ''}" :class="`ascwo-bg-[#016464] ascwo-absolute ascwo-bottom-0 ascwo-right-0 ascwo-text-white ascwo-p-1 ascwo-rounded-tl-lg ascwo-border-none ascwo-cursor-pointer`">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                     </svg>
                                 </button>
@@ -89,103 +89,43 @@
                         </div>
 
                     </div>
-                    <div class="asowp-flex asowp-flex-col asowp-w-full asowp-space-y-2 asowp-text-[11px] asowp-text-[#444444]">
-                        <label class="">{{ __('Change Upload design icon', 'all-signs-options-pro') }}</label>
-                        <div class="asowp-w-full asowp-flex asowp-space-x-2">
-                            <button @click="selectChangeIconImport" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __('Upload icon', 'all-signs-options-pro') }}</button>
-                            <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
-                                <img v-if="images.changeIconImport != ''" :src="images.changeIconImport" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
-                                <button v-if="images.changeIconImport != ''" @click="()=>{images.changeIconImport = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none asowp-cursor-pointer`">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
+                    <div class="ascwo-flex ascwo-flex-col ascwo-w-full ascwo-space-y-2 ascwo-text-[11px] ascwo-text-[#444444]">
+                        <label class="">{{ __('Change Upload design icon', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                        <div class="ascwo-w-full ascwo-flex ascwo-space-x-2">
+                            <button @click="selectChangeIconImport" class="ascwo-bg-[#016464] ascwo-border-none ascwo-w-fit ascwo-h-fit ascwo-p-4 ascwo-rounded ascwo-px-4 ascwo-text-white ascwo-opacity-90 hover:ascwo-opacity-100 ascwo-text-[10px] ascwo-cursor-pointer">{{ __('Upload icon', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                            <div :class="`ascwo-relative ascwo-w-[82px] ascwo-h-[49px] ascwo-rounded-md ascwo-overflow-hidden`">
+                                <img v-if="images.changeIconImport != ''" :src="images.changeIconImport" alt="" class="ascwo-absolute ascwo-w-full ascwo-h-full">
+                                <button v-if="images.changeIconImport != ''" @click="()=>{images.changeIconImport = ''}" :class="`ascwo-bg-[#016464] ascwo-absolute ascwo-bottom-0 ascwo-right-0 ascwo-text-white ascwo-p-1 ascwo-rounded-tl-lg ascwo-border-none ascwo-cursor-pointer`">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                     </svg>
                                 </button>
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="asowp-flex asowp-flex-col asowp-w-full asowp-space-y-2 asowp-text-[11px] asowp-text-[#444444]">
-                        <label class="">{{ __("Change icon share", "all-signs-options-pro") }}</label>
-                        <div class="asowp-flex asowp-w-full asowp-space-x-2">
-                            <button @click="selectChangeIconShare" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __("Upload icon", "all-signs-options-pro") }}</button>
-                            <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
-                                <img v-if="images.changeIconShare != ''" :src="images.changeIconShare" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
-                                <button v-if="images.changeIconShare != ''" @click="()=>{images.changeIconShare = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none asowp-cursor-pointer`">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
+                    <!-- <div class="ascwo-flex ascwo-flex-col ascwo-w-full ascwo-space-y-2 ascwo-text-[11px] ascwo-text-[#444444]">
+                        <label class="">{{ __("Change icon share", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                        <div class="ascwo-flex ascwo-w-full ascwo-space-x-2">
+                            <button @click="selectChangeIconShare" class="ascwo-bg-[#016464] ascwo-border-none ascwo-w-fit ascwo-h-fit ascwo-p-4 ascwo-rounded ascwo-px-4 ascwo-text-white ascwo-opacity-90 hover:ascwo-opacity-100 ascwo-text-[10px] ascwo-cursor-pointer">{{ __("Upload icon", "all-signs-customizer-for-woocommerce-pro") }}</button>
+                            <div :class="`ascwo-relative ascwo-w-[82px] ascwo-h-[49px] ascwo-rounded-md ascwo-overflow-hidden`">
+                                <img v-if="images.changeIconShare != ''" :src="images.changeIconShare" alt="" class="ascwo-absolute ascwo-w-full ascwo-h-full">
+                                <button v-if="images.changeIconShare != ''" @click="()=>{images.changeIconShare = ''}" :class="`ascwo-bg-[#016464] ascwo-absolute ascwo-bottom-0 ascwo-right-0 ascwo-text-white ascwo-p-1 ascwo-rounded-tl-lg ascwo-border-none ascwo-cursor-pointer`">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                     </svg>
                                 </button>
                             </div>
                         </div>
-                        {{ __("change icon to share project", "all-signs-options-pro") }}
+                        {{ __("change icon to share project", "all-signs-customizer-for-woocommerce-pro") }}
                     </div> -->
-                    <!-- <div class="asowp-flex asowp-flex-col asowp-w-full asowp-space-y-2 asowp-text-[11px] asowp-text-[#444444]">
-                        <label class="">{{ __("Change icon save project", "all-signs-options-pro") }}</label>
-                        <div class="asowp-flex asowp-space-x-2 asowp-w-full">
-                            <button @click="selectChangeIconSaveProject" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __("Upload icon", "all-signs-options-pro") }}</button>
-                            <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
-                                <img v-if="images.changeIconSaveProject != ''" :src="images.changeIconSaveProject" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
-                                <button v-if="images.changeIconSaveProject != ''" @click="()=>{images.changeIconSaveProject = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none asowp-cursor-pointer`">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-
-                    </div> -->
-                    <div class="asowp-flex asowp-flex-col asowp-w-full asowp-space-y-2 asowp-text-[11px] asowp-text-[#444444]">
-                        <label class="">{{ __('Change icon Material', 'all-signs-options-pro') }}</label>
-                        <div class="asowp-flex asowp-w-full asowp-space-x-2">
-                            <button @click="selectChangeIconMaterial" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __('Upload icon', 'all-signs-options-pro') }}</button>
-                            <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
-                                <img v-if="images.changeIconMaterial != ''" :src="images.changeIconMaterial" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
-                                <button v-if="images.changeIconMaterial != ''" @click="()=>{images.changeIconMaterial = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none asowp-cursor-pointer`">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="asowp-flex asowp-flex-col asowp-w-full asowp-space-y-2 asowp-text-[11px] asowp-text-[#444444]">
-                        <label class="">{{ __('Change icon Shape', 'all-signs-options-pro') }}</label>
-                        <div class="asowp-flex asowp-w-full asowp-space-x-2">
-                            <button @click="selectChangeIconShape" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __('Upload icon', 'all-signs-options-pro') }}</button>
-                            <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
-                                <img v-if="images.changeIconShape != ''" :src="images.changeIconShape" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
-                                <button v-if="images.changeIconShape != ''" @click="()=>{images.changeIconShape = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none asowp-cursor-pointer`">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="asowp-flex asowp-flex-col asowp-w-full asowp-space-y-2 asowp-text-[11px] asowp-text-[#444444]">
-                        <label class="">{{ __('Change icon Fixing method', 'all-signs-options-pro') }}</label>
-                        <div class="asowp-flex asowp-w-full asowp-space-x-2">
-                            <button @click="selectChangeIconFixingMethod" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __('Upload icon', 'all-signs-options-pro') }}</button>
-                            <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
-                                <img v-if="images.changeIconFixingMethod != ''" :src="images.changeIconFixingMethod" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
-                                <button v-if="images.changeIconFixingMethod != ''" @click="()=>{images.changeIconFixingMethod = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none asowp-cursor-pointer`">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-
-                    </div>
-                    <!-- <div class="asowp-flex asowp-flex-col asowp-w-full asowp-space-y-2 asowp-text-[11px] asowp-text-[#444444]">
-                        <label class="">{{ __("Change icon Product", "all-signs-options-pro") }}</label>
-                        <div class="asowp-flex asowp-w-full asowp-space-x-2">
-                            <button @click="selectChangeIconProduct" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __("Upload icon", "all-signs-options-pro") }}</button>
-                            <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
-                                <img v-if="images.changeIconProduct != ''" :src="images.changeIconProduct" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
-                                <button v-if="images.changeIconProduct != ''" @click="()=>{images.changeIconProduct = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none asowp-cursor-pointer`">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
+                    <!-- <div class="ascwo-flex ascwo-flex-col ascwo-w-full ascwo-space-y-2 ascwo-text-[11px] ascwo-text-[#444444]">
+                        <label class="">{{ __("Change icon save project", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                        <div class="ascwo-flex ascwo-space-x-2 ascwo-w-full">
+                            <button @click="selectChangeIconSaveProject" class="ascwo-bg-[#016464] ascwo-border-none ascwo-w-fit ascwo-h-fit ascwo-p-4 ascwo-rounded ascwo-px-4 ascwo-text-white ascwo-opacity-90 hover:ascwo-opacity-100 ascwo-text-[10px] ascwo-cursor-pointer">{{ __("Upload icon", "all-signs-customizer-for-woocommerce-pro") }}</button>
+                            <div :class="`ascwo-relative ascwo-w-[82px] ascwo-h-[49px] ascwo-rounded-md ascwo-overflow-hidden`">
+                                <img v-if="images.changeIconSaveProject != ''" :src="images.changeIconSaveProject" alt="" class="ascwo-absolute ascwo-w-full ascwo-h-full">
+                                <button v-if="images.changeIconSaveProject != ''" @click="()=>{images.changeIconSaveProject = ''}" :class="`ascwo-bg-[#016464] ascwo-absolute ascwo-bottom-0 ascwo-right-0 ascwo-text-white ascwo-p-1 ascwo-rounded-tl-lg ascwo-border-none ascwo-cursor-pointer`">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                     </svg>
                                 </button>
@@ -193,14 +133,14 @@
                         </div>
 
                     </div> -->
-                    <div class="asowp-flex asowp-flex-col asowp-w-full asowp-space-y-2 asowp-text-[11px] asowp-text-[#444444]">
-                        <label class="">{{ __('Change icon Size', 'all-signs-options-pro') }}</label>
-                        <div class="asowp-flex asowp-w-full asowp-space-x-2">
-                            <button @click="selectChangeIconSize" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __('Upload icon', 'all-signs-options-pro') }}</button>
-                            <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
-                                <img v-if="images.changeIconSize != ''" :src="images.changeIconSize" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
-                                <button v-if="images.changeIconSize != ''" @click="()=>{images.changeIconSize = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none asowp-cursor-pointer`">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
+                    <div class="ascwo-flex ascwo-flex-col ascwo-w-full ascwo-space-y-2 ascwo-text-[11px] ascwo-text-[#444444]">
+                        <label class="">{{ __('Change icon Material', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                        <div class="ascwo-flex ascwo-w-full ascwo-space-x-2">
+                            <button @click="selectChangeIconMaterial" class="ascwo-bg-[#016464] ascwo-border-none ascwo-w-fit ascwo-h-fit ascwo-p-4 ascwo-rounded ascwo-px-4 ascwo-text-white ascwo-opacity-90 hover:ascwo-opacity-100 ascwo-text-[10px] ascwo-cursor-pointer">{{ __('Upload icon', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                            <div :class="`ascwo-relative ascwo-w-[82px] ascwo-h-[49px] ascwo-rounded-md ascwo-overflow-hidden`">
+                                <img v-if="images.changeIconMaterial != ''" :src="images.changeIconMaterial" alt="" class="ascwo-absolute ascwo-w-full ascwo-h-full">
+                                <button v-if="images.changeIconMaterial != ''" @click="()=>{images.changeIconMaterial = ''}" :class="`ascwo-bg-[#016464] ascwo-absolute ascwo-bottom-0 ascwo-right-0 ascwo-text-white ascwo-p-1 ascwo-rounded-tl-lg ascwo-border-none ascwo-cursor-pointer`">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                     </svg>
                                 </button>
@@ -208,14 +148,14 @@
                         </div>
 
                     </div>
-                    <div class="asowp-flex asowp-flex-col asowp-w-full asowp-space-y-2 asowp-text-[11px] asowp-text-[#444444]">
-                        <label class="">{{ __('Change icon Text', 'all-signs-options-pro') }}</label>
-                        <div class="asowp-flex asowp-w-full asowp-space-x-2">
-                            <button @click="selectChangeIconText" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __('Upload icon', 'all-signs-options-pro') }}</button>
-                            <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
-                                <img v-if="images.changeIconText != ''" :src="images.changeIconText" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
-                                <button v-if="images.changeIconText != ''" @click="()=>{images.changeIconText = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none asowp-cursor-pointer`">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
+                    <div class="ascwo-flex ascwo-flex-col ascwo-w-full ascwo-space-y-2 ascwo-text-[11px] ascwo-text-[#444444]">
+                        <label class="">{{ __('Change icon Shape', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                        <div class="ascwo-flex ascwo-w-full ascwo-space-x-2">
+                            <button @click="selectChangeIconShape" class="ascwo-bg-[#016464] ascwo-border-none ascwo-w-fit ascwo-h-fit ascwo-p-4 ascwo-rounded ascwo-px-4 ascwo-text-white ascwo-opacity-90 hover:ascwo-opacity-100 ascwo-text-[10px] ascwo-cursor-pointer">{{ __('Upload icon', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                            <div :class="`ascwo-relative ascwo-w-[82px] ascwo-h-[49px] ascwo-rounded-md ascwo-overflow-hidden`">
+                                <img v-if="images.changeIconShape != ''" :src="images.changeIconShape" alt="" class="ascwo-absolute ascwo-w-full ascwo-h-full">
+                                <button v-if="images.changeIconShape != ''" @click="()=>{images.changeIconShape = ''}" :class="`ascwo-bg-[#016464] ascwo-absolute ascwo-bottom-0 ascwo-right-0 ascwo-text-white ascwo-p-1 ascwo-rounded-tl-lg ascwo-border-none ascwo-cursor-pointer`">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                     </svg>
                                 </button>
@@ -223,14 +163,74 @@
                         </div>
 
                     </div>
-                    <div class="asowp-flex asowp-flex-col asowp-w-full asowp-space-y-2 asowp-text-[11px] asowp-text-[#444444]">
-                        <label class="">{{ __('Change icon color', 'all-signs-options-pro') }}</label>
-                        <div class="asowp-flex asowp-w-full asowp-space-x-2">
-                            <button @click="selectChangeIconColor" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __('Upload icon', 'all-signs-options-pro') }}</button>
-                            <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
-                                <img v-if="images.changeIconColor != ''" :src="images.changeIconColor" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
-                                <button v-if="images.changeIconColor != ''" @click="()=>{images.changeIconColor = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none asowp-cursor-pointer`">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
+                    <div class="ascwo-flex ascwo-flex-col ascwo-w-full ascwo-space-y-2 ascwo-text-[11px] ascwo-text-[#444444]">
+                        <label class="">{{ __('Change icon Fixing method', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                        <div class="ascwo-flex ascwo-w-full ascwo-space-x-2">
+                            <button @click="selectChangeIconFixingMethod" class="ascwo-bg-[#016464] ascwo-border-none ascwo-w-fit ascwo-h-fit ascwo-p-4 ascwo-rounded ascwo-px-4 ascwo-text-white ascwo-opacity-90 hover:ascwo-opacity-100 ascwo-text-[10px] ascwo-cursor-pointer">{{ __('Upload icon', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                            <div :class="`ascwo-relative ascwo-w-[82px] ascwo-h-[49px] ascwo-rounded-md ascwo-overflow-hidden`">
+                                <img v-if="images.changeIconFixingMethod != ''" :src="images.changeIconFixingMethod" alt="" class="ascwo-absolute ascwo-w-full ascwo-h-full">
+                                <button v-if="images.changeIconFixingMethod != ''" @click="()=>{images.changeIconFixingMethod = ''}" :class="`ascwo-bg-[#016464] ascwo-absolute ascwo-bottom-0 ascwo-right-0 ascwo-text-white ascwo-p-1 ascwo-rounded-tl-lg ascwo-border-none ascwo-cursor-pointer`">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- <div class="ascwo-flex ascwo-flex-col ascwo-w-full ascwo-space-y-2 ascwo-text-[11px] ascwo-text-[#444444]">
+                        <label class="">{{ __("Change icon Product", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                        <div class="ascwo-flex ascwo-w-full ascwo-space-x-2">
+                            <button @click="selectChangeIconProduct" class="ascwo-bg-[#016464] ascwo-border-none ascwo-w-fit ascwo-h-fit ascwo-p-4 ascwo-rounded ascwo-px-4 ascwo-text-white ascwo-opacity-90 hover:ascwo-opacity-100 ascwo-text-[10px] ascwo-cursor-pointer">{{ __("Upload icon", "all-signs-customizer-for-woocommerce-pro") }}</button>
+                            <div :class="`ascwo-relative ascwo-w-[82px] ascwo-h-[49px] ascwo-rounded-md ascwo-overflow-hidden`">
+                                <img v-if="images.changeIconProduct != ''" :src="images.changeIconProduct" alt="" class="ascwo-absolute ascwo-w-full ascwo-h-full">
+                                <button v-if="images.changeIconProduct != ''" @click="()=>{images.changeIconProduct = ''}" :class="`ascwo-bg-[#016464] ascwo-absolute ascwo-bottom-0 ascwo-right-0 ascwo-text-white ascwo-p-1 ascwo-rounded-tl-lg ascwo-border-none ascwo-cursor-pointer`">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div> -->
+                    <div class="ascwo-flex ascwo-flex-col ascwo-w-full ascwo-space-y-2 ascwo-text-[11px] ascwo-text-[#444444]">
+                        <label class="">{{ __('Change icon Size', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                        <div class="ascwo-flex ascwo-w-full ascwo-space-x-2">
+                            <button @click="selectChangeIconSize" class="ascwo-bg-[#016464] ascwo-border-none ascwo-w-fit ascwo-h-fit ascwo-p-4 ascwo-rounded ascwo-px-4 ascwo-text-white ascwo-opacity-90 hover:ascwo-opacity-100 ascwo-text-[10px] ascwo-cursor-pointer">{{ __('Upload icon', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                            <div :class="`ascwo-relative ascwo-w-[82px] ascwo-h-[49px] ascwo-rounded-md ascwo-overflow-hidden`">
+                                <img v-if="images.changeIconSize != ''" :src="images.changeIconSize" alt="" class="ascwo-absolute ascwo-w-full ascwo-h-full">
+                                <button v-if="images.changeIconSize != ''" @click="()=>{images.changeIconSize = ''}" :class="`ascwo-bg-[#016464] ascwo-absolute ascwo-bottom-0 ascwo-right-0 ascwo-text-white ascwo-p-1 ascwo-rounded-tl-lg ascwo-border-none ascwo-cursor-pointer`">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="ascwo-flex ascwo-flex-col ascwo-w-full ascwo-space-y-2 ascwo-text-[11px] ascwo-text-[#444444]">
+                        <label class="">{{ __('Change icon Text', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                        <div class="ascwo-flex ascwo-w-full ascwo-space-x-2">
+                            <button @click="selectChangeIconText" class="ascwo-bg-[#016464] ascwo-border-none ascwo-w-fit ascwo-h-fit ascwo-p-4 ascwo-rounded ascwo-px-4 ascwo-text-white ascwo-opacity-90 hover:ascwo-opacity-100 ascwo-text-[10px] ascwo-cursor-pointer">{{ __('Upload icon', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                            <div :class="`ascwo-relative ascwo-w-[82px] ascwo-h-[49px] ascwo-rounded-md ascwo-overflow-hidden`">
+                                <img v-if="images.changeIconText != ''" :src="images.changeIconText" alt="" class="ascwo-absolute ascwo-w-full ascwo-h-full">
+                                <button v-if="images.changeIconText != ''" @click="()=>{images.changeIconText = ''}" :class="`ascwo-bg-[#016464] ascwo-absolute ascwo-bottom-0 ascwo-right-0 ascwo-text-white ascwo-p-1 ascwo-rounded-tl-lg ascwo-border-none ascwo-cursor-pointer`">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="ascwo-flex ascwo-flex-col ascwo-w-full ascwo-space-y-2 ascwo-text-[11px] ascwo-text-[#444444]">
+                        <label class="">{{ __('Change icon color', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                        <div class="ascwo-flex ascwo-w-full ascwo-space-x-2">
+                            <button @click="selectChangeIconColor" class="ascwo-bg-[#016464] ascwo-border-none ascwo-w-fit ascwo-h-fit ascwo-p-4 ascwo-rounded ascwo-px-4 ascwo-text-white ascwo-opacity-90 hover:ascwo-opacity-100 ascwo-text-[10px] ascwo-cursor-pointer">{{ __('Upload icon', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                            <div :class="`ascwo-relative ascwo-w-[82px] ascwo-h-[49px] ascwo-rounded-md ascwo-overflow-hidden`">
+                                <img v-if="images.changeIconColor != ''" :src="images.changeIconColor" alt="" class="ascwo-absolute ascwo-w-full ascwo-h-full">
+                                <button v-if="images.changeIconColor != ''" @click="()=>{images.changeIconColor = ''}" :class="`ascwo-bg-[#016464] ascwo-absolute ascwo-bottom-0 ascwo-right-0 ascwo-text-white ascwo-p-1 ascwo-rounded-tl-lg ascwo-border-none ascwo-cursor-pointer`">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                     </svg>
                                 </button>
@@ -238,14 +238,14 @@
                         </div>
 
                     </div>                 
-                    <div class="asowp-flex asowp-flex-col asowp-w-full asowp-space-y-2 asowp-text-[11px] asowp-text-[#444444]">
-                        <label class="">{{ __('Change icon border', 'all-signs-options-pro') }}</label>
-                        <div class="asowp-flex asowp-w-full asowp-space-x-2">
-                            <button @click="selectChangeIconBorder" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __('Upload icon', 'all-signs-options-pro') }}</button>
-                            <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
-                                <img v-if="images.changeIconBorder != ''" :src="images.changeIconBorder" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
-                                <button v-if="images.changeIconBorder != ''" @click="()=>{images.changeIconBorder = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none asowp-cursor-pointer`">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
+                    <div class="ascwo-flex ascwo-flex-col ascwo-w-full ascwo-space-y-2 ascwo-text-[11px] ascwo-text-[#444444]">
+                        <label class="">{{ __('Change icon border', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                        <div class="ascwo-flex ascwo-w-full ascwo-space-x-2">
+                            <button @click="selectChangeIconBorder" class="ascwo-bg-[#016464] ascwo-border-none ascwo-w-fit ascwo-h-fit ascwo-p-4 ascwo-rounded ascwo-px-4 ascwo-text-white ascwo-opacity-90 hover:ascwo-opacity-100 ascwo-text-[10px] ascwo-cursor-pointer">{{ __('Upload icon', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                            <div :class="`ascwo-relative ascwo-w-[82px] ascwo-h-[49px] ascwo-rounded-md ascwo-overflow-hidden`">
+                                <img v-if="images.changeIconBorder != ''" :src="images.changeIconBorder" alt="" class="ascwo-absolute ascwo-w-full ascwo-h-full">
+                                <button v-if="images.changeIconBorder != ''" @click="()=>{images.changeIconBorder = ''}" :class="`ascwo-bg-[#016464] ascwo-absolute ascwo-bottom-0 ascwo-right-0 ascwo-text-white ascwo-p-1 ascwo-rounded-tl-lg ascwo-border-none ascwo-cursor-pointer`">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                     </svg>
                                 </button>
@@ -253,14 +253,14 @@
                         </div>
 
                     </div>
-                    <div class="asowp-flex asowp-flex-col asowp-w-full asowp-space-y-2 asowp-text-[11px] asowp-text-[#444444]">
-                        <label class="">{{ __('Change icon image', 'all-signs-options-pro') }}</label>
-                        <div class="asowp-flex asowp-w-full asowp-space-x-2">
-                            <button @click="selectChangeIconImage" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __('Upload icon', 'all-signs-options-pro') }}</button>
-                            <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
-                                <img v-if="images.changeIconImage != ''" :src="images.changeIconImage" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
-                                <button v-if="images.changeIconImage != ''" @click="()=>{images.changeIconImage = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none asowp-cursor-pointer`">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
+                    <div class="ascwo-flex ascwo-flex-col ascwo-w-full ascwo-space-y-2 ascwo-text-[11px] ascwo-text-[#444444]">
+                        <label class="">{{ __('Change icon image', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                        <div class="ascwo-flex ascwo-w-full ascwo-space-x-2">
+                            <button @click="selectChangeIconImage" class="ascwo-bg-[#016464] ascwo-border-none ascwo-w-fit ascwo-h-fit ascwo-p-4 ascwo-rounded ascwo-px-4 ascwo-text-white ascwo-opacity-90 hover:ascwo-opacity-100 ascwo-text-[10px] ascwo-cursor-pointer">{{ __('Upload icon', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                            <div :class="`ascwo-relative ascwo-w-[82px] ascwo-h-[49px] ascwo-rounded-md ascwo-overflow-hidden`">
+                                <img v-if="images.changeIconImage != ''" :src="images.changeIconImage" alt="" class="ascwo-absolute ascwo-w-full ascwo-h-full">
+                                <button v-if="images.changeIconImage != ''" @click="()=>{images.changeIconImage = ''}" :class="`ascwo-bg-[#016464] ascwo-absolute ascwo-bottom-0 ascwo-right-0 ascwo-text-white ascwo-p-1 ascwo-rounded-tl-lg ascwo-border-none ascwo-cursor-pointer`">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                     </svg>
                                 </button>
@@ -271,11 +271,11 @@
                 </div>
             </div>
         </div>
-        <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-space-x-4 asowp-px-4 asowp-py-3 asowp-justify-end asowp-items-end">
-            <div class="asowp-bg-[#016464] asowp-rounded">
-                <button :disabled="isLoading" @click="updateImagesSettings" class="asowp-rounded asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointerasowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
-                    <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" />
-                    <div class="asowp-font-semibold asowp-text-[16px]">{{ __("Save", "all-signs-options-pro") }}</div>
+        <div class="ascwo-bg-[#F8F9FB] ascwo-flex ascwo-space-x-4 ascwo-px-4 ascwo-py-3 ascwo-justify-end ascwo-items-end">
+            <div class="ascwo-bg-[#016464] ascwo-rounded">
+                <button :disabled="isLoading" @click="updateImagesSettings" class="ascwo-rounded ascwo-flex ascwo-bg-transparent ascwo-w-fit ascwo-space-x-2 ascwo-h-fit ascwo-text-white ascwo-px-12 ascwo-p-2.5 ascwo-border-none ascwo-opacity-90 hover:ascwo-opacity-100 hover:ascwo-border-none hover:ascwo-text-white hover:ascwo-bg-[#016464] ascwo-cursor-pointerascwo-flex ascwo-bg-transparent ascwo-w-fit ascwo-space-x-2 ascwo-h-fit ascwo-text-white ascwo-px-12 ascwo-p-2.5 ascwo-border-none ascwo-opacity-90 hover:ascwo-opacity-100 hover:ascwo-border-none hover:ascwo-text-white hover:ascwo-bg-[#016464] ascwo-cursor-pointer">
+                    <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="ascwo-w-5 ascwo-w-5" v-if="isLoading" />
+                    <div class="ascwo-font-semibold ascwo-text-[16px]">{{ __("Save", "all-signs-customizer-for-woocommerce-pro") }}</div>
                 </button>
             </div>
         </div>
@@ -341,9 +341,9 @@ const selectResetAllIcon = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: __("Select Image","all-signs-options-pro"),
+            title: __("Select Image","all-signs-customizer-for-woocommerce-pro"),
             button: {
-                text: __("Select Image","all-signs-options-pro")
+                text: __("Select Image","all-signs-customizer-for-woocommerce-pro")
             },
             multiple: false
         }
@@ -368,9 +368,9 @@ const selectUndoIcon = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: __("Select Image","all-signs-options-pro"),
+            title: __("Select Image","all-signs-customizer-for-woocommerce-pro"),
             button: {
-                text: __("Select Image","all-signs-options-pro")
+                text: __("Select Image","all-signs-customizer-for-woocommerce-pro")
             },
             multiple: false
         }
@@ -395,9 +395,9 @@ const selectRedoIcon = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: __("Select Image","all-signs-options-pro"),
+            title: __("Select Image","all-signs-customizer-for-woocommerce-pro"),
             button: {
-                text: __("Select Image","all-signs-options-pro")
+                text: __("Select Image","all-signs-customizer-for-woocommerce-pro")
             },
             multiple: false
         }
@@ -422,9 +422,9 @@ const selectChangeIconPreview = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: __("Select Image","all-signs-options-pro"),
+            title: __("Select Image","all-signs-customizer-for-woocommerce-pro"),
             button: {
-                text: __("Select Image","all-signs-options-pro")
+                text: __("Select Image","all-signs-customizer-for-woocommerce-pro")
             },
             multiple: false
         }
@@ -449,9 +449,9 @@ const selectChangeIconHelp = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: __("Select Image","all-signs-options-pro"),
+            title: __("Select Image","all-signs-customizer-for-woocommerce-pro"),
             button: {
-                text: __("Select Image","all-signs-options-pro")
+                text: __("Select Image","all-signs-customizer-for-woocommerce-pro")
             },
             multiple: false
         }
@@ -476,9 +476,9 @@ const selectChangeIconImport = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: __("Select Image","all-signs-options-pro"),
+            title: __("Select Image","all-signs-customizer-for-woocommerce-pro"),
             button: {
-                text: __("Select Image","all-signs-options-pro")
+                text: __("Select Image","all-signs-customizer-for-woocommerce-pro")
             },
             multiple: false
         }
@@ -503,9 +503,9 @@ const selectChangeIconShare = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: __("Select Image","all-signs-options-pro"),
+            title: __("Select Image","all-signs-customizer-for-woocommerce-pro"),
             button: {
-                text: __("Select Image","all-signs-options-pro")
+                text: __("Select Image","all-signs-customizer-for-woocommerce-pro")
             },
             multiple: false
         }
@@ -530,9 +530,9 @@ const selectChangeIconSaveProject = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: __("Select Image","all-signs-options-pro"),
+            title: __("Select Image","all-signs-customizer-for-woocommerce-pro"),
             button: {
-                text: __("Select Image","all-signs-options-pro")
+                text: __("Select Image","all-signs-customizer-for-woocommerce-pro")
             },
             multiple: false
         }
@@ -557,9 +557,9 @@ const selectChangeIconMaterial = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: __("Select Image","all-signs-options-pro"),
+            title: __("Select Image","all-signs-customizer-for-woocommerce-pro"),
             button: {
-                text: __("Select Image","all-signs-options-pro")
+                text: __("Select Image","all-signs-customizer-for-woocommerce-pro")
             },
             multiple: false
         }
@@ -584,9 +584,9 @@ const selectChangeIconShape = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: __("Select Image","all-signs-options-pro"),
+            title: __("Select Image","all-signs-customizer-for-woocommerce-pro"),
             button: {
-                text: __("Select Image","all-signs-options-pro")
+                text: __("Select Image","all-signs-customizer-for-woocommerce-pro")
             },
             multiple: false
         }
@@ -611,9 +611,9 @@ const selectChangeIconFixingMethod = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: __("Select Image","all-signs-options-pro"),
+            title: __("Select Image","all-signs-customizer-for-woocommerce-pro"),
             button: {
-                text: __("Select Image","all-signs-options-pro")
+                text: __("Select Image","all-signs-customizer-for-woocommerce-pro")
             },
             multiple: false
         }
@@ -638,9 +638,9 @@ const selectChangeIconProduct = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: __("Select Image","all-signs-options-pro"),
+            title: __("Select Image","all-signs-customizer-for-woocommerce-pro"),
             button: {
-                text: __("Select Image","all-signs-options-pro")
+                text: __("Select Image","all-signs-customizer-for-woocommerce-pro")
             },
             multiple: false
         }
@@ -665,9 +665,9 @@ const selectChangeIconSize = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: __("Select Image","all-signs-options-pro"),
+            title: __("Select Image","all-signs-customizer-for-woocommerce-pro"),
             button: {
-                text: __("Select Image","all-signs-options-pro")
+                text: __("Select Image","all-signs-customizer-for-woocommerce-pro")
             },
             multiple: false
         }
@@ -692,9 +692,9 @@ const selectChangeIconText = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: __("Select Image","all-signs-options-pro"),
+            title: __("Select Image","all-signs-customizer-for-woocommerce-pro"),
             button: {
-                text: __("Select Image","all-signs-options-pro")
+                text: __("Select Image","all-signs-customizer-for-woocommerce-pro")
             },
             multiple: false
         }
@@ -719,9 +719,9 @@ const selectChangeIconColor = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: __("Select Image","all-signs-options-pro"),
+            title: __("Select Image","all-signs-customizer-for-woocommerce-pro"),
             button: {
-                text: __("Select Image","all-signs-options-pro")
+                text: __("Select Image","all-signs-customizer-for-woocommerce-pro")
             },
             multiple: false
         }
@@ -746,9 +746,9 @@ const selectChangeIconDownload = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: __("Select Image","all-signs-options-pro"),
+            title: __("Select Image","all-signs-customizer-for-woocommerce-pro"),
             button: {
-                text: __("Select Image","all-signs-options-pro")
+                text: __("Select Image","all-signs-customizer-for-woocommerce-pro")
             },
             multiple: false
         }
@@ -773,9 +773,9 @@ const selectChangeIconBorder = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: __("Select Image","all-signs-options-pro"),
+            title: __("Select Image","all-signs-customizer-for-woocommerce-pro"),
             button: {
-                text: __("Select Image","all-signs-options-pro")
+                text: __("Select Image","all-signs-customizer-for-woocommerce-pro")
             },
             multiple: false
         }
@@ -800,9 +800,9 @@ const selectChangeIconImage = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: __("Select Image","all-signs-options-pro"),
+            title: __("Select Image","all-signs-customizer-for-woocommerce-pro"),
             button: {
-                text: __("Select Image","all-signs-options-pro")
+                text: __("Select Image","all-signs-customizer-for-woocommerce-pro")
             },
             multiple: false
         }

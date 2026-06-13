@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="loadError"
-    class="asowp-flex asowp-h-full asowp-w-full asowp-items-center asowp-justify-center asowp-p-6 asowp-text-center"
+    class="ascwo-flex ascwo-h-full ascwo-w-full ascwo-items-center ascwo-justify-center ascwo-p-6 ascwo-text-center"
   >
     {{ loadError }}
   </div>
@@ -32,7 +32,7 @@ onMounted(async() => {
   try {
     if(route.name == 'preview-back' || route.name == 'template-maker'){
       const result = await api.getPreviewConfig(route.params.configId);
-      asowp_configurator_data = result;
+      ascwo_configurator_data = result;
       skin.value = result.skin;
       configData.value = result.currentConfig;
       manageData.value = result.managesData;
@@ -50,19 +50,19 @@ onMounted(async() => {
       document.head.appendChild(style);
 
     }else{
-      if(asowp_data.page == 'configurator'){
-        skin.value = asowp_configurator_data.skin;
-        configData.value = asowp_configurator_data.currentConfig;
-        manageData.value = asowp_configurator_data.managesData;
-        currencySymbol.value = asowp_configurator_data.currencySymbol
-        templateData.value = asowp_configurator_data.templates
+      if(ascwo_data.page == 'configurator'){
+        skin.value = ascwo_configurator_data.skin;
+        configData.value = ascwo_configurator_data.currentConfig;
+        manageData.value = ascwo_configurator_data.managesData;
+        currencySymbol.value = ascwo_configurator_data.currencySymbol
+        templateData.value = ascwo_configurator_data.templates
       }else {
         isTemplates.value = true;
       }
     }
   } catch (error) {
-    console.error('ASOWP frontend failed to load preview data.', error);
-    loadError.value = asowp_data.page === 'admin'
+    console.error('ASCWO frontend failed to load preview data.', error);
+    loadError.value = ascwo_data.page === 'admin'
       ? 'Unable to load the configurator preview.'
       : 'Unable to load the configurator.';
   }

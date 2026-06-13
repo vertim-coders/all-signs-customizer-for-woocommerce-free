@@ -1,68 +1,68 @@
 <template>
-  <div class="asowp-global-output">
-    <section v-if="isFetching" class="asowp-output-loader asowp-shopify-card">
-      <img :src="loadingIcon" alt="" class="asowp-output-loader-icon" />
+  <div class="ascwo-global-output">
+    <section v-if="isFetching" class="ascwo-output-loader ascwo-ui-card">
+      <img :src="loadingIcon" alt="" class="ascwo-output-loader-icon" />
     </section>
 
     <template v-else>
-      <section class="asowp-output-hero asowp-shopify-card">
-        <h2>{{ __("Output", "all-signs-options-pro") }}</h2>
-        <p>{{ __("Configure exported file naming and output notification emails.", "all-signs-options-pro") }}</p>
+      <section class="ascwo-output-hero ascwo-ui-card">
+        <h2>{{ __("Output", "all-signs-customizer-for-woocommerce-pro") }}</h2>
+        <p>{{ __("Configure exported file naming and output notification emails.", "all-signs-customizer-for-woocommerce-pro") }}</p>
       </section>
 
-      <form class="asowp-output-form" @submit.prevent="updateGlobalOutput">
-        <section class="asowp-output-card asowp-shopify-card">
-          <h3>{{ __("File Naming", "all-signs-options-pro") }}</h3>
-          <div class="asowp-output-setting-row">
+      <form class="ascwo-output-form" @submit.prevent="updateGlobalOutput">
+        <section class="ascwo-output-card ascwo-ui-card">
+          <h3>{{ __("File Naming", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+          <div class="ascwo-output-setting-row">
             <div>
-              <div class="asowp-output-toggle-line">
-                <strong>{{ __("Use order id as zip name", "all-signs-options-pro") }}</strong>
-                <label class="asowp-output-switch">
+              <div class="ascwo-output-toggle-line">
+                <strong>{{ __("Use order id as zip name", "all-signs-customizer-for-woocommerce-pro") }}</strong>
+                <label class="ascwo-output-switch">
                   <input type="checkbox" v-model="output.zipName" />
                   <span></span>
                 </label>
               </div>
-              <p>{{ __("Use the order id as the zip filename for uploaded customization assets.", "all-signs-options-pro") }}</p>
+              <p>{{ __("Use the order id as the zip filename for uploaded customization assets.", "all-signs-customizer-for-woocommerce-pro") }}</p>
             </div>
           </div>
         </section>
 
-        <section class="asowp-output-card asowp-shopify-card">
-          <h3>{{ __("Notifications", "all-signs-options-pro") }}</h3>
-          <div class="asowp-output-notification-toggles">
-            <div class="asowp-output-toggle-line">
-              <strong>{{ __("Send email to customer", "all-signs-options-pro") }}</strong>
-              <label class="asowp-output-switch">
+        <section class="ascwo-output-card ascwo-ui-card">
+          <h3>{{ __("Notifications", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+          <div class="ascwo-output-notification-toggles">
+            <div class="ascwo-output-toggle-line">
+              <strong>{{ __("Send email to customer", "all-signs-customizer-for-woocommerce-pro") }}</strong>
+              <label class="ascwo-output-switch">
                 <input type="checkbox" v-model="output.enableSendMailToCustom" />
                 <span></span>
               </label>
             </div>
 
-            <div class="asowp-output-toggle-line">
-              <strong>{{ __("Send email to admin", "all-signs-options-pro") }}</strong>
-              <label class="asowp-output-switch">
+            <div class="ascwo-output-toggle-line">
+              <strong>{{ __("Send email to admin", "all-signs-customizer-for-woocommerce-pro") }}</strong>
+              <label class="ascwo-output-switch">
                 <input type="checkbox" v-model="output.enableSendMailToAdmin" />
                 <span></span>
               </label>
             </div>
           </div>
 
-          <label class="asowp-output-field">
-            <span>{{ __("Admin recipient emails", "all-signs-options-pro") }}</span>
+          <label class="ascwo-output-field">
+            <span>{{ __("Admin recipient emails", "all-signs-customizer-for-woocommerce-pro") }}</span>
             <input
               v-model.trim="output.ouputReceiverMails"
               type="text"
-              class="asowp-shopify-input"
+              class="ascwo-ui-input"
               autocomplete="off"
             />
-            <small>{{ __("Separate multiple emails with commas.", "all-signs-options-pro") }}</small>
+            <small>{{ __("Separate multiple emails with commas.", "all-signs-customizer-for-woocommerce-pro") }}</small>
           </label>
         </section>
 
-        <div class="asowp-output-actions">
-          <button type="submit" class="asowp-shopify-button-primary" :disabled="isLoading">
-            <Loader2Icon v-if="isLoading" class="asowp-output-save-loader" />
-            {{ __("Save Output", "all-signs-options-pro") }}
+        <div class="ascwo-output-actions">
+          <button type="submit" class="ascwo-ui-button-primary" :disabled="isLoading">
+            <Loader2Icon v-if="isLoading" class="ascwo-output-save-loader" />
+            {{ __("Save Output", "all-signs-customizer-for-woocommerce-pro") }}
           </button>
         </div>
       </form>
@@ -77,7 +77,7 @@ import api from "@/admin/Api/api";
 import toastMessage from "@/admin/utils/functions";
 import { __ } from "@wordpress/i18n";
 
-const loadingIcon = `${String(window?.asowp_data?.assets_url || "").replace(/\/$/, "")}/icons/ic_loading.svg`;
+const loadingIcon = `${String(window?.ascwo_data?.assets_url || "").replace(/\/$/, "")}/icons/ic_loading.svg`;
 
 const defaultOutput = () => ({
   zipName: true,
@@ -124,7 +124,7 @@ const updateGlobalOutput = async () => {
       output.value = payload;
       toastMessage(result.message, result.success === "same" ? "warning" : undefined);
     } else {
-      toastMessage(result?.message || __("The output settings update failed", "all-signs-options-pro"), "error");
+      toastMessage(result?.message || __("The output settings update failed", "all-signs-customizer-for-woocommerce-pro"), "error");
     }
   } finally {
     isLoading.value = false;
@@ -135,89 +135,89 @@ onMounted(fetchGlobalOutput);
 </script>
 
 <style scoped>
-.asowp-global-output {
+.ascwo-global-output {
   display: grid;
   gap: 12px;
   margin: 10px 0 0;
-  color: var(--asowp-shopify-text);
+  color: var(--ascwo-ui-text);
 }
 
-.asowp-output-loader {
+.ascwo-output-loader {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 306px;
 }
 
-.asowp-output-loader-icon {
+.ascwo-output-loader-icon {
   width: 200px;
   height: 200px;
 }
 
-.asowp-output-hero {
+.ascwo-output-hero {
   padding: 24px 28px;
 }
 
-.asowp-output-hero h2,
-.asowp-output-card h3 {
+.ascwo-output-hero h2,
+.ascwo-output-card h3 {
   margin: 0;
-  color: var(--asowp-shopify-text);
-  font-weight: var(--asowp-shopify-weight-heavy);
+  color: var(--ascwo-ui-text);
+  font-weight: var(--ascwo-ui-weight-heavy);
 }
 
-.asowp-output-hero h2 {
+.ascwo-output-hero h2 {
   font-size: 20px;
   line-height: 26px;
 }
 
-.asowp-output-hero p {
+.ascwo-output-hero p {
   margin: 4px 0 0;
-  color: var(--asowp-shopify-text-subdued);
+  color: var(--ascwo-ui-text-subdued);
   font-size: 13px;
   line-height: 18px;
 }
 
-.asowp-output-form {
+.ascwo-output-form {
   display: grid;
   gap: 12px;
 }
 
-.asowp-output-card {
+.ascwo-output-card {
   padding: 24px 28px;
 }
 
-.asowp-output-card h3 {
+.ascwo-output-card h3 {
   font-size: 14px;
   line-height: 20px;
 }
 
-.asowp-output-setting-row {
+.ascwo-output-setting-row {
   margin-top: 16px;
 }
 
-.asowp-output-toggle-line {
+.ascwo-output-toggle-line {
   display: inline-flex;
   align-items: center;
   gap: 16px;
 }
 
-.asowp-output-toggle-line strong {
-  color: var(--asowp-shopify-text);
+.ascwo-output-toggle-line strong {
+  color: var(--ascwo-ui-text);
   font-size: 13px;
   line-height: 20px;
-  font-weight: var(--asowp-shopify-weight-bold);
+  font-weight: var(--ascwo-ui-weight-bold);
 }
 
-.asowp-output-card p,
-.asowp-output-field small {
+.ascwo-output-card p,
+.ascwo-output-field small {
   display: block;
   margin: 6px 0 0;
-  color: var(--asowp-shopify-text-subdued);
+  color: var(--ascwo-ui-text-subdued);
   font-size: 13px;
   line-height: 18px;
 }
 
-.asowp-output-notification-toggles {
+.ascwo-output-notification-toggles {
   display: flex;
   align-items: center;
   gap: 34px;
@@ -226,23 +226,23 @@ onMounted(fetchGlobalOutput);
   flex-wrap: wrap;
 }
 
-.asowp-output-field {
+.ascwo-output-field {
   display: grid;
   gap: 6px;
 }
 
-.asowp-output-field span {
-  color: var(--asowp-shopify-text);
+.ascwo-output-field span {
+  color: var(--ascwo-ui-text);
   font-size: 13px;
   line-height: 18px;
 }
 
-.asowp-output-actions {
+.ascwo-output-actions {
   display: flex;
   justify-content: flex-end;
 }
 
-.asowp-output-actions .asowp-shopify-button-primary {
+.ascwo-output-actions .ascwo-ui-button-primary {
   min-height: 30px;
   padding: 6px 12px;
   font-size: 12px;
@@ -250,14 +250,14 @@ onMounted(fetchGlobalOutput);
   font-weight: 800;
 }
 
-.asowp-output-save-loader {
+.ascwo-output-save-loader {
   width: 15px;
   height: 15px;
   margin-right: 7px;
-  animation: asowp-shopify-spin 0.8s linear infinite;
+  animation: ascwo-ui-spin 0.8s linear infinite;
 }
 
-.asowp-output-switch {
+.ascwo-output-switch {
   position: relative;
   display: inline-flex;
   width: 40px;
@@ -266,13 +266,13 @@ onMounted(fetchGlobalOutput);
   cursor: pointer;
 }
 
-.asowp-output-switch input {
+.ascwo-output-switch input {
   position: absolute;
   opacity: 0;
   pointer-events: none;
 }
 
-.asowp-output-switch span {
+.ascwo-output-switch span {
   position: relative;
   display: block;
   width: 100%;
@@ -283,7 +283,7 @@ onMounted(fetchGlobalOutput);
   transition: background-color 120ms ease;
 }
 
-.asowp-output-switch span::after {
+.ascwo-output-switch span::after {
   content: "";
   position: absolute;
   top: 3px;
@@ -296,11 +296,11 @@ onMounted(fetchGlobalOutput);
   transition: transform 120ms ease;
 }
 
-.asowp-output-switch input:checked + span {
+.ascwo-output-switch input:checked + span {
   background: #007a72;
 }
 
-.asowp-output-switch input:checked + span::after {
+.ascwo-output-switch input:checked + span::after {
   transform: translateX(16px);
 }
 </style>

@@ -9,7 +9,7 @@
 
 <body>
     <div style="display:flex; flex-direction:column;">
-        <div class="asowp-custom-options-info"
+        <div class="ascwo-custom-options-info"
             style="display:flex; justify-content:start; align-items:center; border-top:solid rgb(175, 173, 173) 2px; padding:10px 0 10px 5px; gap:10px;">
             <label
                 style="font-size:medium; font-weight:600; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
@@ -21,7 +21,7 @@
                 <?php echo esc_html($recaps["sign"]["size"]["value"]["height"]["value"]) ?></span>
         </div>
         <?php if ($recaps["sign"]["size"]["value"]["thickness"]["value"] !== 'none') { ?>
-            <div class="asowp-custom-options-info"
+            <div class="ascwo-custom-options-info"
                 style="display:flex; justify-content:start; align-items:center; border-top:solid rgb(175, 173, 173) 2px; padding:10px 0 10px 5px; gap:10px;">
                 <label
                     style="font-size:medium; font-weight:600; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
@@ -30,7 +30,7 @@
                 <span><?php echo esc_html($recaps["sign"]["size"]["value"]["thickness"]["value"]) ?></span>
             </div>
         <?php } ?>
-        <div class="asowp-custom-options-info"
+        <div class="ascwo-custom-options-info"
             style="display:flex; justify-content:start; align-items:center; border-top:solid rgb(175, 173, 173) 2px; padding:10px 0 10px 5px; gap:10px;">
             <label
                 style="font-size:medium; font-weight:600; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
@@ -38,7 +38,7 @@
             </label>
             <span><?php echo esc_html($recaps["sign"]["shape"]["value"]) ?></span>
         </div>
-        <div class="asowp-custom-options-info"
+        <div class="ascwo-custom-options-info"
             style="display:flex; justify-content:start; align-items:center; border-top:solid rgb(175, 173, 173) 2px; padding:10px 0 10px 5px; gap:10px;">
             <label
                 style="font-size:medium; font-weight:600; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
@@ -46,7 +46,7 @@
             </label>
             <span><?php echo esc_html($recaps["sign"]["fixingMethod"]["value"]) ?></span>
         </div>
-        <div class="asowp-custom-options-info"
+        <div class="ascwo-custom-options-info"
             style="display:flex; justify-content:start; align-items:center; border-top:solid rgb(175, 173, 173) 2px; padding:10px 0 10px 5px; gap:10px;">
             <label
                 style="font-size:medium; font-weight:600; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
@@ -73,7 +73,7 @@
                 <?php } ?>
             <?php } ?>
         </div>
-        <div class="asowp-custom-options-info"
+        <div class="ascwo-custom-options-info"
             style="display:flex; justify-content:start; align-items:center; border-top:solid rgb(175, 173, 173) 2px; padding:10px 0 10px 5px; gap:10px;">
             <?php if (isset($recaps["sign"]["color"]["value"]["face1"]) || isset($recaps["texts"]["value"]["face2"])) { ?>
                 <label
@@ -95,7 +95,7 @@
             <?php } ?>
         </div>
         <?php if (isset($recaps["texts"]["value"]) && count($recaps["texts"]["value"]) > 0) { ?>
-            <div class="asowp-custom-options-info"
+            <div class="ascwo-custom-options-info"
                 style="display:flex; justify-content:start; align-items:center; border-top:solid rgb(175, 173, 173) 2px; padding:10px 0 10px 5px; gap:10px;">
                 <label
                     style="font-size:medium; font-weight:600; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
@@ -123,7 +123,7 @@
         <?php } ?>
         <?php if (isset($recaps["additionalComponents"]) && count($recaps["additionalComponents"]) > 0) { ?>
             <?php foreach ($recaps["additionalComponents"] as $key => $value) { ?>
-                <div class="asowp-custom-options-info"
+                <div class="ascwo-custom-options-info"
                     style="display:flex; justify-content:start; align-items:center; border-top:solid rgb(175, 173, 173) 2px; padding:10px 0 10px 5px; gap:10px;">
                     <label
                         style="font-size:medium; font-weight:600; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
@@ -135,7 +135,7 @@
         <?php } ?>
         <?php if (isset($recaps["additionalOptions"]) && count($recaps["additionalOptions"]) > 0) { ?>
             <?php foreach ($recaps["additionalOptions"] as $key => $value) { ?>
-                <div class="asowp-custom-options-info"
+                <div class="ascwo-custom-options-info"
                     style="display:flex; justify-content:start; align-items:center; border-top:solid rgb(175, 173, 173) 2px; padding:10px 0 10px 5px; gap:10px;">
                     <label
                         style="font-size:medium; font-weight:600; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">

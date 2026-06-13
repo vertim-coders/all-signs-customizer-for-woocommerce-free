@@ -1,67 +1,67 @@
 <template>
-  <div class="asowp-colors-panel asowp-space-y-3">
+  <div class="ascwo-colors-panel ascwo-space-y-3">
     <template v-if="!isNewColor">
-      <section class="asowp-card">
-        <div class="asowp-card-inner asowp-flex asowp-items-center asowp-justify-between asowp-gap-4">
+      <section class="ascwo-card">
+        <div class="ascwo-card-inner ascwo-flex ascwo-items-center ascwo-justify-between ascwo-gap-4">
           <div>
-            <h2 class="asowp-title">{{ __("Colors", "all-signs-options-pro") }}</h2>
-            <p class="asowp-subtitle">{{ __("Manage the classic color records, then exclude them from materials when needed.", "all-signs-options-pro") }}</p>
+            <h2 class="ascwo-title">{{ __("Colors", "all-signs-customizer-for-woocommerce-pro") }}</h2>
+            <p class="ascwo-subtitle">{{ __("Manage the classic color records, then exclude them from materials when needed.", "all-signs-customizer-for-woocommerce-pro") }}</p>
           </div>
-          <button type="button" @click="newColor" class="asowp-primary-button">
-            <PlusIcon class="asowp-w-4 asowp-h-4" />
-            {{ __("Add new color", "all-signs-options-pro") }}
+          <button type="button" @click="newColor" class="ascwo-primary-button">
+            <PlusIcon class="ascwo-w-4 ascwo-h-4" />
+            {{ __("Add new color", "all-signs-customizer-for-woocommerce-pro") }}
           </button>
         </div>
       </section>
 
-      <section class="asowp-card">
-        <div class="asowp-card-inner">
-          <h3 class="asowp-section-title">{{ __("Colors List", "all-signs-options-pro") }}</h3>
-          <table class="asowp-colors-table asowp-w-full asowp-border-collapse">
-            <thead class="asowp-bg-[#f3f3f3]">
+      <section class="ascwo-card">
+        <div class="ascwo-card-inner">
+          <h3 class="ascwo-section-title">{{ __("Colors List", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+          <table class="ascwo-colors-table ascwo-w-full ascwo-border-collapse">
+            <thead class="ascwo-bg-[#f3f3f3]">
               <tr>
-                <th>{{ __("Preview", "all-signs-options-pro") }}</th>
-                <th>{{ __("Name", "all-signs-options-pro") }}</th>
-                <th>{{ __("Background color", "all-signs-options-pro") }}</th>
-                <th>{{ __("Default", "all-signs-options-pro") }}</th>
-                <th>{{ __("Actions", "all-signs-options-pro") }}</th>
+                <th>{{ __("Preview", "all-signs-customizer-for-woocommerce-pro") }}</th>
+                <th>{{ __("Name", "all-signs-customizer-for-woocommerce-pro") }}</th>
+                <th>{{ __("Background color", "all-signs-customizer-for-woocommerce-pro") }}</th>
+                <th>{{ __("Default", "all-signs-customizer-for-woocommerce-pro") }}</th>
+                <th>{{ __("Actions", "all-signs-customizer-for-woocommerce-pro") }}</th>
               </tr>
             </thead>
             <tbody>
               <tr v-if="isFetching">
-                <td colspan="5" class="asowp-text-center asowp-py-8">
-                  <Loader2Icon class="asowp-w-7 asowp-h-7 asowp-text-[#007a72] asowp-animate-spin asowp-mx-auto" />
+                <td colspan="5" class="ascwo-text-center ascwo-py-8">
+                  <Loader2Icon class="ascwo-w-7 ascwo-h-7 ascwo-text-[#007a72] ascwo-animate-spin ascwo-mx-auto" />
                 </td>
               </tr>
               <tr v-else-if="colors.items.length === 0">
-                <td colspan="5" class="asowp-text-center asowp-py-8 asowp-text-[13px] asowp-text-[#616161]">
-                  {{ __("No colors configured.", "all-signs-options-pro") }}
+                <td colspan="5" class="ascwo-text-center ascwo-py-8 ascwo-text-[13px] ascwo-text-[#616161]">
+                  {{ __("No colors configured.", "all-signs-customizer-for-woocommerce-pro") }}
                 </td>
               </tr>
               <tr v-for="(col, key) in colors.items" :key="key">
                 <td>
-                  <div class="asowp-color-preview" :style="getPreviewStyle(col)">
+                  <div class="ascwo-color-preview" :style="getPreviewStyle(col)">
                     <img v-if="col.pattern?.active && col.pattern?.url" :src="col.pattern.url" :alt="col.name" />
                   </div>
                 </td>
-                <td class="asowp-row-strong">{{ col.name }}</td>
-                <td class="asowp-font-mono">{{ inferColorHex(col) }}</td>
+                <td class="ascwo-row-strong">{{ col.name }}</td>
+                <td class="ascwo-font-mono">{{ inferColorHex(col) }}</td>
                 <td>
-                  <div class="asowp-inline-flex asowp-items-center asowp-gap-2">
-                    <span class="asowp-toggle-label">{{ __("No", "all-signs-options-pro") }}</span>
-                    <button type="button" @click="!isLoading && selectDefault(key)" :class="['asowp-toggle', col.isDefault ? 'is-active' : '']"><span></span></button>
-                    <span class="asowp-toggle-label">{{ __("Yes", "all-signs-options-pro") }}</span>
+                  <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
+                    <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                    <button type="button" @click="!isLoading && selectDefault(key)" :class="['ascwo-toggle', col.isDefault ? 'is-active' : '']"><span></span></button>
+                    <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</span>
                   </div>
                 </td>
                 <td>
-                  <div class="asowp-flex asowp-items-center asowp-gap-3">
-                    <button type="button" @click="selectMaterialColor(key, col)" class="asowp-outline-button">
-                      <Edit2Icon class="asowp-w-3.5 asowp-h-3.5" />
-                      {{ __("Edit", "all-signs-options-pro") }}
+                  <div class="ascwo-flex ascwo-items-center ascwo-gap-3">
+                    <button type="button" @click="selectMaterialColor(key, col)" class="ascwo-outline-button">
+                      <Edit2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
+                      {{ __("Edit", "all-signs-customizer-for-woocommerce-pro") }}
                     </button>
-                    <button type="button" @click="selectMaterialColor(key, col, true)" class="asowp-link-danger">
-                      <Trash2Icon class="asowp-w-3.5 asowp-h-3.5" />
-                      {{ __("Delete", "all-signs-options-pro") }}
+                    <button type="button" @click="selectMaterialColor(key, col, true)" class="ascwo-link-danger">
+                      <Trash2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
+                      {{ __("Delete", "all-signs-customizer-for-woocommerce-pro") }}
                     </button>
                   </div>
                 </td>
@@ -71,39 +71,39 @@
         </div>
       </section>
 
-      <section class="asowp-card">
-        <div class="asowp-card-inner">
-          <h3 class="asowp-section-title asowp-mb-0">{{ __("Custom Colors", "all-signs-options-pro") }}</h3>
-          <p class="asowp-subtitle asowp-mb-4">{{ __("Keep the same classic fields used for custom color settings.", "all-signs-options-pro") }}</p>
+      <section class="ascwo-card">
+        <div class="ascwo-card-inner">
+          <h3 class="ascwo-section-title ascwo-mb-0">{{ __("Custom Colors", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+          <p class="ascwo-subtitle ascwo-mb-4">{{ __("Keep the same classic fields used for custom color settings.", "all-signs-customizer-for-woocommerce-pro") }}</p>
 
-          <div class="asowp-setting-row asowp-border-t">
+          <div class="ascwo-setting-row ascwo-border-t">
             <div>
-              <h4 class="asowp-setting-title">{{ __("Enable custom colors", "all-signs-options-pro") }}</h4>
+              <h4 class="ascwo-setting-title">{{ __("Enable custom colors", "all-signs-customizer-for-woocommerce-pro") }}</h4>
             </div>
-            <div class="asowp-inline-flex asowp-items-center asowp-gap-2">
-              <span class="asowp-toggle-label">{{ __("No", "all-signs-options-pro") }}</span>
-              <button type="button" @click="handleChangeCustomColorsActive" :class="['asowp-toggle', colors.customColors.active ? 'is-active' : '']"><span></span></button>
-              <span class="asowp-toggle-label">{{ __("Yes", "all-signs-options-pro") }}</span>
+            <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
+              <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <button type="button" @click="handleChangeCustomColorsActive" :class="['ascwo-toggle', colors.customColors.active ? 'is-active' : '']"><span></span></button>
+              <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</span>
             </div>
           </div>
 
-          <label class="asowp-block asowp-mt-3">
-            <span class="asowp-form-label">{{ __("Label", "all-signs-options-pro") }}</span>
-            <input v-model="colors.customColors.label" class="asowp-form-input" autocomplete="off" />
+          <label class="ascwo-block ascwo-mt-3">
+            <span class="ascwo-form-label">{{ __("Label", "all-signs-customizer-for-woocommerce-pro") }}</span>
+            <input v-model="colors.customColors.label" class="ascwo-form-input" autocomplete="off" />
           </label>
 
-          <label class="asowp-block asowp-mt-3">
-            <span class="asowp-form-label">{{ __("Preview image", "all-signs-options-pro") }}</span>
-            <div class="asowp-file-input">
-              <button type="button" @click.prevent="selectCustomPrevImage" class="asowp-file-button">{{ __("Preview image", "all-signs-options-pro") }}</button>
+          <label class="ascwo-block ascwo-mt-3">
+            <span class="ascwo-form-label">{{ __("Preview image", "all-signs-customizer-for-woocommerce-pro") }}</span>
+            <div class="ascwo-file-input">
+              <button type="button" @click.prevent="selectCustomPrevImage" class="ascwo-file-button">{{ __("Preview image", "all-signs-customizer-for-woocommerce-pro") }}</button>
               <input v-model="colors.customColors.prevImg" autocomplete="off" />
             </div>
-            <span class="asowp-help-text">{{ __("Preview image for the custom colors option.", "all-signs-options-pro") }}</span>
+            <span class="ascwo-help-text">{{ __("Preview image for the custom colors option.", "all-signs-customizer-for-woocommerce-pro") }}</span>
           </label>
 
-          <div class="asowp-flex asowp-justify-end asowp-mt-5">
-            <button type="button" @click="updateMaterialColor" :disabled="isLoading" class="asowp-primary-button">
-              {{ isLoading ? __("Saving...", "all-signs-options-pro") : __("Save settings", "all-signs-options-pro") }}
+          <div class="ascwo-flex ascwo-justify-end ascwo-mt-5">
+            <button type="button" @click="updateMaterialColor" :disabled="isLoading" class="ascwo-primary-button">
+              {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce-pro") : __("Save settings", "all-signs-customizer-for-woocommerce-pro") }}
             </button>
           </div>
         </div>
@@ -111,117 +111,117 @@
     </template>
 
     <template v-else>
-      <section class="asowp-card">
-        <div class="asowp-card-inner asowp-flex asowp-justify-end">
-          <button type="button" @click="back" class="asowp-secondary-button">{{ __("Back to colors", "all-signs-options-pro") }}</button>
+      <section class="ascwo-card">
+        <div class="ascwo-card-inner ascwo-flex ascwo-justify-end">
+          <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Back to colors", "all-signs-customizer-for-woocommerce-pro") }}</button>
         </div>
-        <div class="asowp-card-inner asowp-form-body">
-          <div class="asowp-grid asowp-grid-cols-1 lg:asowp-grid-cols-2 asowp-gap-4">
-            <label class="asowp-block">
-              <span class="asowp-form-label">{{ __("Name", "all-signs-options-pro") }}</span>
-              <input v-model.trim="color.name" class="asowp-form-input" autocomplete="off" />
-              <span class="asowp-help-text">{{ __("Customer-facing color name.", "all-signs-options-pro") }}</span>
+        <div class="ascwo-card-inner ascwo-form-body">
+          <div class="ascwo-grid ascwo-grid-cols-1 lg:ascwo-grid-cols-2 ascwo-gap-4">
+            <label class="ascwo-block">
+              <span class="ascwo-form-label">{{ __("Name", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <input v-model.trim="color.name" class="ascwo-form-input" autocomplete="off" />
+              <span class="ascwo-help-text">{{ __("Customer-facing color name.", "all-signs-customizer-for-woocommerce-pro") }}</span>
             </label>
-            <label class="asowp-block">
-              <span class="asowp-form-label">{{ __("Preview image", "all-signs-options-pro") }}</span>
-              <div class="asowp-file-input">
-                <button type="button" @click.prevent="selectColorPreviewImage" class="asowp-file-button">{{ __("Preview image", "all-signs-options-pro") }}</button>
+            <label class="ascwo-block">
+              <span class="ascwo-form-label">{{ __("Preview image", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <div class="ascwo-file-input">
+                <button type="button" @click.prevent="selectColorPreviewImage" class="ascwo-file-button">{{ __("Preview image", "all-signs-customizer-for-woocommerce-pro") }}</button>
                 <input v-model="color.prevImg" autocomplete="off" />
               </div>
-              <span class="asowp-help-text">{{ __("Optional preview image used for this color.", "all-signs-options-pro") }}</span>
+              <span class="ascwo-help-text">{{ __("Optional preview image used for this color.", "all-signs-customizer-for-woocommerce-pro") }}</span>
             </label>
           </div>
 
-          <div class="asowp-setting-row asowp-mt-4">
+          <div class="ascwo-setting-row ascwo-mt-4">
             <div>
-              <h3 class="asowp-setting-title">{{ __("Pattern", "all-signs-options-pro") }}</h3>
-              <p class="asowp-help-text asowp-m-0">{{ __("Choose between a flat background color or a pattern image.", "all-signs-options-pro") }}</p>
+              <h3 class="ascwo-setting-title">{{ __("Pattern", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+              <p class="ascwo-help-text ascwo-m-0">{{ __("Choose between a flat background color or a pattern image.", "all-signs-customizer-for-woocommerce-pro") }}</p>
             </div>
-            <div class="asowp-inline-flex asowp-items-center asowp-gap-2">
-              <span class="asowp-toggle-label">{{ __("Flat color", "all-signs-options-pro") }}</span>
-              <button type="button" @click="color.pattern.active = !color.pattern.active" :class="['asowp-toggle', color.pattern.active ? 'is-active' : '']"><span></span></button>
-              <span class="asowp-toggle-label">{{ __("Pattern image", "all-signs-options-pro") }}</span>
+            <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
+              <span class="ascwo-toggle-label">{{ __("Flat color", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <button type="button" @click="color.pattern.active = !color.pattern.active" :class="['ascwo-toggle', color.pattern.active ? 'is-active' : '']"><span></span></button>
+              <span class="ascwo-toggle-label">{{ __("Pattern image", "all-signs-customizer-for-woocommerce-pro") }}</span>
             </div>
           </div>
 
-          <label v-if="!color.pattern.active" class="asowp-block asowp-mt-3">
-            <span class="asowp-form-label">{{ __("Material background color", "all-signs-options-pro") }}</span>
-            <div class="asowp-color-input-row">
-              <input type="color" v-model="color.pattern.codeHex" class="asowp-native-color" />
-              <input v-model="color.pattern.codeHex" class="asowp-form-input" autocomplete="off" />
+          <label v-if="!color.pattern.active" class="ascwo-block ascwo-mt-3">
+            <span class="ascwo-form-label">{{ __("Material background color", "all-signs-customizer-for-woocommerce-pro") }}</span>
+            <div class="ascwo-color-input-row">
+              <input type="color" v-model="color.pattern.codeHex" class="ascwo-native-color" />
+              <input v-model="color.pattern.codeHex" class="ascwo-form-input" autocomplete="off" />
             </div>
           </label>
-          <label v-else class="asowp-block asowp-mt-3">
-            <span class="asowp-form-label">{{ __("Pattern image", "all-signs-options-pro") }}</span>
-            <div class="asowp-file-input">
-              <button type="button" @click.prevent="selectColorBackgroundImage" class="asowp-file-button">{{ __("Pattern image", "all-signs-options-pro") }}</button>
+          <label v-else class="ascwo-block ascwo-mt-3">
+            <span class="ascwo-form-label">{{ __("Pattern image", "all-signs-customizer-for-woocommerce-pro") }}</span>
+            <div class="ascwo-file-input">
+              <button type="button" @click.prevent="selectColorBackgroundImage" class="ascwo-file-button">{{ __("Pattern image", "all-signs-customizer-for-woocommerce-pro") }}</button>
               <input v-model="color.pattern.url" autocomplete="off" />
             </div>
           </label>
 
-          <div class="asowp-setting-row asowp-mt-4">
+          <div class="ascwo-setting-row ascwo-mt-4">
             <div>
-              <h3 class="asowp-setting-title">{{ __("Text color", "all-signs-options-pro") }}</h3>
-              <p class="asowp-help-text asowp-m-0">{{ __("Enable a dedicated text color for this color option.", "all-signs-options-pro") }}</p>
+              <h3 class="ascwo-setting-title">{{ __("Text color", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+              <p class="ascwo-help-text ascwo-m-0">{{ __("Enable a dedicated text color for this color option.", "all-signs-customizer-for-woocommerce-pro") }}</p>
             </div>
-            <div class="asowp-inline-flex asowp-items-center asowp-gap-2">
-              <span class="asowp-toggle-label">{{ __("No", "all-signs-options-pro") }}</span>
-              <button type="button" @click="color.textColor.active = !color.textColor.active" :class="['asowp-toggle', color.textColor.active ? 'is-active' : '']"><span></span></button>
-              <span class="asowp-toggle-label">{{ __("Yes", "all-signs-options-pro") }}</span>
+            <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
+              <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <button type="button" @click="color.textColor.active = !color.textColor.active" :class="['ascwo-toggle', color.textColor.active ? 'is-active' : '']"><span></span></button>
+              <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</span>
             </div>
           </div>
 
-          <div v-if="color.textColor.active" class="asowp-grid asowp-grid-cols-1 lg:asowp-grid-cols-2 asowp-gap-4 asowp-mt-3">
-            <label class="asowp-block">
-              <span class="asowp-form-label">{{ __("Text color name", "all-signs-options-pro") }}</span>
-              <input v-model="color.textColor.name" class="asowp-form-input" autocomplete="off" />
+          <div v-if="color.textColor.active" class="ascwo-grid ascwo-grid-cols-1 lg:ascwo-grid-cols-2 ascwo-gap-4 ascwo-mt-3">
+            <label class="ascwo-block">
+              <span class="ascwo-form-label">{{ __("Text color name", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <input v-model="color.textColor.name" class="ascwo-form-input" autocomplete="off" />
             </label>
-            <label class="asowp-block">
-              <span class="asowp-form-label">{{ __("Text color", "all-signs-options-pro") }}</span>
-              <div class="asowp-color-input-row">
-                <input type="color" v-model="color.textColor.codeHex" class="asowp-native-color" />
-                <input v-model="color.textColor.codeHex" class="asowp-form-input" autocomplete="off" />
+            <label class="ascwo-block">
+              <span class="ascwo-form-label">{{ __("Text color", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <div class="ascwo-color-input-row">
+                <input type="color" v-model="color.textColor.codeHex" class="ascwo-native-color" />
+                <input v-model="color.textColor.codeHex" class="ascwo-form-input" autocomplete="off" />
               </div>
             </label>
           </div>
 
-          <div v-if="color.textColor.active" class="asowp-setting-row asowp-mt-4">
+          <div v-if="color.textColor.active" class="ascwo-setting-row ascwo-mt-4">
             <div>
-              <h3 class="asowp-setting-title">{{ __("Use the same color for border", "all-signs-options-pro") }}</h3>
-              <p class="asowp-help-text asowp-m-0">{{ __("Apply the text color to the border for this color option.", "all-signs-options-pro") }}</p>
+              <h3 class="ascwo-setting-title">{{ __("Use the same color for border", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+              <p class="ascwo-help-text ascwo-m-0">{{ __("Apply the text color to the border for this color option.", "all-signs-customizer-for-woocommerce-pro") }}</p>
             </div>
-            <div class="asowp-inline-flex asowp-items-center asowp-gap-2">
-              <span class="asowp-toggle-label">{{ __("No", "all-signs-options-pro") }}</span>
-              <button type="button" @click="color.textColor.sameForBorder = !color.textColor.sameForBorder" :class="['asowp-toggle', color.textColor.sameForBorder ? 'is-active' : '']"><span></span></button>
-              <span class="asowp-toggle-label">{{ __("Yes", "all-signs-options-pro") }}</span>
+            <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
+              <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <button type="button" @click="color.textColor.sameForBorder = !color.textColor.sameForBorder" :class="['ascwo-toggle', color.textColor.sameForBorder ? 'is-active' : '']"><span></span></button>
+              <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</span>
             </div>
           </div>
 
-          <label class="asowp-block asowp-mt-3">
-            <span class="asowp-form-label">{{ __("Additional price", "all-signs-options-pro") }}</span>
-            <div class="asowp-price-input">
-              <input type="number" v-model="color.additionalPrice" class="asowp-form-input" />
+          <label class="ascwo-block ascwo-mt-3">
+            <span class="ascwo-form-label">{{ __("Additional price", "all-signs-customizer-for-woocommerce-pro") }}</span>
+            <div class="ascwo-price-input">
+              <input type="number" v-model="color.additionalPrice" class="ascwo-form-input" />
               <span>$</span>
             </div>
           </label>
         </div>
-        <div class="asowp-form-footer">
-          <button type="button" @click="back" class="asowp-secondary-button">{{ __("Cancel", "all-signs-options-pro") }}</button>
-          <button type="button" @click="isEdit ? updateColorInMaterialColor() : addMaterialColor()" :disabled="isLoading || !color.name.trim()" class="asowp-primary-button">
-            {{ isLoading ? __("Saving...", "all-signs-options-pro") : isEdit ? __("Update color", "all-signs-options-pro") : __("Save color", "all-signs-options-pro") }}
+        <div class="ascwo-form-footer">
+          <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Cancel", "all-signs-customizer-for-woocommerce-pro") }}</button>
+          <button type="button" @click="isEdit ? updateColorInMaterialColor() : addMaterialColor()" :disabled="isLoading || !color.name.trim()" class="ascwo-primary-button">
+            {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce-pro") : isEdit ? __("Update color", "all-signs-customizer-for-woocommerce-pro") : __("Save color", "all-signs-customizer-for-woocommerce-pro") }}
           </button>
         </div>
       </section>
     </template>
 
-    <div v-if="openModal" class="asowp-fixed asowp-inset-0 asowp-z-[20000] asowp-flex asowp-items-center asowp-justify-center">
-      <div class="asowp-absolute asowp-inset-0 asowp-bg-black/45" @click="closeModal"></div>
-      <div class="asowp-delete-modal">
-        <h3 class="asowp-text-[16px] asowp-font-[900] asowp-text-[#303030] asowp-mt-0 asowp-mb-2">{{ __("Delete color?", "all-signs-options-pro") }}</h3>
-        <p class="asowp-text-[13px] asowp-text-[#616161] asowp-mt-0 asowp-mb-5">{{ sprintf(__('Are you sure you want to delete "%s"?', "all-signs-options-pro"), color.name) }}</p>
-        <div class="asowp-flex asowp-justify-end asowp-gap-2">
-          <button type="button" @click="closeModal" class="asowp-secondary-button">{{ __("Cancel", "all-signs-options-pro") }}</button>
-          <button type="button" @click="deleteMaterialColor" :disabled="isLoading" class="asowp-danger-button">{{ __("Delete", "all-signs-options-pro") }}</button>
+    <div v-if="openModal" class="ascwo-fixed ascwo-inset-0 ascwo-z-[20000] ascwo-flex ascwo-items-center ascwo-justify-center">
+      <div class="ascwo-absolute ascwo-inset-0 ascwo-bg-black/45" @click="closeModal"></div>
+      <div class="ascwo-delete-modal">
+        <h3 class="ascwo-text-[16px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-2">{{ __("Delete color?", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+        <p class="ascwo-text-[13px] ascwo-text-[#616161] ascwo-mt-0 ascwo-mb-5">{{ sprintf(__('Are you sure you want to delete "%s"?', "all-signs-customizer-for-woocommerce-pro"), color.name) }}</p>
+        <div class="ascwo-flex ascwo-justify-end ascwo-gap-2">
+          <button type="button" @click="closeModal" class="ascwo-secondary-button">{{ __("Cancel", "all-signs-customizer-for-woocommerce-pro") }}</button>
+          <button type="button" @click="deleteMaterialColor" :disabled="isLoading" class="ascwo-danger-button">{{ __("Delete", "all-signs-customizer-for-woocommerce-pro") }}</button>
         </div>
       </div>
     </div>
@@ -382,7 +382,7 @@ const updateMaterialColor = async () => {
       isNewColor.value = false;
       isEdit.value = false;
     } else {
-      toastMessage(res?.message || __("Unable to save colors", "all-signs-options-pro"), "warning");
+      toastMessage(res?.message || __("Unable to save colors", "all-signs-customizer-for-woocommerce-pro"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -400,7 +400,7 @@ const addMaterialColor = async () => {
       isEdit.value = false;
       await fetchMaterialColors();
     } else {
-      toastMessage(res?.message || __("Unable to add color", "all-signs-options-pro"), "warning");
+      toastMessage(res?.message || __("Unable to add color", "all-signs-customizer-for-woocommerce-pro"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -418,7 +418,7 @@ const updateColorInMaterialColor = async () => {
       isEdit.value = false;
       await fetchMaterialColors();
     } else {
-      toastMessage(res?.message || __("Unable to update color", "all-signs-options-pro"), "warning");
+      toastMessage(res?.message || __("Unable to update color", "all-signs-customizer-for-woocommerce-pro"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -436,7 +436,7 @@ const deleteMaterialColor = async () => {
       isEdit.value = false;
       await fetchMaterialColors();
     } else {
-      toastMessage(res?.message || __("Unable to delete color", "all-signs-options-pro"), "warning");
+      toastMessage(res?.message || __("Unable to delete color", "all-signs-customizer-for-woocommerce-pro"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -460,7 +460,7 @@ const selectDefault = async (key) => {
     if (res?.success) {
       await fetchMaterialColors();
     } else {
-      toastMessage(res?.message || __("Unable to update default color", "all-signs-options-pro"), "warning");
+      toastMessage(res?.message || __("Unable to update default color", "all-signs-customizer-for-woocommerce-pro"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -491,7 +491,7 @@ const openMedia = (title, callback) => {
   if (!window.wp?.media) return;
   const uploader = window.wp.media({
     title,
-    button: { text: __("Select image", "all-signs-options-pro") },
+    button: { text: __("Select image", "all-signs-customizer-for-woocommerce-pro") },
     multiple: false,
   });
   uploader.on("select", () => {
@@ -502,15 +502,15 @@ const openMedia = (title, callback) => {
 };
 
 const selectColorBackgroundImage = () => openMedia(
-  __("Select pattern image", "all-signs-options-pro"),
+  __("Select pattern image", "all-signs-customizer-for-woocommerce-pro"),
   (url) => color.value.pattern.url = url
 );
 const selectColorPreviewImage = () => openMedia(
-  __("Select color preview image", "all-signs-options-pro"),
+  __("Select color preview image", "all-signs-customizer-for-woocommerce-pro"),
   (url) => color.value.prevImg = url
 );
 const selectCustomPrevImage = () => openMedia(
-  __("Select custom color preview image", "all-signs-options-pro"),
+  __("Select custom color preview image", "all-signs-customizer-for-woocommerce-pro"),
   (url) => colors.value.customColors.prevImg = url
 );
 
@@ -518,22 +518,22 @@ onMounted(fetchMaterialColors);
 </script>
 
 <style scoped>
-.asowp-colors-panel {
+.ascwo-colors-panel {
   color: #303030;
 }
 
-.asowp-card {
+.ascwo-card {
   background: #fff;
   border: 1px solid #dfe3e8;
   border-radius: 10px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
 }
 
-.asowp-card-inner {
+.ascwo-card-inner {
   padding: 18px 20px;
 }
 
-.asowp-title {
+.ascwo-title {
   margin: 0;
   color: #303030;
   font-size: 16px;
@@ -541,8 +541,8 @@ onMounted(fetchMaterialColors);
   font-weight: 900;
 }
 
-.asowp-subtitle,
-.asowp-help-text {
+.ascwo-subtitle,
+.ascwo-help-text {
   display: block;
   margin: 0;
   color: #616161;
@@ -550,7 +550,7 @@ onMounted(fetchMaterialColors);
   line-height: 16px;
 }
 
-.asowp-section-title {
+.ascwo-section-title {
   margin: 0 0 12px;
   color: #303030;
   font-size: 14px;
@@ -558,23 +558,23 @@ onMounted(fetchMaterialColors);
   font-weight: 900;
 }
 
-.asowp-colors-table,
-.asowp-colors-table thead,
-.asowp-colors-table tbody,
-.asowp-colors-table tr,
-.asowp-colors-table th,
-.asowp-colors-table td {
+.ascwo-colors-table,
+.ascwo-colors-table thead,
+.ascwo-colors-table tbody,
+.ascwo-colors-table tr,
+.ascwo-colors-table th,
+.ascwo-colors-table td {
   border-left: 0 !important;
   border-right: 0 !important;
   outline: 0 !important;
   box-shadow: none !important;
 }
 
-.asowp-colors-table {
+.ascwo-colors-table {
   border: 0 !important;
 }
 
-.asowp-colors-table th {
+.ascwo-colors-table th {
   padding: 9px 12px;
   border-top: 0 !important;
   border-bottom: 0 !important;
@@ -585,7 +585,7 @@ onMounted(fetchMaterialColors);
   text-align: left;
 }
 
-.asowp-colors-table td {
+.ascwo-colors-table td {
   padding: 8px 12px;
   border-top: 0 !important;
   border-bottom: 0 !important;
@@ -595,19 +595,19 @@ onMounted(fetchMaterialColors);
   text-align: left;
 }
 
-.asowp-colors-table tbody tr {
+.ascwo-colors-table tbody tr {
   border-bottom: 1px solid #e5e7eb !important;
 }
 
-.asowp-colors-table tbody tr:last-child {
+.ascwo-colors-table tbody tr:last-child {
   border-bottom: 0 !important;
 }
 
-.asowp-row-strong {
+.ascwo-row-strong {
   font-weight: 900;
 }
 
-.asowp-color-preview {
+.ascwo-color-preview {
   width: 32px;
   height: 32px;
   overflow: hidden;
@@ -616,19 +616,19 @@ onMounted(fetchMaterialColors);
   background: #fff;
 }
 
-.asowp-color-preview img {
+.ascwo-color-preview img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.asowp-toggle-label {
+.ascwo-toggle-label {
   color: #616161;
   font-size: 12px;
   line-height: 16px;
 }
 
-.asowp-toggle {
+.ascwo-toggle {
   width: 38px;
   height: 22px;
   padding: 0;
@@ -640,7 +640,7 @@ onMounted(fetchMaterialColors);
   transition: background 120ms ease;
 }
 
-.asowp-toggle span {
+.ascwo-toggle span {
   width: 18px;
   height: 18px;
   border-radius: 999px;
@@ -652,15 +652,15 @@ onMounted(fetchMaterialColors);
   transition: transform 120ms ease;
 }
 
-.asowp-toggle.is-active {
+.ascwo-toggle.is-active {
   background: #007a72;
 }
 
-.asowp-toggle.is-active span {
+.ascwo-toggle.is-active span {
   transform: translateX(16px);
 }
 
-.asowp-form-label {
+.ascwo-form-label {
   display: block;
   margin-bottom: 4px;
   color: #303030;
@@ -668,7 +668,7 @@ onMounted(fetchMaterialColors);
   line-height: 16px;
 }
 
-.asowp-form-input {
+.ascwo-form-input {
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
@@ -683,16 +683,16 @@ onMounted(fetchMaterialColors);
   box-shadow: none;
 }
 
-.asowp-form-input:focus {
+.ascwo-form-input:focus {
   outline: 2px solid #005bd3;
   outline-offset: 1px;
   border-color: #8c9196;
   box-shadow: none;
 }
 
-.asowp-file-input,
-.asowp-color-input-row,
-.asowp-price-input {
+.ascwo-file-input,
+.ascwo-color-input-row,
+.ascwo-price-input {
   box-sizing: border-box;
   width: 100%;
   height: 38px;
@@ -704,9 +704,9 @@ onMounted(fetchMaterialColors);
   overflow: hidden;
 }
 
-.asowp-file-input input,
-.asowp-color-input-row .asowp-form-input,
-.asowp-price-input .asowp-form-input {
+.ascwo-file-input input,
+.ascwo-color-input-row .ascwo-form-input,
+.ascwo-price-input .ascwo-form-input {
   flex: 1;
   min-width: 0;
   height: 100%;
@@ -715,7 +715,7 @@ onMounted(fetchMaterialColors);
   box-shadow: none;
 }
 
-.asowp-file-button {
+.ascwo-file-button {
   margin-left: 5px;
   min-height: 30px;
   padding: 6px 12px;
@@ -729,7 +729,7 @@ onMounted(fetchMaterialColors);
   cursor: pointer;
 }
 
-.asowp-native-color {
+.ascwo-native-color {
   width: 44px;
   height: 30px;
   margin-left: 6px;
@@ -739,13 +739,13 @@ onMounted(fetchMaterialColors);
   background: #fff;
 }
 
-.asowp-price-input span {
+.ascwo-price-input span {
   padding: 0 14px;
   color: #303030;
   font-size: 13px;
 }
 
-.asowp-setting-row {
+.ascwo-setting-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -753,11 +753,11 @@ onMounted(fetchMaterialColors);
   padding-top: 12px;
 }
 
-.asowp-setting-row.asowp-border-t {
+.ascwo-setting-row.ascwo-border-t {
   border-top: 1px solid #e5e7eb;
 }
 
-.asowp-setting-title {
+.ascwo-setting-title {
   margin: 0;
   color: #303030;
   font-size: 13px;
@@ -765,11 +765,11 @@ onMounted(fetchMaterialColors);
   font-weight: 900;
 }
 
-.asowp-form-body {
+.ascwo-form-body {
   padding-top: 8px;
 }
 
-.asowp-form-footer {
+.ascwo-form-footer {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
@@ -777,10 +777,10 @@ onMounted(fetchMaterialColors);
   border-top: 1px solid #e5e7eb;
 }
 
-.asowp-primary-button,
-.asowp-secondary-button,
-.asowp-outline-button,
-.asowp-danger-button {
+.ascwo-primary-button,
+.ascwo-secondary-button,
+.ascwo-outline-button,
+.ascwo-danger-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -794,38 +794,38 @@ onMounted(fetchMaterialColors);
   cursor: pointer;
 }
 
-.asowp-primary-button {
+.ascwo-primary-button {
   border: 0;
   background: #007a72;
   color: #fff;
 }
 
-.asowp-primary-button:hover {
+.ascwo-primary-button:hover {
   background: #00645f;
   color: #fff;
 }
 
-.asowp-primary-button:disabled,
-.asowp-danger-button:disabled {
+.ascwo-primary-button:disabled,
+.ascwo-danger-button:disabled {
   background: #d8d8d8;
   color: #fff;
   cursor: not-allowed;
 }
 
-.asowp-secondary-button,
-.asowp-outline-button {
+.ascwo-secondary-button,
+.ascwo-outline-button {
   border: 1px solid #c9cccf;
   background: #fff;
   color: #303030;
 }
 
-.asowp-secondary-button:hover,
-.asowp-outline-button:hover {
+.ascwo-secondary-button:hover,
+.ascwo-outline-button:hover {
   background: #f6f6f7;
   color: #303030;
 }
 
-.asowp-link-danger {
+.ascwo-link-danger {
   display: inline-flex;
   align-items: center;
   gap: 5px;
@@ -838,13 +838,13 @@ onMounted(fetchMaterialColors);
   cursor: pointer;
 }
 
-.asowp-danger-button {
+.ascwo-danger-button {
   border: 0;
   background: #8e1f0b;
   color: #fff;
 }
 
-.asowp-delete-modal {
+.ascwo-delete-modal {
   position: relative;
   width: min(420px, 92vw);
   padding: 20px;

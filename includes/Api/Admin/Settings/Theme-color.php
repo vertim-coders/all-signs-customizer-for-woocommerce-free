@@ -1,7 +1,6 @@
 <?php
-namespace ASOWP\Api\Admin\Settings;
+namespace ASCWO\Api\Admin\Settings;
 
-use ASOWP\Support\ConfigSchemaNormalizer;
 use WP_Error;
 use WP_Post;
 use WP_Query;
@@ -10,7 +9,7 @@ use WP_REST_Controller;
 /**
  * class for api routes reaching custom design settings
  */
-class ASOWP_Api_Theme_color_Settings extends WP_REST_Controller
+class ASCWO_Api_Theme_color_Settings extends WP_REST_Controller
 {
 
     /**
@@ -18,14 +17,16 @@ class ASOWP_Api_Theme_color_Settings extends WP_REST_Controller
      */
     public function __construct()
     {
-        $this->namespace = 'asowp/v1';
+        $this->namespace = 'ascwo/v1';
         $this->rest_base = 'configs/(?P<config_id>\d+)/settings/theme-colors';
     }
 
     private function get_normalized_meta(int $config_id): array
     {
-        $meta = get_post_meta($config_id, 'asowp-configs-meta', true);
-        return ConfigSchemaNormalizer::normalize_meta(is_array($meta) ? $meta : array());
+        $meta = get_post_meta($config_id, 'ascwo-configs-meta', true);
+        $meta = is_array($meta) ? $meta : array();
+        $meta['settings'] = isset($meta['settings']) && is_array($meta['settings']) ? $meta['settings'] : array();
+        return $meta;
     }
 
     private function get_theme_colors_from_meta(array $meta): array
@@ -48,7 +49,7 @@ class ASOWP_Api_Theme_color_Settings extends WP_REST_Controller
         }
 
         $meta['settings']['themeColors'] = $theme_colors;
-        return ConfigSchemaNormalizer::save_meta($config_id, $meta);
+        return update_post_meta($config_id, 'ascwo-configs-meta', $meta);
     }
     /**
      * Register the routes
@@ -105,13 +106,13 @@ class ASOWP_Api_Theme_color_Settings extends WP_REST_Controller
                     if (!empty($theme_colors)) {
                         return rest_ensure_response($theme_colors);
                     }
-                    return rest_ensure_response(["message" => __("No Theme color Settings found", "all-signs-options-pro")]);
+                    return rest_ensure_response(["message" => __("No Theme color Settings found", "all-signs-customizer-for-woocommerce-pro")]);
                 }
             } else {
-                return rest_ensure_response(["message" => __(" Theme color ID invalid", "all-signs-options-pro")]);
+                return rest_ensure_response(["message" => __(" Theme color ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["message" => __("Theme color ID i nvalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["message" => __("Theme color ID i nvalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
     public function update_theme_color_settings($request)
@@ -126,18 +127,18 @@ class ASOWP_Api_Theme_color_Settings extends WP_REST_Controller
             if ($post) {
                 $response = $this->save_theme_colors((int) $id, $theme_colors);
                 if ($response === 'same') {
-                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in theme colors", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in theme colors", "all-signs-customizer-for-woocommerce-pro")]);
                 }
                 if ($response) {
-                    return rest_ensure_response(["success" => true, "message" => __("Theme Colors update successfully settings added successfully", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => true, "message" => __("Theme Colors update successfully settings added successfully", "all-signs-customizer-for-woocommerce-pro")]);
                 } else {
-                    return rest_ensure_response(["success" => false, "message" => __("Add Theme Colors update successfully settings failed", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => false, "message" => __("Add Theme Colors update successfully settings failed", "all-signs-customizer-for-woocommerce-pro")]);
                 }
             } else {
-                return rest_ensure_response(["success" => false, "message" => __(" Theme color ID invalid", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => false, "message" => __(" Theme color ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __("Theme color ID i nvalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __("Theme color ID i nvalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
     /**

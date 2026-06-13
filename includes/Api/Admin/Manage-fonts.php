@@ -1,5 +1,5 @@
 <?php
-namespace ASOWP\Api\Admin;
+namespace ASCWO\Api\Admin;
 
 use WP_Error;
 use WP_Post;
@@ -8,7 +8,7 @@ use WP_REST_Controller;
 
 
 
-class ASOWP_Api_Manage_fonts extends WP_REST_Controller
+class ASCWO_Api_Manage_fonts extends WP_REST_Controller
 {
 
     /**
@@ -16,7 +16,7 @@ class ASOWP_Api_Manage_fonts extends WP_REST_Controller
      */
     public function __construct()
     {
-        $this->namespace = 'asowp/v1';
+        $this->namespace = 'ascwo/v1';
         $this->rest_base = 'manage-fonts';
     }
     /**
@@ -91,7 +91,7 @@ class ASOWP_Api_Manage_fonts extends WP_REST_Controller
     public function add_font_to_manages_fonts($request)
     {
         $data = json_decode($request->get_body(), true);
-        $all_fonts = get_option("asowp-manages-fonts", []);
+        $all_fonts = get_option("ascwo-manages-fonts", []);
         if ($data["many"] == true) {
             foreach ($data["fonts"] as $font) {
                 array_push($all_fonts, $font);
@@ -99,9 +99,9 @@ class ASOWP_Api_Manage_fonts extends WP_REST_Controller
         } else {
             array_push($all_fonts, $data["font"]);
         }
-        $update = update_option("asowp-manages-fonts", $all_fonts);
+        $update = update_option("ascwo-manages-fonts", $all_fonts);
         if ($update) {
-            return rest_ensure_response(["success" => true, "message" => __("Font created with success", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => true, "message" => __("Font created with success", "all-signs-customizer-for-woocommerce-pro")]);
         } else {
             return rest_ensure_response(["success" => false, "message" => "Registration failed"]);
         }
@@ -113,11 +113,11 @@ class ASOWP_Api_Manage_fonts extends WP_REST_Controller
      */
     public function get_manage_fonts($request)
     {
-        $all_fonts = get_option("asowp-manages-fonts", []);
+        $all_fonts = get_option("ascwo-manages-fonts", []);
         if (count($all_fonts) != 0) {
             return rest_ensure_response($all_fonts);
         } else {
-            return rest_ensure_response(["message" => __("No Fonts Found", "all-signs-options-pro")]);
+            return rest_ensure_response(["message" => __("No Fonts Found", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
     /**
@@ -128,11 +128,11 @@ class ASOWP_Api_Manage_fonts extends WP_REST_Controller
     public function get_manage_font($request)
     {
         $font_id = $request->get_param('font_id');
-        $all_fonts = get_option("asowp-manages-fonts", []);
+        $all_fonts = get_option("ascwo-manages-fonts", []);
         if ($all_fonts[$font_id]) {
             return rest_ensure_response($all_fonts[$font_id]);
         } else {
-            return rest_ensure_response(["success" => false, "message" => __('Font not found', "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __('Font not found', "all-signs-customizer-for-woocommerce-pro")]);
         }
 
     }
@@ -147,21 +147,21 @@ class ASOWP_Api_Manage_fonts extends WP_REST_Controller
     {
         $font = json_decode($request->get_body(), true);
         $font_id = $request->get_param('font_id');
-        $all_fonts = get_option("asowp-manages-fonts", []);
+        $all_fonts = get_option("ascwo-manages-fonts", []);
         if ($all_fonts[$font_id]) {
             if ($all_fonts[$font_id] != $font) {
                 $all_fonts[$font_id] = $font;
-                $update = update_option("asowp-manages-fonts", $all_fonts);
+                $update = update_option("ascwo-manages-fonts", $all_fonts);
                 if ($update) {
-                    return rest_ensure_response(array('success' => true, "message" => __("The font has been updated with success", "all-signs-options-pro")));
+                    return rest_ensure_response(array('success' => true, "message" => __("The font has been updated with success", "all-signs-customizer-for-woocommerce-pro")));
                 } else {
-                    return rest_ensure_response(array('success' => false, "message" => __("Font update failed", "all-signs-options-pro")));
+                    return rest_ensure_response(array('success' => false, "message" => __("Font update failed", "all-signs-customizer-for-woocommerce-pro")));
                 }
             } else {
-                return rest_ensure_response(array('success' => "same", "message" => __("No change observed in font", "all-signs-options-pro")));
+                return rest_ensure_response(array('success' => "same", "message" => __("No change observed in font", "all-signs-customizer-for-woocommerce-pro")));
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __('Font not found', "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __('Font not found', "all-signs-customizer-for-woocommerce-pro")]);
         }
 
     }
@@ -175,17 +175,17 @@ class ASOWP_Api_Manage_fonts extends WP_REST_Controller
     public function delete_manage_fonts_config($request)
     {
         $font_id = $request->get_param('font_id');
-        $all_fonts = get_option("asowp-manages-fonts", []);
+        $all_fonts = get_option("ascwo-manages-fonts", []);
         if ($all_fonts[$font_id]) {
             array_splice($all_fonts, $font_id, 1);
-            $update = update_option("asowp-manages-fonts", $all_fonts);
+            $update = update_option("ascwo-manages-fonts", $all_fonts);
             if ($update) {
-                return rest_ensure_response(["success" => true, "message" => __("The font was well removed", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => true, "message" => __("The font was well removed", "all-signs-customizer-for-woocommerce-pro")]);
             } else {
-                return rest_ensure_response(["success" => false, "message" => __("Deleting the font failed", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => false, "message" => __("Deleting the font failed", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __('Font not found', "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __('Font not found', "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
 

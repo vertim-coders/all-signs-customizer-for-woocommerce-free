@@ -1,58 +1,58 @@
 <template>
-  <div class="asowp-manage-fonts asowp-bg-[#f1f1f1] asowp-min-h-screen asowp-p-4 asowp-space-y-3">
-    <section class="asowp-card">
-      <div class="asowp-card-inner asowp-flex asowp-items-center asowp-justify-between asowp-gap-4">
-        <h1 class="asowp-text-[14px] asowp-leading-5 asowp-font-[900] asowp-text-[#303030] asowp-m-0">
-          {{ __("Manage Fonts", "all-signs-options-pro") }}
+  <div class="ascwo-manage-fonts ascwo-bg-[#f1f1f1] ascwo-min-h-screen ascwo-p-4 ascwo-space-y-3">
+    <section class="ascwo-card">
+      <div class="ascwo-card-inner ascwo-flex ascwo-items-center ascwo-justify-between ascwo-gap-4">
+        <h1 class="ascwo-text-[14px] ascwo-leading-5 ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">
+          {{ __("Manage Fonts", "all-signs-customizer-for-woocommerce-pro") }}
         </h1>
-        <button type="button" @click="backToFonts" class="asowp-secondary-button">
-          <ArrowLeftIcon class="asowp-w-4 asowp-h-4" />
-          {{ __("Back to fonts", "all-signs-options-pro") }}
+        <button type="button" @click="backToFonts" class="ascwo-secondary-button">
+          <ArrowLeftIcon class="ascwo-w-4 ascwo-h-4" />
+          {{ __("Back to fonts", "all-signs-customizer-for-woocommerce-pro") }}
         </button>
       </div>
     </section>
 
-    <section class="asowp-card">
-      <div class="asowp-card-inner asowp-flex asowp-items-center asowp-justify-between asowp-gap-4 asowp-min-h-[78px]">
+    <section class="ascwo-card">
+      <div class="ascwo-card-inner ascwo-flex ascwo-items-center ascwo-justify-between ascwo-gap-4 ascwo-min-h-[78px]">
         <div>
-          <h2 class="asowp-text-[20px] asowp-leading-6 asowp-font-[900] asowp-text-[#303030] asowp-m-0">
-            {{ __("Fonts", "all-signs-options-pro") }}
+          <h2 class="ascwo-text-[20px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">
+            {{ __("Fonts", "all-signs-customizer-for-woocommerce-pro") }}
           </h2>
-          <p class="asowp-text-[13px] asowp-leading-5 asowp-text-[#616161] asowp-m-0">
-            {{ __("Manage the fonts available to configurations.", "all-signs-options-pro") }}
+          <p class="ascwo-text-[13px] ascwo-leading-5 ascwo-text-[#616161] ascwo-m-0">
+            {{ __("Manage the fonts available to configurations.", "all-signs-customizer-for-woocommerce-pro") }}
           </p>
         </div>
-        <button type="button" @click="goToCreateFont" class="asowp-primary-button">
-          <PlusIcon class="asowp-w-4 asowp-h-4" />
-          {{ __("Add new font", "all-signs-options-pro") }}
+        <button type="button" @click="goToCreateFont" class="ascwo-primary-button">
+          <PlusIcon class="ascwo-w-4 ascwo-h-4" />
+          {{ __("Add new font", "all-signs-customizer-for-woocommerce-pro") }}
         </button>
       </div>
     </section>
 
-    <section class="asowp-card">
-      <div class="asowp-card-inner">
-        <div v-if="isFetching" class="asowp-py-14 asowp-flex asowp-items-center asowp-justify-center">
-          <Loader2Icon class="asowp-w-7 asowp-h-7 asowp-text-[#007a72] asowp-animate-spin" />
+    <section class="ascwo-card">
+      <div class="ascwo-card-inner">
+        <div v-if="isFetching" class="ascwo-py-14 ascwo-flex ascwo-items-center ascwo-justify-center">
+          <Loader2Icon class="ascwo-w-7 ascwo-h-7 ascwo-text-[#007a72] ascwo-animate-spin" />
         </div>
 
-        <div v-else-if="fontRows.length === 0" class="asowp-py-14 asowp-text-center">
-          <SearchIcon class="asowp-w-16 asowp-h-16 asowp-text-[#8c9196] asowp-mx-auto asowp-mb-3" />
-          <h3 class="asowp-text-[18px] asowp-leading-6 asowp-font-[900] asowp-text-[#303030] asowp-m-0">
-            {{ __("No Fonts found", "all-signs-options-pro") }}
+        <div v-else-if="fontRows.length === 0" class="ascwo-py-14 ascwo-text-center">
+          <SearchIcon class="ascwo-w-16 ascwo-h-16 ascwo-text-[#8c9196] ascwo-mx-auto ascwo-mb-3" />
+          <h3 class="ascwo-text-[18px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">
+            {{ __("No Fonts found", "all-signs-customizer-for-woocommerce-pro") }}
           </h3>
-          <p class="asowp-text-[13px] asowp-leading-5 asowp-text-[#616161] asowp-mt-2 asowp-mb-0">
-            {{ __("Try changing the filters or search term", "all-signs-options-pro") }}
+          <p class="ascwo-text-[13px] ascwo-leading-5 ascwo-text-[#616161] ascwo-mt-2 ascwo-mb-0">
+            {{ __("Try changing the filters or search term", "all-signs-customizer-for-woocommerce-pro") }}
           </p>
         </div>
 
-        <table v-else class="asowp-w-full asowp-border-collapse">
-          <thead class="asowp-bg-[#f3f3f3]">
+        <table v-else class="ascwo-w-full ascwo-border-collapse">
+          <thead class="ascwo-bg-[#f3f3f3]">
             <tr>
-              <th class="asowp-py-2.5 asowp-px-3 asowp-text-left asowp-text-[12px] asowp-font-bold asowp-text-[#616161]">
-                {{ __("Label", "all-signs-options-pro") }}
+              <th class="ascwo-py-2.5 ascwo-px-3 ascwo-text-left ascwo-text-[12px] ascwo-font-bold ascwo-text-[#616161]">
+                {{ __("Label", "all-signs-customizer-for-woocommerce-pro") }}
               </th>
-              <th class="asowp-py-2.5 asowp-px-3 asowp-text-left asowp-text-[12px] asowp-font-bold asowp-text-[#616161]">
-                {{ __("Actions", "all-signs-options-pro") }}
+              <th class="ascwo-py-2.5 ascwo-px-3 ascwo-text-left ascwo-text-[12px] ascwo-font-bold ascwo-text-[#616161]">
+                {{ __("Actions", "all-signs-customizer-for-woocommerce-pro") }}
               </th>
             </tr>
           </thead>
@@ -60,18 +60,18 @@
             <tr
               v-for="font in fontRows"
               :key="font.id"
-              class="asowp-border-b asowp-border-solid asowp-border-[#e5e5e5] last:asowp-border-b-0"
+              class="ascwo-border-b ascwo-border-solid ascwo-border-[#e5e5e5] last:ascwo-border-b-0"
             >
-              <td class="asowp-py-3 asowp-px-3 asowp-text-[13px] asowp-leading-5 asowp-font-[900] asowp-text-[#303030]">
+              <td class="ascwo-py-3 ascwo-px-3 ascwo-text-[13px] ascwo-leading-5 ascwo-font-[900] ascwo-text-[#303030]">
                 {{ font.label }}
               </td>
-              <td class="asowp-py-3 asowp-px-3">
-                <div class="asowp-flex asowp-items-center asowp-gap-2">
-                  <button type="button" @click="goToEditFont(font)" class="asowp-outline-button">
-                    {{ __("Edit", "all-signs-options-pro") }}
+              <td class="ascwo-py-3 ascwo-px-3">
+                <div class="ascwo-flex ascwo-items-center ascwo-gap-2">
+                  <button type="button" @click="goToEditFont(font)" class="ascwo-outline-button">
+                    {{ __("Edit", "all-signs-customizer-for-woocommerce-pro") }}
                   </button>
-                  <button type="button" @click="selectDeleteFont(font)" class="asowp-danger-button">
-                    {{ __("Delete", "all-signs-options-pro") }}
+                  <button type="button" @click="selectDeleteFont(font)" class="ascwo-danger-button">
+                    {{ __("Delete", "all-signs-customizer-for-woocommerce-pro") }}
                   </button>
                 </div>
               </td>
@@ -81,59 +81,59 @@
       </div>
     </section>
 
-    <div v-if="showFontModal" class="asowp-fixed asowp-inset-0 asowp-z-[20000] asowp-flex asowp-items-center asowp-justify-center">
-      <div class="asowp-absolute asowp-inset-0 asowp-bg-black/45" @click="closeFontModal"></div>
-      <div class="asowp-modal">
-        <div class="asowp-modal-header">
-          <h3 class="asowp-text-[14px] asowp-font-[900] asowp-text-[#303030] asowp-m-0">
-            {{ isEdit ? __("Edit font", "all-signs-options-pro") : __("Add new font", "all-signs-options-pro") }}
+    <div v-if="showFontModal" class="ascwo-fixed ascwo-inset-0 ascwo-z-[20000] ascwo-flex ascwo-items-center ascwo-justify-center">
+      <div class="ascwo-absolute ascwo-inset-0 ascwo-bg-black/45" @click="closeFontModal"></div>
+      <div class="ascwo-modal">
+        <div class="ascwo-modal-header">
+          <h3 class="ascwo-text-[14px] ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">
+            {{ isEdit ? __("Edit font", "all-signs-customizer-for-woocommerce-pro") : __("Add new font", "all-signs-customizer-for-woocommerce-pro") }}
           </h3>
-          <button type="button" @click="closeFontModal" class="asowp-close-button">
-            <XIcon class="asowp-w-5 asowp-h-5" />
+          <button type="button" @click="closeFontModal" class="ascwo-close-button">
+            <XIcon class="ascwo-w-5 ascwo-h-5" />
           </button>
         </div>
-        <div class="asowp-p-5 asowp-space-y-3">
-          <label class="asowp-block">
-            <span class="asowp-form-label">{{ __("Label", "all-signs-options-pro") }}</span>
-            <input v-model="fontForm.label" class="asowp-form-input" autocomplete="off" />
+        <div class="ascwo-p-5 ascwo-space-y-3">
+          <label class="ascwo-block">
+            <span class="ascwo-form-label">{{ __("Label", "all-signs-customizer-for-woocommerce-pro") }}</span>
+            <input v-model="fontForm.label" class="ascwo-form-input" autocomplete="off" />
           </label>
-          <label class="asowp-block">
-            <span class="asowp-form-label">{{ __("Upload font file", "all-signs-options-pro") }}</span>
-            <div class="asowp-file-input">
-              <button type="button" @click.prevent="selectFontFile" class="asowp-file-button">
-                {{ __("Upload font file", "all-signs-options-pro") }}
+          <label class="ascwo-block">
+            <span class="ascwo-form-label">{{ __("Upload font file", "all-signs-customizer-for-woocommerce-pro") }}</span>
+            <div class="ascwo-file-input">
+              <button type="button" @click.prevent="selectFontFile" class="ascwo-file-button">
+                {{ __("Upload font file", "all-signs-customizer-for-woocommerce-pro") }}
               </button>
               <input v-model="fontForm.url" autocomplete="off" />
             </div>
-            <span class="asowp-help-text">{{ __(".ttf or .otf font file.", "all-signs-options-pro") }}</span>
+            <span class="ascwo-help-text">{{ __(".ttf or .otf font file.", "all-signs-customizer-for-woocommerce-pro") }}</span>
           </label>
         </div>
-        <div class="asowp-modal-footer">
-          <button type="button" @click="closeFontModal" class="asowp-secondary-action">
-            {{ __("Cancel", "all-signs-options-pro") }}
+        <div class="ascwo-modal-footer">
+          <button type="button" @click="closeFontModal" class="ascwo-secondary-action">
+            {{ __("Cancel", "all-signs-customizer-for-woocommerce-pro") }}
           </button>
-          <button type="button" @click="saveFont" :disabled="isLoading || !fontForm.label.trim()" class="asowp-primary-button">
-            {{ isLoading ? __("Saving...", "all-signs-options-pro") : __("Save font", "all-signs-options-pro") }}
+          <button type="button" @click="saveFont" :disabled="isLoading || !fontForm.label.trim()" class="ascwo-primary-button">
+            {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce-pro") : __("Save font", "all-signs-customizer-for-woocommerce-pro") }}
           </button>
         </div>
       </div>
     </div>
 
-    <div v-if="deleteFont.id !== null" class="asowp-fixed asowp-inset-0 asowp-z-[20000] asowp-flex asowp-items-center asowp-justify-center">
-      <div class="asowp-absolute asowp-inset-0 asowp-bg-black/45" @click="closeDeleteModal"></div>
-      <div class="asowp-delete-modal">
-        <h3 class="asowp-text-[16px] asowp-font-[900] asowp-text-[#303030] asowp-mt-0 asowp-mb-2">
-          {{ __("Delete font?", "all-signs-options-pro") }}
+    <div v-if="deleteFont.id !== null" class="ascwo-fixed ascwo-inset-0 ascwo-z-[20000] ascwo-flex ascwo-items-center ascwo-justify-center">
+      <div class="ascwo-absolute ascwo-inset-0 ascwo-bg-black/45" @click="closeDeleteModal"></div>
+      <div class="ascwo-delete-modal">
+        <h3 class="ascwo-text-[16px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-2">
+          {{ __("Delete font?", "all-signs-customizer-for-woocommerce-pro") }}
         </h3>
-        <p class="asowp-text-[13px] asowp-leading-5 asowp-text-[#616161] asowp-mt-0 asowp-mb-5">
-          {{ sprintf(__('Are you sure you want to delete "%s"?', "all-signs-options-pro"), deleteFont.label) }}
+        <p class="ascwo-text-[13px] ascwo-leading-5 ascwo-text-[#616161] ascwo-mt-0 ascwo-mb-5">
+          {{ sprintf(__('Are you sure you want to delete "%s"?', "all-signs-customizer-for-woocommerce-pro"), deleteFont.label) }}
         </p>
-        <div class="asowp-flex asowp-justify-end asowp-gap-2">
-          <button type="button" @click="closeDeleteModal" class="asowp-secondary-action">
-            {{ __("Cancel", "all-signs-options-pro") }}
+        <div class="ascwo-flex ascwo-justify-end ascwo-gap-2">
+          <button type="button" @click="closeDeleteModal" class="ascwo-secondary-action">
+            {{ __("Cancel", "all-signs-customizer-for-woocommerce-pro") }}
           </button>
-          <button type="button" @click="deleteSelectedFont" :disabled="isLoading" class="asowp-danger-action">
-            {{ isLoading ? __("Deleting...", "all-signs-options-pro") : __("Delete", "all-signs-options-pro") }}
+          <button type="button" @click="deleteSelectedFont" :disabled="isLoading" class="ascwo-danger-action">
+            {{ isLoading ? __("Deleting...", "all-signs-customizer-for-woocommerce-pro") : __("Delete", "all-signs-customizer-for-woocommerce-pro") }}
           </button>
         </div>
       </div>
@@ -263,7 +263,7 @@ const saveFont = async () => {
       return String(font.url || font.label).trim().toLowerCase() === String(payload.url || payload.label).trim().toLowerCase();
     });
     if (duplicate) {
-      toastMessage(__("This font already exists", "all-signs-options-pro"), "warning");
+      toastMessage(__("This font already exists", "all-signs-customizer-for-woocommerce-pro"), "warning");
       return;
     }
 
@@ -275,7 +275,7 @@ const saveFont = async () => {
       closeFontModal();
       await fetchFonts();
     } else {
-      toastMessage(result?.message || __("Unable to save this font", "all-signs-options-pro"), "warning");
+      toastMessage(result?.message || __("Unable to save this font", "all-signs-customizer-for-woocommerce-pro"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -300,7 +300,7 @@ const deleteSelectedFont = async () => {
       closeDeleteModal();
       await fetchFonts();
     } else {
-      toastMessage(result?.message || __("Unable to delete this font", "all-signs-options-pro"), "warning");
+      toastMessage(result?.message || __("Unable to delete this font", "all-signs-customizer-for-woocommerce-pro"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -310,8 +310,8 @@ const deleteSelectedFont = async () => {
 const selectFontFile = () => {
   if (!window.wp?.media) return;
   const uploader = window.wp.media({
-    title: __("Select Font File", "all-signs-options-pro"),
-    button: { text: __("Select font", "all-signs-options-pro") },
+    title: __("Select Font File", "all-signs-customizer-for-woocommerce-pro"),
+    button: { text: __("Select font", "all-signs-customizer-for-woocommerce-pro") },
     multiple: false,
   });
 
@@ -347,23 +347,23 @@ onMounted(fetchFonts);
 </script>
 
 <style scoped>
-.asowp-card {
+.ascwo-card {
   background: #fff;
   border: 1px solid #dfe3e8;
   border-radius: 10px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
 }
 
-.asowp-card-inner {
+.ascwo-card-inner {
   padding: 18px 20px;
 }
 
-.asowp-primary-button,
-.asowp-secondary-button,
-.asowp-outline-button,
-.asowp-danger-button,
-.asowp-secondary-action,
-.asowp-danger-action {
+.ascwo-primary-button,
+.ascwo-secondary-button,
+.ascwo-outline-button,
+.ascwo-danger-button,
+.ascwo-secondary-action,
+.ascwo-danger-action {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -378,57 +378,57 @@ onMounted(fetchFonts);
   text-decoration: none;
 }
 
-.asowp-primary-button {
+.ascwo-primary-button {
   border: 0;
   background: #007a72;
   color: #fff;
 }
 
-.asowp-primary-button:hover {
+.ascwo-primary-button:hover {
   background: #00645f;
   color: #fff;
 }
 
-.asowp-primary-button:disabled,
-.asowp-danger-action:disabled {
+.ascwo-primary-button:disabled,
+.ascwo-danger-action:disabled {
   background: #d8d8d8;
   color: #fff;
   cursor: not-allowed;
 }
 
-.asowp-secondary-button,
-.asowp-outline-button,
-.asowp-secondary-action {
+.ascwo-secondary-button,
+.ascwo-outline-button,
+.ascwo-secondary-action {
   border: 1px solid #c9cccf;
   background: #fff;
   color: #303030;
 }
 
-.asowp-secondary-button:hover,
-.asowp-outline-button:hover,
-.asowp-secondary-action:hover {
+.ascwo-secondary-button:hover,
+.ascwo-outline-button:hover,
+.ascwo-secondary-action:hover {
   background: #f6f6f7;
   color: #303030;
 }
 
-.asowp-danger-button {
+.ascwo-danger-button {
   border: 1px solid #c9cccf;
   background: #fff;
   color: #8e1f0b;
 }
 
-.asowp-danger-button:hover {
+.ascwo-danger-button:hover {
   background: #f6f6f7;
   color: #8e1f0b;
 }
 
-.asowp-danger-action {
+.ascwo-danger-action {
   border: 0;
   background: #8e1f0b;
   color: #fff;
 }
 
-.asowp-modal {
+.ascwo-modal {
   position: relative;
   width: min(560px, 92vw);
   overflow: hidden;
@@ -437,7 +437,7 @@ onMounted(fetchFonts);
   box-shadow: 0 18px 42px rgba(0, 0, 0, 0.2);
 }
 
-.asowp-delete-modal {
+.ascwo-delete-modal {
   position: relative;
   width: min(420px, 92vw);
   border-radius: 12px;
@@ -446,8 +446,8 @@ onMounted(fetchFonts);
   box-shadow: 0 18px 42px rgba(0, 0, 0, 0.2);
 }
 
-.asowp-modal-header,
-.asowp-modal-footer {
+.ascwo-modal-header,
+.ascwo-modal-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -456,13 +456,13 @@ onMounted(fetchFonts);
   border-bottom: 1px solid #e1e3e5;
 }
 
-.asowp-modal-footer {
+.ascwo-modal-footer {
   justify-content: flex-end;
   border-top: 1px solid #e1e3e5;
   border-bottom: 0;
 }
 
-.asowp-close-button {
+.ascwo-close-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -474,7 +474,7 @@ onMounted(fetchFonts);
   cursor: pointer;
 }
 
-.asowp-form-label {
+.ascwo-form-label {
   display: block;
   margin-bottom: 4px;
   font-size: 12px;
@@ -482,7 +482,7 @@ onMounted(fetchFonts);
   color: #303030;
 }
 
-.asowp-form-input {
+.ascwo-form-input {
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
@@ -497,7 +497,7 @@ onMounted(fetchFonts);
   box-shadow: none;
 }
 
-.asowp-file-input {
+.ascwo-file-input {
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
@@ -510,7 +510,7 @@ onMounted(fetchFonts);
   overflow: hidden;
 }
 
-.asowp-file-input input {
+.ascwo-file-input input {
   box-sizing: border-box;
   flex: 1;
   min-width: 0;
@@ -522,7 +522,7 @@ onMounted(fetchFonts);
   background: transparent;
 }
 
-.asowp-file-button {
+.ascwo-file-button {
   margin-left: 5px;
   min-height: 32px;
   padding: 6px 12px;
@@ -536,7 +536,7 @@ onMounted(fetchFonts);
   cursor: pointer;
 }
 
-.asowp-help-text {
+.ascwo-help-text {
   display: block;
   margin-top: 3px;
   color: #616161;

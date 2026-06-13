@@ -1,47 +1,47 @@
 <template>
-  <div class="asowp-config-list asowp-p-6 asowp-bg-[#f6f6f7] asowp-min-h-screen">
+  <div class="ascwo-config-list ascwo-p-6 ascwo-bg-[#f6f6f7] ascwo-min-h-screen">
     <!-- Top Header Bar -->
-    <div class="asowp-config-list-header asowp-bg-white asowp-rounded-xl asowp-shadow-sm asowp-border asowp-border-solid asowp-border-[#e1e3e5] asowp-px-6 asowp-py-4 asowp-flex asowp-justify-between asowp-items-center asowp-mb-6">
-      <h1 class="asowp-text-[18px] asowp-font-bold asowp-text-[#1a1a1a] asowp-m-0">
-        {{ __("Configurations List", "all-signs-options-pro") }}
+    <div class="ascwo-config-list-header ascwo-bg-white ascwo-rounded-xl ascwo-shadow-sm ascwo-border ascwo-border-solid ascwo-border-[#e1e3e5] ascwo-px-6 ascwo-py-4 ascwo-flex ascwo-justify-between ascwo-items-center ascwo-mb-6">
+      <h1 class="ascwo-text-[18px] ascwo-font-bold ascwo-text-[#1a1a1a] ascwo-m-0">
+        {{ __("Configurations List", "all-signs-customizer-for-woocommerce-pro") }}
       </h1>
       <RouterLink
         to="/configuration/create"
-        class="asowp-primary-action asowp-inline-flex asowp-items-center asowp-gap-2 asowp-text-white asowp-no-underline"
+        class="ascwo-primary-action ascwo-inline-flex ascwo-items-center ascwo-gap-2 ascwo-text-white ascwo-no-underline"
       >
-        <PlusIcon class="asowp-w-4 asowp-h-4" />
-        {{ __("Add new configuration", "all-signs-options-pro") }}
+        <PlusIcon class="ascwo-w-4 ascwo-h-4" />
+        {{ __("Add new configuration", "all-signs-customizer-for-woocommerce-pro") }}
       </RouterLink>
     </div>
 
     <!-- Table Main Card -->
-    <div class="asowp-config-list-card asowp-bg-white asowp-rounded-2xl asowp-shadow-sm asowp-border asowp-border-solid asowp-border-[#e1e3e5] asowp-overflow-hidden">
+    <div class="ascwo-config-list-card ascwo-bg-white ascwo-rounded-2xl ascwo-shadow-sm ascwo-border ascwo-border-solid ascwo-border-[#e1e3e5] ascwo-overflow-hidden">
       <!-- Loading State -->
-      <div v-if="isFetching" class="asowp-p-20 asowp-flex asowp-flex-col asowp-items-center asowp-justify-center asowp-gap-4">
-        <Loader2Icon class="asowp-w-10 asowp-h-10 asowp-text-[#006e52] asowp-animate-spin" />
-        <span class="asowp-text-[14px] asowp-text-[#616161]">{{ __('Loading configurations...', 'all-signs-options-pro') }}</span>
+      <div v-if="isFetching" class="ascwo-p-20 ascwo-flex ascwo-flex-col ascwo-items-center ascwo-justify-center ascwo-gap-4">
+        <Loader2Icon class="ascwo-w-10 ascwo-h-10 ascwo-text-[#006e52] ascwo-animate-spin" />
+        <span class="ascwo-text-[14px] ascwo-text-[#616161]">{{ __('Loading configurations...', 'all-signs-customizer-for-woocommerce-pro') }}</span>
       </div>
 
       <!-- Empty State -->
-      <div v-else-if="configs.length === 0" class="asowp-p-20 asowp-text-center">
-        <div class="asowp-w-16 asowp-h-16 asowp-bg-[#f1f1f1] asowp-rounded-full asowp-flex asowp-items-center asowp-justify-center asowp-mx-auto asowp-mb-4">
-          <SearchIcon class="asowp-w-8 asowp-h-8 asowp-text-[#616161]" />
+      <div v-else-if="configs.length === 0" class="ascwo-p-20 ascwo-text-center">
+        <div class="ascwo-w-16 ascwo-h-16 ascwo-bg-[#f1f1f1] ascwo-rounded-full ascwo-flex ascwo-items-center ascwo-justify-center ascwo-mx-auto ascwo-mb-4">
+          <SearchIcon class="ascwo-w-8 ascwo-h-8 ascwo-text-[#616161]" />
         </div>
-        <h3 class="asowp-text-[18px] asowp-font-bold asowp-text-[#1a1a1a]">{{ __("No Configurations found", "all-signs-options-pro") }}</h3>
-        <p class="asowp-text-[14px] asowp-text-[#616161] asowp-mt-1">{{ __("Start by creating your first product configuration.", "all-signs-options-pro") }}</p>
+        <h3 class="ascwo-text-[18px] ascwo-font-bold ascwo-text-[#1a1a1a]">{{ __("No Configurations found", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+        <p class="ascwo-text-[14px] ascwo-text-[#616161] ascwo-mt-1">{{ __("Start by creating your first product configuration.", "all-signs-customizer-for-woocommerce-pro") }}</p>
       </div>
 
       <!-- Table Content -->
-      <div v-else class="asowp-config-list-table-wrap">
-        <table class="asowp-config-list-table asowp-w-full asowp-border-collapse">
+      <div v-else class="ascwo-config-list-table-wrap">
+        <table class="ascwo-config-list-table ascwo-w-full ascwo-border-collapse">
           <thead>
             <tr>
-              <th class="asowp-p-5 asowp-text-left asowp-text-[13px] asowp-font-bold asowp-text-[#616161]">{{ __("Name configuration", "all-signs-options-pro") }}</th>
-              <th class="asowp-p-5 asowp-text-left asowp-text-[13px] asowp-font-bold asowp-text-[#616161]">{{ __("Description", "all-signs-options-pro") }}</th>
-              <th class="asowp-p-5 asowp-text-center asowp-text-[13px] asowp-font-bold asowp-text-[#616161]">{{ __("Icon", "all-signs-options-pro") }}</th>
-              <th class="asowp-p-5 asowp-text-center asowp-text-[13px] asowp-font-bold asowp-text-[#616161]">{{ __("Product Type", "all-signs-options-pro") }}</th>
-              <th class="asowp-p-5 asowp-text-center asowp-text-[13px] asowp-font-bold asowp-text-[#616161]">{{ __("Pricing mode", "all-signs-options-pro") }}</th>
-              <th class="asowp-p-5 asowp-text-right asowp-text-[13px] asowp-font-bold asowp-text-[#616161]">{{ __("Action", "all-signs-options-pro") }}</th>
+              <th class="ascwo-p-5 ascwo-text-left ascwo-text-[13px] ascwo-font-bold ascwo-text-[#616161]">{{ __("Name configuration", "all-signs-customizer-for-woocommerce-pro") }}</th>
+              <th class="ascwo-p-5 ascwo-text-left ascwo-text-[13px] ascwo-font-bold ascwo-text-[#616161]">{{ __("Description", "all-signs-customizer-for-woocommerce-pro") }}</th>
+              <th class="ascwo-p-5 ascwo-text-center ascwo-text-[13px] ascwo-font-bold ascwo-text-[#616161]">{{ __("Icon", "all-signs-customizer-for-woocommerce-pro") }}</th>
+              <th class="ascwo-p-5 ascwo-text-center ascwo-text-[13px] ascwo-font-bold ascwo-text-[#616161]">{{ __("Product Type", "all-signs-customizer-for-woocommerce-pro") }}</th>
+              <th class="ascwo-p-5 ascwo-text-center ascwo-text-[13px] ascwo-font-bold ascwo-text-[#616161]">{{ __("Pricing mode", "all-signs-customizer-for-woocommerce-pro") }}</th>
+              <th class="ascwo-p-5 ascwo-text-right ascwo-text-[13px] ascwo-font-bold ascwo-text-[#616161]">{{ __("Action", "all-signs-customizer-for-woocommerce-pro") }}</th>
             </tr>
           </thead>
           <tbody>
@@ -50,50 +50,50 @@
               :key="config.id"
               @click="goToMaterial(config)"
               :class="[
-                'asowp-cursor-pointer hover:asowp-bg-[#f9fafb] asowp-transition-colors group',
-                managingConfigId === config.id ? 'asowp-bg-[#f8faf9]' : ''
+                'ascwo-cursor-pointer hover:ascwo-bg-[#f9fafb] ascwo-transition-colors group',
+                managingConfigId === config.id ? 'ascwo-bg-[#f8faf9]' : ''
               ]"
             >
-              <td class="asowp-p-5">
-                <div class="asowp-flex asowp-items-center asowp-gap-4">
+              <td class="ascwo-p-5">
+                <div class="ascwo-flex ascwo-items-center ascwo-gap-4">
                   <!-- Initials Circle -->
-                  <div class="asowp-config-list-avatar asowp-w-10 asowp-h-10 asowp-rounded-full asowp-bg-[#f1f1f1] asowp-flex asowp-items-center asowp-justify-center asowp-flex-shrink-0 asowp-border asowp-border-solid asowp-border-[#b7d4cc]">
-                    <span class="asowp-text-[12px] asowp-font-bold asowp-text-[#616161]">{{ getInitials(config.name) }}</span>
+                  <div class="ascwo-config-list-avatar ascwo-w-10 ascwo-h-10 ascwo-rounded-full ascwo-bg-[#f1f1f1] ascwo-flex ascwo-items-center ascwo-justify-center ascwo-flex-shrink-0 ascwo-border ascwo-border-solid ascwo-border-[#b7d4cc]">
+                    <span class="ascwo-text-[12px] ascwo-font-bold ascwo-text-[#616161]">{{ getInitials(config.name) }}</span>
                   </div>
-                  <div class="asowp-flex asowp-items-center asowp-gap-2 asowp-min-w-0">
-                    <div class="asowp-text-[14px] asowp-font-semibold asowp-text-[#1a1a1a] asowp-truncate">{{ config.name }}</div>
-                    <span v-if="managingConfigId === config.id" class="asowp-inline-flex asowp-items-center asowp-gap-1 asowp-text-[12px] asowp-font-semibold asowp-text-[#006e52]">
-                      <Loader2Icon class="asowp-w-3.5 asowp-h-3.5 asowp-animate-spin" />
-                      {{ __('Opening...', 'all-signs-options-pro') }}
+                  <div class="ascwo-flex ascwo-items-center ascwo-gap-2 ascwo-min-w-0">
+                    <div class="ascwo-text-[14px] ascwo-font-semibold ascwo-text-[#1a1a1a] ascwo-truncate">{{ config.name }}</div>
+                    <span v-if="managingConfigId === config.id" class="ascwo-inline-flex ascwo-items-center ascwo-gap-1 ascwo-text-[12px] ascwo-font-semibold ascwo-text-[#006e52]">
+                      <Loader2Icon class="ascwo-w-3.5 ascwo-h-3.5 ascwo-animate-spin" />
+                      {{ __('Opening...', 'all-signs-customizer-for-woocommerce-pro') }}
                     </span>
                   </div>
                 </div>
               </td>
-              <td class="asowp-p-5">
-                <div class="asowp-text-[13px] asowp-text-[#616161] asowp-max-w-[200px] asowp-truncate">{{ config.description || '' }}</div>
+              <td class="ascwo-p-5">
+                <div class="ascwo-text-[13px] ascwo-text-[#616161] ascwo-max-w-[200px] ascwo-truncate">{{ config.description || '' }}</div>
               </td>
-              <td class="asowp-p-5 asowp-text-center">
-                <div class="asowp-flex asowp-justify-center">
-                   <div v-if="config.icon" class="asowp-w-8 asowp-h-8 asowp-rounded-lg asowp-overflow-hidden asowp-border asowp-border-solid asowp-border-[#f1f1f1]">
-                      <img :src="config.icon" class="asowp-w-full asowp-h-full asowp-object-cover" />
+              <td class="ascwo-p-5 ascwo-text-center">
+                <div class="ascwo-flex ascwo-justify-center">
+                   <div v-if="config.icon" class="ascwo-w-8 ascwo-h-8 ascwo-rounded-lg ascwo-overflow-hidden ascwo-border ascwo-border-solid ascwo-border-[#f1f1f1]">
+                      <img :src="config.icon" class="ascwo-w-full ascwo-h-full ascwo-object-cover" />
                    </div>
                 </div>
               </td>
-              <td class="asowp-p-5 asowp-text-center">
-                <span :class="['asowp-shopify-badge', `asowp-shopify-badge--${getProductBadgeTone(config)}`]">
+              <td class="ascwo-p-5 ascwo-text-center">
+                <span :class="['ascwo-ui-badge', `ascwo-ui-badge--${getProductBadgeTone(config)}`]">
                   {{ getProductFamilyLabel(config) }}
                 </span>
               </td>
-              <td class="asowp-p-5 asowp-text-center">
-                <span class="asowp-shopify-badge asowp-shopify-badge--info">
+              <td class="ascwo-p-5 ascwo-text-center">
+                <span class="ascwo-ui-badge ascwo-ui-badge--info">
                   {{ (config.materialType || 'simple') === 'advance' ? 'Advanced' : 'Frame fit' }}
                 </span>
               </td>
-              <td class="asowp-p-5 asowp-text-right" @click.stop>
-                <div class="asowp-flex asowp-justify-end">
-                   <button @click="openActions(config, $event)" class="asowp-w-10 asowp-h-8 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-solid asowp-border-[#e1e3e5] asowp-text-[#616161] hover:asowp-text-[#1a1a1a] hover:asowp-bg-gray-50 asowp-flex asowp-items-center asowp-justify-center asowp-cursor-pointer">
-                      <Loader2Icon v-if="managingConfigId === config.id" class="asowp-w-4 asowp-h-4 asowp-animate-spin asowp-text-[#006e52]" />
-                      <MoreHorizontalIcon v-else class="asowp-w-5 asowp-h-5" />
+              <td class="ascwo-p-5 ascwo-text-right" @click.stop>
+                <div class="ascwo-flex ascwo-justify-end">
+                   <button @click="openActions(config, $event)" class="ascwo-w-10 ascwo-h-8 ascwo-rounded-lg ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#e1e3e5] ascwo-text-[#616161] hover:ascwo-text-[#1a1a1a] hover:ascwo-bg-gray-50 ascwo-flex ascwo-items-center ascwo-justify-center ascwo-cursor-pointer">
+                      <Loader2Icon v-if="managingConfigId === config.id" class="ascwo-w-4 ascwo-h-4 ascwo-animate-spin ascwo-text-[#006e52]" />
+                      <MoreHorizontalIcon v-else class="ascwo-w-5 ascwo-h-5" />
                    </button>
                 </div>
               </td>
@@ -102,13 +102,13 @@
         </table>
 
         <!-- Pagination Bar -->
-        <div class="asowp-config-list-pagination asowp-p-6 asowp-flex asowp-justify-center">
-          <div class="asowp-flex asowp-bg-[#f1f1f1] asowp-p-1 asowp-rounded-xl asowp-gap-1">
-            <button @click="setPage(page - 1)" :disabled="page <= 1" class="asowp-w-10 asowp-h-10 asowp-rounded-lg asowp-border-none asowp-bg-transparent asowp-flex asowp-items-center asowp-justify-center asowp-cursor-pointer disabled:asowp-opacity-30 hover:asowp-bg-white/50">
-              <ChevronLeftIcon class="asowp-w-5 asowp-h-5 asowp-text-[#616161]" />
+        <div class="ascwo-config-list-pagination ascwo-p-6 ascwo-flex ascwo-justify-center">
+          <div class="ascwo-flex ascwo-bg-[#f1f1f1] ascwo-p-1 ascwo-rounded-xl ascwo-gap-1">
+            <button @click="setPage(page - 1)" :disabled="page <= 1" class="ascwo-w-10 ascwo-h-10 ascwo-rounded-lg ascwo-border-none ascwo-bg-transparent ascwo-flex ascwo-items-center ascwo-justify-center ascwo-cursor-pointer disabled:ascwo-opacity-30 hover:ascwo-bg-white/50">
+              <ChevronLeftIcon class="ascwo-w-5 ascwo-h-5 ascwo-text-[#616161]" />
             </button>
-            <button @click="setPage(page + 1)" :disabled="page >= totalPages" class="asowp-w-10 asowp-h-10 asowp-rounded-lg asowp-border-none asowp-bg-transparent asowp-flex asowp-items-center asowp-justify-center asowp-cursor-pointer disabled:asowp-opacity-30 hover:asowp-bg-white/50">
-              <ChevronRightIcon class="asowp-w-5 asowp-h-5 asowp-text-[#616161]" />
+            <button @click="setPage(page + 1)" :disabled="page >= totalPages" class="ascwo-w-10 ascwo-h-10 ascwo-rounded-lg ascwo-border-none ascwo-bg-transparent ascwo-flex ascwo-items-center ascwo-justify-center ascwo-cursor-pointer disabled:ascwo-opacity-30 hover:ascwo-bg-white/50">
+              <ChevronRightIcon class="ascwo-w-5 ascwo-h-5 ascwo-text-[#616161]" />
             </button>
           </div>
         </div>
@@ -117,39 +117,39 @@
   </div>
 
   <!-- Action Menu -->
-  <div v-if="showActionMenu" class="asowp-fixed asowp-inset-0 asowp-z-[1000]" @click="showActionMenu = false">
-     <div :style="{ top: menuY + 'px', left: menuX + 'px' }" class="asowp-absolute asowp-w-48 asowp-bg-white asowp-rounded-xl asowp-shadow-xl asowp-border asowp-border-solid asowp-border-[#e1e3e5] asowp-py-2 asowp-overflow-hidden">
-        <button @click="goToMaterial(selectedConfig)" class="asowp-w-full asowp-px-4 asowp-py-2 asowp-text-left asowp-text-[13px] asowp-font-semibold asowp-text-[#202223] asowp-bg-transparent asowp-border-none hover:asowp-bg-[#f9fafb] asowp-cursor-pointer asowp-flex asowp-items-center asowp-gap-3">
-          <SettingsIcon class="asowp-w-4 asowp-h-4" /> {{ __('Manage', 'all-signs-options-pro') }}
+  <div v-if="showActionMenu" class="ascwo-fixed ascwo-inset-0 ascwo-z-[1000]" @click="showActionMenu = false">
+     <div :style="{ top: menuY + 'px', left: menuX + 'px' }" class="ascwo-absolute ascwo-w-48 ascwo-bg-white ascwo-rounded-xl ascwo-shadow-xl ascwo-border ascwo-border-solid ascwo-border-[#e1e3e5] ascwo-py-2 ascwo-overflow-hidden">
+        <button @click="goToMaterial(selectedConfig)" class="ascwo-w-full ascwo-px-4 ascwo-py-2 ascwo-text-left ascwo-text-[13px] ascwo-font-semibold ascwo-text-[#202223] ascwo-bg-transparent ascwo-border-none hover:ascwo-bg-[#f9fafb] ascwo-cursor-pointer ascwo-flex ascwo-items-center ascwo-gap-3">
+          <SettingsIcon class="ascwo-w-4 ascwo-h-4" /> {{ __('Manage', 'all-signs-customizer-for-woocommerce-pro') }}
         </button>
-        <button @click="goToPreview(selectedConfig)" class="asowp-w-full asowp-px-4 asowp-py-2 asowp-text-left asowp-text-[13px] asowp-bg-transparent asowp-border-none hover:asowp-bg-[#f9fafb] asowp-cursor-pointer asowp-flex asowp-items-center asowp-gap-3">
-          <EyeIcon class="asowp-w-4 asowp-h-4" /> {{ __('Preview', 'all-signs-options-pro') }}
+        <button @click="goToPreview(selectedConfig)" class="ascwo-w-full ascwo-px-4 ascwo-py-2 ascwo-text-left ascwo-text-[13px] ascwo-bg-transparent ascwo-border-none hover:ascwo-bg-[#f9fafb] ascwo-cursor-pointer ascwo-flex ascwo-items-center ascwo-gap-3">
+          <EyeIcon class="ascwo-w-4 ascwo-h-4" /> {{ __('Preview', 'all-signs-customizer-for-woocommerce-pro') }}
         </button>
-        <button @click="openEditModalFor(selectedConfig)" class="asowp-w-full asowp-px-4 asowp-py-2 asowp-text-left asowp-text-[13px] asowp-bg-transparent asowp-border-none hover:asowp-bg-[#f9fafb] asowp-cursor-pointer asowp-flex asowp-items-center asowp-gap-3">
-          <Edit2Icon class="asowp-w-4 asowp-h-4" /> {{ __('Edit', 'all-signs-options-pro') }}
+        <button @click="openEditModalFor(selectedConfig)" class="ascwo-w-full ascwo-px-4 ascwo-py-2 ascwo-text-left ascwo-text-[13px] ascwo-bg-transparent ascwo-border-none hover:ascwo-bg-[#f9fafb] ascwo-cursor-pointer ascwo-flex ascwo-items-center ascwo-gap-3">
+          <Edit2Icon class="ascwo-w-4 ascwo-h-4" /> {{ __('Edit', 'all-signs-customizer-for-woocommerce-pro') }}
         </button>
-        <button @click="openDuplicateModalFor(selectedConfig)" class="asowp-w-full asowp-px-4 asowp-py-2 asowp-text-left asowp-text-[13px] asowp-bg-transparent asowp-border-none hover:asowp-bg-[#f9fafb] asowp-cursor-pointer asowp-flex asowp-items-center asowp-gap-3">
-          <CopyIcon class="asowp-w-4 asowp-h-4" /> {{ __('Duplicate', 'all-signs-options-pro') }}
+        <button @click="openDuplicateModalFor(selectedConfig)" class="ascwo-w-full ascwo-px-4 ascwo-py-2 ascwo-text-left ascwo-text-[13px] ascwo-bg-transparent ascwo-border-none hover:ascwo-bg-[#f9fafb] ascwo-cursor-pointer ascwo-flex ascwo-items-center ascwo-gap-3">
+          <CopyIcon class="ascwo-w-4 ascwo-h-4" /> {{ __('Duplicate', 'all-signs-customizer-for-woocommerce-pro') }}
         </button>
-        <div class="asowp-h-px asowp-bg-[#f1f1f1] asowp-my-1"></div>
-        <button @click="selectDeleteConfig(selectedConfig.id, selectedConfig.name)" class="asowp-w-full asowp-px-4 asowp-py-2 asowp-text-left asowp-text-[13px] asowp-text-[#8e1f0b] asowp-bg-transparent asowp-border-none hover:asowp-bg-[#fff1f0] asowp-cursor-pointer asowp-flex asowp-items-center asowp-gap-3">
-          <Trash2Icon class="asowp-w-4 asowp-h-4" /> {{ __('Delete', 'all-signs-options-pro') }}
+        <div class="ascwo-h-px ascwo-bg-[#f1f1f1] ascwo-my-1"></div>
+        <button @click="selectDeleteConfig(selectedConfig.id, selectedConfig.name)" class="ascwo-w-full ascwo-px-4 ascwo-py-2 ascwo-text-left ascwo-text-[13px] ascwo-text-[#8e1f0b] ascwo-bg-transparent ascwo-border-none hover:ascwo-bg-[#fff1f0] ascwo-cursor-pointer ascwo-flex ascwo-items-center ascwo-gap-3">
+          <Trash2Icon class="ascwo-w-4 ascwo-h-4" /> {{ __('Delete', 'all-signs-customizer-for-woocommerce-pro') }}
         </button>
      </div>
   </div>
 
   <!-- Delete Confirmation Modal -->
-  <div v-if="openModal" class="asowp-fixed asowp-inset-0 asowp-z-[20000] asowp-flex asowp-items-center asowp-justify-center">
-    <div class="asowp-absolute asowp-inset-0 asowp-bg-black/40" @click="openModal = false"></div>
-    <div class="asowp-relative asowp-w-[min(400px,95vw)] asowp-bg-white asowp-rounded-2xl asowp-shadow-2xl asowp-p-6 asowp-text-center">
-      <div class="asowp-w-14 asowp-h-14 asowp-bg-[#fff1f0] asowp-text-[#8e1f0b] asowp-rounded-full asowp-flex asowp-items-center asowp-justify-center asowp-mx-auto asowp-mb-4">
-        <Trash2Icon class="asowp-w-7 asowp-h-7" />
+  <div v-if="openModal" class="ascwo-fixed ascwo-inset-0 ascwo-z-[20000] ascwo-flex ascwo-items-center ascwo-justify-center">
+    <div class="ascwo-absolute ascwo-inset-0 ascwo-bg-black/40" @click="openModal = false"></div>
+    <div class="ascwo-relative ascwo-w-[min(400px,95vw)] ascwo-bg-white ascwo-rounded-2xl ascwo-shadow-2xl ascwo-p-6 ascwo-text-center">
+      <div class="ascwo-w-14 ascwo-h-14 ascwo-bg-[#fff1f0] ascwo-text-[#8e1f0b] ascwo-rounded-full ascwo-flex ascwo-items-center ascwo-justify-center ascwo-mx-auto ascwo-mb-4">
+        <Trash2Icon class="ascwo-w-7 ascwo-h-7" />
       </div>
-      <h3 class="asowp-text-[18px] asowp-font-bold asowp-text-[#1a1a1a] asowp-mb-2">{{ __('Delete configuration?', 'all-signs-options-pro') }}</h3>
-      <p class="asowp-text-[14px] asowp-text-[#616161] asowp-mb-6">{{ sprintf(__('Are you sure you want to delete "%s"?', 'all-signs-options-pro'), deleteConfig.name) }}</p>
-      <div class="asowp-flex asowp-gap-3">
-        <button @click="openModal = false" class="asowp-flex-1 asowp-py-2.5 asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c1c4c7] asowp-rounded-xl asowp-text-[13px] asowp-font-bold asowp-cursor-pointer">{{ __('Cancel', 'all-signs-options-pro') }}</button>
-        <button @click="delConfig" class="asowp-flex-1 asowp-py-2.5 asowp-bg-[#8e1f0b] asowp-text-white asowp-border-none asowp-rounded-xl asowp-text-[13px] asowp-font-bold asowp-cursor-pointer">{{ __('Delete', 'all-signs-options-pro') }}</button>
+      <h3 class="ascwo-text-[18px] ascwo-font-bold ascwo-text-[#1a1a1a] ascwo-mb-2">{{ __('Delete configuration?', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
+      <p class="ascwo-text-[14px] ascwo-text-[#616161] ascwo-mb-6">{{ sprintf(__('Are you sure you want to delete "%s"?', 'all-signs-customizer-for-woocommerce-pro'), deleteConfig.name) }}</p>
+      <div class="ascwo-flex ascwo-gap-3">
+        <button @click="openModal = false" class="ascwo-flex-1 ascwo-py-2.5 ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c1c4c7] ascwo-rounded-xl ascwo-text-[13px] ascwo-font-bold ascwo-cursor-pointer">{{ __('Cancel', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+        <button @click="delConfig" class="ascwo-flex-1 ascwo-py-2.5 ascwo-bg-[#8e1f0b] ascwo-text-white ascwo-border-none ascwo-rounded-xl ascwo-text-[13px] ascwo-font-bold ascwo-cursor-pointer">{{ __('Delete', 'all-signs-customizer-for-woocommerce-pro') }}</button>
       </div>
     </div>
   </div>
@@ -260,14 +260,14 @@ const getProductFamilySlug = (config) => {
 };
 const getProductFamilyLabel = (config) => {
   const ncpcProductType = getNcpcProductType(config);
-  if (ncpcProductType === 'neon') return __('Neon', 'all-signs-options-pro');
-  if (ncpcProductType === 'channel') return __('Channel', 'all-signs-options-pro');
+  if (ncpcProductType === 'neon') return __('Neon', 'all-signs-customizer-for-woocommerce-pro');
+  if (ncpcProductType === 'channel') return __('Channel', 'all-signs-customizer-for-woocommerce-pro');
 
   const slug = getProductFamilySlug(config);
-  if (slug === 'banners') return __('Banners', 'all-signs-options-pro');
-  if (slug === 'stickers') return __('Stickers', 'all-signs-options-pro');
-  if (slug === 'signs-panels') return __('Signs & Panels', 'all-signs-options-pro');
-  return __('Not set', 'all-signs-options-pro');
+  if (slug === 'banners') return __('Banners', 'all-signs-customizer-for-woocommerce-pro');
+  if (slug === 'stickers') return __('Stickers', 'all-signs-customizer-for-woocommerce-pro');
+  if (slug === 'signs-panels') return __('Signs & Panels', 'all-signs-customizer-for-woocommerce-pro');
+  return __('Not set', 'all-signs-customizer-for-woocommerce-pro');
 };
 const getNcpcProductType = (config) => {
   const data = getConfigData(config);
@@ -323,7 +323,7 @@ const delConfig = async () => {
   isLoading.value = true;
   try {
     await api.deleteConfig(deleteConfig.value.id);
-    toastMessage(__('Configuration deleted', 'all-signs-options-pro'));
+    toastMessage(__('Configuration deleted', 'all-signs-customizer-for-woocommerce-pro'));
     openModal.value = false;
     fetchConfigs();
   } finally { isLoading.value = false; }
@@ -332,7 +332,7 @@ const delConfig = async () => {
 const openEditModalFor = (c) => {
   // For visual alignment I'm skipping the full modal logic but keeping the button
   showActionMenu.value = false;
-  toastMessage(__('Opening editor...', 'all-signs-options-pro'));
+  toastMessage(__('Opening editor...', 'all-signs-customizer-for-woocommerce-pro'));
   goToMaterial(c);
 };
 
@@ -340,7 +340,7 @@ onMounted(() => fetchConfigs(Number(route.query.page) || 1));
 </script>
 
 <style>
-#asowp-backend-app .asowp-config-list {
+#ascwo-backend-app .ascwo-config-list {
   padding: 8px 24px 24px !important;
   background: rgba(241, 241, 241, 1) !important;
   color: rgba(48, 48, 48, 1);
@@ -349,7 +349,7 @@ onMounted(() => fetchConfigs(Number(route.query.page) || 1));
   font-weight: 450;
 }
 
-#asowp-backend-app .asowp-config-list-header {
+#ascwo-backend-app .ascwo-config-list-header {
   min-height: 100% !important;
   margin-bottom: 10px !important;
   padding: 16px !important;
@@ -358,18 +358,18 @@ onMounted(() => fetchConfigs(Number(route.query.page) || 1));
   box-shadow: 0 1px 0 0 rgba(26, 26, 26, 0.07) !important;
 }
 
-#asowp-backend-app .asowp-config-list-header h1 {
+#ascwo-backend-app .ascwo-config-list-header h1 {
   color: rgba(48, 48, 48, 1) !important;
   font-size: 14px !important;
   line-height: 20px !important;
   font-weight: 650 !important;
 }
 
-#asowp-backend-app .asowp-config-list-header .asowp-primary-action,
-#asowp-backend-app .asowp-config-list-header .asowp-primary-action:hover,
-#asowp-backend-app .asowp-config-list-header .asowp-primary-action:focus,
-#asowp-backend-app .asowp-config-list-header .asowp-primary-action:active,
-#asowp-backend-app .asowp-config-list-header .asowp-primary-action:visited {
+#ascwo-backend-app .ascwo-config-list-header .ascwo-primary-action,
+#ascwo-backend-app .ascwo-config-list-header .ascwo-primary-action:hover,
+#ascwo-backend-app .ascwo-config-list-header .ascwo-primary-action:focus,
+#ascwo-backend-app .ascwo-config-list-header .ascwo-primary-action:active,
+#ascwo-backend-app .ascwo-config-list-header .ascwo-primary-action:visited {
   min-height: 28px !important;
   min-width: 28px !important;
   height: 28px !important;
@@ -391,18 +391,18 @@ onMounted(() => fetchConfigs(Number(route.query.page) || 1));
     0 -1.5px 0 0 rgba(0, 0, 0, 0.25) inset !important;
 }
 
-#asowp-backend-app .asowp-config-list-header .asowp-primary-action:hover,
-#asowp-backend-app .asowp-config-list-header .asowp-primary-action:focus {
+#ascwo-backend-app .ascwo-config-list-header .ascwo-primary-action:hover,
+#ascwo-backend-app .ascwo-config-list-header .ascwo-primary-action:focus {
   border-color: #004e4e !important;
   background: #004e4e !important;
 }
 
-#asowp-backend-app .asowp-config-list-header .asowp-primary-action:active {
+#ascwo-backend-app .ascwo-config-list-header .ascwo-primary-action:active {
   border-color: #003b3b !important;
   background: #003b3b !important;
 }
 
-#asowp-backend-app .asowp-config-list-card {
+#ascwo-backend-app .ascwo-config-list-card {
   border-color: transparent !important;
   border-radius: 12px !important;
   box-shadow: 0 1px 0 0 rgba(26, 26, 26, 0.07) !important;
@@ -410,17 +410,17 @@ onMounted(() => fetchConfigs(Number(route.query.page) || 1));
   overflow: hidden !important;
 }
 
-#asowp-backend-app .asowp-config-list-card > div:not(.asowp-config-list-pagination):not(.asowp-config-list-table-wrap) {
+#ascwo-backend-app .ascwo-config-list-card > div:not(.ascwo-config-list-pagination):not(.ascwo-config-list-table-wrap) {
   margin: 0 !important;
   padding: 0 !important;
 }
 
-#asowp-backend-app .asowp-config-list-table-wrap {
+#ascwo-backend-app .ascwo-config-list-table-wrap {
   padding: 16px 16px 0 !important;
   margin: 0 !important;
 }
 
-#asowp-backend-app .asowp-config-list-table {
+#ascwo-backend-app .ascwo-config-list-table {
   width: 100% !important;
   min-width: 100% !important;
   margin: 0 !important;
@@ -431,12 +431,12 @@ onMounted(() => fetchConfigs(Number(route.query.page) || 1));
   box-shadow: none !important;
 }
 
-#asowp-backend-app .asowp-config-list-table thead tr {
+#ascwo-backend-app .ascwo-config-list-table thead tr {
   background: rgba(247, 247, 247, 1) !important;
   border-bottom: 0 !important;
 }
 
-#asowp-backend-app .asowp-config-list-table th {
+#ascwo-backend-app .ascwo-config-list-table th {
   padding: 6px !important;
   color: rgba(97, 97, 97, 1) !important;
   font-size: 12px !important;
@@ -447,15 +447,15 @@ onMounted(() => fetchConfigs(Number(route.query.page) || 1));
   box-shadow: none !important;
 }
 
-#asowp-backend-app .asowp-config-list-table th:first-child {
+#ascwo-backend-app .ascwo-config-list-table th:first-child {
   padding-left: 12px !important;
 }
 
-#asowp-backend-app .asowp-config-list-table th:last-child {
+#ascwo-backend-app .ascwo-config-list-table th:last-child {
   padding-right: 12px !important;
 }
 
-#asowp-backend-app .asowp-config-list-table td {
+#ascwo-backend-app .ascwo-config-list-table td {
   padding: 6px !important;
   vertical-align: middle !important;
   white-space: nowrap !important;
@@ -466,15 +466,15 @@ onMounted(() => fetchConfigs(Number(route.query.page) || 1));
   box-shadow: none !important;
 }
 
-#asowp-backend-app .asowp-config-list-table td:first-child {
+#ascwo-backend-app .ascwo-config-list-table td:first-child {
   padding-left: 12px !important;
 }
 
-#asowp-backend-app .asowp-config-list-table td:last-child {
+#ascwo-backend-app .ascwo-config-list-table td:last-child {
   padding-right: 12px !important;
 }
 
-#asowp-backend-app .asowp-config-list-table tbody tr {
+#ascwo-backend-app .ascwo-config-list-table tbody tr {
   height: auto !important;
   background-color: rgba(255, 255, 255, 1) !important;
   border-top: 1px solid rgba(235, 235, 235, 1) !important;
@@ -484,61 +484,61 @@ onMounted(() => fetchConfigs(Number(route.query.page) || 1));
   box-shadow: none !important;
 }
 
-#asowp-backend-app .asowp-config-list-table tbody tr:first-child {
+#ascwo-backend-app .ascwo-config-list-table tbody tr:first-child {
   border-top-color: rgba(227, 227, 227, 1) !important;
 }
 
-#asowp-backend-app .asowp-config-list-table tbody tr td {
+#ascwo-backend-app .ascwo-config-list-table tbody tr td {
   border-top: 0 !important;
 }
 
-#asowp-backend-app .asowp-config-list-table tr,
-#asowp-backend-app .asowp-config-list-table th,
-#asowp-backend-app .asowp-config-list-table td {
+#ascwo-backend-app .ascwo-config-list-table tr,
+#ascwo-backend-app .ascwo-config-list-table th,
+#ascwo-backend-app .ascwo-config-list-table td {
   border-right-width: 0 !important;
   border-left-width: 0 !important;
 }
 
-#asowp-backend-app .asowp-config-list-table tbody tr:hover {
+#ascwo-backend-app .ascwo-config-list-table tbody tr:hover {
   background: rgba(247, 247, 247, 1) !important;
 }
 
-#asowp-backend-app .asowp-config-list-avatar {
+#ascwo-backend-app .ascwo-config-list-avatar {
   width: 34px !important;
   height: 34px !important;
   min-width: 34px !important;
 }
 
-#asowp-backend-app .asowp-config-list-avatar span {
+#ascwo-backend-app .ascwo-config-list-avatar span {
   font-size: 12px !important;
   line-height: 20px !important;
   font-weight: 450 !important;
   color: rgba(48, 48, 48, 1) !important;
 }
 
-#asowp-backend-app .asowp-config-list-table .asowp-gap-4 {
+#ascwo-backend-app .ascwo-config-list-table .ascwo-gap-4 {
   gap: 10px !important;
 }
 
-#asowp-backend-app .asowp-config-list-table .asowp-text-\[14px\] {
+#ascwo-backend-app .ascwo-config-list-table .ascwo-text-\[14px\] {
   font-size: 13px !important;
   line-height: 20px !important;
   font-weight: 450 !important;
 }
 
-#asowp-backend-app .asowp-config-list-table .asowp-text-\[13px\] {
+#ascwo-backend-app .ascwo-config-list-table .ascwo-text-\[13px\] {
   font-size: 13px !important;
   line-height: 20px !important;
 }
 
-#asowp-backend-app .asowp-config-list-table span.asowp-rounded-full {
+#ascwo-backend-app .ascwo-config-list-table span.ascwo-rounded-full {
   padding: 2px 8px !important;
   font-size: 11px !important;
   line-height: 16px !important;
   font-weight: 600 !important;
 }
 
-#asowp-backend-app .asowp-shopify-badge {
+#ascwo-backend-app .ascwo-ui-badge {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -553,22 +553,22 @@ onMounted(() => fetchConfigs(Number(route.query.page) || 1));
   white-space: nowrap !important;
 }
 
-#asowp-backend-app .asowp-shopify-badge--info {
+#ascwo-backend-app .ascwo-ui-badge--info {
   background: rgba(224, 240, 255, 1) !important;
   color: rgba(0, 82, 124, 1) !important;
 }
 
-#asowp-backend-app .asowp-shopify-badge--success {
+#ascwo-backend-app .ascwo-ui-badge--success {
   background: rgba(205, 254, 225, 1) !important;
   color: rgba(12, 81, 50, 1) !important;
 }
 
-#asowp-backend-app .asowp-shopify-badge--attention {
+#ascwo-backend-app .ascwo-ui-badge--attention {
   background: rgba(255, 239, 157, 1) !important;
   color: rgba(79, 71, 0, 1) !important;
 }
 
-#asowp-backend-app .asowp-config-list-table td button {
+#ascwo-backend-app .ascwo-config-list-table td button {
   min-width: 28px !important;
   width: 28px !important;
   min-height: 28px !important;
@@ -583,17 +583,17 @@ onMounted(() => fetchConfigs(Number(route.query.page) || 1));
     0 1px 0 #e3e3e3 inset !important;
 }
 
-#asowp-backend-app .asowp-config-list-table td button svg {
+#ascwo-backend-app .ascwo-config-list-table td button svg {
   width: 20px !important;
   height: 20px !important;
 }
 
-#asowp-backend-app .asowp-config-list-pagination {
+#ascwo-backend-app .ascwo-config-list-pagination {
   padding: 16px !important;
   border-top: 1px solid rgba(235, 235, 235, 1) !important;
 }
 
-#asowp-backend-app .asowp-config-list-pagination > div {
+#ascwo-backend-app .ascwo-config-list-pagination > div {
   padding: 0 !important;
   gap: 0 !important;
   border-radius: 8px !important;
@@ -601,7 +601,7 @@ onMounted(() => fetchConfigs(Number(route.query.page) || 1));
   overflow: hidden !important;
 }
 
-#asowp-backend-app .asowp-config-list-pagination button {
+#ascwo-backend-app .ascwo-config-list-pagination button {
   min-width: 24px !important;
   width: 24px !important;
   min-height: 24px !important;
@@ -611,25 +611,25 @@ onMounted(() => fetchConfigs(Number(route.query.page) || 1));
   box-shadow: none !important;
 }
 
-#asowp-backend-app .asowp-config-list-pagination button + button {
+#ascwo-backend-app .ascwo-config-list-pagination button + button {
   border-left: 1px solid rgba(235, 235, 235, 1) !important;
 }
 
-#asowp-backend-app .asowp-config-list-pagination svg {
+#ascwo-backend-app .ascwo-config-list-pagination svg {
   width: 16px !important;
   height: 16px !important;
 }
 
-#asowp-backend-app .asowp-config-list .asowp-p-20 {
+#ascwo-backend-app .ascwo-config-list .ascwo-p-20 {
   padding: 40px !important;
 }
 
-#asowp-backend-app .asowp-config-list .asowp-w-16.asowp-h-16 {
+#ascwo-backend-app .ascwo-config-list .ascwo-w-16.ascwo-h-16 {
   width: 48px !important;
   height: 48px !important;
 }
 
-#asowp-backend-app .asowp-config-list .asowp-w-16.asowp-h-16 svg {
+#ascwo-backend-app .ascwo-config-list .ascwo-w-16.ascwo-h-16 svg {
   width: 24px !important;
   height: 24px !important;
 }

@@ -1,27 +1,27 @@
 import axios from "axios";
 
-const asowpApiUrl = asowp_data.rest_url;
+const ascwoApiUrl = ascwo_data.rest_url;
 
 const frontendApi = {
   getPreviewConfig: async (id) => {
-    const response = await axios.get(`${asowpApiUrl}/configs/${id}/preview`);
+    const response = await axios.get(`${ascwoApiUrl}/configs/${id}/preview`);
     return response.data;
   },
   getTemplate: async (configId, templateId) => {
     const response = await axios.get(
-      `${asowpApiUrl}/templates/${configId}/${templateId}`
+      `${ascwoApiUrl}/templates/${configId}/${templateId}`,
     );
     return response.data;
   },
   updateTemplate: async (templateId, template) => {
     const response = await axios.put(
-      `${asowpApiUrl}/templates/${template.configId}/${templateId}`,
-      template
+      `${ascwoApiUrl}/templates/${template.configId}/${templateId}`,
+      template,
     );
     return response.data;
   },
   submitRequestQuote: async (payload) => {
-    const response = await axios.post(`${asowpApiUrl}/request-quotes`, payload);
+    const response = await axios.post(`${ascwoApiUrl}/request-quotes`, payload);
     return response.data;
   },
 };

@@ -1,57 +1,124 @@
 <template>
-  <div class="asowp-template-category-module">
-    <section class="asowp-template-category-toolbar">
+  <div class="ascwo-template-category-module">
+    <section class="ascwo-template-category-toolbar">
       <div>
-        <div class="asowp-template-category-title-row">
-          <h1>{{ __("Template Categories", "all-signs-options-pro") }}</h1>
-          <span class="asowp-template-category-count-pill">
-            {{ filteredCategories.length }} {{ filteredCategories.length > 1 ? __("categories", "all-signs-options-pro") : __("category", "all-signs-options-pro") }}
+        <div class="ascwo-template-category-title-row">
+          <h1>
+            {{
+              __(
+                "Template Categories",
+                "all-signs-customizer-for-woocommerce-pro",
+              )
+            }}
+          </h1>
+          <span class="ascwo-template-category-count-pill">
+            {{ filteredCategories.length }}
+            {{
+              filteredCategories.length > 1
+                ? __("categories", "all-signs-customizer-for-woocommerce-pro")
+                : __("category", "all-signs-customizer-for-woocommerce-pro")
+            }}
           </span>
         </div>
-        <p>{{ __("Organize templates with categories used across the templates module.", "all-signs-options-pro") }}</p>
+        <p>
+          {{
+            __(
+              "Organize templates with categories used across the templates module.",
+              "all-signs-customizer-for-woocommerce-pro",
+            )
+          }}
+        </p>
       </div>
 
-      <div class="asowp-template-category-actions">
+      <div class="ascwo-template-category-actions">
         <label>
-          <input v-model="search" type="search" :placeholder="__('Search categories', 'all-signs-options-pro')" />
+          <input
+            v-model="search"
+            type="search"
+            :placeholder="
+              __(
+                'Search categories',
+                'all-signs-customizer-for-woocommerce-pro',
+              )
+            "
+          />
         </label>
         <button type="button" @click="openCreateModal">
           <PlusIcon />
-          {{ __("Add new category", "all-signs-options-pro") }}
+          {{
+            __("Add new category", "all-signs-customizer-for-woocommerce-pro")
+          }}
         </button>
       </div>
     </section>
 
-    <section class="asowp-template-category-list">
-      <h2>{{ __("Categories List", "all-signs-options-pro") }}</h2>
+    <section class="ascwo-template-category-list">
+      <h2>
+        {{ __("Categories List", "all-signs-customizer-for-woocommerce-pro") }}
+      </h2>
 
-      <div v-if="filteredCategories.length === 0" class="asowp-template-category-empty">
+      <div
+        v-if="filteredCategories.length === 0"
+        class="ascwo-template-category-empty"
+      >
         <img :src="asoLogo" alt="" />
-        <h3>{{ __("No categories found", "all-signs-options-pro") }}</h3>
-        <p>{{ __("There is currently no category matching this search.", "all-signs-options-pro") }}</p>
-        <button type="button" @click="openCreateModal">{{ __("Add new category", "all-signs-options-pro") }}</button>
+        <h3>
+          {{
+            __(
+              "No categories found",
+              "all-signs-customizer-for-woocommerce-pro",
+            )
+          }}
+        </h3>
+        <p>
+          {{
+            __(
+              "There is currently no category matching this search.",
+              "all-signs-customizer-for-woocommerce-pro",
+            )
+          }}
+        </p>
+        <button type="button" @click="openCreateModal">
+          {{
+            __("Add new category", "all-signs-customizer-for-woocommerce-pro")
+          }}
+        </button>
       </div>
 
-      <table v-else class="asowp-template-category-table">
+      <table v-else class="ascwo-template-category-table">
         <thead>
           <tr>
-            <th>{{ __("Name", "all-signs-options-pro") }}</th>
-            <th>{{ __("Action", "all-signs-options-pro") }}</th>
+            <th>
+              {{ __("Name", "all-signs-customizer-for-woocommerce-pro") }}
+            </th>
+            <th>
+              {{ __("Action", "all-signs-customizer-for-woocommerce-pro") }}
+            </th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="cat in filteredCategories" :key="cat.value">
             <td>
-              <button type="button" class="asowp-template-category-name" @click="selectCategory(cat.value, cat.name)">
+              <button
+                type="button"
+                class="ascwo-template-category-name"
+                @click="selectCategory(cat.value, cat.name)"
+              >
                 {{ cat.name }}
               </button>
             </td>
             <td>
-              <div class="asowp-template-category-row-actions">
-                <button type="button" @click="selectCategory(cat.value, cat.name)">
+              <div class="ascwo-template-category-row-actions">
+                <button
+                  type="button"
+                  @click="selectCategory(cat.value, cat.name)"
+                >
                   <PencilIcon />
                 </button>
-                <button type="button" @click="selectCategory(cat.value, cat.name, true)">
+                <button
+                  type="button"
+                  @click="selectCategory(cat.value, cat.name, true)"
+                >
                   <Trash2Icon />
                 </button>
               </div>
@@ -61,42 +128,102 @@
       </table>
     </section>
 
-    <div v-if="openModal && !isDelete" class="asowp-template-category-modal-layer">
-      <div class="asowp-template-category-backdrop" @click="closeModal"></div>
-      <div class="asowp-template-category-modal">
+    <div
+      v-if="openModal && !isDelete"
+      class="ascwo-template-category-modal-layer"
+    >
+      <div class="ascwo-template-category-backdrop" @click="closeModal"></div>
+      <div class="ascwo-template-category-modal">
         <header>
-          <h2>{{ isEdit ? __("Update category", "all-signs-options-pro") : __("Create new category", "all-signs-options-pro") }}</h2>
+          <h2>
+            {{
+              isEdit
+                ? __(
+                    "Update category",
+                    "all-signs-customizer-for-woocommerce-pro",
+                  )
+                : __(
+                    "Create new category",
+                    "all-signs-customizer-for-woocommerce-pro",
+                  )
+            }}
+          </h2>
           <button type="button" @click="closeModal"><XIcon /></button>
         </header>
-        <div class="asowp-template-category-modal-body">
+        <div class="ascwo-template-category-modal-body">
           <label>
-            <span>{{ __("Name", "all-signs-options-pro") }}</span>
+            <span>{{
+              __("Name", "all-signs-customizer-for-woocommerce-pro")
+            }}</span>
             <input v-model="category" type="text" />
           </label>
         </div>
         <footer>
-          <button type="button" class="asowp-template-category-secondary" @click="closeModal">{{ __("cancel", "all-signs-options-pro") }}</button>
-          <button type="button" class="asowp-template-category-primary" :disabled="isLoading" @click="isEdit ? updateCategory() : createCategory()">
-            {{ isLoading ? __("Saving...", "all-signs-options-pro") : isEdit ? __("Save", "all-signs-options-pro") : __("Create", "all-signs-options-pro") }}
+          <button
+            type="button"
+            class="ascwo-template-category-secondary"
+            @click="closeModal"
+          >
+            {{ __("cancel", "all-signs-customizer-for-woocommerce-pro") }}
+          </button>
+          <button
+            type="button"
+            class="ascwo-template-category-primary"
+            :disabled="isLoading"
+            @click="isEdit ? updateCategory() : createCategory()"
+          >
+            {{
+              isLoading
+                ? __("Saving...", "all-signs-customizer-for-woocommerce-pro")
+                : isEdit
+                ? __("Save", "all-signs-customizer-for-woocommerce-pro")
+                : __("Create", "all-signs-customizer-for-woocommerce-pro")
+            }}
           </button>
         </footer>
       </div>
     </div>
 
-    <div v-if="isDelete" class="asowp-template-category-modal-layer">
-      <div class="asowp-template-category-backdrop" @click="closeModal"></div>
-      <div class="asowp-template-category-modal">
+    <div v-if="isDelete" class="ascwo-template-category-modal-layer">
+      <div class="ascwo-template-category-backdrop" @click="closeModal"></div>
+      <div class="ascwo-template-category-modal">
         <header>
-          <h2>{{ __("Delete category?", "all-signs-options-pro") }}</h2>
+          <h2>
+            {{
+              __("Delete category?", "all-signs-customizer-for-woocommerce-pro")
+            }}
+          </h2>
           <button type="button" @click="closeModal"><XIcon /></button>
         </header>
-        <div class="asowp-template-category-modal-body">
-          <p>{{ __("This action cannot be undone and may affect templates in this category.", "all-signs-options-pro") }}</p>
+        <div class="ascwo-template-category-modal-body">
+          <p>
+            {{
+              __(
+                "This action cannot be undone and may affect templates in this category.",
+                "all-signs-customizer-for-woocommerce-pro",
+              )
+            }}
+          </p>
         </div>
         <footer>
-          <button type="button" class="asowp-template-category-secondary" @click="closeModal">{{ __("Cancel", "all-signs-options-pro") }}</button>
-          <button type="button" class="asowp-template-category-danger" :disabled="isLoading" @click="deleteCategory">
-            {{ isLoading ? __("Deleting...", "all-signs-options-pro") : __("Delete", "all-signs-options-pro") }}
+          <button
+            type="button"
+            class="ascwo-template-category-secondary"
+            @click="closeModal"
+          >
+            {{ __("Cancel", "all-signs-customizer-for-woocommerce-pro") }}
+          </button>
+          <button
+            type="button"
+            class="ascwo-template-category-danger"
+            :disabled="isLoading"
+            @click="deleteCategory"
+          >
+            {{
+              isLoading
+                ? __("Deleting...", "all-signs-customizer-for-woocommerce-pro")
+                : __("Delete", "all-signs-customizer-for-woocommerce-pro")
+            }}
           </button>
         </footer>
       </div>
@@ -110,7 +237,7 @@ import { PencilIcon, PlusIcon, Trash2Icon, XIcon } from "lucide-vue-next";
 import api from "@/admin/Api/api";
 import toastMessage from "@/admin/utils/functions";
 import { __ } from "@wordpress/i18n";
-import asoLogo from "../../../../assets/images/im_asowp-icon.png";
+import asoLogo from "../../../../assets/images/im_ascwo-icon.png";
 
 const categories = ref({});
 const openModal = ref(false);
@@ -136,7 +263,11 @@ const categoryList = computed(() =>
 const filteredCategories = computed(() => {
   const term = search.value.trim().toLowerCase();
   if (!term) return categoryList.value;
-  return categoryList.value.filter((item) => String(item.name || "").toLowerCase().includes(term));
+  return categoryList.value.filter((item) =>
+    String(item.name || "")
+      .toLowerCase()
+      .includes(term),
+  );
 });
 
 onMounted(async () => {
@@ -144,7 +275,13 @@ onMounted(async () => {
     const res = await api.getAllCategories();
     categories.value = normalizeCategories(res);
   } catch (error) {
-    toastMessage(__("Unable to load categories.", "all-signs-options-pro"), "error");
+    toastMessage(
+      __(
+        "Unable to load categories.",
+        "all-signs-customizer-for-woocommerce-pro",
+      ),
+      "error",
+    );
   }
 });
 
@@ -169,7 +306,13 @@ const createCategory = async () => {
     }
     toastMessage(res.message, "error");
   } catch (error) {
-    toastMessage(__("Unable to create category.", "all-signs-options-pro"), "error");
+    toastMessage(
+      __(
+        "Unable to create category.",
+        "all-signs-customizer-for-woocommerce-pro",
+      ),
+      "error",
+    );
   } finally {
     isLoading.value = false;
   }
@@ -183,13 +326,22 @@ const updateCategory = async () => {
     if (update.success) {
       categories.value = normalizeCategories(update?.categories);
       closeModal();
-      toastMessage(update.message, update.success === true ? undefined : "warning");
+      toastMessage(
+        update.message,
+        update.success === true ? undefined : "warning",
+      );
       return;
     }
     toastMessage(update.message, "error");
     closeModal();
   } catch (error) {
-    toastMessage(__("Unable to update category.", "all-signs-options-pro"), "error");
+    toastMessage(
+      __(
+        "Unable to update category.",
+        "all-signs-customizer-for-woocommerce-pro",
+      ),
+      "error",
+    );
   } finally {
     isLoading.value = false;
   }
@@ -209,7 +361,13 @@ const deleteCategory = async () => {
     toastMessage(del.message, "error");
   } catch (error) {
     closeModal();
-    toastMessage(__("Unable to delete category.", "all-signs-options-pro"), "error");
+    toastMessage(
+      __(
+        "Unable to delete category.",
+        "all-signs-customizer-for-woocommerce-pro",
+      ),
+      "error",
+    );
   } finally {
     isLoading.value = false;
   }
@@ -237,37 +395,37 @@ const selectCategory = (key, cat, del = false) => {
 </script>
 
 <style>
-.asowp-template-category-module {
+.ascwo-template-category-module {
   display: grid;
   gap: 16px;
 }
 
-.asowp-template-category-toolbar,
-.asowp-template-category-list {
+.ascwo-template-category-toolbar,
+.ascwo-template-category-list {
   background: #ffffff;
   border: 1px solid #dfe3e8;
   border-radius: 10px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
 }
 
-.asowp-template-category-toolbar {
+.ascwo-template-category-toolbar {
   padding: 24px 28px;
 }
 
-.asowp-template-category-list {
+.ascwo-template-category-list {
   min-height: 520px;
   padding: 24px 28px;
 }
 
-.asowp-template-category-title-row {
+.ascwo-template-category-title-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 14px;
 }
 
-.asowp-template-category-title-row h1,
-.asowp-template-category-list h2 {
+.ascwo-template-category-title-row h1,
+.ascwo-template-category-list h2 {
   margin: 0;
   color: #202223;
   font-size: 20px;
@@ -275,12 +433,12 @@ const selectCategory = (key, cat, del = false) => {
   font-weight: 700;
 }
 
-.asowp-template-category-list h2 {
+.ascwo-template-category-list h2 {
   font-size: 14px;
   line-height: 20px;
 }
 
-.asowp-template-category-count-pill {
+.ascwo-template-category-count-pill {
   display: inline-flex;
   align-items: center;
   flex: 0 0 auto;
@@ -294,26 +452,26 @@ const selectCategory = (key, cat, del = false) => {
   line-height: 18px;
 }
 
-.asowp-template-category-toolbar p {
+.ascwo-template-category-toolbar p {
   margin: 4px 0 0;
   color: #616161;
   font-size: 13px;
   line-height: 19px;
 }
 
-.asowp-template-category-actions {
+.ascwo-template-category-actions {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-top: 16px;
 }
 
-.asowp-template-category-actions label {
+.ascwo-template-category-actions label {
   width: 260px;
 }
 
-.asowp-template-category-actions input,
-.asowp-template-category-modal-body input {
+.ascwo-template-category-actions input,
+.ascwo-template-category-modal-body input {
   width: 100%;
   height: 36px;
   padding: 0 12px;
@@ -326,10 +484,10 @@ const selectCategory = (key, cat, del = false) => {
   box-shadow: none;
 }
 
-.asowp-template-category-actions button,
-.asowp-template-category-empty button,
-.asowp-template-category-primary,
-.asowp-template-category-danger {
+.ascwo-template-category-actions button,
+.ascwo-template-category-empty button,
+.ascwo-template-category-primary,
+.ascwo-template-category-danger {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -346,12 +504,12 @@ const selectCategory = (key, cat, del = false) => {
   cursor: pointer;
 }
 
-.asowp-template-category-actions svg {
+.ascwo-template-category-actions svg {
   width: 16px;
   height: 16px;
 }
 
-.asowp-template-category-empty {
+.ascwo-template-category-empty {
   min-height: 440px;
   display: flex;
   flex-direction: column;
@@ -360,35 +518,35 @@ const selectCategory = (key, cat, del = false) => {
   text-align: center;
 }
 
-.asowp-template-category-empty img {
+.ascwo-template-category-empty img {
   width: min(440px, 58vw);
   max-height: 280px;
   object-fit: contain;
   margin-bottom: 12px;
 }
 
-.asowp-template-category-empty h3 {
+.ascwo-template-category-empty h3 {
   margin: 0;
   color: #202223;
   font-size: 13px;
   font-weight: 700;
 }
 
-.asowp-template-category-empty p {
+.ascwo-template-category-empty p {
   margin: 4px 0 16px;
   color: #616161;
   font-size: 12px;
 }
 
-.asowp-template-category-table {
+.ascwo-template-category-table {
   width: 100%;
   margin-top: 16px;
   border-collapse: collapse;
   background: #ffffff;
 }
 
-.asowp-template-category-table th,
-.asowp-template-category-table td {
+.ascwo-template-category-table th,
+.ascwo-template-category-table td {
   padding: 12px 10px;
   border-top: 1px solid #e1e3e5;
   color: #202223;
@@ -396,13 +554,13 @@ const selectCategory = (key, cat, del = false) => {
   text-align: left;
 }
 
-.asowp-template-category-table th:last-child,
-.asowp-template-category-table td:last-child {
+.ascwo-template-category-table th:last-child,
+.ascwo-template-category-table td:last-child {
   width: 120px;
   text-align: center;
 }
 
-.asowp-template-category-name {
+.ascwo-template-category-name {
   padding: 0;
   color: #202223;
   background: transparent;
@@ -411,12 +569,12 @@ const selectCategory = (key, cat, del = false) => {
   cursor: pointer;
 }
 
-.asowp-template-category-row-actions {
+.ascwo-template-category-row-actions {
   display: inline-flex;
   gap: 6px;
 }
 
-.asowp-template-category-row-actions button {
+.ascwo-template-category-row-actions button {
   width: 30px;
   height: 28px;
   display: inline-flex;
@@ -429,12 +587,12 @@ const selectCategory = (key, cat, del = false) => {
   cursor: pointer;
 }
 
-.asowp-template-category-row-actions svg {
+.ascwo-template-category-row-actions svg {
   width: 14px;
   height: 14px;
 }
 
-.asowp-template-category-modal-layer {
+.ascwo-template-category-modal-layer {
   position: fixed;
   inset: 0;
   z-index: 20000;
@@ -443,13 +601,13 @@ const selectCategory = (key, cat, del = false) => {
   justify-content: center;
 }
 
-.asowp-template-category-backdrop {
+.ascwo-template-category-backdrop {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.45);
 }
 
-.asowp-template-category-modal {
+.ascwo-template-category-modal {
   position: relative;
   width: min(480px, calc(100vw - 32px));
   overflow: hidden;
@@ -458,8 +616,8 @@ const selectCategory = (key, cat, del = false) => {
   box-shadow: 0 20px 44px rgba(0, 0, 0, 0.24);
 }
 
-.asowp-template-category-modal header,
-.asowp-template-category-modal footer {
+.ascwo-template-category-modal header,
+.ascwo-template-category-modal footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -468,20 +626,20 @@ const selectCategory = (key, cat, del = false) => {
   border-bottom: 1px solid #dfe3e8;
 }
 
-.asowp-template-category-modal footer {
+.ascwo-template-category-modal footer {
   justify-content: flex-end;
   border-top: 1px solid #dfe3e8;
   border-bottom: 0;
 }
 
-.asowp-template-category-modal h2 {
+.ascwo-template-category-modal h2 {
   margin: 0;
   color: #202223;
   font-size: 18px;
   line-height: 24px;
 }
 
-.asowp-template-category-modal header button {
+.ascwo-template-category-modal header button {
   width: 28px;
   height: 28px;
   display: inline-flex;
@@ -493,30 +651,30 @@ const selectCategory = (key, cat, del = false) => {
   cursor: pointer;
 }
 
-.asowp-template-category-modal header svg {
+.ascwo-template-category-modal header svg {
   width: 20px;
   height: 20px;
 }
 
-.asowp-template-category-modal-body {
+.ascwo-template-category-modal-body {
   padding: 22px;
 }
 
-.asowp-template-category-modal-body label {
+.ascwo-template-category-modal-body label {
   display: grid;
   gap: 8px;
   color: #202223;
   font-size: 14px;
 }
 
-.asowp-template-category-modal-body p {
+.ascwo-template-category-modal-body p {
   margin: 0;
   color: #616161;
   font-size: 15px;
   line-height: 22px;
 }
 
-.asowp-template-category-secondary {
+.ascwo-template-category-secondary {
   min-height: 34px;
   padding: 6px 14px;
   color: #202223;
@@ -527,7 +685,7 @@ const selectCategory = (key, cat, del = false) => {
   cursor: pointer;
 }
 
-.asowp-template-category-danger {
+.ascwo-template-category-danger {
   background: #8e1f0b;
   border-color: #7a1a09;
 }

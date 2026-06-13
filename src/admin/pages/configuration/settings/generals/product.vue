@@ -1,154 +1,154 @@
 <template>
     <div>
-        <div class="asowp-grid asowp-grid-cols-3 asowp-gap-x-3 asowp-gap-y-7 asowp-bg-[#F8F9FB] asowp-p-8 asowp-pb-12 asowp-translate-y-9">
+        <div class="ascwo-grid ascwo-grid-cols-3 ascwo-gap-x-3 ascwo-gap-y-7 ascwo-bg-[#F8F9FB] ascwo-p-8 ascwo-pb-12 ascwo-translate-y-9">
             <div class="">
-                <div class="asowp-flex asowp-bg-transparent asowp-border-solid asowp-border-[1px] asowp-border-[#E0E0E0] asowp-rounded-t asowp-p-3 asowp-py-4">
-                    <div class="asowp-font-bold asowp-text-[14px] asowp-w-2/4">
-                        {{ __("Enable design from scratch", "all-signs-options-pro") }}
+                <div class="ascwo-flex ascwo-bg-transparent ascwo-border-solid ascwo-border-[1px] ascwo-border-[#E0E0E0] ascwo-rounded-t ascwo-p-3 ascwo-py-4">
+                    <div class="ascwo-font-bold ascwo-text-[14px] ascwo-w-2/4">
+                        {{ __("Enable design from scratch", "all-signs-customizer-for-woocommerce-pro") }}
                     </div>
-                    <div class="asowp-flex asowp-space-x-2 asowp-justify-end asowp-w-2/4">
-                        <div class="asowp-flex asowp-justify-center asowp-items-center asowp-space-x-4">
-                            <p class="asowp-text-md asowp-font-medium asowp-text-black">{{ __("No", "all-signs-options-pro") }}</p>
-                            <label for="yesNo" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="yesNo" type="checkbox" name="yesNo" class="asowp-sr-only asowp-peer" v-model="product.designFromScratch">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[112%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-3px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-3 after:asowp-w-3 after:asowp-transition-all after:asowp-shadow-lg`"></div>
+                    <div class="ascwo-flex ascwo-space-x-2 ascwo-justify-end ascwo-w-2/4">
+                        <div class="ascwo-flex ascwo-justify-center ascwo-items-center ascwo-space-x-4">
+                            <p class="ascwo-text-md ascwo-font-medium ascwo-text-black">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</p>
+                            <label for="yesNo" class="ascwo-relative ascwo-inline-flex ascwo-items-center ascwo-cursor-pointer ascwo-border-[1px] ascwo-border-solid ascwo-border-black ascwo-rounded-full">
+                                <input id="yesNo" type="checkbox" name="yesNo" class="ascwo-sr-only ascwo-peer" v-model="product.designFromScratch">
+                                <div :class="`peer-checked:after:ascwo-border-[#016464] peer-checked:after:ascwo-border-solid peer-checked:after:ascwo-border-[5px] peer-checked:after:ascwo-top-[-2px] peer-checked:after:ascwo-translate-y-[-15%] ascwo-w-10 ascwo-h-3 ascwo-border ascwo-border-[5px] ascwo-border-[#016464] ascwo-bg-zinc-300 ascwo-rounded-full ascwo-peer peer-checked:after:ascwo-translate-x-[112%] after:ascwo-content-[''] after:ascwo-absolute after:ascwo-top-[-3px] after:ascwo-left-[-5px] after:ascwo-bg-zinc-300 after:ascwo-border-white after:ascwo-border-solid after:ascwo-translate-y-[-15%] after:ascwo-border-[#FFFFFF] after:ascwo-border-[5px] after:ascwo-rounded-full after:ascwo-h-3 after:ascwo-w-3 after:ascwo-transition-all after:ascwo-shadow-lg`"></div>
                             </label>
-                            <p class="asowp-text-md asowp-font-medium asowp-text-black">{{ __("Yes", "all-signs-options-pro") }}</p>
+                            <p class="ascwo-text-md ascwo-font-medium ascwo-text-black">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</p>
                         </div>
                     </div>                        
                 </div>
-                <div class="asowp-bg-transparent asowp-text-[11px] asowp-text-[#444444] asowp-border-solid asowp-border-[1px] asowp-border-t-0 asowp-border-[#E0E0E0] asowp-rounded asowp-rounded-t-none asowp-p-3">
-                    {{ __("Would you like to allow your clients to design the product from scratch? Or do you prefer allowing the customization only for templates assigned to the custom product ?", "all-signs-options-pro") }}
+                <div class="ascwo-bg-transparent ascwo-text-[11px] ascwo-text-[#444444] ascwo-border-solid ascwo-border-[1px] ascwo-border-t-0 ascwo-border-[#E0E0E0] ascwo-rounded ascwo-rounded-t-none ascwo-p-3">
+                    {{ __("Would you like to allow your clients to design the product from scratch? Or do you prefer allowing the customization only for templates assigned to the custom product ?", "all-signs-customizer-for-woocommerce-pro") }}
                 </div>
             </div>
             <div class="">
-                <div class="asowp-flex asowp-bg-transparent asowp-border-solid asowp-border-[1px] asowp-border-[#E0E0E0] asowp-rounded-t asowp-p-3 asowp-py-4">
-                    <div class="asowp-font-bold asowp-text-[14px] asowp-w-2/4">
-                        {{ __("Redirect to cart page after adding a custom design to the cart", "all-signs-options-pro") }}
+                <div class="ascwo-flex ascwo-bg-transparent ascwo-border-solid ascwo-border-[1px] ascwo-border-[#E0E0E0] ascwo-rounded-t ascwo-p-3 ascwo-py-4">
+                    <div class="ascwo-font-bold ascwo-text-[14px] ascwo-w-2/4">
+                        {{ __("Redirect to cart page after adding a custom design to the cart", "all-signs-customizer-for-woocommerce-pro") }}
                     </div>
-                    <div class="asowp-flex asowp-space-x-2 asowp-justify-end asowp-w-2/4">
-                        <div class="asowp-flex asowp-justify-center asowp-items-center asowp-space-x-4">
-                            <span class="asowp-text-[#444444] asowp-text-[11px]">{{ __("No", "all-signs-options-pro") }}</span>
-                            <label for="noYesDesign" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="noYesDesign" type="radio" name="noYesCheckOut" class="asowp-sr-only asowp-peer" :checked="product.redirectAfterAddingToCart" @change="handleRedirectAfterAddingToCart('cart')">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[112%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-3px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-3 after:asowp-w-3 after:asowp-transition-all after:asowp-shadow-lg`"></div>
+                    <div class="ascwo-flex ascwo-space-x-2 ascwo-justify-end ascwo-w-2/4">
+                        <div class="ascwo-flex ascwo-justify-center ascwo-items-center ascwo-space-x-4">
+                            <span class="ascwo-text-[#444444] ascwo-text-[11px]">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                            <label for="noYesDesign" class="ascwo-relative ascwo-inline-flex ascwo-items-center ascwo-cursor-pointer ascwo-border-[1px] ascwo-border-solid ascwo-border-black ascwo-rounded-full">
+                                <input id="noYesDesign" type="radio" name="noYesCheckOut" class="ascwo-sr-only ascwo-peer" :checked="product.redirectAfterAddingToCart" @change="handleRedirectAfterAddingToCart('cart')">
+                                <div :class="`peer-checked:after:ascwo-border-[#016464] peer-checked:after:ascwo-border-solid peer-checked:after:ascwo-border-[5px] peer-checked:after:ascwo-top-[-2px] peer-checked:after:ascwo-translate-y-[-15%] ascwo-w-10 ascwo-h-3 ascwo-border ascwo-border-[5px] ascwo-border-[#016464] ascwo-bg-zinc-300 ascwo-rounded-full ascwo-peer peer-checked:after:ascwo-translate-x-[112%] after:ascwo-content-[''] after:ascwo-absolute after:ascwo-top-[-3px] after:ascwo-left-[-5px] after:ascwo-bg-zinc-300 after:ascwo-border-white after:ascwo-border-solid after:ascwo-translate-y-[-15%] after:ascwo-border-[#FFFFFF] after:ascwo-border-[5px] after:ascwo-rounded-full after:ascwo-h-3 after:ascwo-w-3 after:ascwo-transition-all after:ascwo-shadow-lg`"></div>
                             </label>
-                            <span class="asowp-text-[#444444] asowp-text-[11px]">{{ __("Yes", "all-signs-options-pro") }}</span>
+                            <span class="ascwo-text-[#444444] ascwo-text-[11px]">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</span>
                         </div>
                     </div>                        
                 </div>
                
-                <div class="asowp-bg-transparent asowp-text-[11px] asowp-text-[#444444] asowp-border-solid asowp-border-[1px] asowp-border-t-0 asowp-border-[#E0E0E0] asowp-rounded asowp-rounded-t-none asowp-p-3">
-                    {{ __("This options allow you to define what to do after adding a design to the cart", "all-signs-options-pro") }}
+                <div class="ascwo-bg-transparent ascwo-text-[11px] ascwo-text-[#444444] ascwo-border-solid ascwo-border-[1px] ascwo-border-t-0 ascwo-border-[#E0E0E0] ascwo-rounded ascwo-rounded-t-none ascwo-p-3">
+                    {{ __("This options allow you to define what to do after adding a design to the cart", "all-signs-customizer-for-woocommerce-pro") }}
                 </div>
             </div>
             <div class="">
-                <div class="asowp-flex asowp-bg-transparent asowp-border-solid asowp-border-[1px] asowp-border-[#E0E0E0] asowp-rounded-t asowp-p-3 asowp-py-4">
-                    <div class="asowp-font-bold asowp-text-[14px] asowp-w-2/4">
-                        {{ __("Redirect to checkout page after adding a custom design to the cart", "all-signs-options-pro") }}
+                <div class="ascwo-flex ascwo-bg-transparent ascwo-border-solid ascwo-border-[1px] ascwo-border-[#E0E0E0] ascwo-rounded-t ascwo-p-3 ascwo-py-4">
+                    <div class="ascwo-font-bold ascwo-text-[14px] ascwo-w-2/4">
+                        {{ __("Redirect to checkout page after adding a custom design to the cart", "all-signs-customizer-for-woocommerce-pro") }}
                     </div>
-                    <div class="asowp-flex asowp-space-x-2 asowp-justify-end asowp-w-2/4">
-                        <div class="asowp-flex asowp-justify-center asowp-items-center asowp-space-x-4">
-                            <span class="asowp-text-[#444444] asowp-text-[11px]">{{ __("No", "all-signs-options-pro") }}</span>
-                            <label for="noYesCheckOut" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="noYesCheckOut" type="radio" name="noYesCheckOut" class="asowp-sr-only asowp-peer" :checked="product.redirectToCheckOutPage" @change="handleRedirectAfterAddingToCart('checkout')">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[112%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-3px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-3 after:asowp-w-3 after:asowp-transition-all after:asowp-shadow-lg`"></div>
+                    <div class="ascwo-flex ascwo-space-x-2 ascwo-justify-end ascwo-w-2/4">
+                        <div class="ascwo-flex ascwo-justify-center ascwo-items-center ascwo-space-x-4">
+                            <span class="ascwo-text-[#444444] ascwo-text-[11px]">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                            <label for="noYesCheckOut" class="ascwo-relative ascwo-inline-flex ascwo-items-center ascwo-cursor-pointer ascwo-border-[1px] ascwo-border-solid ascwo-border-black ascwo-rounded-full">
+                                <input id="noYesCheckOut" type="radio" name="noYesCheckOut" class="ascwo-sr-only ascwo-peer" :checked="product.redirectToCheckOutPage" @change="handleRedirectAfterAddingToCart('checkout')">
+                                <div :class="`peer-checked:after:ascwo-border-[#016464] peer-checked:after:ascwo-border-solid peer-checked:after:ascwo-border-[5px] peer-checked:after:ascwo-top-[-2px] peer-checked:after:ascwo-translate-y-[-15%] ascwo-w-10 ascwo-h-3 ascwo-border ascwo-border-[5px] ascwo-border-[#016464] ascwo-bg-zinc-300 ascwo-rounded-full ascwo-peer peer-checked:after:ascwo-translate-x-[112%] after:ascwo-content-[''] after:ascwo-absolute after:ascwo-top-[-3px] after:ascwo-left-[-5px] after:ascwo-bg-zinc-300 after:ascwo-border-white after:ascwo-border-solid after:ascwo-translate-y-[-15%] after:ascwo-border-[#FFFFFF] after:ascwo-border-[5px] after:ascwo-rounded-full after:ascwo-h-3 after:ascwo-w-3 after:ascwo-transition-all after:ascwo-shadow-lg`"></div>
                             </label>
-                            <span class="asowp-text-[#444444] asowp-text-[11px]">{{ __("Yes", "all-signs-options-pro") }}</span>
+                            <span class="ascwo-text-[#444444] ascwo-text-[11px]">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</span>
                         </div>
                     </div>                        
                 </div>
-                <div class="asowp-bg-transparent asowp-text-[11px] asowp-text-[#444444] asowp-border-solid asowp-border-[1px] asowp-border-t-0 asowp-border-[#E0E0E0] asowp-rounded asowp-rounded-t-none asowp-p-3">
-                    {{ __("This options allow you to define what to do after adding a design to the cart", "all-signs-options-pro") }}
+                <div class="ascwo-bg-transparent ascwo-text-[11px] ascwo-text-[#444444] ascwo-border-solid ascwo-border-[1px] ascwo-border-t-0 ascwo-border-[#E0E0E0] ascwo-rounded ascwo-rounded-t-none ascwo-p-3">
+                    {{ __("This options allow you to define what to do after adding a design to the cart", "all-signs-customizer-for-woocommerce-pro") }}
                 </div>
             </div>
             <div class="">
-                <div class="asowp-flex asowp-bg-transparent asowp-border-solid asowp-border-[1px] asowp-border-[#E0E0E0] asowp-rounded-t asowp-p-3 asowp-py-4">
-                    <div class="asowp-font-bold asowp-text-[14px] asowp-w-2/4">
-                        {{ __("Display or no recap on checkout page", "all-signs-options-pro") }}
+                <div class="ascwo-flex ascwo-bg-transparent ascwo-border-solid ascwo-border-[1px] ascwo-border-[#E0E0E0] ascwo-rounded-t ascwo-p-3 ascwo-py-4">
+                    <div class="ascwo-font-bold ascwo-text-[14px] ascwo-w-2/4">
+                        {{ __("Display or no recap on checkout page", "all-signs-customizer-for-woocommerce-pro") }}
                     </div>
-                    <div class="asowp-flex asowp-space-x-2 asowp-justify-end asowp-w-2/4">
-                        <div class="asowp-flex asowp-justify-center asowp-items-center asowp-space-x-4">
-                            <p class="asowp-text-md asowp-font-medium asowp-text-black">{{ __("No", "all-signs-options-pro") }}</p>
-                            <label for="yesNoCheckout" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="yesNoCheckout" type="checkbox" name="yesNoCheckout" class="asowp-sr-only asowp-peer" v-model="product.displayRecapsOnCheckout">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[112%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-3px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-3 after:asowp-w-3 after:asowp-transition-all after:asowp-shadow-lg`"></div>
+                    <div class="ascwo-flex ascwo-space-x-2 ascwo-justify-end ascwo-w-2/4">
+                        <div class="ascwo-flex ascwo-justify-center ascwo-items-center ascwo-space-x-4">
+                            <p class="ascwo-text-md ascwo-font-medium ascwo-text-black">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</p>
+                            <label for="yesNoCheckout" class="ascwo-relative ascwo-inline-flex ascwo-items-center ascwo-cursor-pointer ascwo-border-[1px] ascwo-border-solid ascwo-border-black ascwo-rounded-full">
+                                <input id="yesNoCheckout" type="checkbox" name="yesNoCheckout" class="ascwo-sr-only ascwo-peer" v-model="product.displayRecapsOnCheckout">
+                                <div :class="`peer-checked:after:ascwo-border-[#016464] peer-checked:after:ascwo-border-solid peer-checked:after:ascwo-border-[5px] peer-checked:after:ascwo-top-[-2px] peer-checked:after:ascwo-translate-y-[-15%] ascwo-w-10 ascwo-h-3 ascwo-border ascwo-border-[5px] ascwo-border-[#016464] ascwo-bg-zinc-300 ascwo-rounded-full ascwo-peer peer-checked:after:ascwo-translate-x-[112%] after:ascwo-content-[''] after:ascwo-absolute after:ascwo-top-[-3px] after:ascwo-left-[-5px] after:ascwo-bg-zinc-300 after:ascwo-border-white after:ascwo-border-solid after:ascwo-translate-y-[-15%] after:ascwo-border-[#FFFFFF] after:ascwo-border-[5px] after:ascwo-rounded-full after:ascwo-h-3 after:ascwo-w-3 after:ascwo-transition-all after:ascwo-shadow-lg`"></div>
                             </label>
-                            <p class="asowp-text-md asowp-font-medium asowp-text-black">{{ __("Yes", "all-signs-options-pro") }}</p>
+                            <p class="ascwo-text-md ascwo-font-medium ascwo-text-black">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</p>
                         </div>
                     </div>                        
                 </div>
-                <div class="asowp-bg-transparent asowp-text-[11px] asowp-text-[#444444] asowp-border-solid asowp-border-[1px] asowp-border-t-0 asowp-border-[#E0E0E0] asowp-rounded asowp-rounded-t-none asowp-p-3">
-                    {{ __("This options allow you to define what to do after adding a design to the cart", "all-signs-options-pro") }}
+                <div class="ascwo-bg-transparent ascwo-text-[11px] ascwo-text-[#444444] ascwo-border-solid ascwo-border-[1px] ascwo-border-t-0 ascwo-border-[#E0E0E0] ascwo-rounded ascwo-rounded-t-none ascwo-p-3">
+                    {{ __("This options allow you to define what to do after adding a design to the cart", "all-signs-customizer-for-woocommerce-pro") }}
                 </div>
             </div>
             <div class="">
-                <div class="asowp-flex asowp-bg-transparent asowp-border-solid asowp-border-[1px] asowp-border-[#E0E0E0] asowp-rounded-t asowp-p-3 asowp-py-4">
-                    <div class="asowp-font-bold asowp-text-[14px] asowp-w-2/4">
-                        {{ __("Hide add to cart button for custom on product detail page", "all-signs-options-pro") }}
+                <div class="ascwo-flex ascwo-bg-transparent ascwo-border-solid ascwo-border-[1px] ascwo-border-[#E0E0E0] ascwo-rounded-t ascwo-p-3 ascwo-py-4">
+                    <div class="ascwo-font-bold ascwo-text-[14px] ascwo-w-2/4">
+                        {{ __("Hide add to cart button for custom on product detail page", "all-signs-customizer-for-woocommerce-pro") }}
                     </div>
-                    <div class="asowp-flex asowp-space-x-2 asowp-justify-end asowp-w-2/4">
-                        <div class="asowp-flex asowp-justify-center asowp-items-center asowp-space-x-4">
-                            <p class="asowp-text-md asowp-font-medium asowp-text-black">{{ __("No", "all-signs-options-pro") }}</p>
-                            <label for="yesNoDetail" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="yesNoDetail" type="checkbox" name="yesNoDetail" class="asowp-sr-only asowp-peer" v-model="product.hideAddToCartButtonOnDetailPage">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[112%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-3px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-3 after:asowp-w-3 after:asowp-transition-all after:asowp-shadow-lg`"></div>
+                    <div class="ascwo-flex ascwo-space-x-2 ascwo-justify-end ascwo-w-2/4">
+                        <div class="ascwo-flex ascwo-justify-center ascwo-items-center ascwo-space-x-4">
+                            <p class="ascwo-text-md ascwo-font-medium ascwo-text-black">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</p>
+                            <label for="yesNoDetail" class="ascwo-relative ascwo-inline-flex ascwo-items-center ascwo-cursor-pointer ascwo-border-[1px] ascwo-border-solid ascwo-border-black ascwo-rounded-full">
+                                <input id="yesNoDetail" type="checkbox" name="yesNoDetail" class="ascwo-sr-only ascwo-peer" v-model="product.hideAddToCartButtonOnDetailPage">
+                                <div :class="`peer-checked:after:ascwo-border-[#016464] peer-checked:after:ascwo-border-solid peer-checked:after:ascwo-border-[5px] peer-checked:after:ascwo-top-[-2px] peer-checked:after:ascwo-translate-y-[-15%] ascwo-w-10 ascwo-h-3 ascwo-border ascwo-border-[5px] ascwo-border-[#016464] ascwo-bg-zinc-300 ascwo-rounded-full ascwo-peer peer-checked:after:ascwo-translate-x-[112%] after:ascwo-content-[''] after:ascwo-absolute after:ascwo-top-[-3px] after:ascwo-left-[-5px] after:ascwo-bg-zinc-300 after:ascwo-border-white after:ascwo-border-solid after:ascwo-translate-y-[-15%] after:ascwo-border-[#FFFFFF] after:ascwo-border-[5px] after:ascwo-rounded-full after:ascwo-h-3 after:ascwo-w-3 after:ascwo-transition-all after:ascwo-shadow-lg`"></div>
                             </label>
-                            <p class="asowp-text-md asowp-font-medium asowp-text-black">{{ __("Yes", "all-signs-options-pro") }}</p>
+                            <p class="ascwo-text-md ascwo-font-medium ascwo-text-black">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</p>
                         </div>
                     </div>                        
                 </div>
-                <div class="asowp-bg-transparent asowp-text-[11px] asowp-text-[#444444] asowp-border-solid asowp-border-[1px] asowp-border-t-0 asowp-border-[#E0E0E0] asowp-rounded asowp-rounded-t-none asowp-p-3">
-                    {{ __("This options allow you to define whether or not you want hide the add to cart button for custom products on the products page.", "all-signs-options-pro") }}
+                <div class="ascwo-bg-transparent ascwo-text-[11px] ascwo-text-[#444444] ascwo-border-solid ascwo-border-[1px] ascwo-border-t-0 ascwo-border-[#E0E0E0] ascwo-rounded ascwo-rounded-t-none ascwo-p-3">
+                    {{ __("This options allow you to define whether or not you want hide the add to cart button for custom products on the products page.", "all-signs-customizer-for-woocommerce-pro") }}
                 </div>
             </div>
             <div class="">
-                <div class="asowp-flex asowp-bg-transparent asowp-border-solid asowp-border-[1px] asowp-border-[#E0E0E0] asowp-rounded-t asowp-p-3 asowp-py-4">
-                    <div class="asowp-font-bold asowp-text-[14px] asowp-w-2/4">
-                        {{ __("Hide design buttons on shop page", "all-signs-options-pro") }} 
+                <div class="ascwo-flex ascwo-bg-transparent ascwo-border-solid ascwo-border-[1px] ascwo-border-[#E0E0E0] ascwo-rounded-t ascwo-p-3 ascwo-py-4">
+                    <div class="ascwo-font-bold ascwo-text-[14px] ascwo-w-2/4">
+                        {{ __("Hide design buttons on shop page", "all-signs-customizer-for-woocommerce-pro") }} 
                     </div>
-                    <div class="asowp-flex asowp-space-x-2 asowp-justify-end asowp-w-2/4">
-                        <div class="asowp-flex asowp-justify-center asowp-items-center asowp-space-x-4">
-                            <p class="asowp-text-md asowp-font-medium asowp-text-black">{{ __("No", "all-signs-options-pro") }}</p>
-                            <label for="yesNoShop" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="yesNoShop" type="checkbox" name="yesNoShop" class="asowp-sr-only asowp-peer" v-model="product.hideDesignButtonsOnShopPage">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[112%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-3px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-3 after:asowp-w-3 after:asowp-transition-all after:asowp-shadow-lg`"></div>
+                    <div class="ascwo-flex ascwo-space-x-2 ascwo-justify-end ascwo-w-2/4">
+                        <div class="ascwo-flex ascwo-justify-center ascwo-items-center ascwo-space-x-4">
+                            <p class="ascwo-text-md ascwo-font-medium ascwo-text-black">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</p>
+                            <label for="yesNoShop" class="ascwo-relative ascwo-inline-flex ascwo-items-center ascwo-cursor-pointer ascwo-border-[1px] ascwo-border-solid ascwo-border-black ascwo-rounded-full">
+                                <input id="yesNoShop" type="checkbox" name="yesNoShop" class="ascwo-sr-only ascwo-peer" v-model="product.hideDesignButtonsOnShopPage">
+                                <div :class="`peer-checked:after:ascwo-border-[#016464] peer-checked:after:ascwo-border-solid peer-checked:after:ascwo-border-[5px] peer-checked:after:ascwo-top-[-2px] peer-checked:after:ascwo-translate-y-[-15%] ascwo-w-10 ascwo-h-3 ascwo-border ascwo-border-[5px] ascwo-border-[#016464] ascwo-bg-zinc-300 ascwo-rounded-full ascwo-peer peer-checked:after:ascwo-translate-x-[112%] after:ascwo-content-[''] after:ascwo-absolute after:ascwo-top-[-3px] after:ascwo-left-[-5px] after:ascwo-bg-zinc-300 after:ascwo-border-white after:ascwo-border-solid after:ascwo-translate-y-[-15%] after:ascwo-border-[#FFFFFF] after:ascwo-border-[5px] after:ascwo-rounded-full after:ascwo-h-3 after:ascwo-w-3 after:ascwo-transition-all after:ascwo-shadow-lg`"></div>
                             </label>
-                            <p class="asowp-text-md asowp-font-medium asowp-text-black">{{ __("Yes", "all-signs-options-pro") }}</p>
+                            <p class="ascwo-text-md ascwo-font-medium ascwo-text-black">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</p>
                         </div>
                     </div>                        
                 </div>
-                <div class="asowp-bg-transparent asowp-text-[11px] asowp-text-[#444444] asowp-border-solid asowp-border-[1px] asowp-border-t-0 asowp-border-[#E0E0E0] asowp-rounded asowp-rounded-t-none asowp-p-3">
-                    {{ __("This option displays/hides the customization button on the store page.", "all-signs-options-pro") }}
+                <div class="ascwo-bg-transparent ascwo-text-[11px] ascwo-text-[#444444] ascwo-border-solid ascwo-border-[1px] ascwo-border-t-0 ascwo-border-[#E0E0E0] ascwo-rounded ascwo-rounded-t-none ascwo-p-3">
+                    {{ __("This option displays/hides the customization button on the store page.", "all-signs-customizer-for-woocommerce-pro") }}
                 </div>
             </div>
             <div class="">
-                <div class="asowp-flex asowp-bg-transparent asowp-border-solid asowp-border-[1px] asowp-border-[#E0E0E0] asowp-rounded-t asowp-p-3 asowp-py-4">
-                    <div class="asowp-font-bold asowp-text-[14px] asowp-w-2/4">
-                        {{ __("hide add to cart buttons for custom product on shop", "all-signs-options-pro") }}
+                <div class="ascwo-flex ascwo-bg-transparent ascwo-border-solid ascwo-border-[1px] ascwo-border-[#E0E0E0] ascwo-rounded-t ascwo-p-3 ascwo-py-4">
+                    <div class="ascwo-font-bold ascwo-text-[14px] ascwo-w-2/4">
+                        {{ __("hide add to cart buttons for custom product on shop", "all-signs-customizer-for-woocommerce-pro") }}
                     </div>
-                    <div class="asowp-flex asowp-space-x-2 asowp-justify-end asowp-w-2/4">
-                        <div class="asowp-flex asowp-justify-center asowp-items-center asowp-space-x-4">
-                            <p class="asowp-text-md asowp-font-medium asowp-text-black">{{ __("No", "all-signs-options-pro") }}</p>
-                            <label for="yesNoCustom" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="yesNoCustom" type="checkbox" name="yesNoCustom" class="asowp-sr-only asowp-peer" v-model="product.hideAddToCartButtonOnShopPage">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[112%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-3px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-3 after:asowp-w-3 after:asowp-transition-all after:asowp-shadow-lg`"></div>
+                    <div class="ascwo-flex ascwo-space-x-2 ascwo-justify-end ascwo-w-2/4">
+                        <div class="ascwo-flex ascwo-justify-center ascwo-items-center ascwo-space-x-4">
+                            <p class="ascwo-text-md ascwo-font-medium ascwo-text-black">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</p>
+                            <label for="yesNoCustom" class="ascwo-relative ascwo-inline-flex ascwo-items-center ascwo-cursor-pointer ascwo-border-[1px] ascwo-border-solid ascwo-border-black ascwo-rounded-full">
+                                <input id="yesNoCustom" type="checkbox" name="yesNoCustom" class="ascwo-sr-only ascwo-peer" v-model="product.hideAddToCartButtonOnShopPage">
+                                <div :class="`peer-checked:after:ascwo-border-[#016464] peer-checked:after:ascwo-border-solid peer-checked:after:ascwo-border-[5px] peer-checked:after:ascwo-top-[-2px] peer-checked:after:ascwo-translate-y-[-15%] ascwo-w-10 ascwo-h-3 ascwo-border ascwo-border-[5px] ascwo-border-[#016464] ascwo-bg-zinc-300 ascwo-rounded-full ascwo-peer peer-checked:after:ascwo-translate-x-[112%] after:ascwo-content-[''] after:ascwo-absolute after:ascwo-top-[-3px] after:ascwo-left-[-5px] after:ascwo-bg-zinc-300 after:ascwo-border-white after:ascwo-border-solid after:ascwo-translate-y-[-15%] after:ascwo-border-[#FFFFFF] after:ascwo-border-[5px] after:ascwo-rounded-full after:ascwo-h-3 after:ascwo-w-3 after:ascwo-transition-all after:ascwo-shadow-lg`"></div>
                             </label>
-                            <p class="asowp-text-md asowp-font-medium asowp-text-black">{{ __("Yes", "all-signs-options-pro") }}</p>
+                            <p class="ascwo-text-md ascwo-font-medium ascwo-text-black">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</p>
                         </div>
                     </div>                        
                 </div>
-                <div class="asowp-bg-transparent asowp-text-[11px] asowp-text-[#444444] asowp-border-solid asowp-border-[1px] asowp-border-t-0 asowp-border-[#E0E0E0] asowp-rounded asowp-rounded-t-none asowp-p-3">
-                    {{ __("This option hides the add-to-cart buttons on customizable products on the store page.", "all-signs-options-pro") }}
+                <div class="ascwo-bg-transparent ascwo-text-[11px] ascwo-text-[#444444] ascwo-border-solid ascwo-border-[1px] ascwo-border-t-0 ascwo-border-[#E0E0E0] ascwo-rounded ascwo-rounded-t-none ascwo-p-3">
+                    {{ __("This option hides the add-to-cart buttons on customizable products on the store page.", "all-signs-customizer-for-woocommerce-pro") }}
                 </div>
             </div>
         </div>
     </div>
-    <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-space-x-4 asowp-px-4 asowp-py-3 asowp-justify-end asowp-items-end asowp-translate-y-12">
-        <div class="asowp-bg-[#016464] asowp-rounded">
-            <button :disabled="isLoading" @click="updateProductSettings" class=" asowp-rounded asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
-                <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" />
-                <div class="asowp-font-semibold asowp-text-[16px]">{{ __("Save", "all-signs-options-pro") }}</div>
+    <div class="ascwo-bg-[#F8F9FB] ascwo-flex ascwo-space-x-4 ascwo-px-4 ascwo-py-3 ascwo-justify-end ascwo-items-end ascwo-translate-y-12">
+        <div class="ascwo-bg-[#016464] ascwo-rounded">
+            <button :disabled="isLoading" @click="updateProductSettings" class=" ascwo-rounded ascwo-flex ascwo-bg-transparent ascwo-w-fit ascwo-space-x-2 ascwo-h-fit ascwo-text-white ascwo-px-12 ascwo-p-2.5 ascwo-border-none ascwo-opacity-90 hover:ascwo-opacity-100 hover:ascwo-border-none hover:ascwo-text-white hover:ascwo-bg-[#016464] ascwo-cursor-pointer">
+                <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="ascwo-w-5 ascwo-w-5" v-if="isLoading" />
+                <div class="ascwo-font-semibold ascwo-text-[16px]">{{ __("Save", "all-signs-customizer-for-woocommerce-pro") }}</div>
             </button>
         </div>
     </div>

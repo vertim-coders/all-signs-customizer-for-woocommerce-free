@@ -1,9 +1,9 @@
 <?php
-namespace ASOWP\Api\Admin\Required_Options;
+namespace ASCWO\Api\Admin\Required_Options;
 
 use WP_REST_Server;
 
-class ASOWP_Api_Required_Options_Materials extends ASOWP_Api_Required_Options_Base
+class ASCWO_Api_Required_Options_Materials extends ASCWO_Api_Required_Options_Base
 {
     public function register_routes()
     {
@@ -119,8 +119,8 @@ class ASOWP_Api_Required_Options_Materials extends ASOWP_Api_Required_Options_Ba
             $request,
             'materials',
             'material',
-            __('Material not found', 'all-signs-options-pro'),
-            __('Default material successfully updated', 'all-signs-options-pro')
+            __('Material not found', 'all-signs-customizer-for-woocommerce-pro'),
+            __('Default material successfully updated', 'all-signs-customizer-for-woocommerce-pro')
         );
     }
 }

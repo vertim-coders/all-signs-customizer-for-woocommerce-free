@@ -1,26 +1,27 @@
 <?php
-namespace ASOWP\Api\Admin\Additionals_Options;
+namespace ASCWO\Api\Admin\Additionals_Options;
 
-use ASOWP\Support\ConfigSchemaNormalizer;
 use WP_REST_Controller;
 
-class ASOWP_Api_Customs_Additionals_Base extends WP_REST_Controller
+class ASCWO_Api_Customs_Additionals_Base extends WP_REST_Controller
 {
     public function __construct()
     {
-        $this->namespace = 'asowp/v1';
+        $this->namespace = 'ascwo/v1';
         $this->rest_base = 'configs';
     }
 
     protected function get_meta(int $config_id): array
     {
-        $meta = get_post_meta($config_id, 'asowp-configs-meta', true);
+        $meta = get_post_meta($config_id, 'ascwo-configs-meta', true);
         return is_array($meta) ? $meta : array();
     }
 
     protected function get_normalized_meta(int $config_id): array
     {
-        return ConfigSchemaNormalizer::normalize_meta($this->get_meta($config_id));
+        $meta = $this->get_meta($config_id);
+        $meta['additionalOptions'] = isset($meta['additionalOptions']) && is_array($meta['additionalOptions']) ? $meta['additionalOptions'] : array();
+        return $meta;
     }
 
     protected function save_meta(int $config_id, array $meta)
@@ -33,7 +34,7 @@ class ASOWP_Api_Customs_Additionals_Base extends WP_REST_Controller
             array('meta_value' => $serialized_meta),
             array(
                 'post_id' => $config_id,
-                'meta_key' => 'asowp-configs-meta',
+                'meta_key' => 'ascwo-configs-meta',
             ),
             array('%s'),
             array('%d', '%s')
@@ -48,12 +49,12 @@ class ASOWP_Api_Customs_Additionals_Base extends WP_REST_Controller
                 $wpdb->prepare(
                     "SELECT meta_value FROM {$wpdb->postmeta} WHERE post_id = %d AND meta_key = %s LIMIT 1",
                     $config_id,
-                    'asowp-configs-meta'
+                    'ascwo-configs-meta'
                 )
             );
 
             if ($existing === null) {
-                $added = add_post_meta($config_id, 'asowp-configs-meta', $meta, true);
+                $added = add_post_meta($config_id, 'ascwo-configs-meta', $meta, true);
                 if ($added === false) {
                     return false;
                 }
@@ -76,7 +77,7 @@ class ASOWP_Api_Customs_Additionals_Base extends WP_REST_Controller
 
     protected function save_additional_options(int $config_id, array $additional_options)
     {
-        $meta = $this->get_normalized_meta($config_id);
+        $meta = $this->get_meta($config_id);
         $meta['additionalOptions'] = $additional_options;
         return $this->save_meta($config_id, $meta);
     }
@@ -134,7 +135,7 @@ class ASOWP_Api_Customs_Additionals_Base extends WP_REST_Controller
             return $material['colors'];
         }
 
-        return array_values(get_option('asowp_all_colors', array()));
+        return array_values(get_option('ascwo_all_colors', array()));
     }
 
     public function get_config_permissions_check($request)

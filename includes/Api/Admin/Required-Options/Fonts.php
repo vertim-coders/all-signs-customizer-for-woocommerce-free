@@ -1,9 +1,9 @@
 <?php
-namespace ASOWP\Api\Admin\Required_Options;
+namespace ASCWO\Api\Admin\Required_Options;
 
 use WP_REST_Server;
 
-class ASOWP_Api_Required_Options_Fonts extends ASOWP_Api_Required_Options_Base
+class ASCWO_Api_Required_Options_Fonts extends ASCWO_Api_Required_Options_Base
 {
     public function register_routes()
     {
@@ -120,7 +120,7 @@ class ASOWP_Api_Required_Options_Fonts extends ASOWP_Api_Required_Options_Base
     {
         $config_id = absint($request->get_param('config_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $required_options = $this->get_required_options($config_id);
@@ -152,7 +152,7 @@ class ASOWP_Api_Required_Options_Fonts extends ASOWP_Api_Required_Options_Base
     {
         $config_id = absint($request->get_param('config_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $payload = json_decode($request->get_body(), true);
@@ -196,13 +196,13 @@ class ASOWP_Api_Required_Options_Fonts extends ASOWP_Api_Required_Options_Base
     {
         $config_id = absint($request->get_param('config_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $payload = json_decode($request->get_body(), true);
         $font_id = isset($payload['font_id']) && is_numeric($payload['font_id']) ? (int) $payload['font_id'] : null;
         if ($font_id === null) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Font not found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Font not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $required_options = $this->get_required_options($config_id);
@@ -218,10 +218,10 @@ class ASOWP_Api_Required_Options_Fonts extends ASOWP_Api_Required_Options_Base
         return rest_ensure_response($saved === true
             ? array(
                 'success' => true,
-                'message' => __('Font successfully added', 'all-signs-options-pro'),
+                'message' => __('Font successfully added', 'all-signs-customizer-for-woocommerce-pro'),
                 'data' => array('font' => end($items)),
             )
-            : array('success' => false, 'message' => __('Font has not been added', 'all-signs-options-pro')));
+            : array('success' => false, 'message' => __('Font has not been added', 'all-signs-customizer-for-woocommerce-pro')));
     }
 
     public function update_font_item($request)
@@ -229,7 +229,7 @@ class ASOWP_Api_Required_Options_Fonts extends ASOWP_Api_Required_Options_Base
         $config_id = absint($request->get_param('config_id'));
         $item_id = absint($request->get_param('item_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $payload = json_decode($request->get_body(), true);
@@ -240,7 +240,7 @@ class ASOWP_Api_Required_Options_Fonts extends ASOWP_Api_Required_Options_Base
         $items = $this->section_item_list($required_options, 'fonts');
 
         if (!isset($items[$item_id])) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Font not found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Font not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         if ($position !== null) {
@@ -265,10 +265,10 @@ class ASOWP_Api_Required_Options_Fonts extends ASOWP_Api_Required_Options_Base
         return rest_ensure_response($saved === true
             ? array(
                 'success' => true,
-                'message' => __('Font successfully updated', 'all-signs-options-pro'),
+                'message' => __('Font successfully updated', 'all-signs-customizer-for-woocommerce-pro'),
                 'data' => array('font' => $items[$item_id]),
             )
-            : array('success' => false, 'message' => __('Font has not been updated', 'all-signs-options-pro')));
+            : array('success' => false, 'message' => __('Font has not been updated', 'all-signs-customizer-for-woocommerce-pro')));
     }
 
     public function set_default_font_item($request)
@@ -276,13 +276,13 @@ class ASOWP_Api_Required_Options_Fonts extends ASOWP_Api_Required_Options_Base
         $config_id = absint($request->get_param('config_id'));
         $item_id = absint($request->get_param('item_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $required_options = $this->get_required_options($config_id);
         $items = $this->section_item_list($required_options, 'fonts');
         if (!isset($items[$item_id])) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Font not found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Font not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         foreach ($items as $index => $item) {
@@ -295,10 +295,10 @@ class ASOWP_Api_Required_Options_Fonts extends ASOWP_Api_Required_Options_Base
         return rest_ensure_response($saved === true
             ? array(
                 'success' => true,
-                'message' => __('Default font successfully updated', 'all-signs-options-pro'),
+                'message' => __('Default font successfully updated', 'all-signs-customizer-for-woocommerce-pro'),
                 'data' => array('font' => $items[$item_id]),
             )
-            : array('success' => false, 'message' => __('Default font has not been updated', 'all-signs-options-pro')));
+            : array('success' => false, 'message' => __('Default font has not been updated', 'all-signs-customizer-for-woocommerce-pro')));
     }
 
     public function delete_font_item($request)
@@ -306,13 +306,13 @@ class ASOWP_Api_Required_Options_Fonts extends ASOWP_Api_Required_Options_Base
         $config_id = absint($request->get_param('config_id'));
         $item_id = absint($request->get_param('item_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $required_options = $this->get_required_options($config_id);
         $items = $this->section_item_list($required_options, 'fonts');
         if (!isset($items[$item_id])) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Font not found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Font not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         array_splice($items, $item_id, 1);
@@ -324,15 +324,15 @@ class ASOWP_Api_Required_Options_Fonts extends ASOWP_Api_Required_Options_Base
         return rest_ensure_response($saved === true
             ? array(
                 'success' => true,
-                'message' => __('Font successfully deleted', 'all-signs-options-pro'),
+                'message' => __('Font successfully deleted', 'all-signs-customizer-for-woocommerce-pro'),
                 'data' => array('items' => array_values($items)),
             )
-            : array('success' => false, 'message' => __('Font has not been deleted', 'all-signs-options-pro')));
+            : array('success' => false, 'message' => __('Font has not been deleted', 'all-signs-customizer-for-woocommerce-pro')));
     }
 
     private function get_managed_fonts(): array
     {
-        $fonts = get_option('asowp-manages-fonts', array());
+        $fonts = get_option('ascwo-manages-fonts', array());
         return is_array($fonts) ? $fonts : array();
     }
 

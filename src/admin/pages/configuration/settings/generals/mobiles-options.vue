@@ -1,37 +1,37 @@
 <template>
     <div>                
-        <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-8 asowp-space-y-6 asowp-translate-y-10">
-            <div class="asowp-flex asowp-flex-col asowp-space-y-3">
-                <label class="asowp-text-[12px] asowp-font-medium">{{ __("Show Navigation Menu on Mobile", "all-signs-options-pro") }}</label>
+        <div class="ascwo-bg-[#F8F9FB] ascwo-px-8 ascwo-py-8 ascwo-space-y-6 ascwo-translate-y-10">
+            <div class="ascwo-flex ascwo-flex-col ascwo-space-y-3">
+                <label class="ascwo-text-[12px] ascwo-font-medium">{{ __("Show Navigation Menu on Mobile", "all-signs-customizer-for-woocommerce-pro") }}</label>
                 <select v-model="mobile.showNavigatorMenu">
-                    <option value="on">{{ __("On", "all-signs-options-pro") }}</option>
-                    <option value="off">{{ __("Off", "all-signs-options-pro") }}</option>
+                    <option value="on">{{ __("On", "all-signs-customizer-for-woocommerce-pro") }}</option>
+                    <option value="off">{{ __("Off", "all-signs-customizer-for-woocommerce-pro") }}</option>
                 </select>
             </div>
-            <div class="asowp-text-[11px] asowp-text-[#444444]">{{ __("Display a navigation menu of the selections on mobile.", "all-signs-options-pro") }}</div>
-            <div class="asowp-flex asowp-flex-col asowp-space-y-3">
-                <label class="asowp-text-[12px] asowp-font-medium">{{ __("Show Navigation Menu First", "all-signs-options-pro") }}</label>
+            <div class="ascwo-text-[11px] ascwo-text-[#444444]">{{ __("Display a navigation menu of the selections on mobile.", "all-signs-customizer-for-woocommerce-pro") }}</div>
+            <div class="ascwo-flex ascwo-flex-col ascwo-space-y-3">
+                <label class="ascwo-text-[12px] ascwo-font-medium">{{ __("Show Navigation Menu First", "all-signs-customizer-for-woocommerce-pro") }}</label>
                 <select v-model="mobile.showNavigationMenuFirst">
-                    <option value="yes">{{ __("Yes", "all-signs-options-pro") }}</option>
-                    <option value="no">{{ __("No", "all-signs-options-pro") }}</option>
+                    <option value="yes">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</option>
+                    <option value="no">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</option>
                 </select>
             </div>
-            <div class="asowp-text-[11px] asowp-text-[#444444]">{{ __("This allows the users to jump to a specific selection from the navigation menu first. Otherwise, the screen will show the first selection.", "all-signs-options-pro") }}</div>
-            <div class="asowp-flex asowp-flex-col asowp-space-y-3">
-                <label class="asowp-text-[12px] asowp-font-medium">{{ __("Mobile Selection Options Display", "all-signs-options-pro") }}</label>
+            <div class="ascwo-text-[11px] ascwo-text-[#444444]">{{ __("This allows the users to jump to a specific selection from the navigation menu first. Otherwise, the screen will show the first selection.", "all-signs-customizer-for-woocommerce-pro") }}</div>
+            <div class="ascwo-flex ascwo-flex-col ascwo-space-y-3">
+                <label class="ascwo-text-[12px] ascwo-font-medium">{{ __("Mobile Selection Options Display", "all-signs-customizer-for-woocommerce-pro") }}</label>
                 <select v-model="mobile.mobileSelectionOptionsDisplay">
-                    <option value="horizontally-stack">{{ __("Horizontally Stack", "all-signs-options-pro") }}</option>
-                    <option value="scroll">{{ __("Scroll", "all-signs-options-pro") }}</option>
+                    <option value="horizontally-stack">{{ __("Horizontally Stack", "all-signs-customizer-for-woocommerce-pro") }}</option>
+                    <option value="scroll">{{ __("Scroll", "all-signs-customizer-for-woocommerce-pro") }}</option>
                 </select>
             </div>
-            <div class="asowp-text-[11px] asowp-text-[#444444]">{{ __("Allow selection options to display as horizontally scrollable options on mobile or stacked vertically.", "all-signs-options-pro") }}</div>
+            <div class="ascwo-text-[11px] ascwo-text-[#444444]">{{ __("Allow selection options to display as horizontally scrollable options on mobile or stacked vertically.", "all-signs-customizer-for-woocommerce-pro") }}</div>
         </div>
     </div>
-    <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-space-x-4 asowp-px-4 asowp-py-3 asowp-justify-end asowp-items-end asowp-translate-y-16">
-        <div class="asowp-bg-[#016464] asowp-rounded">
-            <button :disabled="isLoading" @click="updateMobileSettings" class="asowp-rounded asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointerasowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
-                <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" />
-                <div class="asowp-font-semibold asowp-text-[16px]">{{ __("Save", "all-signs-options-pro") }}</div>
+    <div class="ascwo-bg-[#F8F9FB] ascwo-flex ascwo-space-x-4 ascwo-px-4 ascwo-py-3 ascwo-justify-end ascwo-items-end ascwo-translate-y-16">
+        <div class="ascwo-bg-[#016464] ascwo-rounded">
+            <button :disabled="isLoading" @click="updateMobileSettings" class="ascwo-rounded ascwo-flex ascwo-bg-transparent ascwo-w-fit ascwo-space-x-2 ascwo-h-fit ascwo-text-white ascwo-px-12 ascwo-p-2.5 ascwo-border-none ascwo-opacity-90 hover:ascwo-opacity-100 hover:ascwo-border-none hover:ascwo-text-white hover:ascwo-bg-[#016464] ascwo-cursor-pointerascwo-flex ascwo-bg-transparent ascwo-w-fit ascwo-space-x-2 ascwo-h-fit ascwo-text-white ascwo-px-12 ascwo-p-2.5 ascwo-border-none ascwo-opacity-90 hover:ascwo-opacity-100 hover:ascwo-border-none hover:ascwo-text-white hover:ascwo-bg-[#016464] ascwo-cursor-pointer">
+                <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="ascwo-w-5 ascwo-w-5" v-if="isLoading" />
+                <div class="ascwo-font-semibold ascwo-text-[16px]">{{ __("Save", "all-signs-customizer-for-woocommerce-pro") }}</div>
             </button>
         </div>
     </div>

@@ -1,19 +1,19 @@
 <template>
-  <section class="asowp-additional">
+  <section class="ascwo-additional">
     <template v-if="!isNewAdditionalOptions">
-      <header class="asowp-additional-header">
+      <header class="ascwo-additional-header">
         <div>
           <h1>Additional Components</h1>
           <p>Manage the reusable additional components offered in this configuration.</p>
         </div>
-        <button type="button" class="asowp-additional-primary" :disabled="isLoading" @click="newAdditionalOptions">
+        <button type="button" class="ascwo-additional-primary" :disabled="isLoading" @click="newAdditionalOptions">
           <PlusIcon :size="15" />
           Add additional component
         </button>
       </header>
 
-      <div class="asowp-additional-card">
-        <table class="asowp-additional-table">
+      <div class="ascwo-additional-card">
+        <table class="ascwo-additional-table">
           <thead>
             <tr>
               <th>Icon</th>
@@ -24,16 +24,16 @@
           </thead>
           <tbody>
             <tr v-if="isFetching">
-              <td colspan="4" class="asowp-additional-empty asowp-table-loader-cell">
-                <Loader2Icon class="asowp-table-loader-icon asowp-w-7 asowp-h-7" />
+              <td colspan="4" class="ascwo-additional-empty ascwo-table-loader-cell">
+                <Loader2Icon class="ascwo-table-loader-icon ascwo-w-7 ascwo-h-7" />
               </td>
             </tr>
             <tr v-else-if="additionalOptions.length === 0">
-              <td colspan="4" class="asowp-additional-empty">{{ noAdditionalOptionsFound || 'No additional components found' }}</td>
+              <td colspan="4" class="ascwo-additional-empty">{{ noAdditionalOptionsFound || 'No additional components found' }}</td>
             </tr>
             <tr v-for="(additionalOption, key) in additionalOptions" :key="key">
               <td>
-                <div class="asowp-additional-icon-box">
+                <div class="ascwo-additional-icon-box">
                   <img v-if="additionalOption.icon" :src="additionalOption.icon" alt="" />
                   <span v-else>-</span>
                 </div>
@@ -43,17 +43,17 @@
                 <p>{{ additionalOption.description }}</p>
               </td>
               <td>
-                <button type="button" class="asowp-additional-pill" @click="openComponentEditor(key)">
+                <button type="button" class="ascwo-additional-pill" @click="openComponentEditor(key)">
                   {{ optionCount(additionalOption) }} options
                 </button>
               </td>
               <td>
-                <div class="asowp-additional-actions">
-                  <button type="button" class="asowp-additional-secondary" @click="openComponentEditor(key)">
+                <div class="ascwo-additional-actions">
+                  <button type="button" class="ascwo-additional-secondary" @click="openComponentEditor(key)">
                     <PencilIcon :size="14" />
                     Edit
                   </button>
-                  <button type="button" class="asowp-additional-danger" @click="selectAdditionalOption(key, additionalOption, true)">
+                  <button type="button" class="ascwo-additional-danger" @click="selectAdditionalOption(key, additionalOption, true)">
                     <Trash2Icon :size="14" />
                     Delete
                   </button>
@@ -66,39 +66,39 @@
     </template>
 
     <template v-else>
-      <header class="asowp-additional-header asowp-additional-header-simple">
+      <header class="ascwo-additional-header ascwo-additional-header-simple">
         <div>
           <h1>{{ isEdit ? 'Edit additional component' : 'Add additional component' }}</h1>
           <p>Define the component and the options customers can choose from.</p>
         </div>
       </header>
 
-      <div class="asowp-additional-card asowp-additional-form-card">
-        <div class="asowp-additional-grid asowp-additional-grid-2">
-          <div class="asowp-additional-field">
+      <div class="ascwo-additional-card ascwo-additional-form-card">
+        <div class="ascwo-additional-grid ascwo-additional-grid-2">
+          <div class="ascwo-additional-field">
             <label>Title</label>
             <input v-model="additionalOption.title" type="text" :class="{ 'is-invalid': emptyLabel }" />
           </div>
-          <div class="asowp-additional-field">
+          <div class="ascwo-additional-field">
             <label>Group icon</label>
             <UploadField :value="additionalOption.icon" button-label="Upload icon" @choose="selectAdditionalOptionsIcon" @clear="additionalOption.icon = ''" />
           </div>
         </div>
 
-        <div class="asowp-additional-field">
+        <div class="ascwo-additional-field">
           <label>Description</label>
           <input v-model="additionalOption.description" type="text" />
         </div>
       </div>
 
-      <div class="asowp-additional-footer">
-        <button type="button" class="asowp-additional-secondary" :disabled="isLoading" @click="back">
+      <div class="ascwo-additional-footer">
+        <button type="button" class="ascwo-additional-secondary" :disabled="isLoading" @click="back">
           Back to additional components
         </button>
         <button
           v-if="isEdit"
           type="button"
-          class="asowp-additional-primary"
+          class="ascwo-additional-primary"
           :disabled="isLoading"
           @click="updateAdditionalOption"
         >
@@ -107,7 +107,7 @@
         <button
           v-else
           type="button"
-          class="asowp-additional-primary"
+          class="ascwo-additional-primary"
           :disabled="isLoading"
           @click="addAdditionalOption"
         >
@@ -116,14 +116,14 @@
       </div>
     </template>
 
-    <div v-if="openModal" class="asowp-additional-modal" @click.self="closeModal">
-      <div class="asowp-additional-dialog">
-        <button type="button" class="asowp-additional-close" @click="closeModal">x</button>
+    <div v-if="openModal" class="ascwo-additional-modal" @click.self="closeModal">
+      <div class="ascwo-additional-dialog">
+        <button type="button" class="ascwo-additional-close" @click="closeModal">x</button>
         <h2>Delete additional component?</h2>
         <p>{{ additionalOption.title }}</p>
-        <div class="asowp-additional-actions asowp-additional-actions-end">
-          <button type="button" class="asowp-additional-secondary" :disabled="isLoading" @click="closeModal">Cancel</button>
-          <button type="button" class="asowp-additional-danger-button" :disabled="isLoading" @click="deleteAdditionalOption">
+        <div class="ascwo-additional-actions ascwo-additional-actions-end">
+          <button type="button" class="ascwo-additional-secondary" :disabled="isLoading" @click="closeModal">Cancel</button>
+          <button type="button" class="ascwo-additional-danger-button" :disabled="isLoading" @click="deleteAdditionalOption">
             {{ isLoading ? 'Deleting...' : 'Delete' }}
           </button>
         </div>
@@ -326,9 +326,9 @@ const UploadField = defineComponent({
   emits: ['choose', 'clear'],
   setup(props, { emit }) {
     return () =>
-      h('div', { class: 'asowp-additional-upload' }, [
-        h('button', { type: 'button', class: 'asowp-additional-primary asowp-additional-upload-button', onClick: (event) => emit('choose', event) }, props.buttonLabel),
-        h('div', { class: 'asowp-additional-upload-preview' }, [
+      h('div', { class: 'ascwo-additional-upload' }, [
+        h('button', { type: 'button', class: 'ascwo-additional-primary ascwo-additional-upload-button', onClick: (event) => emit('choose', event) }, props.buttonLabel),
+        h('div', { class: 'ascwo-additional-upload-preview' }, [
           props.value ? h('img', { src: props.value, alt: '' }) : null,
           props.value ? h('button', { type: 'button', onClick: () => emit('clear') }, 'x') : null,
         ]),
@@ -338,22 +338,22 @@ const UploadField = defineComponent({
 </script>
 
 <style>
-.asowp-additional {
+.ascwo-additional {
   display: grid;
   gap: 12px;
   color: #202223;
   font-size: 13px;
 }
 
-.asowp-additional-header,
-.asowp-additional-card {
+.ascwo-additional-header,
+.ascwo-additional-card {
   background: #fff;
   border: 1px solid #d8dee4;
   border-radius: 8px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
 }
 
-.asowp-additional-header {
+.ascwo-additional-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -361,11 +361,11 @@ const UploadField = defineComponent({
   padding: 24px 28px;
 }
 
-.asowp-additional-header-simple {
+.ascwo-additional-header-simple {
   align-items: flex-start;
 }
 
-.asowp-additional-header h1 {
+.ascwo-additional-header h1 {
   margin: 0;
   color: #303030;
   font-size: 18px;
@@ -373,25 +373,25 @@ const UploadField = defineComponent({
   line-height: 1.25;
 }
 
-.asowp-additional-header p,
-.asowp-additional-card p {
+.ascwo-additional-header p,
+.ascwo-additional-card p {
   margin: 4px 0 0;
   color: #5f6368;
   font-size: 12px;
   line-height: 1.35;
 }
 
-.asowp-additional-card {
+.ascwo-additional-card {
   padding: 28px 34px;
 }
 
-.asowp-additional-table {
+.ascwo-additional-table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
 }
 
-.asowp-additional-table th {
+.ascwo-additional-table th {
   padding: 12px 14px;
   background: #f4f4f4;
   color: #5f6368;
@@ -399,25 +399,25 @@ const UploadField = defineComponent({
   font-weight: 700;
 }
 
-.asowp-additional-table td {
+.ascwo-additional-table td {
   padding: 8px 14px;
   border-bottom: 1px solid #e1e3e5;
   color: #303030;
   vertical-align: middle;
 }
 
-.asowp-additional-table tr:last-child td {
+.ascwo-additional-table tr:last-child td {
   border-bottom: 0;
 }
 
-.asowp-additional-table strong {
+.ascwo-additional-table strong {
   display: block;
   color: #202223;
   font-size: 13px;
   font-weight: 800;
 }
 
-.asowp-additional-icon-box {
+.ascwo-additional-icon-box {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -430,27 +430,27 @@ const UploadField = defineComponent({
   color: #5f6368;
 }
 
-.asowp-additional-icon-box img {
+.ascwo-additional-icon-box img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.asowp-additional-actions {
+.ascwo-additional-actions {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.asowp-additional-actions-end {
+.ascwo-additional-actions-end {
   justify-content: flex-end;
 }
 
-.asowp-additional-primary,
-.asowp-additional-secondary,
-.asowp-additional-danger,
-.asowp-additional-pill,
-.asowp-additional-danger-button {
+.ascwo-additional-primary,
+.ascwo-additional-secondary,
+.ascwo-additional-danger,
+.ascwo-additional-pill,
+.ascwo-additional-danger-button {
   appearance: none;
   display: inline-flex;
   align-items: center;
@@ -467,39 +467,39 @@ const UploadField = defineComponent({
   text-decoration: none;
 }
 
-.asowp-additional-primary,
-.asowp-additional-primary:hover,
-.asowp-additional-primary:focus {
+.ascwo-additional-primary,
+.ascwo-additional-primary:hover,
+.ascwo-additional-primary:focus {
   color: #fff;
   background: #007a73;
   border: 1px solid #006c67;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
-.asowp-additional-secondary,
-.asowp-additional-secondary:hover,
-.asowp-additional-secondary:focus {
+.ascwo-additional-secondary,
+.ascwo-additional-secondary:hover,
+.ascwo-additional-secondary:focus {
   color: #111827;
   background: #fff;
   border: 1px solid #c9cccf;
 }
 
-.asowp-additional-danger,
-.asowp-additional-danger:hover,
-.asowp-additional-danger:focus {
+.ascwo-additional-danger,
+.ascwo-additional-danger:hover,
+.ascwo-additional-danger:focus {
   padding-inline: 4px;
   color: #8a0f00;
   background: transparent;
   border: 0;
 }
 
-.asowp-additional-danger-button {
+.ascwo-additional-danger-button {
   color: #fff;
   background: #bf0711;
   border: 1px solid #a80d12;
 }
 
-.asowp-additional-pill {
+.ascwo-additional-pill {
   min-height: 22px;
   padding: 4px 10px;
   color: #5f6368;
@@ -509,38 +509,38 @@ const UploadField = defineComponent({
   font-weight: 600;
 }
 
-.asowp-additional-empty {
+.ascwo-additional-empty {
   height: 120px;
   text-align: center;
   color: #5f6368;
 }
 
-.asowp-additional-grid {
+.ascwo-additional-grid {
   display: grid;
   gap: 14px 18px;
 }
 
-.asowp-additional-grid-2 {
+.ascwo-additional-grid-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.asowp-additional-form-card {
+.ascwo-additional-form-card {
   display: grid;
   gap: 14px;
 }
 
-.asowp-additional-field {
+.ascwo-additional-field {
   display: grid;
   gap: 6px;
 }
 
-.asowp-additional-field label {
+.ascwo-additional-field label {
   color: #303030;
   font-size: 12px;
   font-weight: 500;
 }
 
-.asowp-additional-field input {
+.ascwo-additional-field input {
   width: 100%;
   min-height: 34px;
   padding: 6px 10px;
@@ -551,12 +551,12 @@ const UploadField = defineComponent({
   font-size: 13px;
 }
 
-.asowp-additional-field input.is-invalid {
+.ascwo-additional-field input.is-invalid {
   border-color: #d72c0d;
   background: #fff4f4;
 }
 
-.asowp-additional-upload {
+.ascwo-additional-upload {
   display: flex;
   align-items: center;
   min-height: 34px;
@@ -567,12 +567,12 @@ const UploadField = defineComponent({
   padding-left: 5px;
 }
 
-.asowp-additional-upload-button {
+.ascwo-additional-upload-button {
   min-height: 26px;
   padding: 5px 12px;
 }
 
-.asowp-additional-upload-preview {
+.ascwo-additional-upload-preview {
   position: relative;
   margin-left: auto;
   width: 44px;
@@ -580,13 +580,13 @@ const UploadField = defineComponent({
   border-left: 1px solid #e1e3e5;
 }
 
-.asowp-additional-upload-preview img {
+.ascwo-additional-upload-preview img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.asowp-additional-upload-preview button {
+.ascwo-additional-upload-preview button {
   position: absolute;
   top: 0;
   right: 0;
@@ -595,13 +595,13 @@ const UploadField = defineComponent({
   color: #fff;
 }
 
-.asowp-additional-footer {
+.ascwo-additional-footer {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
 }
 
-.asowp-additional-modal {
+.ascwo-additional-modal {
   position: fixed;
   inset: 0;
   z-index: 9999;
@@ -611,7 +611,7 @@ const UploadField = defineComponent({
   background: rgba(0, 0, 0, 0.45);
 }
 
-.asowp-additional-dialog {
+.ascwo-additional-dialog {
   position: relative;
   width: min(420px, calc(100vw - 32px));
   padding: 22px;
@@ -620,13 +620,13 @@ const UploadField = defineComponent({
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
 }
 
-.asowp-additional-dialog h2 {
+.ascwo-additional-dialog h2 {
   margin: 0;
   font-size: 16px;
   font-weight: 800;
 }
 
-.asowp-additional-close {
+.ascwo-additional-close {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -637,12 +637,12 @@ const UploadField = defineComponent({
 }
 
 @media (max-width: 900px) {
-  .asowp-additional-header,
-  .asowp-additional-grid-2 {
+  .ascwo-additional-header,
+  .ascwo-additional-grid-2 {
     grid-template-columns: 1fr;
   }
 
-  .asowp-additional-header {
+  .ascwo-additional-header {
     display: grid;
   }
 }

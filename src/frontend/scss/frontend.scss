@@ -1,20 +1,20 @@
 :root {
-  --asowp-scrollBar-color: #000000;
+  --ascwo-scrollBar-color: #000000;
 }
-.asowp-configurator-container {
+.ascwo-configurator-container {
   height: 100vh;
   min-height: 100vh;
 }
-.asowp-configurator-container:empty {
+.ascwo-configurator-container:empty {
   height: 0;
   min-height: 0;
 }
-.asowp-templates-customize_button {
+.ascwo-templates-customize_button {
   color: white;
   text-decoration: none;
 }
-.asowp-frontend-app,
-#asowp-frontend-app {
+.ascwo-frontend-app,
+#ascwo-frontend-app {
   p {
     margin: 0 !important;
   }
@@ -24,32 +24,32 @@
     overflow: auto;
   }
 
-  .asowp-scrollBar::-webkit-scrollbar {
+  .ascwo-scrollBar::-webkit-scrollbar {
     width: 6px;
     height: 4px;
     overflow: scroll;
   }
-  .asowp-scrollBar::-webkit-scrollbar-thumb {
-    background-color: var(--asowp-scrollBar-color);
+  .ascwo-scrollBar::-webkit-scrollbar-thumb {
+    background-color: var(--ascwo-scrollBar-color);
     border-radius: 20px;
   }
 
-  .asowp-base-animation {
+  .ascwo-base-animation {
     transition-property: all;
     transition-duration: 500ms;
     // cursor: pointer;
   }
-  .asowp-buttons-rad-none {
+  .ascwo-buttons-rad-none {
     border-radius: 0px !important;
     border: 0px;
   }
-  .asowp-full-center {
+  .ascwo-full-center {
     justify-content: center !important;
     align-items: center !important;
     /* white-space: nowrap; */
   }
 
-  .asowp-option-buton {
+  .ascwo-option-buton {
     width: fit-content;
     height: 90%;
     display: flex;
@@ -57,49 +57,49 @@
     width: -moz-fit-content;
   }
 
-  .asowp-new-border {
+  .ascwo-new-border {
     border: solid 1px !important;
   }
 
-  .asowp-inputImage {
-    /* asowp-text-md  */
+  .ascwo-inputImage {
+    /* ascwo-text-md  */
     display: flex !important;
     padding: 8px 14px 8px 14px !important;
     border-radius: 9999px !important;
     cursor: pointer !important;
   }
-  .asowp-inputImage svg,
-  .asowp-inputImage p {
+  .ascwo-inputImage svg,
+  .ascwo-inputImage p {
     margin-left: 5px !important;
     margin-right: 5px !important;
   }
 }
-#asowp-showPreview{
+#ascwo-showPreview {
   pointer-events: none;
   user-select: none;
-  -webkit-user-select: none
+  -webkit-user-select: none;
 }
-.asowp-text-size {
+.ascwo-text-size {
   padding: 0 !important;
   height: 100% !important;
   margin: 0 !important;
   text-align: center;
 }
 
-.asowp-inputColor-hide {
+.ascwo-inputColor-hide {
   width: 0px !important;
   height: 0px !important;
 }
 
-.asowp-scrollDiv {
+.ascwo-scrollDiv {
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
 }
-.asowp-cardDiv {
+.ascwo-cardDiv {
   // display: inline-block;
 }
-.asowp-disabled-div {
+.ascwo-disabled-div {
   pointer-events: none;
   opacity: 0.5;
   user-select: none;

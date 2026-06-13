@@ -1,161 +1,161 @@
 <template>
-    <div class="asowp-space-y-1">
-        <div class="asowp-bg-white asowp-shadow-md asowp-justify-center asowp-items-center asowp-px-4 asowp-py-6">
-            <p class="asowp-text-[14px] asowp-font-bold">2- {{ __('Set the Label and Description', 'all-signs-options-pro') }}</p>
-            <p class="asowp-text-[12px]">{{ __('This text will display above the input options.', 'all-signs-options-pro') }}</p>
-            <div class="asowp-flex asowp-justify-between asowp-space-x-12">
-                <div class="asowp-w-2/5 asowp-space-y-2">
-                    <label>{{ __('Label', 'all-signs-options-pro') }}</label>
-                    <input v-model="inputTypeImage.label" type="text" :class="`asowp-w-full ${emptyLabel?'asowp-field-required':''}`" value="Remote control (Dimmer)"/>
+    <div class="ascwo-space-y-1">
+        <div class="ascwo-bg-white ascwo-shadow-md ascwo-justify-center ascwo-items-center ascwo-px-4 ascwo-py-6">
+            <p class="ascwo-text-[14px] ascwo-font-bold">2- {{ __('Set the Label and Description', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+            <p class="ascwo-text-[12px]">{{ __('This text will display above the input options.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+            <div class="ascwo-flex ascwo-justify-between ascwo-space-x-12">
+                <div class="ascwo-w-2/5 ascwo-space-y-2">
+                    <label>{{ __('Label', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                    <input v-model="inputTypeImage.label" type="text" :class="`ascwo-w-full ${emptyLabel?'ascwo-field-required':''}`" value="Remote control (Dimmer)"/>
                 </div>
-                <div class="asowp-w-2/5 asowp-space-y-2">
-                    <label>{{ __('Description', 'all-signs-options-pro') }}</label>
-                    <input v-model="inputTypeImage.description" type="text" class="asowp-w-full" value="A remote control is included free with every sign"/>
+                <div class="ascwo-w-2/5 ascwo-space-y-2">
+                    <label>{{ __('Description', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                    <input v-model="inputTypeImage.description" type="text" class="ascwo-w-full" value="A remote control is included free with every sign"/>
                 </div>
             </div>
         </div>
-        <div class="asowp-bg-white asowp-shadow-md asowp-justify-center asowp-items-center asowp-px-4 asowp-py-6 asowp-space-y-2">
+        <div class="ascwo-bg-white ascwo-shadow-md ascwo-justify-center ascwo-items-center ascwo-px-4 ascwo-py-6 ascwo-space-y-2">
             <div>
-                <p class="asowp-text-[14px] asowp-font-bold">3- {{ __('Images as Input', 'all-signs-options-pro') }}</p>
-                <p class="asowp-text-[12px]">{{ __('Displays as a row of images that is selectable by the customer.', 'all-signs-options-pro') }}</p>
+                <p class="ascwo-text-[14px] ascwo-font-bold">3- {{ __('Images as Input', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                <p class="ascwo-text-[12px]">{{ __('Displays as a row of images that is selectable by the customer.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
             </div>
-            <div class="asowp-relative asowp-border-solid asowp-border-[1px] asowp-border-[#e5e7eb] asowp-rounded-lg asowp-p-8" v-for="(option,key) in inputTypeImage.options">
-                <div class="asowp-font-bold asowp-font-[14px]" v-if="!dropOptions[key]">
+            <div class="ascwo-relative ascwo-border-solid ascwo-border-[1px] ascwo-border-[#e5e7eb] ascwo-rounded-lg ascwo-p-8" v-for="(option,key) in inputTypeImage.options">
+                <div class="ascwo-font-bold ascwo-font-[14px]" v-if="!dropOptions[key]">
                     {{ key+1 }}. {{ option.label }}
                 </div>
                 <div v-if="dropOptions[key]">
-                    <div class="asowp-flex asowp-justify-between asowp-space-x-12">
-                        <div class="asowp-w-2/5 asowp-space-y-2">
-                            <label>{{ __('Label', 'all-signs-options-pro') }}</label>
-                            <input v-model="inputTypeImage.options[key].label" type="text" :class="`asowp-w-full`" value="Remote control (Dimmer)"/>
+                    <div class="ascwo-flex ascwo-justify-between ascwo-space-x-12">
+                        <div class="ascwo-w-2/5 ascwo-space-y-2">
+                            <label>{{ __('Label', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                            <input v-model="inputTypeImage.options[key].label" type="text" :class="`ascwo-w-full`" value="Remote control (Dimmer)"/>
                         </div>
-                        <div class="asowp-w-2/5 asowp-space-y-2">
-                            <label>{{ __('Value (Required)', 'all-signs-options-pro') }}</label>
-                            <input v-model="inputTypeImage.options[key].value" type="text" :class="`asowp-w-full ${emptyValueArray[key]?'asowp-field-required':''}`" value="A remote control is included free with every sign"/>
+                        <div class="ascwo-w-2/5 ascwo-space-y-2">
+                            <label>{{ __('Value (Required)', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                            <input v-model="inputTypeImage.options[key].value" type="text" :class="`ascwo-w-full ${emptyValueArray[key]?'ascwo-field-required':''}`" value="A remote control is included free with every sign"/>
                         </div>
                     </div>
-                    <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2 asowp-py-4">
-                        <label class="so-text-[12px] asowp-text-[#444444]">{{ __('Color', 'all-signs-options-pro') }}</label>
-                        <div class="asowp-relative asowp-flex">
+                    <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2 ascwo-py-4">
+                        <label class="so-text-[12px] ascwo-text-[#444444]">{{ __('Color', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                        <div class="ascwo-relative ascwo-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="inputTypeImage.options[key].color"
                                 @input="e=>colorImageInput(e,key)"
-                                class="asowp-w-9 asowp-h-[30px]"
+                                class="ascwo-w-9 ascwo-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="inputTypeImage.options[key].color"
                                 @input="e=>colorImageInput(e,key)"
-                                class="asowp-p-1 asowp-text-black asowp-w-full -asowp-translate-y-px"
+                                class="ascwo-p-1 ascwo-text-black ascwo-w-full -ascwo-translate-y-px"
                             />
                         </div>
                     </div>
                     <div>
-                        <p class="asowp-text-[14px] asowp-font-bold">{{ __('Popup Image (optional)', 'all-signs-options-pro') }}</p>
-                        <p class="asowp-text-[12px]">{{ __('Example Image - displayed as popup', 'all-signs-options-pro') }}</p>
-                        <div class="asowp-flex">
-                            <div class="asowp-flex asowp-items-center asowp-justify-between asowp-w-full asowp-h-[54px] asowp-border asowp-border-solid asowp-border-[#9ca3af] asowp-rounded-[5px] asowp-bg-white asowp-overflow-hidden asowp-p-1">
-                                <button type="button" @click="e=>selectPopupImage(e,key)" class="asowp-bg-[#007a73] asowp-border-none asowp-h-[40px] asowp-px-4 asowp-rounded-[6px] asowp-text-white asowp-text-[12px] asowp-font-bold asowp-cursor-pointer hover:asowp-bg-[#006c67] hover:asowp-border-none hover:asowp-text-white">{{ __('choose a picture', 'all-signs-options-pro') }}</button>
-                                <div class="asowp-relative asowp-w-[50px] asowp-h-[48px] asowp-rounded-[8px] asowp-border asowp-border-solid asowp-border-[#e5e7eb] asowp-bg-white asowp-overflow-hidden">
-                                    <img v-if="inputTypeImage.options[key].popImg != ''" :src="inputTypeImage.options[key].popImg" alt="" class="asowp-absolute asowp-inset-0 asowp-w-full asowp-h-full asowp-object-cover">
-                                    <button v-if="inputTypeImage.options[key].popImg != ''" type="button" @click="()=>{inputTypeImage.options[key].popImg = ''}" :class="`asowp-bg-[#007a73] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none asowp-cursor-pointer`">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
+                        <p class="ascwo-text-[14px] ascwo-font-bold">{{ __('Popup Image (optional)', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                        <p class="ascwo-text-[12px]">{{ __('Example Image - displayed as popup', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                        <div class="ascwo-flex">
+                            <div class="ascwo-flex ascwo-items-center ascwo-justify-between ascwo-w-full ascwo-h-[54px] ascwo-border ascwo-border-solid ascwo-border-[#9ca3af] ascwo-rounded-[5px] ascwo-bg-white ascwo-overflow-hidden ascwo-p-1">
+                                <button type="button" @click="e=>selectPopupImage(e,key)" class="ascwo-bg-[#007a73] ascwo-border-none ascwo-h-[40px] ascwo-px-4 ascwo-rounded-[6px] ascwo-text-white ascwo-text-[12px] ascwo-font-bold ascwo-cursor-pointer hover:ascwo-bg-[#006c67] hover:ascwo-border-none hover:ascwo-text-white">{{ __('choose a picture', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                                <div class="ascwo-relative ascwo-w-[50px] ascwo-h-[48px] ascwo-rounded-[8px] ascwo-border ascwo-border-solid ascwo-border-[#e5e7eb] ascwo-bg-white ascwo-overflow-hidden">
+                                    <img v-if="inputTypeImage.options[key].popImg != ''" :src="inputTypeImage.options[key].popImg" alt="" class="ascwo-absolute ascwo-inset-0 ascwo-w-full ascwo-h-full ascwo-object-cover">
+                                    <button v-if="inputTypeImage.options[key].popImg != ''" type="button" @click="()=>{inputTypeImage.options[key].popImg = ''}" :class="`ascwo-bg-[#007a73] ascwo-absolute ascwo-bottom-0 ascwo-right-0 ascwo-text-white ascwo-p-1 ascwo-rounded-tl-lg ascwo-border-none ascwo-cursor-pointer`">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                         </svg>
                                     </button>
                                 </div>
                             </div>
-                            <div class="asowp-flex asowp-items-center asowp-justify-between asowp-w-full asowp-h-[54px] asowp-border asowp-border-solid asowp-border-[#9ca3af] asowp-rounded-[5px] asowp-bg-white asowp-overflow-hidden asowp-p-1">
-                                <button type="button" @click="e=>selectChangePreviewImage(e,key)" class="asowp-bg-[#007a73] asowp-border-none asowp-h-[40px] asowp-px-4 asowp-rounded-[6px] asowp-text-white asowp-text-[12px] asowp-font-bold asowp-cursor-pointer hover:asowp-bg-[#006c67] hover:asowp-border-none hover:asowp-text-white">{{ __('choose a picture', 'all-signs-options-pro') }}</button>
-                                <div class="asowp-relative asowp-w-[50px] asowp-h-[48px] asowp-rounded-[8px] asowp-border asowp-border-solid asowp-border-[#e5e7eb] asowp-bg-white asowp-overflow-hidden">
-                                    <img v-if="inputTypeImage.options[key].prevImg != ''" :src="inputTypeImage.options[key].prevImg" alt="" class="asowp-absolute asowp-inset-0 asowp-w-full asowp-h-full asowp-object-cover">
-                                    <button v-if="inputTypeImage.options[key].prevImg != ''" type="button" @click="()=>{inputTypeImage.options[key].prevImg = ''}" :class="`asowp-bg-[#007a73] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none asowp-cursor-pointer`">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
+                            <div class="ascwo-flex ascwo-items-center ascwo-justify-between ascwo-w-full ascwo-h-[54px] ascwo-border ascwo-border-solid ascwo-border-[#9ca3af] ascwo-rounded-[5px] ascwo-bg-white ascwo-overflow-hidden ascwo-p-1">
+                                <button type="button" @click="e=>selectChangePreviewImage(e,key)" class="ascwo-bg-[#007a73] ascwo-border-none ascwo-h-[40px] ascwo-px-4 ascwo-rounded-[6px] ascwo-text-white ascwo-text-[12px] ascwo-font-bold ascwo-cursor-pointer hover:ascwo-bg-[#006c67] hover:ascwo-border-none hover:ascwo-text-white">{{ __('choose a picture', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                                <div class="ascwo-relative ascwo-w-[50px] ascwo-h-[48px] ascwo-rounded-[8px] ascwo-border ascwo-border-solid ascwo-border-[#e5e7eb] ascwo-bg-white ascwo-overflow-hidden">
+                                    <img v-if="inputTypeImage.options[key].prevImg != ''" :src="inputTypeImage.options[key].prevImg" alt="" class="ascwo-absolute ascwo-inset-0 ascwo-w-full ascwo-h-full ascwo-object-cover">
+                                    <button v-if="inputTypeImage.options[key].prevImg != ''" type="button" @click="()=>{inputTypeImage.options[key].prevImg = ''}" :class="`ascwo-bg-[#007a73] ascwo-absolute ascwo-bottom-0 ascwo-right-0 ascwo-text-white ascwo-p-1 ascwo-rounded-tl-lg ascwo-border-none ascwo-cursor-pointer`">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                         </svg>
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        <p class="asowp-text-[14px] asowp-font-bold">{{ __('Pricing (optional)', 'all-signs-options-pro') }}</p>
-                        <div class="asowp-flex asowp-space-x-4">
-                            <div class="asowp-flex asowp-justify-center asowp-items-center asowp-space-x-4">
-                                <p class="asowp-text-md asowp-font-medium asowp-text-black">{{ __('None', 'all-signs-options-pro') }}</p>
-                                <label :for="'none'+key" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                    <input :id="'none'+key" type="radio" :name="'price'+key" class="asowp-sr-only asowp-peer" value="none" v-model="inputTypeImage.options[key].price.type">
-                                    <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[112%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-3px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-3 after:asowp-w-3 after:asowp-transition-all after:asowp-shadow-lg`"></div>
+                        <p class="ascwo-text-[14px] ascwo-font-bold">{{ __('Pricing (optional)', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                        <div class="ascwo-flex ascwo-space-x-4">
+                            <div class="ascwo-flex ascwo-justify-center ascwo-items-center ascwo-space-x-4">
+                                <p class="ascwo-text-md ascwo-font-medium ascwo-text-black">{{ __('None', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                                <label :for="'none'+key" class="ascwo-relative ascwo-inline-flex ascwo-items-center ascwo-cursor-pointer ascwo-border-[1px] ascwo-border-solid ascwo-border-black ascwo-rounded-full">
+                                    <input :id="'none'+key" type="radio" :name="'price'+key" class="ascwo-sr-only ascwo-peer" value="none" v-model="inputTypeImage.options[key].price.type">
+                                    <div :class="`peer-checked:after:ascwo-border-[#016464] peer-checked:after:ascwo-border-solid peer-checked:after:ascwo-border-[5px] peer-checked:after:ascwo-top-[-2px] peer-checked:after:ascwo-translate-y-[-15%] ascwo-w-10 ascwo-h-3 ascwo-border ascwo-border-[5px] ascwo-border-[#016464] ascwo-bg-zinc-300 ascwo-rounded-full ascwo-peer peer-checked:after:ascwo-translate-x-[112%] after:ascwo-content-[''] after:ascwo-absolute after:ascwo-top-[-3px] after:ascwo-left-[-5px] after:ascwo-bg-zinc-300 after:ascwo-border-white after:ascwo-border-solid after:ascwo-translate-y-[-15%] after:ascwo-border-[#FFFFFF] after:ascwo-border-[5px] after:ascwo-rounded-full after:ascwo-h-3 after:ascwo-w-3 after:ascwo-transition-all after:ascwo-shadow-lg`"></div>
                                 </label>
                             </div>
 
-                            <div class="asowp-flex asowp-justify-center asowp-items-center asowp-space-x-4">
-                                <p class="asowp-text-md asowp-font-medium asowp-text-black">{{ __('Base Price', 'all-signs-options-pro') }}</p>
-                                <label :for="'base'+key" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input :id="'base'+key" type="radio" :name="'price'+key" class="asowp-sr-only asowp-peer" value="base" v-model="inputTypeImage.options[key].price.type">
-                                <div class="peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[112%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-3px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-3 after:asowp-w-3 after:asowp-transition-all after:asowp-shadow-lg"></div>
+                            <div class="ascwo-flex ascwo-justify-center ascwo-items-center ascwo-space-x-4">
+                                <p class="ascwo-text-md ascwo-font-medium ascwo-text-black">{{ __('Base Price', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                                <label :for="'base'+key" class="ascwo-relative ascwo-inline-flex ascwo-items-center ascwo-cursor-pointer ascwo-border-[1px] ascwo-border-solid ascwo-border-black ascwo-rounded-full">
+                                <input :id="'base'+key" type="radio" :name="'price'+key" class="ascwo-sr-only ascwo-peer" value="base" v-model="inputTypeImage.options[key].price.type">
+                                <div class="peer-checked:after:ascwo-border-[#016464] peer-checked:after:ascwo-border-solid peer-checked:after:ascwo-border-[5px] peer-checked:after:ascwo-top-[-2px] peer-checked:after:ascwo-translate-y-[-15%] ascwo-w-10 ascwo-h-3 ascwo-border ascwo-border-[5px] ascwo-border-[#016464] ascwo-bg-zinc-300 ascwo-rounded-full ascwo-peer peer-checked:after:ascwo-translate-x-[112%] after:ascwo-content-[''] after:ascwo-absolute after:ascwo-top-[-3px] after:ascwo-left-[-5px] after:ascwo-bg-zinc-300 after:ascwo-border-white after:ascwo-border-solid after:ascwo-translate-y-[-15%] after:ascwo-border-[#FFFFFF] after:ascwo-border-[5px] after:ascwo-rounded-full after:ascwo-h-3 after:ascwo-w-3 after:ascwo-transition-all after:ascwo-shadow-lg"></div>
                                 </label>
                             </div>
-                            <div class="asowp-flex asowp-justify-center asowp-items-center asowp-space-x-4">
-                                <p class="asowp-text-md asowp-font-medium asowp-text-black">{{ __('Price Multiplier', 'all-signs-options-pro') }}</p>
-                                <label :for="'multiplier'+key" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input :id="'multiplier'+key" type="radio" :name="'price'+key" class="asowp-sr-only asowp-peer" value="multiplier" v-model="inputTypeImage.options[key].price.type">
-                                <div class="peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[112%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-3px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-3 after:asowp-w-3 after:asowp-transition-all after:asowp-shadow-lg"></div>
+                            <div class="ascwo-flex ascwo-justify-center ascwo-items-center ascwo-space-x-4">
+                                <p class="ascwo-text-md ascwo-font-medium ascwo-text-black">{{ __('Price Multiplier', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                                <label :for="'multiplier'+key" class="ascwo-relative ascwo-inline-flex ascwo-items-center ascwo-cursor-pointer ascwo-border-[1px] ascwo-border-solid ascwo-border-black ascwo-rounded-full">
+                                <input :id="'multiplier'+key" type="radio" :name="'price'+key" class="ascwo-sr-only ascwo-peer" value="multiplier" v-model="inputTypeImage.options[key].price.type">
+                                <div class="peer-checked:after:ascwo-border-[#016464] peer-checked:after:ascwo-border-solid peer-checked:after:ascwo-border-[5px] peer-checked:after:ascwo-top-[-2px] peer-checked:after:ascwo-translate-y-[-15%] ascwo-w-10 ascwo-h-3 ascwo-border ascwo-border-[5px] ascwo-border-[#016464] ascwo-bg-zinc-300 ascwo-rounded-full ascwo-peer peer-checked:after:ascwo-translate-x-[112%] after:ascwo-content-[''] after:ascwo-absolute after:ascwo-top-[-3px] after:ascwo-left-[-5px] after:ascwo-bg-zinc-300 after:ascwo-border-white after:ascwo-border-solid after:ascwo-translate-y-[-15%] after:ascwo-border-[#FFFFFF] after:ascwo-border-[5px] after:ascwo-rounded-full after:ascwo-h-3 after:ascwo-w-3 after:ascwo-transition-all after:ascwo-shadow-lg"></div>
                                 </label>
                             </div>
                         </div>
                         <div v-show="inputTypeImage.options[key].price.type!='none'">
-                            <div class="asowp-flex asowp-flex-col asowp-space-y-1 asowp-w-10/12 asowp-pt-4 asowp-pb-8 asowp-px-8">
-                                <input type="number" class="asowp-border-solid asowp-rounded asowp-p-2 asowp-h-[35px]" v-model="inputTypeImage.options[key].price.value" @blur="isNaN(inputTypeImage.options[key].price.value) ? inputTypeImage.options[key].price.value = 0 : ''">
-                                <p class="text-[11px] w-2/3">{{inputTypeImage.options[key].price.type == 'base'? __('Additional cost when selected by customer (e.g. $10.00).', 'all-signs-options-pro') : __('Multiply the final price of the sign when selected (e.g. 2 x 100).', 'all-signs-options-pro')}}</p>
+                            <div class="ascwo-flex ascwo-flex-col ascwo-space-y-1 ascwo-w-10/12 ascwo-pt-4 ascwo-pb-8 ascwo-px-8">
+                                <input type="number" class="ascwo-border-solid ascwo-rounded ascwo-p-2 ascwo-h-[35px]" v-model="inputTypeImage.options[key].price.value" @blur="isNaN(inputTypeImage.options[key].price.value) ? inputTypeImage.options[key].price.value = 0 : ''">
+                                <p class="text-[11px] w-2/3">{{inputTypeImage.options[key].price.type == 'base'? __('Additional cost when selected by customer (e.g. $10.00).', 'all-signs-customizer-for-woocommerce-pro') : __('Multiply the final price of the sign when selected (e.g. 2 x 100).', 'all-signs-customizer-for-woocommerce-pro')}}</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="asowp-absolute asowp-flex asowp-jsutify-center asowp-items-center asowp-space-x-2 asowp-right-0 asowp-top-0 ">
-                    <button v-if="dropOptions[key]" :disabled="isLoading" @click="dropOptions[key]=false" class="asowp-top-0 asowp-flex asowp-justify-center asowp-items-center asowp-bg-[#007a73] asowp-rounded-[7px] asowp-w-8 asowp-h-8 asowp-text-white asowp-border-none hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#007a73] asowp-cursor-pointer">
+                <div class="ascwo-absolute ascwo-flex ascwo-jsutify-center ascwo-items-center ascwo-space-x-2 ascwo-right-0 ascwo-top-0 ">
+                    <button v-if="dropOptions[key]" :disabled="isLoading" @click="dropOptions[key]=false" class="ascwo-top-0 ascwo-flex ascwo-justify-center ascwo-items-center ascwo-bg-[#007a73] ascwo-rounded-[7px] ascwo-w-8 ascwo-h-8 ascwo-text-white ascwo-border-none hover:ascwo-border-none hover:ascwo-text-white hover:ascwo-bg-[#007a73] ascwo-cursor-pointer">
                         <ChevronUpIcon :size="16" :stroke-width="2.25" />
                     </button>
-                    <button v-if="!dropOptions[key]" :disabled="isLoading" @click="dropOptions[key]=true" class="asowp-top-0 asowp-flex asowp-justify-center asowp-items-center asowp-bg-[#007a73] asowp-rounded-[7px] asowp-w-8 asowp-h-8 asowp-text-white asowp-border-none hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#007a73] asowp-cursor-pointer">
+                    <button v-if="!dropOptions[key]" :disabled="isLoading" @click="dropOptions[key]=true" class="ascwo-top-0 ascwo-flex ascwo-justify-center ascwo-items-center ascwo-bg-[#007a73] ascwo-rounded-[7px] ascwo-w-8 ascwo-h-8 ascwo-text-white ascwo-border-none hover:ascwo-border-none hover:ascwo-text-white hover:ascwo-bg-[#007a73] ascwo-cursor-pointer">
                         <ChevronDownIcon :size="16" :stroke-width="2.25" />
                     </button>
-                    <button v-if="inputTypeImage.options.length > 1" :disabled="isLoading" @click="handleClickRemoveAdditional(key)" class="asowp-flex asowp-jsutify-center asowp-items-center asowp-bg-red-500 asowp-rounded asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-red-400 asowp-cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
+                    <button v-if="inputTypeImage.options.length > 1" :disabled="isLoading" @click="handleClickRemoveAdditional(key)" class="ascwo-flex ascwo-jsutify-center ascwo-items-center ascwo-bg-red-500 ascwo-rounded ascwo-w-fit ascwo-space-x-2 ascwo-h-fit ascwo-text-white ascwo-opacity-90 hover:ascwo-opacity-100 hover:ascwo-border-none hover:ascwo-text-white hover:ascwo-bg-red-400 ascwo-cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
                     </button>
                 </div>
             </div>
-            <div class="asowp-pt-4 asowp-felx asowp-justify-start asowp-items-center">
-                <button :disabled="isLoading" @click="handleClickAddAdditional" class="asowp-flex asowp-jsutify-center asowp-items-center asowp-bg-[#016464] asowp-rounded asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-8 asowp-p-2.5 asowp-rounded asowp-border-none hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+            <div class="ascwo-pt-4 ascwo-felx ascwo-justify-start ascwo-items-center">
+                <button :disabled="isLoading" @click="handleClickAddAdditional" class="ascwo-flex ascwo-jsutify-center ascwo-items-center ascwo-bg-[#016464] ascwo-rounded ascwo-w-fit ascwo-space-x-2 ascwo-h-fit ascwo-text-white ascwo-px-8 ascwo-p-2.5 ascwo-rounded ascwo-border-none hover:ascwo-opacity-100 hover:ascwo-border-none hover:ascwo-text-white hover:ascwo-bg-[#016464] ascwo-cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-6 ascwo-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                     </svg>
-                    {{ __("More", "all-signs-options-pro") }}
+                    {{ __("More", "all-signs-customizer-for-woocommerce-pro") }}
                 </button>
             </div>
         </div>
     </div>
-    <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-space-x-4 asowp-px-4 asowp-py-4 asowp-justify-end asowp-items-end asowp-sticky asowp-z-[999] asowp-bottom-0">
-        <div class="asowp-bg-[#007a73] asowp-rounded-[7px] asowp-border asowp-border-solid asowp-border-[#006c67]">
-            <button class="asowp-flex asowp-items-center asowp-justify-center asowp-bg-transparent asowp-w-fit asowp-gap-1.5 asowp-h-[30px] asowp-px-3.5 asowp-py-1.5 asowp-border-none asowp-text-white asowp-text-[12px] asowp-font-bold hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-transparent asowp-cursor-pointer" @click="setBack">
-                <svg class="asowp-w-4 asowp-h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div class="ascwo-bg-[#F8F9FB] ascwo-flex ascwo-space-x-4 ascwo-px-4 ascwo-py-4 ascwo-justify-end ascwo-items-end ascwo-sticky ascwo-z-[999] ascwo-bottom-0">
+        <div class="ascwo-bg-[#007a73] ascwo-rounded-[7px] ascwo-border ascwo-border-solid ascwo-border-[#006c67]">
+            <button class="ascwo-flex ascwo-items-center ascwo-justify-center ascwo-bg-transparent ascwo-w-fit ascwo-gap-1.5 ascwo-h-[30px] ascwo-px-3.5 ascwo-py-1.5 ascwo-border-none ascwo-text-white ascwo-text-[12px] ascwo-font-bold hover:ascwo-border-none hover:ascwo-text-white hover:ascwo-bg-transparent ascwo-cursor-pointer" @click="setBack">
+                <svg class="ascwo-w-4 ascwo-h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1 12L5 8V11L17.17 11C17.3756 10.414 17.7586 9.90661 18.2657 9.54821C18.7729 9.18981 19.379 8.9982 20 9C20.7956 9 21.5587 9.31607 22.1213 9.87868C22.6839 10.4413 23 11.2044 23 12C23 12.7956 22.6839 13.5587 22.1213 14.1213C21.5587 14.6839 20.7956 15 20 15C18.69 15 17.58 14.17 17.17 13L5 13V16L1 12Z" fill="currentColor"/>
                 </svg>
 
-                <div class="asowp-leading-none">{{ __('Back', 'all-signs-options-pro') }}</div>
+                <div class="ascwo-leading-none">{{ __('Back', 'all-signs-customizer-for-woocommerce-pro') }}</div>
             </button>
         </div>
-        <div :class="`${isLoading ? 'asowp-bg-[#006c67]' : 'asowp-bg-[#007a73]'} asowp-rounded-[7px] asowp-border asowp-border-solid asowp-border-[#006c67]`">
-            <button :disabled="isLoading" @click="props.action? updateAdditional(): saveAdditional()" class="asowp-flex asowp-items-center asowp-justify-center asowp-bg-transparent asowp-w-fit asowp-gap-1.5 asowp-h-[30px] asowp-text-white asowp-text-[12px] asowp-font-bold asowp-px-4 asowp-py-1.5 asowp-border-none hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-transparent asowp-cursor-pointer">
-                <div class="asowp-flex asowp-items-center">
-                    <img src="@/../assets/icons/ic_loading_gray.svg" class="asowp-w-4 asowp-h-4" v-if="isLoading"/>
-                    <svg class="asowp-w-4 asowp-h-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" v-if="!isLoading">
+        <div :class="`${isLoading ? 'ascwo-bg-[#006c67]' : 'ascwo-bg-[#007a73]'} ascwo-rounded-[7px] ascwo-border ascwo-border-solid ascwo-border-[#006c67]`">
+            <button :disabled="isLoading" @click="props.action? updateAdditional(): saveAdditional()" class="ascwo-flex ascwo-items-center ascwo-justify-center ascwo-bg-transparent ascwo-w-fit ascwo-gap-1.5 ascwo-h-[30px] ascwo-text-white ascwo-text-[12px] ascwo-font-bold ascwo-px-4 ascwo-py-1.5 ascwo-border-none hover:ascwo-border-none hover:ascwo-text-white hover:ascwo-bg-transparent ascwo-cursor-pointer">
+                <div class="ascwo-flex ascwo-items-center">
+                    <img src="@/../assets/icons/ic_loading_gray.svg" class="ascwo-w-4 ascwo-h-4" v-if="isLoading"/>
+                    <svg class="ascwo-w-4 ascwo-h-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" v-if="!isLoading">
                         <path d="M2.5 1.25C2.16848 1.25 1.85054 1.3817 1.61612 1.61612C1.3817 1.85054 1.25 2.16848 1.25 2.5V17.5C1.25 17.8315 1.3817 18.1495 1.61612 18.3839C1.85054 18.6183 2.16848 18.75 2.5 18.75H17.5C17.8315 18.75 18.1495 18.6183 18.3839 18.3839C18.6183 18.1495 18.75 17.8315 18.75 17.5V2.5C18.75 2.16848 18.6183 1.85054 18.3839 1.61612C18.1495 1.3817 17.8315 1.25 17.5 1.25H2.5C1.83696 1.25 1.20107 1.3817 0.732233 1.61612C0.263392 1.85054 0 2.16848 0 2.5V11.6163L13.9325 8.3075C14.0499 8.19014 14.209 8.12421 14.375 8.12421C14.541 8.12421 14.7001 8.19014 14.8175 8.3075C14.9349 8.42486 15.0008 8.58403 15.0008 8.75C15.0008 8.91597 14.9349 9.07514 14.8175 9.1925L10.4425 13.5675C10.3844 13.6257 10.3155 13.6719 10.2395 13.7034C10.1636 13.7349 10.0822 13.7511 10 13.7511C9.91779 13.7511 9.83639 13.7349 9.76046 13.7034C9.68453 13.6719 9.61556 13.6257 9.5575 13.5675L5.1825 9.1925C5.12439 9.13439 5.07829 9.0654 5.04685 8.98948C5.0154 8.91356 4.99921 8.83218 4.99921 8.75C4.99921 8.66782 5.0154 8.58644 5.04685 8.51052C5.07829 8.4346 5.12439 8.36561 5.1825 8.3075C5.24061 8.24939 5.3096 8.20329 5.38552 8.17185C5.46144 8.1404 5.54282 8.12421 5.625 8.12421C5.70718 8.12421 5.78856 8.1404 5.86448 8.17185C5.9404 8.20329 6.00939 8.24939 6.0675 8.3075L9.375 11.6163V2.5C9.375 1.83696 9.63839 1.20107 10.1072 0.732233C10.5761 0.263392 11.212 0 11.875 0L17.5 0C18.163 0 18.7989 0.263392 19.2678 0.732233C19.7366 1.20107 20 1.83696 20 2.5V17.5C20 18.163 19.7366 18.7989 19.2678 19.2678C18.7989 19.7366 18.163 20 17.5 20H2.5C1.83696 20 1.20107 19.7366 0.732233 19.2678C0.263392 18.7989 0 18.163 0 17.5V2.5C0 1.83696 0.263392 1.20107 0.732233 0.732233C1.20107 0.263392 1.83696 0 2.5 0L5.625 0C5.79076 0 5.94973 0.065848 6.06694 0.183058C6.18415 0.300269 6.25 0.45924 6.25 0.625C6.25 0.79076 6.18415 0.949732 6.06694 1.06694C5.94973 1.18415 5.79076 1.25 5.625 1.25H2.5Z" fill="white"/>
                     </svg>
                 </div>
 
-                <span class="asowp-leading-none">{{props.action? __('Update', 'all-signs-options-pro') : __('Save', 'all-signs-options-pro') }}</span>
+                <span class="ascwo-leading-none">{{props.action? __('Update', 'all-signs-customizer-for-woocommerce-pro') : __('Save', 'all-signs-customizer-for-woocommerce-pro') }}</span>
             </button>
         </div>
     </div>
@@ -208,9 +208,9 @@ const selectChangePreviewImage = async(e,key) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: __('choose a picture', 'all-signs-options-pro'),
+            title: __('choose a picture', 'all-signs-customizer-for-woocommerce-pro'),
             button: {
-                text: __('choose a picture', 'all-signs-options-pro')
+                text: __('choose a picture', 'all-signs-customizer-for-woocommerce-pro')
             },
             multiple: false
         }
@@ -235,9 +235,9 @@ const selectPopupImage = async(e,key) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: __('choose a picture', 'all-signs-options-pro'),
+            title: __('choose a picture', 'all-signs-customizer-for-woocommerce-pro'),
             button: {
-                text: __('choose a picture', 'all-signs-options-pro')
+                text: __('choose a picture', 'all-signs-customizer-for-woocommerce-pro')
             },
             multiple: false
         }

@@ -1,9 +1,9 @@
 <?php
-namespace ASOWP\Api\Admin\Required_Options;
+namespace ASCWO\Api\Admin\Required_Options;
 
 use WP_REST_Server;
 
-class ASOWP_Api_Required_Options_FixingMethods extends ASOWP_Api_Required_Options_Base
+class ASCWO_Api_Required_Options_FixingMethods extends ASCWO_Api_Required_Options_Base
 {
     public function register_routes()
     {
@@ -135,7 +135,7 @@ class ASOWP_Api_Required_Options_FixingMethods extends ASOWP_Api_Required_Option
     {
         $config_id = absint($request->get_param('config_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $required_options = $this->get_required_options($config_id);
@@ -160,8 +160,8 @@ class ASOWP_Api_Required_Options_FixingMethods extends ASOWP_Api_Required_Option
             $request,
             'fixing-methods',
             'fixingMethod',
-            __('Fixing method not found', 'all-signs-options-pro'),
-            __('Default fixing method successfully updated', 'all-signs-options-pro')
+            __('Fixing method not found', 'all-signs-customizer-for-woocommerce-pro'),
+            __('Default fixing method successfully updated', 'all-signs-customizer-for-woocommerce-pro')
         );
     }
 
@@ -170,29 +170,29 @@ class ASOWP_Api_Required_Options_FixingMethods extends ASOWP_Api_Required_Option
         $config_id = absint($request->get_param('config_id'));
         $item_id = absint($request->get_param('item_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $required_options = $this->get_required_options($config_id);
         $items = $this->section_item_list($required_options, 'fixing-methods');
         if (!isset($items[$item_id])) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Fixing method not found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Fixing method not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         return rest_ensure_response(array('success' => true, 'data' => array('fixingMethod' => $items[$item_id])));
     }
 
-        public function add_fixing_method_item($request)
+    public function add_fixing_method_item($request)
     {
         $config_id = absint($request->get_param('config_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $payload = json_decode($request->get_body(), true);
         $payload = is_array($payload) ? $payload : array();
 
-        // Generate Shopify-style id
+        // Generate stable item id
         if (!isset($payload['id']) || empty($payload['id'])) {
             $payload['id'] = $this->generate_fixing_method_id($payload);
         }
@@ -206,8 +206,8 @@ class ASOWP_Api_Required_Options_FixingMethods extends ASOWP_Api_Required_Option
         $saved = $this->save_required_options($config_id, $required_options);
 
         return rest_ensure_response($saved === true
-            ? array('success' => true, 'message' => __('Fixing method successfully added', 'all-signs-options-pro'), 'data' => array('fixingMethod' => end($items)))
-            : array('success' => false, 'message' => __('Fixing method has not been added', 'all-signs-options-pro')));
+            ? array('success' => true, 'message' => __('Fixing method successfully added', 'all-signs-customizer-for-woocommerce-pro'), 'data' => array('fixingMethod' => end($items)))
+            : array('success' => false, 'message' => __('Fixing method has not been added', 'all-signs-customizer-for-woocommerce-pro')));
     }
 
     public function update_fixing_method_item($request)
@@ -215,7 +215,7 @@ class ASOWP_Api_Required_Options_FixingMethods extends ASOWP_Api_Required_Option
         $config_id = absint($request->get_param('config_id'));
         $item_id = absint($request->get_param('item_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $payload = json_decode($request->get_body(), true);
@@ -224,7 +224,7 @@ class ASOWP_Api_Required_Options_FixingMethods extends ASOWP_Api_Required_Option
         $required_options = $this->get_required_options($config_id);
         $items = $this->section_item_list($required_options, 'fixing-methods');
         if (!isset($items[$item_id])) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Fixing method not found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Fixing method not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $items[$item_id] = array_merge($items[$item_id], $payload);
@@ -233,8 +233,8 @@ class ASOWP_Api_Required_Options_FixingMethods extends ASOWP_Api_Required_Option
         $saved = $this->save_required_options($config_id, $required_options);
 
         return rest_ensure_response($saved === true
-            ? array('success' => true, 'message' => __('Fixing method successfully edited', 'all-signs-options-pro'), 'data' => array('fixingMethod' => $items[$item_id]))
-            : array('success' => false, 'message' => __('Fixing method has not been edited', 'all-signs-options-pro')));
+            ? array('success' => true, 'message' => __('Fixing method successfully edited', 'all-signs-customizer-for-woocommerce-pro'), 'data' => array('fixingMethod' => $items[$item_id]))
+            : array('success' => false, 'message' => __('Fixing method has not been edited', 'all-signs-customizer-for-woocommerce-pro')));
     }
 
     public function delete_fixing_method_item($request)
@@ -242,13 +242,13 @@ class ASOWP_Api_Required_Options_FixingMethods extends ASOWP_Api_Required_Option
         $config_id = absint($request->get_param('config_id'));
         $item_id = absint($request->get_param('item_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $required_options = $this->get_required_options($config_id);
         $items = $this->section_item_list($required_options, 'fixing-methods');
         if (!isset($items[$item_id])) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Fixing method not found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Fixing method not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         array_splice($items, $item_id, 1);
@@ -257,7 +257,7 @@ class ASOWP_Api_Required_Options_FixingMethods extends ASOWP_Api_Required_Option
         $saved = $this->save_required_options($config_id, $required_options);
 
         return rest_ensure_response($saved === true
-            ? array('success' => true, 'message' => __('Fixing method successfully deleted', 'all-signs-options-pro'), 'data' => array('items' => array_values($items)))
-            : array('success' => false, 'message' => __('Fixing method has not been deleted', 'all-signs-options-pro')));
+            ? array('success' => true, 'message' => __('Fixing method successfully deleted', 'all-signs-customizer-for-woocommerce-pro'), 'data' => array('items' => array_values($items)))
+            : array('success' => false, 'message' => __('Fixing method has not been deleted', 'all-signs-customizer-for-woocommerce-pro')));
     }
 }

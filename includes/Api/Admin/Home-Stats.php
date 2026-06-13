@@ -1,14 +1,14 @@
 <?php
-namespace ASOWP\Api\Admin;
+namespace ASCWO\Api\Admin;
 
 use WP_Error;
 use WP_REST_Controller;
 
-class ASOWP_Api_Home_Stats extends WP_REST_Controller
+class ASCWO_Api_Home_Stats extends WP_REST_Controller
 {
     public function __construct()
     {
-        $this->namespace = 'asowp/v1';
+        $this->namespace = 'ascwo/v1';
         $this->rest_base = 'stats';
     }
 
@@ -68,15 +68,15 @@ class ASOWP_Api_Home_Stats extends WP_REST_Controller
     {
         if (!function_exists('wc_get_orders')) {
             return new WP_Error(
-                'asowp_woocommerce_missing',
-                __('WooCommerce is required to compute stats.', 'all-signs-options-pro'),
+                'ascwo_woocommerce_missing',
+                __('WooCommerce is required to compute stats.', 'all-signs-customizer-for-woocommerce-pro'),
                 array('status' => 400)
             );
         }
 
         $statuses = $this->normalize_statuses($request->get_param('statuses'));
         $cache_enabled = (bool) $request->get_param('cache');
-        $cache_key = 'asowp_home_stats_' . md5(wp_json_encode(array('statuses' => $statuses)));
+        $cache_key = 'ascwo_home_stats_' . md5(wp_json_encode(array('statuses' => $statuses)));
 
         if ($cache_enabled) {
             $cached = get_transient($cache_key);
@@ -112,7 +112,7 @@ class ASOWP_Api_Home_Stats extends WP_REST_Controller
                 $total_orders_revenue += $line_total;
                 $total_orders_revenue_incl_tax += $line_total + $line_tax;
 
-                $meta = $item->get_meta('asowp_meta_data', true);
+                $meta = $item->get_meta('ascwo_meta_data', true);
                 if (empty($meta) || !is_array($meta) || !isset($meta['recaps'])) {
                     continue;
                 }

@@ -1,44 +1,44 @@
 <template>
-  <div class="asowp-space-y-3">
-    <section v-if="!createGroup" class="asowp-bg-white asowp-border asowp-border-solid asowp-border-[#d1d5db] asowp-rounded-xl asowp-shadow-sm asowp-px-5 asowp-py-4 asowp-flex asowp-items-center asowp-justify-between asowp-gap-4">
+  <div class="ascwo-space-y-3">
+    <section v-if="!createGroup" class="ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#d1d5db] ascwo-rounded-xl ascwo-shadow-sm ascwo-px-5 ascwo-py-4 ascwo-flex ascwo-items-center ascwo-justify-between ascwo-gap-4">
       <div>
-        <h1 class="asowp-m-0 asowp-text-[20px] asowp-leading-6 asowp-font-[900] asowp-text-[#303030]">{{ __('Clipart Groups', 'all-signs-options-pro') }}</h1>
-        <p class="asowp-m-0 asowp-mt-1 asowp-text-[13px] asowp-leading-4 asowp-text-[#616161]">
-          {{ __('Manage the reusable clipart groups used across configurations.', 'all-signs-options-pro') }}
+        <h1 class="ascwo-m-0 ascwo-text-[20px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030]">{{ __('Clipart Groups', 'all-signs-customizer-for-woocommerce-pro') }}</h1>
+        <p class="ascwo-m-0 ascwo-mt-1 ascwo-text-[13px] ascwo-leading-4 ascwo-text-[#616161]">
+          {{ __('Manage the reusable clipart groups used across configurations.', 'all-signs-customizer-for-woocommerce-pro') }}
         </p>
       </div>
-      <button type="button" @click="goToCreateGroup" class="asowp-h-8 asowp-px-3 asowp-rounded-lg asowp-bg-[#00796b] asowp-border asowp-border-solid asowp-border-[#005f55] asowp-text-white asowp-text-[13px] asowp-font-[800] asowp-cursor-pointer hover:asowp-bg-[#00695f] hover:asowp-text-white asowp-inline-flex asowp-items-center asowp-gap-2">
-        <PlusIcon class="asowp-w-4 asowp-h-4" />
-        {{ __('Add new clipart group', 'all-signs-options-pro') }}
+      <button type="button" @click="goToCreateGroup" class="ascwo-h-8 ascwo-px-3 ascwo-rounded-lg ascwo-bg-[#00796b] ascwo-border ascwo-border-solid ascwo-border-[#005f55] ascwo-text-white ascwo-text-[13px] ascwo-font-[800] ascwo-cursor-pointer hover:ascwo-bg-[#00695f] hover:ascwo-text-white ascwo-inline-flex ascwo-items-center ascwo-gap-2">
+        <PlusIcon class="ascwo-w-4 ascwo-h-4" />
+        {{ __('Add new clipart group', 'all-signs-customizer-for-woocommerce-pro') }}
       </button>
     </section>
 
-    <section v-if="!createGroup" class="asowp-bg-white asowp-border asowp-border-solid asowp-border-[#d1d5db] asowp-rounded-xl asowp-shadow-sm asowp-px-5 asowp-py-4">
-      <div v-if="isFetching" class="asowp-min-h-[200px] asowp-flex asowp-items-center asowp-justify-center asowp-text-[13px] asowp-text-[#616161]">
-        {{ __('Loading...', 'all-signs-options-pro') }}
+    <section v-if="!createGroup" class="ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#d1d5db] ascwo-rounded-xl ascwo-shadow-sm ascwo-px-5 ascwo-py-4">
+      <div v-if="isFetching" class="ascwo-min-h-[200px] ascwo-flex ascwo-items-center ascwo-justify-center ascwo-text-[13px] ascwo-text-[#616161]">
+        {{ __('Loading...', 'all-signs-customizer-for-woocommerce-pro') }}
       </div>
-      <div v-else-if="clipartsGroups.length === 0" class="asowp-min-h-[220px] asowp-flex asowp-flex-col asowp-items-center asowp-justify-center asowp-text-center">
-        <SearchIcon class="asowp-w-16 asowp-h-16 asowp-text-[#8c9196] asowp-mb-5" />
-        <h2 class="asowp-m-0 asowp-text-[20px] asowp-leading-6 asowp-font-[900] asowp-text-[#303030]">{{ __('No Clipart Groups found', 'all-signs-options-pro') }}</h2>
-        <p class="asowp-m-0 asowp-mt-3 asowp-text-[13px] asowp-text-[#616161]">{{ __('Try changing the filters or search term', 'all-signs-options-pro') }}</p>
+      <div v-else-if="clipartsGroups.length === 0" class="ascwo-min-h-[220px] ascwo-flex ascwo-flex-col ascwo-items-center ascwo-justify-center ascwo-text-center">
+        <SearchIcon class="ascwo-w-16 ascwo-h-16 ascwo-text-[#8c9196] ascwo-mb-5" />
+        <h2 class="ascwo-m-0 ascwo-text-[20px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030]">{{ __('No Clipart Groups found', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
+        <p class="ascwo-m-0 ascwo-mt-3 ascwo-text-[13px] ascwo-text-[#616161]">{{ __('Try changing the filters or search term', 'all-signs-customizer-for-woocommerce-pro') }}</p>
       </div>
-      <table v-else class="asowp-cliparts-table asowp-w-full asowp-border-collapse asowp-text-left">
-        <thead class="asowp-bg-[#f6f6f7]">
+      <table v-else class="ascwo-cliparts-table ascwo-w-full ascwo-border-collapse ascwo-text-left">
+        <thead class="ascwo-bg-[#f6f6f7]">
           <tr>
-            <th class="asowp-px-3 asowp-py-2.5 asowp-text-[12px] asowp-font-[800] asowp-text-[#616161]">{{ __('Title', 'all-signs-options-pro') }}</th>
-            <th class="asowp-px-3 asowp-py-2.5 asowp-text-[12px] asowp-font-[800] asowp-text-[#616161]">{{ __('Description', 'all-signs-options-pro') }}</th>
-            <th class="asowp-px-3 asowp-py-2.5 asowp-text-[12px] asowp-font-[800] asowp-text-[#616161]">{{ __('Actions', 'all-signs-options-pro') }}</th>
+            <th class="ascwo-px-3 ascwo-py-2.5 ascwo-text-[12px] ascwo-font-[800] ascwo-text-[#616161]">{{ __('Title', 'all-signs-customizer-for-woocommerce-pro') }}</th>
+            <th class="ascwo-px-3 ascwo-py-2.5 ascwo-text-[12px] ascwo-font-[800] ascwo-text-[#616161]">{{ __('Description', 'all-signs-customizer-for-woocommerce-pro') }}</th>
+            <th class="ascwo-px-3 ascwo-py-2.5 ascwo-text-[12px] ascwo-font-[800] ascwo-text-[#616161]">{{ __('Actions', 'all-signs-customizer-for-woocommerce-pro') }}</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(group, key) in clipartsGroups" :key="key" class="asowp-border-b asowp-border-solid asowp-border-[#e5e7eb]">
-            <td class="asowp-px-3 asowp-py-2.5 asowp-text-[13px] asowp-font-[800] asowp-text-[#202223]">{{ group.title }}</td>
-            <td class="asowp-px-3 asowp-py-2.5 asowp-text-[13px] asowp-text-[#303030]">{{ group.description || '-' }}</td>
-            <td class="asowp-px-3 asowp-py-3">
-              <div class="asowp-flex asowp-items-center asowp-gap-2">
-                <button type="button" @click="goToGroup(key)" class="asowp-h-7 asowp-px-2.5 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-text-[13px] asowp-font-[700] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7] hover:asowp-text-[#202223]">{{ __('Manage', 'all-signs-options-pro') }}</button>
-                <button type="button" @click="goToEditGroup(key)" class="asowp-h-7 asowp-px-2.5 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-text-[13px] asowp-font-[700] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7] hover:asowp-text-[#202223]">{{ __('Edit', 'all-signs-options-pro') }}</button>
-                <button type="button" @click="selectGroup(key, group, true)" class="asowp-h-7 asowp-px-2.5 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-text-[#8a0f00] asowp-text-[13px] asowp-font-[700] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7] hover:asowp-text-[#8a0f00]">{{ __('Delete', 'all-signs-options-pro') }}</button>
+          <tr v-for="(group, key) in clipartsGroups" :key="key" class="ascwo-border-b ascwo-border-solid ascwo-border-[#e5e7eb]">
+            <td class="ascwo-px-3 ascwo-py-2.5 ascwo-text-[13px] ascwo-font-[800] ascwo-text-[#202223]">{{ group.title }}</td>
+            <td class="ascwo-px-3 ascwo-py-2.5 ascwo-text-[13px] ascwo-text-[#303030]">{{ group.description || '-' }}</td>
+            <td class="ascwo-px-3 ascwo-py-3">
+              <div class="ascwo-flex ascwo-items-center ascwo-gap-2">
+                <button type="button" @click="goToGroup(key)" class="ascwo-h-7 ascwo-px-2.5 ascwo-rounded-lg ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-text-[13px] ascwo-font-[700] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7] hover:ascwo-text-[#202223]">{{ __('Manage', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                <button type="button" @click="goToEditGroup(key)" class="ascwo-h-7 ascwo-px-2.5 ascwo-rounded-lg ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-text-[13px] ascwo-font-[700] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7] hover:ascwo-text-[#202223]">{{ __('Edit', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                <button type="button" @click="selectGroup(key, group, true)" class="ascwo-h-7 ascwo-px-2.5 ascwo-rounded-lg ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-text-[#8a0f00] ascwo-text-[13px] ascwo-font-[700] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7] hover:ascwo-text-[#8a0f00]">{{ __('Delete', 'all-signs-customizer-for-woocommerce-pro') }}</button>
               </div>
             </td>
           </tr>
@@ -46,39 +46,39 @@
       </table>
     </section>
 
-    <section v-if="createGroup" class="asowp-bg-white asowp-border asowp-border-solid asowp-border-[#d1d5db] asowp-rounded-xl asowp-shadow-sm asowp-px-5 asowp-py-4">
-      <h1 class="asowp-m-0 asowp-text-[20px] asowp-leading-6 asowp-font-[900] asowp-text-[#303030]">
-        {{ isEdit ? __('Edit clipart group', 'all-signs-options-pro') : __('Add clipart group', 'all-signs-options-pro') }}
+    <section v-if="createGroup" class="ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#d1d5db] ascwo-rounded-xl ascwo-shadow-sm ascwo-px-5 ascwo-py-4">
+      <h1 class="ascwo-m-0 ascwo-text-[20px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030]">
+        {{ isEdit ? __('Edit clipart group', 'all-signs-customizer-for-woocommerce-pro') : __('Add clipart group', 'all-signs-customizer-for-woocommerce-pro') }}
       </h1>
     </section>
 
-    <section v-if="createGroup" class="asowp-bg-white asowp-border asowp-border-solid asowp-border-[#d1d5db] asowp-rounded-xl asowp-shadow-sm asowp-px-5 asowp-py-4">
-      <div class="asowp-grid md:asowp-grid-cols-2 asowp-gap-4">
-        <label class="asowp-block asowp-text-[13px] asowp-text-[#303030]">
-          {{ __('Title', 'all-signs-options-pro') }}
-          <input v-model="newGroup.title" type="text" :class="['asowp-mt-2 asowp-box-border asowp-w-full asowp-h-9 asowp-rounded-lg asowp-border asowp-border-solid asowp-border-[#8c9196] asowp-px-3 asowp-text-[13px] asowp-outline-none focus:asowp-border-[#008060]', emptyLabel ? 'asowp-border-[#d72c0d]' : '']">
+    <section v-if="createGroup" class="ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#d1d5db] ascwo-rounded-xl ascwo-shadow-sm ascwo-px-5 ascwo-py-4">
+      <div class="ascwo-grid md:ascwo-grid-cols-2 ascwo-gap-4">
+        <label class="ascwo-block ascwo-text-[13px] ascwo-text-[#303030]">
+          {{ __('Title', 'all-signs-customizer-for-woocommerce-pro') }}
+          <input v-model="newGroup.title" type="text" :class="['ascwo-mt-2 ascwo-box-border ascwo-w-full ascwo-h-9 ascwo-rounded-lg ascwo-border ascwo-border-solid ascwo-border-[#8c9196] ascwo-px-3 ascwo-text-[13px] ascwo-outline-none focus:ascwo-border-[#008060]', emptyLabel ? 'ascwo-border-[#d72c0d]' : '']">
         </label>
-        <label class="asowp-block asowp-text-[13px] asowp-text-[#303030]">
-          {{ __('Description', 'all-signs-options-pro') }}
-          <input v-model="newGroup.description" type="text" class="asowp-mt-2 asowp-box-border asowp-w-full asowp-h-9 asowp-rounded-lg asowp-border asowp-border-solid asowp-border-[#8c9196] asowp-px-3 asowp-text-[13px] asowp-outline-none focus:asowp-border-[#008060]">
+        <label class="ascwo-block ascwo-text-[13px] ascwo-text-[#303030]">
+          {{ __('Description', 'all-signs-customizer-for-woocommerce-pro') }}
+          <input v-model="newGroup.description" type="text" class="ascwo-mt-2 ascwo-box-border ascwo-w-full ascwo-h-9 ascwo-rounded-lg ascwo-border ascwo-border-solid ascwo-border-[#8c9196] ascwo-px-3 ascwo-text-[13px] ascwo-outline-none focus:ascwo-border-[#008060]">
         </label>
       </div>
-      <div class="asowp-mt-5 asowp-flex asowp-justify-end asowp-gap-3">
-        <button type="button" @click="back" :disabled="isLoading" class="asowp-h-8 asowp-px-3 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-text-[#202223] asowp-text-[13px] asowp-font-[700] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7] hover:asowp-text-[#202223]">{{ __('Back', 'all-signs-options-pro') }}</button>
-        <button type="button" @click="isEdit ? updateGroup() : addNewGroup()" :disabled="isLoading || !newGroup.title.trim()" class="asowp-h-8 asowp-px-3 asowp-rounded-lg asowp-bg-[#00796b] asowp-border asowp-border-solid asowp-border-[#005f55] asowp-text-white asowp-text-[13px] asowp-font-[800] asowp-cursor-pointer hover:asowp-bg-[#00695f] hover:asowp-text-white disabled:asowp-bg-[#d1d1d1] disabled:asowp-border-[#d1d1d1] disabled:asowp-cursor-not-allowed">
-          {{ isLoading ? __('Saving...', 'all-signs-options-pro') : __('Save', 'all-signs-options-pro') }}
+      <div class="ascwo-mt-5 ascwo-flex ascwo-justify-end ascwo-gap-3">
+        <button type="button" @click="back" :disabled="isLoading" class="ascwo-h-8 ascwo-px-3 ascwo-rounded-lg ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-text-[#202223] ascwo-text-[13px] ascwo-font-[700] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7] hover:ascwo-text-[#202223]">{{ __('Back', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+        <button type="button" @click="isEdit ? updateGroup() : addNewGroup()" :disabled="isLoading || !newGroup.title.trim()" class="ascwo-h-8 ascwo-px-3 ascwo-rounded-lg ascwo-bg-[#00796b] ascwo-border ascwo-border-solid ascwo-border-[#005f55] ascwo-text-white ascwo-text-[13px] ascwo-font-[800] ascwo-cursor-pointer hover:ascwo-bg-[#00695f] hover:ascwo-text-white disabled:ascwo-bg-[#d1d1d1] disabled:ascwo-border-[#d1d1d1] disabled:ascwo-cursor-not-allowed">
+          {{ isLoading ? __('Saving...', 'all-signs-customizer-for-woocommerce-pro') : __('Save', 'all-signs-customizer-for-woocommerce-pro') }}
         </button>
       </div>
     </section>
 
-    <div v-if="openModal" class="asowp-fixed asowp-inset-0 asowp-z-[20000] asowp-flex asowp-items-center asowp-justify-center">
-      <div class="asowp-absolute asowp-inset-0 asowp-bg-black/40" @click="closeModal"></div>
-      <div class="asowp-relative asowp-w-[min(460px,95vw)] asowp-bg-white asowp-rounded-xl asowp-shadow-2xl asowp-p-5">
-        <h2 class="asowp-m-0 asowp-text-[20px] asowp-font-[900] asowp-text-[#303030]">{{ __('Delete clipart group?', 'all-signs-options-pro') }}</h2>
-        <p class="asowp-mt-3 asowp-text-[13px] asowp-text-[#616161]">{{ __('This action cannot be undone.', 'all-signs-options-pro') }}</p>
-        <div class="asowp-mt-6 asowp-flex asowp-justify-end asowp-gap-3">
-          <button type="button" @click="closeModal" class="asowp-h-8 asowp-px-3 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-text-[13px] asowp-font-[700] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7]">{{ __('Cancel', 'all-signs-options-pro') }}</button>
-          <button type="button" @click="deleteGroup" :disabled="isLoading" class="asowp-h-8 asowp-px-3 asowp-rounded-lg asowp-bg-[#8a0f00] asowp-border-none asowp-text-white asowp-text-[13px] asowp-font-[800] asowp-cursor-pointer hover:asowp-bg-[#731000] hover:asowp-text-white">{{ __('Delete', 'all-signs-options-pro') }}</button>
+    <div v-if="openModal" class="ascwo-fixed ascwo-inset-0 ascwo-z-[20000] ascwo-flex ascwo-items-center ascwo-justify-center">
+      <div class="ascwo-absolute ascwo-inset-0 ascwo-bg-black/40" @click="closeModal"></div>
+      <div class="ascwo-relative ascwo-w-[min(460px,95vw)] ascwo-bg-white ascwo-rounded-xl ascwo-shadow-2xl ascwo-p-5">
+        <h2 class="ascwo-m-0 ascwo-text-[20px] ascwo-font-[900] ascwo-text-[#303030]">{{ __('Delete clipart group?', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
+        <p class="ascwo-mt-3 ascwo-text-[13px] ascwo-text-[#616161]">{{ __('This action cannot be undone.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+        <div class="ascwo-mt-6 ascwo-flex ascwo-justify-end ascwo-gap-3">
+          <button type="button" @click="closeModal" class="ascwo-h-8 ascwo-px-3 ascwo-rounded-lg ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-text-[13px] ascwo-font-[700] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7]">{{ __('Cancel', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+          <button type="button" @click="deleteGroup" :disabled="isLoading" class="ascwo-h-8 ascwo-px-3 ascwo-rounded-lg ascwo-bg-[#8a0f00] ascwo-border-none ascwo-text-white ascwo-text-[13px] ascwo-font-[800] ascwo-cursor-pointer hover:ascwo-bg-[#731000] hover:ascwo-text-white">{{ __('Delete', 'all-signs-customizer-for-woocommerce-pro') }}</button>
         </div>
       </div>
     </div>
@@ -147,7 +147,7 @@ const goToEditGroup = (id) => {
 const addNewGroup = async () => {
   if (newGroup.value.title.trim() === '') {
     emptyLabel.value = true;
-    toastMessage(__("Label must not be empty", "all-signs-options-pro"), "warning");
+    toastMessage(__("Label must not be empty", "all-signs-customizer-for-woocommerce-pro"), "warning");
     return;
   }
 
@@ -178,7 +178,7 @@ const selectGroup = (id, group, isDeleting = false) => {
 const updateGroup = async () => {
   if (newGroup.value.title.trim() === '') {
     emptyLabel.value = true;
-    toastMessage(__("Label must not be empty", "all-signs-options-pro"), "warning");
+    toastMessage(__("Label must not be empty", "all-signs-customizer-for-woocommerce-pro"), "warning");
     return;
   }
 
@@ -244,30 +244,30 @@ onMounted(fetchGroups);
 </script>
 
 <style scoped>
-.asowp-cliparts-table,
-.asowp-cliparts-table thead,
-.asowp-cliparts-table tbody,
-.asowp-cliparts-table tr,
-.asowp-cliparts-table th,
-.asowp-cliparts-table td {
+.ascwo-cliparts-table,
+.ascwo-cliparts-table thead,
+.ascwo-cliparts-table tbody,
+.ascwo-cliparts-table tr,
+.ascwo-cliparts-table th,
+.ascwo-cliparts-table td {
   border-left: 0 !important;
   border-right: 0 !important;
 }
 
-.asowp-cliparts-table th,
-.asowp-cliparts-table td {
+.ascwo-cliparts-table th,
+.ascwo-cliparts-table td {
   border-top: 0 !important;
 }
 
-.asowp-cliparts-table thead tr {
+.ascwo-cliparts-table thead tr {
   border-bottom: 1px solid #e5e7eb;
 }
 
-.asowp-cliparts-table tbody tr {
+.ascwo-cliparts-table tbody tr {
   border-bottom: 1px solid #e5e7eb !important;
 }
 
-.asowp-cliparts-table tbody tr:last-child {
+.ascwo-cliparts-table tbody tr:last-child {
   border-bottom: 0 !important;
 }
 </style>

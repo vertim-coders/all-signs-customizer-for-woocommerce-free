@@ -1,9 +1,9 @@
 <?php
-namespace ASOWP\Api\Admin\Required_Options;
+namespace ASCWO\Api\Admin\Required_Options;
 
 use WP_REST_Server;
 
-class ASOWP_Api_Required_Options_Sizes extends ASOWP_Api_Required_Options_Base
+class ASCWO_Api_Required_Options_Sizes extends ASCWO_Api_Required_Options_Base
 {
     public function register_routes()
     {
@@ -135,7 +135,7 @@ class ASOWP_Api_Required_Options_Sizes extends ASOWP_Api_Required_Options_Base
     {
         $config_id = absint($request->get_param('config_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $required_options = $this->get_required_options($config_id);
@@ -148,7 +148,7 @@ class ASOWP_Api_Required_Options_Sizes extends ASOWP_Api_Required_Options_Base
     {
         $config_id = absint($request->get_param('config_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $payload = json_decode($request->get_body(), true);
@@ -177,7 +177,7 @@ class ASOWP_Api_Required_Options_Sizes extends ASOWP_Api_Required_Options_Base
         $productType = '';
         if ($config_id > 0) {
             $meta = $this->get_normalized_meta($config_id);
-            $productType = isset($meta['productType']) ? (string)$meta['productType'] : '';
+            $productType = isset($meta['productType']) ? (string) $meta['productType'] : '';
         }
 
         return array(
@@ -215,14 +215,14 @@ class ASOWP_Api_Required_Options_Sizes extends ASOWP_Api_Required_Options_Base
         $config_id = absint($request->get_param('config_id'));
         $item_id = absint($request->get_param('item_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $required_options = $this->get_required_options($config_id);
         $sizes = $this->section_item_list($required_options, 'sizes');
 
         if (!isset($sizes[$item_id])) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Size not found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Size not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         return rest_ensure_response(array(
@@ -237,7 +237,7 @@ class ASOWP_Api_Required_Options_Sizes extends ASOWP_Api_Required_Options_Base
     {
         $config_id = absint($request->get_param('config_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $payload = json_decode($request->get_body(), true);
@@ -250,16 +250,16 @@ class ASOWP_Api_Required_Options_Sizes extends ASOWP_Api_Required_Options_Base
         $sizes = $this->ensure_single_default_item($sizes);
         $sizes_section = $this->section_value_with_items($required_options, 'sizes', $sizes);
         $required_options = $this->set_section_items($required_options, 'sizes', $sizes_section);
-        
+
         $saved = $this->save_required_options($config_id, $required_options);
 
         return rest_ensure_response($saved === true
             ? array(
                 'success' => true,
-                'message' => __('Size successfully added', 'all-signs-options-pro'),
+                'message' => __('Size successfully added', 'all-signs-customizer-for-woocommerce-pro'),
                 'data' => array('size' => end($sizes)),
             )
-            : array('success' => false, 'message' => __('Size has not been added', 'all-signs-options-pro')));
+            : array('success' => false, 'message' => __('Size has not been added', 'all-signs-customizer-for-woocommerce-pro')));
     }
 
     public function update_size_item($request)
@@ -267,7 +267,7 @@ class ASOWP_Api_Required_Options_Sizes extends ASOWP_Api_Required_Options_Base
         $config_id = absint($request->get_param('config_id'));
         $item_id = absint($request->get_param('item_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $payload = json_decode($request->get_body(), true);
@@ -276,11 +276,11 @@ class ASOWP_Api_Required_Options_Sizes extends ASOWP_Api_Required_Options_Base
         $required_options = $this->get_required_options($config_id);
         $sizes = $this->section_item_list($required_options, 'sizes');
         if (!isset($sizes[$item_id])) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Size not found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Size not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         if ($sizes[$item_id] === $payload) {
-            return rest_ensure_response(array('success' => 'same', 'message' => __('No change was observed', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => 'same', 'message' => __('No change was observed', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $sizes[$item_id] = $payload;
@@ -291,10 +291,10 @@ class ASOWP_Api_Required_Options_Sizes extends ASOWP_Api_Required_Options_Base
         return rest_ensure_response($saved === true
             ? array(
                 'success' => true,
-                'message' => __('Size successfully edited', 'all-signs-options-pro'),
+                'message' => __('Size successfully edited', 'all-signs-customizer-for-woocommerce-pro'),
                 'data' => array('size' => $sizes[$item_id]),
             )
-            : array('success' => false, 'message' => __('Size has not been edited', 'all-signs-options-pro')));
+            : array('success' => false, 'message' => __('Size has not been edited', 'all-signs-customizer-for-woocommerce-pro')));
     }
 
     public function delete_size_item($request)
@@ -302,13 +302,13 @@ class ASOWP_Api_Required_Options_Sizes extends ASOWP_Api_Required_Options_Base
         $config_id = absint($request->get_param('config_id'));
         $item_id = absint($request->get_param('item_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $required_options = $this->get_required_options($config_id);
         $sizes = $this->section_item_list($required_options, 'sizes');
         if (!isset($sizes[$item_id])) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Size not found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Size not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         array_splice($sizes, $item_id, 1);
@@ -319,10 +319,10 @@ class ASOWP_Api_Required_Options_Sizes extends ASOWP_Api_Required_Options_Base
         return rest_ensure_response($saved === true
             ? array(
                 'success' => true,
-                'message' => __('Size successfully deleted', 'all-signs-options-pro'),
+                'message' => __('Size successfully deleted', 'all-signs-customizer-for-woocommerce-pro'),
                 'data' => array('items' => array_values($sizes)),
             )
-            : array('success' => false, 'message' => __('Size has not been deleted', 'all-signs-options-pro')));
+            : array('success' => false, 'message' => __('Size has not been deleted', 'all-signs-customizer-for-woocommerce-pro')));
     }
 
     public function set_default_size_item($request)
@@ -330,13 +330,13 @@ class ASOWP_Api_Required_Options_Sizes extends ASOWP_Api_Required_Options_Base
         $config_id = absint($request->get_param('config_id'));
         $item_id = absint($request->get_param('item_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $required_options = $this->get_required_options($config_id);
         $sizes = $this->section_item_list($required_options, 'sizes');
         if (!isset($sizes[$item_id])) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Size not found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Size not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         foreach ($sizes as $index => $size) {
@@ -349,9 +349,9 @@ class ASOWP_Api_Required_Options_Sizes extends ASOWP_Api_Required_Options_Base
         return rest_ensure_response($saved === true
             ? array(
                 'success' => true,
-                'message' => __('Default size successfully updated', 'all-signs-options-pro'),
+                'message' => __('Default size successfully updated', 'all-signs-customizer-for-woocommerce-pro'),
                 'data' => array('size' => $sizes[$item_id]),
             )
-            : array('success' => false, 'message' => __('Size has not been edited', 'all-signs-options-pro')));
+            : array('success' => false, 'message' => __('Size has not been edited', 'all-signs-customizer-for-woocommerce-pro')));
     }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace ASOWP\Api\Admin;
+namespace ASCWO\Api\Admin;
 
 use WP_Error;
 use WP_Post;
@@ -9,7 +9,7 @@ use WP_REST_Controller;
 /**
  * REST_API Handler
  */
-class ASOWP_Api_GoogleFonts extends WP_REST_Controller
+class ASCWO_Api_GoogleFonts extends WP_REST_Controller
 {
 
     /**
@@ -17,7 +17,7 @@ class ASOWP_Api_GoogleFonts extends WP_REST_Controller
      */
     public function __construct()
     {
-        $this->namespace = 'asowp/v1';
+        $this->namespace = 'ascwo/v1';
         $this->rest_base = 'google-fonts';
     }
 

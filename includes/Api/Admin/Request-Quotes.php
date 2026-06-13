@@ -1,5 +1,5 @@
 <?php
-namespace ASOWP\Api\Admin;
+namespace ASCWO\Api\Admin;
 
 use WP_Error;
 use WP_Query;
@@ -7,11 +7,11 @@ use WP_REST_Controller;
 use WP_REST_Request;
 use WP_REST_Response;
 
-class ASOWP_Api_Request_Quotes extends WP_REST_Controller
+class ASCWO_Api_Request_Quotes extends WP_REST_Controller
 {
     public function __construct()
     {
-        $this->namespace = 'asowp/v1';
+        $this->namespace = 'ascwo/v1';
         $this->rest_base = 'request-quotes';
     }
 
@@ -77,7 +77,7 @@ class ASOWP_Api_Request_Quotes extends WP_REST_Controller
     public function get_request_quotes($request)
     {
         $query = new WP_Query(array(
-            'post_type' => 'asowp-request-quote',
+            'post_type' => 'ascwo-request-quote',
             'post_status' => array('publish', 'private'),
             'posts_per_page' => 100,
             'orderby' => 'date',
@@ -102,7 +102,7 @@ class ASOWP_Api_Request_Quotes extends WP_REST_Controller
         $quote = $this->format_quote($quote_id);
 
         if (!$quote) {
-            return new WP_Error('asowp_quote_not_found', __('Quote not found', 'all-signs-options-pro'), array('status' => 404));
+            return new WP_Error('ascwo_quote_not_found', __('Quote not found', 'all-signs-customizer-for-woocommerce-pro'), array('status' => 404));
         }
 
         return rest_ensure_response($quote);
@@ -112,7 +112,7 @@ class ASOWP_Api_Request_Quotes extends WP_REST_Controller
     {
         $payload = $this->normalize_request_payload($request);
         $post_id = wp_insert_post(array(
-            'post_type' => 'asowp-request-quote',
+            'post_type' => 'ascwo-request-quote',
             'post_status' => 'private',
             'post_title' => $this->build_quote_title($payload),
         ), true);
@@ -125,12 +125,12 @@ class ASOWP_Api_Request_Quotes extends WP_REST_Controller
         $payload['createdAt'] = current_time('c');
         $payload['files'] = $this->store_uploaded_files($request, (int) $post_id, $payload['files']);
 
-        update_post_meta((int) $post_id, 'asowp-request-quote-payload', $payload);
+        update_post_meta((int) $post_id, 'ascwo-request-quote-payload', $payload);
 
         return rest_ensure_response(array(
             'success' => true,
             'id' => (int) $post_id,
-            'message' => __('Quote request saved', 'all-signs-options-pro'),
+            'message' => __('Quote request saved', 'all-signs-customizer-for-woocommerce-pro'),
             'recap' => $payload['recaps'],
         ));
     }
@@ -141,7 +141,7 @@ class ASOWP_Api_Request_Quotes extends WP_REST_Controller
         $payload = $this->get_quote_payload($quote_id);
 
         if (!$payload) {
-            return new WP_Error('asowp_quote_not_found', __('Quote not found', 'all-signs-options-pro'), array('status' => 404));
+            return new WP_Error('ascwo_quote_not_found', __('Quote not found', 'all-signs-customizer-for-woocommerce-pro'), array('status' => 404));
         }
 
         $params = $request->get_json_params();
@@ -157,7 +157,7 @@ class ASOWP_Api_Request_Quotes extends WP_REST_Controller
         }
 
         if ($status === '') {
-            return new WP_Error('asowp_quote_missing_status', __('Missing quote status', 'all-signs-options-pro'), array('status' => 400));
+            return new WP_Error('ascwo_quote_missing_status', __('Missing quote status', 'all-signs-customizer-for-woocommerce-pro'), array('status' => 400));
         }
 
         $payload['status'] = $status;
@@ -165,7 +165,7 @@ class ASOWP_Api_Request_Quotes extends WP_REST_Controller
             $payload['notifiedAt'] = current_time('c');
         }
 
-        update_post_meta($quote_id, 'asowp-request-quote-payload', $payload);
+        update_post_meta($quote_id, 'ascwo-request-quote-payload', $payload);
 
         return rest_ensure_response(array(
             'success' => true,
@@ -177,7 +177,7 @@ class ASOWP_Api_Request_Quotes extends WP_REST_Controller
     {
         $quote_id = absint($request['quote_id']);
         if (!$this->is_valid_quote($quote_id)) {
-            return new WP_Error('asowp_quote_not_found', __('Quote not found', 'all-signs-options-pro'), array('status' => 404));
+            return new WP_Error('ascwo_quote_not_found', __('Quote not found', 'all-signs-customizer-for-woocommerce-pro'), array('status' => 404));
         }
 
         $deleted = wp_delete_post($quote_id, true);
@@ -191,7 +191,7 @@ class ASOWP_Api_Request_Quotes extends WP_REST_Controller
         $payload = $this->get_quote_payload($quote_id);
 
         if (!$payload || empty($payload['files'][$file_index]) || !is_array($payload['files'][$file_index])) {
-            return new WP_Error('asowp_quote_file_not_found', __('Quote file not found', 'all-signs-options-pro'), array('status' => 404));
+            return new WP_Error('ascwo_quote_file_not_found', __('Quote file not found', 'all-signs-customizer-for-woocommerce-pro'), array('status' => 404));
         }
 
         $file = $payload['files'][$file_index];
@@ -200,7 +200,7 @@ class ASOWP_Api_Request_Quotes extends WP_REST_Controller
         $base_dir = wp_normalize_path($uploads['basedir']);
 
         if ($path === '' || !file_exists($path) || strpos($path, $base_dir) !== 0) {
-            return new WP_Error('asowp_quote_file_not_found', __('Quote file not found', 'all-signs-options-pro'), array('status' => 404));
+            return new WP_Error('ascwo_quote_file_not_found', __('Quote file not found', 'all-signs-customizer-for-woocommerce-pro'), array('status' => 404));
         }
 
         $name = isset($file['name']) ? sanitize_file_name((string) $file['name']) : basename($path);
@@ -365,10 +365,10 @@ class ASOWP_Api_Request_Quotes extends WP_REST_Controller
             $name = $customer['email'] ?? '';
         }
         if ($name === '') {
-            $name = __('Anonymous customer', 'all-signs-options-pro');
+            $name = __('Anonymous customer', 'all-signs-customizer-for-woocommerce-pro');
         }
 
-        return sprintf(__('Request quote - %s', 'all-signs-options-pro'), $name);
+        return sprintf(__('Request quote - %s', 'all-signs-customizer-for-woocommerce-pro'), $name);
     }
 
     private function format_quote(int $quote_id)
@@ -397,7 +397,7 @@ class ASOWP_Api_Request_Quotes extends WP_REST_Controller
             return null;
         }
 
-        $payload = get_post_meta($quote_id, 'asowp-request-quote-payload', true);
+        $payload = get_post_meta($quote_id, 'ascwo-request-quote-payload', true);
         return is_array($payload) ? $payload : null;
     }
 
@@ -407,7 +407,7 @@ class ASOWP_Api_Request_Quotes extends WP_REST_Controller
             return false;
         }
         $post = get_post($quote_id);
-        return $post && $post->post_type === 'asowp-request-quote';
+        return $post && $post->post_type === 'ascwo-request-quote';
     }
 
     private function pick_object($value)

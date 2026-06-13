@@ -1,301 +1,301 @@
 <template>
-    <div class="asowp-space-y-1 asowp-translate-y-8">
-        <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-8 asowp-space-y-6">
-            <h3 class="asowp-text-[16px]">{{ __("Content Header", "all-signs-options-pro") }}</h3>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Title Header", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.titleHeader" class="asowp-w-full"/>
+    <div class="ascwo-space-y-1 ascwo-translate-y-8">
+        <div class="ascwo-bg-[#F8F9FB] ascwo-px-8 ascwo-py-8 ascwo-space-y-6">
+            <h3 class="ascwo-text-[16px]">{{ __("Content Header", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Title Header", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.titleHeader" class="ascwo-w-full"/>
                 </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="so-text-[12px] asowp-text-[#444444]">{{ __("Text button refresh", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textButtonRefresh" class="asowp-w-full"/>
-                </div>
-            </div>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Additonals Options Header", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textAdditonnalOptionsHeader" class="asowp-w-full"/>
-                </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="so-text-[12px] asowp-text-[#444444]">{{ __("Additonals Options Button Text", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textButtonAdditonnalOptions" class="asowp-w-full"/>
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="so-text-[12px] ascwo-text-[#444444]">{{ __("Text button refresh", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textButtonRefresh" class="ascwo-w-full"/>
                 </div>
             </div>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Text button back", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textButtonBack" class="asowp-w-full"/>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Additonals Options Header", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textAdditonnalOptionsHeader" class="ascwo-w-full"/>
                 </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="so-text-[12px] asowp-text-[#444444]">{{ __("Text button next", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textButtonNext" class="asowp-w-full"/>
-                </div>
-            </div>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Text Before Price", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textBeforePrice" class="asowp-w-full"/>
-                </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Text After Price", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textAfterPrice" class="asowp-w-full"/>
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="so-text-[12px] ascwo-text-[#444444]">{{ __("Additonals Options Button Text", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textButtonAdditonnalOptions" class="ascwo-w-full"/>
                 </div>
             </div>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="so-text-[12px] asowp-text-[#444444]">{{ __("Text button finish", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textButtonFinish" class="asowp-w-full"/>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Text button back", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textButtonBack" class="ascwo-w-full"/>
                 </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="so-text-[12px] asowp-text-[#444444]">{{ __("Text button Add to cart", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textAddToCart" class="asowp-w-full"/>
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="so-text-[12px] ascwo-text-[#444444]">{{ __("Text button next", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textButtonNext" class="ascwo-w-full"/>
+                </div>
+            </div>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Text Before Price", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textBeforePrice" class="ascwo-w-full"/>
+                </div>
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Text After Price", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textAfterPrice" class="ascwo-w-full"/>
+                </div>
+            </div>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="so-text-[12px] ascwo-text-[#444444]">{{ __("Text button finish", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textButtonFinish" class="ascwo-w-full"/>
+                </div>
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="so-text-[12px] ascwo-text-[#444444]">{{ __("Text button Add to cart", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textAddToCart" class="ascwo-w-full"/>
                 </div>
             </div>
 
-            <h3 class="asowp-text-[16px]">{{ __("Action on selected object in canvas", "all-signs-options-pro") }}</h3>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Canvas selected object edit button", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textCanvasEdit" class="asowp-w-full"/>
+            <h3 class="ascwo-text-[16px]">{{ __("Action on selected object in canvas", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Canvas selected object edit button", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textCanvasEdit" class="ascwo-w-full"/>
                 </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="so-text-[12px] asowp-text-[#444444]">{{ __("Canvas selected object delete button", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textCanvasDelete" class="asowp-w-full"/>
-                </div>
-            </div>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Canvas selected object CenterH button", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textCanvasCenterH" class="asowp-w-full"/>
-                </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="so-text-[12px] asowp-text-[#444444]">{{ __("Canvas selected object centerV button", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textCanvasCenterV" class="asowp-w-full"/>
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="so-text-[12px] ascwo-text-[#444444]">{{ __("Canvas selected object delete button", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textCanvasDelete" class="ascwo-w-full"/>
                 </div>
             </div>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Canvas selected object clone button", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textCanvasClone" class="asowp-w-full"/>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Canvas selected object CenterH button", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textCanvasCenterH" class="ascwo-w-full"/>
+                </div>
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="so-text-[12px] ascwo-text-[#444444]">{{ __("Canvas selected object centerV button", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textCanvasCenterV" class="ascwo-w-full"/>
+                </div>
+            </div>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Canvas selected object clone button", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textCanvasClone" class="ascwo-w-full"/>
                 </div>
             </div>
             
         </div>
-        <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-8 asowp-space-y-6">
-            <h3 class="asowp-text-[16px]">{{ __("Content Sidebar", "all-signs-options-pro") }}</h3>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Preview text", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textPreview" class="asowp-w-full"/>
+        <div class="ascwo-bg-[#F8F9FB] ascwo-px-8 ascwo-py-8 ascwo-space-y-6">
+            <h3 class="ascwo-text-[16px]">{{ __("Content Sidebar", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Preview text", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textPreview" class="ascwo-w-full"/>
                 </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="so-text-[12px] asowp-text-[#444444]">{{ __("Share text", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textShare" class="asowp-w-full"/>
-                </div>
-            </div>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Move Up", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textMoveUp" class="asowp-w-full"/>
-                </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="so-text-[12px] asowp-text-[#444444]">{{ __("Move down", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textMoveDown" class="asowp-w-full"/>
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="so-text-[12px] ascwo-text-[#444444]">{{ __("Share text", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textShare" class="ascwo-w-full"/>
                 </div>
             </div>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="so-text-[12px] asowp-text-[#444444]">{{ __("Help text", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textHelp" class="asowp-w-full"/>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Move Up", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textMoveUp" class="ascwo-w-full"/>
                 </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="so-text-[12px] asowp-text-[#444444]">{{ __("Download text", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textDownload" class="asowp-w-full"/>
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="so-text-[12px] ascwo-text-[#444444]">{{ __("Move down", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textMoveDown" class="ascwo-w-full"/>
                 </div>
             </div>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Import text", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textImport" class="asowp-w-full"/>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="so-text-[12px] ascwo-text-[#444444]">{{ __("Help text", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textHelp" class="ascwo-w-full"/>
                 </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Save text", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textSave" class="asowp-w-full"/>
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="so-text-[12px] ascwo-text-[#444444]">{{ __("Download text", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textDownload" class="ascwo-w-full"/>
+                </div>
+            </div>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Import text", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textImport" class="ascwo-w-full"/>
+                </div>
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Save text", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textSave" class="ascwo-w-full"/>
                 </div>
             </div>
         </div>
-        <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-8 asowp-space-y-6">
-            <h3 class="asowp-text-[16px]">{{ __("Button Options", "all-signs-options-pro") }}</h3>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Text Material", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textMaterial" class="asowp-w-full"/>
+        <div class="ascwo-bg-[#F8F9FB] ascwo-px-8 ascwo-py-8 ascwo-space-y-6">
+            <h3 class="ascwo-text-[16px]">{{ __("Button Options", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Text Material", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textMaterial" class="ascwo-w-full"/>
                 </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="so-text-[12px] asowp-text-[#444444]">{{ __("Text Size", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textSize" class="asowp-w-full"/>
-                </div>
-            </div>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Text Width", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textWidth" class="asowp-w-full"/>
-                </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="so-text-[12px] asowp-text-[#444444]">{{ __("Text Height", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textHeight" class="asowp-w-full"/>
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="so-text-[12px] ascwo-text-[#444444]">{{ __("Text Size", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textSize" class="ascwo-w-full"/>
                 </div>
             </div>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Text Position", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textPosition" class="asowp-w-full"/>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Text Width", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textWidth" class="ascwo-w-full"/>
                 </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="so-text-[12px] asowp-text-[#444444]">{{ __("Text Angle", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textAngle" class="asowp-w-full"/>
-                </div>
-            </div>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Text Top", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textTop" class="asowp-w-full"/>
-                </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="so-text-[12px] asowp-text-[#444444]">{{ __("Text Bottom", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textBottom" class="asowp-w-full"/>
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="so-text-[12px] ascwo-text-[#444444]">{{ __("Text Height", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textHeight" class="ascwo-w-full"/>
                 </div>
             </div>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Text Left", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textLeft" class="asowp-w-full"/>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Text Position", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textPosition" class="ascwo-w-full"/>
                 </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="so-text-[12px] asowp-text-[#444444]">{{ __("Text Right", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textRight" class="asowp-w-full"/>
-                </div>
-            </div>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Label of Custom Size", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.customSize" class="asowp-w-full"/>
-                </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="so-text-[12px] asowp-text-[#444444]">{{ __("Label of Custom Size button Done", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.customSizeButtonDone" class="asowp-w-full"/>
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="so-text-[12px] ascwo-text-[#444444]">{{ __("Text Angle", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textAngle" class="ascwo-w-full"/>
                 </div>
             </div>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Text Thickness", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.thickness" class="asowp-w-full"/>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Text Top", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textTop" class="ascwo-w-full"/>
                 </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Text Shape", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textShape" class="asowp-w-full"/>
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="so-text-[12px] ascwo-text-[#444444]">{{ __("Text Bottom", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textBottom" class="ascwo-w-full"/>
+                </div>
+            </div>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Text Left", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textLeft" class="ascwo-w-full"/>
+                </div>
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="so-text-[12px] ascwo-text-[#444444]">{{ __("Text Right", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textRight" class="ascwo-w-full"/>
+                </div>
+            </div>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Label of Custom Size", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.customSize" class="ascwo-w-full"/>
+                </div>
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="so-text-[12px] ascwo-text-[#444444]">{{ __("Label of Custom Size button Done", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.customSizeButtonDone" class="ascwo-w-full"/>
+                </div>
+            </div>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Text Thickness", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.thickness" class="ascwo-w-full"/>
+                </div>
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Text Shape", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textShape" class="ascwo-w-full"/>
                 </div>
                 
             </div>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="so-text-[12px] asowp-text-[#444444]">{{ __("Text Fixing Methods", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textFixingMethods" class="asowp-w-full"/>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="so-text-[12px] ascwo-text-[#444444]">{{ __("Text Fixing Methods", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textFixingMethods" class="ascwo-w-full"/>
                 </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Text Color", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textColor" class="asowp-w-full"/>
-                </div>
-                
-            </div>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="so-text-[12px] asowp-text-[#444444]">{{ __("Text option Text", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textOptionText" class="asowp-w-full"/>
-                </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Text Border", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textBorder" class="asowp-w-full"/>
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Text Color", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textColor" class="ascwo-w-full"/>
                 </div>
                 
             </div>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="so-text-[12px] asowp-text-[#444444]">{{ __("Text Product", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textProduct" class="asowp-w-full"/>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="so-text-[12px] ascwo-text-[#444444]">{{ __("Text option Text", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textOptionText" class="ascwo-w-full"/>
                 </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Text Image", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textImage" class="asowp-w-full"/>
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Text Border", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textBorder" class="ascwo-w-full"/>
+                </div>
+                
+            </div>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="so-text-[12px] ascwo-text-[#444444]">{{ __("Text Product", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textProduct" class="ascwo-w-full"/>
+                </div>
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Text Image", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textImage" class="ascwo-w-full"/>
                 </div>
             </div>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Text Example", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textExample" class="asowp-w-full"/>
-                </div>
-            </div>
-        </div>
-        <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-8 asowp-space-y-6">
-            <h3 class="asowp-text-[16px]">{{ __("Rest Modal", "all-signs-options-pro") }}</h3>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Reset Modal Text", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.resetModalText" class="asowp-w-full"/>
-                </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="so-text-[12px] asowp-text-[#444444]">{{ __("Reset Modal Yes Button Text", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.resetModalYes" class="asowp-w-full"/>
-                </div>
-            </div>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Reset Modal No Button Text", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.resetModalNo" class="asowp-w-full"/>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Text Example", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textExample" class="ascwo-w-full"/>
                 </div>
             </div>
         </div>
-        <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-8 asowp-space-y-6">
-            <h3 class="asowp-text-[16px]">{{ __("Text Required Modal", "all-signs-options-pro") }}</h3>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Modal Title", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textNoTextModalTitle" class="asowp-w-full"/>
+        <div class="ascwo-bg-[#F8F9FB] ascwo-px-8 ascwo-py-8 ascwo-space-y-6">
+            <h3 class="ascwo-text-[16px]">{{ __("Rest Modal", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Reset Modal Text", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.resetModalText" class="ascwo-w-full"/>
                 </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Modal Message", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textNoTextModalMessage" class="asowp-w-full"/>
-                </div>
-            </div>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Modal Button Text", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textNoTextModalButton" class="asowp-w-full"/>
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="so-text-[12px] ascwo-text-[#444444]">{{ __("Reset Modal Yes Button Text", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.resetModalYes" class="ascwo-w-full"/>
                 </div>
             </div>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("No Font Modal Title", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textNoFontModalTitle" class="asowp-w-full"/>
-                </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("No Font Modal Message", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textNoFontModalMessage" class="asowp-w-full"/>
-                </div>
-            </div>
-            <div class="asowp-flex asowp-justify-between">
-                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("No Font Modal Button Text", "all-signs-options-pro") }}</label>
-                    <input type="text" v-model="visualizer.textNoFontModalButton" class="asowp-w-full"/>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Reset Modal No Button Text", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.resetModalNo" class="ascwo-w-full"/>
                 </div>
             </div>
         </div>
-        <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-space-x-4 asowp-px-4 asowp-py-3 asowp-justify-end asowp-items-end">
-            <div class="asowp-bg-[#016464] asowp-rounded">
-                <button :disabled="isLoading" @click="updateVisualizerSettings" class="asowp-rounded asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointerasowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
-                    <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" />
-                    <div class="asowp-font-semibold asowp-text-[16px]">{{ __("Save", "all-signs-options-pro") }}</div>
+        <div class="ascwo-bg-[#F8F9FB] ascwo-px-8 ascwo-py-8 ascwo-space-y-6">
+            <h3 class="ascwo-text-[16px]">{{ __("Text Required Modal", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Modal Title", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textNoTextModalTitle" class="ascwo-w-full"/>
+                </div>
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Modal Message", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textNoTextModalMessage" class="ascwo-w-full"/>
+                </div>
+            </div>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("Modal Button Text", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textNoTextModalButton" class="ascwo-w-full"/>
+                </div>
+            </div>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("No Font Modal Title", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textNoFontModalTitle" class="ascwo-w-full"/>
+                </div>
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("No Font Modal Message", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textNoFontModalMessage" class="ascwo-w-full"/>
+                </div>
+            </div>
+            <div class="ascwo-flex ascwo-justify-between">
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-2/5 ascwo-space-y-2">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __("No Font Modal Button Text", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <input type="text" v-model="visualizer.textNoFontModalButton" class="ascwo-w-full"/>
+                </div>
+            </div>
+        </div>
+        <div class="ascwo-bg-[#F8F9FB] ascwo-flex ascwo-space-x-4 ascwo-px-4 ascwo-py-3 ascwo-justify-end ascwo-items-end">
+            <div class="ascwo-bg-[#016464] ascwo-rounded">
+                <button :disabled="isLoading" @click="updateVisualizerSettings" class="ascwo-rounded ascwo-flex ascwo-bg-transparent ascwo-w-fit ascwo-space-x-2 ascwo-h-fit ascwo-text-white ascwo-px-12 ascwo-p-2.5 ascwo-border-none ascwo-opacity-90 hover:ascwo-opacity-100 hover:ascwo-border-none hover:ascwo-text-white hover:ascwo-bg-[#016464] ascwo-cursor-pointerascwo-flex ascwo-bg-transparent ascwo-w-fit ascwo-space-x-2 ascwo-h-fit ascwo-text-white ascwo-px-12 ascwo-p-2.5 ascwo-border-none ascwo-opacity-90 hover:ascwo-opacity-100 hover:ascwo-border-none hover:ascwo-text-white hover:ascwo-bg-[#016464] ascwo-cursor-pointer">
+                    <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="ascwo-w-5 ascwo-w-5" v-if="isLoading" />
+                    <div class="ascwo-font-semibold ascwo-text-[16px]">{{ __("Save", "all-signs-customizer-for-woocommerce-pro") }}</div>
                 </button>
             </div>
         </div>

@@ -2,10 +2,10 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 
-const activePage = window.asowp_data?.page || "";
+const activePage = window.ascwo_data?.page || "";
 const mountSelector = activePage
-  ? `.asowp-frontend-app[data-asowp-page="${activePage}"], #asowp-frontend-app`
-  : ".asowp-frontend-app, #asowp-frontend-app";
+  ? `.ascwo-frontend-app[data-ascwo-page="${activePage}"], #ascwo-frontend-app`
+  : ".ascwo-frontend-app, #ascwo-frontend-app";
 
 let isMounted = false;
 let mountObserver = null;
@@ -26,13 +26,15 @@ function mountFrontendApp() {
 
   const duplicateLoaderSelector =
     activePage === "templates"
-      ? "#asowp-templates-loader"
+      ? "#ascwo-templates-loader"
       : activePage === "configurator"
-        ? "#asowp-configurator-loader"
-        : "";
+      ? "#ascwo-configurator-loader"
+      : "";
 
   if (duplicateLoaderSelector) {
-    const loaders = Array.from(document.querySelectorAll(duplicateLoaderSelector));
+    const loaders = Array.from(
+      document.querySelectorAll(duplicateLoaderSelector),
+    );
     loaders.slice(1).forEach((node) => node.remove());
   }
 

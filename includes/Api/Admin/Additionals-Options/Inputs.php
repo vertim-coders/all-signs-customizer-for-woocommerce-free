@@ -1,5 +1,5 @@
 <?php
-namespace ASOWP\Api\Admin\Additionals_Options;
+namespace ASCWO\Api\Admin\Additionals_Options;
 
 use WP_Error;
 use WP_Post;
@@ -8,14 +8,14 @@ use WP_Query;
 /**
  * class for api routes reaching additional options inputs
  */
-class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Customs_Additionals_Base
+class ASCWO_Api_Additional_Options_Inputs extends ASCWO_Api_Customs_Additionals_Base
 {
     /**
      * [__construct description]
      */
     public function __construct()
     {
-        $this->namespace = 'asowp/v1';
+        $this->namespace = 'ascwo/v1';
         $this->rest_base = 'configs/(?P<config_id>\d+)/additional-options/inputs';
     }
     /**
@@ -181,7 +181,7 @@ class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Customs_Additionals_
         $section = $this->get_inputs_section($meta_value);
         if (empty($section)) {
             $section = array(
-                'label' => __('Inputs', 'all-signs-options-pro'),
+                'label' => __('Inputs', 'all-signs-customizer-for-woocommerce-pro'),
                 'description' => '',
                 'items' => array(),
             );
@@ -192,7 +192,7 @@ class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Customs_Additionals_
         }
 
         if (!isset($section['label'])) {
-            $section['label'] = __('Inputs', 'all-signs-options-pro');
+            $section['label'] = __('Inputs', 'all-signs-customizer-for-woocommerce-pro');
         }
 
         if (!isset($section['description'])) {
@@ -213,19 +213,19 @@ class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Customs_Additionals_
     {
         $id = $request->get_param('config_id');
         if ($id != 0) {
-            $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
+            $meta_value = get_post_meta($id, 'ascwo-configs-meta', true);
 
             if (!empty($meta_value)) {
                 $inputs_options = $this->get_inputs_from_meta($meta_value);
                 if (count($inputs_options) > 0) {
                     return rest_ensure_response($inputs_options);
                 }
-                return rest_ensure_response(["message" => __("No Additonal Inputs found", "all-signs-options-pro")]);
+                return rest_ensure_response(["message" => __("No Additonal Inputs found", "all-signs-customizer-for-woocommerce-pro")]);
             } else {
-                return rest_ensure_response(["message" => __("No Additonal Inputs found", "all-signs-options-pro")]);
+                return rest_ensure_response(["message" => __("No Additonal Inputs found", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["message" => __("Inputs ID invalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["message" => __("Inputs ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
 
     }
@@ -241,7 +241,7 @@ class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Customs_Additionals_
         $id = $request->get_param('config_id');
         $input_id = $request->get_param('input_id');
         if ($id != 0) {
-            $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
+            $meta_value = get_post_meta($id, 'ascwo-configs-meta', true);
 
             if (!empty($meta_value)) {
                 $inputs = $this->get_inputs_from_meta($meta_value);
@@ -249,13 +249,13 @@ class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Customs_Additionals_
                 if (isset($inputs[$input_id])) {
                     return rest_ensure_response($inputs[$input_id]);
                 }
-                return rest_ensure_response(array("message" => __("No input found", "all-signs-options-pro")));
+                return rest_ensure_response(array("message" => __("No input found", "all-signs-customizer-for-woocommerce-pro")));
 
             } else {
-                return rest_ensure_response(["message" => __("No data found", "all-signs-options-pro")]);
+                return rest_ensure_response(["message" => __("No data found", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["message" => __("Inputs ID invalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["message" => __("Inputs ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
 
     }
@@ -274,22 +274,22 @@ class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Customs_Additionals_
         if ($id != 0) {
             $post = get_post($id);
             if ($post) {
-                $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
+                $meta_value = get_post_meta($id, 'ascwo-configs-meta', true);
                 $meta_value = $this->ensure_inputs_section($meta_value);
                 $meta_value["additionalOptions"]["inputs"]["items"][] = $input;
 
                 $response = $this->save_meta((int) $id, $meta_value);
 
                 if ($response) {
-                    return rest_ensure_response(["success" => true, "message" => __("Option added successfuly", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => true, "message" => __("Option added successfuly", "all-signs-customizer-for-woocommerce-pro")]);
                 } else {
-                    return rest_ensure_response(["message" => __("Add option failed", "all-signs-options-pro")]);
+                    return rest_ensure_response(["message" => __("Add option failed", "all-signs-customizer-for-woocommerce-pro")]);
                 }
             } else {
-                return rest_ensure_response(["message" => __("Input ID invalid", "all-signs-options-pro")]);
+                return rest_ensure_response(["message" => __("Input ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["message" => __("Input ID invalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["message" => __("Input ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
     public function update_inputs($request)
@@ -301,27 +301,27 @@ class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Customs_Additionals_
         if ($id != 0) {
             $post = get_post($id);
             if ($post) {
-                $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
-                    $meta_value = $this->ensure_inputs_section($meta_value);
-                    $current_inputs = $meta_value["additionalOptions"]["inputs"]["items"] ?? array();
-                    if ($current_inputs == $inputs) {
-                        return rest_ensure_response(["success" => "same", "message" => __("No change observe on additionnals options", "all-signs-options-pro")]);
-                    } else {
-                        $meta_value["additionalOptions"]["inputs"]["items"] = array_values(is_array($inputs) ? $inputs : array());
+                $meta_value = get_post_meta($id, 'ascwo-configs-meta', true);
+                $meta_value = $this->ensure_inputs_section($meta_value);
+                $current_inputs = $meta_value["additionalOptions"]["inputs"]["items"] ?? array();
+                if ($current_inputs == $inputs) {
+                    return rest_ensure_response(["success" => "same", "message" => __("No change observe on additionnals options", "all-signs-customizer-for-woocommerce-pro")]);
+                } else {
+                    $meta_value["additionalOptions"]["inputs"]["items"] = array_values(is_array($inputs) ? $inputs : array());
 
                     $response = $this->save_meta((int) $id, $meta_value);
 
                     if ($response) {
-                        return rest_ensure_response(["success" => true, "message" => __("Additonnals Option successfully sorted", "all-signs-options-pro")]);
+                        return rest_ensure_response(["success" => true, "message" => __("Additonnals Option successfully sorted", "all-signs-customizer-for-woocommerce-pro")]);
                     } else {
-                        return rest_ensure_response(["message" => __("Additonnals Option sort failed", "all-signs-options-pro")]);
+                        return rest_ensure_response(["message" => __("Additonnals Option sort failed", "all-signs-customizer-for-woocommerce-pro")]);
                     }
                 }
             } else {
-                return rest_ensure_response(["message" => __("Input ID invalid", "all-signs-options-pro")]);
+                return rest_ensure_response(["message" => __("Input ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["message" => __("Input ID invalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["message" => __("Input ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
 
@@ -339,39 +339,39 @@ class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Customs_Additionals_
         if ($id != 0) {
             $post = get_post($id);
             if ($post) {
-                $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
+                $meta_value = get_post_meta($id, 'ascwo-configs-meta', true);
                 if (!empty($meta_value)) {
                     $meta_value = $this->ensure_inputs_section($meta_value);
                     $inputs = $meta_value["additionalOptions"]["inputs"]["items"] ?? array();
 
                     if (isset($inputs[$input_id])) {
                         if ($inputs[$input_id] == $input) {
-                            return rest_ensure_response(["success" => true, "message" => __("No change observed in option", "all-signs-options-pro")]);
+                            return rest_ensure_response(["success" => true, "message" => __("No change observed in option", "all-signs-customizer-for-woocommerce-pro")]);
                         } else {
                             $inputs[$input_id] = $input;
                             $meta_value["additionalOptions"]["inputs"]["items"] = array_values($inputs);
                             $response = $this->save_meta((int) $id, $meta_value);
 
                             if ($response) {
-                                return rest_ensure_response(["success" => true, "message" => __("Option updated successfully", "all-signs-options-pro")]);
+                                return rest_ensure_response(["success" => true, "message" => __("Option updated successfully", "all-signs-customizer-for-woocommerce-pro")]);
                             } else {
-                                return rest_ensure_response(["message" => __("update input additional failed", "all-signs-options-pro")]);
+                                return rest_ensure_response(["message" => __("update input additional failed", "all-signs-customizer-for-woocommerce-pro")]);
                             }
                         }
                     } else {
-                        return rest_ensure_response(["message" => __("update input additional failed", "all-signs-options-pro")]);
+                        return rest_ensure_response(["message" => __("update input additional failed", "all-signs-customizer-for-woocommerce-pro")]);
                     }
 
 
                 } else {
-                    return rest_ensure_response(["message" => __("No input additional setting found", "all-signs-options-pro")]);
+                    return rest_ensure_response(["message" => __("No input additional setting found", "all-signs-customizer-for-woocommerce-pro")]);
                 }
 
             } else {
-                return rest_ensure_response(["message" => __("Input ID invalid", "all-signs-options-pro")]);
+                return rest_ensure_response(["message" => __("Input ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["message" => __("Input ID invalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["message" => __("Input ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
 
@@ -387,7 +387,7 @@ class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Customs_Additionals_
         if ($id != 0) {
             $post = get_post($id);
             if ($post) {
-                $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
+                $meta_value = get_post_meta($id, 'ascwo-configs-meta', true);
                 $meta_value = $this->ensure_inputs_section($meta_value);
                 if (!empty($meta_value["additionalOptions"]["inputs"]["items"])) {
                     $inputs = $meta_value["additionalOptions"]["inputs"]["items"];
@@ -399,19 +399,19 @@ class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Customs_Additionals_
                     $response = $this->save_meta((int) $id, $meta_value);
 
                     if ($response) {
-                        return rest_ensure_response(["success" => true, "message" => __("Option deleted successfully", "all-signs-options-pro")]);
+                        return rest_ensure_response(["success" => true, "message" => __("Option deleted successfully", "all-signs-customizer-for-woocommerce-pro")]);
                     } else {
-                        return rest_ensure_response(["message" => __("delete input additional failed", "all-signs-options-pro")]);
+                        return rest_ensure_response(["message" => __("delete input additional failed", "all-signs-customizer-for-woocommerce-pro")]);
                     }
                 } else {
-                    return rest_ensure_response(["message" => __("No input setting found", "all-signs-options-pro")]);
+                    return rest_ensure_response(["message" => __("No input setting found", "all-signs-customizer-for-woocommerce-pro")]);
                 }
 
             } else {
-                return rest_ensure_response(["message" => __("Input ID invalid", "all-signs-options-pro")]);
+                return rest_ensure_response(["message" => __("Input ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["message" => __("Input ID invalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["message" => __("Input ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
 

@@ -1,28 +1,28 @@
 <template>
-  <div class="asowp-global-settings asowp-min-h-screen asowp-bg-[#f1f1f1] asowp-p-4">
-    <section class="asowp-card asowp-mb-3">
-      <div class="asowp-card-inner">
-        <h1 class="asowp-title">{{ __("Global Settings", "all-signs-options-pro") }}</h1>
+  <div class="ascwo-global-settings ascwo-min-h-screen ascwo-bg-[#f1f1f1] ascwo-p-4">
+    <section class="ascwo-card ascwo-mb-3">
+      <div class="ascwo-card-inner">
+        <h1 class="ascwo-title">{{ __("Global Settings", "all-signs-customizer-for-woocommerce-pro") }}</h1>
       </div>
     </section>
 
-    <section class="asowp-card asowp-tabs-card asowp-mb-3">
-      <nav class="asowp-tabs">
+    <section class="ascwo-card ascwo-tabs-card ascwo-mb-3">
+      <nav class="ascwo-tabs">
         <button
           v-for="tab in tabs"
           :key="tab.name"
           v-show="tab.name !== 'global-settings-license' || !actualLink.includes(excludeLink)"
           type="button"
           @click="router.push(tab.path)"
-          :class="['asowp-tab', route.name === tab.name ? 'is-active' : '']"
+          :class="['ascwo-tab', route.name === tab.name ? 'is-active' : '']"
         >
-          <component :is="tab.icon" class="asowp-w-4 asowp-h-4" />
+          <component :is="tab.icon" class="ascwo-w-4 ascwo-h-4" />
           <span>{{ tab.label }}</span>
         </button>
       </nav>
     </section>
 
-    <div class="asowp-content">
+    <div class="ascwo-content">
       <Licences v-if="$route.name === 'global-settings-license' && !actualLink.includes(excludeLink)" />
       <ConfigurationPage v-if="$route.name === 'global-settings-configuration-page'" />
       <Output v-if="$route.name === 'global-settings-output'" />
@@ -52,12 +52,12 @@ const excludeLink = ref("https://signsdesigner.us/public-demos");
 const actualLink = ref(window.location.href);
 
 const tabs = [
-  { label: __("License", "all-signs-options-pro"), icon: KeyRoundIcon, name: "global-settings-license", path: "/settings/license" },
-  { label: __("Configuration page", "all-signs-options-pro"), icon: FileCogIcon, name: "global-settings-configuration-page", path: "/settings/configuration-page" },
-  { label: __("Output", "all-signs-options-pro"), icon: PrinterIcon, name: "global-settings-output", path: "/settings/output" },
-  { label: __("Shapes", "all-signs-options-pro"), icon: ShapesIcon, name: "global-settings-shape", path: "/settings/shape" },
-  { label: __("Fixing method", "all-signs-options-pro"), icon: WrenchIcon, name: "global-settings-fixing-method", path: "/settings/fixing-method" },
-  { label: __("Border", "all-signs-options-pro"), icon: SquareIcon, name: "global-settings-border", path: "/settings/border" },
+  { label: __("License", "all-signs-customizer-for-woocommerce-pro"), icon: KeyRoundIcon, name: "global-settings-license", path: "/settings/license" },
+  { label: __("Configuration page", "all-signs-customizer-for-woocommerce-pro"), icon: FileCogIcon, name: "global-settings-configuration-page", path: "/settings/configuration-page" },
+  { label: __("Output", "all-signs-customizer-for-woocommerce-pro"), icon: PrinterIcon, name: "global-settings-output", path: "/settings/output" },
+  { label: __("Shapes", "all-signs-customizer-for-woocommerce-pro"), icon: ShapesIcon, name: "global-settings-shape", path: "/settings/shape" },
+  { label: __("Fixing method", "all-signs-customizer-for-woocommerce-pro"), icon: WrenchIcon, name: "global-settings-fixing-method", path: "/settings/fixing-method" },
+  { label: __("Border", "all-signs-customizer-for-woocommerce-pro"), icon: SquareIcon, name: "global-settings-border", path: "/settings/border" },
 ];
 
 onMounted(() => {
@@ -68,18 +68,18 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.asowp-card {
+.ascwo-card {
   background: #fff;
   border: 1px solid #dfe3e8;
   border-radius: 10px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
 }
 
-.asowp-card-inner {
+.ascwo-card-inner {
   padding: 18px 20px;
 }
 
-.asowp-title {
+.ascwo-title {
   margin: 0;
   color: #303030;
   font-size: 16px;
@@ -87,13 +87,13 @@ onMounted(() => {
   font-weight: 900;
 }
 
-.asowp-tabs-card {
+.ascwo-tabs-card {
   position: sticky;
   top: 46px;
   z-index: 30;
 }
 
-.asowp-tabs {
+.ascwo-tabs {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -104,7 +104,7 @@ onMounted(() => {
   scrollbar-width: thin;
 }
 
-.asowp-tab {
+.ascwo-tab {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -123,17 +123,17 @@ onMounted(() => {
   white-space: nowrap;
 }
 
-.asowp-tab:hover {
+.ascwo-tab:hover {
   background: #fff;
   color: #007a72;
 }
 
-.asowp-tab.is-active {
+.ascwo-tab.is-active {
   background: #fff;
   color: #007a72;
 }
 
-.asowp-tab.is-active::after {
+.ascwo-tab.is-active::after {
   content: "";
   position: absolute;
   right: 12px;
@@ -144,13 +144,13 @@ onMounted(() => {
   background: #007a72;
 }
 
-.asowp-tab :deep(svg) {
+.ascwo-tab :deep(svg) {
   width: 20px;
   height: 20px;
   flex: 0 0 auto;
 }
 
-.asowp-content {
+.ascwo-content {
   color: #303030;
 }
 </style>

@@ -7,8 +7,8 @@ import menuFix from "./utils/admin-menu-fix";
 const app = createApp(App);
 
 app.use(router);
-app.mount("#asowp-admin-app");
-menuFix("asowp");
+app.mount("#ascwo-admin-app");
+menuFix("ascwo");
 
 try {
   Crisp.configure("119b2249-75d7-428e-9822-47c33b453759", { autoload: true });
@@ -17,10 +17,10 @@ try {
   Crisp.setZIndex(900);
 
   const ensureCrispOffsetStyles = () => {
-    if (document.getElementById("asowp-crisp-wp-offset-style")) return;
+    if (document.getElementById("ascwo-crisp-wp-offset-style")) return;
 
     const style = document.createElement("style");
-    style.id = "asowp-crisp-wp-offset-style";
+    style.id = "ascwo-crisp-wp-offset-style";
     style.textContent = `
       #crisp-chatbox {
         z-index: 900 !important;
@@ -44,5 +44,5 @@ try {
   };
 
   window.setTimeout(hideCrispWhenReady, 500);
-  window.asowpUpdateCrispPosition = () => {};
+  window.ascwoUpdateCrispPosition = () => {};
 } catch (_) {}

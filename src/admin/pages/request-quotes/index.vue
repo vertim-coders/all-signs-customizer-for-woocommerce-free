@@ -1,40 +1,40 @@
 <template>
-  <main class="asowp-request-quotes-page">
-    <header class="asowp-request-quotes-heading">
-      <h1>{{ __("Request quotes", "all-signs-options-pro") }}</h1>
-      <p>{{ totalCount }} {{ totalCount === 1 ? __("request stored", "all-signs-options-pro") : __("requests stored", "all-signs-options-pro") }}</p>
+  <main class="ascwo-request-quotes-page">
+    <header class="ascwo-request-quotes-heading">
+      <h1>{{ __("Request quotes", "all-signs-customizer-for-woocommerce-pro") }}</h1>
+      <p>{{ totalCount }} {{ totalCount === 1 ? __("request stored", "all-signs-customizer-for-woocommerce-pro") : __("requests stored", "all-signs-customizer-for-woocommerce-pro") }}</p>
     </header>
 
-    <section class="asowp-request-quotes-layout">
-      <article class="asowp-request-quotes-card asowp-request-quotes-list-card">
+    <section class="ascwo-request-quotes-layout">
+      <article class="ascwo-request-quotes-card ascwo-request-quotes-list-card">
         <header>
           <div>
-            <h2>{{ __("Stored request quotes", "all-signs-options-pro") }}</h2>
-            <p>{{ __("Read the customer request and download the uploaded files.", "all-signs-options-pro") }}</p>
+            <h2>{{ __("Stored request quotes", "all-signs-customizer-for-woocommerce-pro") }}</h2>
+            <p>{{ __("Read the customer request and download the uploaded files.", "all-signs-customizer-for-woocommerce-pro") }}</p>
           </div>
-          <button type="button" class="asowp-request-quotes-refresh" :disabled="isLoading" @click="loadQuotes">
+          <button type="button" class="ascwo-request-quotes-refresh" :disabled="isLoading" @click="loadQuotes">
             <RefreshCwIcon :class="{ 'is-spinning': isLoading }" />
           </button>
         </header>
 
-        <div v-if="isLoading" class="asowp-request-quotes-loader">
+        <div v-if="isLoading" class="ascwo-request-quotes-loader">
           <img :src="loadingIcon" alt="" />
         </div>
 
-        <div v-else-if="requestQuotes.length === 0" class="asowp-request-quotes-empty">
-          {{ __("No request quote has been saved yet.", "all-signs-options-pro") }}
+        <div v-else-if="requestQuotes.length === 0" class="ascwo-request-quotes-empty">
+          {{ __("No request quote has been saved yet.", "all-signs-customizer-for-woocommerce-pro") }}
         </div>
 
-        <div v-else class="asowp-request-quotes-table-wrap">
-          <table class="asowp-request-quotes-table">
+        <div v-else class="ascwo-request-quotes-table-wrap">
+          <table class="ascwo-request-quotes-table">
             <thead>
               <tr>
-                <th>{{ __("Created", "all-signs-options-pro") }}</th>
-                <th>{{ __("Customer", "all-signs-options-pro") }}</th>
-                <th>{{ __("Product", "all-signs-options-pro") }}</th>
-                <th>{{ __("Files", "all-signs-options-pro") }}</th>
-                <th>{{ __("Status", "all-signs-options-pro") }}</th>
-                <th>{{ __("Action", "all-signs-options-pro") }}</th>
+                <th>{{ __("Created", "all-signs-customizer-for-woocommerce-pro") }}</th>
+                <th>{{ __("Customer", "all-signs-customizer-for-woocommerce-pro") }}</th>
+                <th>{{ __("Product", "all-signs-customizer-for-woocommerce-pro") }}</th>
+                <th>{{ __("Files", "all-signs-customizer-for-woocommerce-pro") }}</th>
+                <th>{{ __("Status", "all-signs-customizer-for-woocommerce-pro") }}</th>
+                <th>{{ __("Action", "all-signs-customizer-for-woocommerce-pro") }}</th>
               </tr>
             </thead>
             <tbody>
@@ -50,15 +50,15 @@
                 </td>
                 <td>
                   <span>{{ quote.productType || "n/a" }}</span>
-                  <small>{{ quote.configId ? `Config ${quote.configId}` : __("No config id", "all-signs-options-pro") }}</small>
+                  <small>{{ quote.configId ? `Config ${quote.configId}` : __("No config id", "all-signs-customizer-for-woocommerce-pro") }}</small>
                 </td>
                 <td>{{ quote.files?.length || 0 }}</td>
                 <td>
-                  <span class="asowp-request-quotes-badge" :class="`is-${statusTone(quote.status)}`">{{ quote.status || "pending" }}</span>
+                  <span class="ascwo-request-quotes-badge" :class="`is-${statusTone(quote.status)}`">{{ quote.status || "pending" }}</span>
                 </td>
                 <td>
-                  <button type="button" class="asowp-request-quotes-view" @click="selectQuote(quote)">
-                    {{ __("View", "all-signs-options-pro") }}
+                  <button type="button" class="ascwo-request-quotes-view" @click="selectQuote(quote)">
+                    {{ __("View", "all-signs-customizer-for-woocommerce-pro") }}
                   </button>
                 </td>
               </tr>
@@ -67,36 +67,36 @@
         </div>
       </article>
 
-      <aside class="asowp-request-quotes-card asowp-request-quotes-detail-card">
+      <aside class="ascwo-request-quotes-card ascwo-request-quotes-detail-card">
         <template v-if="selectedQuote">
           <header>
             <div>
-              <h2>{{ __("Quote details", "all-signs-options-pro") }}</h2>
+              <h2>{{ __("Quote details", "all-signs-customizer-for-woocommerce-pro") }}</h2>
               <p>ID {{ selectedQuote.id }}</p>
             </div>
-            <span class="asowp-request-quotes-badge" :class="`is-${statusTone(selectedQuote.status)}`">{{ selectedQuote.status || "pending" }}</span>
+            <span class="ascwo-request-quotes-badge" :class="`is-${statusTone(selectedQuote.status)}`">{{ selectedQuote.status || "pending" }}</span>
           </header>
 
-          <div class="asowp-request-quotes-detail-group">
-            <h3>{{ __("Customer", "all-signs-options-pro") }}</h3>
+          <div class="ascwo-request-quotes-detail-group">
+            <h3>{{ __("Customer", "all-signs-customizer-for-woocommerce-pro") }}</h3>
             <p>{{ customerName(selectedQuote) }}</p>
-            <p>{{ selectedQuote.customer?.email || __("No email provided", "all-signs-options-pro") }}</p>
-            <p>{{ selectedQuote.customer?.phone || __("No phone provided", "all-signs-options-pro") }}</p>
+            <p>{{ selectedQuote.customer?.email || __("No email provided", "all-signs-customizer-for-woocommerce-pro") }}</p>
+            <p>{{ selectedQuote.customer?.phone || __("No phone provided", "all-signs-customizer-for-woocommerce-pro") }}</p>
           </div>
 
-          <div class="asowp-request-quotes-detail-group">
-            <h3>{{ __("Message", "all-signs-options-pro") }}</h3>
-            <p>{{ selectedQuote.customer?.message || __("No message provided", "all-signs-options-pro") }}</p>
+          <div class="ascwo-request-quotes-detail-group">
+            <h3>{{ __("Message", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+            <p>{{ selectedQuote.customer?.message || __("No message provided", "all-signs-customizer-for-woocommerce-pro") }}</p>
           </div>
 
-          <div class="asowp-request-quotes-detail-group">
-            <h3>{{ __("Files", "all-signs-options-pro") }}</h3>
-            <p v-if="!selectedQuote.files || selectedQuote.files.length === 0">{{ __("No uploaded file.", "all-signs-options-pro") }}</p>
+          <div class="ascwo-request-quotes-detail-group">
+            <h3>{{ __("Files", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+            <p v-if="!selectedQuote.files || selectedQuote.files.length === 0">{{ __("No uploaded file.", "all-signs-customizer-for-woocommerce-pro") }}</p>
             <a
               v-for="(file, index) in selectedQuote.files"
               v-else
               :key="`${selectedQuote.id}-${file.name}-${index}`"
-              class="asowp-request-quotes-file"
+              class="ascwo-request-quotes-file"
               :href="downloadUrl(selectedQuote, index)"
               target="_blank"
               rel="noopener"
@@ -106,32 +106,32 @@
             </a>
           </div>
 
-          <div class="asowp-request-quotes-detail-group">
-            <h3>{{ __("Technical data", "all-signs-options-pro") }}</h3>
-            <p>{{ __("Created:", "all-signs-options-pro") }} {{ formatDate(selectedQuote.createdAt) }}</p>
-            <p>{{ __("Product type:", "all-signs-options-pro") }} {{ selectedQuote.productType || "-" }}</p>
-            <p>{{ __("Notified:", "all-signs-options-pro") }} {{ selectedQuote.notifiedAt ? formatDate(selectedQuote.notifiedAt) : __("No", "all-signs-options-pro") }}</p>
-            <p>{{ __("Source content type:", "all-signs-options-pro") }} {{ selectedQuote.source?.contentType || "-" }}</p>
+          <div class="ascwo-request-quotes-detail-group">
+            <h3>{{ __("Technical data", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+            <p>{{ __("Created:", "all-signs-customizer-for-woocommerce-pro") }} {{ formatDate(selectedQuote.createdAt) }}</p>
+            <p>{{ __("Product type:", "all-signs-customizer-for-woocommerce-pro") }} {{ selectedQuote.productType || "-" }}</p>
+            <p>{{ __("Notified:", "all-signs-customizer-for-woocommerce-pro") }} {{ selectedQuote.notifiedAt ? formatDate(selectedQuote.notifiedAt) : __("No", "all-signs-customizer-for-woocommerce-pro") }}</p>
+            <p>{{ __("Source content type:", "all-signs-customizer-for-woocommerce-pro") }} {{ selectedQuote.source?.contentType || "-" }}</p>
           </div>
 
-          <div v-if="selectedQuote.previewImg" class="asowp-request-quotes-detail-group">
-            <h3>{{ __("Preview", "all-signs-options-pro") }}</h3>
-            <img class="asowp-request-quotes-preview" :src="selectedQuote.previewImg" alt="" />
+          <div v-if="selectedQuote.previewImg" class="ascwo-request-quotes-detail-group">
+            <h3>{{ __("Preview", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+            <img class="ascwo-request-quotes-preview" :src="selectedQuote.previewImg" alt="" />
           </div>
 
           <footer>
             <button
               type="button"
-              class="asowp-request-quotes-mark"
+              class="ascwo-request-quotes-mark"
               :disabled="isSaving || selectedQuote.status === 'notified'"
               @click="markAsNotified"
             >
               <Loader2Icon v-if="isSaving" class="is-spinning" />
-              <span>{{ selectedQuote.status === "notified" ? __("Already notified", "all-signs-options-pro") : __("Mark as notified", "all-signs-options-pro") }}</span>
+              <span>{{ selectedQuote.status === "notified" ? __("Already notified", "all-signs-customizer-for-woocommerce-pro") : __("Mark as notified", "all-signs-customizer-for-woocommerce-pro") }}</span>
             </button>
           </footer>
         </template>
-        <p v-else>{{ __("Select a quote to see details.", "all-signs-options-pro") }}</p>
+        <p v-else>{{ __("Select a quote to see details.", "all-signs-customizer-for-woocommerce-pro") }}</p>
       </aside>
     </section>
   </main>
@@ -147,7 +147,7 @@ const requestQuotes = ref([]);
 const selectedQuote = ref(null);
 const isLoading = ref(true);
 const isSaving = ref(false);
-const loadingIcon = `${String(asowp_data.assets_url || "").replace(/\/$/, "")}/icons/ic_loading.svg`;
+const loadingIcon = `${String(ascwo_data.assets_url || "").replace(/\/$/, "")}/icons/ic_loading.svg`;
 
 const totalCount = computed(() => requestQuotes.value.length);
 
@@ -178,7 +178,7 @@ const customerName = (quote) => {
   const firstName = quote?.customer?.firstName || "";
   const lastName = quote?.customer?.lastName || "";
   const name = `${firstName} ${lastName}`.trim();
-  return name || quote?.customer?.email || __("Anonymous customer", "all-signs-options-pro");
+  return name || quote?.customer?.email || __("Anonymous customer", "all-signs-customizer-for-woocommerce-pro");
 };
 
 const formatDate = (value) => {
@@ -207,7 +207,7 @@ const statusTone = (status = "") => {
 };
 
 const downloadUrl = (quote, fileIndex) => {
-  return `${String(asowp_data.rest_url || "").replace(/\/$/, "")}/request-quotes/${quote.id}/download/${fileIndex}`;
+  return `${String(ascwo_data.rest_url || "").replace(/\/$/, "")}/request-quotes/${quote.id}/download/${fileIndex}`;
 };
 
 const markAsNotified = async () => {
@@ -235,12 +235,12 @@ onMounted(loadQuotes);
 </script>
 
 <style>
-.asowp-request-quotes-page,
-.asowp-request-quotes-page * {
+.ascwo-request-quotes-page,
+.ascwo-request-quotes-page * {
   box-sizing: border-box;
 }
 
-.asowp-request-quotes-page {
+.ascwo-request-quotes-page {
   min-height: calc(100vh - 32px);
   padding: 42px 48px 80px;
   background: #f3f3f3;
@@ -248,17 +248,17 @@ onMounted(loadQuotes);
   font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
 }
 
-.asowp-request-quotes-heading,
-.asowp-request-quotes-layout {
+.ascwo-request-quotes-heading,
+.ascwo-request-quotes-layout {
   width: min(1186px, 100%);
   margin: 0 auto;
 }
 
-.asowp-request-quotes-heading {
+.ascwo-request-quotes-heading {
   margin-bottom: 30px;
 }
 
-.asowp-request-quotes-heading h1 {
+.ascwo-request-quotes-heading h1 {
   margin: 0;
   color: #111827;
   font-size: 24px;
@@ -266,47 +266,47 @@ onMounted(loadQuotes);
   font-weight: 750;
 }
 
-.asowp-request-quotes-heading p {
+.ascwo-request-quotes-heading p {
   margin: 3px 0 0;
   color: #4b5563;
   font-size: 14px;
   line-height: 20px;
 }
 
-.asowp-request-quotes-layout {
+.ascwo-request-quotes-layout {
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr);
   gap: 20px;
   align-items: start;
 }
 
-.asowp-request-quotes-card {
+.ascwo-request-quotes-card {
   background: #ffffff;
   border: 1px solid #dfe3e8;
   border-radius: 12px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
 }
 
-.asowp-request-quotes-list-card {
+.ascwo-request-quotes-list-card {
   min-height: 202px;
   padding: 38px 39px;
 }
 
-.asowp-request-quotes-list-card > header,
-.asowp-request-quotes-detail-card > header {
+.ascwo-request-quotes-list-card > header,
+.ascwo-request-quotes-detail-card > header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
 }
 
-.asowp-request-quotes-list-card > header {
+.ascwo-request-quotes-list-card > header {
   padding-bottom: 22px;
   border-bottom: 1px solid #e5e7eb;
 }
 
-.asowp-request-quotes-list-card h2,
-.asowp-request-quotes-detail-card h2 {
+.ascwo-request-quotes-list-card h2,
+.ascwo-request-quotes-detail-card h2 {
   margin: 0;
   color: #303030;
   font-size: 16px;
@@ -314,15 +314,15 @@ onMounted(loadQuotes);
   font-weight: 700;
 }
 
-.asowp-request-quotes-list-card header p,
-.asowp-request-quotes-detail-card header p {
+.ascwo-request-quotes-list-card header p,
+.ascwo-request-quotes-detail-card header p {
   margin: 6px 0 0;
   color: #616161;
   font-size: 15px;
   line-height: 22px;
 }
 
-.asowp-request-quotes-refresh {
+.ascwo-request-quotes-refresh {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -336,14 +336,14 @@ onMounted(loadQuotes);
   cursor: pointer;
 }
 
-.asowp-request-quotes-refresh svg {
+.ascwo-request-quotes-refresh svg {
   width: 16px;
   height: 16px;
 }
 
-.asowp-request-quotes-refresh:hover,
-.asowp-request-quotes-refresh:focus,
-.asowp-request-quotes-refresh:active {
+.ascwo-request-quotes-refresh:hover,
+.ascwo-request-quotes-refresh:focus,
+.ascwo-request-quotes-refresh:active {
   color: #303030;
   background: #ffffff;
   border-color: #b8c0ca;
@@ -351,37 +351,37 @@ onMounted(loadQuotes);
   box-shadow: none;
 }
 
-.asowp-request-quotes-loader {
+.ascwo-request-quotes-loader {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 118px;
 }
 
-.asowp-request-quotes-loader img {
+.ascwo-request-quotes-loader img {
   width: 42px;
   height: 42px;
 }
 
-.asowp-request-quotes-empty {
+.ascwo-request-quotes-empty {
   padding-top: 22px;
   color: #303030;
   font-size: 15px;
   line-height: 22px;
 }
 
-.asowp-request-quotes-table-wrap {
+.ascwo-request-quotes-table-wrap {
   padding-top: 14px;
   overflow-x: auto;
 }
 
-.asowp-request-quotes-table {
+.ascwo-request-quotes-table {
   width: 100%;
   border-collapse: collapse;
   color: #303030;
 }
 
-.asowp-request-quotes-table th {
+.ascwo-request-quotes-table th {
   padding: 12px 12px;
   color: #616161;
   background: #f7f7f7;
@@ -393,7 +393,7 @@ onMounted(loadQuotes);
   text-align: left;
 }
 
-.asowp-request-quotes-table td {
+.ascwo-request-quotes-table td {
   padding: 14px 12px;
   border: 0;
   border-bottom: 1px solid #e5e7eb;
@@ -402,29 +402,29 @@ onMounted(loadQuotes);
   vertical-align: middle;
 }
 
-.asowp-request-quotes-table tr.is-active td {
+.ascwo-request-quotes-table tr.is-active td {
   background: #f8fbff;
 }
 
-.asowp-request-quotes-table strong,
-.asowp-request-quotes-table small {
+.ascwo-request-quotes-table strong,
+.ascwo-request-quotes-table small {
   display: block;
 }
 
-.asowp-request-quotes-table strong {
+.ascwo-request-quotes-table strong {
   color: #303030;
   font-size: 13px;
   line-height: 18px;
   font-weight: 700;
 }
 
-.asowp-request-quotes-table small {
+.ascwo-request-quotes-table small {
   color: #616161;
   font-size: 12px;
   line-height: 18px;
 }
 
-.asowp-request-quotes-badge {
+.ascwo-request-quotes-badge {
   display: inline-flex;
   align-items: center;
   min-height: 24px;
@@ -437,18 +437,18 @@ onMounted(loadQuotes);
   font-weight: 600;
 }
 
-.asowp-request-quotes-badge.is-success {
+.ascwo-request-quotes-badge.is-success {
   color: #075e54;
   background: #dff5ee;
 }
 
-.asowp-request-quotes-badge.is-critical {
+.ascwo-request-quotes-badge.is-critical {
   color: #8a1f11;
   background: #fde2dd;
 }
 
-.asowp-request-quotes-view,
-.asowp-request-quotes-mark {
+.ascwo-request-quotes-view,
+.ascwo-request-quotes-mark {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -461,15 +461,15 @@ onMounted(loadQuotes);
   cursor: pointer;
 }
 
-.asowp-request-quotes-view {
+.ascwo-request-quotes-view {
   color: #303030;
   background: #ffffff;
   border: 1px solid #d0d5dd;
 }
 
-.asowp-request-quotes-view:hover,
-.asowp-request-quotes-view:focus,
-.asowp-request-quotes-view:active {
+.ascwo-request-quotes-view:hover,
+.ascwo-request-quotes-view:focus,
+.ascwo-request-quotes-view:active {
   color: #303030;
   background: #ffffff;
   border-color: #b8c0ca;
@@ -477,27 +477,27 @@ onMounted(loadQuotes);
   box-shadow: none;
 }
 
-.asowp-request-quotes-detail-card {
+.ascwo-request-quotes-detail-card {
   min-height: 106px;
   padding: 39px 39px;
 }
 
-.asowp-request-quotes-detail-card > p,
-.asowp-request-quotes-detail-group p {
+.ascwo-request-quotes-detail-card > p,
+.ascwo-request-quotes-detail-group p {
   margin: 0;
   color: #303030;
   font-size: 15px;
   line-height: 22px;
 }
 
-.asowp-request-quotes-detail-group {
+.ascwo-request-quotes-detail-group {
   display: grid;
   gap: 7px;
   padding: 18px 0;
   border-bottom: 1px solid #e5e7eb;
 }
 
-.asowp-request-quotes-detail-group h3 {
+.ascwo-request-quotes-detail-group h3 {
   margin: 0;
   color: #303030;
   font-size: 13px;
@@ -505,7 +505,7 @@ onMounted(loadQuotes);
   font-weight: 700;
 }
 
-.asowp-request-quotes-file {
+.ascwo-request-quotes-file {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -521,12 +521,12 @@ onMounted(loadQuotes);
   font-weight: 650;
 }
 
-.asowp-request-quotes-file svg {
+.ascwo-request-quotes-file svg {
   width: 15px;
   height: 15px;
 }
 
-.asowp-request-quotes-preview {
+.ascwo-request-quotes-preview {
   display: block;
   max-width: 100%;
   height: auto;
@@ -534,13 +534,13 @@ onMounted(loadQuotes);
   border-radius: 8px;
 }
 
-.asowp-request-quotes-detail-card footer {
+.ascwo-request-quotes-detail-card footer {
   display: flex;
   justify-content: flex-end;
   padding-top: 18px;
 }
 
-.asowp-request-quotes-mark {
+.ascwo-request-quotes-mark {
   gap: 8px;
   color: #ffffff;
   background: #00796b;
@@ -548,9 +548,9 @@ onMounted(loadQuotes);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
-.asowp-request-quotes-mark:hover,
-.asowp-request-quotes-mark:focus,
-.asowp-request-quotes-mark:active {
+.ascwo-request-quotes-mark:hover,
+.ascwo-request-quotes-mark:focus,
+.ascwo-request-quotes-mark:active {
   color: #ffffff;
   background: #00796b;
   border-color: #005f54;
@@ -558,32 +558,32 @@ onMounted(loadQuotes);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
-.asowp-request-quotes-mark:disabled {
+.ascwo-request-quotes-mark:disabled {
   cursor: not-allowed;
   opacity: 0.7;
 }
 
-.asowp-request-quotes-mark svg {
+.ascwo-request-quotes-mark svg {
   width: 15px;
   height: 15px;
 }
 
 .is-spinning {
-  animation: asowp-request-quotes-spin 0.8s linear infinite;
+  animation: ascwo-request-quotes-spin 0.8s linear infinite;
 }
 
-@keyframes asowp-request-quotes-spin {
+@keyframes ascwo-request-quotes-spin {
   to {
     transform: rotate(360deg);
   }
 }
 
 @media (max-width: 980px) {
-  .asowp-request-quotes-page {
+  .ascwo-request-quotes-page {
     padding: 28px 16px 60px;
   }
 
-  .asowp-request-quotes-layout {
+  .ascwo-request-quotes-layout {
     grid-template-columns: 1fr;
   }
 }

@@ -1,4 +1,4 @@
-=== All Signs Options Pro ===
+=== All Signs Customizer for WooCommerce Pro ===
 Contributors: vertim, abokajr
 Donate link: https://signsdesigner.us/
 Tags: woocommerce, product customizer, product configurator, sign builder, sign product
@@ -13,7 +13,7 @@ Allow WooCommerce stores to sell customizable signs with dynamic product options
 
 == Description ==
 
-All Signs Options Pro is a WooCommerce plugin designed to help merchants sell customizable sign products with flexible configuration options such as size, material, fixing method, colors, or additional services.
+All Signs Customizer for WooCommerce Pro is a WooCommerce plugin designed to help merchants sell customizable sign products with flexible configuration options such as size, material, fixing method, colors, or additional services.
 
 The plugin allows customers to configure their sign directly on the product page before purchasing, without complex setup or custom development.
 
@@ -24,9 +24,9 @@ This plugin is ideal for businesses selling:
 * Banners
 
 WooCommerce product variations are often too limited for made-to-order products.  
-All Signs Options Pro provides a clean and structured way to add custom options that reflect real-world sign production needs.
+All Signs Customizer for WooCommerce Pro provides a clean and structured way to add custom options that reflect real-world sign production needs.
 
-= Why use All Signs Options Pro? =
+= Why use All Signs Customizer for WooCommerce Pro? =
 * Improve customer clarity before checkout
 * Reduce back-and-forth messages with customers
 * Speed up the ordering process
@@ -53,7 +53,7 @@ All Signs Options Pro provides a clean and structured way to add custom options 
 Install the plugin, create or edit a WooCommerce product, and start adding custom sign options in minutes.
 
 == Pro Version ==
-All Signs Options Pro is designed to cover essential sign customization needs.
+All Signs Customizer for WooCommerce Pro is designed to cover essential sign customization needs.
 
 For merchants who require more advanced features such as:
 * Advanced pricing rules
@@ -76,7 +76,7 @@ A Pro version is available.
 = Automatic Installation =
 1. Log in to your WordPress admin dashboard
 2. Go to Plugins > Add New
-3. Search for "All Signs Options Pro"
+3. Search for "All Signs Customizer for WooCommerce Pro"
 4. Click Install Now, then Activate
 
 = Manual Installation =
@@ -103,11 +103,11 @@ Yes. WooCommerce must be installed and activated.
 <p><a href="https://signsdesigner.us/all-signs-customizer-product/">If you need help, you can open a support ticket here </a></p>
 
 
-= Will All Signs Options Pro work with my theme? =
+= Will All Signs Customizer for WooCommerce Pro work with my theme? =
 Yes. The plugin works with any properly coded WordPress theme, including default themes.
 
 = Is there a Pro version available? =
-Yes. A Pro version of All Signs Options is available for stores that need advanced customization features.
+Yes. A Pro version of All Signs Customizer for WooCommerce is available for stores that need advanced customization features.
 <p><a href="https://signsdesigner.us/all-signs-customizer-product/">Learn more here </a></p>
 
 == Screenshots ==

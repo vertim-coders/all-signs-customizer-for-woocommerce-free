@@ -2,48 +2,48 @@
     <div>
             
         <div>
-            <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-8 asowp-space-y-6 asowp-translate-y-8">
-                <h3 class="asowp-text-[16px] asowp-semibold">{{ __('Custom design link', 'all-signs-options-pro') }}</h3>
-                <div class="asowp-flex asowp-space-x-3">
-                    <div class="asowp-text-[11px]">{{ __('Enable custom design link', 'all-signs-options-pro') }}</div>
-                    <div class="asowp-flex asowp-items-center asowp-translate-y-0.5">
-                        <label for="toggleEnableCustom" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                            <input id="toggleEnableCustom" type="checkbox" name="toggleEnableCustom" class="asowp-sr-only asowp-peer" v-model="uploadDesign.activate">
-                            <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
+            <div class="ascwo-bg-[#F8F9FB] ascwo-px-8 ascwo-py-8 ascwo-space-y-6 ascwo-translate-y-8">
+                <h3 class="ascwo-text-[16px] ascwo-semibold">{{ __('Custom design link', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
+                <div class="ascwo-flex ascwo-space-x-3">
+                    <div class="ascwo-text-[11px]">{{ __('Enable custom design link', 'all-signs-customizer-for-woocommerce-pro') }}</div>
+                    <div class="ascwo-flex ascwo-items-center ascwo-translate-y-0.5">
+                        <label for="toggleEnableCustom" class="ascwo-relative ascwo-inline-flex ascwo-items-center ascwo-cursor-pointer ascwo-border-[1px] ascwo-border-solid ascwo-border-black ascwo-rounded-full">
+                            <input id="toggleEnableCustom" type="checkbox" name="toggleEnableCustom" class="ascwo-sr-only ascwo-peer" v-model="uploadDesign.activate">
+                            <div :class="`peer-checked:after:ascwo-border-[#016464] peer-checked:after:ascwo-border-solid peer-checked:after:ascwo-border-[5px] peer-checked:after:ascwo-top-[-2px] peer-checked:after:ascwo-translate-y-[-15%] ascwo-w-10 ascwo-h-3 ascwo-border ascwo-border-[5px] ascwo-border-[#016464] ascwo-bg-zinc-300 ascwo-rounded-full ascwo-peer peer-checked:after:ascwo-translate-x-[140%] after:ascwo-content-[''] after:ascwo-absolute after:ascwo-top-[-2px] after:ascwo-left-[-5px] after:ascwo-bg-zinc-300 after:ascwo-border-white after:ascwo-border-solid after:ascwo-translate-y-[-15%] after:ascwo-border-[#FFFFFF] after:ascwo-border-[5px] after:ascwo-rounded-full after:ascwo-h-2.5 after:ascwo-w-2.5 after:ascwo-transition-all after:ascwo-shadow-lg`"></div>
                         </label>
                     </div>
                 </div>
-                <div class="asowp-text-[11px] asowp-text-[#444444]">
-                    {{ __('Enable this to display a link to direct customers to another page on your site, this will display as one of the first options on desktop and mobile.', 'all-signs-options-pro') }}
+                <div class="ascwo-text-[11px] ascwo-text-[#444444]">
+                    {{ __('Enable this to display a link to direct customers to another page on your site, this will display as one of the first options on desktop and mobile.', 'all-signs-customizer-for-woocommerce-pro') }}
                 </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-3/5 asowp-space-y-2" v-if="uploadDesign.activate">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __('Custom Design Link', 'all-signs-options-pro') }}</label>
-                    <input type="text" v-model="uploadDesign.link" class="asowp-w-full"/>
-                    <span class="asowp-text-[12px] asowp-text-[#444444]">{{ __('URL to redirect customers on your store that will allow for more complex graphic design quote submissions.', 'all-signs-options-pro') }}</span>
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-3/5 ascwo-space-y-2" v-if="uploadDesign.activate">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __('Custom Design Link', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                    <input type="text" v-model="uploadDesign.link" class="ascwo-w-full"/>
+                    <span class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __('URL to redirect customers on your store that will allow for more complex graphic design quote submissions.', 'all-signs-customizer-for-woocommerce-pro') }}</span>
                 </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-3/5 asowp-space-y-2" v-if="uploadDesign.activate">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __('Phrase for link to submit custom design page', 'all-signs-options-pro') }}</label>
-                    <input type="text" v-model="uploadDesign.phraseSubmitCustom" class="asowp-w-full"/>
+                <div class="ascwo-flex ascwo-flex-col ascwo-w-3/5 ascwo-space-y-2" v-if="uploadDesign.activate">
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __('Phrase for link to submit custom design page', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                    <input type="text" v-model="uploadDesign.phraseSubmitCustom" class="ascwo-w-full"/>
 
                 </div>
                 
             </div>
-            <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-pb-8 asowp-space-y-6 asowp-translate-y-8">
-                <h3 class="asowp-text-[16px] asowp-semibold asowp-m-0">{{ __('The message to be displayed when the help button is clicked', 'all-signs-options-pro') }}</h3>
-                <div class="asowp-relative asowp-w-full asowp-max-h-fit">
-                    <div class="asowp-px-4">
-                        <div class="asowp-px-[10px] asowp-pt-[5px]">
-                            <textarea name="" id="asowp-admin-tinymce" cols="30" rows="10"></textarea>
+            <div class="ascwo-bg-[#F8F9FB] ascwo-px-8 ascwo-pb-8 ascwo-space-y-6 ascwo-translate-y-8">
+                <h3 class="ascwo-text-[16px] ascwo-semibold ascwo-m-0">{{ __('The message to be displayed when the help button is clicked', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
+                <div class="ascwo-relative ascwo-w-full ascwo-max-h-fit">
+                    <div class="ascwo-px-4">
+                        <div class="ascwo-px-[10px] ascwo-pt-[5px]">
+                            <textarea name="" id="ascwo-admin-tinymce" cols="30" rows="10"></textarea>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-space-x-4 asowp-px-4 asowp-py-3 asowp-justify-end asowp-items-end asowp-translate-y-12">
-            <div class="asowp-bg-[#016464] asowp-rounded">
-                <button :disabled="isLoading" @click="updateUploadDesignSettings" class="asowp-rounded asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointerasowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
-                    <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" />
-                    <div class="asowp-font-semibold asowp-text-[16px]">{{ __('Save', 'all-signs-options-pro') }}</div>
+        <div class="ascwo-bg-[#F8F9FB] ascwo-flex ascwo-space-x-4 ascwo-px-4 ascwo-py-3 ascwo-justify-end ascwo-items-end ascwo-translate-y-12">
+            <div class="ascwo-bg-[#016464] ascwo-rounded">
+                <button :disabled="isLoading" @click="updateUploadDesignSettings" class="ascwo-rounded ascwo-flex ascwo-bg-transparent ascwo-w-fit ascwo-space-x-2 ascwo-h-fit ascwo-text-white ascwo-px-12 ascwo-p-2.5 ascwo-border-none ascwo-opacity-90 hover:ascwo-opacity-100 hover:ascwo-border-none hover:ascwo-text-white hover:ascwo-bg-[#016464] ascwo-cursor-pointerascwo-flex ascwo-bg-transparent ascwo-w-fit ascwo-space-x-2 ascwo-h-fit ascwo-text-white ascwo-px-12 ascwo-p-2.5 ascwo-border-none ascwo-opacity-90 hover:ascwo-opacity-100 hover:ascwo-border-none hover:ascwo-text-white hover:ascwo-bg-[#016464] ascwo-cursor-pointer">
+                    <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="ascwo-w-5 ascwo-w-5" v-if="isLoading" />
+                    <div class="ascwo-font-semibold ascwo-text-[16px]">{{ __('Save', 'all-signs-customizer-for-woocommerce-pro') }}</div>
                 </button>
             </div>
         </div>
@@ -69,7 +69,7 @@ const uploadDesign = ref({
     helpContent:'',
 })
 
-const tinymceEditorId = 'asowp-admin-tinymce';
+const tinymceEditorId = 'ascwo-admin-tinymce';
 const getTinyMCE = () => window.tinymce ?? null;
 const getTinyMCEEditor = () => getTinyMCE()?.get(tinymceEditorId) ?? null;
 const setTinyMCEContent = (content = '') => {

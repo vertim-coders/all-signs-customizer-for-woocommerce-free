@@ -1,7 +1,6 @@
 <?php
-namespace ASOWP\Api\Admin;
+namespace ASCWO\Api\Admin;
 
-use ASOWP\Support\ConfigSchemaNormalizer;
 use WP_Error;
 use WP_Post;
 use WP_Query;
@@ -10,7 +9,7 @@ use WP_REST_Controller;
 /**
  * REST_API Handler
  */
-class ASOWP_Api_Configs extends WP_REST_Controller
+class ASCWO_Api_Configs extends WP_REST_Controller
 {
     private function is_valid_config_id(int $config_id): bool
     {
@@ -21,7 +20,7 @@ class ASOWP_Api_Configs extends WP_REST_Controller
         if (!$post) {
             return false;
         }
-        if ($post->post_type !== 'asowp-configs') {
+        if ($post->post_type !== 'ascwo-configs') {
             return false;
         }
         if ($post->post_status !== 'publish') {
@@ -57,7 +56,7 @@ class ASOWP_Api_Configs extends WP_REST_Controller
 
     private function get_product_assigned_config_id(int $product_id): int
     {
-        $meta = get_post_meta($product_id, 'product-asowp-metas', true);
+        $meta = get_post_meta($product_id, 'product-ascwo-metas', true);
         if (!is_array($meta)) {
             return 0;
         }
@@ -83,7 +82,7 @@ class ASOWP_Api_Configs extends WP_REST_Controller
 
     private function set_product_config_id(int $product_id, int $config_id): void
     {
-        $meta_key = 'product-asowp-metas';
+        $meta_key = 'product-ascwo-metas';
         $meta = get_post_meta($product_id, $meta_key, true);
         if (!is_array($meta)) {
             $meta = array();
@@ -97,7 +96,7 @@ class ASOWP_Api_Configs extends WP_REST_Controller
 
     private function clear_product_config_id(int $product_id, int $config_id): void
     {
-        $meta_key = 'product-asowp-metas';
+        $meta_key = 'product-ascwo-metas';
         $meta = get_post_meta($product_id, $meta_key, true);
         if (!is_array($meta)) {
             return;
@@ -126,7 +125,7 @@ class ASOWP_Api_Configs extends WP_REST_Controller
             'fields' => 'ids',
             'meta_query' => array(
                 array(
-                    'key' => 'product-asowp-metas',
+                    'key' => 'product-ascwo-metas',
                     'compare' => 'EXISTS',
                 ),
             ),
@@ -176,7 +175,7 @@ class ASOWP_Api_Configs extends WP_REST_Controller
      */
     public function __construct()
     {
-        $this->namespace = 'asowp/v1';
+        $this->namespace = 'ascwo/v1';
         $this->rest_base = 'configs';
     }
 
@@ -284,35 +283,42 @@ class ASOWP_Api_Configs extends WP_REST_Controller
         $data = [
             'post_title' => $params["name"],
             'post_content' => $params["description"],
-            'post_type' => 'asowp-configs',
+            'post_type' => 'ascwo-configs',
             'post_meta' => [
-                "asowp-configs-meta" => [],
-                "asowp-templates" => [],
+                "ascwo-configs-meta" => [],
+                "ascwo-templates" => [],
             ],
             'post_status' => 'publish'
         ];
         if (isset($params["data"]) && !empty($params["data"])) {
             $post_id = wp_insert_post($data);
             if ($post_id != 0 && !is_wp_error($post_id)) {
-                $data = ConfigSchemaNormalizer::normalize_meta([
+                $meta = array(
+                    'schemaVersion' => 1,
+                    'schemaSource' => 'raw',
                     "icon" => isset($params["icon"]) ? $params["icon"] : '',
                     "popImg" => isset($params["popImg"]) ? $params["popImg"] : '',
                     "materialType" => $material_type,
-                    "data" => $params["data"]
-                ]);
-                ConfigSchemaNormalizer::save_meta((int) $post_id, $data);
-                update_post_meta($post_id, "asowp-templates", []);
+                    "productType" => isset($params["productType"]) ? $params["productType"] : 'signs-panels',
+                    "pricingMode" => isset($params["pricingMode"]) ? $params["pricingMode"] : 'frame-fit',
+                    "settings" => isset($params["settings"]) && is_array($params["settings"]) ? $params["settings"] : array(),
+                    "requiredOptions" => isset($params["requiredOptions"]) && is_array($params["requiredOptions"]) ? $params["requiredOptions"] : array(),
+                    "additionalOptions" => isset($params["additionalOptions"]) && is_array($params["additionalOptions"]) ? $params["additionalOptions"] : array(),
+                    "data" => $params["data"],
+                );
+                update_post_meta((int) $post_id, 'ascwo-configs-meta', $meta);
+                update_post_meta($post_id, "ascwo-templates", []);
                 if (!empty($product_ids)) {
                     $conflicts = $this->sync_config_products((int) $post_id, $product_ids);
                     if (!empty($conflicts)) {
                         return rest_ensure_response([
                             "success" => false,
-                            "message" => __("Some products are already assigned to another configuration.", "all-signs-options-pro"),
+                            "message" => __("Some products are already assigned to another configuration.", "all-signs-customizer-for-woocommerce-pro"),
                             "conflicts" => $conflicts,
                         ]);
                     }
                 }
-                return rest_ensure_response(["success" => true, "message" => __("Configuration created with success", "all-signs-options-pro"), "post_id" => $post_id]);
+                return rest_ensure_response(["success" => true, "message" => __("Configuration created with success", "all-signs-customizer-for-woocommerce-pro"), "post_id" => $post_id]);
             } else {
                 return rest_ensure_response(["success" => false, "message" => "Registration failed"]);
             }
@@ -329,15 +335,22 @@ class ASOWP_Api_Configs extends WP_REST_Controller
     {
         $id = $request->get_param('config_id');
         if ($id != 0) {
-            $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
+            $meta_value = get_post_meta($id, 'ascwo-configs-meta', true);
             if (is_array($meta_value) && !empty($meta_value)) {
-                return rest_ensure_response(ConfigSchemaNormalizer::to_shopify_schema($meta_value));
+                return rest_ensure_response(array_merge(
+                    array(
+                        'id' => (int) $id,
+                        'name' => get_the_title($id),
+                        'description' => get_post_field('post_content', $id),
+                    ),
+                    $meta_value
+                ));
             } else {
-                return rest_ensure_response(["message" => __("Not ASO Config Post", "all-signs-options-pro")]);
+                return rest_ensure_response(["message" => __("Not ASO Config Post", "all-signs-customizer-for-woocommerce-pro")]);
             }
 
         } else {
-            return rest_ensure_response(["message" => __("Custom ID invalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
 
 
@@ -346,16 +359,17 @@ class ASOWP_Api_Configs extends WP_REST_Controller
     public function get_preview_config_data($request)
     {
         $configId = $request->get_param('config_id');
-        $config = get_post_meta($configId, "asowp-configs-meta", true);
-        $config = ConfigSchemaNormalizer::normalize_meta($config);
+        $config = get_post_meta($configId, "ascwo-configs-meta", true);
+        $config = is_array($config) ? $config : array();
+        $config['settings'] = isset($config['settings']) && is_array($config['settings']) ? $config['settings'] : array();
         $material_type = isset($config['materialType']) ? $this->sanitize_material_type($config['materialType']) : 'simple';
-        $pageSettings = get_option("asowp_config_page", [])["others"];
-        $all_cliparts_groups = get_option("asowp-manages-cliparts", []);
-        $all_fonts = get_option("asowp-manages-fonts", []);
-        $all_shapes = get_option("asowp_all_shapes", []);
-        $all_fixingMethods = get_option("asowp_all_fixingMethods", []);
-        $all_borders = get_option("asowp_all_borders", []);
-        $outputOptions = get_option("asowp_output_options", []);
+        $pageSettings = get_option("ascwo_config_page", [])["others"];
+        $all_cliparts_groups = get_option("ascwo-manages-cliparts", []);
+        $all_fonts = get_option("ascwo-manages-fonts", []);
+        $all_shapes = get_option("ascwo_all_shapes", []);
+        $all_fixingMethods = get_option("ascwo_all_fixingMethods", []);
+        $all_borders = get_option("ascwo_all_borders", []);
+        $outputOptions = get_option("ascwo_output_options", []);
         $configData = [
             'name' => get_post_field('post_title', $configId),
             "description" => get_post_field('post_content', $configId),
@@ -408,9 +422,9 @@ class ASOWP_Api_Configs extends WP_REST_Controller
             'nbDecimals' => wc_get_price_decimals(),
             'currencySymbol' => html_entity_decode(get_woocommerce_currency_symbol()),
             'currency_pos' => get_option('woocommerce_currency_pos'),
-            "fixing_methods_url" => ASOWP_ASSETS . '/images/fixing-methodes',
-            "borders_url" => ASOWP_ASSETS . '/images/borders',
-            "frontend_nonce" => wp_create_nonce('asowp_add_to_cart_after_custom')
+            "fixing_methods_url" => ASCWO_ASSETS . '/images/fixing-methodes',
+            "borders_url" => ASCWO_ASSETS . '/images/borders',
+            "frontend_nonce" => wp_create_nonce('ascwo_add_to_cart_after_custom')
         );
         return rest_ensure_response($preview_data);
     }
@@ -428,7 +442,7 @@ class ASOWP_Api_Configs extends WP_REST_Controller
             $params["data"] = $this->sanitize_config_data($params["data"]);
         }
         $existing_post = get_post($post_id);
-        $existing_meta = get_post_meta($post_id, 'asowp-configs-meta', true);
+        $existing_meta = get_post_meta($post_id, 'ascwo-configs-meta', true);
         $args = array(
             'ID' => $post_id,
             'post_title' => isset($params["name"]) ? $params["name"] : ($existing_post ? $existing_post->post_title : ''),
@@ -436,19 +450,15 @@ class ASOWP_Api_Configs extends WP_REST_Controller
         );
 
         $updatePosts = wp_update_post($args);
-        $meta = get_post_meta($post_id, 'asowp-configs-meta', true);
+        $meta = get_post_meta($post_id, 'ascwo-configs-meta', true);
         if (!is_wp_error($updatePosts)) {
-            $data_payload = isset($params["data"]) ? $params["data"] : (isset($meta['data']) ? $meta['data'] : array());
-            if (isset($params["settings"]) && is_array($params["settings"])) {
-                if (!is_array($data_payload)) {
-                    $data_payload = array();
-                }
-                $data_payload["settings"] = $params["settings"];
-            }
+            $data_payload = isset($params["data"]) && is_array($params["data"]) ? $params["data"] : (isset($meta['data']) && is_array($meta['data']) ? $meta['data'] : array());
             $material_type = isset($params['materialType'])
                 ? $this->sanitize_material_type($params['materialType'])
                 : (isset($meta['materialType']) ? $this->sanitize_material_type($meta['materialType']) : 'simple');
-            $data = ConfigSchemaNormalizer::normalize_meta([
+            $data = array(
+                'schemaVersion' => isset($meta['schemaVersion']) ? $meta['schemaVersion'] : 1,
+                'schemaSource' => 'raw',
                 "icon" => isset($params["icon"]) ? $params["icon"] : (is_array($existing_meta) && isset($existing_meta["icon"]) ? $existing_meta["icon"] : ''),
                 "popImg" => isset($params["popImg"]) ? $params["popImg"] : (is_array($existing_meta) && isset($existing_meta["popImg"]) ? $existing_meta["popImg"] : ''),
                 "materialType" => $material_type,
@@ -458,21 +468,21 @@ class ASOWP_Api_Configs extends WP_REST_Controller
                 "pricingMode" => isset($params["pricingMode"]) ? $params["pricingMode"] : (isset($meta["pricingMode"]) ? $meta["pricingMode"] : null),
                 "requiredOptions" => isset($params["requiredOptions"]) ? $params["requiredOptions"] : (isset($meta["requiredOptions"]) ? $meta["requiredOptions"] : array()),
                 "additionalOptions" => isset($params["additionalOptions"]) ? $params["additionalOptions"] : (isset($meta["additionalOptions"]) ? $meta["additionalOptions"] : array()),
-            ]);
-            ConfigSchemaNormalizer::save_meta((int) $post_id, $data);
+            );
+            update_post_meta((int) $post_id, 'ascwo-configs-meta', $data);
             if (isset($params['product_ids']) && is_array($params['product_ids'])) {
                 $conflicts = $this->sync_config_products((int) $post_id, $params['product_ids']);
                 if (!empty($conflicts)) {
                     return rest_ensure_response(array(
                         'success' => false,
-                        "message" => __("Some products are already assigned to another configuration.", "all-signs-options-pro"),
+                        "message" => __("Some products are already assigned to another configuration.", "all-signs-customizer-for-woocommerce-pro"),
                         "conflicts" => $conflicts,
                     ));
                 }
             }
-            return rest_ensure_response(array('success' => true, "message" => __("The configuration has been updated with success", "all-signs-options-pro")));
+            return rest_ensure_response(array('success' => true, "message" => __("The configuration has been updated with success", "all-signs-customizer-for-woocommerce-pro")));
         } else {
-            return rest_ensure_response(array('success' => false, "message" => __("Configuration update failed", "all-signs-options-pro")));
+            return rest_ensure_response(array('success' => false, "message" => __("Configuration update failed", "all-signs-customizer-for-woocommerce-pro")));
         }
 
     }
@@ -497,12 +507,12 @@ class ASOWP_Api_Configs extends WP_REST_Controller
 
             $deletePost = wp_delete_post($id, true);
             if ($deletePost != null && $deletePost != false) {
-                return rest_ensure_response(["success" => true, "message" => __("The configuration was well removed", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => true, "message" => __("The configuration was well removed", "all-signs-customizer-for-woocommerce-pro")]);
             } else {
-                return rest_ensure_response(["success" => false, "message" => __("Deleting the configuration failed", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => false, "message" => __("Deleting the configuration failed", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __("Deleting the configuration failed", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __("Deleting the configuration failed", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
 
@@ -518,7 +528,7 @@ class ASOWP_Api_Configs extends WP_REST_Controller
     {
 
         $args = array(
-            'post_type' => 'asowp-configs',
+            'post_type' => 'ascwo-configs',
             'post_status' => 'publish',
             'order' => 'DESC',
             'orderby' => 'ID',
@@ -567,8 +577,16 @@ class ASOWP_Api_Configs extends WP_REST_Controller
             while ($query->have_posts()) {
                 $query->the_post();
                 $id = get_the_ID();
-                $meta = get_post_meta($id, 'asowp-configs-meta', true);
-                $post_data = ConfigSchemaNormalizer::to_admin_payload((int) $id, $meta);
+                $meta = get_post_meta($id, 'ascwo-configs-meta', true);
+                $meta = is_array($meta) ? $meta : array();
+                $post_data = array_merge(
+                    array(
+                        'id' => (int) $id,
+                        'name' => get_the_title($id),
+                        'description' => get_post_field('post_content', $id),
+                    ),
+                    $meta
+                );
                 array_push($posts_data["data"], $post_data);
                 //$posts_data["data"][] = $post_data;
 

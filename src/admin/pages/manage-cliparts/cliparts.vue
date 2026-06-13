@@ -1,60 +1,60 @@
 <template>
-  <div class="asowp-space-y-3">
-    <section class="asowp-bg-white asowp-border asowp-border-solid asowp-border-[#d1d5db] asowp-rounded-xl asowp-shadow-sm asowp-px-5 asowp-py-4 asowp-flex asowp-items-center asowp-justify-between asowp-gap-4">
-      <div class="asowp-flex asowp-items-center asowp-gap-3">
-        <button type="button" @click="router.push({ name: 'managecliparts' })" class="asowp-bg-transparent asowp-border-none asowp-p-0 asowp-text-[14px] asowp-leading-5 asowp-font-[900] asowp-text-[#303030] asowp-cursor-pointer hover:asowp-text-[#303030]">
-          {{ __('Clipart groups', 'all-signs-options-pro') }}
+  <div class="ascwo-space-y-3">
+    <section class="ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#d1d5db] ascwo-rounded-xl ascwo-shadow-sm ascwo-px-5 ascwo-py-4 ascwo-flex ascwo-items-center ascwo-justify-between ascwo-gap-4">
+      <div class="ascwo-flex ascwo-items-center ascwo-gap-3">
+        <button type="button" @click="router.push({ name: 'managecliparts' })" class="ascwo-bg-transparent ascwo-border-none ascwo-p-0 ascwo-text-[14px] ascwo-leading-5 ascwo-font-[900] ascwo-text-[#303030] ascwo-cursor-pointer hover:ascwo-text-[#303030]">
+          {{ __('Clipart groups', 'all-signs-customizer-for-woocommerce-pro') }}
         </button>
-        <ChevronRightIcon class="asowp-w-5 asowp-h-5 asowp-text-[#6b7280]" />
-        <span class="asowp-text-[14px] asowp-leading-5 asowp-font-[700] asowp-text-[#616161]">{{ groupTitle }}</span>
+        <ChevronRightIcon class="ascwo-w-5 ascwo-h-5 ascwo-text-[#6b7280]" />
+        <span class="ascwo-text-[14px] ascwo-leading-5 ascwo-font-[700] ascwo-text-[#616161]">{{ groupTitle }}</span>
       </div>
-      <button type="button" @click="router.push({ name: 'managecliparts' })" class="asowp-h-8 asowp-px-3 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-text-[#202223] asowp-text-[13px] asowp-font-[700] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7] hover:asowp-text-[#202223]">
-        {{ __('Back to clipart groups', 'all-signs-options-pro') }}
+      <button type="button" @click="router.push({ name: 'managecliparts' })" class="ascwo-h-8 ascwo-px-3 ascwo-rounded-lg ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-text-[#202223] ascwo-text-[13px] ascwo-font-[700] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7] hover:ascwo-text-[#202223]">
+        {{ __('Back to clipart groups', 'all-signs-customizer-for-woocommerce-pro') }}
       </button>
     </section>
 
     <template v-if="!isNew">
-      <section class="asowp-bg-white asowp-border asowp-border-solid asowp-border-[#d1d5db] asowp-rounded-xl asowp-shadow-sm asowp-px-5 asowp-py-4 asowp-flex asowp-items-center asowp-justify-between asowp-gap-4">
+      <section class="ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#d1d5db] ascwo-rounded-xl ascwo-shadow-sm ascwo-px-5 ascwo-py-4 ascwo-flex ascwo-items-center ascwo-justify-between ascwo-gap-4">
         <div>
-          <h1 class="asowp-m-0 asowp-text-[20px] asowp-leading-6 asowp-font-[900] asowp-text-[#303030]">{{ __('Cliparts', 'all-signs-options-pro') }}</h1>
-          <p class="asowp-m-0 asowp-mt-1 asowp-text-[13px] asowp-leading-4 asowp-text-[#616161]">{{ __('Manage the cliparts inside this group.', 'all-signs-options-pro') }}</p>
+          <h1 class="ascwo-m-0 ascwo-text-[20px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030]">{{ __('Cliparts', 'all-signs-customizer-for-woocommerce-pro') }}</h1>
+          <p class="ascwo-m-0 ascwo-mt-1 ascwo-text-[13px] ascwo-leading-4 ascwo-text-[#616161]">{{ __('Manage the cliparts inside this group.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
         </div>
-        <button type="button" @click="goToCreateClipart" class="asowp-h-8 asowp-px-3 asowp-rounded-lg asowp-bg-[#00796b] asowp-border asowp-border-solid asowp-border-[#005f55] asowp-text-white asowp-text-[13px] asowp-font-[800] asowp-cursor-pointer hover:asowp-bg-[#00695f] hover:asowp-text-white asowp-inline-flex asowp-items-center asowp-gap-2">
-          <PlusIcon class="asowp-w-4 asowp-h-4" />
-          {{ __('Add new clipart', 'all-signs-options-pro') }}
+        <button type="button" @click="goToCreateClipart" class="ascwo-h-8 ascwo-px-3 ascwo-rounded-lg ascwo-bg-[#00796b] ascwo-border ascwo-border-solid ascwo-border-[#005f55] ascwo-text-white ascwo-text-[13px] ascwo-font-[800] ascwo-cursor-pointer hover:ascwo-bg-[#00695f] hover:ascwo-text-white ascwo-inline-flex ascwo-items-center ascwo-gap-2">
+          <PlusIcon class="ascwo-w-4 ascwo-h-4" />
+          {{ __('Add new clipart', 'all-signs-customizer-for-woocommerce-pro') }}
         </button>
       </section>
 
-      <section class="asowp-bg-white asowp-border asowp-border-solid asowp-border-[#d1d5db] asowp-rounded-xl asowp-shadow-sm asowp-px-5 asowp-py-4">
-        <div v-if="isFetching" class="asowp-min-h-[200px] asowp-flex asowp-items-center asowp-justify-center asowp-text-[13px] asowp-text-[#616161]">
-          {{ __('Loading...', 'all-signs-options-pro') }}
+      <section class="ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#d1d5db] ascwo-rounded-xl ascwo-shadow-sm ascwo-px-5 ascwo-py-4">
+        <div v-if="isFetching" class="ascwo-min-h-[200px] ascwo-flex ascwo-items-center ascwo-justify-center ascwo-text-[13px] ascwo-text-[#616161]">
+          {{ __('Loading...', 'all-signs-customizer-for-woocommerce-pro') }}
         </div>
-        <div v-else-if="clipartGroups.length === 0" class="asowp-min-h-[220px] asowp-flex asowp-flex-col asowp-items-center asowp-justify-center asowp-text-center">
-          <SearchIcon class="asowp-w-16 asowp-h-16 asowp-text-[#8c9196] asowp-mb-5" />
-          <h2 class="asowp-m-0 asowp-text-[20px] asowp-leading-6 asowp-font-[900] asowp-text-[#303030]">{{ __('No Cliparts found', 'all-signs-options-pro') }}</h2>
-          <p class="asowp-m-0 asowp-mt-3 asowp-text-[13px] asowp-text-[#616161]">{{ __('Try changing the filters or search term', 'all-signs-options-pro') }}</p>
+        <div v-else-if="clipartGroups.length === 0" class="ascwo-min-h-[220px] ascwo-flex ascwo-flex-col ascwo-items-center ascwo-justify-center ascwo-text-center">
+          <SearchIcon class="ascwo-w-16 ascwo-h-16 ascwo-text-[#8c9196] ascwo-mb-5" />
+          <h2 class="ascwo-m-0 ascwo-text-[20px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030]">{{ __('No Cliparts found', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
+          <p class="ascwo-m-0 ascwo-mt-3 ascwo-text-[13px] ascwo-text-[#616161]">{{ __('Try changing the filters or search term', 'all-signs-customizer-for-woocommerce-pro') }}</p>
         </div>
-        <table v-else class="asowp-cliparts-table asowp-w-full asowp-border-collapse asowp-text-left">
-          <thead class="asowp-bg-[#f6f6f7]">
+        <table v-else class="ascwo-cliparts-table ascwo-w-full ascwo-border-collapse ascwo-text-left">
+          <thead class="ascwo-bg-[#f6f6f7]">
             <tr>
-              <th class="asowp-px-3 asowp-py-2.5 asowp-text-[12px] asowp-font-[800] asowp-text-[#616161]">{{ __('Title', 'all-signs-options-pro') }}</th>
-              <th class="asowp-px-3 asowp-py-2.5 asowp-text-[12px] asowp-font-[800] asowp-text-[#616161]">{{ __('Image', 'all-signs-options-pro') }}</th>
-              <th class="asowp-px-3 asowp-py-2.5 asowp-text-[12px] asowp-font-[800] asowp-text-[#616161]">{{ __('Additional Price', 'all-signs-options-pro') }}</th>
-              <th class="asowp-px-3 asowp-py-2.5 asowp-text-[12px] asowp-font-[800] asowp-text-[#616161]">{{ __('Actions', 'all-signs-options-pro') }}</th>
+              <th class="ascwo-px-3 ascwo-py-2.5 ascwo-text-[12px] ascwo-font-[800] ascwo-text-[#616161]">{{ __('Title', 'all-signs-customizer-for-woocommerce-pro') }}</th>
+              <th class="ascwo-px-3 ascwo-py-2.5 ascwo-text-[12px] ascwo-font-[800] ascwo-text-[#616161]">{{ __('Image', 'all-signs-customizer-for-woocommerce-pro') }}</th>
+              <th class="ascwo-px-3 ascwo-py-2.5 ascwo-text-[12px] ascwo-font-[800] ascwo-text-[#616161]">{{ __('Additional Price', 'all-signs-customizer-for-woocommerce-pro') }}</th>
+              <th class="ascwo-px-3 ascwo-py-2.5 ascwo-text-[12px] ascwo-font-[800] ascwo-text-[#616161]">{{ __('Actions', 'all-signs-customizer-for-woocommerce-pro') }}</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, key) in clipartGroups" :key="key" class="asowp-border-b asowp-border-solid asowp-border-[#e5e7eb]">
-              <td class="asowp-px-3 asowp-py-2.5 asowp-text-[13px] asowp-font-[800] asowp-text-[#202223]">{{ item.title || '-' }}</td>
-              <td class="asowp-px-3 asowp-py-3">
-                <img v-if="item.url" :src="item.url" class="asowp-w-12 asowp-h-12 asowp-object-contain asowp-rounded-lg asowp-border asowp-border-solid asowp-border-[#d9dee3]" alt="">
+            <tr v-for="(item, key) in clipartGroups" :key="key" class="ascwo-border-b ascwo-border-solid ascwo-border-[#e5e7eb]">
+              <td class="ascwo-px-3 ascwo-py-2.5 ascwo-text-[13px] ascwo-font-[800] ascwo-text-[#202223]">{{ item.title || '-' }}</td>
+              <td class="ascwo-px-3 ascwo-py-3">
+                <img v-if="item.url" :src="item.url" class="ascwo-w-12 ascwo-h-12 ascwo-object-contain ascwo-rounded-lg ascwo-border ascwo-border-solid ascwo-border-[#d9dee3]" alt="">
                 <span v-else>-</span>
               </td>
-              <td class="asowp-px-3 asowp-py-2.5 asowp-text-[13px] asowp-text-[#303030]">{{ item.additionalPrice || 0 }} {{ currency_symbol }}</td>
-              <td class="asowp-px-3 asowp-py-3">
-                <div class="asowp-flex asowp-items-center asowp-gap-2">
-                  <button type="button" @click="goToEditClipart(key)" class="asowp-h-7 asowp-px-2.5 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-text-[13px] asowp-font-[700] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7] hover:asowp-text-[#202223]">{{ __('Edit', 'all-signs-options-pro') }}</button>
-                  <button type="button" @click="selectClipart(key, item, true)" class="asowp-h-7 asowp-px-2.5 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-text-[#8a0f00] asowp-text-[13px] asowp-font-[700] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7] hover:asowp-text-[#8a0f00]">{{ __('Delete', 'all-signs-options-pro') }}</button>
+              <td class="ascwo-px-3 ascwo-py-2.5 ascwo-text-[13px] ascwo-text-[#303030]">{{ item.additionalPrice || 0 }} {{ currency_symbol }}</td>
+              <td class="ascwo-px-3 ascwo-py-3">
+                <div class="ascwo-flex ascwo-items-center ascwo-gap-2">
+                  <button type="button" @click="goToEditClipart(key)" class="ascwo-h-7 ascwo-px-2.5 ascwo-rounded-lg ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-text-[13px] ascwo-font-[700] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7] hover:ascwo-text-[#202223]">{{ __('Edit', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                  <button type="button" @click="selectClipart(key, item, true)" class="ascwo-h-7 ascwo-px-2.5 ascwo-rounded-lg ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-text-[#8a0f00] ascwo-text-[13px] ascwo-font-[700] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7] hover:ascwo-text-[#8a0f00]">{{ __('Delete', 'all-signs-customizer-for-woocommerce-pro') }}</button>
                 </div>
               </td>
             </tr>
@@ -64,78 +64,78 @@
     </template>
 
     <template v-else>
-      <section class="asowp-bg-white asowp-border asowp-border-solid asowp-border-[#d1d5db] asowp-rounded-xl asowp-shadow-sm asowp-px-5 asowp-py-4">
-        <h1 class="asowp-m-0 asowp-text-[20px] asowp-leading-6 asowp-font-[900] asowp-text-[#303030]">{{ isEdit ? __('Edit clipart', 'all-signs-options-pro') : __('Add clipart', 'all-signs-options-pro') }}</h1>
+      <section class="ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#d1d5db] ascwo-rounded-xl ascwo-shadow-sm ascwo-px-5 ascwo-py-4">
+        <h1 class="ascwo-m-0 ascwo-text-[20px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030]">{{ isEdit ? __('Edit clipart', 'all-signs-customizer-for-woocommerce-pro') : __('Add clipart', 'all-signs-customizer-for-woocommerce-pro') }}</h1>
       </section>
 
-      <section class="asowp-bg-white asowp-border asowp-border-solid asowp-border-[#d1d5db] asowp-rounded-xl asowp-shadow-sm asowp-px-5 asowp-py-4">
-        <div class="asowp-flex asowp-items-center asowp-gap-3 asowp-mb-5">
-          <span class="asowp-text-[13px] asowp-text-[#616161]">{{ __('Upload', 'all-signs-options-pro') }}</span>
-          <label class="asowp-inline-flex asowp-items-center">
-            <input type="checkbox" class="asowp-sr-only asowp-peer" v-model="useApi" :disabled="isEdit">
-            <span class="asowp-w-10 asowp-h-6 asowp-rounded-full asowp-bg-[#00796b] asowp-relative asowp-cursor-pointer peer-checked:asowp-bg-[#d8dee9] after:asowp-content-[''] after:asowp-absolute after:asowp-top-0.5 after:asowp-left-0.5 after:asowp-w-5 after:asowp-h-5 after:asowp-rounded-full after:asowp-bg-white after:asowp-shadow after:asowp-transition-transform peer-checked:after:asowp-translate-x-4"></span>
+      <section class="ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#d1d5db] ascwo-rounded-xl ascwo-shadow-sm ascwo-px-5 ascwo-py-4">
+        <div class="ascwo-flex ascwo-items-center ascwo-gap-3 ascwo-mb-5">
+          <span class="ascwo-text-[13px] ascwo-text-[#616161]">{{ __('Upload', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+          <label class="ascwo-inline-flex ascwo-items-center">
+            <input type="checkbox" class="ascwo-sr-only ascwo-peer" v-model="useApi" :disabled="isEdit">
+            <span class="ascwo-w-10 ascwo-h-6 ascwo-rounded-full ascwo-bg-[#00796b] ascwo-relative ascwo-cursor-pointer peer-checked:ascwo-bg-[#d8dee9] after:ascwo-content-[''] after:ascwo-absolute after:ascwo-top-0.5 after:ascwo-left-0.5 after:ascwo-w-5 after:ascwo-h-5 after:ascwo-rounded-full after:ascwo-bg-white after:ascwo-shadow after:ascwo-transition-transform peer-checked:after:ascwo-translate-x-4"></span>
           </label>
-          <span class="asowp-text-[13px] asowp-text-[#616161]">{{ __('API', 'all-signs-options-pro') }}</span>
+          <span class="ascwo-text-[13px] ascwo-text-[#616161]">{{ __('API', 'all-signs-customizer-for-woocommerce-pro') }}</span>
         </div>
 
-        <div v-if="!useApi || isEdit" class="asowp-space-y-3">
-          <div v-for="(row, key) in editableRows" :key="key" class="asowp-border asowp-border-solid asowp-border-[#d1d5db] asowp-rounded-xl asowp-p-4">
-            <h2 class="asowp-m-0 asowp-mb-3 asowp-text-[14px] asowp-font-[900] asowp-text-[#303030]">{{ __('Clipart', 'all-signs-options-pro') }} {{ key + 1 }}</h2>
-            <div class="asowp-grid md:asowp-grid-cols-2 asowp-gap-4">
-              <label class="asowp-block asowp-text-[13px] asowp-text-[#303030]">
-                {{ __('Label', 'all-signs-options-pro') }}
-                <input v-model="row.title" type="text" class="asowp-mt-2 asowp-box-border asowp-w-full asowp-h-9 asowp-rounded-lg asowp-border asowp-border-solid asowp-border-[#8c9196] asowp-px-3 asowp-text-[13px] asowp-outline-none focus:asowp-border-[#008060]">
+        <div v-if="!useApi || isEdit" class="ascwo-space-y-3">
+          <div v-for="(row, key) in editableRows" :key="key" class="ascwo-border ascwo-border-solid ascwo-border-[#d1d5db] ascwo-rounded-xl ascwo-p-4">
+            <h2 class="ascwo-m-0 ascwo-mb-3 ascwo-text-[14px] ascwo-font-[900] ascwo-text-[#303030]">{{ __('Clipart', 'all-signs-customizer-for-woocommerce-pro') }} {{ key + 1 }}</h2>
+            <div class="ascwo-grid md:ascwo-grid-cols-2 ascwo-gap-4">
+              <label class="ascwo-block ascwo-text-[13px] ascwo-text-[#303030]">
+                {{ __('Label', 'all-signs-customizer-for-woocommerce-pro') }}
+                <input v-model="row.title" type="text" class="ascwo-mt-2 ascwo-box-border ascwo-w-full ascwo-h-9 ascwo-rounded-lg ascwo-border ascwo-border-solid ascwo-border-[#8c9196] ascwo-px-3 ascwo-text-[13px] ascwo-outline-none focus:ascwo-border-[#008060]">
               </label>
-              <label class="asowp-block asowp-text-[13px] asowp-text-[#303030]">
-                {{ __('Additional price', 'all-signs-options-pro') }}
-                <input v-model="row.additionalPrice" type="number" class="asowp-mt-2 asowp-box-border asowp-w-full asowp-h-9 asowp-rounded-lg asowp-border asowp-border-solid asowp-border-[#8c9196] asowp-px-3 asowp-text-[13px] asowp-outline-none focus:asowp-border-[#008060]">
+              <label class="ascwo-block ascwo-text-[13px] ascwo-text-[#303030]">
+                {{ __('Additional price', 'all-signs-customizer-for-woocommerce-pro') }}
+                <input v-model="row.additionalPrice" type="number" class="ascwo-mt-2 ascwo-box-border ascwo-w-full ascwo-h-9 ascwo-rounded-lg ascwo-border ascwo-border-solid ascwo-border-[#8c9196] ascwo-px-3 ascwo-text-[13px] ascwo-outline-none focus:ascwo-border-[#008060]">
               </label>
             </div>
-            <label class="asowp-block asowp-mt-4 asowp-text-[13px] asowp-text-[#303030]">
-              {{ __('Clipart image', 'all-signs-options-pro') }}
-              <div class="asowp-mt-2 asowp-flex asowp-items-center asowp-justify-between asowp-h-10 asowp-rounded-lg asowp-border asowp-border-solid asowp-border-[#303030] asowp-overflow-hidden asowp-bg-white">
-                <button type="button" @click="(event) => selectClipartImage(event, key)" class="asowp-ml-1 asowp-h-7 asowp-px-3 asowp-rounded-lg asowp-bg-[#00796b] asowp-border asowp-border-solid asowp-border-[#005f55] asowp-text-white asowp-text-[13px] asowp-font-[800] asowp-cursor-pointer hover:asowp-bg-[#00695f] hover:asowp-text-white">{{ __('Clipart image', 'all-signs-options-pro') }}</button>
-                <div class="asowp-w-9 asowp-h-9 asowp-rounded-lg asowp-border-l asowp-border-solid asowp-border-[#e5e7eb] asowp-flex asowp-items-center asowp-justify-center asowp-overflow-hidden">
-                  <img v-if="row.url" :src="row.url" class="asowp-w-full asowp-h-full asowp-object-cover" alt="">
+            <label class="ascwo-block ascwo-mt-4 ascwo-text-[13px] ascwo-text-[#303030]">
+              {{ __('Clipart image', 'all-signs-customizer-for-woocommerce-pro') }}
+              <div class="ascwo-mt-2 ascwo-flex ascwo-items-center ascwo-justify-between ascwo-h-10 ascwo-rounded-lg ascwo-border ascwo-border-solid ascwo-border-[#303030] ascwo-overflow-hidden ascwo-bg-white">
+                <button type="button" @click="(event) => selectClipartImage(event, key)" class="ascwo-ml-1 ascwo-h-7 ascwo-px-3 ascwo-rounded-lg ascwo-bg-[#00796b] ascwo-border ascwo-border-solid ascwo-border-[#005f55] ascwo-text-white ascwo-text-[13px] ascwo-font-[800] ascwo-cursor-pointer hover:ascwo-bg-[#00695f] hover:ascwo-text-white">{{ __('Clipart image', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                <div class="ascwo-w-9 ascwo-h-9 ascwo-rounded-lg ascwo-border-l ascwo-border-solid ascwo-border-[#e5e7eb] ascwo-flex ascwo-items-center ascwo-justify-center ascwo-overflow-hidden">
+                  <img v-if="row.url" :src="row.url" class="ascwo-w-full ascwo-h-full ascwo-object-cover" alt="">
                 </div>
               </div>
             </label>
-            <button v-if="!isEdit && editableRows.length > 1" type="button" @click="handleDeleteClipartSelected(key)" class="asowp-mt-4 asowp-h-7 asowp-px-2.5 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-text-[#8a0f00] asowp-text-[13px] asowp-font-[700] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7] hover:asowp-text-[#8a0f00]">{{ __('Remove', 'all-signs-options-pro') }}</button>
+            <button v-if="!isEdit && editableRows.length > 1" type="button" @click="handleDeleteClipartSelected(key)" class="ascwo-mt-4 ascwo-h-7 ascwo-px-2.5 ascwo-rounded-lg ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-text-[#8a0f00] ascwo-text-[13px] ascwo-font-[700] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7] hover:ascwo-text-[#8a0f00]">{{ __('Remove', 'all-signs-customizer-for-woocommerce-pro') }}</button>
           </div>
-          <button v-if="!isEdit" type="button" @click="handleAddClipart" class="asowp-h-7 asowp-px-2.5 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-text-[13px] asowp-font-[700] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7] hover:asowp-text-[#202223]">{{ __('Add clipart', 'all-signs-options-pro') }}</button>
+          <button v-if="!isEdit" type="button" @click="handleAddClipart" class="ascwo-h-7 ascwo-px-2.5 ascwo-rounded-lg ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-text-[13px] ascwo-font-[700] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7] hover:ascwo-text-[#202223]">{{ __('Add clipart', 'all-signs-customizer-for-woocommerce-pro') }}</button>
         </div>
 
-        <div v-else class="asowp-space-y-4">
-          <div class="asowp-flex asowp-items-center asowp-gap-3">
-            <select v-model="selectedCategory" class="asowp-h-8 asowp-rounded-lg asowp-border asowp-border-solid asowp-border-[#8c9196] asowp-px-3 asowp-text-[13px]">
+        <div v-else class="ascwo-space-y-4">
+          <div class="ascwo-flex ascwo-items-center ascwo-gap-3">
+            <select v-model="selectedCategory" class="ascwo-h-8 ascwo-rounded-lg ascwo-border ascwo-border-solid ascwo-border-[#8c9196] ascwo-px-3 ascwo-text-[13px]">
               <option v-for="category in apiCategories" :key="category.value" :value="category.value">{{ category.label }}</option>
             </select>
-            <button type="button" @click="getApiCliparts" class="asowp-h-8 asowp-px-3 asowp-rounded-lg asowp-bg-[#00796b] asowp-border asowp-border-solid asowp-border-[#005f55] asowp-text-white asowp-text-[13px] asowp-font-[800] asowp-cursor-pointer hover:asowp-bg-[#00695f] hover:asowp-text-white">{{ __('Get', 'all-signs-options-pro') }}</button>
+            <button type="button" @click="getApiCliparts" class="ascwo-h-8 ascwo-px-3 ascwo-rounded-lg ascwo-bg-[#00796b] ascwo-border ascwo-border-solid ascwo-border-[#005f55] ascwo-text-white ascwo-text-[13px] ascwo-font-[800] ascwo-cursor-pointer hover:ascwo-bg-[#00695f] hover:ascwo-text-white">{{ __('Get', 'all-signs-customizer-for-woocommerce-pro') }}</button>
           </div>
-          <div class="asowp-grid asowp-grid-cols-8 asowp-gap-3">
-            <label v-for="(apiClipart, key) in apiCliparts" :key="key" :class="['asowp-w-16 asowp-h-16 asowp-rounded-lg asowp-border asowp-border-solid asowp-border-[#d1d5db] asowp-bg-white asowp-flex asowp-items-center asowp-justify-center asowp-cursor-pointer', clipartsSelected[key] ? 'asowp-ring-2 asowp-ring-[#00796b]' : '']">
-              <input type="checkbox" class="asowp-sr-only" @change="(event) => handleSelectClipart(event, key)">
-              <img :src="apiClipart" class="asowp-w-12 asowp-h-12 asowp-object-contain" alt="">
+          <div class="ascwo-grid ascwo-grid-cols-8 ascwo-gap-3">
+            <label v-for="(apiClipart, key) in apiCliparts" :key="key" :class="['ascwo-w-16 ascwo-h-16 ascwo-rounded-lg ascwo-border ascwo-border-solid ascwo-border-[#d1d5db] ascwo-bg-white ascwo-flex ascwo-items-center ascwo-justify-center ascwo-cursor-pointer', clipartsSelected[key] ? 'ascwo-ring-2 ascwo-ring-[#00796b]' : '']">
+              <input type="checkbox" class="ascwo-sr-only" @change="(event) => handleSelectClipart(event, key)">
+              <img :src="apiClipart" class="ascwo-w-12 ascwo-h-12 ascwo-object-contain" alt="">
             </label>
           </div>
-          <button v-if="Object.keys(clipartsSelected).length" type="button" @click="displayAllChoice" class="asowp-h-8 asowp-px-3 asowp-rounded-lg asowp-bg-[#00796b] asowp-border asowp-border-solid asowp-border-[#005f55] asowp-text-white asowp-text-[13px] asowp-font-[800] asowp-cursor-pointer hover:asowp-bg-[#00695f] hover:asowp-text-white">{{ __('I made my choices', 'all-signs-options-pro') }}</button>
+          <button v-if="Object.keys(clipartsSelected).length" type="button" @click="displayAllChoice" class="ascwo-h-8 ascwo-px-3 ascwo-rounded-lg ascwo-bg-[#00796b] ascwo-border ascwo-border-solid ascwo-border-[#005f55] ascwo-text-white ascwo-text-[13px] ascwo-font-[800] ascwo-cursor-pointer hover:ascwo-bg-[#00695f] hover:ascwo-text-white">{{ __('I made my choices', 'all-signs-customizer-for-woocommerce-pro') }}</button>
         </div>
 
-        <div class="asowp-mt-6 asowp-flex asowp-justify-end asowp-gap-3">
-          <button type="button" @click="back" class="asowp-h-8 asowp-px-3 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-text-[#202223] asowp-text-[13px] asowp-font-[700] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7] hover:asowp-text-[#202223]">{{ __('Back', 'all-signs-options-pro') }}</button>
-          <button type="button" @click="isEdit ? updateClipart() : saveClipart()" :disabled="isLoading" class="asowp-h-8 asowp-px-3 asowp-rounded-lg asowp-bg-[#00796b] asowp-border asowp-border-solid asowp-border-[#005f55] asowp-text-white asowp-text-[13px] asowp-font-[800] asowp-cursor-pointer hover:asowp-bg-[#00695f] hover:asowp-text-white disabled:asowp-bg-[#d1d1d1] disabled:asowp-border-[#d1d1d1]">{{ isLoading ? __('Saving...', 'all-signs-options-pro') : __('Save', 'all-signs-options-pro') }}</button>
+        <div class="ascwo-mt-6 ascwo-flex ascwo-justify-end ascwo-gap-3">
+          <button type="button" @click="back" class="ascwo-h-8 ascwo-px-3 ascwo-rounded-lg ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-text-[#202223] ascwo-text-[13px] ascwo-font-[700] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7] hover:ascwo-text-[#202223]">{{ __('Back', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+          <button type="button" @click="isEdit ? updateClipart() : saveClipart()" :disabled="isLoading" class="ascwo-h-8 ascwo-px-3 ascwo-rounded-lg ascwo-bg-[#00796b] ascwo-border ascwo-border-solid ascwo-border-[#005f55] ascwo-text-white ascwo-text-[13px] ascwo-font-[800] ascwo-cursor-pointer hover:ascwo-bg-[#00695f] hover:ascwo-text-white disabled:ascwo-bg-[#d1d1d1] disabled:ascwo-border-[#d1d1d1]">{{ isLoading ? __('Saving...', 'all-signs-customizer-for-woocommerce-pro') : __('Save', 'all-signs-customizer-for-woocommerce-pro') }}</button>
         </div>
       </section>
     </template>
 
-    <div v-if="openModal" class="asowp-fixed asowp-inset-0 asowp-z-[20000] asowp-flex asowp-items-center asowp-justify-center">
-      <div class="asowp-absolute asowp-inset-0 asowp-bg-black/40" @click="closeModal"></div>
-      <div class="asowp-relative asowp-w-[min(460px,95vw)] asowp-bg-white asowp-rounded-xl asowp-shadow-2xl asowp-p-5">
-        <h2 class="asowp-m-0 asowp-text-[20px] asowp-font-[900] asowp-text-[#303030]">{{ __('Delete clipart?', 'all-signs-options-pro') }}</h2>
-        <p class="asowp-mt-3 asowp-text-[13px] asowp-text-[#616161]">{{ __('This action cannot be undone.', 'all-signs-options-pro') }}</p>
-        <div class="asowp-mt-6 asowp-flex asowp-justify-end asowp-gap-3">
-          <button type="button" @click="closeModal" class="asowp-h-8 asowp-px-3 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-text-[13px] asowp-font-[700] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7]">{{ __('Cancel', 'all-signs-options-pro') }}</button>
-          <button type="button" @click="deleteClipart" :disabled="isLoading" class="asowp-h-8 asowp-px-3 asowp-rounded-lg asowp-bg-[#8a0f00] asowp-border-none asowp-text-white asowp-text-[13px] asowp-font-[800] asowp-cursor-pointer hover:asowp-bg-[#731000] hover:asowp-text-white">{{ __('Delete', 'all-signs-options-pro') }}</button>
+    <div v-if="openModal" class="ascwo-fixed ascwo-inset-0 ascwo-z-[20000] ascwo-flex ascwo-items-center ascwo-justify-center">
+      <div class="ascwo-absolute ascwo-inset-0 ascwo-bg-black/40" @click="closeModal"></div>
+      <div class="ascwo-relative ascwo-w-[min(460px,95vw)] ascwo-bg-white ascwo-rounded-xl ascwo-shadow-2xl ascwo-p-5">
+        <h2 class="ascwo-m-0 ascwo-text-[20px] ascwo-font-[900] ascwo-text-[#303030]">{{ __('Delete clipart?', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
+        <p class="ascwo-mt-3 ascwo-text-[13px] ascwo-text-[#616161]">{{ __('This action cannot be undone.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+        <div class="ascwo-mt-6 ascwo-flex ascwo-justify-end ascwo-gap-3">
+          <button type="button" @click="closeModal" class="ascwo-h-8 ascwo-px-3 ascwo-rounded-lg ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-text-[13px] ascwo-font-[700] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7]">{{ __('Cancel', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+          <button type="button" @click="deleteClipart" :disabled="isLoading" class="ascwo-h-8 ascwo-px-3 ascwo-rounded-lg ascwo-bg-[#8a0f00] ascwo-border-none ascwo-text-white ascwo-text-[13px] ascwo-font-[800] ascwo-cursor-pointer hover:ascwo-bg-[#731000] hover:ascwo-text-white">{{ __('Delete', 'all-signs-customizer-for-woocommerce-pro') }}</button>
         </div>
       </div>
     </div>
@@ -162,7 +162,7 @@ const clipart = ref({ title: "", url: "", additionalPrice: 0 });
 const makeChoice = ref(false);
 const useApi = ref(false);
 const selectedCategory = ref('animals');
-const currency_symbol = ref(asowp_data.currencySymbol);
+const currency_symbol = ref(ascwo_data.currencySymbol);
 const groupTitle = ref('');
 const clipartId = ref(null);
 const isFetching = ref(false);
@@ -175,22 +175,22 @@ const clipartsSelected = ref({});
 
 const editableRows = computed(() => isEdit.value ? [clipart.value] : cliparts.value);
 const apiCategories = [
-  { value: 'animals', label: __('Animals', 'all-signs-options-pro') },
-  { value: 'arrows', label: __('Arrows', 'all-signs-options-pro') },
-  { value: 'decorationFestivities', label: __('Decoration & Festivities', 'all-signs-options-pro') },
-  { value: 'emojisFlags', label: __('Emojis & Flags', 'all-signs-options-pro') },
-  { value: 'foodsDrinks', label: __('Foods & Drinks', 'all-signs-options-pro') },
-  { value: 'healthcare', label: __('Healthcare', 'all-signs-options-pro') },
-  { value: 'householdTools', label: __('Household Tools', 'all-signs-options-pro') },
-  { value: 'mostPopular', label: __('Most Popular', 'all-signs-options-pro') },
-  { value: 'peoples', label: __('Peoples', 'all-signs-options-pro') },
-  { value: 'plantsNature', label: __('Plants & Nature', 'all-signs-options-pro') },
-  { value: 'prohibitionsWarnings', label: __('Prohibitions & Warnings', 'all-signs-options-pro') },
-  { value: 'shapes', label: __('Shapes', 'all-signs-options-pro') },
-  { value: 'sportActivities', label: __('Sport & Activities', 'all-signs-options-pro') },
-  { value: 'symbolsMarkings', label: __('Symbols & Markings', 'all-signs-options-pro') },
-  { value: 'vehiclesTraffic', label: __('Vehicles & Traffic', 'all-signs-options-pro') },
-  { value: 'others', label: __('Others', 'all-signs-options-pro') },
+  { value: 'animals', label: __('Animals', 'all-signs-customizer-for-woocommerce-pro') },
+  { value: 'arrows', label: __('Arrows', 'all-signs-customizer-for-woocommerce-pro') },
+  { value: 'decorationFestivities', label: __('Decoration & Festivities', 'all-signs-customizer-for-woocommerce-pro') },
+  { value: 'emojisFlags', label: __('Emojis & Flags', 'all-signs-customizer-for-woocommerce-pro') },
+  { value: 'foodsDrinks', label: __('Foods & Drinks', 'all-signs-customizer-for-woocommerce-pro') },
+  { value: 'healthcare', label: __('Healthcare', 'all-signs-customizer-for-woocommerce-pro') },
+  { value: 'householdTools', label: __('Household Tools', 'all-signs-customizer-for-woocommerce-pro') },
+  { value: 'mostPopular', label: __('Most Popular', 'all-signs-customizer-for-woocommerce-pro') },
+  { value: 'peoples', label: __('Peoples', 'all-signs-customizer-for-woocommerce-pro') },
+  { value: 'plantsNature', label: __('Plants & Nature', 'all-signs-customizer-for-woocommerce-pro') },
+  { value: 'prohibitionsWarnings', label: __('Prohibitions & Warnings', 'all-signs-customizer-for-woocommerce-pro') },
+  { value: 'shapes', label: __('Shapes', 'all-signs-customizer-for-woocommerce-pro') },
+  { value: 'sportActivities', label: __('Sport & Activities', 'all-signs-customizer-for-woocommerce-pro') },
+  { value: 'symbolsMarkings', label: __('Symbols & Markings', 'all-signs-customizer-for-woocommerce-pro') },
+  { value: 'vehiclesTraffic', label: __('Vehicles & Traffic', 'all-signs-customizer-for-woocommerce-pro') },
+  { value: 'others', label: __('Others', 'all-signs-customizer-for-woocommerce-pro') },
 ];
 
 onMounted(async () => {
@@ -232,7 +232,7 @@ const getApiCliparts = () => {
 
 const fetchApiCliparts = async () => {
   try {
-    const result = await axios.get("https://signsdesigner.us/app/asowp-cliparts/cliparts.json");
+    const result = await axios.get("https://signsdesigner.us/app/ascwo-cliparts/cliparts.json");
     allCliparts.value = result.data || {};
     getApiCliparts();
   } catch (error) {
@@ -332,8 +332,8 @@ const closeModal = () => {
 const selectClipartImage = async (event, key = -1) => {
   event.preventDefault();
   const uploader = wp.media({
-    title: __("Select Image", "all-signs-options-pro"),
-    button: { text: __("Select Image", "all-signs-options-pro") },
+    title: __("Select Image", "all-signs-customizer-for-woocommerce-pro"),
+    button: { text: __("Select Image", "all-signs-customizer-for-woocommerce-pro") },
     multiple: false,
   }).on('select', () => {
     const selection = uploader.state().get('selection');
@@ -382,30 +382,30 @@ watch(
 </script>
 
 <style scoped>
-.asowp-cliparts-table,
-.asowp-cliparts-table thead,
-.asowp-cliparts-table tbody,
-.asowp-cliparts-table tr,
-.asowp-cliparts-table th,
-.asowp-cliparts-table td {
+.ascwo-cliparts-table,
+.ascwo-cliparts-table thead,
+.ascwo-cliparts-table tbody,
+.ascwo-cliparts-table tr,
+.ascwo-cliparts-table th,
+.ascwo-cliparts-table td {
   border-left: 0 !important;
   border-right: 0 !important;
 }
 
-.asowp-cliparts-table th,
-.asowp-cliparts-table td {
+.ascwo-cliparts-table th,
+.ascwo-cliparts-table td {
   border-top: 0 !important;
 }
 
-.asowp-cliparts-table thead tr {
+.ascwo-cliparts-table thead tr {
   border-bottom: 1px solid #e5e7eb;
 }
 
-.asowp-cliparts-table tbody tr {
+.ascwo-cliparts-table tbody tr {
   border-bottom: 1px solid #e5e7eb !important;
 }
 
-.asowp-cliparts-table tbody tr:last-child {
+.ascwo-cliparts-table tbody tr:last-child {
   border-bottom: 0 !important;
 }
 </style>

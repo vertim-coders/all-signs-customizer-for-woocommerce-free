@@ -2,7 +2,7 @@
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/vue-loader/dist/index.js??ruleSet[1].rules[8].use[0]!./src/frontend/pages/configurateur/Default/index.vue?vue&type=style&index=0&id=5ab70054&scoped=true&lang=css ***!
   \************************************************************************************************************************************************************************************************************************************************************************************/
 
-.asowp-hide[data-v-5ab70054]{
+.ascwo-hide[data-v-5ab70054]{
         display: none;
 }
 .flipper[data-v-5ab70054] {
@@ -16,15 +16,15 @@
 .flipper-switch[data-v-5ab70054] {
         transform: rotateY(180deg);
 }
-#asowp-sign-recto[data-v-5ab70054], #asowp-sign-verso[data-v-5ab70054] {
+#ascwo-sign-recto[data-v-5ab70054], #ascwo-sign-verso[data-v-5ab70054] {
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
 }
-#asowp-sign-recto[data-v-5ab70054] {
+#ascwo-sign-recto[data-v-5ab70054] {
         /* background-color: #bbb; */
         color: black;
 }
-#asowp-sign-verso[data-v-5ab70054] {
+#ascwo-sign-verso[data-v-5ab70054] {
         /* background-color: dodgerblue; */
         color: white;
         transform: rotateY(180deg);
@@ -57,15 +57,15 @@
 .flipper-switch[data-v-77962a27] {
         transform: rotateY(180deg);
 }
-#asowp-sign-recto[data-v-77962a27], #asowp-sign-verso[data-v-77962a27] {
+#ascwo-sign-recto[data-v-77962a27], #ascwo-sign-verso[data-v-77962a27] {
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
 }
-#asowp-sign-recto[data-v-77962a27] {
+#ascwo-sign-recto[data-v-77962a27] {
         /* background-color: #bbb; */
         color: black;
 }
-#asowp-sign-verso[data-v-77962a27] {
+#ascwo-sign-verso[data-v-77962a27] {
         /* background-color: dodgerblue; */
         color: white;
         transform: rotateY(180deg);
@@ -80,113 +80,113 @@ to {
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/frontend/scss/frontend.scss ***!
   \**************************************************************************************************************************/
 :root {
-  --asowp-scrollBar-color: #000000;
+  --ascwo-scrollBar-color: #000000;
 }
 
-.asowp-configurator-container {
+.ascwo-configurator-container {
   height: 100vh;
   min-height: 100vh;
 }
 
-.asowp-configurator-container:empty {
+.ascwo-configurator-container:empty {
   height: 0;
   min-height: 0;
 }
 
-.asowp-templates-customize_button {
+.ascwo-templates-customize_button {
   color: white;
   text-decoration: none;
 }
 
-.asowp-frontend-app p,
-#asowp-frontend-app p {
+.ascwo-frontend-app p,
+#ascwo-frontend-app p {
   margin: 0 !important;
 }
-.asowp-frontend-app .no-scrollbar::-webkit-scrollbar,
-#asowp-frontend-app .no-scrollbar::-webkit-scrollbar {
+.ascwo-frontend-app .no-scrollbar::-webkit-scrollbar,
+#ascwo-frontend-app .no-scrollbar::-webkit-scrollbar {
   display: none;
   overflow: auto;
 }
-.asowp-frontend-app .asowp-scrollBar::-webkit-scrollbar,
-#asowp-frontend-app .asowp-scrollBar::-webkit-scrollbar {
+.ascwo-frontend-app .ascwo-scrollBar::-webkit-scrollbar,
+#ascwo-frontend-app .ascwo-scrollBar::-webkit-scrollbar {
   width: 6px;
   height: 4px;
   overflow: scroll;
 }
-.asowp-frontend-app .asowp-scrollBar::-webkit-scrollbar-thumb,
-#asowp-frontend-app .asowp-scrollBar::-webkit-scrollbar-thumb {
-  background-color: var(--asowp-scrollBar-color);
+.ascwo-frontend-app .ascwo-scrollBar::-webkit-scrollbar-thumb,
+#ascwo-frontend-app .ascwo-scrollBar::-webkit-scrollbar-thumb {
+  background-color: var(--ascwo-scrollBar-color);
   border-radius: 20px;
 }
-.asowp-frontend-app .asowp-base-animation,
-#asowp-frontend-app .asowp-base-animation {
+.ascwo-frontend-app .ascwo-base-animation,
+#ascwo-frontend-app .ascwo-base-animation {
   transition-property: all;
   transition-duration: 500ms;
 }
-.asowp-frontend-app .asowp-buttons-rad-none,
-#asowp-frontend-app .asowp-buttons-rad-none {
+.ascwo-frontend-app .ascwo-buttons-rad-none,
+#ascwo-frontend-app .ascwo-buttons-rad-none {
   border-radius: 0px !important;
   border: 0px;
 }
-.asowp-frontend-app .asowp-full-center,
-#asowp-frontend-app .asowp-full-center {
+.ascwo-frontend-app .ascwo-full-center,
+#ascwo-frontend-app .ascwo-full-center {
   justify-content: center !important;
   align-items: center !important;
   /* white-space: nowrap; */
 }
-.asowp-frontend-app .asowp-option-buton,
-#asowp-frontend-app .asowp-option-buton {
+.ascwo-frontend-app .ascwo-option-buton,
+#ascwo-frontend-app .ascwo-option-buton {
   width: fit-content;
   height: 90%;
   display: flex;
   flex-direction: column;
   width: -moz-fit-content;
 }
-.asowp-frontend-app .asowp-new-border,
-#asowp-frontend-app .asowp-new-border {
+.ascwo-frontend-app .ascwo-new-border,
+#ascwo-frontend-app .ascwo-new-border {
   border: solid 1px !important;
 }
-.asowp-frontend-app .asowp-inputImage,
-#asowp-frontend-app .asowp-inputImage {
-  /* asowp-text-md  */
+.ascwo-frontend-app .ascwo-inputImage,
+#ascwo-frontend-app .ascwo-inputImage {
+  /* ascwo-text-md  */
   display: flex !important;
   padding: 8px 14px 8px 14px !important;
   border-radius: 9999px !important;
   cursor: pointer !important;
 }
-.asowp-frontend-app .asowp-inputImage svg,
-.asowp-frontend-app .asowp-inputImage p,
-#asowp-frontend-app .asowp-inputImage svg,
-#asowp-frontend-app .asowp-inputImage p {
+.ascwo-frontend-app .ascwo-inputImage svg,
+.ascwo-frontend-app .ascwo-inputImage p,
+#ascwo-frontend-app .ascwo-inputImage svg,
+#ascwo-frontend-app .ascwo-inputImage p {
   margin-left: 5px !important;
   margin-right: 5px !important;
 }
 
-#asowp-showPreview {
+#ascwo-showPreview {
   pointer-events: none;
   user-select: none;
   -webkit-user-select: none;
 }
 
-.asowp-text-size {
+.ascwo-text-size {
   padding: 0 !important;
   height: 100% !important;
   margin: 0 !important;
   text-align: center;
 }
 
-.asowp-inputColor-hide {
+.ascwo-inputColor-hide {
   width: 0px !important;
   height: 0px !important;
 }
 
-.asowp-scrollDiv {
+.ascwo-scrollDiv {
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
 }
 
-.asowp-disabled-div {
+.ascwo-disabled-div {
   pointer-events: none;
   opacity: 0.5;
   user-select: none;

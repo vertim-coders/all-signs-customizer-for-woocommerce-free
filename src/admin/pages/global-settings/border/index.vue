@@ -1,50 +1,50 @@
 <template>
-  <div class="asowp-global-border asowp-space-y-3">
+  <div class="ascwo-global-border ascwo-space-y-3">
     <template v-if="!isNewBorder">
-      <section class="asowp-card">
-        <div class="asowp-card-inner">
-          <h2 class="asowp-page-title">{{ __("Borders", "all-signs-options-pro") }}</h2>
-          <p class="asowp-subtitle">{{ __("Manage the borders available globally across configurations.", "all-signs-options-pro") }}</p>
+      <section class="ascwo-card">
+        <div class="ascwo-card-inner">
+          <h2 class="ascwo-page-title">{{ __("Borders", "all-signs-customizer-for-woocommerce-pro") }}</h2>
+          <p class="ascwo-subtitle">{{ __("Manage the borders available globally across configurations.", "all-signs-customizer-for-woocommerce-pro") }}</p>
         </div>
       </section>
 
-      <section class="asowp-card">
-        <div class="asowp-card-inner">
-          <h3 class="asowp-section-title">{{ __("Borders List", "all-signs-options-pro") }}</h3>
+      <section class="ascwo-card">
+        <div class="ascwo-card-inner">
+          <h3 class="ascwo-section-title">{{ __("Borders List", "all-signs-customizer-for-woocommerce-pro") }}</h3>
 
-          <table class="asowp-border-table asowp-w-full asowp-border-collapse">
-            <thead class="asowp-bg-[#f3f3f3]">
+          <table class="ascwo-border-table ascwo-w-full ascwo-border-collapse">
+            <thead class="ascwo-bg-[#f3f3f3]">
               <tr>
-                <th>{{ __("Border", "all-signs-options-pro") }}</th>
-                <th>{{ __("Preview", "all-signs-options-pro") }}</th>
-                <th>{{ __("Actions", "all-signs-options-pro") }}</th>
+                <th>{{ __("Border", "all-signs-customizer-for-woocommerce-pro") }}</th>
+                <th>{{ __("Preview", "all-signs-customizer-for-woocommerce-pro") }}</th>
+                <th>{{ __("Actions", "all-signs-customizer-for-woocommerce-pro") }}</th>
               </tr>
             </thead>
             <tbody>
               <tr v-if="isFetching">
-                <td colspan="3" class="asowp-text-center asowp-py-10">
-                  <Loader2Icon class="asowp-w-7 asowp-h-7 asowp-text-[#007a72] asowp-animate-spin asowp-mx-auto" />
+                <td colspan="3" class="ascwo-text-center ascwo-py-10">
+                  <Loader2Icon class="ascwo-w-7 ascwo-h-7 ascwo-text-[#007a72] ascwo-animate-spin ascwo-mx-auto" />
                 </td>
               </tr>
               <tr v-else-if="borders.length === 0">
-                <td colspan="3" class="asowp-empty">
-                  <SearchIcon class="asowp-w-14 asowp-h-14 asowp-text-[#8c9196]" />
-                  <strong>{{ __("No borders found", "all-signs-options-pro") }}</strong>
-                  <span>{{ __("Create borders to use them inside configurations.", "all-signs-options-pro") }}</span>
+                <td colspan="3" class="ascwo-empty">
+                  <SearchIcon class="ascwo-w-14 ascwo-h-14 ascwo-text-[#8c9196]" />
+                  <strong>{{ __("No borders found", "all-signs-customizer-for-woocommerce-pro") }}</strong>
+                  <span>{{ __("Create borders to use them inside configurations.", "all-signs-customizer-for-woocommerce-pro") }}</span>
                 </td>
               </tr>
               <tr v-for="(item, key) in borders" :key="key">
-                <td class="asowp-row-strong">{{ item.name }}</td>
+                <td class="ascwo-row-strong">{{ item.name }}</td>
                 <td>
-                  <div class="asowp-preview-box">
+                  <div class="ascwo-preview-box">
                     <img v-if="item.icon" :src="item.icon" :alt="item.name" />
-                    <SquareIcon v-else class="asowp-w-7 asowp-h-7 asowp-text-[#111827]" />
+                    <SquareIcon v-else class="ascwo-w-7 ascwo-h-7 ascwo-text-[#111827]" />
                   </div>
                 </td>
                 <td>
-                  <button type="button" @click="selectBorder(key, item)" class="asowp-outline-button">
-                    <Edit2Icon class="asowp-w-3.5 asowp-h-3.5" />
-                    {{ __("Edit", "all-signs-options-pro") }}
+                  <button type="button" @click="selectBorder(key, item)" class="ascwo-outline-button">
+                    <Edit2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
+                    {{ __("Edit", "all-signs-customizer-for-woocommerce-pro") }}
                   </button>
                 </td>
               </tr>
@@ -54,41 +54,41 @@
       </section>
     </template>
 
-    <section v-else class="asowp-card">
-      <div class="asowp-card-inner asowp-flex asowp-justify-end">
-        <button type="button" @click="back" class="asowp-secondary-button">{{ __("Back to borders", "all-signs-options-pro") }}</button>
+    <section v-else class="ascwo-card">
+      <div class="ascwo-card-inner ascwo-flex ascwo-justify-end">
+        <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Back to borders", "all-signs-customizer-for-woocommerce-pro") }}</button>
       </div>
 
-      <div class="asowp-card-inner asowp-form-body">
-        <h3 class="asowp-section-title">{{ __("Edit Border", "all-signs-options-pro") }}</h3>
+      <div class="ascwo-card-inner ascwo-form-body">
+        <h3 class="ascwo-section-title">{{ __("Edit Border", "all-signs-customizer-for-woocommerce-pro") }}</h3>
 
-        <div class="asowp-grid asowp-grid-cols-1 lg:asowp-grid-cols-2 asowp-gap-4">
-          <label class="asowp-block">
-            <span class="asowp-form-label">{{ __("Name", "all-signs-options-pro") }}</span>
-            <input v-model.trim="border.name" class="asowp-form-input" autocomplete="off" />
+        <div class="ascwo-grid ascwo-grid-cols-1 lg:ascwo-grid-cols-2 ascwo-gap-4">
+          <label class="ascwo-block">
+            <span class="ascwo-form-label">{{ __("Name", "all-signs-customizer-for-woocommerce-pro") }}</span>
+            <input v-model.trim="border.name" class="ascwo-form-input" autocomplete="off" />
           </label>
-          <label class="asowp-block">
-            <span class="asowp-form-label">{{ __("Value", "all-signs-options-pro") }}</span>
-            <input v-model.trim="border.value" class="asowp-form-input" autocomplete="off" />
+          <label class="ascwo-block">
+            <span class="ascwo-form-label">{{ __("Value", "all-signs-customizer-for-woocommerce-pro") }}</span>
+            <input v-model.trim="border.value" class="ascwo-form-input" autocomplete="off" />
           </label>
         </div>
 
-        <label class="asowp-block asowp-mt-3">
-          <span class="asowp-form-label">{{ __("Upload icon", "all-signs-options-pro") }}</span>
-          <div class="asowp-file-input">
-            <button type="button" @click.prevent="selectBorderIcon" class="asowp-file-button">{{ __("Upload Icon", "all-signs-options-pro") }}</button>
+        <label class="ascwo-block ascwo-mt-3">
+          <span class="ascwo-form-label">{{ __("Upload icon", "all-signs-customizer-for-woocommerce-pro") }}</span>
+          <div class="ascwo-file-input">
+            <button type="button" @click.prevent="selectBorderIcon" class="ascwo-file-button">{{ __("Upload Icon", "all-signs-customizer-for-woocommerce-pro") }}</button>
             <input v-model="border.icon" autocomplete="off" />
-            <div class="asowp-upload-preview">
+            <div class="ascwo-upload-preview">
               <img v-if="border.icon" :src="border.icon" :alt="border.name" />
             </div>
           </div>
         </label>
       </div>
 
-      <div class="asowp-form-footer">
-        <button type="button" @click="back" class="asowp-secondary-button">{{ __("Cancel", "all-signs-options-pro") }}</button>
-        <button type="button" @click="updateBorder" :disabled="isLoading || !border.name.trim()" class="asowp-primary-button">
-          {{ isLoading ? __("Saving...", "all-signs-options-pro") : __("Save border", "all-signs-options-pro") }}
+      <div class="ascwo-form-footer">
+        <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Cancel", "all-signs-customizer-for-woocommerce-pro") }}</button>
+        <button type="button" @click="updateBorder" :disabled="isLoading || !border.name.trim()" class="ascwo-primary-button">
+          {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce-pro") : __("Save border", "all-signs-customizer-for-woocommerce-pro") }}
         </button>
       </div>
     </section>
@@ -139,7 +139,7 @@ const updateBorder = async () => {
       await fetchBorders();
       back();
     } else {
-      toastMessage(result?.message || __("Unable to save border", "all-signs-options-pro"), "warning");
+      toastMessage(result?.message || __("Unable to save border", "all-signs-customizer-for-woocommerce-pro"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -149,8 +149,8 @@ const updateBorder = async () => {
 const selectBorderIcon = () => {
   if (!window.wp?.media) return;
   const uploader = window.wp.media({
-    title: __("Select Border icon", "all-signs-options-pro"),
-    button: { text: __("Select Icon", "all-signs-options-pro") },
+    title: __("Select Border icon", "all-signs-customizer-for-woocommerce-pro"),
+    button: { text: __("Select Icon", "all-signs-customizer-for-woocommerce-pro") },
     multiple: false,
   });
   uploader.on("select", () => {
@@ -172,18 +172,18 @@ onMounted(fetchBorders);
 </script>
 
 <style scoped>
-.asowp-card {
+.ascwo-card {
   background: #fff;
   border: 1px solid #dfe3e8;
   border-radius: 10px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
 }
 
-.asowp-card-inner {
+.ascwo-card-inner {
   padding: 18px 20px;
 }
 
-.asowp-page-title {
+.ascwo-page-title {
   margin: 0;
   color: #303030;
   font-size: 20px;
@@ -191,7 +191,7 @@ onMounted(fetchBorders);
   font-weight: 900;
 }
 
-.asowp-section-title {
+.ascwo-section-title {
   margin: 0 0 12px;
   color: #303030;
   font-size: 14px;
@@ -199,7 +199,7 @@ onMounted(fetchBorders);
   font-weight: 900;
 }
 
-.asowp-subtitle {
+.ascwo-subtitle {
   display: block;
   margin: 0;
   color: #616161;
@@ -207,23 +207,23 @@ onMounted(fetchBorders);
   line-height: 16px;
 }
 
-.asowp-border-table,
-.asowp-border-table thead,
-.asowp-border-table tbody,
-.asowp-border-table tr,
-.asowp-border-table th,
-.asowp-border-table td {
+.ascwo-border-table,
+.ascwo-border-table thead,
+.ascwo-border-table tbody,
+.ascwo-border-table tr,
+.ascwo-border-table th,
+.ascwo-border-table td {
   border-left: 0 !important;
   border-right: 0 !important;
   outline: 0 !important;
   box-shadow: none !important;
 }
 
-.asowp-border-table {
+.ascwo-border-table {
   border: 0 !important;
 }
 
-.asowp-border-table th {
+.ascwo-border-table th {
   padding: 9px 12px;
   border-top: 0 !important;
   border-bottom: 0 !important;
@@ -234,7 +234,7 @@ onMounted(fetchBorders);
   text-align: left;
 }
 
-.asowp-border-table td {
+.ascwo-border-table td {
   padding: 8px 12px;
   border-top: 0 !important;
   border-bottom: 0 !important;
@@ -244,19 +244,19 @@ onMounted(fetchBorders);
   text-align: left;
 }
 
-.asowp-border-table tbody tr {
+.ascwo-border-table tbody tr {
   border-bottom: 1px solid #e5e7eb !important;
 }
 
-.asowp-border-table tbody tr:last-child {
+.ascwo-border-table tbody tr:last-child {
   border-bottom: 0 !important;
 }
 
-.asowp-row-strong {
+.ascwo-row-strong {
   font-weight: 900;
 }
 
-.asowp-preview-box {
+.ascwo-preview-box {
   width: 56px;
   height: 56px;
   display: inline-flex;
@@ -268,40 +268,40 @@ onMounted(fetchBorders);
   border-radius: 8px;
 }
 
-.asowp-preview-box img {
+.ascwo-preview-box img {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
 
-.asowp-empty {
+.ascwo-empty {
   height: 210px;
   text-align: center !important;
   color: #616161 !important;
 }
 
-.asowp-empty strong,
-.asowp-empty span {
+.ascwo-empty strong,
+.ascwo-empty span {
   display: block;
 }
 
-.asowp-empty strong {
+.ascwo-empty strong {
   margin-top: 12px;
   color: #303030;
   font-size: 18px;
   font-weight: 900;
 }
 
-.asowp-empty span {
+.ascwo-empty span {
   margin-top: 8px;
   font-size: 13px;
 }
 
-.asowp-form-body {
+.ascwo-form-body {
   padding-top: 0;
 }
 
-.asowp-form-label {
+.ascwo-form-label {
   display: block;
   margin: 0 0 6px;
   color: #303030;
@@ -310,7 +310,7 @@ onMounted(fetchBorders);
   font-weight: 400;
 }
 
-.asowp-form-input {
+.ascwo-form-input {
   width: 100%;
   min-height: 40px;
   padding: 8px 12px;
@@ -323,13 +323,13 @@ onMounted(fetchBorders);
   box-shadow: none !important;
 }
 
-.asowp-form-input:focus {
+.ascwo-form-input:focus {
   border-color: #005bd3 !important;
   box-shadow: 0 0 0 1px #005bd3 !important;
   outline: 0;
 }
 
-.asowp-file-input {
+.ascwo-file-input {
   display: grid;
   grid-template-columns: auto 1fr 42px;
   align-items: center;
@@ -339,14 +339,14 @@ onMounted(fetchBorders);
   overflow: hidden;
 }
 
-.asowp-file-input input {
+.ascwo-file-input input {
   height: 100%;
   border: 0 !important;
   box-shadow: none !important;
   font-size: 12px;
 }
 
-.asowp-file-button {
+.ascwo-file-button {
   height: 32px;
   margin-left: 4px;
   padding: 0 12px;
@@ -359,7 +359,7 @@ onMounted(fetchBorders);
   cursor: pointer;
 }
 
-.asowp-upload-preview {
+.ascwo-upload-preview {
   width: 38px;
   height: 36px;
   margin-right: 2px;
@@ -367,13 +367,13 @@ onMounted(fetchBorders);
   background: #fff;
 }
 
-.asowp-upload-preview img {
+.ascwo-upload-preview img {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
 
-.asowp-form-footer {
+.ascwo-form-footer {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
@@ -381,9 +381,9 @@ onMounted(fetchBorders);
   border-top: 1px solid #e5e7eb;
 }
 
-.asowp-primary-button,
-.asowp-secondary-button,
-.asowp-outline-button {
+.ascwo-primary-button,
+.ascwo-secondary-button,
+.ascwo-outline-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -398,34 +398,34 @@ onMounted(fetchBorders);
   cursor: pointer;
 }
 
-.asowp-primary-button {
+.ascwo-primary-button {
   border: 1px solid #005e56;
   background: #007a72;
   color: #fff !important;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-.asowp-primary-button:hover {
+.ascwo-primary-button:hover {
   background: #006e67;
   color: #fff !important;
 }
 
-.asowp-primary-button:disabled {
+.ascwo-primary-button:disabled {
   border-color: #d4d4d4;
   background: #d4d4d4;
   color: #fff !important;
   cursor: not-allowed;
 }
 
-.asowp-secondary-button,
-.asowp-outline-button {
+.ascwo-secondary-button,
+.ascwo-outline-button {
   border: 1px solid #c9cccf;
   background: #fff;
   color: #303030 !important;
 }
 
-.asowp-secondary-button:hover,
-.asowp-outline-button:hover {
+.ascwo-secondary-button:hover,
+.ascwo-outline-button:hover {
   background: #f6f6f7;
   color: #303030 !important;
 }

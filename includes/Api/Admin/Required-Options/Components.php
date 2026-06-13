@@ -1,9 +1,9 @@
 <?php
-namespace ASOWP\Api\Admin\Required_Options;
+namespace ASCWO\Api\Admin\Required_Options;
 
 use WP_REST_Server;
 
-class ASOWP_Api_Required_Options_Components extends ASOWP_Api_Required_Options_Base
+class ASCWO_Api_Required_Options_Components extends ASCWO_Api_Required_Options_Base
 {
     public function register_routes()
     {

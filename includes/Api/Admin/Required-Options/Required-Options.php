@@ -1,5 +1,5 @@
 <?php
-namespace ASOWP\Api\Admin\Required_Options;
+namespace ASCWO\Api\Admin\Required_Options;
 
 require_once __DIR__ . '/Base.php';
 
@@ -20,19 +20,19 @@ foreach (array(
     }
 }
 
-class ASOWP_Api_Required_Options extends ASOWP_Api_Required_Options_Base
+class ASCWO_Api_Required_Options extends ASCWO_Api_Required_Options_Base
 {
     public function register_routes()
     {
-        (new ASOWP_Api_Required_Options_Sizes())->register_routes();
-        (new ASOWP_Api_Required_Options_Colors())->register_routes();
-        (new ASOWP_Api_Required_Options_Shapes())->register_routes();
-        (new ASOWP_Api_Required_Options_FixingMethods())->register_routes();
-        (new ASOWP_Api_Required_Options_Pricings())->register_routes();
-        (new ASOWP_Api_Required_Options_Borders())->register_routes();
-        (new ASOWP_Api_Required_Options_Materials())->register_routes();
-        (new ASOWP_Api_Required_Options_Components())->register_routes();
-        (new ASOWP_Api_Required_Options_Fonts())->register_routes();
+        (new ASCWO_Api_Required_Options_Sizes())->register_routes();
+        (new ASCWO_Api_Required_Options_Colors())->register_routes();
+        (new ASCWO_Api_Required_Options_Shapes())->register_routes();
+        (new ASCWO_Api_Required_Options_FixingMethods())->register_routes();
+        (new ASCWO_Api_Required_Options_Pricings())->register_routes();
+        (new ASCWO_Api_Required_Options_Borders())->register_routes();
+        (new ASCWO_Api_Required_Options_Materials())->register_routes();
+        (new ASCWO_Api_Required_Options_Components())->register_routes();
+        (new ASCWO_Api_Required_Options_Fonts())->register_routes();
 
         register_rest_route(
             $this->namespace,
@@ -64,7 +64,7 @@ class ASOWP_Api_Required_Options extends ASOWP_Api_Required_Options_Base
             $post_ids = $wpdb->get_col(
                 $wpdb->prepare(
                     "SELECT DISTINCT post_id FROM {$wpdb->postmeta} WHERE meta_key = %s",
-                    'asowp-configs-meta'
+                    'ascwo-configs-meta'
                 )
             );
             $config_ids = array_map('absint', $post_ids);
@@ -73,7 +73,7 @@ class ASOWP_Api_Required_Options extends ASOWP_Api_Required_Options_Base
         if (empty($config_ids)) {
             return rest_ensure_response(array(
                 'success' => false,
-                'message' => __('No configurations found', 'all-signs-options-pro'),
+                'message' => __('No configurations found', 'all-signs-customizer-for-woocommerce-pro'),
             ));
         }
 
@@ -81,7 +81,7 @@ class ASOWP_Api_Required_Options extends ASOWP_Api_Required_Options_Base
         $results = array();
 
         foreach ($config_ids as $config_id) {
-            $meta = get_post_meta($config_id, 'asowp-configs-meta', true);
+            $meta = get_post_meta($config_id, 'ascwo-configs-meta', true);
             if (!is_array($meta)) {
                 continue;
             }
@@ -180,7 +180,7 @@ class ASOWP_Api_Required_Options extends ASOWP_Api_Required_Options_Base
             }
 
             if ($changed) {
-                update_post_meta($config_id, 'asowp-configs-meta', $meta);
+                update_post_meta($config_id, 'ascwo-configs-meta', $meta);
                 clean_post_cache($config_id);
                 $updated_count++;
                 $results[] = array(
@@ -198,7 +198,7 @@ class ASOWP_Api_Required_Options extends ASOWP_Api_Required_Options_Base
         return rest_ensure_response(array(
             'success' => true,
             'message' => sprintf(
-                __('Migration completed: %d configuration(s) updated out of %d', 'all-signs-options-pro'),
+                __('Migration completed: %d configuration(s) updated out of %d', 'all-signs-customizer-for-woocommerce-pro'),
                 $updated_count,
                 count($config_ids)
             ),

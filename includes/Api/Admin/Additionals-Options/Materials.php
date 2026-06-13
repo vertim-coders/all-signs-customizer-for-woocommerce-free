@@ -1,9 +1,9 @@
 <?php
-namespace ASOWP\Api\Admin\Additionals_Options;
+namespace ASCWO\Api\Admin\Additionals_Options;
 
 use WP_REST_Server;
 
-class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Additionals_Base
+class ASCWO_Api_Customs_Additionals_Materials extends ASCWO_Api_Customs_Additionals_Base
 {
     public function register_routes()
     {
@@ -154,7 +154,7 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
     {
         $config_id = absint($request->get_param('config_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Custom ID invalid', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Custom ID invalid', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $materials = $this->get_section_items($config_id, 'materials');
@@ -184,7 +184,7 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
             ));
         }
 
-        return rest_ensure_response(array('success' => false, 'message' => __('No material found', 'all-signs-options-pro')));
+        return rest_ensure_response(array('success' => false, 'message' => __('No material found', 'all-signs-customizer-for-woocommerce-pro')));
     }
 
     public function add_material($request)
@@ -212,7 +212,7 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
         if ($saved === true) {
             return rest_ensure_response(array(
                 'success' => true,
-                'message' => __('Material successfully added', 'all-signs-options-pro'),
+                'message' => __('Material successfully added', 'all-signs-customizer-for-woocommerce-pro'),
                 'data' => array(
                     'materials' => array(
                         'items' => array_values($materials),
@@ -221,7 +221,7 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
             ));
         }
 
-        return rest_ensure_response(array('success' => false, 'message' => __('Material has not been added', 'all-signs-options-pro')));
+        return rest_ensure_response(array('success' => false, 'message' => __('Material has not been added', 'all-signs-customizer-for-woocommerce-pro')));
     }
 
     public function update_material($request)
@@ -236,7 +236,7 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
         $materials = $this->get_section_items($config_id, 'materials');
         $index = $this->find_item_index($materials, $material_id);
         if ($index === null) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Material not found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Material not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $payload['id'] = isset($payload['id']) && $payload['id'] !== '' ? (string) $payload['id'] : (isset($materials[$index]['id']) ? $materials[$index]['id'] : $material_id);
@@ -255,7 +255,7 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
         if ($saved === true) {
             return rest_ensure_response(array(
                 'success' => true,
-                'message' => __('Material successfully updated', 'all-signs-options-pro'),
+                'message' => __('Material successfully updated', 'all-signs-customizer-for-woocommerce-pro'),
                 'data' => array(
                     'materials' => array(
                         'items' => array_values($materials),
@@ -264,7 +264,7 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
             ));
         }
 
-        return rest_ensure_response(array('success' => false, 'message' => __('Material has not been updated', 'all-signs-options-pro')));
+        return rest_ensure_response(array('success' => false, 'message' => __('Material has not been updated', 'all-signs-customizer-for-woocommerce-pro')));
     }
 
     public function delete_material($request)
@@ -275,7 +275,7 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
         $index = $this->find_item_index($materials, $material_id);
 
         if ($index === null) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Material not found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Material not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         array_splice($materials, $index, 1);
@@ -283,7 +283,7 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
         if ($saved === true) {
             return rest_ensure_response(array(
                 'success' => true,
-                'message' => __('Material successfully deleted', 'all-signs-options-pro'),
+                'message' => __('Material successfully deleted', 'all-signs-customizer-for-woocommerce-pro'),
                 'data' => array(
                     'materials' => array(
                         'items' => array_values($materials),
@@ -292,7 +292,7 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
             ));
         }
 
-        return rest_ensure_response(array('success' => false, 'message' => __('Material has not been deleted', 'all-signs-options-pro')));
+        return rest_ensure_response(array('success' => false, 'message' => __('Material has not been deleted', 'all-signs-customizer-for-woocommerce-pro')));
     }
 
     public function set_default_material($request)
@@ -303,7 +303,7 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
         $index = $this->find_item_index($materials, $material_id);
 
         if ($index === null) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Material not found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Material not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $current = isset($materials[$index]['isDefault']) ? (bool) $materials[$index]['isDefault'] : false;
@@ -311,7 +311,7 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
             return rest_ensure_response(array(
                 'success' => true,
                 'success_state' => 'same',
-                'message' => __('Material already default', 'all-signs-options-pro'),
+                'message' => __('Material already default', 'all-signs-customizer-for-woocommerce-pro'),
             ));
         }
 
@@ -323,7 +323,7 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
         if ($saved === true) {
             return rest_ensure_response(array(
                 'success' => true,
-                'message' => __('Material default successfully updated', 'all-signs-options-pro'),
+                'message' => __('Material default successfully updated', 'all-signs-customizer-for-woocommerce-pro'),
                 'data' => array(
                     'materials' => array(
                         'items' => array_values($materials),
@@ -332,7 +332,7 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
             ));
         }
 
-        return rest_ensure_response(array('success' => false, 'message' => __('Material default has not been updated', 'all-signs-options-pro')));
+        return rest_ensure_response(array('success' => false, 'message' => __('Material default has not been updated', 'all-signs-customizer-for-woocommerce-pro')));
     }
 
     public function get_material_colors($request)
@@ -365,7 +365,7 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
         $materials = $this->get_section_items($config_id, 'materials');
         $index = $this->find_item_index($materials, $material_id);
         if ($index === null) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Material not found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Material not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $materials[$index]['colors'] = isset($payload['allColors']) && is_array($payload['allColors']) ? array_values($payload['allColors']) : array_values($payload);
@@ -374,7 +374,7 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
         if ($saved === true) {
             return rest_ensure_response(array(
                 'success' => true,
-                'message' => __('Material colors successfully updated', 'all-signs-options-pro'),
+                'message' => __('Material colors successfully updated', 'all-signs-customizer-for-woocommerce-pro'),
                 'data' => array(
                     'colors' => array(
                         'allColors' => $materials[$index]['colors'],
@@ -383,6 +383,6 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
             ));
         }
 
-        return rest_ensure_response(array('success' => false, 'message' => __('Material colors has not been updated', 'all-signs-options-pro')));
+        return rest_ensure_response(array('success' => false, 'message' => __('Material colors has not been updated', 'all-signs-customizer-for-woocommerce-pro')));
     }
 }

@@ -1,10 +1,10 @@
 <?php
-namespace ASOWP;
+namespace ASCWO;
 
 /**
  * public Pages Handler
  */
-class ASOWP_Public
+class ASCWO_Public
 {
 
     public function __construct()
@@ -26,12 +26,12 @@ class ASOWP_Public
             return;
         }
 
-        wp_enqueue_style('asowp-style', ASOWP_ASSETS . '/css/style.css', false, ASOWP_VERSION);
+        wp_enqueue_style('ascwo-style', ASCWO_ASSETS . '/css/style.css', false, ASCWO_VERSION);
         $this->add_button_styles_inline();
-        wp_enqueue_style('asowp-omodal', ASOWP_ASSETS . '/utilities/modal.min.css', false, ASOWP_VERSION);
-        wp_enqueue_script('asowp-omodal', ASOWP_ASSETS . '/utilities/modal.min.js', [], ASOWP_VERSION, true);
-        wp_enqueue_script('asowp-tinymce-script', includes_url('/js/tinymce/') . 'tinymce.min.js', [], ASOWP_VERSION, true);
-        wp_enqueue_script('asowp-product-min', ASOWP_ASSETS . '/utilities/asowp-product-min.js', ["jquery"], ASOWP_VERSION, true);
+        wp_enqueue_style('ascwo-omodal', ASCWO_ASSETS . '/utilities/modal.min.css', false, ASCWO_VERSION);
+        wp_enqueue_script('ascwo-omodal', ASCWO_ASSETS . '/utilities/modal.min.js', [], ASCWO_VERSION, true);
+        wp_enqueue_script('ascwo-tinymce-script', includes_url('/js/tinymce/') . 'tinymce.min.js', [], ASCWO_VERSION, true);
+        wp_enqueue_script('ascwo-product-min', ASCWO_ASSETS . '/utilities/ascwo-product-min.js', ["jquery"], ASCWO_VERSION, true);
     }
 
     private function should_enqueue_public_assets(): bool
@@ -57,33 +57,33 @@ class ASOWP_Public
 
     private function add_button_styles_inline()
     {
-        $settings = get_option('asowp_config_page', []);
+        $settings = get_option('ascwo_config_page', []);
         $styles = isset($settings['buttonStyles']) && is_array($settings['buttonStyles']) ? $settings['buttonStyles'] : [];
         $map = [
             'productDesign' => [
                 'legacy' => 'productDesignCss',
-                'selectors' => ['.asowp-design-product', '.asowp-product-card__btn--customize'],
+                'selectors' => ['.ascwo-design-product', '.ascwo-product-card__btn--customize'],
             ],
             'productTemplate' => [
                 'legacy' => 'productTemplateCss',
-                'selectors' => ['.asowp-template-product', '.asowp-product-card__btn--template'],
+                'selectors' => ['.ascwo-template-product', '.ascwo-product-card__btn--template'],
             ],
             'templateAddToCart' => [
                 'legacy' => '',
-                'selectors' => ['.asowp-templates-add_to_cart_button'],
+                'selectors' => ['.ascwo-templates-add_to_cart_button'],
             ],
             'templateDesign' => [
                 'legacy' => '',
-                'selectors' => ['.asowp-templates-customize_button'],
+                'selectors' => ['.ascwo-templates-customize_button'],
             ],
             'templatesFilter' => [
                 'legacy' => '',
-                'selectors' => ['.asowp-templates-category-btn'],
-                'active_selectors' => ['.asowp-templates-category-btn--active'],
+                'selectors' => ['.ascwo-templates-category-btn'],
+                'active_selectors' => ['.ascwo-templates-category-btn--active'],
             ],
             'recapsButton' => [
                 'legacy' => '',
-                'selectors' => ['.asowp-cart-product-preview'],
+                'selectors' => ['.ascwo-cart-product-preview'],
             ],
         ];
 
@@ -114,7 +114,7 @@ class ASOWP_Public
         }
 
         if ($inline !== '') {
-            wp_add_inline_style('asowp-style', $inline);
+            wp_add_inline_style('ascwo-style', $inline);
         }
     }
 

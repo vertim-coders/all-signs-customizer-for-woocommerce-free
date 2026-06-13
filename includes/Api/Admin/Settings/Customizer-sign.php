@@ -1,7 +1,6 @@
 <?php
-namespace ASOWP\Api\Admin\Settings;
+namespace ASCWO\Api\Admin\Settings;
 
-use ASOWP\Support\ConfigSchemaNormalizer;
 use WP_Error;
 use WP_Post;
 use WP_Query;
@@ -10,7 +9,7 @@ use WP_REST_Controller;
 /**
  * class for api routes reaching custom design settings
  */
-class ASOWP_Api_Customizer_Sign_Settings extends WP_REST_Controller
+class ASCWO_Api_Customizer_Sign_Settings extends WP_REST_Controller
 {
 
     /**
@@ -18,14 +17,16 @@ class ASOWP_Api_Customizer_Sign_Settings extends WP_REST_Controller
      */
     public function __construct()
     {
-        $this->namespace = 'asowp/v1';
+        $this->namespace = 'ascwo/v1';
         $this->rest_base = 'configs/(?P<config_id>\d+)/settings/customizer-signs';
     }
 
     private function get_normalized_meta(int $config_id): array
     {
-        $meta = get_post_meta($config_id, 'asowp-configs-meta', true);
-        return ConfigSchemaNormalizer::normalize_meta(is_array($meta) ? $meta : array());
+        $meta = get_post_meta($config_id, 'ascwo-configs-meta', true);
+        $meta = is_array($meta) ? $meta : array();
+        $meta['settings'] = isset($meta['settings']) && is_array($meta['settings']) ? $meta['settings'] : array();
+        return $meta;
     }
 
     private function get_customizer_sign_from_meta(array $meta): array
@@ -50,7 +51,7 @@ class ASOWP_Api_Customizer_Sign_Settings extends WP_REST_Controller
         }
 
         $meta['settings']['customizerSign'][$section] = $section_options;
-        return ConfigSchemaNormalizer::save_meta($config_id, $meta);
+        return update_post_meta($config_id, 'ascwo-configs-meta', $meta);
     }
     /**
      * Register the routes
@@ -175,19 +176,19 @@ class ASOWP_Api_Customizer_Sign_Settings extends WP_REST_Controller
             if ($post) {
                 $meta_value = $this->get_normalized_meta((int) $id);
                 if (empty($meta_value)) {
-                    return rest_ensure_response(["success" => false, "message" => __("No Settings found", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => false, "message" => __("No Settings found", "all-signs-customizer-for-woocommerce-pro")]);
                 } else {
                     $customizer_sign = $this->get_customizer_sign_from_meta($meta_value);
                     if (!empty($customizer_sign)) {
                         return rest_ensure_response($customizer_sign);
                     }
-                    return rest_ensure_response(["success" => false, "message" => __("No Customizer Sign Settings found", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => false, "message" => __("No Customizer Sign Settings found", "all-signs-customizer-for-woocommerce-pro")]);
                 }
             } else {
-                return rest_ensure_response(["success" => false, "message" => __("Customizer ID invalid", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => false, "message" => __("Customizer ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __("Customizer ID invalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __("Customizer ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
     /**
@@ -204,19 +205,19 @@ class ASOWP_Api_Customizer_Sign_Settings extends WP_REST_Controller
             if ($post) {
                 $response = $this->save_customizer_sign_section((int) $id, 'customizerOptions', is_array($customizer_options) ? $customizer_options : array());
                 if ($response === 'same') {
-                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in customizer options in customizer sign settings", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in customizer options in customizer sign settings", "all-signs-customizer-for-woocommerce-pro")]);
                 }
 
                 if ($response) {
-                    return rest_ensure_response(["success" => true, "message" => __("customizer in customizer sign settings upadted successfully", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => true, "message" => __("customizer in customizer sign settings upadted successfully", "all-signs-customizer-for-woocommerce-pro")]);
                 } else {
-                    return rest_ensure_response(["success" => false, "message" => __("Update customizer in customizer sign settings failed", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => false, "message" => __("Update customizer in customizer sign settings failed", "all-signs-customizer-for-woocommerce-pro")]);
                 }
             } else {
-                return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
 
@@ -234,19 +235,19 @@ class ASOWP_Api_Customizer_Sign_Settings extends WP_REST_Controller
             if ($post) {
                 $response = $this->save_customizer_sign_section((int) $id, 'configOptions', is_array($config_options) ? $config_options : array());
                 if ($response === 'same') {
-                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in config options in customizer sign settings", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in config options in customizer sign settings", "all-signs-customizer-for-woocommerce-pro")]);
                 }
 
                 if ($response) {
-                    return rest_ensure_response(["success" => true, "message" => __("Config options in customizer sign settings updated successfully", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => true, "message" => __("Config options in customizer sign settings updated successfully", "all-signs-customizer-for-woocommerce-pro")]);
                 } else {
-                    return rest_ensure_response(["success" => false, "message" => __("Update config options in customizer sign settings failed", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => false, "message" => __("Update config options in customizer sign settings failed", "all-signs-customizer-for-woocommerce-pro")]);
                 }
             } else {
-                return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
     /**
@@ -263,18 +264,18 @@ class ASOWP_Api_Customizer_Sign_Settings extends WP_REST_Controller
             if ($post) {
                 $response = $this->save_customizer_sign_section((int) $id, 'signPart', is_array($sign_options) ? $sign_options : array());
                 if ($response === 'same') {
-                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in Sign part in customizer sign settings ", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in Sign part in customizer sign settings ", "all-signs-customizer-for-woocommerce-pro")]);
                 }
                 if ($response) {
-                    return rest_ensure_response(["success" => true, "message" => __("Sign part in customizer sign settings upadted successfully", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => true, "message" => __("Sign part in customizer sign settings upadted successfully", "all-signs-customizer-for-woocommerce-pro")]);
                 } else {
-                    return rest_ensure_response(["success" => false, "message" => __("Update Sign part in customizer sign settings failed", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => false, "message" => __("Update Sign part in customizer sign settings failed", "all-signs-customizer-for-woocommerce-pro")]);
                 }
             } else {
-                return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
     /**
@@ -291,18 +292,18 @@ class ASOWP_Api_Customizer_Sign_Settings extends WP_REST_Controller
             if ($post) {
                 $response = $this->save_customizer_sign_section((int) $id, 'text', is_array($text_options) ? $text_options : array());
                 if ($response === 'same') {
-                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in Text in customizer sign settings", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in Text in customizer sign settings", "all-signs-customizer-for-woocommerce-pro")]);
                 }
                 if ($response) {
-                    return rest_ensure_response(["success" => true, "message" => __("Text in customizer sign settings upadted successfully", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => true, "message" => __("Text in customizer sign settings upadted successfully", "all-signs-customizer-for-woocommerce-pro")]);
                 } else {
-                    return rest_ensure_response(["success" => false, "message" => __("Update Text in customizer sign settings failed", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => false, "message" => __("Update Text in customizer sign settings failed", "all-signs-customizer-for-woocommerce-pro")]);
                 }
             } else {
-                return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
     /**
@@ -319,18 +320,18 @@ class ASOWP_Api_Customizer_Sign_Settings extends WP_REST_Controller
             if ($post) {
                 $response = $this->save_customizer_sign_section((int) $id, 'images', is_array($image_options) ? $image_options : array());
                 if ($response === 'same') {
-                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in image in Customizer sign settings", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in image in Customizer sign settings", "all-signs-customizer-for-woocommerce-pro")]);
                 }
                 if ($response) {
-                    return rest_ensure_response(["success" => true, "message" => __("image in Customizer sign settings upadted successfully", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => true, "message" => __("image in Customizer sign settings upadted successfully", "all-signs-customizer-for-woocommerce-pro")]);
                 } else {
-                    return rest_ensure_response(["success" => false, "message" => __("Update image in Customizer sign settings failed", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => false, "message" => __("Update image in Customizer sign settings failed", "all-signs-customizer-for-woocommerce-pro")]);
                 }
             } else {
-                return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
     /**

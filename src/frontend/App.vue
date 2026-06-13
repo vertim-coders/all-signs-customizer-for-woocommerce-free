@@ -9,9 +9,9 @@ import '@/frontend/utils/tailwindcss.min.js';
 import '../../assets/utilities/fabric.min.js';
 import '../../assets/utilities/hammerjs.js';
 
-const activateProduct = ref(!isNaN(asowp_data.caches) && parseInt(asowp_data.caches) > 1704067200? true : false);
+const activateProduct = ref(!isNaN(ascwo_data.caches) && parseInt(ascwo_data.caches) > 1704067200? true : false);
 const frontendReady = ref(false);
-const currentPage = window.asowp_data?.page || '';
+const currentPage = window.ascwo_data?.page || '';
 const route = useRoute();
 const canRenderFrontend = computed(() => {
     const isAdminPreview = currentPage === 'admin' && (route.name === 'preview-back' || route.name === 'template-maker');
@@ -22,7 +22,7 @@ onMounted(async() => {
     try {
         await loadFrontendDependencies();
     } catch (error) {
-        console.error('ASOWP frontend bootstrap failed to load optional dependencies.', error);
+        console.error('ASCWO frontend bootstrap failed to load optional dependencies.', error);
     } finally {
         frontendReady.value = true;
     }
@@ -31,7 +31,7 @@ onMounted(async() => {
 const loadFrontendDependencies = async () => {
     window.tailwind = window.tailwind || {};
     window.tailwind.config = {
-        prefix: 'asowp-',
+        prefix: 'ascwo-',
         corePlugins: {
             preflight: false,
         },

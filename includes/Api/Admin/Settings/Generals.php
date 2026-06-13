@@ -1,7 +1,6 @@
 <?php
-namespace ASOWP\Api\Admin\Settings;
+namespace ASCWO\Api\Admin\Settings;
 
-use ASOWP\Support\ConfigSchemaNormalizer;
 use WP_Error;
 use WP_Post;
 use WP_Query;
@@ -10,7 +9,7 @@ use WP_REST_Controller;
 /**
  * class for api routes reaching generals settings
  */
-class ASOWP_Api_General_Settings extends WP_REST_Controller
+class ASCWO_Api_General_Settings extends WP_REST_Controller
 {
 
     /**
@@ -18,7 +17,7 @@ class ASOWP_Api_General_Settings extends WP_REST_Controller
      */
     public function __construct()
     {
-        $this->namespace = 'asowp/v1';
+        $this->namespace = 'ascwo/v1';
         $this->rest_base = 'configs/(?P<config_id>\d+)/settings/generals';
     }
     /**
@@ -121,8 +120,10 @@ class ASOWP_Api_General_Settings extends WP_REST_Controller
 
     private function get_normalized_meta(int $config_id): array
     {
-        $meta = get_post_meta($config_id, 'asowp-configs-meta', true);
-        return ConfigSchemaNormalizer::normalize_meta(is_array($meta) ? $meta : array());
+        $meta = get_post_meta($config_id, 'ascwo-configs-meta', true);
+        $meta = is_array($meta) ? $meta : array();
+        $meta['settings'] = isset($meta['settings']) && is_array($meta['settings']) ? $meta['settings'] : array();
+        return $meta;
     }
 
     private function get_generals_from_meta(array $meta): array
@@ -147,7 +148,7 @@ class ASOWP_Api_General_Settings extends WP_REST_Controller
         }
 
         $meta['settings']['generals'][$section] = $section_options;
-        return ConfigSchemaNormalizer::save_meta($config_id, $meta);
+        return update_post_meta($config_id, 'ascwo-configs-meta', $meta);
     }
 
     /**
@@ -161,21 +162,21 @@ class ASOWP_Api_General_Settings extends WP_REST_Controller
         if ($id != 0) {
             $post = get_post($id);
             if ($post) {
-                $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
+                $meta_value = get_post_meta($id, 'ascwo-configs-meta', true);
                 if (empty($meta_value)) {
-                    return rest_ensure_response(["message" => __("No Settings found", "all-signs-options-pro")]);
+                    return rest_ensure_response(["message" => __("No Settings found", "all-signs-customizer-for-woocommerce-pro")]);
                 } else {
                     $generals = $this->get_generals_from_meta($this->get_normalized_meta((int) $id));
                     if (!empty($generals)) {
                         return rest_ensure_response($generals);
                     }
-                    return rest_ensure_response(["message" => __("No generals Settings found", "all-signs-options-pro")]);
+                    return rest_ensure_response(["message" => __("No generals Settings found", "all-signs-customizer-for-woocommerce-pro")]);
                 }
             } else {
-                return rest_ensure_response(["message" => __("Custom ID invalid", "all-signs-options-pro")]);
+                return rest_ensure_response(["message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["message" => __("Custom ID invalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
     /**
@@ -193,19 +194,19 @@ class ASOWP_Api_General_Settings extends WP_REST_Controller
                 $response = $this->save_general_section((int) $id, 'product', is_array($product_options) ? $product_options : array());
 
                 if ($response === 'same') {
-                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in product options in generals settings failed", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in product options in generals settings failed", "all-signs-customizer-for-woocommerce-pro")]);
                 }
 
                 if ($response) {
-                    return rest_ensure_response(["success" => true, "message" => __("Product options in generals settings updated successfully", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => true, "message" => __("Product options in generals settings updated successfully", "all-signs-customizer-for-woocommerce-pro")]);
                 } else {
-                    return rest_ensure_response(["success" => false, "message" => __("Update product options in generals settings failed", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => false, "message" => __("Update product options in generals settings failed", "all-signs-customizer-for-woocommerce-pro")]);
                 }
             } else {
-                return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
 
@@ -224,19 +225,19 @@ class ASOWP_Api_General_Settings extends WP_REST_Controller
                 $response = $this->save_general_section((int) $id, 'mobile', is_array($mobile_options) ? $mobile_options : array());
 
                 if ($response === 'same') {
-                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in mobile options in generals settings failed", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in mobile options in generals settings failed", "all-signs-customizer-for-woocommerce-pro")]);
                 }
 
                 if ($response) {
-                    return rest_ensure_response(["success" => true, "message" => __("Mobile options in generals settings updated successfully", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => true, "message" => __("Mobile options in generals settings updated successfully", "all-signs-customizer-for-woocommerce-pro")]);
                 } else {
-                    return rest_ensure_response(["success" => false, "message" => __("Update mobile options in generals settings failed", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => false, "message" => __("Update mobile options in generals settings failed", "all-signs-customizer-for-woocommerce-pro")]);
                 }
             } else {
-                return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
     /**
@@ -254,19 +255,19 @@ class ASOWP_Api_General_Settings extends WP_REST_Controller
                 $response = $this->save_general_section((int) $id, 'output', is_array($output_options) ? $output_options : array());
 
                 if ($response === 'same') {
-                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in output options in generals settings failed", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in output options in generals settings failed", "all-signs-customizer-for-woocommerce-pro")]);
                 }
 
                 if ($response) {
-                    return rest_ensure_response(["success" => true, "message" => __("Output options in generals settings updated successfully", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => true, "message" => __("Output options in generals settings updated successfully", "all-signs-customizer-for-woocommerce-pro")]);
                 } else {
-                    return rest_ensure_response(["success" => false, "message" => __("Update output options in generals settings failed", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => false, "message" => __("Update output options in generals settings failed", "all-signs-customizer-for-woocommerce-pro")]);
                 }
             } else {
-                return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
 
@@ -294,30 +295,30 @@ class ASOWP_Api_General_Settings extends WP_REST_Controller
         );
 
         if (!in_array($section, $allowed_sections, true)) {
-            return rest_ensure_response(["success" => false, "message" => __("General settings section invalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __("General settings section invalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
 
         $section_options = json_decode($request->get_body(), true);
 
         if ($id == 0) {
-            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
 
         $post = get_post($id);
         if (!$post) {
-            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
 
         $response = $this->save_general_section((int) $id, $section, is_array($section_options) ? $section_options : array());
         if ($response === 'same') {
-            return rest_ensure_response(["success" => "same", "message" => __("No change observed in general settings", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => "same", "message" => __("No change observed in general settings", "all-signs-customizer-for-woocommerce-pro")]);
         }
 
         if ($response) {
-            return rest_ensure_response(["success" => true, "message" => __("General settings updated successfully", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => true, "message" => __("General settings updated successfully", "all-signs-customizer-for-woocommerce-pro")]);
         }
 
-        return rest_ensure_response(["success" => false, "message" => __("Update general settings failed", "all-signs-options-pro")]);
+        return rest_ensure_response(["success" => false, "message" => __("Update general settings failed", "all-signs-customizer-for-woocommerce-pro")]);
     }
     /**
      * Checks if a given request has access to read the materials.
@@ -331,5 +332,4 @@ class ASOWP_Api_General_Settings extends WP_REST_Controller
         return true;
     }
 }
-
 

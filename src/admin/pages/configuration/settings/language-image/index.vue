@@ -1,117 +1,117 @@
 <template>
-  <div class="asowp-language-setup">
-    <div v-if="isFetching" class="asowp-language-card asowp-language-loading">
+  <div class="ascwo-language-setup">
+    <div v-if="isFetching" class="ascwo-language-card ascwo-language-loading">
       <img :src="loadingIcon" alt="" />
     </div>
 
-    <div v-else class="asowp-language-layout">
-      <div class="asowp-language-main">
-        <header class="asowp-language-card asowp-language-hero">
-          <h1>{{ __('Language & Images', 'all-signs-options-pro') }}</h1>
-          <p>{{ __('Configure upload texts, visualizer wording and system images in one page, without switching between legacy child screens.', 'all-signs-options-pro') }}</p>
+    <div v-else class="ascwo-language-layout">
+      <div class="ascwo-language-main">
+        <header class="ascwo-language-card ascwo-language-hero">
+          <h1>{{ __('Language & Images', 'all-signs-customizer-for-woocommerce-pro') }}</h1>
+          <p>{{ __('Configure upload texts, visualizer wording and system images in one page, without switching between legacy child screens.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
         </header>
 
-        <section id="asowp-language-upload-design" class="asowp-language-card asowp-language-section">
+        <section id="ascwo-language-upload-design" class="ascwo-language-card ascwo-language-section">
           <SectionHead
-            :title="__('Upload Design', 'all-signs-options-pro')"
-            :description="__('Texts and help content used for the upload design flow.', 'all-signs-options-pro')"
+            :title="__('Upload Design', 'all-signs-customizer-for-woocommerce-pro')"
+            :description="__('Texts and help content used for the upload design flow.', 'all-signs-customizer-for-woocommerce-pro')"
             :open="openSections.uploadDesign"
             @toggle="toggleSection('uploadDesign')"
           />
 
-          <div v-show="openSections.uploadDesign" class="asowp-section-body">
-            <div class="asowp-toggle-block">
+          <div v-show="openSections.uploadDesign" class="ascwo-section-body">
+            <div class="ascwo-toggle-block">
               <div>
-                <h3>{{ __('Enable custom design link', 'all-signs-options-pro') }}</h3>
-                <p>{{ __('Enable this to display a link redirecting customers to another page on your store for more complex design requests.', 'all-signs-options-pro') }}</p>
+                <h3>{{ __('Enable custom design link', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
+                <p>{{ __('Enable this to display a link redirecting customers to another page on your store for more complex design requests.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
               </div>
-              <div class="asowp-toggle-line">
-                <span>{{ __('No', 'all-signs-options-pro') }}</span>
-                <label class="asowp-switch">
+              <div class="ascwo-toggle-line">
+                <span>{{ __('No', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                <label class="ascwo-switch">
                   <input type="checkbox" v-model="uploadDesign.activate" />
                   <span></span>
                 </label>
-                <span>{{ __('Yes', 'all-signs-options-pro') }}</span>
+                <span>{{ __('Yes', 'all-signs-customizer-for-woocommerce-pro') }}</span>
               </div>
             </div>
 
-            <div v-if="uploadDesign.activate" class="asowp-form-grid asowp-form-grid-single">
-              <label class="asowp-field">
-                <span>{{ __('Custom Design Link', 'all-signs-options-pro') }}</span>
-                <input v-model="uploadDesign.link" type="text" class="asowp-shopify-input" :class="{ 'is-invalid': isUploadDesignLinkInvalid }" />
-                <small>{{ isUploadDesignLinkInvalid ? __('Please enter a valid URL starting with http:// or https://.', 'all-signs-options-pro') : __('URL to redirect customers on your store that will allow for more complex graphic design quote submissions.', 'all-signs-options-pro') }}</small>
+            <div v-if="uploadDesign.activate" class="ascwo-form-grid ascwo-form-grid-single">
+              <label class="ascwo-field">
+                <span>{{ __('Custom Design Link', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                <input v-model="uploadDesign.link" type="text" class="ascwo-ui-input" :class="{ 'is-invalid': isUploadDesignLinkInvalid }" />
+                <small>{{ isUploadDesignLinkInvalid ? __('Please enter a valid URL starting with http:// or https://.', 'all-signs-customizer-for-woocommerce-pro') : __('URL to redirect customers on your store that will allow for more complex graphic design quote submissions.', 'all-signs-customizer-for-woocommerce-pro') }}</small>
               </label>
 
-              <label class="asowp-field">
-                <span>{{ __('Phrase for link to submit custom design page', 'all-signs-options-pro') }}</span>
-                <input v-model="uploadDesign.phraseSubmitCustom" type="text" class="asowp-shopify-input" />
+              <label class="ascwo-field">
+                <span>{{ __('Phrase for link to submit custom design page', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                <input v-model="uploadDesign.phraseSubmitCustom" type="text" class="ascwo-ui-input" />
               </label>
             </div>
 
-            <div class="asowp-field">
-              <span>{{ __('Help content', 'all-signs-options-pro') }}</span>
-              <div class="asowp-editor-wrap">
-                <textarea id="asowp-language-help-content"></textarea>
+            <div class="ascwo-field">
+              <span>{{ __('Help content', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <div class="ascwo-editor-wrap">
+                <textarea id="ascwo-language-help-content"></textarea>
               </div>
             </div>
 
             <SectionSave
               :loading="savingSection === 'uploadDesign'"
-              :label="__('Save Upload Design', 'all-signs-options-pro')"
+              :label="__('Save Upload Design', 'all-signs-customizer-for-woocommerce-pro')"
               @save="saveUploadDesign"
             />
           </div>
         </section>
 
-        <section id="asowp-language-visualizer" class="asowp-language-card asowp-language-section">
+        <section id="ascwo-language-visualizer" class="ascwo-language-card ascwo-language-section">
           <SectionHead
-            :title="__('Visualizer', 'all-signs-options-pro')"
-            :description="__('Texts and labels used inside the visualizer interface.', 'all-signs-options-pro')"
+            :title="__('Visualizer', 'all-signs-customizer-for-woocommerce-pro')"
+            :description="__('Texts and labels used inside the visualizer interface.', 'all-signs-customizer-for-woocommerce-pro')"
             :open="openSections.visualizer"
             @toggle="toggleSection('visualizer')"
           />
 
-          <div v-show="openSections.visualizer" class="asowp-section-body">
-            <FieldGroup :title="__('Content Header', 'all-signs-options-pro')" :fields="visualizerHeaderFields" :values="visualizer" @change="setVisualizerField" />
-            <FieldGroup :title="__('Content Text', 'all-signs-options-pro')" :fields="visualizerContentFields" :values="visualizer" @change="setVisualizerField" />
-            <FieldGroup :title="__('Action on selected object in canvas', 'all-signs-options-pro')" :fields="visualizerCanvasFields" :values="visualizer" @change="setVisualizerField" />
-            <FieldGroup :title="__('Content Sidebar', 'all-signs-options-pro')" :fields="visualizerSidebarFields" :values="visualizer" @change="setVisualizerField" />
-            <FieldGroup :title="__('Button Options', 'all-signs-options-pro')" :fields="visualizerOptionFields" :values="visualizer" @change="setVisualizerField" />
+          <div v-show="openSections.visualizer" class="ascwo-section-body">
+            <FieldGroup :title="__('Content Header', 'all-signs-customizer-for-woocommerce-pro')" :fields="visualizerHeaderFields" :values="visualizer" @change="setVisualizerField" />
+            <FieldGroup :title="__('Content Text', 'all-signs-customizer-for-woocommerce-pro')" :fields="visualizerContentFields" :values="visualizer" @change="setVisualizerField" />
+            <FieldGroup :title="__('Action on selected object in canvas', 'all-signs-customizer-for-woocommerce-pro')" :fields="visualizerCanvasFields" :values="visualizer" @change="setVisualizerField" />
+            <FieldGroup :title="__('Content Sidebar', 'all-signs-customizer-for-woocommerce-pro')" :fields="visualizerSidebarFields" :values="visualizer" @change="setVisualizerField" />
+            <FieldGroup :title="__('Button Options', 'all-signs-customizer-for-woocommerce-pro')" :fields="visualizerOptionFields" :values="visualizer" @change="setVisualizerField" />
 
             <SectionSave
               :loading="savingSection === 'visualizer'"
-              :label="__('Save Visualizer', 'all-signs-options-pro')"
+              :label="__('Save Visualizer', 'all-signs-customizer-for-woocommerce-pro')"
               @save="saveVisualizer"
             />
           </div>
         </section>
 
-        <section id="asowp-language-images" class="asowp-language-card asowp-language-section">
+        <section id="ascwo-language-images" class="ascwo-language-card ascwo-language-section">
           <SectionHead
-            :title="__('Images', 'all-signs-options-pro')"
-            :description="__('Icons and system images used across the configurator UI.', 'all-signs-options-pro')"
+            :title="__('Images', 'all-signs-customizer-for-woocommerce-pro')"
+            :description="__('Icons and system images used across the configurator UI.', 'all-signs-customizer-for-woocommerce-pro')"
             :open="openSections.images"
             @toggle="toggleSection('images')"
           />
 
-          <div v-show="openSections.images" class="asowp-section-body">
-            <ImageGroup :title="__('Custom design link', 'all-signs-options-pro')" :fields="imageCustomDesignFields" :values="images" @upload="selectImage" @clear="clearImage" />
-            <ImageGroup :title="__('Side bar', 'all-signs-options-pro')" :fields="imageSidebarFields" :values="images" @upload="selectImage" @clear="clearImage" />
-            <ImageGroup :title="__('Menu', 'all-signs-options-pro')" :fields="imageMenuFields" :values="images" @upload="selectImage" @clear="clearImage" />
+          <div v-show="openSections.images" class="ascwo-section-body">
+            <ImageGroup :title="__('Custom design link', 'all-signs-customizer-for-woocommerce-pro')" :fields="imageCustomDesignFields" :values="images" @upload="selectImage" @clear="clearImage" />
+            <ImageGroup :title="__('Side bar', 'all-signs-customizer-for-woocommerce-pro')" :fields="imageSidebarFields" :values="images" @upload="selectImage" @clear="clearImage" />
+            <ImageGroup :title="__('Menu', 'all-signs-customizer-for-woocommerce-pro')" :fields="imageMenuFields" :values="images" @upload="selectImage" @clear="clearImage" />
 
             <SectionSave
               :loading="savingSection === 'images'"
-              :label="__('Save Images', 'all-signs-options-pro')"
+              :label="__('Save Images', 'all-signs-customizer-for-woocommerce-pro')"
               @save="saveImages"
             />
           </div>
         </section>
       </div>
 
-      <div class="asowp-section-menu-wrap">
-        <aside class="asowp-section-menu asowp-language-card">
-          <h2>{{ __('Section Menu', 'all-signs-options-pro') }}</h2>
-          <div class="asowp-section-menu-links">
+      <div class="ascwo-section-menu-wrap">
+        <aside class="ascwo-section-menu ascwo-language-card">
+          <h2>{{ __('Section Menu', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
+          <div class="ascwo-section-menu-links">
             <a v-for="item in sectionMenu" :key="item.id" :href="`#${item.id}`" @click.prevent="scrollToSection(item.id)">
               {{ item.label }}
             </a>
@@ -130,7 +130,7 @@ import api from '@/admin/Api/api';
 import toastMessage from '@/admin/utils/functions';
 import { __ } from "@wordpress/i18n";
 
-const loadingIcon = `${String(window?.asowp_data?.assets_url || "").replace(/\/$/, "")}/icons/ic_loading.svg`;
+const loadingIcon = `${String(window?.ascwo_data?.assets_url || "").replace(/\/$/, "")}/icons/ic_loading.svg`;
 
 const SectionHead = defineComponent({
   props: {
@@ -140,13 +140,13 @@ const SectionHead = defineComponent({
   },
   emits: ['toggle'],
   setup(props, { emit }) {
-    return () => h('div', { class: 'asowp-section-head' }, [
+    return () => h('div', { class: 'ascwo-section-head' }, [
       h('div', null, [
         h('h2', props.title),
         h('p', props.description),
       ]),
-      h('button', { type: 'button', class: 'asowp-collapse-button', onClick: () => emit('toggle') }, [
-        props.open ? __('Show less', 'all-signs-options-pro') : __('Show more', 'all-signs-options-pro'),
+      h('button', { type: 'button', class: 'ascwo-collapse-button', onClick: () => emit('toggle') }, [
+        props.open ? __('Show less', 'all-signs-customizer-for-woocommerce-pro') : __('Show more', 'all-signs-customizer-for-woocommerce-pro'),
         h(props.open ? ChevronUpIcon : ChevronDownIcon),
       ]),
     ]);
@@ -160,9 +160,9 @@ const SectionSave = defineComponent({
   },
   emits: ['save'],
   setup(props, { emit }) {
-    return () => h('div', { class: 'asowp-save-row' }, [
-      h('button', { type: 'button', disabled: props.loading, class: 'asowp-shopify-button-primary asowp-language-save', onClick: () => emit('save') }, [
-        props.loading ? h(Loader2Icon, { class: 'asowp-spin' }) : null,
+    return () => h('div', { class: 'ascwo-save-row' }, [
+      h('button', { type: 'button', disabled: props.loading, class: 'ascwo-ui-button-primary ascwo-language-save', onClick: () => emit('save') }, [
+        props.loading ? h(Loader2Icon, { class: 'ascwo-spin' }) : null,
         props.label,
       ]),
     ]);
@@ -177,12 +177,12 @@ const FieldGroup = defineComponent({
   },
   emits: ['change'],
   setup(props, { emit }) {
-    return () => h('div', { class: 'asowp-field-group' }, [
+    return () => h('div', { class: 'ascwo-field-group' }, [
       h('h3', props.title),
-      h('div', { class: 'asowp-form-grid' }, props.fields.map((field) => h('label', { class: 'asowp-field', key: field.key }, [
+      h('div', { class: 'ascwo-form-grid' }, props.fields.map((field) => h('label', { class: 'ascwo-field', key: field.key }, [
         h('span', field.label),
         h('input', {
-          class: 'asowp-shopify-input',
+          class: 'ascwo-ui-input',
           type: 'text',
           value: props.values[field.key] || '',
           onInput: (event) => emit('change', field.key, event.target.value),
@@ -200,15 +200,15 @@ const ImageGroup = defineComponent({
   },
   emits: ['upload', 'clear'],
   setup(props, { emit }) {
-    return () => h('div', { class: 'asowp-field-group asowp-image-group' }, [
+    return () => h('div', { class: 'ascwo-field-group ascwo-image-group' }, [
       h('h3', props.title),
-      h('div', { class: 'asowp-image-grid' }, props.fields.map((field) => h('div', { class: 'asowp-image-field', key: field.key }, [
+      h('div', { class: 'ascwo-image-grid' }, props.fields.map((field) => h('div', { class: 'ascwo-image-field', key: field.key }, [
         h('span', field.title),
-        h('div', { class: 'asowp-image-control' }, [
-          h('button', { type: 'button', class: 'asowp-upload-button', onClick: () => emit('upload', field.key) }, __('Upload icon', 'all-signs-options-pro')),
-          h('div', { class: 'asowp-image-preview' }, [
+        h('div', { class: 'ascwo-image-control' }, [
+          h('button', { type: 'button', class: 'ascwo-upload-button', onClick: () => emit('upload', field.key) }, __('Upload icon', 'all-signs-customizer-for-woocommerce-pro')),
+          h('div', { class: 'ascwo-image-preview' }, [
             props.values[field.key] ? h('img', { src: props.values[field.key], alt: '' }) : null,
-            props.values[field.key] ? h('button', { type: 'button', class: 'asowp-image-clear', onClick: () => emit('clear', field.key), 'aria-label': __('Remove image', 'all-signs-options-pro') }, [h(Trash2Icon)]) : null,
+            props.values[field.key] ? h('button', { type: 'button', class: 'ascwo-image-clear', onClick: () => emit('clear', field.key), 'aria-label': __('Remove image', 'all-signs-customizer-for-woocommerce-pro') }, [h(Trash2Icon)]) : null,
           ]),
         ]),
       ]))),
@@ -306,9 +306,9 @@ const openSections = reactive({
 });
 
 const sectionMenu = [
-  { id: 'asowp-language-upload-design', label: 'Upload Design' },
-  { id: 'asowp-language-visualizer', label: 'Visualizer' },
-  { id: 'asowp-language-images', label: 'Images' },
+  { id: 'ascwo-language-upload-design', label: 'Upload Design' },
+  { id: 'ascwo-language-visualizer', label: 'Visualizer' },
+  { id: 'ascwo-language-images', label: 'Images' },
 ];
 
 const visualizerHeaderFields = [
@@ -444,7 +444,7 @@ const setVisualizerField = (key, value) => {
 };
 
 const getTinyMCE = () => window.tinymce ?? null;
-const getTinyMCEEditor = () => getTinyMCE()?.get('asowp-language-help-content') ?? null;
+const getTinyMCEEditor = () => getTinyMCE()?.get('ascwo-language-help-content') ?? null;
 const setTinyMCEContent = (content = '') => {
   getTinyMCEEditor()?.setContent(content || '');
 };
@@ -463,7 +463,7 @@ const initTinyMCE = (content = '') => {
   }
 
   editorApi.init({
-    selector: '#asowp-language-help-content',
+    selector: '#ascwo-language-help-content',
     plugins: 'wordpress paste link image media',
     toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | code | wp_adv',
     relative_urls: false,
@@ -487,12 +487,12 @@ const handleSaveResponse = async (result) => {
     return;
   }
 
-  toastMessage(result?.message || __('Unable to save settings', 'all-signs-options-pro'), 'error');
+  toastMessage(result?.message || __('Unable to save settings', 'all-signs-customizer-for-woocommerce-pro'), 'error');
 };
 
 const saveUploadDesign = async () => {
   if (isUploadDesignLinkInvalid.value) {
-    toastMessage(__('Please enter a valid custom design link.', 'all-signs-options-pro'), 'error');
+    toastMessage(__('Please enter a valid custom design link.', 'all-signs-customizer-for-woocommerce-pro'), 'error');
     return;
   }
 
@@ -501,7 +501,7 @@ const saveUploadDesign = async () => {
   try {
     await handleSaveResponse(await api.updateLanguageImagesUploadDesign(configId.value, uploadDesign.value));
   } catch (error) {
-    toastMessage(error?.response?.data?.message || __('Unable to save upload design settings', 'all-signs-options-pro'), 'error');
+    toastMessage(error?.response?.data?.message || __('Unable to save upload design settings', 'all-signs-customizer-for-woocommerce-pro'), 'error');
   } finally {
     savingSection.value = '';
   }
@@ -512,7 +512,7 @@ const saveVisualizer = async () => {
   try {
     await handleSaveResponse(await api.updateLanguageImagesVisualizer(configId.value, visualizer.value));
   } catch (error) {
-    toastMessage(error?.response?.data?.message || __('Unable to save visualizer settings', 'all-signs-options-pro'), 'error');
+    toastMessage(error?.response?.data?.message || __('Unable to save visualizer settings', 'all-signs-customizer-for-woocommerce-pro'), 'error');
   } finally {
     savingSection.value = '';
   }
@@ -523,7 +523,7 @@ const saveImages = async () => {
   try {
     await handleSaveResponse(await api.updateLanguageImagesImgs(configId.value, images.value));
   } catch (error) {
-    toastMessage(error?.response?.data?.message || __('Unable to save image settings', 'all-signs-options-pro'), 'error');
+    toastMessage(error?.response?.data?.message || __('Unable to save image settings', 'all-signs-customizer-for-woocommerce-pro'), 'error');
   } finally {
     savingSection.value = '';
   }
@@ -531,13 +531,13 @@ const saveImages = async () => {
 
 const selectImage = (key) => {
   if (!window.wp?.media) {
-    toastMessage(__('WordPress media library is not available.', 'all-signs-options-pro'), 'error');
+    toastMessage(__('WordPress media library is not available.', 'all-signs-customizer-for-woocommerce-pro'), 'error');
     return;
   }
 
   const uploader = window.wp.media({
-    title: __('Select Image', 'all-signs-options-pro'),
-    button: { text: __('Select Image', 'all-signs-options-pro') },
+    title: __('Select Image', 'all-signs-customizer-for-woocommerce-pro'),
+    button: { text: __('Select Image', 'all-signs-customizer-for-woocommerce-pro') },
     multiple: false,
   });
 
@@ -572,64 +572,64 @@ onBeforeUnmount(() => {
 </script>
 
 <style>
-.asowp-language-setup {
-  color: var(--asowp-shopify-text);
+.ascwo-language-setup {
+  color: var(--ascwo-ui-text);
 }
 
-.asowp-language-layout {
+.ascwo-language-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 220px;
   gap: 20px;
   align-items: start;
 }
 
-.asowp-language-main {
+.ascwo-language-main {
   display: grid;
   gap: 16px;
   min-width: 0;
 }
 
-.asowp-language-card {
-  background: var(--asowp-shopify-surface);
-  border: 1px solid var(--asowp-shopify-border);
-  border-radius: var(--asowp-shopify-radius-card);
+.ascwo-language-card {
+  background: var(--ascwo-ui-surface);
+  border: 1px solid var(--ascwo-ui-border);
+  border-radius: var(--ascwo-ui-radius-card);
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
 }
 
-.asowp-language-hero {
+.ascwo-language-hero {
   padding: 16px 20px;
 }
 
-.asowp-language-hero h1,
-.asowp-language-section h2,
-.asowp-section-menu h2 {
+.ascwo-language-hero h1,
+.ascwo-language-section h2,
+.ascwo-section-menu h2 {
   margin: 0;
   color: #303030;
   font-weight: 750;
   letter-spacing: 0;
 }
 
-.asowp-language-hero h1 {
+.ascwo-language-hero h1 {
   font-size: 22px;
   line-height: 28px;
 }
 
-.asowp-language-hero p,
-.asowp-section-head p,
-.asowp-toggle-block p,
-.asowp-field small {
+.ascwo-language-hero p,
+.ascwo-section-head p,
+.ascwo-toggle-block p,
+.ascwo-field small {
   margin: 6px 0 0;
   color: #616161;
   font-size: 14px;
   line-height: 22px;
 }
 
-.asowp-language-section {
+.ascwo-language-section {
   padding: 20px;
   scroll-margin-top: 12px;
 }
 
-.asowp-section-head {
+.ascwo-section-head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -637,17 +637,17 @@ onBeforeUnmount(() => {
   margin-bottom: 18px;
 }
 
-.asowp-language-section h2 {
+.ascwo-language-section h2 {
   font-size: 17px;
   line-height: 24px;
 }
 
-.asowp-section-body {
+.ascwo-section-body {
   display: grid;
   gap: 16px;
 }
 
-.asowp-collapse-button {
+.ascwo-collapse-button {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -664,8 +664,8 @@ onBeforeUnmount(() => {
   white-space: nowrap;
 }
 
-.asowp-collapse-button:hover,
-.asowp-collapse-button:focus {
+.ascwo-collapse-button:hover,
+.ascwo-collapse-button:focus {
   background: #ffffff;
   color: #202223;
   border-color: #babfc3;
@@ -673,28 +673,28 @@ onBeforeUnmount(() => {
   outline: none;
 }
 
-.asowp-collapse-button svg {
+.ascwo-collapse-button svg {
   width: 15px;
   height: 15px;
 }
 
-.asowp-toggle-block,
-.asowp-field-group {
+.ascwo-toggle-block,
+.ascwo-field-group {
   padding: 16px;
   border: 1px solid #dfe3e8;
   border-radius: 10px;
   background: #ffffff;
 }
 
-.asowp-toggle-block {
+.ascwo-toggle-block {
   display: flex;
   justify-content: space-between;
   gap: 20px;
   align-items: flex-start;
 }
 
-.asowp-toggle-block h3,
-.asowp-field-group h3 {
+.ascwo-toggle-block h3,
+.ascwo-field-group h3 {
   margin: 0 0 12px;
   color: #303030;
   font-size: 13px;
@@ -702,7 +702,7 @@ onBeforeUnmount(() => {
   font-weight: 750;
 }
 
-.asowp-toggle-line {
+.ascwo-toggle-line {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -710,32 +710,32 @@ onBeforeUnmount(() => {
   font-size: 13px;
 }
 
-.asowp-form-grid {
+.ascwo-form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   column-gap: 20px;
   row-gap: 14px;
 }
 
-.asowp-form-grid-single {
+.ascwo-form-grid-single {
   grid-template-columns: 1fr;
 }
 
-.asowp-field {
+.ascwo-field {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
-.asowp-field > span,
-.asowp-image-field > span {
+.ascwo-field > span,
+.ascwo-image-field > span {
   color: #303030;
   font-size: 13px;
   line-height: 18px;
   font-weight: 500;
 }
 
-.asowp-shopify-input {
+.ascwo-ui-input {
   width: 100%;
   min-height: 36px;
   padding: 7px 10px;
@@ -749,39 +749,39 @@ onBeforeUnmount(() => {
   box-sizing: border-box;
 }
 
-.asowp-shopify-input:focus {
+.ascwo-ui-input:focus {
   border-color: #8c9196;
   box-shadow: none !important;
 }
 
-.asowp-shopify-input.is-invalid {
+.ascwo-ui-input.is-invalid {
   border-color: #d72c0d;
 }
 
-.asowp-editor-wrap {
+.ascwo-editor-wrap {
   overflow: hidden;
   border: 1px solid #dfe3e8;
   border-radius: 10px;
   background: #ffffff;
 }
 
-.asowp-editor-wrap .mce-toolbar .mce-btn,
-.asowp-editor-wrap .mce-toolbar .mce-btn:hover,
-.asowp-editor-wrap .mce-toolbar .mce-btn:focus,
-.asowp-editor-wrap .mce-toolbar .mce-btn:active,
-.asowp-editor-wrap .mce-toolbar .mce-btn.mce-active,
-.asowp-editor-wrap .mce-toolbar .mce-btn.mce-active:hover,
-.asowp-editor-wrap .mce-toolbar .mce-btn.mce-active:focus {
+.ascwo-editor-wrap .mce-toolbar .mce-btn,
+.ascwo-editor-wrap .mce-toolbar .mce-btn:hover,
+.ascwo-editor-wrap .mce-toolbar .mce-btn:focus,
+.ascwo-editor-wrap .mce-toolbar .mce-btn:active,
+.ascwo-editor-wrap .mce-toolbar .mce-btn.mce-active,
+.ascwo-editor-wrap .mce-toolbar .mce-btn.mce-active:hover,
+.ascwo-editor-wrap .mce-toolbar .mce-btn.mce-active:focus {
   background: transparent !important;
   border-color: transparent !important;
   box-shadow: none !important;
   outline: none !important;
 }
 
-.asowp-editor-wrap .mce-toolbar .mce-btn button,
-.asowp-editor-wrap .mce-toolbar .mce-btn button:hover,
-.asowp-editor-wrap .mce-toolbar .mce-btn button:focus,
-.asowp-editor-wrap .mce-toolbar .mce-btn button:active {
+.ascwo-editor-wrap .mce-toolbar .mce-btn button,
+.ascwo-editor-wrap .mce-toolbar .mce-btn button:hover,
+.ascwo-editor-wrap .mce-toolbar .mce-btn button:focus,
+.ascwo-editor-wrap .mce-toolbar .mce-btn button:active {
   min-width: 28px !important;
   height: 28px !important;
   padding: 4px 6px !important;
@@ -792,25 +792,25 @@ onBeforeUnmount(() => {
   outline: none !important;
 }
 
-.asowp-editor-wrap .mce-toolbar .mce-btn:hover button,
-.asowp-editor-wrap .mce-toolbar .mce-btn:focus button {
+.ascwo-editor-wrap .mce-toolbar .mce-btn:hover button,
+.ascwo-editor-wrap .mce-toolbar .mce-btn:focus button {
   background: #eef2f7 !important;
 }
 
-.asowp-editor-wrap .mce-toolbar .mce-btn.mce-active button,
-.asowp-editor-wrap .mce-toolbar .mce-btn button[aria-pressed="true"] {
+.ascwo-editor-wrap .mce-toolbar .mce-btn.mce-active button,
+.ascwo-editor-wrap .mce-toolbar .mce-btn button[aria-pressed="true"] {
   background: #acd0f5 !important;
   color: #111827 !important;
   box-shadow: none !important;
 }
 
-.asowp-editor-wrap .mce-toolbar .mce-btn i,
-.asowp-editor-wrap .mce-toolbar .mce-btn .mce-ico {
+.ascwo-editor-wrap .mce-toolbar .mce-btn i,
+.ascwo-editor-wrap .mce-toolbar .mce-btn .mce-ico {
   color: #1f2937 !important;
   text-shadow: none !important;
 }
 
-.asowp-switch {
+.ascwo-switch {
   position: relative;
   display: inline-flex;
   width: 40px;
@@ -819,13 +819,13 @@ onBeforeUnmount(() => {
   cursor: pointer;
 }
 
-.asowp-switch input {
+.ascwo-switch input {
   position: absolute;
   opacity: 0;
   pointer-events: none;
 }
 
-.asowp-switch span {
+.ascwo-switch span {
   position: absolute;
   inset: 0;
   border-radius: 999px;
@@ -833,7 +833,7 @@ onBeforeUnmount(() => {
   transition: background 160ms ease;
 }
 
-.asowp-switch span::after {
+.ascwo-switch span::after {
   content: "";
   position: absolute;
   top: 3px;
@@ -846,26 +846,26 @@ onBeforeUnmount(() => {
   transition: transform 160ms ease;
 }
 
-.asowp-switch input:checked + span {
+.ascwo-switch input:checked + span {
   background: #007a76;
 }
 
-.asowp-switch input:checked + span::after {
+.ascwo-switch input:checked + span::after {
   transform: translateX(16px);
 }
 
-.asowp-image-grid {
+.ascwo-image-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px 18px;
 }
 
-.asowp-image-field {
+.ascwo-image-field {
   display: grid;
   gap: 6px;
 }
 
-.asowp-image-control {
+.ascwo-image-control {
   display: grid;
   grid-template-columns: minmax(116px, auto) 42px;
   gap: 0;
@@ -879,7 +879,7 @@ onBeforeUnmount(() => {
   box-sizing: border-box;
 }
 
-.asowp-upload-button {
+.ascwo-upload-button {
   width: fit-content !important;
   min-width: 116px;
   min-height: 34px;
@@ -896,8 +896,8 @@ onBeforeUnmount(() => {
   box-shadow: none;
 }
 
-.asowp-upload-button:hover,
-.asowp-upload-button:focus {
+.ascwo-upload-button:hover,
+.ascwo-upload-button:focus {
   background: #007a76;
   color: #ffffff;
   border-color: #005c5c;
@@ -905,7 +905,7 @@ onBeforeUnmount(() => {
   outline: none;
 }
 
-.asowp-image-preview {
+.ascwo-image-preview {
   position: relative;
   justify-self: end;
   width: 42px;
@@ -917,13 +917,13 @@ onBeforeUnmount(() => {
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
 }
 
-.asowp-image-preview img {
+.ascwo-image-preview img {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
 
-.asowp-image-clear {
+.ascwo-image-clear {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -939,52 +939,52 @@ onBeforeUnmount(() => {
   cursor: pointer;
 }
 
-.asowp-image-clear svg {
+.ascwo-image-clear svg {
   width: 13px;
   height: 13px;
 }
 
-.asowp-save-row {
+.ascwo-save-row {
   display: flex;
   justify-content: flex-end;
   margin-top: 2px;
 }
 
-.asowp-language-save {
+.ascwo-language-save {
   min-height: 32px;
   padding: 6px 14px;
   font-size: 13px;
 }
 
-.asowp-language-save svg {
+.ascwo-language-save svg {
   width: 14px;
   height: 14px;
 }
 
-.asowp-section-menu-wrap {
+.ascwo-section-menu-wrap {
   position: sticky;
   top: 46px;
   align-self: start;
 }
 
-.asowp-section-menu {
+.ascwo-section-menu {
   padding: 10px;
 }
 
-.asowp-section-menu h2 {
+.ascwo-section-menu h2 {
   margin: 0;
   font-size: 14px;
   line-height: 20px;
   font-weight: 650;
 }
 
-.asowp-section-menu-links {
+.ascwo-section-menu-links {
   display: grid;
   gap: 8px;
   margin-top: 6px;
 }
 
-.asowp-section-menu a {
+.ascwo-section-menu a {
   display: block;
   width: 100%;
   box-sizing: border-box;
@@ -1002,8 +1002,8 @@ onBeforeUnmount(() => {
   cursor: pointer;
 }
 
-.asowp-section-menu a:hover,
-.asowp-section-menu a:focus {
+.ascwo-section-menu a:hover,
+.ascwo-section-menu a:focus {
   background: #ffffff;
   color: #111827;
   border-color: #d1d5db;
@@ -1011,53 +1011,53 @@ onBeforeUnmount(() => {
   outline: none;
 }
 
-.asowp-language-loading {
+.ascwo-language-loading {
   display: flex;
   min-height: 300px;
   align-items: center;
   justify-content: center;
 }
 
-.asowp-language-loading img {
+.ascwo-language-loading img {
   width: 140px;
   height: 140px;
 }
 
-.asowp-spin {
-  animation: asowp-language-spin 800ms linear infinite;
+.ascwo-spin {
+  animation: ascwo-language-spin 800ms linear infinite;
 }
 
-@keyframes asowp-language-spin {
+@keyframes ascwo-language-spin {
   to {
     transform: rotate(360deg);
   }
 }
 
 @media (max-width: 1200px) {
-  .asowp-language-layout {
+  .ascwo-language-layout {
     grid-template-columns: 1fr;
   }
 
-  .asowp-section-menu-wrap {
+  .ascwo-section-menu-wrap {
     position: static;
     order: -1;
   }
 }
 
 @media (max-width: 782px) {
-  .asowp-language-hero,
-  .asowp-language-section {
+  .ascwo-language-hero,
+  .ascwo-language-section {
     padding: 20px;
   }
 
-  .asowp-section-head,
-  .asowp-toggle-block {
+  .ascwo-section-head,
+  .ascwo-toggle-block {
     flex-direction: column;
     align-items: stretch;
   }
 
-  .asowp-form-grid,
-  .asowp-image-grid {
+  .ascwo-form-grid,
+  .ascwo-image-grid {
     grid-template-columns: 1fr;
   }
 }

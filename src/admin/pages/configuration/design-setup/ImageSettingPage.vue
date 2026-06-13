@@ -1,6 +1,6 @@
 <template>
-  <section class="asowp-image-settings">
-    <header class="asowp-image-header">
+  <section class="ascwo-image-settings">
+    <header class="ascwo-image-header">
       <div>
         <h1>Image Setup</h1>
         <p>Bring image configuration closer to the core flow, while keeping the same classic save location.</p>
@@ -11,8 +11,8 @@
       title="Image Access"
       description="Control whether customers can upload or download images in the editor."
     >
-      <div class="asowp-image-grid asowp-image-grid-2">
-        <ToggleField label="Enable Image" v-model="image.active" class="asowp-image-span-2" />
+      <div class="ascwo-image-grid ascwo-image-grid-2">
+        <ToggleField label="Enable Image" v-model="image.active" class="ascwo-image-span-2" />
         <ToggleField label="Enable Download Image" v-model="image.enableDownloadImage" />
         <ToggleField label="Enable upload Image" v-model="image.enableUploadImage" />
       </div>
@@ -23,37 +23,37 @@
         title="Image Colors"
         description="Manage predefined image colors and the optional custom color preview."
       >
-        <div class="asowp-image-stack">
-          <div class="asowp-image-field asowp-image-field-sm">
+        <div class="ascwo-image-stack">
+          <div class="ascwo-image-field ascwo-image-field-sm">
             <label>Label</label>
             <input v-model="image.colorsLabel" type="text" />
           </div>
 
-          <div v-if="image.colors.length" class="asowp-image-color-grid">
-            <div v-for="(color, index) in image.colors" :key="`image-color-${index}`" class="asowp-image-color-row">
-              <div class="asowp-image-field">
+          <div v-if="image.colors.length" class="ascwo-image-color-grid">
+            <div v-for="(color, index) in image.colors" :key="`image-color-${index}`" class="ascwo-image-color-row">
+              <div class="ascwo-image-field">
                 <label>Name</label>
                 <input v-model="color.name" type="text" />
               </div>
-              <label class="asowp-image-swatch-field">
+              <label class="ascwo-image-swatch-field">
                 <span>Color</span>
                 <input v-model="color.codeHex" type="color" />
               </label>
-              <button type="button" class="asowp-image-icon-danger" @click="removeColor(index)" aria-label="Remove color">
+              <button type="button" class="ascwo-image-icon-danger" @click="removeColor(index)" aria-label="Remove color">
                 <Trash2Icon :size="15" />
               </button>
             </div>
           </div>
 
-          <button type="button" class="asowp-image-secondary asowp-image-fit" @click="addColor">Add more colors</button>
+          <button type="button" class="ascwo-image-secondary ascwo-image-fit" @click="addColor">Add more colors</button>
 
-          <div class="asowp-image-custom-color">
+          <div class="ascwo-image-custom-color">
             <ToggleField label="Enable Custom color" v-model="image.enableCustomColor" />
-            <div class="asowp-image-upload-field">
+            <div class="ascwo-image-upload-field">
               <label>Custom color preview image</label>
-              <div class="asowp-image-upload-control">
-                <button type="button" class="asowp-image-primary" @click="selectColorPrevImage">upload image</button>
-                <div class="asowp-image-upload-preview">
+              <div class="ascwo-image-upload-control">
+                <button type="button" class="ascwo-image-primary" @click="selectColorPrevImage">upload image</button>
+                <div class="ascwo-image-upload-preview">
                   <img v-if="image.colorsPrevImg" :src="image.colorsPrevImg" alt="" />
                   <button v-if="image.colorsPrevImg" type="button" @click="image.colorsPrevImg = ''">×</button>
                 </div>
@@ -67,41 +67,41 @@
         title="Upload Script"
         description="Define the upload behavior, size limits and allowed extensions."
       >
-        <div class="asowp-image-stack">
-          <div class="asowp-image-inline-toggle">
+        <div class="ascwo-image-stack">
+          <div class="ascwo-image-inline-toggle">
             <strong>Normal</strong>
             <SwitchControl v-model="image.fileUploadScript.customWithGraphical" />
             <strong>Custom with graphical enchacements</strong>
           </div>
 
           <div>
-            <div class="asowp-image-inline-toggle">
+            <div class="ascwo-image-inline-toggle">
               <strong>Restrict uploaded image sizes</strong>
               <span>No</span>
               <SwitchControl v-model="image.fileUploadScript.enableSizeRestriction" />
               <span>Yes</span>
             </div>
-            <p class="asowp-image-muted">Enable this to enforce minimum and maximum width on uploaded images.</p>
+            <p class="ascwo-image-muted">Enable this to enforce minimum and maximum width on uploaded images.</p>
           </div>
 
-          <div v-if="image.fileUploadScript.enableSizeRestriction" class="asowp-image-grid asowp-image-grid-2">
-            <div class="asowp-image-field">
+          <div v-if="image.fileUploadScript.enableSizeRestriction" class="ascwo-image-grid ascwo-image-grid-2">
+            <div class="ascwo-image-field">
               <label>Upload min width (px)</label>
               <input v-model.number="image.fileUploadScript.uploadMinWidth" type="number" />
             </div>
-            <div class="asowp-image-field">
+            <div class="ascwo-image-field">
               <label>Upload Max width (px)</label>
               <input v-model.number="image.fileUploadScript.uploadMaxWidth" type="number" />
             </div>
           </div>
 
-          <div class="asowp-image-field">
+          <div class="ascwo-image-field">
             <label>Select allow extension</label>
-            <div class="asowp-image-token-box">
+            <div class="ascwo-image-token-box">
               <span
                 v-for="extension in image.fileUploadScript.allowedUploadsExtentions"
                 :key="extension"
-                class="asowp-image-token"
+                class="ascwo-image-token"
               >
                 {{ extension.toUpperCase() }}
                 <button type="button" @click="removeExtension(extension)">×</button>
@@ -126,8 +126,8 @@
         title="Cutlines"
         description="Configure the first and second cutline only when they are enabled."
       >
-        <div class="asowp-image-stack">
-          <div class="asowp-image-field">
+        <div class="ascwo-image-stack">
+          <div class="ascwo-image-field">
             <label>Cutline Type</label>
             <select v-model="image.selectedCutline">
               <option value="none">none</option>
@@ -136,36 +136,36 @@
             </select>
           </div>
 
-          <div v-if="image.selectedCutline === '1x' || image.selectedCutline === '2x'" class="asowp-image-soft-card">
+          <div v-if="image.selectedCutline === '1x' || image.selectedCutline === '2x'" class="ascwo-image-soft-card">
             <strong>First Cutline</strong>
-            <div class="asowp-image-grid asowp-image-grid-2">
-              <div class="asowp-image-field">
+            <div class="ascwo-image-grid ascwo-image-grid-2">
+              <div class="ascwo-image-field">
                 <label>Border Size (for print ready file)</label>
                 <input v-model.number="image.cutlines.first.borderSize" type="number" />
               </div>
-              <label class="asowp-image-swatch-field asowp-image-top-label">
+              <label class="ascwo-image-swatch-field ascwo-image-top-label">
                 <span>Color</span>
                 <input v-model="image.cutlines.first.color" type="color" />
               </label>
             </div>
           </div>
 
-          <div v-if="image.selectedCutline === '2x'" class="asowp-image-soft-card">
+          <div v-if="image.selectedCutline === '2x'" class="ascwo-image-soft-card">
             <strong>Second Cutline</strong>
-            <div class="asowp-image-grid asowp-image-grid-2">
-              <div class="asowp-image-field">
+            <div class="ascwo-image-grid ascwo-image-grid-2">
+              <div class="ascwo-image-field">
                 <label>Size between Two Cutlines border</label>
                 <input v-model.number="image.cutlines.second.size" type="number" />
               </div>
-              <label class="asowp-image-swatch-field asowp-image-top-label">
+              <label class="ascwo-image-swatch-field ascwo-image-top-label">
                 <span>Color</span>
                 <input v-model="image.cutlines.second.color" type="color" />
               </label>
-              <div class="asowp-image-field">
+              <div class="ascwo-image-field">
                 <label>Border Size (for print ready file)</label>
                 <input v-model.number="image.cutlines.second.borderSize" type="number" />
               </div>
-              <label class="asowp-image-swatch-field asowp-image-top-label">
+              <label class="ascwo-image-swatch-field ascwo-image-top-label">
                 <span>Border Color</span>
                 <input v-model="image.cutlines.second.borderColor" type="color" />
               </label>
@@ -178,13 +178,13 @@
         title="Filters"
         description="Control which image effects are available in the editor."
       >
-        <div class="asowp-image-stack">
-          <div class="asowp-image-inline-toggle">
+        <div class="ascwo-image-stack">
+          <div class="ascwo-image-inline-toggle">
             <strong>Filter</strong>
             <SwitchControl v-model="image.filter.active" />
           </div>
 
-          <div v-if="image.filter.active" class="asowp-image-filter-row">
+          <div v-if="image.filter.active" class="ascwo-image-filter-row">
             <FilterItem label="Greyscale" v-model="image.filter.enableGreyscale" />
             <FilterItem label="Greenify" v-model="image.filter.enableGreenify" />
             <FilterItem label="Pinkify" v-model="image.filter.enablePinkify" />
@@ -203,13 +203,13 @@
         title="Scenes"
         description="Choose the background scenes used for image preview."
       >
-        <div class="asowp-image-stack">
-          <div class="asowp-image-actions-left">
-            <button type="button" class="asowp-image-primary asowp-image-wide" @click="addImage">Choose scenes</button>
-            <button type="button" class="asowp-image-secondary" @click="useDefaultScenes">Use default scenes</button>
+        <div class="ascwo-image-stack">
+          <div class="ascwo-image-actions-left">
+            <button type="button" class="ascwo-image-primary ascwo-image-wide" @click="addImage">Choose scenes</button>
+            <button type="button" class="ascwo-image-secondary" @click="useDefaultScenes">Use default scenes</button>
           </div>
-          <div v-if="image.scenes.length" class="asowp-image-scenes">
-            <div v-for="(scene, index) in image.scenes" :key="`${scene}-${index}`" class="asowp-image-scene">
+          <div v-if="image.scenes.length" class="ascwo-image-scenes">
+            <div v-for="(scene, index) in image.scenes" :key="`${scene}-${index}`" class="ascwo-image-scene">
               <img :src="resolveSceneUrl(scene)" alt="" />
               <button type="button" @click="deleteImage(index)">×</button>
             </div>
@@ -218,8 +218,8 @@
       </SettingSection>
     </template>
 
-    <div class="asowp-image-save-row">
-      <button type="button" class="asowp-image-primary" :disabled="isLoading" @click="updateImageSettings">
+    <div class="ascwo-image-save-row">
+      <button type="button" class="ascwo-image-primary" :disabled="isLoading" @click="updateImageSettings">
         {{ isLoading ? 'Saving...' : 'Save Image' }}
       </button>
     </div>
@@ -229,7 +229,7 @@
 <script setup>
 import api from '@/admin/Api/api';
 import toastMessage from '@/admin/utils/functions';
-import { shopifyImageUrl } from '@/admin/utils/shopify-assets';
+import { adminImageUrl } from '@/admin/utils/admin-assets';
 import { defineComponent, h, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { Trash2Icon } from 'lucide-vue-next';
@@ -298,7 +298,7 @@ const extensionOptions = [
 
 const defaultScenes = Array.from(
   { length: 7 },
-  (_item, index) => shopifyImageUrl(`aso_default_files/scenes/${index + 1}.webp`),
+  (_item, index) => adminImageUrl(`aso_default_files/scenes/${index + 1}.webp`),
 );
 
 const mergeSettings = (loaded = {}) => {
@@ -410,7 +410,7 @@ const resolveSceneUrl = (scene) => {
   if (/^(https?:)?\/\//i.test(scene) || String(scene).startsWith('data:')) return scene;
   const normalized = String(scene).replace(/^\/+/, '');
   if (normalized.startsWith('aso_default_files/')) {
-    return shopifyImageUrl(normalized);
+    return adminImageUrl(normalized);
   }
   return scene;
 };
@@ -448,7 +448,7 @@ const SwitchControl = defineComponent({
         'button',
         {
           type: 'button',
-          class: ['asowp-image-switch', { 'is-on': componentProps.modelValue }],
+          class: ['ascwo-image-switch', { 'is-on': componentProps.modelValue }],
           onClick: () => emit('update:modelValue', !componentProps.modelValue),
         },
         [h('span')],
@@ -470,9 +470,9 @@ const ToggleField = defineComponent({
   },
   emits: ['update:modelValue'],
   template: `
-    <div class="asowp-image-toggle-field">
+    <div class="ascwo-image-toggle-field">
       <strong>{{ label }}</strong>
-      <div class="asowp-image-toggle-line">
+      <div class="ascwo-image-toggle-line">
         <span>No</span>
         <SwitchControl :model-value="modelValue" @update:model-value="$emit('update:modelValue', $event)" />
         <span>Yes</span>
@@ -500,17 +500,17 @@ const SettingSection = defineComponent({
     };
   },
   template: `
-    <section class="asowp-image-card">
-      <div class="asowp-image-card-head">
+    <section class="ascwo-image-card">
+      <div class="ascwo-image-card-head">
         <div>
           <h2>{{ title }}</h2>
           <p>{{ description }}</p>
         </div>
-        <button type="button" class="asowp-image-show-btn" @click="isOpen = !isOpen">
+        <button type="button" class="ascwo-image-show-btn" @click="isOpen = !isOpen">
           {{ isOpen ? 'Show less ^' : 'Show more v' }}
         </button>
       </div>
-      <div v-show="isOpen" class="asowp-image-card-body">
+      <div v-show="isOpen" class="ascwo-image-card-body">
         <slot />
       </div>
     </section>
@@ -531,8 +531,8 @@ const FilterItem = defineComponent({
   },
   emits: ['update:modelValue'],
   template: `
-    <div class="asowp-image-filter-item">
-      <div class="asowp-image-filter-icon"></div>
+    <div class="ascwo-image-filter-item">
+      <div class="ascwo-image-filter-icon"></div>
       <span>{{ label }}</span>
       <SwitchControl :model-value="modelValue" @update:model-value="$emit('update:modelValue', $event)" />
     </div>
@@ -541,27 +541,27 @@ const FilterItem = defineComponent({
 </script>
 
 <style>
-.asowp-image-settings {
+.ascwo-image-settings {
   display: grid;
   gap: 12px;
   color: #202223;
   font-size: 13px;
 }
 
-.asowp-image-header,
-.asowp-image-card {
+.ascwo-image-header,
+.ascwo-image-card {
   background: #fff;
   border: 1px solid #d8dee4;
   border-radius: 8px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
 }
 
-.asowp-image-header {
+.ascwo-image-header {
   padding: 18px 22px;
 }
 
-.asowp-image-header h1,
-.asowp-image-card h2 {
+.ascwo-image-header h1,
+.ascwo-image-card h2 {
   margin: 0;
   color: #303030;
   font-size: 15px;
@@ -569,46 +569,46 @@ const FilterItem = defineComponent({
   line-height: 1.25;
 }
 
-.asowp-image-header h1 {
+.ascwo-image-header h1 {
   font-size: 16px;
 }
 
-.asowp-image-header p,
-.asowp-image-card p,
-.asowp-image-muted {
+.ascwo-image-header p,
+.ascwo-image-card p,
+.ascwo-image-muted {
   margin: 3px 0 0;
   color: #5f6368;
   font-size: 12px;
   line-height: 1.35;
 }
 
-.asowp-image-card {
+.ascwo-image-card {
   padding: 16px 22px;
 }
 
-.asowp-image-card-head {
+.ascwo-image-card-head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
 }
 
-.asowp-image-card-body {
+.ascwo-image-card-body {
   margin-top: 16px;
 }
 
-.asowp-image-show-btn,
-.asowp-image-secondary,
-.asowp-image-primary,
-.asowp-image-token button,
-.asowp-image-scene button,
-.asowp-image-icon-danger {
+.ascwo-image-show-btn,
+.ascwo-image-secondary,
+.ascwo-image-primary,
+.ascwo-image-token button,
+.ascwo-image-scene button,
+.ascwo-image-icon-danger {
   appearance: none;
   cursor: pointer;
   font-family: inherit;
 }
 
-.asowp-image-show-btn {
+.ascwo-image-show-btn {
   padding: 4px 8px;
   color: #303030;
   background: #fff;
@@ -618,46 +618,46 @@ const FilterItem = defineComponent({
   font-weight: 600;
 }
 
-.asowp-image-grid {
+.ascwo-image-grid {
   display: grid;
   gap: 18px;
 }
 
-.asowp-image-grid-2 {
+.ascwo-image-grid-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.asowp-image-span-2 {
+.ascwo-image-span-2 {
   grid-column: 1 / -1;
 }
 
-.asowp-image-stack {
+.ascwo-image-stack {
   display: grid;
   gap: 14px;
 }
 
-.asowp-image-field,
-.asowp-image-upload-field {
+.ascwo-image-field,
+.ascwo-image-upload-field {
   display: grid;
   gap: 5px;
 }
 
-.asowp-image-field-sm {
+.ascwo-image-field-sm {
   max-width: 360px;
 }
 
-.asowp-image-field label,
-.asowp-image-upload-field label,
-.asowp-image-swatch-field span {
+.ascwo-image-field label,
+.ascwo-image-upload-field label,
+.ascwo-image-swatch-field span {
   color: #303030;
   font-size: 12px;
   font-weight: 500;
 }
 
-.asowp-image-field input,
-.asowp-image-field select,
-.asowp-image-token-box,
-.asowp-image-upload-control {
+.ascwo-image-field input,
+.ascwo-image-field select,
+.ascwo-image-token-box,
+.ascwo-image-upload-control {
   width: 100%;
   min-height: 34px;
   border: 1px solid #8c9196;
@@ -667,12 +667,12 @@ const FilterItem = defineComponent({
   font-size: 13px;
 }
 
-.asowp-image-field input,
-.asowp-image-field select {
+.ascwo-image-field input,
+.ascwo-image-field select {
   padding: 6px 10px;
 }
 
-.asowp-image-token-box {
+.ascwo-image-token-box {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -680,7 +680,7 @@ const FilterItem = defineComponent({
   padding: 5px 8px;
 }
 
-.asowp-image-token-box select {
+.ascwo-image-token-box select {
   flex: 1 1 160px;
   min-width: 120px;
   min-height: 24px;
@@ -689,7 +689,7 @@ const FilterItem = defineComponent({
   outline: 0;
 }
 
-.asowp-image-token {
+.ascwo-image-token {
   display: inline-flex;
   align-items: center;
   gap: 5px;
@@ -700,7 +700,7 @@ const FilterItem = defineComponent({
   font-size: 12px;
 }
 
-.asowp-image-token button {
+.ascwo-image-token button {
   padding: 0;
   border: 0;
   background: transparent;
@@ -708,20 +708,20 @@ const FilterItem = defineComponent({
   line-height: 1;
 }
 
-.asowp-image-toggle-field {
+.ascwo-image-toggle-field {
   display: grid;
   gap: 6px;
 }
 
-.asowp-image-toggle-field strong,
-.asowp-image-inline-toggle strong {
+.ascwo-image-toggle-field strong,
+.ascwo-image-inline-toggle strong {
   color: #303030;
   font-size: 12px;
   font-weight: 700;
 }
 
-.asowp-image-toggle-line,
-.asowp-image-inline-toggle {
+.ascwo-image-toggle-line,
+.ascwo-image-inline-toggle {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -729,7 +729,7 @@ const FilterItem = defineComponent({
   font-size: 12px;
 }
 
-.asowp-image-switch {
+.ascwo-image-switch {
   position: relative;
   width: 34px;
   height: 20px;
@@ -740,7 +740,7 @@ const FilterItem = defineComponent({
   transition: background 0.15s ease;
 }
 
-.asowp-image-switch span {
+.ascwo-image-switch span {
   position: absolute;
   top: 2px;
   left: 2px;
@@ -752,16 +752,16 @@ const FilterItem = defineComponent({
   transition: transform 0.15s ease;
 }
 
-.asowp-image-switch.is-on {
+.ascwo-image-switch.is-on {
   background: #007a73;
 }
 
-.asowp-image-switch.is-on span {
+.ascwo-image-switch.is-on span {
   transform: translateX(14px);
 }
 
-.asowp-image-primary,
-.asowp-image-secondary {
+.ascwo-image-primary,
+.ascwo-image-secondary {
   min-height: 30px;
   padding: 6px 14px;
   border-radius: 7px;
@@ -771,52 +771,52 @@ const FilterItem = defineComponent({
   text-decoration: none;
 }
 
-.asowp-image-primary,
-.asowp-image-primary:hover,
-.asowp-image-primary:focus {
+.ascwo-image-primary,
+.ascwo-image-primary:hover,
+.ascwo-image-primary:focus {
   color: #fff;
   background: #007a73;
   border: 1px solid #006c67;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
-.asowp-image-primary:disabled {
+.ascwo-image-primary:disabled {
   cursor: not-allowed;
   background: #d1d1d1;
   border-color: #d1d1d1;
 }
 
-.asowp-image-secondary,
-.asowp-image-secondary:hover,
-.asowp-image-secondary:focus {
+.ascwo-image-secondary,
+.ascwo-image-secondary:hover,
+.ascwo-image-secondary:focus {
   color: #111827;
   background: #fff;
   border: 1px solid #c9cccf;
 }
 
-.asowp-image-fit {
+.ascwo-image-fit {
   width: fit-content;
 }
 
-.asowp-image-wide {
+.ascwo-image-wide {
   padding-inline: 28px;
 }
 
-.asowp-image-custom-color {
+.ascwo-image-custom-color {
   display: grid;
   grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
   gap: 18px;
   align-items: end;
 }
 
-.asowp-image-upload-control {
+.ascwo-image-upload-control {
   display: flex;
   align-items: center;
   overflow: hidden;
   padding: 0 0 0 5px;
 }
 
-.asowp-image-upload-preview {
+.ascwo-image-upload-preview {
   position: relative;
   margin-left: auto;
   width: 44px;
@@ -825,14 +825,14 @@ const FilterItem = defineComponent({
   background: #fff;
 }
 
-.asowp-image-upload-preview img {
+.ascwo-image-upload-preview img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.asowp-image-upload-preview button,
-.asowp-image-scene button {
+.ascwo-image-upload-preview button,
+.ascwo-image-scene button {
   position: absolute;
   top: 0;
   right: 0;
@@ -842,25 +842,25 @@ const FilterItem = defineComponent({
   border-radius: 0 0 0 5px;
 }
 
-.asowp-image-color-grid {
+.ascwo-image-color-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px 14px;
 }
 
-.asowp-image-color-row {
+.ascwo-image-color-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 42px 24px;
   gap: 8px;
   align-items: end;
 }
 
-.asowp-image-swatch-field {
+.ascwo-image-swatch-field {
   display: grid;
   gap: 5px;
 }
 
-.asowp-image-swatch-field input[type='color'] {
+.ascwo-image-swatch-field input[type='color'] {
   width: 34px;
   height: 34px;
   padding: 3px;
@@ -869,11 +869,11 @@ const FilterItem = defineComponent({
   background: #fff;
 }
 
-.asowp-image-top-label {
+.ascwo-image-top-label {
   align-self: end;
 }
 
-.asowp-image-icon-danger {
+.ascwo-image-icon-danger {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -885,7 +885,7 @@ const FilterItem = defineComponent({
   color: #bf0711;
 }
 
-.asowp-image-soft-card {
+.ascwo-image-soft-card {
   display: grid;
   gap: 12px;
   padding: 14px;
@@ -894,14 +894,14 @@ const FilterItem = defineComponent({
   background: #fff;
 }
 
-.asowp-image-filter-row {
+.ascwo-image-filter-row {
   display: flex;
   flex-wrap: wrap;
   gap: 12px 18px;
   align-items: flex-start;
 }
 
-.asowp-image-filter-item {
+.ascwo-image-filter-item {
   display: grid;
   grid-template-columns: 28px auto 34px;
   align-items: center;
@@ -910,7 +910,7 @@ const FilterItem = defineComponent({
   font-size: 10px;
 }
 
-.asowp-image-filter-icon {
+.ascwo-image-filter-icon {
   width: 24px;
   height: 24px;
   border: 1px solid #b7c4d4;
@@ -920,19 +920,19 @@ const FilterItem = defineComponent({
     #f8fafc;
 }
 
-.asowp-image-actions-left {
+.ascwo-image-actions-left {
   display: flex;
   gap: 8px;
   align-items: center;
 }
 
-.asowp-image-scenes {
+.ascwo-image-scenes {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
 }
 
-.asowp-image-scene {
+.ascwo-image-scene {
   position: relative;
   width: 74px;
   height: 74px;
@@ -941,26 +941,26 @@ const FilterItem = defineComponent({
   border-radius: 8px;
 }
 
-.asowp-image-scene img {
+.ascwo-image-scene img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.asowp-image-save-row {
+.ascwo-image-save-row {
   display: flex;
   justify-content: flex-end;
   padding-top: 2px;
 }
 
 @media (max-width: 900px) {
-  .asowp-image-grid-2,
-  .asowp-image-custom-color,
-  .asowp-image-color-grid {
+  .ascwo-image-grid-2,
+  .ascwo-image-custom-color,
+  .ascwo-image-color-grid {
     grid-template-columns: 1fr;
   }
 
-  .asowp-image-span-2 {
+  .ascwo-image-span-2 {
     grid-column: auto;
   }
 }

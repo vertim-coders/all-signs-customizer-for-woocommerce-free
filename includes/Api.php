@@ -1,39 +1,40 @@
 <?php
-namespace ASOWP;
+namespace ASCWO;
 
-use ASOWP\Api\Admin\Additionals_Options\ASOWP_Api_Additional_Options;
-use ASOWP\Api\Admin\ASOWP_Api_Configs;
-use ASOWP\Api\Admin\ASOWP_Api_GoogleFonts;
-use ASOWP\Api\Admin\ASOWP_Api_Manage_colors;
-use ASOWP\Api\Admin\ASOWP_Api_Manage_cliparts;
-use ASOWP\Api\Admin\ASOWP_Api_Manage_fonts;
-use ASOWP\Api\Admin\ASOWP_Api_Manage_sizes;
-use ASOWP\Api\Admin\ASOWP_Api_Templates_Categories;
-use ASOWP\Api\Admin\ASOWP_Api_WooCommerce_Products;
-use ASOWP\Api\Admin\ASOWP_Api_Home_Stats;
-use ASOWP\Api\Admin\ASOWP_Api_Request_Quotes;
-use ASOWP\Api\Admin\Globals_Settings\ASOWP_Api_Globals_Settings;
-use ASOWP\Api\Admin\Required_Options\ASOWP_Api_Required_Options;
-use ASOWP\Api\Admin\Settings\ASOWP_Api_Customizer_Sign_Settings;
-use ASOWP\Api\Admin\Settings\ASOWP_Api_General_Settings;
-use ASOWP\Api\Admin\Settings\ASOWP_Api_Language_Images_Settings;
-use ASOWP\Api\Admin\Settings\ASOWP_Api_Theme_color_Settings;
-use ASOWP\Api\Admin\Templates\ASOWP_Api_Templates;
-use ASOWP\Support\ConfigSchemaNormalizer;
+use ASCWO\Api\Admin\Additionals_Options\ASCWO_Api_Additional_Options;
+use ASCWO\Api\Admin\ASCWO_Api_Configs;
+use ASCWO\Api\Admin\ASCWO_Api_GoogleFonts;
+use ASCWO\Api\Admin\ASCWO_Api_Manage_colors;
+use ASCWO\Api\Admin\ASCWO_Api_Manage_cliparts;
+use ASCWO\Api\Admin\ASCWO_Api_Manage_fonts;
+use ASCWO\Api\Admin\ASCWO_Api_Manage_sizes;
+use ASCWO\Api\Admin\ASCWO_Api_Templates_Categories;
+use ASCWO\Api\Admin\ASCWO_Api_WooCommerce_Products;
+use ASCWO\Api\Admin\ASCWO_Api_Home_Stats;
+use ASCWO\Api\Admin\ASCWO_Api_Request_Quotes;
+use ASCWO\Api\Admin\Globals_Settings\ASCWO_Api_Globals_Settings;
+use ASCWO\Api\Admin\Required_Options\ASCWO_Api_Required_Options;
+use ASCWO\Api\Admin\Settings\ASCWO_Api_Customizer_Sign_Settings;
+use ASCWO\Api\Admin\Settings\ASCWO_Api_General_Settings;
+use ASCWO\Api\Admin\Settings\ASCWO_Api_Language_Images_Settings;
+use ASCWO\Api\Admin\Settings\ASCWO_Api_Theme_color_Settings;
+use ASCWO\Api\Admin\Templates\ASCWO_Api_Templates;
 use WP_REST_Controller;
 
 /**
  * REST_API Handler
  */
-class Api extends WP_REST_Controller {
+class Api extends WP_REST_Controller
+{
 
     /**
      * [__construct description]
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->includes();
 
-        add_action( 'rest_api_init', [ $this, 'register_routes' ] );
+        add_action('rest_api_init', [$this, 'register_routes']);
     }
 
     /**
@@ -41,53 +42,51 @@ class Api extends WP_REST_Controller {
      *
      * @return void
      */
-    private function includes() {
-        if ( !class_exists( ConfigSchemaNormalizer::class ) ) {
-            require_once __DIR__ . '/Support/ConfigSchemaNormalizer.php';
-        }
-        if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASOWP_Api_Configs'  ) ) {
+    private function includes()
+    {
+        if (!class_exists(__NAMESPACE__ . '\Api\Admin\ASCWO_Api_Configs')) {
             require_once __DIR__ . '/Api/Admin/Configs.php';
         }
-        if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASOWP_Api_GoogleFonts'  ) ) {
+        if (!class_exists(__NAMESPACE__ . '\Api\Admin\ASCWO_Api_GoogleFonts')) {
             require_once __DIR__ . '/Api/Admin/googleFonts.php';
         }
-        if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASOWP_Api_Manage_cliparts'  ) ) {
+        if (!class_exists(__NAMESPACE__ . '\Api\Admin\ASCWO_Api_Manage_cliparts')) {
             require_once __DIR__ . '/Api/Admin/Manage-cliparts.php';
         }
-        if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASOWP_Api_Manage_fonts'  ) ) {
+        if (!class_exists(__NAMESPACE__ . '\Api\Admin\ASCWO_Api_Manage_fonts')) {
             require_once __DIR__ . '/Api/Admin/Manage-fonts.php';
         }
-        if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASOWP_Api_WooCommerce_Products'  ) ) {
+        if (!class_exists(__NAMESPACE__ . '\Api\Admin\ASCWO_Api_WooCommerce_Products')) {
             require_once __DIR__ . '/Api/Admin/WooCommerce-Products.php';
         }
-        if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASOWP_Api_Home_Stats'  ) ) {
+        if (!class_exists(__NAMESPACE__ . '\Api\Admin\ASCWO_Api_Home_Stats')) {
             require_once __DIR__ . '/Api/Admin/Home-Stats.php';
         }
-        if ( !class_exists( __NAMESPACE__ . '\Api\Admin\Required_Options\ASOWP_Api_Required_Options'  ) ) {
+        if (!class_exists(__NAMESPACE__ . '\Api\Admin\Required_Options\ASCWO_Api_Required_Options')) {
             require_once __DIR__ . '/Api/Admin/Required-Options/Required-Options.php';
         }
-        if ( !class_exists( __NAMESPACE__ . '\Api\Admin\Globals_Settings'  ) ) {
+        if (!class_exists(__NAMESPACE__ . '\Api\Admin\Globals_Settings')) {
             require_once __DIR__ . '/Api/Admin/Globals-Settings/Globals-Settings.php';
         }
-        if ( !class_exists( __NAMESPACE__ . '\Api\Admin\Additionals_Options\ASOWP_Api_Additional_Options'  ) ) {
+        if (!class_exists(__NAMESPACE__ . '\Api\Admin\Additionals_Options\ASCWO_Api_Additional_Options')) {
             require_once __DIR__ . '/Api/Admin/Additionals-Options/Additional-Options.php';
         }
-        if(!class_exists( __NAMESPACE__ .'Api\Admin\Settings\ASOWP_Api_Customizer_Sign_Settings')){
+        if (!class_exists(__NAMESPACE__ . 'Api\Admin\Settings\ASCWO_Api_Customizer_Sign_Settings')) {
             require_once __DIR__ . '/Api/Admin/Settings/Customizer-sign.php';
         }
-        if(!class_exists( __NAMESPACE__ .'Api\Admin\Settings\ASOWP_Api_General_Settings')){
+        if (!class_exists(__NAMESPACE__ . 'Api\Admin\Settings\ASCWO_Api_General_Settings')) {
             require_once __DIR__ . '/Api/Admin/Settings/Generals.php';
         }
-        if(!class_exists( __NAMESPACE__ .'Api\Admin\Settings\ASOWP_Api_Language_Images_Settings')){
+        if (!class_exists(__NAMESPACE__ . 'Api\Admin\Settings\ASCWO_Api_Language_Images_Settings')) {
             require_once __DIR__ . '/Api/Admin/Settings/Language-Image.php';
         }
-        if(!class_exists( __NAMESPACE__ .'Api\Admin\Settings\ASOWP_Api_Theme_color_Settings')){
+        if (!class_exists(__NAMESPACE__ . 'Api\Admin\Settings\ASCWO_Api_Theme_color_Settings')) {
             require_once __DIR__ . '/Api/Admin/Settings/Theme-color.php';
         }
-        if(!class_exists( __NAMESPACE__ .'Api\Admin\ASOWP_Api_Templates_Categories')){
+        if (!class_exists(__NAMESPACE__ . 'Api\Admin\ASCWO_Api_Templates_Categories')) {
             require_once __DIR__ . '/Api/Admin/Templates/Categories.php';
         }
-        if(!class_exists( __NAMESPACE__ .'Api\Admin\ASOWP_Api_Templates_Categories')){
+        if (!class_exists(__NAMESPACE__ . 'Api\Admin\ASCWO_Api_Templates_Categories')) {
             require_once __DIR__ . '/Api/Admin/Templates/Templates.php';
         }
     }
@@ -97,22 +96,23 @@ class Api extends WP_REST_Controller {
      *
      * @return void
      */
-    public function register_routes() {
-        (new ASOWP_Api_Configs())->register_routes();
-        (new ASOWP_Api_Manage_fonts())->register_routes();
-        (new ASOWP_Api_Manage_cliparts())->register_routes();
-        (new ASOWP_Api_WooCommerce_Products())->register_routes();
-        (new ASOWP_Api_Home_Stats())->register_routes();
-        (new ASOWP_Api_Required_Options())->register_routes();
-        (new ASOWP_Api_GoogleFonts())->register_routes();
-        (new ASOWP_Api_Additional_Options())->register_routes();
-        (new ASOWP_Api_Globals_Settings())->register_route();
-        (new ASOWP_Api_General_Settings())->register_routes();
-        (new ASOWP_Api_Customizer_Sign_Settings())->register_routes();
-        (new ASOWP_Api_Language_Images_Settings())->register_routes();
-        (new ASOWP_Api_Theme_color_Settings())->register_routes();
-        (new ASOWP_Api_Templates_Categories())->register_routes();
-        (new ASOWP_Api_Templates())->register_routes();
+    public function register_routes()
+    {
+        (new ASCWO_Api_Configs())->register_routes();
+        (new ASCWO_Api_Manage_fonts())->register_routes();
+        (new ASCWO_Api_Manage_cliparts())->register_routes();
+        (new ASCWO_Api_WooCommerce_Products())->register_routes();
+        (new ASCWO_Api_Home_Stats())->register_routes();
+        (new ASCWO_Api_Required_Options())->register_routes();
+        (new ASCWO_Api_GoogleFonts())->register_routes();
+        (new ASCWO_Api_Additional_Options())->register_routes();
+        (new ASCWO_Api_Globals_Settings())->register_route();
+        (new ASCWO_Api_General_Settings())->register_routes();
+        (new ASCWO_Api_Customizer_Sign_Settings())->register_routes();
+        (new ASCWO_Api_Language_Images_Settings())->register_routes();
+        (new ASCWO_Api_Theme_color_Settings())->register_routes();
+        (new ASCWO_Api_Templates_Categories())->register_routes();
+        (new ASCWO_Api_Templates())->register_routes();
     }
 
 }

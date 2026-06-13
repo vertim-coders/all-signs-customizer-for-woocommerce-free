@@ -1,14 +1,14 @@
 <template>
-  <div class="asowp-text-settings">
-    <section class="asowp-card">
-      <div class="asowp-card-body asowp-header-card">
+  <div class="ascwo-text-settings">
+    <section class="ascwo-card">
+      <div class="ascwo-card-body ascwo-header-card">
         <div>
-          <h1>{{ __("Text Setting", "all-signs-options-pro") }}</h1>
+          <h1>{{ __("Text Setting", "all-signs-customizer-for-woocommerce-pro") }}</h1>
           <p>
             {{
               __(
                 "Bring text configuration closer to the core setup, while keeping the same classic save location.",
-                "all-signs-options-pro"
+                "all-signs-customizer-for-woocommerce-pro"
               )
             }}
           </p>
@@ -16,72 +16,72 @@
       </div>
     </section>
 
-    <section class="asowp-card">
-      <div class="asowp-card-body">
-        <div class="asowp-section-head">
+    <section class="ascwo-card">
+      <div class="ascwo-card-body">
+        <div class="ascwo-section-head">
           <div>
-            <h2>{{ __("Text Access", "all-signs-options-pro") }}</h2>
-            <p>{{ __("Decide whether this configuration should expose text customization.", "all-signs-options-pro") }}</p>
+            <h2>{{ __("Text Access", "all-signs-customizer-for-woocommerce-pro") }}</h2>
+            <p>{{ __("Decide whether this configuration should expose text customization.", "all-signs-customizer-for-woocommerce-pro") }}</p>
           </div>
-          <button class="asowp-disclosure-button" type="button" @click="togglePanel('access')">
-            {{ openPanels.access ? __("Show less", "all-signs-options-pro") : __("Show more", "all-signs-options-pro") }}
-            <ChevronUpIcon v-if="openPanels.access" class="asowp-icon" />
-            <ChevronDownIcon v-else class="asowp-icon" />
+          <button class="ascwo-disclosure-button" type="button" @click="togglePanel('access')">
+            {{ openPanels.access ? __("Show less", "all-signs-customizer-for-woocommerce-pro") : __("Show more", "all-signs-customizer-for-woocommerce-pro") }}
+            <ChevronUpIcon v-if="openPanels.access" class="ascwo-icon" />
+            <ChevronDownIcon v-else class="ascwo-icon" />
           </button>
         </div>
-        <div v-if="openPanels.access" class="asowp-panel-content">
+        <div v-if="openPanels.access" class="ascwo-panel-content">
           <ToggleRow v-model="text.active" />
         </div>
       </div>
     </section>
 
-    <section class="asowp-card">
-      <div class="asowp-card-body">
-        <div class="asowp-section-head">
+    <section class="ascwo-card">
+      <div class="ascwo-card-body">
+        <div class="ascwo-section-head">
           <div>
-            <h2>{{ __("QR Code", "all-signs-options-pro") }}</h2>
-            <p>{{ __("Control whether QR code customization is available in this configuration.", "all-signs-options-pro") }}</p>
+            <h2>{{ __("QR Code", "all-signs-customizer-for-woocommerce-pro") }}</h2>
+            <p>{{ __("Control whether QR code customization is available in this configuration.", "all-signs-customizer-for-woocommerce-pro") }}</p>
           </div>
-          <button class="asowp-disclosure-button" type="button" @click="togglePanel('qr')">
-            {{ openPanels.qr ? __("Show less", "all-signs-options-pro") : __("Show more", "all-signs-options-pro") }}
-            <ChevronUpIcon v-if="openPanels.qr" class="asowp-icon" />
-            <ChevronDownIcon v-else class="asowp-icon" />
+          <button class="ascwo-disclosure-button" type="button" @click="togglePanel('qr')">
+            {{ openPanels.qr ? __("Show less", "all-signs-customizer-for-woocommerce-pro") : __("Show more", "all-signs-customizer-for-woocommerce-pro") }}
+            <ChevronUpIcon v-if="openPanels.qr" class="ascwo-icon" />
+            <ChevronDownIcon v-else class="ascwo-icon" />
           </button>
         </div>
-        <div v-if="openPanels.qr" class="asowp-panel-content">
+        <div v-if="openPanels.qr" class="ascwo-panel-content">
           <ToggleRow v-model="text.enableQrCode" />
         </div>
       </div>
     </section>
 
     <template v-if="text.active">
-      <section class="asowp-card">
-        <div class="asowp-card-body">
-          <div class="asowp-section-head">
+      <section class="ascwo-card">
+        <div class="ascwo-card-body">
+          <div class="ascwo-section-head">
             <div>
-              <h2>{{ __("Text Type", "all-signs-options-pro") }}</h2>
-              <p>{{ __("Choose the main text rendering mode used by the configurator.", "all-signs-options-pro") }}</p>
+              <h2>{{ __("Text Type", "all-signs-customizer-for-woocommerce-pro") }}</h2>
+              <p>{{ __("Choose the main text rendering mode used by the configurator.", "all-signs-customizer-for-woocommerce-pro") }}</p>
             </div>
-            <button class="asowp-disclosure-button" type="button" @click="togglePanel('type')">
-              {{ openPanels.type ? __("Show less", "all-signs-options-pro") : __("Show more", "all-signs-options-pro") }}
-              <ChevronUpIcon v-if="openPanels.type" class="asowp-icon" />
-              <ChevronDownIcon v-else class="asowp-icon" />
+            <button class="ascwo-disclosure-button" type="button" @click="togglePanel('type')">
+              {{ openPanels.type ? __("Show less", "all-signs-customizer-for-woocommerce-pro") : __("Show more", "all-signs-customizer-for-woocommerce-pro") }}
+              <ChevronUpIcon v-if="openPanels.type" class="ascwo-icon" />
+              <ChevronDownIcon v-else class="ascwo-icon" />
             </button>
           </div>
-          <div v-if="openPanels.type" class="asowp-panel-content">
-            <div class="asowp-text-type-grid">
+          <div v-if="openPanels.type" class="ascwo-panel-content">
+            <div class="ascwo-text-type-grid">
               <button
                 v-for="type in textTypeOptions"
                 :key="type.value"
-                class="asowp-type-card"
+                class="ascwo-type-card"
                 type="button"
                 @click="setTextType(type.value)"
               >
-                <span class="asowp-type-left">
+                <span class="ascwo-type-left">
                   <img :src="type.image" :alt="type.label" />
                   <strong>{{ type.label }}</strong>
                 </span>
-                <span :class="['asowp-toggle', text.textType === type.value ? 'is-active' : '']">
+                <span :class="['ascwo-toggle', text.textType === type.value ? 'is-active' : '']">
                   <span></span>
                 </span>
               </button>
@@ -90,41 +90,41 @@
         </div>
       </section>
 
-      <section class="asowp-card">
-        <div class="asowp-card-body">
-          <div class="asowp-section-head">
+      <section class="ascwo-card">
+        <div class="ascwo-card-body">
+          <div class="ascwo-section-head">
             <div>
-              <h2>{{ __("Text Colors", "all-signs-options-pro") }}</h2>
-              <p>{{ __("Manage predefined text colors and the optional custom color flow.", "all-signs-options-pro") }}</p>
+              <h2>{{ __("Text Colors", "all-signs-customizer-for-woocommerce-pro") }}</h2>
+              <p>{{ __("Manage predefined text colors and the optional custom color flow.", "all-signs-customizer-for-woocommerce-pro") }}</p>
             </div>
-            <button class="asowp-disclosure-button" type="button" @click="togglePanel('colors')">
-              {{ openPanels.colors ? __("Show less", "all-signs-options-pro") : __("Show more", "all-signs-options-pro") }}
-              <ChevronUpIcon v-if="openPanels.colors" class="asowp-icon" />
-              <ChevronDownIcon v-else class="asowp-icon" />
+            <button class="ascwo-disclosure-button" type="button" @click="togglePanel('colors')">
+              {{ openPanels.colors ? __("Show less", "all-signs-customizer-for-woocommerce-pro") : __("Show more", "all-signs-customizer-for-woocommerce-pro") }}
+              <ChevronUpIcon v-if="openPanels.colors" class="ascwo-icon" />
+              <ChevronDownIcon v-else class="ascwo-icon" />
             </button>
           </div>
-          <div v-if="openPanels.colors" class="asowp-panel-content">
-            <label class="asowp-field asowp-label-field">
-              <span>{{ __("Label", "all-signs-options-pro") }}</span>
+          <div v-if="openPanels.colors" class="ascwo-panel-content">
+            <label class="ascwo-field ascwo-label-field">
+              <span>{{ __("Label", "all-signs-customizer-for-woocommerce-pro") }}</span>
               <input v-model="text.colorsLabel" type="text" autocomplete="off" />
             </label>
 
-            <div class="asowp-color-grid">
-              <article v-for="(color, index) in text.colors" :key="`text-color-${index}`" class="asowp-color-card">
-                <div class="asowp-color-card-head">
-                  <strong>{{ sprintf(__("Color %s", "all-signs-options-pro"), index + 1) }}</strong>
-                  <button type="button" class="asowp-icon-danger" @click="removeColor(index)">
-                    <Trash2Icon class="asowp-icon" />
+            <div class="ascwo-color-grid">
+              <article v-for="(color, index) in text.colors" :key="`text-color-${index}`" class="ascwo-color-card">
+                <div class="ascwo-color-card-head">
+                  <strong>{{ sprintf(__("Color %s", "all-signs-customizer-for-woocommerce-pro"), index + 1) }}</strong>
+                  <button type="button" class="ascwo-icon-danger" @click="removeColor(index)">
+                    <Trash2Icon class="ascwo-icon" />
                   </button>
                 </div>
-                <div class="asowp-color-row">
-                  <label class="asowp-field asowp-color-name">
-                    <span class="asowp-sr-only">{{ __("Color name", "all-signs-options-pro") }}</span>
-                    <input v-model="color.name" type="text" :placeholder="__('Name', 'all-signs-options-pro')" autocomplete="off" />
+                <div class="ascwo-color-row">
+                  <label class="ascwo-field ascwo-color-name">
+                    <span class="ascwo-sr-only">{{ __("Color name", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                    <input v-model="color.name" type="text" :placeholder="__('Name', 'all-signs-customizer-for-woocommerce-pro')" autocomplete="off" />
                   </label>
-                  <label class="asowp-field asowp-color-code">
-                    <span>{{ __("Color", "all-signs-options-pro") }}</span>
-                    <span class="asowp-color-inputs">
+                  <label class="ascwo-field ascwo-color-code">
+                    <span>{{ __("Color", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                    <span class="ascwo-color-inputs">
                       <input v-model="color.codeHex" type="color" @input="normalizeColor(index)" />
                       <input v-model="color.codeHex" type="text" autocomplete="off" @blur="normalizeColor(index)" />
                     </span>
@@ -133,25 +133,25 @@
               </article>
             </div>
 
-            <button type="button" class="asowp-secondary-button asowp-small-button" @click="addNewColor">
-              {{ __("Add text color", "all-signs-options-pro") }}
+            <button type="button" class="ascwo-secondary-button ascwo-small-button" @click="addNewColor">
+              {{ __("Add text color", "all-signs-customizer-for-woocommerce-pro") }}
             </button>
 
-            <div class="asowp-custom-color-row">
-              <div class="asowp-custom-toggle">
-                <strong>{{ __("Enable Custom color", "all-signs-options-pro") }}</strong>
+            <div class="ascwo-custom-color-row">
+              <div class="ascwo-custom-toggle">
+                <strong>{{ __("Enable Custom color", "all-signs-customizer-for-woocommerce-pro") }}</strong>
                 <ToggleRow v-model="text.enableCustomColor" />
               </div>
-              <label class="asowp-field asowp-upload-field">
-                <span>{{ __("Custom color preview image", "all-signs-options-pro") }}</span>
-                <span class="asowp-file-control">
-                  <button type="button" class="asowp-primary-button asowp-file-button" @click.prevent="selectColorPrevImage">
-                    {{ __("upload image", "all-signs-options-pro") }}
+              <label class="ascwo-field ascwo-upload-field">
+                <span>{{ __("Custom color preview image", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                <span class="ascwo-file-control">
+                  <button type="button" class="ascwo-primary-button ascwo-file-button" @click.prevent="selectColorPrevImage">
+                    {{ __("upload image", "all-signs-customizer-for-woocommerce-pro") }}
                   </button>
-                  <span class="asowp-file-preview">
+                  <span class="ascwo-file-preview">
                     <img v-if="text.colorsPrevImg" :src="text.colorsPrevImg" alt="" />
                     <button v-if="text.colorsPrevImg" type="button" @click="text.colorsPrevImg = ''">
-                      <Trash2Icon class="asowp-icon" />
+                      <Trash2Icon class="ascwo-icon" />
                     </button>
                   </span>
                 </span>
@@ -161,35 +161,35 @@
         </div>
       </section>
 
-      <section class="asowp-card">
-        <div class="asowp-card-body">
-          <div class="asowp-section-head">
+      <section class="ascwo-card">
+        <div class="ascwo-card-body">
+          <div class="ascwo-section-head">
             <div>
-              <h2>{{ __("Font Size", "all-signs-options-pro") }}</h2>
-              <p>{{ __("Configure whether the customer can change size and define the allowed bounds.", "all-signs-options-pro") }}</p>
+              <h2>{{ __("Font Size", "all-signs-customizer-for-woocommerce-pro") }}</h2>
+              <p>{{ __("Configure whether the customer can change size and define the allowed bounds.", "all-signs-customizer-for-woocommerce-pro") }}</p>
             </div>
-            <button class="asowp-disclosure-button" type="button" @click="togglePanel('fontSize')">
-              {{ openPanels.fontSize ? __("Show less", "all-signs-options-pro") : __("Show more", "all-signs-options-pro") }}
-              <ChevronUpIcon v-if="openPanels.fontSize" class="asowp-icon" />
-              <ChevronDownIcon v-else class="asowp-icon" />
+            <button class="ascwo-disclosure-button" type="button" @click="togglePanel('fontSize')">
+              {{ openPanels.fontSize ? __("Show less", "all-signs-customizer-for-woocommerce-pro") : __("Show more", "all-signs-customizer-for-woocommerce-pro") }}
+              <ChevronUpIcon v-if="openPanels.fontSize" class="ascwo-icon" />
+              <ChevronDownIcon v-else class="ascwo-icon" />
             </button>
           </div>
-          <div v-if="openPanels.fontSize" class="asowp-panel-content">
-            <div class="asowp-block-toggle">
-              <strong>{{ __("Enable font size", "all-signs-options-pro") }}</strong>
+          <div v-if="openPanels.fontSize" class="ascwo-panel-content">
+            <div class="ascwo-block-toggle">
+              <strong>{{ __("Enable font size", "all-signs-customizer-for-woocommerce-pro") }}</strong>
               <ToggleRow v-model="text.enableFontSize.active" />
             </div>
-            <div v-if="text.enableFontSize.active" class="asowp-form-grid asowp-three-cols">
-              <label class="asowp-field">
-                <span>{{ __("Minimum font size", "all-signs-options-pro") }}</span>
+            <div v-if="text.enableFontSize.active" class="ascwo-form-grid ascwo-three-cols">
+              <label class="ascwo-field">
+                <span>{{ __("Minimum font size", "all-signs-customizer-for-woocommerce-pro") }}</span>
                 <input v-model="text.enableFontSize.minimumFontSize" type="number" />
               </label>
-              <label class="asowp-field">
-                <span>{{ __("Maximum font size", "all-signs-options-pro") }}</span>
+              <label class="ascwo-field">
+                <span>{{ __("Maximum font size", "all-signs-customizer-for-woocommerce-pro") }}</span>
                 <input v-model="text.enableFontSize.maximumFontSize" type="number" />
               </label>
-              <label class="asowp-field">
-                <span>{{ __("Default size", "all-signs-options-pro") }}</span>
+              <label class="ascwo-field">
+                <span>{{ __("Default size", "all-signs-customizer-for-woocommerce-pro") }}</span>
                 <input v-model="text.enableFontSize.defaultFontSize" type="number" />
               </label>
             </div>
@@ -197,28 +197,28 @@
         </div>
       </section>
 
-      <section class="asowp-card">
-        <div class="asowp-card-body">
-          <div class="asowp-section-head">
+      <section class="ascwo-card">
+        <div class="ascwo-card-body">
+          <div class="ascwo-section-head">
             <div>
-              <h2>{{ __("Text Options", "all-signs-options-pro") }}</h2>
-              <p>{{ __("Enable or disable the formatting tools available to the customer.", "all-signs-options-pro") }}</p>
+              <h2>{{ __("Text Options", "all-signs-customizer-for-woocommerce-pro") }}</h2>
+              <p>{{ __("Enable or disable the formatting tools available to the customer.", "all-signs-customizer-for-woocommerce-pro") }}</p>
             </div>
-            <button class="asowp-disclosure-button" type="button" @click="togglePanel('options')">
-              {{ openPanels.options ? __("Show less", "all-signs-options-pro") : __("Show more", "all-signs-options-pro") }}
-              <ChevronUpIcon v-if="openPanels.options" class="asowp-icon" />
-              <ChevronDownIcon v-else class="asowp-icon" />
+            <button class="ascwo-disclosure-button" type="button" @click="togglePanel('options')">
+              {{ openPanels.options ? __("Show less", "all-signs-customizer-for-woocommerce-pro") : __("Show more", "all-signs-customizer-for-woocommerce-pro") }}
+              <ChevronUpIcon v-if="openPanels.options" class="ascwo-icon" />
+              <ChevronDownIcon v-else class="ascwo-icon" />
             </button>
           </div>
-          <div v-if="openPanels.options" class="asowp-panel-content">
-            <div class="asowp-options-row">
-              <div v-for="option in textOptionControls" :key="option.key" class="asowp-option-control">
-                <button type="button" :class="['asowp-option-icon', option.className]" @click="text[option.key] = !text[option.key]">
+          <div v-if="openPanels.options" class="ascwo-panel-content">
+            <div class="ascwo-options-row">
+              <div v-for="option in textOptionControls" :key="option.key" class="ascwo-option-control">
+                <button type="button" :class="['ascwo-option-icon', option.className]" @click="text[option.key] = !text[option.key]">
                   <span v-if="option.key !== 'enableTextAlignment'">{{ option.icon }}</span>
-                  <span v-else class="asowp-align-icon"><i></i><i></i><i></i></span>
+                  <span v-else class="ascwo-align-icon"><i></i><i></i><i></i></span>
                 </button>
                 <span>{{ option.label }}</span>
-                <button type="button" :class="['asowp-toggle', text[option.key] ? 'is-active' : '']" @click="text[option.key] = !text[option.key]">
+                <button type="button" :class="['ascwo-toggle', text[option.key] ? 'is-active' : '']" @click="text[option.key] = !text[option.key]">
                   <span></span>
                 </button>
               </div>
@@ -228,10 +228,10 @@
       </section>
     </template>
 
-    <div class="asowp-save-row">
-      <button type="button" class="asowp-primary-button" :disabled="isLoading" @click="updateTextSettings">
+    <div class="ascwo-save-row">
+      <button type="button" class="ascwo-primary-button" :disabled="isLoading" @click="updateTextSettings">
         <img v-if="isLoading" src="@/../assets/icons/ic_loading_gray.svg" alt="" />
-        {{ isLoading ? __("Saving...", "all-signs-options-pro") : __("Save Text", "all-signs-options-pro") }}
+        {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce-pro") : __("Save Text", "all-signs-customizer-for-woocommerce-pro") }}
       </button>
     </div>
   </div>
@@ -249,7 +249,7 @@ import { defineComponent, h, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import { __, sprintf } from "@wordpress/i18n";
 
-const adminImageUrl = (path) => `${String(window?.asowp_data?.assets_url || "").replace(/\/$/, "")}/images/${path}`;
+const adminImageUrl = (path) => `${String(window?.ascwo_data?.assets_url || "").replace(/\/$/, "")}/images/${path}`;
 
 const ToggleRow = defineComponent({
   props: {
@@ -261,18 +261,18 @@ const ToggleRow = defineComponent({
   emits: ["update:modelValue"],
   setup(props, { emit }) {
     return () =>
-      h("span", { class: "asowp-toggle-row" }, [
-        h("span", { class: "asowp-toggle-label" }, "No"),
+      h("span", { class: "ascwo-toggle-row" }, [
+        h("span", { class: "ascwo-toggle-label" }, "No"),
         h(
           "button",
           {
             type: "button",
-            class: ["asowp-toggle", props.modelValue ? "is-active" : ""],
+            class: ["ascwo-toggle", props.modelValue ? "is-active" : ""],
             onClick: () => emit("update:modelValue", !props.modelValue),
           },
           [h("span")]
         ),
-        h("span", { class: "asowp-toggle-label" }, "Yes"),
+        h("span", { class: "ascwo-toggle-label" }, "Yes"),
       ]);
   },
 });
@@ -415,9 +415,9 @@ const selectColorPrevImage = (event) => {
   event?.preventDefault?.();
   const uploader = wp
     .media({
-      title: __("Select Custom Text Color Preview Image", "all-signs-options-pro"),
+      title: __("Select Custom Text Color Preview Image", "all-signs-customizer-for-woocommerce-pro"),
       button: {
-        text: __("Select Image", "all-signs-options-pro"),
+        text: __("Select Image", "all-signs-customizer-for-woocommerce-pro"),
       },
       multiple: false,
     })
@@ -442,9 +442,9 @@ const updateTextSettings = async () => {
     const result = await api.updateCustomizerSignsText(configId.value, text.value);
     if (result?.success) {
       await props.fetchSettings?.();
-      toastMessage(result.message || __("Text settings saved", "all-signs-options-pro"));
+      toastMessage(result.message || __("Text settings saved", "all-signs-customizer-for-woocommerce-pro"));
     } else {
-      toastMessage(result?.message || __("Unable to save text settings", "all-signs-options-pro"), "error");
+      toastMessage(result?.message || __("Unable to save text settings", "all-signs-customizer-for-woocommerce-pro"), "error");
     }
   } finally {
     isLoading.value = false;
@@ -453,24 +453,24 @@ const updateTextSettings = async () => {
 </script>
 
 <style>
-.asowp-text-settings {
+.ascwo-text-settings {
   display: grid;
   gap: 12px;
 }
 
-.asowp-card {
+.ascwo-card {
   background: #ffffff;
   border: 1px solid #dfe3e8;
   border-radius: 10px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
 }
 
-.asowp-card-body {
+.ascwo-card-body {
   padding: 16px 18px;
 }
 
-.asowp-header-card h1,
-.asowp-section-head h2 {
+.ascwo-header-card h1,
+.ascwo-section-head h2 {
   margin: 0;
   color: #303030;
   font-size: 15px;
@@ -478,24 +478,24 @@ const updateTextSettings = async () => {
   font-weight: 900;
 }
 
-.asowp-header-card p,
-.asowp-section-head p {
+.ascwo-header-card p,
+.ascwo-section-head p {
   margin: 2px 0 0;
   color: #616161;
   font-size: 11px;
   line-height: 15px;
 }
 
-.asowp-section-head {
+.ascwo-section-head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
 }
 
-.asowp-disclosure-button,
-.asowp-secondary-button,
-.asowp-primary-button {
+.ascwo-disclosure-button,
+.ascwo-secondary-button,
+.ascwo-primary-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -513,61 +513,61 @@ const updateTextSettings = async () => {
   text-decoration: none;
 }
 
-.asowp-primary-button {
+.ascwo-primary-button {
   border-color: #005f59;
   background: #007a72;
   color: #ffffff;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
-.asowp-primary-button:hover,
-.asowp-primary-button:focus {
+.ascwo-primary-button:hover,
+.ascwo-primary-button:focus {
   background: #00645f;
   color: #ffffff;
 }
 
-.asowp-primary-button:disabled {
+.ascwo-primary-button:disabled {
   border-color: #d1d1d1;
   background: #d4d4d4;
   color: #ffffff;
   cursor: default;
 }
 
-.asowp-secondary-button:hover,
-.asowp-disclosure-button:hover {
+.ascwo-secondary-button:hover,
+.ascwo-disclosure-button:hover {
   background: #f6f6f7;
   color: #303030;
 }
 
-.asowp-small-button {
+.ascwo-small-button {
   width: fit-content;
   height: 28px;
   margin-top: 10px;
   padding: 0 10px;
 }
 
-.asowp-icon {
+.ascwo-icon {
   width: 16px;
   height: 16px;
 }
 
-.asowp-panel-content {
+.ascwo-panel-content {
   padding-top: 12px;
 }
 
-.asowp-toggle-row {
+.ascwo-toggle-row {
   display: inline-flex;
   align-items: center;
   gap: 8px;
 }
 
-.asowp-toggle-label {
+.ascwo-toggle-label {
   color: #616161;
   font-size: 12px;
   line-height: 16px;
 }
 
-.asowp-toggle {
+.ascwo-toggle {
   position: relative;
   width: 40px;
   height: 22px;
@@ -579,7 +579,7 @@ const updateTextSettings = async () => {
   transition: background 0.15s ease;
 }
 
-.asowp-toggle span {
+.ascwo-toggle span {
   position: absolute;
   top: 3px;
   left: 3px;
@@ -591,21 +591,21 @@ const updateTextSettings = async () => {
   transition: transform 0.15s ease;
 }
 
-.asowp-toggle.is-active {
+.ascwo-toggle.is-active {
   background: #007a72;
 }
 
-.asowp-toggle.is-active span {
+.ascwo-toggle.is-active span {
   transform: translateX(18px);
 }
 
-.asowp-text-type-grid {
+.ascwo-text-type-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
 }
 
-.asowp-type-card {
+.ascwo-type-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -619,13 +619,13 @@ const updateTextSettings = async () => {
   cursor: pointer;
 }
 
-.asowp-type-left {
+.ascwo-type-left {
   display: inline-flex;
   align-items: center;
   gap: 12px;
 }
 
-.asowp-type-card img {
+.ascwo-type-card img {
   width: 48px;
   height: 48px;
   object-fit: contain;
@@ -634,16 +634,16 @@ const updateTextSettings = async () => {
   background: #f7f8fa;
 }
 
-.asowp-type-card strong,
-.asowp-block-toggle strong,
-.asowp-custom-toggle strong {
+.ascwo-type-card strong,
+.ascwo-block-toggle strong,
+.ascwo-custom-toggle strong {
   color: #303030;
   font-size: 12px;
   line-height: 16px;
   font-weight: 900;
 }
 
-.asowp-field {
+.ascwo-field {
   display: grid;
   gap: 4px;
   color: #303030;
@@ -651,11 +651,11 @@ const updateTextSettings = async () => {
   line-height: 16px;
 }
 
-.asowp-field > span:first-child {
+.ascwo-field > span:first-child {
   font-weight: 400;
 }
 
-.asowp-field input {
+.ascwo-field input {
   width: 100%;
   min-height: 36px;
   margin: 0;
@@ -669,25 +669,25 @@ const updateTextSettings = async () => {
   box-shadow: none;
 }
 
-.asowp-label-field {
+.ascwo-label-field {
   max-width: 320px;
   margin-bottom: 12px;
 }
 
-.asowp-color-grid {
+.ascwo-color-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
 }
 
-.asowp-color-card {
+.ascwo-color-card {
   padding: 10px;
   border: 1px solid #dfe3e8;
   border-radius: 7px;
   background: #ffffff;
 }
 
-.asowp-color-card-head {
+.ascwo-color-card-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -695,14 +695,14 @@ const updateTextSettings = async () => {
   margin-bottom: 8px;
 }
 
-.asowp-color-card-head strong {
+.ascwo-color-card-head strong {
   color: #303030;
   font-size: 11px;
   line-height: 14px;
   font-weight: 900;
 }
 
-.asowp-icon-danger {
+.ascwo-icon-danger {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -715,26 +715,26 @@ const updateTextSettings = async () => {
   cursor: pointer;
 }
 
-.asowp-color-row {
+.ascwo-color-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 120px;
   align-items: end;
   gap: 8px;
 }
 
-.asowp-color-inputs {
+.ascwo-color-inputs {
   display: grid;
   grid-template-columns: 32px minmax(0, 1fr);
   gap: 6px;
 }
 
-.asowp-color-inputs input[type="color"] {
+.ascwo-color-inputs input[type="color"] {
   min-height: 34px;
   padding: 3px;
   cursor: pointer;
 }
 
-.asowp-custom-color-row {
+.ascwo-custom-color-row {
   display: grid;
   grid-template-columns: 210px minmax(0, 1fr);
   gap: 16px;
@@ -742,13 +742,13 @@ const updateTextSettings = async () => {
   margin-top: 12px;
 }
 
-.asowp-custom-toggle,
-.asowp-block-toggle {
+.ascwo-custom-toggle,
+.ascwo-block-toggle {
   display: grid;
   gap: 6px;
 }
 
-.asowp-file-control {
+.ascwo-file-control {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: stretch;
@@ -759,17 +759,17 @@ const updateTextSettings = async () => {
   overflow: hidden;
 }
 
-.asowp-file-button {
+.ascwo-file-button {
   height: 30px;
   margin: 3px;
 }
 
-.asowp-file-preview {
+.ascwo-file-preview {
   position: relative;
   min-height: 34px;
 }
 
-.asowp-file-preview img {
+.ascwo-file-preview img {
   position: absolute;
   inset: 3px 38px auto auto;
   width: 44px;
@@ -778,7 +778,7 @@ const updateTextSettings = async () => {
   border-radius: 5px;
 }
 
-.asowp-file-preview button {
+.ascwo-file-preview button {
   position: absolute;
   right: 3px;
   top: 5px;
@@ -791,24 +791,24 @@ const updateTextSettings = async () => {
   cursor: pointer;
 }
 
-.asowp-form-grid {
+.ascwo-form-grid {
   display: grid;
   gap: 14px;
   margin-top: 12px;
 }
 
-.asowp-three-cols {
+.ascwo-three-cols {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.asowp-options-row {
+.ascwo-options-row {
   display: flex;
   flex-wrap: wrap;
   gap: 18px 24px;
   align-items: flex-start;
 }
 
-.asowp-option-control {
+.ascwo-option-control {
   display: grid;
   justify-items: center;
   gap: 4px;
@@ -818,7 +818,7 @@ const updateTextSettings = async () => {
   min-width: 64px;
 }
 
-.asowp-option-icon {
+.ascwo-option-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -834,63 +834,63 @@ const updateTextSettings = async () => {
   cursor: pointer;
 }
 
-.asowp-option-icon.is-bold {
+.ascwo-option-icon.is-bold {
   font-weight: 900;
 }
 
-.asowp-option-icon.is-underline {
+.ascwo-option-icon.is-underline {
   text-decoration: underline;
 }
 
-.asowp-option-icon.is-overline {
+.ascwo-option-icon.is-overline {
   text-decoration: overline;
 }
 
-.asowp-option-icon.is-strike {
+.ascwo-option-icon.is-strike {
   text-decoration: line-through;
 }
 
-.asowp-option-icon.is-italic {
+.ascwo-option-icon.is-italic {
   font-style: italic;
 }
 
-.asowp-option-icon.is-opacity span {
+.ascwo-option-icon.is-opacity span {
   opacity: 0.55;
 }
 
-.asowp-option-icon.is-border {
+.ascwo-option-icon.is-border {
   -webkit-text-stroke: 0.5px #303030;
 }
 
-.asowp-align-icon {
+.ascwo-align-icon {
   display: grid;
   gap: 3px;
   width: 18px;
 }
 
-.asowp-align-icon i {
+.ascwo-align-icon i {
   display: block;
   height: 2px;
   border-radius: 999px;
   background: #303030;
 }
 
-.asowp-align-icon i:nth-child(2) {
+.ascwo-align-icon i:nth-child(2) {
   width: 70%;
 }
 
-.asowp-save-row {
+.ascwo-save-row {
   display: flex;
   justify-content: flex-end;
   padding-top: 2px;
 }
 
-.asowp-save-row img {
+.ascwo-save-row img {
   width: 14px;
   height: 14px;
 }
 
-.asowp-sr-only {
+.ascwo-sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -903,13 +903,13 @@ const updateTextSettings = async () => {
 }
 
 @media (max-width: 1180px) {
-  .asowp-color-grid,
-  .asowp-text-type-grid,
-  .asowp-three-cols {
+  .ascwo-color-grid,
+  .ascwo-text-type-grid,
+  .ascwo-three-cols {
     grid-template-columns: 1fr;
   }
 
-  .asowp-custom-color-row {
+  .ascwo-custom-color-row {
     grid-template-columns: 1fr;
   }
 }

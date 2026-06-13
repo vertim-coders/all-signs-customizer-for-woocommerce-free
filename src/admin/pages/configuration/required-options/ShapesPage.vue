@@ -1,47 +1,47 @@
 <template>
-  <div class="asowp-shapes-panel asowp-space-y-3">
+  <div class="ascwo-shapes-panel ascwo-space-y-3">
     <template v-if="!isNewShape">
-      <section class="asowp-card">
-        <div class="asowp-card-inner asowp-flex asowp-items-center asowp-justify-between asowp-gap-4">
+      <section class="ascwo-card">
+        <div class="ascwo-card-inner ascwo-flex ascwo-items-center ascwo-justify-between ascwo-gap-4">
           <div>
-            <h2 class="asowp-title">{{ __("Shapes", "all-signs-options-pro") }}</h2>
-            <p class="asowp-subtitle">{{ __("Manage the shapes available in this config.", "all-signs-options-pro") }}</p>
+            <h2 class="ascwo-title">{{ __("Shapes", "all-signs-customizer-for-woocommerce-pro") }}</h2>
+            <p class="ascwo-subtitle">{{ __("Manage the shapes available in this config.", "all-signs-customizer-for-woocommerce-pro") }}</p>
           </div>
-          <div class="asowp-flex asowp-items-center asowp-gap-2">
-            <button type="button" @click="newShape" class="asowp-primary-button">
-              <PlusIcon class="asowp-w-4 asowp-h-4" />
-              {{ __("Add shape", "all-signs-options-pro") }}
+          <div class="ascwo-flex ascwo-items-center ascwo-gap-2">
+            <button type="button" @click="newShape" class="ascwo-primary-button">
+              <PlusIcon class="ascwo-w-4 ascwo-h-4" />
+              {{ __("Add shape", "all-signs-customizer-for-woocommerce-pro") }}
             </button>
-            <button type="button" @click="goToManageShapes" class="asowp-secondary-button">
-              {{ __("Manage shapes", "all-signs-options-pro") }}
+            <button type="button" @click="goToManageShapes" class="ascwo-secondary-button">
+              {{ __("Manage shapes", "all-signs-customizer-for-woocommerce-pro") }}
             </button>
           </div>
         </div>
       </section>
 
-      <section class="asowp-card">
-        <div class="asowp-card-inner">
-          <h3 class="asowp-section-title">{{ __("Shapes List", "all-signs-options-pro") }}</h3>
-          <table class="asowp-shapes-table asowp-w-full asowp-border-collapse">
-            <thead class="asowp-bg-[#f3f3f3]">
+      <section class="ascwo-card">
+        <div class="ascwo-card-inner">
+          <h3 class="ascwo-section-title">{{ __("Shapes List", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+          <table class="ascwo-shapes-table ascwo-w-full ascwo-border-collapse">
+            <thead class="ascwo-bg-[#f3f3f3]">
               <tr>
-                <th class="asowp-w-10"></th>
-                <th>{{ __("Preview", "all-signs-options-pro") }}</th>
-                <th>{{ __("Label", "all-signs-options-pro") }}</th>
-                <th>{{ __("Price", "all-signs-options-pro") }}</th>
-                <th>{{ __("Default", "all-signs-options-pro") }}</th>
-                <th>{{ __("Actions", "all-signs-options-pro") }}</th>
+                <th class="ascwo-w-10"></th>
+                <th>{{ __("Preview", "all-signs-customizer-for-woocommerce-pro") }}</th>
+                <th>{{ __("Label", "all-signs-customizer-for-woocommerce-pro") }}</th>
+                <th>{{ __("Price", "all-signs-customizer-for-woocommerce-pro") }}</th>
+                <th>{{ __("Default", "all-signs-customizer-for-woocommerce-pro") }}</th>
+                <th>{{ __("Actions", "all-signs-customizer-for-woocommerce-pro") }}</th>
               </tr>
             </thead>
             <tbody>
               <tr v-if="isFetching">
-                <td colspan="6" class="asowp-text-center asowp-py-8">
-                  <Loader2Icon class="asowp-w-7 asowp-h-7 asowp-text-[#007a72] asowp-animate-spin asowp-mx-auto" />
+                <td colspan="6" class="ascwo-text-center ascwo-py-8">
+                  <Loader2Icon class="ascwo-w-7 ascwo-h-7 ascwo-text-[#007a72] ascwo-animate-spin ascwo-mx-auto" />
                 </td>
               </tr>
               <tr v-else-if="shapes.length === 0">
-                <td colspan="6" class="asowp-text-center asowp-py-8 asowp-text-[13px] asowp-text-[#616161]">
-                  {{ __("No shapes configured.", "all-signs-options-pro") }}
+                <td colspan="6" class="ascwo-text-center ascwo-py-8 ascwo-text-[13px] ascwo-text-[#616161]">
+                  {{ __("No shapes configured.", "all-signs-customizer-for-woocommerce-pro") }}
                 </td>
               </tr>
               <tr
@@ -53,32 +53,32 @@
                 @drop="onDrop(key)"
               >
                 <td>
-                  <GripVerticalIcon class="asowp-drag-icon" />
+                  <GripVerticalIcon class="ascwo-drag-icon" />
                 </td>
                 <td>
-                  <div class="asowp-preview-box">
+                  <div class="ascwo-preview-box">
                     <img v-if="getManagedShape(sh)?.icon" :src="getManagedShape(sh).icon" :alt="getManagedShape(sh).name" />
-                    <ShapesIcon v-else class="asowp-w-7 asowp-h-7 asowp-text-[#111827]" />
+                    <ShapesIcon v-else class="ascwo-w-7 ascwo-h-7 ascwo-text-[#111827]" />
                   </div>
                 </td>
-                <td class="asowp-row-strong">{{ getManagedShape(sh)?.name || __("Unknown shape", "all-signs-options-pro") }}</td>
+                <td class="ascwo-row-strong">{{ getManagedShape(sh)?.name || __("Unknown shape", "all-signs-customizer-for-woocommerce-pro") }}</td>
                 <td>{{ Number(sh.additionalPrice || 0) }}</td>
                 <td>
-                  <div class="asowp-inline-flex asowp-items-center asowp-gap-2">
-                    <span class="asowp-toggle-label">{{ __("No", "all-signs-options-pro") }}</span>
-                    <button type="button" @click="!isLoading && selectDefault(key)" :class="['asowp-toggle', sh.isDefault ? 'is-active' : '']"><span></span></button>
-                    <span class="asowp-toggle-label">{{ __("Yes", "all-signs-options-pro") }}</span>
+                  <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
+                    <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                    <button type="button" @click="!isLoading && selectDefault(key)" :class="['ascwo-toggle', sh.isDefault ? 'is-active' : '']"><span></span></button>
+                    <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</span>
                   </div>
                 </td>
                 <td>
-                  <div class="asowp-flex asowp-items-center asowp-gap-3">
-                    <button type="button" @click="selectMaterialShape(key, sh)" class="asowp-outline-button">
-                      <Edit2Icon class="asowp-w-3.5 asowp-h-3.5" />
-                      {{ __("Edit", "all-signs-options-pro") }}
+                  <div class="ascwo-flex ascwo-items-center ascwo-gap-3">
+                    <button type="button" @click="selectMaterialShape(key, sh)" class="ascwo-outline-button">
+                      <Edit2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
+                      {{ __("Edit", "all-signs-customizer-for-woocommerce-pro") }}
                     </button>
-                    <button type="button" @click="selectMaterialShape(key, sh, true)" class="asowp-link-danger">
-                      <Trash2Icon class="asowp-w-3.5 asowp-h-3.5" />
-                      {{ __("Delete", "all-signs-options-pro") }}
+                    <button type="button" @click="selectMaterialShape(key, sh, true)" class="ascwo-link-danger">
+                      <Trash2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
+                      {{ __("Delete", "all-signs-customizer-for-woocommerce-pro") }}
                     </button>
                   </div>
                 </td>
@@ -89,61 +89,61 @@
       </section>
     </template>
 
-    <section v-else class="asowp-card">
-      <div class="asowp-card-inner asowp-flex asowp-justify-end">
-        <button type="button" @click="back" class="asowp-secondary-button">{{ __("Back to shapes", "all-signs-options-pro") }}</button>
+    <section v-else class="ascwo-card">
+      <div class="ascwo-card-inner ascwo-flex ascwo-justify-end">
+        <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Back to shapes", "all-signs-customizer-for-woocommerce-pro") }}</button>
       </div>
-      <div class="asowp-card-inner asowp-form-body">
-        <h3 class="asowp-section-title">{{ isEdit ? __("Edit shape", "all-signs-options-pro") : __("Add shape", "all-signs-options-pro") }}</h3>
+      <div class="ascwo-card-inner ascwo-form-body">
+        <h3 class="ascwo-section-title">{{ isEdit ? __("Edit shape", "all-signs-customizer-for-woocommerce-pro") : __("Add shape", "all-signs-customizer-for-woocommerce-pro") }}</h3>
 
-        <label class="asowp-field-block">
-          <span class="asowp-form-label">{{ __("Shape", "all-signs-options-pro") }}</span>
-          <select v-model.number="shape.shapeId" class="asowp-form-input">
+        <label class="ascwo-field-block">
+          <span class="ascwo-form-label">{{ __("Shape", "all-signs-customizer-for-woocommerce-pro") }}</span>
+          <select v-model.number="shape.shapeId" class="ascwo-form-input">
             <option v-for="option in availableManagedShapes" :key="option.value" :value="option.value">
               {{ option.name }}
             </option>
           </select>
         </label>
 
-        <div class="asowp-selected-preview">
-          <div class="asowp-preview-box asowp-preview-box-lg">
+        <div class="ascwo-selected-preview">
+          <div class="ascwo-preview-box ascwo-preview-box-lg">
             <img v-if="selectedManagedShape?.icon" :src="selectedManagedShape.icon" :alt="selectedManagedShape.name" />
-            <ShapesIcon v-else class="asowp-w-9 asowp-h-9 asowp-text-[#111827]" />
+            <ShapesIcon v-else class="ascwo-w-9 ascwo-h-9 ascwo-text-[#111827]" />
           </div>
           <div>
-            <div class="asowp-row-strong">{{ selectedManagedShape?.name || __("None", "all-signs-options-pro") }}</div>
-            <p class="asowp-help-text asowp-m-0">{{ selectedManagedShape?.value || __("Preview of the shape selected for this config.", "all-signs-options-pro") }}</p>
+            <div class="ascwo-row-strong">{{ selectedManagedShape?.name || __("None", "all-signs-customizer-for-woocommerce-pro") }}</div>
+            <p class="ascwo-help-text ascwo-m-0">{{ selectedManagedShape?.value || __("Preview of the shape selected for this config.", "all-signs-customizer-for-woocommerce-pro") }}</p>
           </div>
         </div>
 
-        <label class="asowp-field-block">
-          <span class="asowp-form-label">{{ __("Additional price", "all-signs-options-pro") }}</span>
-          <input type="number" v-model="shape.additionalPrice" class="asowp-form-input" />
+        <label class="ascwo-field-block">
+          <span class="ascwo-form-label">{{ __("Additional price", "all-signs-customizer-for-woocommerce-pro") }}</span>
+          <input type="number" v-model="shape.additionalPrice" class="ascwo-form-input" />
         </label>
 
-        <div v-if="selectedManagedShape?.value === 'cut-to-shape'" class="asowp-cut-shape-fields">
+        <div v-if="selectedManagedShape?.value === 'cut-to-shape'" class="ascwo-cut-shape-fields">
           <label v-for="size in ['small', 'medium', 'large']" :key="size">
-            <span class="asowp-form-label asowp-capitalize">{{ size }}</span>
-            <input type="number" v-model="shape.shapeSize[size]" class="asowp-form-input" />
+            <span class="ascwo-form-label ascwo-capitalize">{{ size }}</span>
+            <input type="number" v-model="shape.shapeSize[size]" class="ascwo-form-input" />
           </label>
         </div>
       </div>
-      <div class="asowp-form-footer">
-        <button type="button" @click="back" class="asowp-secondary-button">{{ __("Back to shapes", "all-signs-options-pro") }}</button>
-        <button type="button" @click="isEdit ? updateMaterialShapes() : addShapes()" :disabled="isLoading || shape.shapeId < 0" class="asowp-primary-button">
-          {{ isLoading ? __("Saving...", "all-signs-options-pro") : __("Save shape", "all-signs-options-pro") }}
+      <div class="ascwo-form-footer">
+        <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Back to shapes", "all-signs-customizer-for-woocommerce-pro") }}</button>
+        <button type="button" @click="isEdit ? updateMaterialShapes() : addShapes()" :disabled="isLoading || shape.shapeId < 0" class="ascwo-primary-button">
+          {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce-pro") : __("Save shape", "all-signs-customizer-for-woocommerce-pro") }}
         </button>
       </div>
     </section>
 
-    <div v-if="openModal" class="asowp-fixed asowp-inset-0 asowp-z-[20000] asowp-flex asowp-items-center asowp-justify-center">
-      <div class="asowp-absolute asowp-inset-0 asowp-bg-black/45" @click="closeModal"></div>
-      <div class="asowp-delete-modal">
-        <h3 class="asowp-text-[16px] asowp-font-[900] asowp-text-[#303030] asowp-mt-0 asowp-mb-2">{{ __("Delete shape?", "all-signs-options-pro") }}</h3>
-        <p class="asowp-text-[13px] asowp-text-[#616161] asowp-mt-0 asowp-mb-5">{{ __("Are you sure you want to delete this shape?", "all-signs-options-pro") }}</p>
-        <div class="asowp-flex asowp-justify-end asowp-gap-2">
-          <button type="button" @click="closeModal" class="asowp-secondary-button">{{ __("Cancel", "all-signs-options-pro") }}</button>
-          <button type="button" @click="deleteShapes" :disabled="isLoading" class="asowp-danger-button">{{ __("Delete", "all-signs-options-pro") }}</button>
+    <div v-if="openModal" class="ascwo-fixed ascwo-inset-0 ascwo-z-[20000] ascwo-flex ascwo-items-center ascwo-justify-center">
+      <div class="ascwo-absolute ascwo-inset-0 ascwo-bg-black/45" @click="closeModal"></div>
+      <div class="ascwo-delete-modal">
+        <h3 class="ascwo-text-[16px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-2">{{ __("Delete shape?", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+        <p class="ascwo-text-[13px] ascwo-text-[#616161] ascwo-mt-0 ascwo-mb-5">{{ __("Are you sure you want to delete this shape?", "all-signs-customizer-for-woocommerce-pro") }}</p>
+        <div class="ascwo-flex ascwo-justify-end ascwo-gap-2">
+          <button type="button" @click="closeModal" class="ascwo-secondary-button">{{ __("Cancel", "all-signs-customizer-for-woocommerce-pro") }}</button>
+          <button type="button" @click="deleteShapes" :disabled="isLoading" class="ascwo-danger-button">{{ __("Delete", "all-signs-customizer-for-woocommerce-pro") }}</button>
         </div>
       </div>
     </div>
@@ -230,7 +230,7 @@ const updateShapes = async () => {
       isEdit.value = false;
       await fetchMaterialShapes();
     } else {
-      toastMessage(res?.message || __("Unable to save shapes", "all-signs-options-pro"), "warning");
+      toastMessage(res?.message || __("Unable to save shapes", "all-signs-customizer-for-woocommerce-pro"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -250,7 +250,7 @@ const addShapes = async () => {
       isEdit.value = false;
       await fetchMaterialShapes();
     } else {
-      toastMessage(res?.message || __("Unable to add shape", "all-signs-options-pro"), "warning");
+      toastMessage(res?.message || __("Unable to add shape", "all-signs-customizer-for-woocommerce-pro"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -270,7 +270,7 @@ const updateMaterialShapes = async () => {
       isEdit.value = false;
       await fetchMaterialShapes();
     } else {
-      toastMessage(res?.message || __("Unable to update shape", "all-signs-options-pro"), "warning");
+      toastMessage(res?.message || __("Unable to update shape", "all-signs-customizer-for-woocommerce-pro"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -289,7 +289,7 @@ const deleteShapes = async () => {
       isEdit.value = false;
       await fetchMaterialShapes();
     } else {
-      toastMessage(res?.message || __("Unable to delete shape", "all-signs-options-pro"), "warning");
+      toastMessage(res?.message || __("Unable to delete shape", "all-signs-customizer-for-woocommerce-pro"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -314,7 +314,7 @@ const selectDefault = async (key) => {
     if (res?.success) {
       await fetchMaterialShapes();
     } else {
-      toastMessage(res?.message || __("Unable to update default shape", "all-signs-options-pro"), "warning");
+      toastMessage(res?.message || __("Unable to update default shape", "all-signs-customizer-for-woocommerce-pro"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -324,7 +324,7 @@ const selectDefault = async (key) => {
 const newShape = () => {
   const firstAvailable = availableManagedShapes.value[0]?.value;
   if (firstAvailable === undefined) {
-    toastMessage(__("No more shapes available", "all-signs-options-pro"), "warning");
+    toastMessage(__("No more shapes available", "all-signs-customizer-for-woocommerce-pro"), "warning");
     return;
   }
   shapeId.value = null;
@@ -364,22 +364,22 @@ onMounted(fetchMaterialShapes);
 </script>
 
 <style scoped>
-.asowp-shapes-panel {
+.ascwo-shapes-panel {
   color: #303030;
 }
 
-.asowp-card {
+.ascwo-card {
   background: #fff;
   border: 1px solid #dfe3e8;
   border-radius: 10px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
 }
 
-.asowp-card-inner {
+.ascwo-card-inner {
   padding: 18px 20px;
 }
 
-.asowp-title {
+.ascwo-title {
   margin: 0;
   color: #303030;
   font-size: 20px;
@@ -387,8 +387,8 @@ onMounted(fetchMaterialShapes);
   font-weight: 900;
 }
 
-.asowp-subtitle,
-.asowp-help-text {
+.ascwo-subtitle,
+.ascwo-help-text {
   display: block;
   margin: 0;
   color: #616161;
@@ -396,7 +396,7 @@ onMounted(fetchMaterialShapes);
   line-height: 16px;
 }
 
-.asowp-section-title {
+.ascwo-section-title {
   margin: 0 0 12px;
   color: #303030;
   font-size: 14px;
@@ -404,23 +404,23 @@ onMounted(fetchMaterialShapes);
   font-weight: 900;
 }
 
-.asowp-shapes-table,
-.asowp-shapes-table thead,
-.asowp-shapes-table tbody,
-.asowp-shapes-table tr,
-.asowp-shapes-table th,
-.asowp-shapes-table td {
+.ascwo-shapes-table,
+.ascwo-shapes-table thead,
+.ascwo-shapes-table tbody,
+.ascwo-shapes-table tr,
+.ascwo-shapes-table th,
+.ascwo-shapes-table td {
   border-left: 0 !important;
   border-right: 0 !important;
   outline: 0 !important;
   box-shadow: none !important;
 }
 
-.asowp-shapes-table {
+.ascwo-shapes-table {
   border: 0 !important;
 }
 
-.asowp-shapes-table th {
+.ascwo-shapes-table th {
   padding: 9px 12px;
   border-top: 0 !important;
   border-bottom: 0 !important;
@@ -431,7 +431,7 @@ onMounted(fetchMaterialShapes);
   text-align: left;
 }
 
-.asowp-shapes-table td {
+.ascwo-shapes-table td {
   padding: 8px 12px;
   border-top: 0 !important;
   border-bottom: 0 !important;
@@ -441,26 +441,26 @@ onMounted(fetchMaterialShapes);
   text-align: left;
 }
 
-.asowp-shapes-table tbody tr {
+.ascwo-shapes-table tbody tr {
   border-bottom: 1px solid #e5e7eb !important;
 }
 
-.asowp-shapes-table tbody tr:last-child {
+.ascwo-shapes-table tbody tr:last-child {
   border-bottom: 0 !important;
 }
 
-.asowp-drag-icon {
+.ascwo-drag-icon {
   width: 16px;
   height: 16px;
   color: #667085;
   cursor: grab;
 }
 
-.asowp-row-strong {
+.ascwo-row-strong {
   font-weight: 900;
 }
 
-.asowp-preview-box {
+.ascwo-preview-box {
   width: 54px;
   height: 54px;
   overflow: hidden;
@@ -472,19 +472,19 @@ onMounted(fetchMaterialShapes);
   justify-content: center;
 }
 
-.asowp-preview-box img {
+.ascwo-preview-box img {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
 
-.asowp-preview-box-lg {
+.ascwo-preview-box-lg {
   width: 58px;
   height: 58px;
   flex: 0 0 58px;
 }
 
-.asowp-selected-preview {
+.ascwo-selected-preview {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -496,13 +496,13 @@ onMounted(fetchMaterialShapes);
   background: #f7f7f7;
 }
 
-.asowp-toggle-label {
+.ascwo-toggle-label {
   color: #616161;
   font-size: 12px;
   line-height: 16px;
 }
 
-.asowp-toggle {
+.ascwo-toggle {
   width: 38px;
   height: 22px;
   padding: 0;
@@ -514,7 +514,7 @@ onMounted(fetchMaterialShapes);
   transition: background 120ms ease;
 }
 
-.asowp-toggle span {
+.ascwo-toggle span {
   width: 18px;
   height: 18px;
   border-radius: 999px;
@@ -526,15 +526,15 @@ onMounted(fetchMaterialShapes);
   transition: transform 120ms ease;
 }
 
-.asowp-toggle.is-active {
+.ascwo-toggle.is-active {
   background: #007a72;
 }
 
-.asowp-toggle.is-active span {
+.ascwo-toggle.is-active span {
   transform: translateX(16px);
 }
 
-.asowp-form-label {
+.ascwo-form-label {
   display: block;
   margin-bottom: 4px;
   color: #303030;
@@ -542,7 +542,7 @@ onMounted(fetchMaterialShapes);
   line-height: 16px;
 }
 
-.asowp-form-input {
+.ascwo-form-input {
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
@@ -557,23 +557,23 @@ onMounted(fetchMaterialShapes);
   box-shadow: none;
 }
 
-.asowp-form-input:focus {
+.ascwo-form-input:focus {
   outline: 2px solid #005bd3;
   outline-offset: 1px;
   border-color: #8c9196;
   box-shadow: none;
 }
 
-.asowp-field-block {
+.ascwo-field-block {
   display: block;
   margin-top: 14px;
 }
 
-.asowp-form-body {
+.ascwo-form-body {
   padding-top: 6px;
 }
 
-.asowp-form-footer {
+.ascwo-form-footer {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
@@ -581,17 +581,17 @@ onMounted(fetchMaterialShapes);
   border-top: 1px solid #e5e7eb;
 }
 
-.asowp-cut-shape-fields {
+.ascwo-cut-shape-fields {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
   margin-top: 14px;
 }
 
-.asowp-primary-button,
-.asowp-secondary-button,
-.asowp-outline-button,
-.asowp-danger-button {
+.ascwo-primary-button,
+.ascwo-secondary-button,
+.ascwo-outline-button,
+.ascwo-danger-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -605,38 +605,38 @@ onMounted(fetchMaterialShapes);
   cursor: pointer;
 }
 
-.asowp-primary-button {
+.ascwo-primary-button {
   border: 0;
   background: #007a72;
   color: #fff;
 }
 
-.asowp-primary-button:hover {
+.ascwo-primary-button:hover {
   background: #00645f;
   color: #fff;
 }
 
-.asowp-primary-button:disabled,
-.asowp-danger-button:disabled {
+.ascwo-primary-button:disabled,
+.ascwo-danger-button:disabled {
   background: #d8d8d8;
   color: #fff;
   cursor: not-allowed;
 }
 
-.asowp-secondary-button,
-.asowp-outline-button {
+.ascwo-secondary-button,
+.ascwo-outline-button {
   border: 1px solid #c9cccf;
   background: #fff;
   color: #303030;
 }
 
-.asowp-secondary-button:hover,
-.asowp-outline-button:hover {
+.ascwo-secondary-button:hover,
+.ascwo-outline-button:hover {
   background: #f6f6f7;
   color: #303030;
 }
 
-.asowp-link-danger {
+.ascwo-link-danger {
   display: inline-flex;
   align-items: center;
   gap: 5px;
@@ -649,13 +649,13 @@ onMounted(fetchMaterialShapes);
   cursor: pointer;
 }
 
-.asowp-danger-button {
+.ascwo-danger-button {
   border: 0;
   background: #8e1f0b;
   color: #fff;
 }
 
-.asowp-delete-modal {
+.ascwo-delete-modal {
   position: relative;
   width: min(420px, 92vw);
   padding: 20px;

@@ -1,46 +1,46 @@
 
 <template>
-    <div class="asowp-space-y-1">
-        <div class="asowp-bg-white asowp-shadow-md asowp-justify-center asowp-items-center asowp-px-4 asowp-py-4">
-            <p class="asowp-text-[14px] asowp-font-bold">2- {{ __('Set the Label and Description', 'all-signs-options-pro') }}</p>
-            <p class="asowp-text-[12px]">{{ __('This text will display above the input options.', 'all-signs-options-pro') }}</p>
-            <div class="asowp-flex asowp-justify-between asowp-space-x-12">
-                <div class="asowp-w-2/5 asowp-space-y-2">
-                    <label>{{ __('Label', 'all-signs-options-pro') }}</label>
-                    <input v-model="yesOrNo.label"  type="text" :class="`asowp-w-full ${emptyLabel?'asowp-field-required':''}`" value="Remote control (Dimmer)"/>
+    <div class="ascwo-space-y-1">
+        <div class="ascwo-bg-white ascwo-shadow-md ascwo-justify-center ascwo-items-center ascwo-px-4 ascwo-py-4">
+            <p class="ascwo-text-[14px] ascwo-font-bold">2- {{ __('Set the Label and Description', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+            <p class="ascwo-text-[12px]">{{ __('This text will display above the input options.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+            <div class="ascwo-flex ascwo-justify-between ascwo-space-x-12">
+                <div class="ascwo-w-2/5 ascwo-space-y-2">
+                    <label>{{ __('Label', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                    <input v-model="yesOrNo.label"  type="text" :class="`ascwo-w-full ${emptyLabel?'ascwo-field-required':''}`" value="Remote control (Dimmer)"/>
                 </div>
-                <div class="asowp-w-2/5 asowp-space-y-2">
-                    <label>{{ __('Description', 'all-signs-options-pro') }}</label>
-                    <input v-model="yesOrNo.description" type="text" :class="`asowp-w-full`" value="A remote control is included free with every sign"/>
+                <div class="ascwo-w-2/5 ascwo-space-y-2">
+                    <label>{{ __('Description', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                    <input v-model="yesOrNo.description" type="text" :class="`ascwo-w-full`" value="A remote control is included free with every sign"/>
                 </div>
             </div>
         </div>
-        <div class="asowp-bg-white asowp-shadow-md asowp-justify-center asowp-items-center asowp-px-4 asowp-py-4">
-            <p class="asowp-text-[14px] asowp-font-bold">3- {{ __('Yes/No Input', 'all-signs-options-pro') }}</p>
-            <p class="asowp-text-[12px]">{{ __('Displays as two buttons side by side.', 'all-signs-options-pro') }}</p>
-            <div class="asowp-flex asowp-justify-between asowp-space-x-12">
-                <div class="asowp-w-2/5 asowp-space-y-2">
-                    <label>{{ __('Selected Value', 'all-signs-options-pro') }}</label>
-                    <input v-model="yesOrNo.inputs.yes" type="text" :class="`asowp-w-full ${emptyInputsYes?'asowp-field-required':''}`" value="yes"/>
+        <div class="ascwo-bg-white ascwo-shadow-md ascwo-justify-center ascwo-items-center ascwo-px-4 ascwo-py-4">
+            <p class="ascwo-text-[14px] ascwo-font-bold">3- {{ __('Yes/No Input', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+            <p class="ascwo-text-[12px]">{{ __('Displays as two buttons side by side.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+            <div class="ascwo-flex ascwo-justify-between ascwo-space-x-12">
+                <div class="ascwo-w-2/5 ascwo-space-y-2">
+                    <label>{{ __('Selected Value', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                    <input v-model="yesOrNo.inputs.yes" type="text" :class="`ascwo-w-full ${emptyInputsYes?'ascwo-field-required':''}`" value="yes"/>
                 </div>
-                <div class="asowp-w-2/5 asowp-space-y-2">
-                    <label>{{ __('Unselected Value', 'all-signs-options-pro') }}</label>
-                    <input v-model="yesOrNo.inputs.no" type="text" :class="`asowp-w-full ${emptyInputsNo?'asowp-field-required':''}`" value="no"/>
+                <div class="ascwo-w-2/5 ascwo-space-y-2">
+                    <label>{{ __('Unselected Value', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                    <input v-model="yesOrNo.inputs.no" type="text" :class="`ascwo-w-full ${emptyInputsNo?'ascwo-field-required':''}`" value="no"/>
                 </div>
             </div>
-            <p class="asowp-text-[14px] asowp-font-bold asowp-pt-4">{{ __('DEFAULT SELECTED VALUE', 'all-signs-options-pro') }}</p>
-            <p class="asowp-text-[12px]">{{ __("Choose which value is highlighted by default when the product customiser initally displays.", "all-signs-options-pro") }}</p>
-            <div class="asowp-flex asowp-space-x-4">
-                <div class="asowp-flex asowp-justify-center asowp-items-center asowp-space-x-4">
-                    <p class="asowp-text-md asowp-font-medium asowp-text-black">{{ __("Selected", "all-signs-options-pro") }}</p>
-                    <label for="selected" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                        <input id="selected" type="radio" name="selected" class="asowp-sr-only asowp-peer" value="yes" v-model="yesOrNo.default">
-                        <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[112%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-3px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-3 after:asowp-w-3 after:asowp-transition-all after:asowp-shadow-lg`"></div>
+            <p class="ascwo-text-[14px] ascwo-font-bold ascwo-pt-4">{{ __('DEFAULT SELECTED VALUE', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+            <p class="ascwo-text-[12px]">{{ __("Choose which value is highlighted by default when the product customiser initally displays.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+            <div class="ascwo-flex ascwo-space-x-4">
+                <div class="ascwo-flex ascwo-justify-center ascwo-items-center ascwo-space-x-4">
+                    <p class="ascwo-text-md ascwo-font-medium ascwo-text-black">{{ __("Selected", "all-signs-customizer-for-woocommerce-pro") }}</p>
+                    <label for="selected" class="ascwo-relative ascwo-inline-flex ascwo-items-center ascwo-cursor-pointer ascwo-border-[1px] ascwo-border-solid ascwo-border-black ascwo-rounded-full">
+                        <input id="selected" type="radio" name="selected" class="ascwo-sr-only ascwo-peer" value="yes" v-model="yesOrNo.default">
+                        <div :class="`peer-checked:after:ascwo-border-[#016464] peer-checked:after:ascwo-border-solid peer-checked:after:ascwo-border-[5px] peer-checked:after:ascwo-top-[-2px] peer-checked:after:ascwo-translate-y-[-15%] ascwo-w-10 ascwo-h-3 ascwo-border ascwo-border-[5px] ascwo-border-[#016464] ascwo-bg-zinc-300 ascwo-rounded-full ascwo-peer peer-checked:after:ascwo-translate-x-[112%] after:ascwo-content-[''] after:ascwo-absolute after:ascwo-top-[-3px] after:ascwo-left-[-5px] after:ascwo-bg-zinc-300 after:ascwo-border-white after:ascwo-border-solid after:ascwo-translate-y-[-15%] after:ascwo-border-[#FFFFFF] after:ascwo-border-[5px] after:ascwo-rounded-full after:ascwo-h-3 after:ascwo-w-3 after:ascwo-transition-all after:ascwo-shadow-lg`"></div>
                     </label>
                 </div>
 
-                <div class="asowp-flex asowp-justify-center asowp-items-center asowp-space-x-4">
-                    <p class="asowp-text-md asowp-font-medium asowp-text-black">{{ __("Unselected", "all-signs-options-pro") }}</p>
+                <div class="ascwo-flex ascwo-justify-center ascwo-items-center ascwo-space-x-4">
+                    <p class="ascwo-text-md asowp-font-medium asowp-text-black">{{ __("Unselected", "all-signs-customizer-for-woocommerce-pro") }}</p>
                     <label for="unselected" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
                         <input id="unselected" type="radio" name="unselected" class="asowp-sr-only asowp-peer" value="no" v-model="yesOrNo.default">
                         <div class="peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[112%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-3px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-3 after:asowp-w-3 after:asowp-transition-all after:asowp-shadow-lg"></div>
@@ -50,10 +50,10 @@
 
         </div>
         <div class="asowp-bg-white asowp-shadow-md asowp-justify-center asowp-items-center asowp-px-4 asowp-py-4">
-            <p class="asowp-text-[14px] asowp-font-bold">{{ __("4- Popup Image (optional)", "all-signs-options-pro") }}</p>
-            <p class="asowp-text-[12px]">{{ __("Example Image - displayed as popup", "all-signs-options-pro") }}</p>
+            <p class="asowp-text-[14px] asowp-font-bold">{{ __("4- Popup Image (optional)", "all-signs-customizer-for-woocommerce-pro") }}</p>
+            <p class="asowp-text-[12px]">{{ __("Example Image - displayed as popup", "all-signs-customizer-for-woocommerce-pro") }}</p>
             <div class="asowp-flex asowp-items-center asowp-justify-between asowp-w-full asowp-max-w-[574px] asowp-h-[54px] asowp-border asowp-border-solid asowp-border-[#9ca3af] asowp-rounded-[5px] asowp-bg-white asowp-overflow-hidden asowp-p-1">
-                <button type="button" @click="selectChangeImage" class="asowp-bg-[#007a73] asowp-border-none asowp-h-[40px] asowp-px-4 asowp-rounded-[6px] asowp-text-white asowp-text-[12px] asowp-font-bold asowp-cursor-pointer hover:asowp-bg-[#006c67] hover:asowp-border-none hover:asowp-text-white">{{ __("choose a picture", "all-signs-options-pro") }}</button>
+                <button type="button" @click="selectChangeImage" class="asowp-bg-[#007a73] asowp-border-none asowp-h-[40px] asowp-px-4 asowp-rounded-[6px] asowp-text-white asowp-text-[12px] asowp-font-bold asowp-cursor-pointer hover:asowp-bg-[#006c67] hover:asowp-border-none hover:asowp-text-white">{{ __("choose a picture", "all-signs-customizer-for-woocommerce-pro") }}</button>
                 <div class="asowp-relative asowp-w-[50px] asowp-h-[48px] asowp-rounded-[8px] asowp-border asowp-border-solid asowp-border-[#e5e7eb] asowp-bg-white asowp-overflow-hidden">
                     <img v-if="yesOrNo.popImg != ''" :src="yesOrNo.popImg" alt="" class="asowp-absolute asowp-inset-0 asowp-w-full asowp-h-full asowp-object-cover">
                     <button v-if="yesOrNo.popImg != ''" type="button" @click="()=>{yesOrNo.popImg = ''}" :class="`asowp-bg-[#007a73] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none asowp-cursor-pointer`">
@@ -65,10 +65,10 @@
             </div>
         </div>
         <div class="asowp-bg-white asowp-shadow-md asowp-justify-center asowp-items-center asowp-px-4 asowp-py-4">
-            <p class="asowp-text-[14px] asowp-font-bold">{{ __("5- Pricing (optional)", "all-signs-options-pro") }} </p>
+            <p class="asowp-text-[14px] asowp-font-bold">{{ __("5- Pricing (optional)", "all-signs-customizer-for-woocommerce-pro") }} </p>
             <div class="asowp-flex asowp-space-x-4">
                 <div class="asowp-flex asowp-justify-center asowp-items-center asowp-space-x-4">
-                    <p class="asowp-text-md asowp-font-medium asowp-text-black">{{ __("None", "all-signs-options-pro") }}</p>
+                    <p class="asowp-text-md asowp-font-medium asowp-text-black">{{ __("None", "all-signs-customizer-for-woocommerce-pro") }}</p>
                     <label for="none" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
                         <input id="none" type="radio" name="none" class="asowp-sr-only asowp-peer" value="none" v-model="yesOrNo.price.type">
                         <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[112%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-3px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-3 after:asowp-w-3 after:asowp-transition-all after:asowp-shadow-lg`"></div>
@@ -76,14 +76,14 @@
                 </div>
 
                 <div class="asowp-flex asowp-justify-center asowp-items-center asowp-space-x-4">
-                    <p class="asowp-text-md asowp-font-medium asowp-text-black">{{ __("Base Price", "all-signs-options-pro") }}</p>
+                    <p class="asowp-text-md asowp-font-medium asowp-text-black">{{ __("Base Price", "all-signs-customizer-for-woocommerce-pro") }}</p>
                     <label for="base" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
                     <input id="base" type="radio" name="base" class="asowp-sr-only asowp-peer" value="base" v-model="yesOrNo.price.type">
                     <div class="peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[112%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-3px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-3 after:asowp-w-3 after:asowp-transition-all after:asowp-shadow-lg"></div>
                     </label>
                 </div>
                 <div class="asowp-flex asowp-justify-center asowp-items-center asowp-space-x-4">
-                    <p class="asowp-text-md asowp-font-medium asowp-text-black">{{ __("Price Multiplier", "all-signs-options-pro") }}</p>
+                    <p class="asowp-text-md asowp-font-medium asowp-text-black">{{ __("Price Multiplier", "all-signs-customizer-for-woocommerce-pro") }}</p>
                     <label for="multiplier" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
                     <input id="multiplier" type="radio" name="multiplier" class="asowp-sr-only asowp-peer" value="multiplier" v-model="yesOrNo.price.type">
                     <div class="peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[112%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-3px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-3 after:asowp-w-3 after:asowp-transition-all after:asowp-shadow-lg"></div>
@@ -105,7 +105,7 @@
                     <path d="M1 12L5 8V11L17.17 11C17.3756 10.414 17.7586 9.90661 18.2657 9.54821C18.7729 9.18981 19.379 8.9982 20 9C20.7956 9 21.5587 9.31607 22.1213 9.87868C22.6839 10.4413 23 11.2044 23 12C23 12.7956 22.6839 13.5587 22.1213 14.1213C21.5587 14.6839 20.7956 15 20 15C18.69 15 17.58 14.17 17.17 13L5 13V16L1 12Z" fill="currentColor"/>
                 </svg>
 
-                <div class="asowp-leading-none">{{ __("Back", "all-signs-options-pro") }}</div>
+                <div class="asowp-leading-none">{{ __("Back", "all-signs-customizer-for-woocommerce-pro") }}</div>
             </button>
         </div>
         <div :class="`${isLoading ? 'asowp-bg-[#006c67]' : 'asowp-bg-[#007a73]'} asowp-rounded-[7px] asowp-border asowp-border-solid asowp-border-[#006c67]`">
@@ -117,7 +117,7 @@
                     </svg>
                 </div>
 
-                <span class="asowp-leading-none">{{props.action? __('Update','all-signs-options-pro'): __('Save','all-signs-options-pro')}}</span>
+                <span class="asowp-leading-none">{{props.action? __('Update','all-signs-customizer-for-woocommerce-pro'): __('Save','all-signs-customizer-for-woocommerce-pro')}}</span>
             </button>
         </div>
     </div>
@@ -159,9 +159,9 @@ const selectChangeImage = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: __("Select Image", "all-signs-options-pro"),
+            title: __("Select Image", "all-signs-customizer-for-woocommerce-pro"),
             button: {
-                text: __("Select Image", "all-signs-options-pro")
+                text: __("Select Image", "all-signs-customizer-for-woocommerce-pro")
             },
             multiple: false
         }

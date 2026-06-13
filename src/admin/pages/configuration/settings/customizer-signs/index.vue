@@ -1,168 +1,168 @@
 <template>
-  <div class="asowp-customizer-setup">
-    <div v-if="isFetching" class="asowp-customizer-card asowp-customizer-loading">
+  <div class="ascwo-customizer-setup">
+    <div v-if="isFetching" class="ascwo-customizer-card ascwo-customizer-loading">
       <img :src="loadingIcon" alt="" />
     </div>
 
-    <div v-else class="asowp-customizer-layout">
-      <div class="asowp-customizer-main">
-        <header class="asowp-customizer-card asowp-customizer-hero">
-          <h1>{{ __('Customizer Setup', 'all-signs-options-pro') }}</h1>
-          <p>{{ __('Configure the classic customizer behavior in one page, without switching between second-level settings tabs.', 'all-signs-options-pro') }}</p>
+    <div v-else class="ascwo-customizer-layout">
+      <div class="ascwo-customizer-main">
+        <header class="ascwo-customizer-card ascwo-customizer-hero">
+          <h1>{{ __('Customizer Setup', 'all-signs-customizer-for-woocommerce-pro') }}</h1>
+          <p>{{ __('Configure the classic customizer behavior in one page, without switching between second-level settings tabs.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
         </header>
 
-        <section id="asowp-customizer-config-options" class="asowp-customizer-card asowp-customizer-section">
-          <div class="asowp-section-head">
+        <section id="ascwo-customizer-config-options" class="ascwo-customizer-card ascwo-customizer-section">
+          <div class="ascwo-section-head">
             <div>
-              <h2>{{ __('Config Options', 'all-signs-options-pro') }}</h2>
-              <p>{{ __('Show, hide and order configuration blocks displayed in the customizer.', 'all-signs-options-pro') }}</p>
+              <h2>{{ __('Config Options', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
+              <p>{{ __('Show, hide and order configuration blocks displayed in the customizer.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
             </div>
-            <button type="button" class="asowp-collapse-button" @click="toggleSection('configOptions')">
-              {{ openSections.configOptions ? __('Show less', 'all-signs-options-pro') : __('Show more', 'all-signs-options-pro') }}
+            <button type="button" class="ascwo-collapse-button" @click="toggleSection('configOptions')">
+              {{ openSections.configOptions ? __('Show less', 'all-signs-customizer-for-woocommerce-pro') : __('Show more', 'all-signs-customizer-for-woocommerce-pro') }}
               <ChevronUpIcon v-if="openSections.configOptions" />
               <ChevronDownIcon v-else />
             </button>
           </div>
 
           <div v-if="openSections.configOptions">
-            <p class="asowp-section-note">
-              {{ __('The list order below is the display order used in the customizer. Move items up or down by dragging the rows, then save.', 'all-signs-options-pro') }}
+            <p class="ascwo-section-note">
+              {{ __('The list order below is the display order used in the customizer. Move items up or down by dragging the rows, then save.', 'all-signs-customizer-for-woocommerce-pro') }}
             </p>
 
-            <div class="asowp-config-options-list">
+            <div class="ascwo-config-options-list">
               <article
                 v-for="(option, index) in configOptions"
                 :key="option.type"
-                class="asowp-config-option-row"
+                class="ascwo-config-option-row"
                 draggable="true"
                 @dragstart="onDragStart(index)"
                 @dragover.prevent
                 @drop="onDrop(index)"
                 @dragend="onDragEnd"
               >
-                <div class="asowp-config-option-left">
-                  <button type="button" class="asowp-drag-handle" :aria-label="__('Drag to reorder', 'all-signs-options-pro')">
+                <div class="ascwo-config-option-left">
+                  <button type="button" class="ascwo-drag-handle" :aria-label="__('Drag to reorder', 'all-signs-customizer-for-woocommerce-pro')">
                     <GripVerticalIcon />
                   </button>
-                  <component :is="optionIcon(option.type)" class="asowp-option-icon" />
+                  <component :is="optionIcon(option.type)" class="ascwo-option-icon" />
                   <div>
                     <h3>{{ optionLabel(option.type) }}</h3>
-                    <p>{{ option.active ? __('Visible in the customizer', 'all-signs-options-pro') : __('Hidden from the customizer', 'all-signs-options-pro') }}</p>
+                    <p>{{ option.active ? __('Visible in the customizer', 'all-signs-customizer-for-woocommerce-pro') : __('Hidden from the customizer', 'all-signs-customizer-for-woocommerce-pro') }}</p>
                   </div>
                 </div>
-                <button type="button" class="asowp-visibility-button" @click="toggleConfigOption(index)">
+                <button type="button" class="ascwo-visibility-button" @click="toggleConfigOption(index)">
                   <EyeIcon v-if="option.active" />
                   <EyeOffIcon v-else />
-                  {{ option.active ? __('Hide option', 'all-signs-options-pro') : __('Show option', 'all-signs-options-pro') }}
+                  {{ option.active ? __('Hide option', 'all-signs-customizer-for-woocommerce-pro') : __('Show option', 'all-signs-customizer-for-woocommerce-pro') }}
                 </button>
               </article>
             </div>
 
-            <div class="asowp-save-row">
-              <button type="button" class="asowp-shopify-button-primary asowp-customizer-save" :disabled="savingSection === 'configOptions'" @click="saveConfigOptions">
-                <Loader2Icon v-if="savingSection === 'configOptions'" class="asowp-spin" />
-                {{ __('Save Config Options', 'all-signs-options-pro') }}
+            <div class="ascwo-save-row">
+              <button type="button" class="ascwo-ui-button-primary ascwo-customizer-save" :disabled="savingSection === 'configOptions'" @click="saveConfigOptions">
+                <Loader2Icon v-if="savingSection === 'configOptions'" class="ascwo-spin" />
+                {{ __('Save Config Options', 'all-signs-customizer-for-woocommerce-pro') }}
               </button>
             </div>
           </div>
         </section>
 
-        <section id="asowp-customizer-options" class="asowp-customizer-card asowp-customizer-section">
-          <div class="asowp-section-head">
+        <section id="ascwo-customizer-options" class="ascwo-customizer-card ascwo-customizer-section">
+          <div class="ascwo-section-head">
             <div>
-              <h2>{{ __('Customizer Options', 'all-signs-options-pro') }}</h2>
-              <p>{{ __('Measurement, layout and flow options for the classic customizer.', 'all-signs-options-pro') }}</p>
+              <h2>{{ __('Customizer Options', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
+              <p>{{ __('Measurement, layout and flow options for the classic customizer.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
             </div>
-            <button type="button" class="asowp-collapse-button" @click="toggleSection('customizerOptions')">
-              {{ openSections.customizerOptions ? __('Show less', 'all-signs-options-pro') : __('Show more', 'all-signs-options-pro') }}
+            <button type="button" class="ascwo-collapse-button" @click="toggleSection('customizerOptions')">
+              {{ openSections.customizerOptions ? __('Show less', 'all-signs-customizer-for-woocommerce-pro') : __('Show more', 'all-signs-customizer-for-woocommerce-pro') }}
               <ChevronUpIcon v-if="openSections.customizerOptions" />
               <ChevronDownIcon v-else />
             </button>
           </div>
 
-          <div v-if="openSections.customizerOptions" class="asowp-options-grid">
-            <label class="asowp-field">
-              <span>{{ __('Measurement Unit', 'all-signs-options-pro') }}</span>
-              <select v-model="customizerOptions.measurementUnit" class="asowp-shopify-input">
-                <option value="cm">{{ __('Centimeters', 'all-signs-options-pro') }}</option>
-                <option value="in">{{ __('inches', 'all-signs-options-pro') }}</option>
-                <option value="mm">{{ __('Milimetres', 'all-signs-options-pro') }}</option>
-                <option value="m">{{ __('Mètre', 'all-signs-options-pro') }}</option>
-                <option value="ft">{{ __('Feet', 'all-signs-options-pro') }}</option>
+          <div v-if="openSections.customizerOptions" class="ascwo-options-grid">
+            <label class="ascwo-field">
+              <span>{{ __('Measurement Unit', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <select v-model="customizerOptions.measurementUnit" class="ascwo-ui-input">
+                <option value="cm">{{ __('Centimeters', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                <option value="in">{{ __('inches', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                <option value="mm">{{ __('Milimetres', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                <option value="m">{{ __('Mètre', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                <option value="ft">{{ __('Feet', 'all-signs-customizer-for-woocommerce-pro') }}</option>
               </select>
             </label>
 
-            <label class="asowp-field">
-              <span>{{ __('Show/hide Measurements', 'all-signs-options-pro') }}</span>
-              <select v-model="customizerOptions.showHideMeasurements" class="asowp-shopify-input">
-                <option value="both">{{ __('show both width and height', 'all-signs-options-pro') }}</option>
-                <option value="none">{{ __('Do not show measurements', 'all-signs-options-pro') }}</option>
-                <option value="height">{{ __('show only height', 'all-signs-options-pro') }}</option>
-                <option value="width">{{ __('show only width', 'all-signs-options-pro') }}</option>
+            <label class="ascwo-field">
+              <span>{{ __('Show/hide Measurements', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <select v-model="customizerOptions.showHideMeasurements" class="ascwo-ui-input">
+                <option value="both">{{ __('show both width and height', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                <option value="none">{{ __('Do not show measurements', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                <option value="height">{{ __('show only height', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                <option value="width">{{ __('show only width', 'all-signs-customizer-for-woocommerce-pro') }}</option>
               </select>
             </label>
 
-            <label class="asowp-field">
-              <span>{{ __('Decimal Format of Measurements', 'all-signs-options-pro') }}</span>
-              <select v-model="customizerOptions.decimalFormatMeasurements" class="asowp-shopify-input">
-                <option value="with-decimal">{{ __('with decimal', 'all-signs-options-pro') }}</option>
-                <option value="no-decimal">{{ __('No decimal', 'all-signs-options-pro') }}</option>
+            <label class="ascwo-field">
+              <span>{{ __('Decimal Format of Measurements', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <select v-model="customizerOptions.decimalFormatMeasurements" class="ascwo-ui-input">
+                <option value="with-decimal">{{ __('with decimal', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                <option value="no-decimal">{{ __('No decimal', 'all-signs-customizer-for-woocommerce-pro') }}</option>
               </select>
             </label>
 
-            <label class="asowp-field">
-              <span>{{ __('Desktop Column Order', 'all-signs-options-pro') }}</span>
-              <select v-model="customizerOptions.desktopColumnOrder" class="asowp-shopify-input">
-                <option value="right">{{ __('Right', 'all-signs-options-pro') }}</option>
-                <option value="left">{{ __('Left', 'all-signs-options-pro') }}</option>
+            <label class="ascwo-field">
+              <span>{{ __('Desktop Column Order', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <select v-model="customizerOptions.desktopColumnOrder" class="ascwo-ui-input">
+                <option value="right">{{ __('Right', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                <option value="left">{{ __('Left', 'all-signs-customizer-for-woocommerce-pro') }}</option>
               </select>
             </label>
 
-            <label class="asowp-field">
-              <span>{{ __('Finish button position', 'all-signs-options-pro') }}</span>
-              <select v-model="customizerOptions.finishButtonPosition" class="asowp-shopify-input">
-                <option value="top">{{ __('Top', 'all-signs-options-pro') }}</option>
-                <option value="bottom">{{ __('Bottom', 'all-signs-options-pro') }}</option>
+            <label class="ascwo-field">
+              <span>{{ __('Finish button position', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <select v-model="customizerOptions.finishButtonPosition" class="ascwo-ui-input">
+                <option value="top">{{ __('Top', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                <option value="bottom">{{ __('Bottom', 'all-signs-customizer-for-woocommerce-pro') }}</option>
               </select>
             </label>
 
-            <label class="asowp-field">
-              <span>{{ __('Allow next button', 'all-signs-options-pro') }}</span>
-              <select :value="customizerOptions.allowNextButton ? 'yes' : 'no'" class="asowp-shopify-input" @change="customizerOptions.allowNextButton = $event.target.value === 'yes'">
-                <option value="yes">{{ __('Yes', 'all-signs-options-pro') }}</option>
-                <option value="no">{{ __('No', 'all-signs-options-pro') }}</option>
+            <label class="ascwo-field">
+              <span>{{ __('Allow next button', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <select :value="customizerOptions.allowNextButton ? 'yes' : 'no'" class="ascwo-ui-input" @change="customizerOptions.allowNextButton = $event.target.value === 'yes'">
+                <option value="yes">{{ __('Yes', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                <option value="no">{{ __('No', 'all-signs-customizer-for-woocommerce-pro') }}</option>
               </select>
             </label>
 
-            <div class="asowp-inline-toggle">
-              <span>{{ __('Show thickness pricing labels in configurator', 'all-signs-options-pro') }}</span>
-              <label class="asowp-switch"><input type="checkbox" v-model="customizerOptions.showThicknessPricing"><span></span></label>
+            <div class="ascwo-inline-toggle">
+              <span>{{ __('Show thickness pricing labels in configurator', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <label class="ascwo-switch"><input type="checkbox" v-model="customizerOptions.showThicknessPricing"><span></span></label>
             </div>
 
-            <div class="asowp-inline-toggle">
-              <span>{{ __('Expand thickness by default in configurator', 'all-signs-options-pro') }}</span>
-              <label class="asowp-switch"><input type="checkbox" v-model="customizerOptions.expandThicknessByDefault"><span></span></label>
+            <div class="ascwo-inline-toggle">
+              <span>{{ __('Expand thickness by default in configurator', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <label class="ascwo-switch"><input type="checkbox" v-model="customizerOptions.expandThicknessByDefault"><span></span></label>
             </div>
 
-            <div class="asowp-inline-toggle">
-              <span>{{ __('Expand predefined sizes by default in configurator', 'all-signs-options-pro') }}</span>
-              <label class="asowp-switch"><input type="checkbox" v-model="customizerOptions.expandPredefinedSizesByDefault"><span></span></label>
+            <div class="ascwo-inline-toggle">
+              <span>{{ __('Expand predefined sizes by default in configurator', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <label class="ascwo-switch"><input type="checkbox" v-model="customizerOptions.expandPredefinedSizesByDefault"><span></span></label>
             </div>
 
-            <div class="asowp-save-row asowp-options-save">
-              <button type="button" class="asowp-shopify-button-primary asowp-customizer-save" :disabled="savingSection === 'customizerOptions'" @click="saveCustomizerOptions">
-                <Loader2Icon v-if="savingSection === 'customizerOptions'" class="asowp-spin" />
-                {{ __('Save Customizer Options', 'all-signs-options-pro') }}
+            <div class="ascwo-save-row ascwo-options-save">
+              <button type="button" class="ascwo-ui-button-primary ascwo-customizer-save" :disabled="savingSection === 'customizerOptions'" @click="saveCustomizerOptions">
+                <Loader2Icon v-if="savingSection === 'customizerOptions'" class="ascwo-spin" />
+                {{ __('Save Customizer Options', 'all-signs-customizer-for-woocommerce-pro') }}
               </button>
             </div>
           </div>
         </section>
       </div>
 
-      <div class="asowp-section-menu-wrap">
-        <aside class="asowp-section-menu asowp-customizer-card">
-          <h2>{{ __('Section Menu', 'all-signs-options-pro') }}</h2>
-          <div class="asowp-section-menu-links">
+      <div class="ascwo-section-menu-wrap">
+        <aside class="ascwo-section-menu ascwo-customizer-card">
+          <h2>{{ __('Section Menu', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
+          <div class="ascwo-section-menu-links">
             <a v-for="item in sectionMenu" :key="item.id" :href="`#${item.id}`" @click.prevent="scrollToSection(item.id)">
               {{ item.label }}
             </a>
@@ -201,7 +201,7 @@ import api from '@/admin/Api/api';
 import toastMessage from '@/admin/utils/functions';
 import { __ } from "@wordpress/i18n";
 
-const loadingIcon = `${String(window?.asowp_data?.assets_url || "").replace(/\/$/, "")}/icons/ic_loading.svg`;
+const loadingIcon = `${String(window?.ascwo_data?.assets_url || "").replace(/\/$/, "")}/icons/ic_loading.svg`;
 
 const route = useRoute();
 const configId = ref(route.params.configId);
@@ -243,8 +243,8 @@ const openSections = reactive({
 });
 
 const sectionMenu = [
-  { id: 'asowp-customizer-config-options', label: 'Config Options' },
-  { id: 'asowp-customizer-options', label: 'Customizer Options' },
+  { id: 'ascwo-customizer-config-options', label: 'Config Options' },
+  { id: 'ascwo-customizer-options', label: 'Customizer Options' },
 ];
 
 const iconMap = {
@@ -346,7 +346,7 @@ const handleSaveResponse = async (result) => {
     toastMessage(result.message);
     return;
   }
-  toastMessage(result?.message || __('Unable to save settings', 'all-signs-options-pro'), 'error');
+  toastMessage(result?.message || __('Unable to save settings', 'all-signs-customizer-for-woocommerce-pro'), 'error');
 };
 
 const saveConfigOptions = async () => {
@@ -354,7 +354,7 @@ const saveConfigOptions = async () => {
   try {
     await handleSaveResponse(await api.updateCustomizerSignsConfigOptions(configId.value, configOptions.value));
   } catch (error) {
-    toastMessage(error?.response?.data?.message || __('Unable to save config options', 'all-signs-options-pro'), 'error');
+    toastMessage(error?.response?.data?.message || __('Unable to save config options', 'all-signs-customizer-for-woocommerce-pro'), 'error');
   } finally {
     savingSection.value = '';
   }
@@ -365,7 +365,7 @@ const saveCustomizerOptions = async () => {
   try {
     await handleSaveResponse(await api.updateCustomizerSignsCustomizer(configId.value, customizerOptions.value));
   } catch (error) {
-    toastMessage(error?.response?.data?.message || __('Unable to save customizer options', 'all-signs-options-pro'), 'error');
+    toastMessage(error?.response?.data?.message || __('Unable to save customizer options', 'all-signs-customizer-for-woocommerce-pro'), 'error');
   } finally {
     savingSection.value = '';
   }
@@ -382,64 +382,64 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.asowp-customizer-setup {
-  color: var(--asowp-shopify-text);
+.ascwo-customizer-setup {
+  color: var(--ascwo-ui-text);
 }
 
-.asowp-customizer-layout {
+.ascwo-customizer-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 220px;
   gap: 20px;
   align-items: start;
 }
 
-.asowp-customizer-main {
+.ascwo-customizer-main {
   display: grid;
   gap: 16px;
   min-width: 0;
 }
 
-.asowp-customizer-card {
-  background: var(--asowp-shopify-surface);
-  border: 1px solid var(--asowp-shopify-border);
-  border-radius: var(--asowp-shopify-radius-card);
+.ascwo-customizer-card {
+  background: var(--ascwo-ui-surface);
+  border: 1px solid var(--ascwo-ui-border);
+  border-radius: var(--ascwo-ui-radius-card);
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
 }
 
-.asowp-customizer-hero {
+.ascwo-customizer-hero {
   padding: 16px 20px;
 }
 
-.asowp-customizer-hero h1,
-.asowp-customizer-section h2,
-.asowp-section-menu h2 {
+.ascwo-customizer-hero h1,
+.ascwo-customizer-section h2,
+.ascwo-section-menu h2 {
   margin: 0;
   color: #303030;
   font-weight: 750;
   letter-spacing: 0;
 }
 
-.asowp-customizer-hero h1 {
+.ascwo-customizer-hero h1 {
   font-size: 22px;
   line-height: 28px;
 }
 
-.asowp-customizer-hero p,
-.asowp-section-head p,
-.asowp-section-note,
-.asowp-config-option-row p {
+.ascwo-customizer-hero p,
+.ascwo-section-head p,
+.ascwo-section-note,
+.ascwo-config-option-row p {
   margin: 6px 0 0;
   color: #616161;
   font-size: 14px;
   line-height: 22px;
 }
 
-.asowp-customizer-section {
+.ascwo-customizer-section {
   padding: 20px;
   scroll-margin-top: 12px;
 }
 
-.asowp-section-head {
+.ascwo-section-head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -447,13 +447,13 @@ onMounted(async () => {
   margin-bottom: 18px;
 }
 
-.asowp-customizer-section h2 {
+.ascwo-customizer-section h2 {
   font-size: 17px;
   line-height: 24px;
 }
 
-.asowp-collapse-button,
-.asowp-visibility-button {
+.ascwo-collapse-button,
+.ascwo-visibility-button {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -470,10 +470,10 @@ onMounted(async () => {
   white-space: nowrap;
 }
 
-.asowp-collapse-button:hover,
-.asowp-collapse-button:focus,
-.asowp-visibility-button:hover,
-.asowp-visibility-button:focus {
+.ascwo-collapse-button:hover,
+.ascwo-collapse-button:focus,
+.ascwo-visibility-button:hover,
+.ascwo-visibility-button:focus {
   background: #ffffff;
   color: #202223;
   border-color: #babfc3;
@@ -481,22 +481,22 @@ onMounted(async () => {
   outline: none;
 }
 
-.asowp-collapse-button svg,
-.asowp-visibility-button svg {
+.ascwo-collapse-button svg,
+.ascwo-visibility-button svg {
   width: 15px;
   height: 15px;
 }
 
-.asowp-section-note {
+.ascwo-section-note {
   margin-bottom: 14px;
 }
 
-.asowp-config-options-list {
+.ascwo-config-options-list {
   display: grid;
   gap: 10px;
 }
 
-.asowp-config-option-row {
+.ascwo-config-option-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -508,14 +508,14 @@ onMounted(async () => {
   background: #ffffff;
 }
 
-.asowp-config-option-left {
+.ascwo-config-option-left {
   display: inline-flex;
   align-items: center;
   gap: 10px;
   min-width: 0;
 }
 
-.asowp-drag-handle {
+.ascwo-drag-handle {
   display: inline-flex;
   width: 32px;
   height: 32px;
@@ -529,14 +529,14 @@ onMounted(async () => {
   cursor: grab;
 }
 
-.asowp-drag-handle svg,
-.asowp-option-icon {
+.ascwo-drag-handle svg,
+.ascwo-option-icon {
   width: 17px;
   height: 17px;
   color: #303030;
 }
 
-.asowp-config-option-row h3 {
+.ascwo-config-option-row h3 {
   margin: 0;
   color: #303030;
   font-size: 13px;
@@ -545,33 +545,33 @@ onMounted(async () => {
   letter-spacing: 0;
 }
 
-.asowp-config-option-row p {
+.ascwo-config-option-row p {
   font-size: 11px;
   line-height: 15px;
 }
 
-.asowp-options-grid {
+.ascwo-options-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   column-gap: 30px;
   row-gap: 16px;
 }
 
-.asowp-field {
+.ascwo-field {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
-.asowp-field > span,
-.asowp-inline-toggle > span {
+.ascwo-field > span,
+.ascwo-inline-toggle > span {
   color: #303030;
   font-size: 13px;
   line-height: 18px;
   font-weight: 500;
 }
 
-.asowp-shopify-input {
+.ascwo-ui-input {
   width: 100%;
   min-height: 36px;
   padding: 7px 10px;
@@ -585,19 +585,19 @@ onMounted(async () => {
   box-sizing: border-box;
 }
 
-.asowp-shopify-input:focus {
+.ascwo-ui-input:focus {
   border-color: #8c9196;
   box-shadow: none !important;
 }
 
-.asowp-inline-toggle {
+.ascwo-inline-toggle {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   min-height: 36px;
 }
 
-.asowp-switch {
+.ascwo-switch {
   position: relative;
   display: inline-flex;
   width: 40px;
@@ -606,13 +606,13 @@ onMounted(async () => {
   cursor: pointer;
 }
 
-.asowp-switch input {
+.ascwo-switch input {
   position: absolute;
   opacity: 0;
   pointer-events: none;
 }
 
-.asowp-switch span {
+.ascwo-switch span {
   position: absolute;
   inset: 0;
   border-radius: 999px;
@@ -620,7 +620,7 @@ onMounted(async () => {
   transition: background 160ms ease;
 }
 
-.asowp-switch span::after {
+.ascwo-switch span::after {
   content: "";
   position: absolute;
   top: 3px;
@@ -633,59 +633,59 @@ onMounted(async () => {
   transition: transform 160ms ease;
 }
 
-.asowp-switch input:checked + span {
+.ascwo-switch input:checked + span {
   background: #007a76;
 }
 
-.asowp-switch input:checked + span::after {
+.ascwo-switch input:checked + span::after {
   transform: translateX(16px);
 }
 
-.asowp-save-row {
+.ascwo-save-row {
   display: flex;
   justify-content: flex-end;
   margin-top: 18px;
 }
 
-.asowp-options-save {
+.ascwo-options-save {
   grid-column: 1 / -1;
 }
 
-.asowp-customizer-save {
+.ascwo-customizer-save {
   min-height: 32px;
   padding: 6px 14px;
   font-size: 13px;
 }
 
-.asowp-customizer-save svg {
+.ascwo-customizer-save svg {
   width: 14px;
   height: 14px;
 }
 
-.asowp-section-menu-wrap {
+.ascwo-section-menu-wrap {
   position: sticky;
   top: 46px;
   align-self: start;
 }
 
-.asowp-section-menu {
+.ascwo-section-menu {
   padding: 10px;
 }
 
-.asowp-section-menu h2 {
+.ascwo-section-menu h2 {
   margin: 0;
   font-size: 14px;
   line-height: 20px;
   font-weight: 650;
 }
 
-.asowp-section-menu-links {
+.ascwo-section-menu-links {
   display: grid;
   gap: 8px;
   margin-top: 6px;
 }
 
-.asowp-section-menu a {
+.ascwo-section-menu a {
   display: block;
   width: 100%;
   box-sizing: border-box;
@@ -703,8 +703,8 @@ onMounted(async () => {
   cursor: pointer;
 }
 
-.asowp-section-menu a:hover,
-.asowp-section-menu a:focus {
+.ascwo-section-menu a:hover,
+.ascwo-section-menu a:focus {
   background: #ffffff;
   color: #111827;
   border-color: #d1d5db;
@@ -712,51 +712,51 @@ onMounted(async () => {
   outline: none;
 }
 
-.asowp-customizer-loading {
+.ascwo-customizer-loading {
   display: flex;
   min-height: 300px;
   align-items: center;
   justify-content: center;
 }
 
-.asowp-customizer-loading img {
+.ascwo-customizer-loading img {
   width: 140px;
   height: 140px;
 }
 
-.asowp-spin {
-  animation: asowp-customizer-spin 800ms linear infinite;
+.ascwo-spin {
+  animation: ascwo-customizer-spin 800ms linear infinite;
 }
 
-@keyframes asowp-customizer-spin {
+@keyframes ascwo-customizer-spin {
   to {
     transform: rotate(360deg);
   }
 }
 
 @media (max-width: 1200px) {
-  .asowp-customizer-layout {
+  .ascwo-customizer-layout {
     grid-template-columns: 1fr;
   }
 
-  .asowp-section-menu-wrap {
+  .ascwo-section-menu-wrap {
     position: static;
     order: -1;
   }
 }
 
 @media (max-width: 782px) {
-  .asowp-customizer-hero,
-  .asowp-customizer-section {
+  .ascwo-customizer-hero,
+  .ascwo-customizer-section {
     padding: 20px;
   }
 
-  .asowp-options-grid {
+  .ascwo-options-grid {
     grid-template-columns: 1fr;
   }
 
-  .asowp-section-head,
-  .asowp-config-option-row {
+  .ascwo-section-head,
+  .ascwo-config-option-row {
     flex-direction: column;
     align-items: stretch;
   }

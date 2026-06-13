@@ -1,58 +1,58 @@
 <template>
-  <section class="asowp-component-editor">
-    <header class="asowp-component-card asowp-component-hero">
+  <section class="ascwo-component-editor">
+    <header class="ascwo-component-card ascwo-component-hero">
       <div>
         <h1>Edit additional component</h1>
         <p>Define the component and the options customers can choose from.</p>
       </div>
     </header>
 
-    <div class="asowp-component-card asowp-component-details">
-      <div class="asowp-component-grid asowp-component-grid-2">
-        <label class="asowp-component-field">
+    <div class="ascwo-component-card ascwo-component-details">
+      <div class="ascwo-component-grid ascwo-component-grid-2">
+        <label class="ascwo-component-field">
           <span>Title</span>
           <input v-model="additionalOption.title" type="text" />
         </label>
-        <label class="asowp-component-field">
+        <label class="ascwo-component-field">
           <span>Group icon</span>
-          <div class="asowp-component-upload">
-            <button type="button" class="asowp-component-primary asowp-component-upload-button" @click="openMedia(additionalOption, 'icon', 'Select group icon')">Upload icon</button>
-            <div class="asowp-component-upload-preview">
+          <div class="ascwo-component-upload">
+            <button type="button" class="ascwo-component-primary ascwo-component-upload-button" @click="openMedia(additionalOption, 'icon', 'Select group icon')">Upload icon</button>
+            <div class="ascwo-component-upload-preview">
               <img v-if="additionalOption.icon" :src="additionalOption.icon" alt="" />
               <button v-if="additionalOption.icon" type="button" @click="additionalOption.icon = ''">x</button>
             </div>
           </div>
         </label>
       </div>
-      <label class="asowp-component-field">
+      <label class="ascwo-component-field">
         <span>Description</span>
         <input v-model="additionalOption.description" type="text" />
       </label>
     </div>
 
-    <div class="asowp-component-card asowp-component-options">
+    <div class="ascwo-component-card ascwo-component-options">
       <div>
         <h2>Options</h2>
         <p>Add the values available for this additional component.</p>
       </div>
 
-      <div v-if="isFetching" class="asowp-component-empty asowp-table-loader-cell">
-        <Loader2Icon class="asowp-table-loader-icon asowp-w-7 asowp-h-7" />
+      <div v-if="isFetching" class="ascwo-component-empty ascwo-table-loader-cell">
+        <Loader2Icon class="ascwo-table-loader-icon ascwo-w-7 ascwo-h-7" />
       </div>
-      <article v-for="(item, index) in additionalOption.options" v-else :key="index" class="asowp-component-option">
-        <header class="asowp-component-option-head">
+      <article v-for="(item, index) in additionalOption.options" v-else :key="index" class="ascwo-component-option">
+        <header class="ascwo-component-option-head">
           <div>
             <h3>{{ item.title || `Option ${index + 1}` }}</h3>
             <p>{{ optionSummary(item) }}</p>
           </div>
-          <div class="asowp-component-option-actions">
+          <div class="ascwo-component-option-actions">
             <span>Default</span>
-            <button type="button" :class="['asowp-component-toggle', item.isDefault ? 'is-active' : '']" @click="setDefault(index)"><span></span></button>
-            <button type="button" class="asowp-component-danger" @click="removeOption(index)">
+            <button type="button" :class="['ascwo-component-toggle', item.isDefault ? 'is-active' : '']" @click="setDefault(index)"><span></span></button>
+            <button type="button" class="ascwo-component-danger" @click="removeOption(index)">
               <Trash2Icon :size="14" />
               Remove
             </button>
-            <button type="button" class="asowp-component-secondary" @click="toggleOption(index)">
+            <button type="button" class="ascwo-component-secondary" @click="toggleOption(index)">
               <ChevronUpIcon v-if="expandedOption === index" :size="14" />
               <ChevronDownIcon v-else :size="14" />
               {{ expandedOption === index ? 'Collapse' : 'Expand' }}
@@ -60,46 +60,46 @@
           </div>
         </header>
 
-        <div v-if="expandedOption === index" class="asowp-component-option-body">
-          <div class="asowp-component-grid asowp-component-grid-2">
-            <label class="asowp-component-field">
+        <div v-if="expandedOption === index" class="ascwo-component-option-body">
+          <div class="ascwo-component-grid ascwo-component-grid-2">
+            <label class="ascwo-component-field">
               <span>Title</span>
               <input v-model="item.title" type="text" />
             </label>
-            <label class="asowp-component-field">
+            <label class="ascwo-component-field">
               <span>Description</span>
               <input v-model="item.description" type="text" />
             </label>
           </div>
 
-          <div class="asowp-component-grid asowp-component-grid-2">
-            <label class="asowp-component-field">
+          <div class="ascwo-component-grid ascwo-component-grid-2">
+            <label class="ascwo-component-field">
               <span>Option icon</span>
               <UploadControl :value="item.icon" label="Upload icon" @choose="openMedia(item, 'icon', 'Select option icon')" @clear="item.icon = ''" />
             </label>
-            <label class="asowp-component-field">
+            <label class="ascwo-component-field">
               <span>Popup image</span>
               <UploadControl :value="item.popImg" label="Upload image" @choose="openMedia(item, 'popImg', 'Select popup image')" @clear="item.popImg = ''" />
             </label>
           </div>
 
-          <div class="asowp-component-grid asowp-component-grid-2">
-            <label class="asowp-component-field">
+          <div class="ascwo-component-grid ascwo-component-grid-2">
+            <label class="ascwo-component-field">
               <span>Preview image</span>
               <UploadControl :value="item.image" label="Upload preview" @choose="openMedia(item, 'image', 'Select preview image')" @clear="item.image = ''" />
             </label>
-            <label class="asowp-component-field">
+            <label class="ascwo-component-field">
               <span>Additional price</span>
               <input v-model.number="item.additionalPrice" type="number" />
             </label>
           </div>
 
-          <div class="asowp-component-grid asowp-component-grid-2">
-            <label class="asowp-component-field">
+          <div class="ascwo-component-grid ascwo-component-grid-2">
+            <label class="ascwo-component-field">
               <span>Exclude colors</span>
               <Multiselect
                 v-model="item.excludeColors"
-                mode="multiple"
+                mode="tags"
                 :options="materialColors"
                 label="name"
                 valueProp="name"
@@ -108,12 +108,12 @@
               />
               <small>No color exclusion.</small>
             </label>
-            <div class="asowp-component-surface">
-              <div class="asowp-component-inline">
+            <div class="ascwo-component-surface">
+              <div class="ascwo-component-inline">
                 <span>Enable pricing by surface</span>
-                <button type="button" :class="['asowp-component-toggle', item.enablePricingBySurface ? 'is-active' : '']" @click="item.enablePricingBySurface = !item.enablePricingBySurface"><span></span></button>
+                <button type="button" :class="['ascwo-component-toggle', item.enablePricingBySurface ? 'is-active' : '']" @click="item.enablePricingBySurface = !item.enablePricingBySurface"><span></span></button>
               </div>
-              <label class="asowp-component-field">
+              <label class="ascwo-component-field">
                 <span>Surface</span>
                 <input v-model.number="item.surface" type="number" :disabled="!item.enablePricingBySurface" />
               </label>
@@ -122,15 +122,15 @@
         </div>
       </article>
 
-      <button type="button" class="asowp-component-secondary asowp-component-add-option" @click="addOption">
+      <button type="button" class="ascwo-component-secondary ascwo-component-add-option" @click="addOption">
         <PlusIcon :size="14" />
         Add option
       </button>
     </div>
 
-    <footer class="asowp-component-footer">
-      <button type="button" class="asowp-component-secondary" :disabled="isLoading" @click="goBack">Back to additional components</button>
-      <button type="button" class="asowp-component-primary" :disabled="isLoading" @click="saveComponent">
+    <footer class="ascwo-component-footer">
+      <button type="button" class="ascwo-component-secondary" :disabled="isLoading" @click="goBack">Back to additional components</button>
+      <button type="button" class="ascwo-component-primary" :disabled="isLoading" @click="saveComponent">
         {{ isLoading ? 'Saving...' : 'Save additional component' }}
       </button>
     </footer>
@@ -291,9 +291,9 @@ const UploadControl = defineComponent({
   emits: ['choose', 'clear'],
   setup(props, { emit }) {
     return () =>
-      h('div', { class: 'asowp-component-upload' }, [
-        h('button', { type: 'button', class: 'asowp-component-primary asowp-component-upload-button', onClick: () => emit('choose') }, props.label),
-        h('div', { class: 'asowp-component-upload-preview' }, [
+      h('div', { class: 'ascwo-component-upload' }, [
+        h('button', { type: 'button', class: 'ascwo-component-primary ascwo-component-upload-button', onClick: () => emit('choose') }, props.label),
+        h('div', { class: 'ascwo-component-upload-preview' }, [
           props.value ? h('img', { src: props.value, alt: '' }) : null,
           props.value ? h('button', { type: 'button', onClick: () => emit('clear') }, 'x') : null,
         ]),
@@ -303,26 +303,26 @@ const UploadControl = defineComponent({
 </script>
 
 <style>
-.asowp-component-editor {
+.ascwo-component-editor {
   display: grid;
   gap: 12px;
   color: #303030;
   font-size: 13px;
 }
 
-.asowp-component-card {
+.ascwo-component-card {
   background: #fff;
   border: 1px solid #d8dee4;
   border-radius: 8px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
 }
 
-.asowp-component-hero {
+.ascwo-component-hero {
   padding: 24px 28px;
 }
 
-.asowp-component-hero h1,
-.asowp-component-options h2 {
+.ascwo-component-hero h1,
+.ascwo-component-options h2 {
   margin: 0;
   color: #303030;
   font-size: 18px;
@@ -330,46 +330,46 @@ const UploadControl = defineComponent({
   line-height: 1.25;
 }
 
-.asowp-component-hero p,
-.asowp-component-options p,
-.asowp-component-option p {
+.ascwo-component-hero p,
+.ascwo-component-options p,
+.ascwo-component-option p {
   margin: 4px 0 0;
   color: #5f6368;
   font-size: 12px;
   line-height: 1.35;
 }
 
-.asowp-component-details,
-.asowp-component-options {
+.ascwo-component-details,
+.ascwo-component-options {
   display: grid;
   gap: 14px;
   padding: 24px 28px;
 }
 
-.asowp-component-grid {
+.ascwo-component-grid {
   display: grid;
   gap: 14px 18px;
 }
 
-.asowp-component-grid-2 {
+.ascwo-component-grid-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.asowp-component-field {
+.ascwo-component-field {
   display: grid;
   gap: 6px;
   margin: 0;
 }
 
-.asowp-component-field span,
-.asowp-component-inline span {
+.ascwo-component-field span,
+.ascwo-component-inline span {
   color: #303030;
   font-size: 12px;
   font-weight: 500;
 }
 
-.asowp-component-field input,
-.asowp-component-field select {
+.ascwo-component-field input,
+.ascwo-component-field select {
   width: 100%;
   min-height: 34px;
   padding: 6px 10px;
@@ -380,22 +380,22 @@ const UploadControl = defineComponent({
   font-size: 13px;
 }
 
-.asowp-component-field select[multiple] {
+.ascwo-component-field select[multiple] {
   min-height: 34px;
 }
 
-.asowp-component-field input:disabled {
+.ascwo-component-field input:disabled {
   border-color: #e1e3e5;
   background: #f4f4f4;
   color: #8c9196;
 }
 
-.asowp-component-field small {
+.ascwo-component-field small {
   color: #5f6368;
   font-size: 11px;
 }
 
-.asowp-component-upload {
+.ascwo-component-upload {
   display: flex;
   align-items: center;
   min-height: 34px;
@@ -406,12 +406,12 @@ const UploadControl = defineComponent({
   background: #fff;
 }
 
-.asowp-component-upload-button {
+.ascwo-component-upload-button {
   min-height: 26px;
   padding: 5px 12px;
 }
 
-.asowp-component-upload-preview {
+.ascwo-component-upload-preview {
   position: relative;
   width: 44px;
   height: 30px;
@@ -419,13 +419,13 @@ const UploadControl = defineComponent({
   border-left: 1px solid #e1e3e5;
 }
 
-.asowp-component-upload-preview img {
+.ascwo-component-upload-preview img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.asowp-component-upload-preview button {
+.ascwo-component-upload-preview button {
   position: absolute;
   top: 0;
   right: 0;
@@ -434,54 +434,54 @@ const UploadControl = defineComponent({
   color: #fff;
 }
 
-.asowp-component-option {
+.ascwo-component-option {
   border: 1px solid #d8dee4;
   border-radius: 8px;
   background: #fff;
   padding: 16px 20px;
 }
 
-.asowp-component-option-head {
+.ascwo-component-option-head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
 }
 
-.asowp-component-option h3 {
+.ascwo-component-option h3 {
   margin: 0;
   color: #303030;
   font-size: 13px;
   font-weight: 800;
 }
 
-.asowp-component-option-actions,
-.asowp-component-inline {
+.ascwo-component-option-actions,
+.ascwo-component-inline {
   display: inline-flex;
   align-items: center;
   gap: 8px;
 }
 
-.asowp-component-option-actions > span {
+.ascwo-component-option-actions > span {
   color: #5f6368;
   font-size: 11px;
 }
 
-.asowp-component-option-body {
+.ascwo-component-option-body {
   display: grid;
   gap: 14px;
   margin-top: 18px;
 }
 
-.asowp-component-surface {
+.ascwo-component-surface {
   display: grid;
   gap: 8px;
   align-content: start;
 }
 
-.asowp-component-primary,
-.asowp-component-secondary,
-.asowp-component-danger {
+.ascwo-component-primary,
+.ascwo-component-secondary,
+.ascwo-component-danger {
   appearance: none;
   display: inline-flex;
   align-items: center;
@@ -498,36 +498,36 @@ const UploadControl = defineComponent({
   text-decoration: none;
 }
 
-.asowp-component-primary,
-.asowp-component-primary:hover,
-.asowp-component-primary:focus {
+.ascwo-component-primary,
+.ascwo-component-primary:hover,
+.ascwo-component-primary:focus {
   color: #fff;
   background: #007a73;
   border: 1px solid #006c67;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
-.asowp-component-secondary,
-.asowp-component-secondary:hover,
-.asowp-component-secondary:focus {
+.ascwo-component-secondary,
+.ascwo-component-secondary:hover,
+.ascwo-component-secondary:focus {
   color: #111827;
   background: #fff;
   border: 1px solid #c9cccf;
 }
 
-.asowp-component-danger,
-.asowp-component-danger:hover,
-.asowp-component-danger:focus {
+.ascwo-component-danger,
+.ascwo-component-danger:hover,
+.ascwo-component-danger:focus {
   color: #8a0f00;
   background: transparent;
   border: 0;
 }
 
-.asowp-component-add-option {
+.ascwo-component-add-option {
   justify-self: flex-start;
 }
 
-.asowp-component-toggle {
+.ascwo-component-toggle {
   position: relative;
   width: 40px;
   height: 22px;
@@ -539,7 +539,7 @@ const UploadControl = defineComponent({
   box-shadow: none;
 }
 
-.asowp-component-toggle span {
+.ascwo-component-toggle span {
   position: absolute;
   top: 2px;
   left: 2px;
@@ -551,33 +551,33 @@ const UploadControl = defineComponent({
   transition: transform 0.15s ease;
 }
 
-.asowp-component-toggle.is-active {
+.ascwo-component-toggle.is-active {
   background: #007a73;
 }
 
-.asowp-component-toggle.is-active span {
+.ascwo-component-toggle.is-active span {
   transform: translateX(18px);
 }
 
-.asowp-component-footer {
+.ascwo-component-footer {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
 }
 
-.asowp-component-empty {
+.ascwo-component-empty {
   padding: 40px;
   text-align: center;
   color: #5f6368;
 }
 
 @media (max-width: 900px) {
-  .asowp-component-grid-2,
-  .asowp-component-option-head {
+  .ascwo-component-grid-2,
+  .ascwo-component-option-head {
     grid-template-columns: 1fr;
   }
 
-  .asowp-component-option-head {
+  .ascwo-component-option-head {
     display: grid;
   }
 }

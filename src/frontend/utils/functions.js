@@ -5,7 +5,7 @@ async function add_to_cart(ajax_url, cart_data, nonce, redirectToCheckOut) {
     const response = await axios.post(
       ajax_url,
       {
-        action: "asowp_add_custom_design_to_cart",
+        action: "ascwo_add_custom_design_to_cart",
         data: cart_data,
         redirectToCheckOut: redirectToCheckOut,
         nonce: nonce,
@@ -14,7 +14,7 @@ async function add_to_cart(ajax_url, cart_data, nonce, redirectToCheckOut) {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      }
+      },
     );
     const data = response?.data || {};
     const redirecting = Boolean(data.cart_item_key && data.url);
@@ -40,71 +40,73 @@ async function add_to_cart(ajax_url, cart_data, nonce, redirectToCheckOut) {
 }
 function formatPrice(price) {
   let formattedPrice = parseFloat(
-    price + parseFloat(asowp_configurator_data.regularPrice)
-  ).toFixed(asowp_configurator_data.decimals);
+    price + parseFloat(ascwo_configurator_data.regularPrice),
+  ).toFixed(ascwo_configurator_data.decimals);
 
-  switch (asowp_configurator_data.currency_pos) {
+  switch (ascwo_configurator_data.currency_pos) {
     case "left":
-      formattedPrice = asowp_configurator_data.currencySymbol + formattedPrice;
+      formattedPrice = ascwo_configurator_data.currencySymbol + formattedPrice;
       break;
     case "right":
-      formattedPrice = formattedPrice + asowp_configurator_data.currencySymbol;
+      formattedPrice = formattedPrice + ascwo_configurator_data.currencySymbol;
       break;
     case "left_space":
       formattedPrice =
-        asowp_configurator_data.currencySymbol + " " + formattedPrice;
+        ascwo_configurator_data.currencySymbol + " " + formattedPrice;
       break;
     case "right_space":
       formattedPrice =
-        formattedPrice + " " + asowp_configurator_data.currencySymbol;
+        formattedPrice + " " + ascwo_configurator_data.currencySymbol;
       break;
   }
 
   // Remplacez le séparateur décimal et des milliers
   formattedPrice = formattedPrice.replace(
     ".",
-    asowp_configurator_data.decimalSep
+    ascwo_configurator_data.decimalSep,
   );
   formattedPrice = formattedPrice.replace(
     /(\d)(?=(\d{3})+(?!\d))/g,
-    "$1" + asowp_configurator_data.thousandSep
+    "$1" + ascwo_configurator_data.thousandSep,
   );
 
   return formattedPrice;
 }
 function addformatToPrice(price) {
-  let formattedPrice = parseFloat( price ).toFixed(asowp_configurator_data.decimals);
+  let formattedPrice = parseFloat(price).toFixed(
+    ascwo_configurator_data.decimals,
+  );
 
-  switch (asowp_configurator_data.currency_pos) {
+  switch (ascwo_configurator_data.currency_pos) {
     case "left":
-      formattedPrice = asowp_configurator_data.currencySymbol + formattedPrice;
+      formattedPrice = ascwo_configurator_data.currencySymbol + formattedPrice;
       break;
     case "right":
-      formattedPrice = formattedPrice + asowp_configurator_data.currencySymbol;
+      formattedPrice = formattedPrice + ascwo_configurator_data.currencySymbol;
       break;
     case "left_space":
       formattedPrice =
-        asowp_configurator_data.currencySymbol + " " + formattedPrice;
+        ascwo_configurator_data.currencySymbol + " " + formattedPrice;
       break;
     case "right_space":
       formattedPrice =
-        formattedPrice + " " + asowp_configurator_data.currencySymbol;
+        formattedPrice + " " + ascwo_configurator_data.currencySymbol;
       break;
   }
 
   // Remplacez le séparateur décimal et des milliers
   formattedPrice = formattedPrice.replace(
     ".",
-    asowp_configurator_data.decimalSep
+    ascwo_configurator_data.decimalSep,
   );
   formattedPrice = formattedPrice.replace(
     /(\d)(?=(\d{3})+(?!\d))/g,
-    "$1" + asowp_configurator_data.thousandSep
+    "$1" + ascwo_configurator_data.thousandSep,
   );
 
   return formattedPrice;
 }
-// const qtyInput = document.getElementById('asowp-quantity');
+// const qtyInput = document.getElementById('ascwo-quantity');
 // qtyInput.addEventListener('input', () => {
 //   if (qtyInput.value < 1) {
 //     qtyInput.value = 1;
@@ -112,7 +114,7 @@ function addformatToPrice(price) {
 // });
 
 function setScrollColor(color) {
-  document.documentElement.style.setProperty("--asowp-scrollBar-color", color);
+  document.documentElement.style.setProperty("--ascwo-scrollBar-color", color);
 }
 
 export { add_to_cart, formatPrice, addformatToPrice, setScrollColor };

@@ -1,5 +1,5 @@
 <?php
-namespace ASOWP\Api\Admin;
+namespace ASCWO\Api\Admin;
 
 use WP_Error;
 use WP_Post;
@@ -8,7 +8,7 @@ use WP_REST_Controller;
 
 
 
-class ASOWP_Api_Templates_Categories extends WP_REST_Controller
+class ASCWO_Api_Templates_Categories extends WP_REST_Controller
 {
 
     /**
@@ -16,7 +16,7 @@ class ASOWP_Api_Templates_Categories extends WP_REST_Controller
      */
     public function __construct()
     {
-        $this->namespace = 'asowp/v1';
+        $this->namespace = 'ascwo/v1';
         $this->rest_base = 'categories';
     }
     /**
@@ -91,12 +91,12 @@ class ASOWP_Api_Templates_Categories extends WP_REST_Controller
     public function add_category_to_templates_categories($request)
     {
         $data = $request->get_body();
-        $all_categories = get_option("asowp-templates-categories", []);
+        $all_categories = get_option("ascwo-templates-categories", []);
         $key = uniqid();
         $all_categories[$key] = $data;
-        $update = update_option("asowp-templates-categories", $all_categories);
+        $update = update_option("ascwo-templates-categories", $all_categories);
         if ($update) {
-            return rest_ensure_response(["success" => true, "message" => __("Category created with success", "all-signs-options-pro"), "categories" => $all_categories, "key" => $key]);
+            return rest_ensure_response(["success" => true, "message" => __("Category created with success", "all-signs-customizer-for-woocommerce-pro"), "categories" => $all_categories, "key" => $key]);
         } else {
             return rest_ensure_response(["success" => false, "message" => "Registration failed"]);
         }
@@ -108,13 +108,13 @@ class ASOWP_Api_Templates_Categories extends WP_REST_Controller
      */
     public function get_templates_categories($request)
     {
-        //$update = update_option("asowp-templates-categories",[]);
-        $all_categories = get_option("asowp-templates-categories", []);
+        //$update = update_option("ascwo-templates-categories",[]);
+        $all_categories = get_option("ascwo-templates-categories", []);
 
         if (count($all_categories) != 0) {
             return rest_ensure_response($all_categories);
         } else {
-            return rest_ensure_response(["message" => __("No Category Found", "all-signs-options-pro")]);
+            return rest_ensure_response(["message" => __("No Category Found", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
     /**
@@ -125,11 +125,11 @@ class ASOWP_Api_Templates_Categories extends WP_REST_Controller
     public function get_template_category($request)
     {
         $category_id = $request->get_param('category_id');
-        $all_categories = get_option("asowp-templates-categories", []);
+        $all_categories = get_option("ascwo-templates-categories", []);
         if (isset($all_categories[$category_id])) {
             return rest_ensure_response($all_categories[$category_id]);
         } else {
-            return rest_ensure_response(["success" => false, "message" => __('Category not found', "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __('Category not found', "all-signs-customizer-for-woocommerce-pro")]);
         }
 
     }
@@ -144,21 +144,21 @@ class ASOWP_Api_Templates_Categories extends WP_REST_Controller
     {
         $category = $request->get_body();
         $category_id = $request->get_param('category_id');
-        $all_categories = get_option("asowp-templates-categories", []);
+        $all_categories = get_option("ascwo-templates-categories", []);
         if (isset($all_categories[$category_id])) {
             if ($all_categories[$category_id] != $category) {
                 $all_categories[$category_id] = $category;
-                $update = update_option("asowp-templates-categories", $all_categories);
+                $update = update_option("ascwo-templates-categories", $all_categories);
                 if ($update) {
-                    return rest_ensure_response(array('success' => true, "message" => __("The category has been updated with success", "all-signs-options-pro"), "categories" => $all_categories));
+                    return rest_ensure_response(array('success' => true, "message" => __("The category has been updated with success", "all-signs-customizer-for-woocommerce-pro"), "categories" => $all_categories));
                 } else {
-                    return rest_ensure_response(array('success' => false, "message" => __("Category update failed", "all-signs-options-pro")));
+                    return rest_ensure_response(array('success' => false, "message" => __("Category update failed", "all-signs-customizer-for-woocommerce-pro")));
                 }
             } else {
-                return rest_ensure_response(array('success' => "same", "message" => __("No change observed in category", "all-signs-options-pro"), "categories" => $all_categories));
+                return rest_ensure_response(array('success' => "same", "message" => __("No change observed in category", "all-signs-customizer-for-woocommerce-pro"), "categories" => $all_categories));
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __('Category not found', "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __('Category not found', "all-signs-customizer-for-woocommerce-pro")]);
         }
 
     }
@@ -172,17 +172,17 @@ class ASOWP_Api_Templates_Categories extends WP_REST_Controller
     public function delete_templates_categories_config($request)
     {
         $category_id = $request->get_param('category_id');
-        $all_categories = get_option("asowp-templates-categories", []);
+        $all_categories = get_option("ascwo-templates-categories", []);
         if (isset($all_categories[$category_id])) {
             unset($all_categories[$category_id]);
-            $update = update_option("asowp-templates-categories", $all_categories);
+            $update = update_option("ascwo-templates-categories", $all_categories);
             if ($update) {
-                return rest_ensure_response(["success" => true, "message" => __("The category was well removed", "all-signs-options-pro"), "categories" => $all_categories]);
+                return rest_ensure_response(["success" => true, "message" => __("The category was well removed", "all-signs-customizer-for-woocommerce-pro"), "categories" => $all_categories]);
             } else {
-                return rest_ensure_response(["success" => false, "message" => __("Deleting the category failed", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => false, "message" => __("Deleting the category failed", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __('Category not found', "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __('Category not found', "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
 

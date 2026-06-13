@@ -1,7 +1,7 @@
 (function ($) {
   "use strict";
   $(function () {
-    $(document).on("click", ".asowp_admin_generate_zip_file", function (e) {
+    $(document).on("click", ".ascwo_admin_generate_zip_file", function (e) {
       e.preventDefault();
       $(this).prop("disabled", true);
       $(this).find("img").show();
@@ -10,7 +10,7 @@
       $.post(
         ajaxurl,
         {
-          action: "asowp_generate_order_zip_file",
+          action: "ascwo_generate_order_zip_file",
           nonce: nonce,
           item_id: item_id,
         },
@@ -21,7 +21,7 @@
             $(this).find("img").hide();
             console.error(data.error);
           }
-        }
+        },
       );
     });
 
@@ -33,45 +33,45 @@
         var variation_id = $("input[name='variation_id']").val();
 
         if (variation_id) {
-          $(".asowp-buttons-wrap-variation").hide();
+          $(".ascwo-buttons-wrap-variation").hide();
           $(
-            ".asowp-buttons-wrap-variation[data-id='" + variation_id + "']"
+            ".ascwo-buttons-wrap-variation[data-id='" + variation_id + "']",
           ).show();
 
           if (typeof hide_cart_button !== "undefined") {
             if (
-              $(".asowp-buttons-wrap-variation[data-id='" + variation_id + "']")
+              $(".ascwo-buttons-wrap-variation[data-id='" + variation_id + "']")
                 .length > 0 &&
               hide_cart_button === true
             ) {
-              $(".asowp-buttons-wrap-variation")
+              $(".ascwo-buttons-wrap-variation")
                 .parent()
                 .find(".add_to_cart_button")
                 .hide();
-              $(".asowp-buttons-wrap-variation")
+              $(".ascwo-buttons-wrap-variation")
                 .parent()
                 .find(".single_add_to_cart_button")
                 .hide();
             } else {
-              $(".asowp-buttons-wrap-variation")
+              $(".ascwo-buttons-wrap-variation")
                 .parent()
                 .find(".add_to_cart_button")
                 .show();
-              $(".asowp-buttons-wrap-variation")
+              $(".ascwo-buttons-wrap-variation")
                 .parent()
                 .find(".single_add_to_cart_button")
                 .show();
             }
           }
         }
-      }
+      },
     );
 
     $(".single_variation_wrap").on(
       "hide_variation",
       function (event, variation) {
-        $(".asowp-buttons-wrap-variation").hide();
-      }
+        $(".ascwo-buttons-wrap-variation").hide();
+      },
     );
 
     var cartForm = $(".woocommerce-cart-form");

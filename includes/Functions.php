@@ -5,19 +5,19 @@ if (!defined('ABSPATH'))
 /**
  * save preview image
  */
-function asowp_save_prev_images($images)
+function ascwo_save_prev_images($images)
 {
-    $upload_dirs = ASOWP_IMAGE_PATH;
+    $upload_dirs = ASCWO_IMAGE_PATH;
     wp_mkdir_p($upload_dirs);
     $upload_dir = $upload_dirs . DIRECTORY_SEPARATOR;
-    $name = uniqid('asowp-');
+    $name = uniqid('ascwo-');
     $preview_img = [];
     if (!isset($images["face1"])) {
         foreach ($images as $key => $image) {
             $file = base64_decode(explode(',', $image["url"])[1]);
             $file_name = $upload_dir . $name . "." . $image['format'];
             file_put_contents($file_name, $file); // phpcs:ignore
-            $preview_img[] = ASOWP_IMAGE_URL . '/' . $name . '.' . $image['format'];
+            $preview_img[] = ASCWO_IMAGE_URL . '/' . $name . '.' . $image['format'];
         }
 
     } else {
@@ -27,7 +27,7 @@ function asowp_save_prev_images($images)
                 $file = base64_decode(explode(',', $image["url"])[1]);
                 $file_name = $upload_dir . $name . $key . "." . $image['format'];
                 file_put_contents($file_name, $file); // phpcs:ignore
-                $preview_img[$key][] = ASOWP_IMAGE_URL . '/' . $name . $key . "." . $image['format'];
+                $preview_img[$key][] = ASCWO_IMAGE_URL . '/' . $name . $key . "." . $image['format'];
             }
         }
     }
@@ -37,9 +37,9 @@ function asowp_save_prev_images($images)
 /**
  * save preview image
  */
-function asowp_save_upload_images($images)
+function ascwo_save_upload_images($images)
 {
-    $upload_dirs = ASOWP_IMAGE_PATH;
+    $upload_dirs = ASCWO_IMAGE_PATH;
     wp_mkdir_p($upload_dirs);
     $upload_dir = $upload_dirs . DIRECTORY_SEPARATOR;
     $preview_imgs = [];
@@ -52,20 +52,20 @@ function asowp_save_upload_images($images)
                     $file_data = base64_decode(explode(',', $image["url"])[1]);
                     $file_extension = explode('/', mime_content_type($image["url"]))[1];
                     $file_extension = explode("+", $file_extension)[0];
-                    $name = uniqid('asowp-');
+                    $name = uniqid('ascwo-');
                     $file_name = $upload_dir . "$name-$key-file_{$index}.{$file_extension}";
                     file_put_contents($file_name, $file_data); // phpcs:ignore
-                    $preview_imgs[$key][] = ["name" => "$name-$key-file_{$index}.{$file_extension}", "url" => ASOWP_IMAGE_URL . "/$name-$key-file_{$index}.{$file_extension}"];
+                    $preview_imgs[$key][] = ["name" => "$name-$key-file_{$index}.{$file_extension}", "url" => ASCWO_IMAGE_URL . "/$name-$key-file_{$index}.{$file_extension}"];
                 } else {
                     // Handle URL
                     $response = wp_remote_get($image["url"]);
                     if (is_array($response) && !is_wp_error($response)) {
                         $file_data = wp_remote_retrieve_body($response);
                         $file_extension = pathinfo($image["url"], PATHINFO_EXTENSION);
-                        $name = uniqid('asowp-');
+                        $name = uniqid('ascwo-');
                         $file_name = $upload_dir . "$name-$key-file_{$index}.{$file_extension}";
                         file_put_contents($file_name, $file_data); // phpcs:ignore
-                        $preview_imgs[$key][] = ["name" => "$name-$key-file_{$index}.{$file_extension}", "url" => ASOWP_IMAGE_URL . "/$name-$key-file_{$index}.{$file_extension}"];
+                        $preview_imgs[$key][] = ["name" => "$name-$key-file_{$index}.{$file_extension}", "url" => ASCWO_IMAGE_URL . "/$name-$key-file_{$index}.{$file_extension}"];
                     }
                 }
             }
@@ -78,20 +78,20 @@ function asowp_save_upload_images($images)
                     $file_data = base64_decode(explode(',', $image["url"])[1]);
                     $file_extension = explode('/', mime_content_type($image["url"]))[1];
                     $file_extension = explode("+", $file_extension)[0];
-                    $name = uniqid('asowp-');
+                    $name = uniqid('ascwo-');
                     $file_name = $upload_dir . "$name-file_{$index}.{$file_extension}";
                     file_put_contents($file_name, $file_data); // phpcs:ignore
-                    $preview_imgs[] = ["name" => "$name-file_{$index}.{$file_extension}", "url" => ASOWP_IMAGE_URL . "/$name-file_{$index}.{$file_extension}"];
+                    $preview_imgs[] = ["name" => "$name-file_{$index}.{$file_extension}", "url" => ASCWO_IMAGE_URL . "/$name-file_{$index}.{$file_extension}"];
                 } else {
                     // Handle URL
                     $response = wp_remote_get($image["url"]);
                     if (is_array($response) && !is_wp_error($response)) {
                         $file_data = wp_remote_retrieve_body($response);
                         $file_extension = pathinfo($image["url"], PATHINFO_EXTENSION);
-                        $name = uniqid('asowp-');
+                        $name = uniqid('ascwo-');
                         $file_name = $upload_dir . "$name-file_{$index}.{$file_extension}";
                         file_put_contents($file_name, $file_data); // phpcs:ignore
-                        $preview_imgs[] = ["name" => "$name-file_{$index}.{$file_extension}", "url" => ASOWP_IMAGE_URL . "/$name-file_{$index}.{$file_extension}"];
+                        $preview_imgs[] = ["name" => "$name-file_{$index}.{$file_extension}", "url" => ASCWO_IMAGE_URL . "/$name-file_{$index}.{$file_extension}"];
                     }
                 }
             }
@@ -104,9 +104,9 @@ function asowp_save_upload_images($images)
 /**
  * add or edit product to cart
  */
-function asowp_add_custom_design_to_cart_ajax()
+function ascwo_add_custom_design_to_cart_ajax()
 {
-    if (isset($_POST['nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'asowp_add_to_cart_after_custom')) {
+    if (isset($_POST['nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ascwo_add_to_cart_after_custom')) {
 
         if (isset($_POST['data']['variation_id'])) {
             $redirectToCheckOut = isset($_POST['redirectToCheckOut']) ? $_POST['redirectToCheckOut'] : false;
@@ -117,8 +117,8 @@ function asowp_add_custom_design_to_cart_ajax()
             $message = '';
 
             $newly_added_cart_item_key = false;
-            $asowp_previews = asowp_save_prev_images($recaps["designImages"]);
-            $uploads = asowp_save_upload_images($recaps['images']["value"]);
+            $ascwo_previews = ascwo_save_prev_images($recaps["designImages"]);
+            $uploads = ascwo_save_upload_images($recaps['images']["value"]);
             if (isset($uploads["face1"])) {
                 foreach ($uploads as $key => $face) {
                     foreach ($face as $index => $upload) {
@@ -132,18 +132,18 @@ function asowp_add_custom_design_to_cart_ajax()
                     $recaps['images']["value"][$key]["infos"] = $upload;
                 }
             }
-            //$preview_img = ASOWP_IMAGE_URL . '/' . $file_name . '.png';
+            //$preview_img = ASCWO_IMAGE_URL . '/' . $file_name . '.png';
             if ($cart_item_key) {
-                WC()->cart->cart_contents[$cart_item_key]['asowp_recaps'] = $recaps;
+                WC()->cart->cart_contents[$cart_item_key]['ascwo_recaps'] = $recaps;
                 WC()->cart->calculate_totals();
                 wp_send_json(array(
                     'success' => true
                 ));
             } else {
-                $newly_added_cart_item_key = asowp_add_designs_to_cart($main_variation_id, $recaps, $asowp_previews, $quantity);
+                $newly_added_cart_item_key = ascwo_add_designs_to_cart($main_variation_id, $recaps, $ascwo_previews, $quantity);
 
                 if ($newly_added_cart_item_key) {
-                    $message = __('Product successfully added to cart.', "all-signs-options-pro");
+                    $message = __('Product successfully added to cart.', "all-signs-customizer-for-woocommerce-pro");
                     if ($redirectToCheckOut === "true" || $redirectToCheckOut === true) {
                         $url = wc_get_checkout_url();
                     } else {
@@ -158,7 +158,7 @@ function asowp_add_custom_design_to_cart_ajax()
 
                     ));
                 } else {
-                    $message = __('A problem occured while adding the product to the cart. Please try again.', "all-signs-options-pro");
+                    $message = __('A problem occured while adding the product to the cart. Please try again.', "all-signs-customizer-for-woocommerce-pro");
                     wp_send_json(array(
                         'success' => false,
                         'message' => $message,
@@ -168,7 +168,7 @@ function asowp_add_custom_design_to_cart_ajax()
 
             }
         } else {
-            wp_send_json(array('message' => __("Missing product ID", "all-signs-options-pro")));
+            wp_send_json(array('message' => __("Missing product ID", "all-signs-customizer-for-woocommerce-pro")));
         }
     } else {
         wp_send_json(array('message' => 'nonce invalid.'));
@@ -178,7 +178,7 @@ function asowp_add_custom_design_to_cart_ajax()
 /**
  *  add product to cart
  */
-function asowp_add_designs_to_cart(int $product_id, array $recaps, $images, int $quantity = 1)
+function ascwo_add_designs_to_cart(int $product_id, array $recaps, $images, int $quantity = 1)
 {
     $newly_added_cart_item_key = false;
     $product = wc_get_product($product_id);
@@ -196,7 +196,7 @@ function asowp_add_designs_to_cart(int $product_id, array $recaps, $images, int 
             0,
             array(),
             array(
-                'asowp_meta_data' => [
+                'ascwo_meta_data' => [
                     "recaps" => $recaps
                 ]
             )
@@ -210,7 +210,7 @@ function asowp_add_designs_to_cart(int $product_id, array $recaps, $images, int 
             $variation_id,
             $variation,
             array(
-                'asowp_meta_data' => [
+                'ascwo_meta_data' => [
                     "recaps" => $recaps
                 ]
             )
@@ -249,9 +249,9 @@ function asowp_add_designs_to_cart(int $product_id, array $recaps, $images, int 
 /**
  *  includes ajax in plugin 
  */
-add_action('wp_ajax_asowp_add_custom_design_to_cart', 'asowp_add_custom_design_to_cart_ajax');
-add_action('wp_ajax_nopriv_asowp_add_custom_design_to_cart', 'asowp_add_custom_design_to_cart_ajax');
-function asowp_get_price_format()
+add_action('wp_ajax_ascwo_add_custom_design_to_cart', 'ascwo_add_custom_design_to_cart_ajax');
+add_action('wp_ajax_nopriv_ascwo_add_custom_design_to_cart', 'ascwo_add_custom_design_to_cart_ajax');
+function ascwo_get_price_format()
 {
     $currency_pos = get_option('woocommerce_currency_pos');
     $format = '%s%v';
@@ -275,7 +275,7 @@ function asowp_get_price_format()
     }
     return $format;
 }
-function asowp_get_custom_products()
+function ascwo_get_custom_products()
 {
     $args = [
         'post_type' => 'product',
@@ -283,7 +283,7 @@ function asowp_get_custom_products()
         'fields' => 'ids',
         'meta_query' => [
             [
-                'key' => 'product-asowp-metas',
+                'key' => 'product-ascwo-metas',
                 'value' => 'config-id";s:1:"0"',
                 'compare' => 'NOT LIKE',
             ],
@@ -305,19 +305,20 @@ function asowp_get_custom_products()
  *
  * @param mixed  $data  Données à sauvegarder.
  * @param string $name  Nom du fichier (sans extension).
- * @param string $path  Chemin relatif du dossier (ex: 'asowp-templates').
+ * @param string $path  Chemin relatif du dossier (ex: 'ascwo-templates').
  *
  * @return string|null URL du fichier JSON si succès, null si erreur.
  */
-function asowp_save_large_data($data, $name, $path) {
+function ascwo_save_large_data($data, $name, $path)
+{
     // Vérifier si les données sont valides
     if (empty($data)) {
         return null;
     }
 
     // Définition des chemins
-    $base_dir = trailingslashit(ASOWP_DATA_PATH) . trim($path, '/') . '/';
-    $base_url = trailingslashit(ASOWP_DATA_URL) . trim($path, '/') . '/';
+    $base_dir = trailingslashit(ASCWO_DATA_PATH) . trim($path, '/') . '/';
+    $base_url = trailingslashit(ASCWO_DATA_URL) . trim($path, '/') . '/';
 
     // Création du dossier s'il n'existe pas
     wp_mkdir_p($base_dir);
@@ -344,10 +345,11 @@ function asowp_save_large_data($data, $name, $path) {
  *
  * @return mixed Données JSON décodées ou null si fichier inexistant.
  */
-function asowp_get_large_data($path) {
+function ascwo_get_large_data($path)
+{
     // Remplace l'URL par le chemin réel
     $path = stripslashes($path);
-    $path = str_replace(ASOWP_DATA_URL, ASOWP_DATA_PATH, $path);
+    $path = str_replace(ASCWO_DATA_URL, ASCWO_DATA_PATH, $path);
 
     // Vérifier si le fichier existe et récupérer son contenu
     if (file_exists($path)) {
@@ -358,9 +360,10 @@ function asowp_get_large_data($path) {
     return null; // Retourne null si le fichier n'existe pas
 }
 
-function asowp_get_filename_without_extension($file_url) {
+function ascwo_get_filename_without_extension($file_url)
+{
     // Convertir l'URL en chemin système si nécessaire
-    $file_path = str_replace(ASOWP_DATA_URL, ASOWP_DATA_PATH, $file_url);
+    $file_path = str_replace(ASCWO_DATA_URL, ASCWO_DATA_PATH, $file_url);
 
     // Extraire uniquement le nom du fichier
     $file_name = pathinfo($file_path, PATHINFO_FILENAME);
@@ -368,9 +371,9 @@ function asowp_get_filename_without_extension($file_url) {
     return $file_name;
 }
 
-function asowp_get_license_status()
+function ascwo_get_license_status()
 {
-    $option_data = get_option('asowp_license_data', false);
+    $option_data = get_option('ascwo_license_data', false);
     if (is_array($option_data)) {
         $timestamp = isset($option_data['timestamp']) ? (int) $option_data['timestamp'] : 0;
         $seconds_until = max(0, $timestamp - time());
@@ -397,13 +400,13 @@ function asowp_get_license_status()
     ];
 }
 
-function asowp_get_license_cache_timestamp(): int
+function ascwo_get_license_cache_timestamp(): int
 {
-    $status = asowp_get_license_status();
+    $status = ascwo_get_license_status();
     $timestamp = isset($status['timestamp']) ? (int) $status['timestamp'] : 0;
     if ($timestamp > 0 && $timestamp <= time()) {
-        delete_option('asowp_license_data');
-        wp_cache_delete('asowp_license_data', 'options');
+        delete_option('ascwo_license_data');
+        wp_cache_delete('ascwo_license_data', 'options');
         return 0;
     }
 

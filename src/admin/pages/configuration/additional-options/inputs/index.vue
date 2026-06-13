@@ -1,19 +1,19 @@
 ﻿<template>
-  <section class="asowp-inputs">
+  <section class="ascwo-inputs">
     <template v-if="!news">
-      <header class="asowp-inputs-card asowp-inputs-hero">
+      <header class="ascwo-inputs-card ascwo-inputs-hero">
         <div>
           <h1>Inputs</h1>
           <p>Manage standalone customer inputs using the NCPC-style input builder.</p>
         </div>
-        <button type="button" class="asowp-inputs-primary" @click="newAdditionalOptions">
+        <button type="button" class="ascwo-inputs-primary" @click="newAdditionalOptions">
           <PlusIcon :size="15" />
           Add input
         </button>
       </header>
 
-      <div class="asowp-inputs-card asowp-inputs-table-card">
-        <table class="asowp-inputs-table">
+      <div class="ascwo-inputs-card ascwo-inputs-table-card">
+        <table class="ascwo-inputs-table">
           <thead>
             <tr>
               <th>Label</th>
@@ -23,12 +23,12 @@
           </thead>
           <tbody ref="additionalsListTable">
             <tr v-if="isFetching">
-              <td colspan="3" class="asowp-inputs-empty asowp-table-loader-cell">
-                <Loader2Icon class="asowp-table-loader-icon asowp-w-7 asowp-h-7" />
+              <td colspan="3" class="ascwo-inputs-empty ascwo-table-loader-cell">
+                <Loader2Icon class="ascwo-table-loader-icon ascwo-w-7 ascwo-h-7" />
               </td>
             </tr>
             <tr v-else-if="additionals.length === 0">
-              <td colspan="3" class="asowp-inputs-empty">{{ noAdditionalsOptionsFound || 'No inputs found' }}</td>
+              <td colspan="3" class="ascwo-inputs-empty">{{ noAdditionalsOptionsFound || 'No inputs found' }}</td>
             </tr>
             <tr v-for="(item, key) in additionals" v-else :key="key" :data-id="key">
               <td>
@@ -36,15 +36,15 @@
                 <p>{{ inputDescription(item) }}</p>
               </td>
               <td>
-                <span class="asowp-inputs-pill">{{ typeLabel(item.type) }}</span>
+                <span class="ascwo-inputs-pill">{{ typeLabel(item.type) }}</span>
               </td>
               <td>
-                <div class="asowp-inputs-actions">
-                  <button type="button" class="asowp-inputs-secondary" @click="selectAdditionalOptions(item, key)">
+                <div class="ascwo-inputs-actions">
+                  <button type="button" class="ascwo-inputs-secondary" @click="selectAdditionalOptions(item, key)">
                     <PencilIcon :size="14" />
                     Edit
                   </button>
-                  <button type="button" class="asowp-inputs-danger" @click="selectAdditionalOptions(item, key, true)">
+                  <button type="button" class="ascwo-inputs-danger" @click="selectAdditionalOptions(item, key, true)">
                     <Trash2Icon :size="14" />
                     Delete
                   </button>
@@ -53,8 +53,8 @@
             </tr>
           </tbody>
         </table>
-        <div v-if="additionals.length > 1 && sortChanged" class="asowp-inputs-sort">
-          <button type="button" class="asowp-inputs-primary" :disabled="isLoading" @click="updateSortOptions">
+        <div v-if="additionals.length > 1 && sortChanged" class="ascwo-inputs-sort">
+          <button type="button" class="ascwo-inputs-primary" :disabled="isLoading" @click="updateSortOptions">
             {{ isLoading ? 'Saving...' : 'Save sort' }}
           </button>
         </div>
@@ -62,17 +62,17 @@
     </template>
 
     <template v-else>
-      <header class="asowp-inputs-card asowp-inputs-simple-head">
+      <header class="ascwo-inputs-card ascwo-inputs-simple-head">
         <div>
           <h1>{{ edit ? 'Edit additional option' : 'Create new additional option' }}</h1>
         </div>
       </header>
 
-      <section class="asowp-inputs-card asowp-inputs-types">
+      <section class="ascwo-inputs-card ascwo-inputs-types">
         <h2>1- Choose an Input Type</h2>
         <p>This text will display above the input options.</p>
-        <div class="asowp-inputs-type-grid">
-          <button v-for="inputType in inputTypes" :key="inputType.value" type="button" :class="['asowp-inputs-type', type === inputType.value ? 'is-active' : '']" @click="type = inputType.value">
+        <div class="ascwo-inputs-type-grid">
+          <button v-for="inputType in inputTypes" :key="inputType.value" type="button" :class="['ascwo-inputs-type', type === inputType.value ? 'is-active' : '']" @click="type = inputType.value">
             <component :is="inputType.icon" :size="22" />
             <span>{{ inputType.label }}</span>
           </button>
@@ -86,14 +86,14 @@
       <IncludedType v-if="type === 'include-type'" :action="edit" :data="additionals[additionalOptionId] ?? null" :id="additionalOptionId" :change-action="changeAction" :change-open="newAdditionnal" :change-additionals="changeAdditionals"/>
     </template>
 
-    <div v-if="openModal" class="asowp-inputs-modal" @click.self="closeModal">
-      <div class="asowp-inputs-dialog">
-        <button type="button" class="asowp-inputs-close" @click="closeModal">x</button>
+    <div v-if="openModal" class="ascwo-inputs-modal" @click.self="closeModal">
+      <div class="ascwo-inputs-dialog">
+        <button type="button" class="ascwo-inputs-close" @click="closeModal">x</button>
         <h2>Delete this input?</h2>
         <p>{{ additionals[additionalOptionId]?.label }}</p>
-        <div class="asowp-inputs-actions asowp-inputs-actions-end">
-          <button type="button" class="asowp-inputs-secondary" :disabled="isLoading" @click="closeModal">Cancel</button>
-          <button type="button" class="asowp-inputs-danger-button" :disabled="isLoading" @click="deleteAdditional">
+        <div class="ascwo-inputs-actions ascwo-inputs-actions-end">
+          <button type="button" class="ascwo-inputs-secondary" :disabled="isLoading" @click="closeModal">Cancel</button>
+          <button type="button" class="ascwo-inputs-danger-button" :disabled="isLoading" @click="deleteAdditional">
             {{ isLoading ? 'Deleting...' : 'Delete' }}
           </button>
         </div>
@@ -262,22 +262,22 @@ const closeModal = () => {
 </script>
 
 <style>
-.asowp-inputs {
+.ascwo-inputs {
   display: grid;
   gap: 12px;
   color: #303030;
   font-size: 13px;
 }
 
-.asowp-inputs-card {
+.ascwo-inputs-card {
   background: #fff;
   border: 1px solid #d8dee4;
   border-radius: 8px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
 }
 
-.asowp-inputs-hero,
-.asowp-inputs-simple-head {
+.ascwo-inputs-hero,
+.ascwo-inputs-simple-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -285,9 +285,9 @@ const closeModal = () => {
   padding: 24px 28px;
 }
 
-.asowp-inputs-hero h1,
-.asowp-inputs-simple-head h1,
-.asowp-inputs-types h2 {
+.ascwo-inputs-hero h1,
+.ascwo-inputs-simple-head h1,
+.ascwo-inputs-types h2 {
   margin: 0;
   color: #303030;
   font-size: 18px;
@@ -295,26 +295,26 @@ const closeModal = () => {
   line-height: 1.25;
 }
 
-.asowp-inputs-hero p,
-.asowp-inputs-types p,
-.asowp-inputs-table p {
+.ascwo-inputs-hero p,
+.ascwo-inputs-types p,
+.ascwo-inputs-table p {
   margin: 4px 0 0;
   color: #5f6368;
   font-size: 12px;
   line-height: 1.35;
 }
 
-.asowp-inputs-table-card {
+.ascwo-inputs-table-card {
   padding: 28px 34px;
 }
 
-.asowp-inputs-table {
+.ascwo-inputs-table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
 }
 
-.asowp-inputs-table th {
+.ascwo-inputs-table th {
   padding: 12px 14px;
   background: #f4f4f4;
   color: #5f6368;
@@ -322,25 +322,25 @@ const closeModal = () => {
   font-weight: 700;
 }
 
-.asowp-inputs-table td {
+.ascwo-inputs-table td {
   padding: 10px 14px;
   border-bottom: 1px solid #e1e3e5;
   color: #303030;
   vertical-align: middle;
 }
 
-.asowp-inputs-table tr:last-child td {
+.ascwo-inputs-table tr:last-child td {
   border-bottom: 0;
 }
 
-.asowp-inputs-table strong {
+.ascwo-inputs-table strong {
   display: block;
   color: #202223;
   font-size: 13px;
   font-weight: 800;
 }
 
-.asowp-inputs-pill {
+.ascwo-inputs-pill {
   display: inline-flex;
   align-items: center;
   min-height: 22px;
@@ -352,20 +352,20 @@ const closeModal = () => {
   font-weight: 600;
 }
 
-.asowp-inputs-actions {
+.ascwo-inputs-actions {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.asowp-inputs-actions-end {
+.ascwo-inputs-actions-end {
   justify-content: flex-end;
 }
 
-.asowp-inputs-primary,
-.asowp-inputs-secondary,
-.asowp-inputs-danger,
-.asowp-inputs-danger-button {
+.ascwo-inputs-primary,
+.ascwo-inputs-secondary,
+.ascwo-inputs-danger,
+.ascwo-inputs-danger-button {
   appearance: none;
   display: inline-flex;
   align-items: center;
@@ -382,62 +382,62 @@ const closeModal = () => {
   text-decoration: none;
 }
 
-.asowp-inputs-primary,
-.asowp-inputs-primary:hover,
-.asowp-inputs-primary:focus {
+.ascwo-inputs-primary,
+.ascwo-inputs-primary:hover,
+.ascwo-inputs-primary:focus {
   color: #fff;
   background: #007a73;
   border: 1px solid #006c67;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
-.asowp-inputs-secondary,
-.asowp-inputs-secondary:hover,
-.asowp-inputs-secondary:focus {
+.ascwo-inputs-secondary,
+.ascwo-inputs-secondary:hover,
+.ascwo-inputs-secondary:focus {
   color: #111827;
   background: #fff;
   border: 1px solid #c9cccf;
 }
 
-.asowp-inputs-danger,
-.asowp-inputs-danger:hover,
-.asowp-inputs-danger:focus {
+.ascwo-inputs-danger,
+.ascwo-inputs-danger:hover,
+.ascwo-inputs-danger:focus {
   color: #8a0f00;
   background: transparent;
   border: 0;
 }
 
-.asowp-inputs-danger-button {
+.ascwo-inputs-danger-button {
   color: #fff;
   background: #bf0711;
   border: 1px solid #a80d12;
 }
 
-.asowp-inputs-empty {
+.ascwo-inputs-empty {
   height: 120px;
   text-align: center;
   color: #5f6368;
 }
 
-.asowp-inputs-sort {
+.ascwo-inputs-sort {
   display: flex;
   justify-content: flex-end;
   margin-top: 14px;
 }
 
-.asowp-inputs-types {
+.ascwo-inputs-types {
   display: grid;
   gap: 12px;
   padding: 24px 28px;
 }
 
-.asowp-inputs-type-grid {
+.ascwo-inputs-type-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 12px;
 }
 
-.asowp-inputs-type {
+.ascwo-inputs-type {
   display: grid;
   place-items: center;
   gap: 8px;
@@ -451,12 +451,12 @@ const closeModal = () => {
   cursor: pointer;
 }
 
-.asowp-inputs-type.is-active {
+.ascwo-inputs-type.is-active {
   border-color: #5b7fff;
   box-shadow: inset 0 0 0 1px #5b7fff;
 }
 
-.asowp-inputs-modal {
+.ascwo-inputs-modal {
   position: fixed;
   inset: 0;
   z-index: 9999;
@@ -466,7 +466,7 @@ const closeModal = () => {
   background: rgba(0, 0, 0, 0.45);
 }
 
-.asowp-inputs-dialog {
+.ascwo-inputs-dialog {
   position: relative;
   width: min(420px, calc(100vw - 32px));
   padding: 22px;
@@ -475,13 +475,13 @@ const closeModal = () => {
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
 }
 
-.asowp-inputs-dialog h2 {
+.ascwo-inputs-dialog h2 {
   margin: 0;
   font-size: 16px;
   font-weight: 800;
 }
 
-.asowp-inputs-close {
+.ascwo-inputs-close {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -492,7 +492,7 @@ const closeModal = () => {
 }
 
 @media (max-width: 1000px) {
-  .asowp-inputs-type-grid {
+  .ascwo-inputs-type-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

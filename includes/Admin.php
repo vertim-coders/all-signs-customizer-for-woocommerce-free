@@ -1,20 +1,20 @@
 <?php
-namespace ASOWP;
+namespace ASCWO;
 
 /**
  * Admin Pages Handler
  */
-class ASOWP_Admin
+class ASCWO_Admin
 {
 
     public function __construct()
     {
         add_action('admin_menu', [$this, 'admin_menu']);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_product_assets']);
-        add_filter('upload_mimes', [$this, 'asowp_add_custom_mime_types']);
-        add_filter('wp_check_filetype_and_ext', [$this, 'asowp_check_filetype_and_ext'], 99, 5);
-        add_action('wp_ajax_asowp_check_product_health', [$this, 'check_product_health']);
-        add_action('wp_ajax_nopriv_asowp_check_product_health', [$this, 'check_product_health']);
+        add_filter('upload_mimes', [$this, 'ascwo_add_custom_mime_types']);
+        add_filter('wp_check_filetype_and_ext', [$this, 'ascwo_check_filetype_and_ext'], 99, 5);
+        add_action('wp_ajax_ascwo_check_product_health', [$this, 'check_product_health']);
+        add_action('wp_ajax_nopriv_ascwo_check_product_health', [$this, 'check_product_health']);
     }
 
     /**
@@ -28,18 +28,18 @@ class ASOWP_Admin
             global $submenu;
 
             $capability = 'manage_options';
-            $slug = 'asowp';
+            $slug = 'ascwo';
 
-            $hook = add_menu_page(__('All Signs Options', "all-signs-options-pro"), __('All Signs Options', "all-signs-options-pro"), $capability, $slug, [$this, 'plugin_page'], ASOWP_ASSETS . '/images/im_icon_asowp.png');
+            $hook = add_menu_page(__('All Signs Customizer for WooCommerce', "all-signs-customizer-for-woocommerce-pro"), __('All Signs Customizer for WooCommerce', "all-signs-customizer-for-woocommerce-pro"), $capability, $slug, [$this, 'plugin_page'], ASCWO_ASSETS . '/images/im_icon_ascwo.png');
 
             if (current_user_can($capability)) {
-                $submenu[$slug][] = array(__('Home', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/');
-                $submenu[$slug][] = array(__('Configurations', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/configuration');
-                $submenu[$slug][] = array(__('Request quotes', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/request-quotes');
-                $submenu[$slug][] = array(__('Global Settings', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/settings/output');
-                $submenu[$slug][] = array(__('Templates', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/templates');
-                $submenu[$slug][] = array(__('Manage Fonts', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/manage-font');
-                $submenu[$slug][] = array(__('Manage Cliparts', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/manage-cliparts');
+                $submenu[$slug][] = array(__('Home', "all-signs-customizer-for-woocommerce-pro"), $capability, 'admin.php?page=' . $slug . '#/');
+                $submenu[$slug][] = array(__('Configurations', "all-signs-customizer-for-woocommerce-pro"), $capability, 'admin.php?page=' . $slug . '#/configuration');
+                $submenu[$slug][] = array(__('Request quotes', "all-signs-customizer-for-woocommerce-pro"), $capability, 'admin.php?page=' . $slug . '#/request-quotes');
+                $submenu[$slug][] = array(__('Global Settings', "all-signs-customizer-for-woocommerce-pro"), $capability, 'admin.php?page=' . $slug . '#/settings/output');
+                $submenu[$slug][] = array(__('Templates', "all-signs-customizer-for-woocommerce-pro"), $capability, 'admin.php?page=' . $slug . '#/templates');
+                $submenu[$slug][] = array(__('Manage Fonts', "all-signs-customizer-for-woocommerce-pro"), $capability, 'admin.php?page=' . $slug . '#/manage-font');
+                $submenu[$slug][] = array(__('Manage Cliparts', "all-signs-customizer-for-woocommerce-pro"), $capability, 'admin.php?page=' . $slug . '#/manage-cliparts');
 
 
             }
@@ -69,20 +69,20 @@ class ASOWP_Admin
             wp_enqueue_editor();
         }
 
-        wp_enqueue_script('asowp-runtime', ASOWP_ASSETS . '/js/runtime.js', [], filemtime(ASOWP_PATH . '/assets/js/runtime.js'), true);
-        wp_enqueue_script('asowp-vendor', ASOWP_ASSETS . '/js/vendors.js', [], filemtime(ASOWP_PATH . '/assets/js/vendors.js'), true);
+        wp_enqueue_script('ascwo-runtime', ASCWO_ASSETS . '/js/runtime.js', [], filemtime(ASCWO_PATH . '/assets/js/runtime.js'), true);
+        wp_enqueue_script('ascwo-vendor', ASCWO_ASSETS . '/js/vendors.js', [], filemtime(ASCWO_PATH . '/assets/js/vendors.js'), true);
 
-        wp_enqueue_style('asowp-admin', ASOWP_ASSETS . '/css/admin.css', false, filemtime(ASOWP_PATH . '/assets/css/admin.css'));
-        wp_enqueue_style('asowp-frontend', ASOWP_ASSETS . '/css/frontend.css', false, filemtime(ASOWP_PATH . '/assets/css/frontend.css'));
+        wp_enqueue_style('ascwo-admin', ASCWO_ASSETS . '/css/admin.css', false, filemtime(ASCWO_PATH . '/assets/css/admin.css'));
+        wp_enqueue_style('ascwo-frontend', ASCWO_ASSETS . '/css/frontend.css', false, filemtime(ASCWO_PATH . '/assets/css/frontend.css'));
 
-        wp_enqueue_script('asowp-admin', ASOWP_ASSETS . '/js/admin.js', ['jquery', 'asowp-vendor', 'asowp-runtime', 'wp-i18n', 'editor'], filemtime(ASOWP_PATH . '/assets/js/admin.js'), true);
-        wp_set_script_translations( 'asowp-admin', "all-signs-options-pro" );
-        wp_enqueue_script('asowp-fabric', ASOWP_ASSETS . '/utilities/fabric.min.js', [], filemtime(ASOWP_PATH . '/assets/utilities/fabric.min.js'), true);
-        wp_enqueue_script('asowp-frontend', ASOWP_ASSETS . '/js/frontend.js', ['jquery', 'asowp-vendor', 'asowp-runtime', 'asowp-fabric'], filemtime(ASOWP_PATH . '/assets/js/frontend.js'), true);
+        wp_enqueue_script('ascwo-admin', ASCWO_ASSETS . '/js/admin.js', ['jquery', 'ascwo-vendor', 'ascwo-runtime', 'wp-i18n', 'editor'], filemtime(ASCWO_PATH . '/assets/js/admin.js'), true);
+        wp_set_script_translations('ascwo-admin', "all-signs-customizer-for-woocommerce-pro");
+        wp_enqueue_script('ascwo-fabric', ASCWO_ASSETS . '/utilities/fabric.min.js', [], filemtime(ASCWO_PATH . '/assets/utilities/fabric.min.js'), true);
+        wp_enqueue_script('ascwo-frontend', ASCWO_ASSETS . '/js/frontend.js', ['jquery', 'ascwo-vendor', 'ascwo-runtime', 'ascwo-fabric'], filemtime(ASCWO_PATH . '/assets/js/frontend.js'), true);
 
-        wp_enqueue_style('asowp-toast', ASOWP_ASSETS . '/utilities/toast.min.css', false, ASOWP_VERSION);
-        wp_enqueue_script('asowp-toast', ASOWP_ASSETS . '/utilities/toast.min.js', [], ASOWP_VERSION, true);
-        wp_enqueue_script('asowp-sortable', ASOWP_ASSETS . '/utilities/sortable.js', [], ASOWP_VERSION, true);
+        wp_enqueue_style('ascwo-toast', ASCWO_ASSETS . '/utilities/toast.min.css', false, ASCWO_VERSION);
+        wp_enqueue_script('ascwo-toast', ASCWO_ASSETS . '/utilities/toast.min.js', [], ASCWO_VERSION, true);
+        wp_enqueue_script('ascwo-sortable', ASCWO_ASSETS . '/utilities/sortable.js', [], ASCWO_VERSION, true);
         wp_enqueue_media();
     }
 
@@ -108,7 +108,7 @@ class ASOWP_Admin
             return;
         }
 
-        wp_enqueue_style('asowp-style', ASOWP_ASSETS . '/css/style.css', false, ASOWP_VERSION);
+        wp_enqueue_style('ascwo-style', ASCWO_ASSETS . '/css/style.css', false, ASCWO_VERSION);
     }
 
     /**
@@ -120,32 +120,32 @@ class ASOWP_Admin
     {
         $api_url = get_rest_url(); ?>
         <div class="wrap">
-            <div id="asowp-admin-app"></div>
+            <div id="ascwo-admin-app"></div>
         </div>
         <?php $script_data = [
-            "rest_url" => $api_url . "asowp/v1",
+            "rest_url" => $api_url . "ascwo/v1",
             "rest_nonce" => wp_create_nonce('wp_rest'),
             "ajax_url" => esc_url(admin_url('admin-ajax.php')),
             "site_url" => urlencode(get_site_url()),
-            "caches" => function_exists('asowp_get_license_cache_timestamp') ? \asowp_get_license_cache_timestamp() : 0,
-            "author" => ASOWP_ID,
-            "assets_url" => ASOWP_ASSETS,
+            "caches" => function_exists('ascwo_get_license_cache_timestamp') ? \ascwo_get_license_cache_timestamp() : 0,
+            "author" => ASCWO_ID,
+            "assets_url" => ASCWO_ASSETS,
             "page" => "admin",
-            "version" => ASOWP_VERSION,
+            "version" => ASCWO_VERSION,
             'currencySymbol' => class_exists('WooCommerce') ? html_entity_decode(get_woocommerce_currency_symbol()) : '',
             'currency_pos' => class_exists('WooCommerce') ? get_option('woocommerce_currency_pos') : ''
         ];
         $configurator_data = array(
-            "fixing_methods_url" => ASOWP_ASSETS . '/images/fixing-methodes',
-            "borders_url" => ASOWP_ASSETS . '/images/borders',
+            "fixing_methods_url" => ASCWO_ASSETS . '/images/fixing-methodes',
+            "borders_url" => ASCWO_ASSETS . '/images/borders',
         );
-        wp_localize_script("asowp-admin", "asowp_data", $script_data);
-        wp_localize_script("asowp-frontend", "asowp_data", $script_data);
-        wp_localize_script("asowp-admin", "asowp_configurator_data", $configurator_data);
-        wp_localize_script("asowp-frontend", "asowp_configurator_data", $configurator_data);
+        wp_localize_script("ascwo-admin", "ascwo_data", $script_data);
+        wp_localize_script("ascwo-frontend", "ascwo_data", $script_data);
+        wp_localize_script("ascwo-admin", "ascwo_configurator_data", $configurator_data);
+        wp_localize_script("ascwo-frontend", "ascwo_configurator_data", $configurator_data);
     }
 
-    public function asowp_add_custom_mime_types($mimes)
+    public function ascwo_add_custom_mime_types($mimes)
     {
         return array_merge(
             $mimes,
@@ -169,7 +169,7 @@ class ASOWP_Admin
      * @param string $real_mime The real mimes.
      * @return array
      */
-    public function asowp_check_filetype_and_ext($data, $file, $filename, $mimes, $real_mime)
+    public function ascwo_check_filetype_and_ext($data, $file, $filename, $mimes, $real_mime)
     {
         if (!empty($data['ext']) && !empty($data['type'])) {
             return $data;

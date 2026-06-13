@@ -19,11 +19,11 @@
  *    - Also ensures WP import exists and removes t import.
  *
  * Usage:
- *   node i18n-wrapper.js <path> --domain=all-signs-options-pro [--dry-run] [--no-backup]
+ *   node i18n-wrapper.js <path> --domain=all-signs-customizer-for-woocommerce-pro [--dry-run] [--no-backup]
  *
  * Examples:
- *   node i18n-wrapper.js ./src --domain=all-signs-options-pro --dry-run
- *   node i18n-wrapper.js ./src --domain=all-signs-options-pro
+ *   node i18n-wrapper.js ./src --domain=all-signs-customizer-for-woocommerce-pro --dry-run
+ *   node i18n-wrapper.js ./src --domain=all-signs-customizer-for-woocommerce-pro
  *   node i18n-wrapper.js ./src --domain=my-new-domain        (updates domain everywhere)
  */
 
@@ -34,7 +34,7 @@ class I18nWrapper {
   constructor(options = {}) {
     this.dryRun = !!options.dryRun;
     this.backup = options.backup !== false;
-    this.domain = options.domain || "all-signs-options-pro";
+    this.domain = options.domain || "all-signs-customizer-for-woocommerce-pro";
 
     this.stats = {
       filesProcessed: 0,
@@ -48,8 +48,7 @@ class I18nWrapper {
       scriptsCreated: 0,
     };
 
-    this.wpImportLine =
-      `import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";\n`;
+    this.wpImportLine = `import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";\n`;
   }
 
   // ---------- helpers ----------
@@ -103,7 +102,10 @@ class I18nWrapper {
 
       const lead = textBuffer.match(/^\s*/)?.[0] ?? "";
       const trail = textBuffer.match(/\s*$/)?.[0] ?? "";
-      const core = textBuffer.slice(lead.length, textBuffer.length - trail.length);
+      const core = textBuffer.slice(
+        lead.length,
+        textBuffer.length - trail.length,
+      );
 
       const normalized = this.normalizeInnerText(core);
 
@@ -195,7 +197,7 @@ class I18nWrapper {
     for (const fn of fnNames) {
       const re = new RegExp(
         `\\b${fn}\\s*\\(\\s*([^,]+?)\\s*,\\s*(["'])([^"']*)\\2`,
-        "g"
+        "g",
       );
 
       content = content.replace(re, (m, firstArg, q, oldDomain) => {
@@ -225,14 +227,21 @@ class I18nWrapper {
   }
 
   ensureWpImport(scriptBlock) {
-    if (this.hasWpImport(scriptBlock)) return { modified: false, out: scriptBlock };
+    if (this.hasWpImport(scriptBlock))
+      return { modified: false, out: scriptBlock };
 
     let out = scriptBlock;
     const importBlockMatch = out.match(/^(?:\s*import[\s\S]*?;\s*)+/m);
     if (importBlockMatch) {
-      out = out.replace(importBlockMatch[0], importBlockMatch[0] + this.wpImportLine);
+      out = out.replace(
+        importBlockMatch[0],
+        importBlockMatch[0] + this.wpImportLine,
+      );
     } else {
-      out = out.replace(/<script\b[^>]*>\s*/m, (m) => m + "\n" + this.wpImportLine);
+      out = out.replace(
+        /<script\b[^>]*>\s*/m,
+        (m) => m + "\n" + this.wpImportLine,
+      );
     }
 
     this.stats.importsAdded += 1;
@@ -243,19 +252,22 @@ class I18nWrapper {
     const scriptRe = /<script\b[^>]*>[\s\S]*?<\/script>/m;
 
     if (scriptRe.test(fileContent)) {
-      return fileContent.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gm, (block) => {
-        let changed = false;
+      return fileContent.replace(
+        /<script\b[^>]*>[\s\S]*?<\/script>/gm,
+        (block) => {
+          let changed = false;
 
-        const rm = this.removeTImport(block);
-        if (rm.modified) changed = true;
-        block = rm.out;
+          const rm = this.removeTImport(block);
+          if (rm.modified) changed = true;
+          block = rm.out;
 
-        const add = this.ensureWpImport(block);
-        if (add.modified) changed = true;
-        block = add.out;
+          const add = this.ensureWpImport(block);
+          if (add.modified) changed = true;
+          block = add.out;
 
-        return block;
-      });
+          return block;
+        },
+      );
     }
 
     // no script block -> create <script setup> with wp import
@@ -266,7 +278,12 @@ class I18nWrapper {
     const idx = fileContent.indexOf("</template>");
     if (idx !== -1) {
       const insertAt = idx + "</template>".length;
-      return fileContent.slice(0, insertAt) + "\n\n" + newScript + fileContent.slice(insertAt);
+      return (
+        fileContent.slice(0, insertAt) +
+        "\n\n" +
+        newScript +
+        fileContent.slice(insertAt)
+      );
     }
     return newScript + fileContent;
   }
@@ -346,7 +363,17 @@ class I18nWrapper {
         const fullPath = path.join(dirPath, entry.name);
 
         if (entry.isDirectory()) {
-          if (["node_modules", "dist", "build", ".git", ".nuxt", ".output"].includes(entry.name)) continue;
+          if (
+            [
+              "node_modules",
+              "dist",
+              "build",
+              ".git",
+              ".nuxt",
+              ".output",
+            ].includes(entry.name)
+          )
+            continue;
           this.processDirectory(fullPath);
         } else if (entry.isFile() && entry.name.endsWith(".vue")) {
           this.processFile(fullPath);
@@ -389,7 +416,8 @@ function parseArgs(argv) {
   for (const a of argv) {
     if (a === "--dry-run") opts.dryRun = true;
     if (a === "--no-backup") opts.noBackup = true;
-    if (a.startsWith("--domain=")) opts.domain = a.split("=").slice(1).join("=");
+    if (a.startsWith("--domain="))
+      opts.domain = a.split("=").slice(1).join("=");
   }
   return opts;
 }
@@ -403,7 +431,7 @@ Usage:
   node i18n-wrapper.js <chemin-dossier-ou-fichier> --domain=your-text-domain [--dry-run] [--no-backup]
 
 Options:
-  --domain=xxx   Text-domain WordPress (ex: all-signs-options-pro)
+  --domain=xxx   Text-domain WordPress (ex: all-signs-customizer-for-woocommerce-pro)
   --dry-run      Afficher les changements sans modifier les fichiers
   --no-backup    Ne pas créer de .backup
 
@@ -417,7 +445,7 @@ Notes:
   const opts = parseArgs(args.slice(1));
 
   if (!opts.domain) {
-    console.error('✗ Option requise: --domain=your-text-domain');
+    console.error("✗ Option requise: --domain=your-text-domain");
     process.exit(1);
   }
 
@@ -444,7 +472,9 @@ Notes:
   } else if (stat.isFile() && targetPath.endsWith(".vue")) {
     wrapper.processFile(targetPath);
   } else {
-    console.error("✗ Le chemin doit pointer vers un fichier .vue ou un dossier");
+    console.error(
+      "✗ Le chemin doit pointer vers un fichier .vue ou un dossier",
+    );
     process.exit(1);
   }
 

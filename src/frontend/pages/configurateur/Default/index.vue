@@ -1,88 +1,88 @@
 <template> 
-    <div class="asowp-relative asowp-flex asowp-w-full asowp-h-full">
+    <div class="ascwo-relative ascwo-flex ascwo-w-full ascwo-h-full">
 
-        <div class="asowp-relative asowp-flex asowp-w-full asowp-h-full">
-            <div class="asowp-w-full lg:asowp-w-[92%] asowp-h-full asowp-flex asowp-flex-col">
-                <div :class="`asowp-w-full asowp-h-[7%] lg:asowp-h-[10%] asowp-bg-[${configColors.bars.backgroundColor}] asowp-text-[${configColors.bars.titleColor}] asowp-flex asowp-items-center asowp-justify-between`">
-                    <div v-if="isLoaded" class="asowp-w-full asowp-h-full asowp-flex asowp-items-center asowp-justify-between asowp-px-2">
-                        <div class="asowp-w-1/5 asowp-bg-gradient-to-r asowp-from-zinc-400 asowp-via-zinc-200 asowp-to-zinc-400 asowp-p-4 asowp-h-[65%] asowp-animate-pulse"></div>
-                        <div class="asowp-w-1/3 asowp-h-[65%] asowp-flex asowp-space-x-4">
-                            <div class="asowp-w-1/3 asowp-bg-gradient-to-r asowp-from-zinc-400 asowp-via-zinc-200 asowp-to-zinc-400 asowp-p-4 asowp-h-full asowp-animate-pulse"></div>
-                            <div class="asowp-w-1/3 asowp-bg-gradient-to-r asowp-from-zinc-400 asowp-via-zinc-200 asowp-to-zinc-400 asowp-p-4 asowp-h-full asowp-animate-pulse"></div>
-                            <div class="asowp-w-1/3 asowp-bg-gradient-to-r asowp-from-zinc-400 asowp-via-zinc-200 asowp-to-zinc-400 asowp-p-4 asowp-h-full asowp-animate-pulse"></div>
+        <div class="ascwo-relative ascwo-flex ascwo-w-full ascwo-h-full">
+            <div class="ascwo-w-full lg:ascwo-w-[92%] ascwo-h-full ascwo-flex ascwo-flex-col">
+                <div :class="`ascwo-w-full ascwo-h-[7%] lg:ascwo-h-[10%] ascwo-bg-[${configColors.bars.backgroundColor}] ascwo-text-[${configColors.bars.titleColor}] ascwo-flex ascwo-items-center ascwo-justify-between`">
+                    <div v-if="isLoaded" class="ascwo-w-full ascwo-h-full ascwo-flex ascwo-items-center ascwo-justify-between ascwo-px-2">
+                        <div class="ascwo-w-1/5 ascwo-bg-gradient-to-r ascwo-from-zinc-400 ascwo-via-zinc-200 ascwo-to-zinc-400 ascwo-p-4 ascwo-h-[65%] ascwo-animate-pulse"></div>
+                        <div class="ascwo-w-1/3 ascwo-h-[65%] ascwo-flex ascwo-space-x-4">
+                            <div class="ascwo-w-1/3 ascwo-bg-gradient-to-r ascwo-from-zinc-400 ascwo-via-zinc-200 ascwo-to-zinc-400 ascwo-p-4 ascwo-h-full ascwo-animate-pulse"></div>
+                            <div class="ascwo-w-1/3 ascwo-bg-gradient-to-r ascwo-from-zinc-400 ascwo-via-zinc-200 ascwo-to-zinc-400 ascwo-p-4 ascwo-h-full ascwo-animate-pulse"></div>
+                            <div class="ascwo-w-1/3 ascwo-bg-gradient-to-r ascwo-from-zinc-400 ascwo-via-zinc-200 ascwo-to-zinc-400 ascwo-p-4 ascwo-h-full ascwo-animate-pulse"></div>
                         </div>
-                        <div class="asowp-w-1/5 asowp-bg-gradient-to-r asowp-from-zinc-400 asowp-via-zinc-200 asowp-to-zinc-400 asowp-p-4 asowp-h-[65%] asowp-animate-pulse"></div>
+                        <div class="ascwo-w-1/5 ascwo-bg-gradient-to-r ascwo-from-zinc-400 ascwo-via-zinc-200 ascwo-to-zinc-400 ascwo-p-4 ascwo-h-[65%] ascwo-animate-pulse"></div>
                     </div>
                     
-                    <div v-show="!isLoaded" :class="`asowp-hidden lg:asowp-flex asowp-w-1/3 asowp-justify-start asowp-pl-3 asowp-text-base lg:asowp-text-2xl asowp-font-bold asowp-text-center asowp-text-[${configColors.bars.titleColor}]`">
+                    <div v-show="!isLoaded" :class="`ascwo-hidden lg:ascwo-flex ascwo-w-1/3 ascwo-justify-start ascwo-pl-3 ascwo-text-base lg:ascwo-text-2xl ascwo-font-bold ascwo-text-center ascwo-text-[${configColors.bars.titleColor}]`">
                         {{ configVisualiserTexts.titleHeader && configVisualiserTexts.titleHeader.trim() !== '' ? configVisualiserTexts.titleHeader : props.config.name }}
                     </div>
-                    <div @click="() => showStateButtons = !showStateButtons" v-show="!isLoaded" :class="`asowp-relative asowp-flex lg:asowp-hidden asowp-w-1/4 asowp-pl-2 asowp-justify-start asowp-text-[${configColors.bars.titleColor}]`">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+                    <div @click="() => showStateButtons = !showStateButtons" v-show="!isLoaded" :class="`ascwo-relative ascwo-flex lg:ascwo-hidden ascwo-w-1/4 ascwo-pl-2 ascwo-justify-start ascwo-text-[${configColors.bars.titleColor}]`">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-6 ascwo-h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                         </svg>
 
-                        <div v-if="showStateButtons" :class="`asowp-absolute asowp-bottom-0 asowp-translate-y-[110%] asowp-z-10 asowp-flex asowp-bg-[${configColors.bars.backgroundColor}] asowp-fit asowp-full-center asowp-space-x-3 asowp-px-2`">
-                            <span @click="confirmResetAll(true)" :class="`asowp-w-fit asowp-h-fit asowp-flex asowp-full-center asowp-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] asowp-bg-[${configColors.bars.reset.backgroundColor}] asowp-text-[${configColors.bars.reset.textColor}] hover:asowp-bg-[${configColors.bars.reset.hoverBackgroundColor}] hover:asowp-text-[${configColors.bars.reset.hoverTextColor}] asowp-border-2 asowp-border-[${configColors.bars.reset.borderColor}] hover:asowp-border-[${configColors.bars.reset.hoverBorderColor}] asowp-space-x-2 asowp-p-2 asowp-px-3 asowp-rounded-full asowp-base-animation asowp-cursor-pointer`">
-                                <svg v-if="configSectionIcons.resetAllIcon === '' " class="asowp-h-5 asowp-w-5" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <div v-if="showStateButtons" :class="`ascwo-absolute ascwo-bottom-0 ascwo-translate-y-[110%] ascwo-z-10 ascwo-flex ascwo-bg-[${configColors.bars.backgroundColor}] ascwo-fit ascwo-full-center ascwo-space-x-3 ascwo-px-2`">
+                            <span @click="confirmResetAll(true)" :class="`ascwo-w-fit ascwo-h-fit ascwo-flex ascwo-full-center ascwo-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] ascwo-bg-[${configColors.bars.reset.backgroundColor}] ascwo-text-[${configColors.bars.reset.textColor}] hover:ascwo-bg-[${configColors.bars.reset.hoverBackgroundColor}] hover:ascwo-text-[${configColors.bars.reset.hoverTextColor}] ascwo-border-2 ascwo-border-[${configColors.bars.reset.borderColor}] hover:ascwo-border-[${configColors.bars.reset.hoverBorderColor}] ascwo-space-x-2 ascwo-p-2 ascwo-px-3 ascwo-rounded-full ascwo-base-animation ascwo-cursor-pointer`">
+                                <svg v-if="configSectionIcons.resetAllIcon === '' " class="ascwo-h-5 ascwo-w-5" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="simple-line-icons:reload">
                                     <path id="Vector" d="M14.9789 0C7.48448 0 1.38745 6.09744 1.38745 13.5918C1.38745 20.6362 6.81604 26.5274 13.7967 27.1298L11.1056 28.4938C10.7732 28.6762 10.5754 29.0863 10.7723 29.4102L10.8675 29.6563C11.0653 29.9802 11.4937 30.0951 11.8251 29.9136L16.3166 27.6139C16.3223 27.6102 16.3284 27.6112 16.334 27.6074L16.6354 27.4424C16.8018 27.351 16.912 27.2015 16.956 27.0351C17.002 26.8687 16.9809 26.6835 16.882 26.5223L16.7034 26.2293C16.7006 26.2237 16.695 26.2199 16.6917 26.2148L13.9176 21.8798C13.7207 21.5559 13.2932 21.441 12.96 21.6224L12.742 21.7743C12.4096 21.9557 12.3876 22.4245 12.5845 22.7475L14.2214 25.2867C14.2125 25.2862 14.2045 25.2829 14.196 25.2825C8.06477 24.8803 3.26242 19.7442 3.26242 13.5919C3.26245 7.13109 8.51852 1.875 14.9789 1.875C21.4401 1.875 26.7257 7.13109 26.7257 13.5919C26.7257 17.3119 25.0171 20.7286 22.0382 22.966C21.6244 23.2772 21.5409 23.8651 21.8517 24.279C22.163 24.6938 22.7508 24.7763 23.1647 24.4655C26.6199 21.8701 28.6012 17.9068 28.6012 13.5919C28.6007 6.09753 22.4737 0 14.9789 0Z" fill="currentColor"/>
                                     </g>
                                 </svg>
-                                <img v-if="configSectionIcons.resetAllIcon !== '' " :src="configSectionIcons.resetAllIcon" class="asowp-w-5 asowp-h-5" />                                                            
+                                <img v-if="configSectionIcons.resetAllIcon !== '' " :src="configSectionIcons.resetAllIcon" class="ascwo-w-5 ascwo-h-5" />                                                            
                             </span>
 
-                            <span @click="undo" :class="`asowp-w-fit asowp-h-fit asowp-flex asowp-full-center asowp-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] asowp-p-2 asowp-rounded-full asowp-bg-[${configColors.bars.undoRedo.backgroundColor}] asowp-text-[${configColors.bars.undoRedo.textColor}] hover:asowp-bg-[${configColors.bars.undoRedo.hoverBackgroundColor}] hover:asowp-text-[${configColors.bars.undoRedo.hoverTextColor}] asowp-border-2 asowp-border-[${configColors.bars.undoRedo.borderColor}] hover:asowp-border-[${configColors.bars.undoRedo.hoverBorderColor}] asowp-base-animation asowp-cursor-pointer`">
-                                <svg v-if="configSectionIcons.cancelAnAction === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4 lg:asowp-w-5 lg:asowp-h-5">
+                            <span @click="undo" :class="`ascwo-w-fit ascwo-h-fit ascwo-flex ascwo-full-center ascwo-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] ascwo-p-2 ascwo-rounded-full ascwo-bg-[${configColors.bars.undoRedo.backgroundColor}] ascwo-text-[${configColors.bars.undoRedo.textColor}] hover:ascwo-bg-[${configColors.bars.undoRedo.hoverBackgroundColor}] hover:ascwo-text-[${configColors.bars.undoRedo.hoverTextColor}] ascwo-border-2 ascwo-border-[${configColors.bars.undoRedo.borderColor}] hover:ascwo-border-[${configColors.bars.undoRedo.hoverBorderColor}] ascwo-base-animation ascwo-cursor-pointer`">
+                                <svg v-if="configSectionIcons.cancelAnAction === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4 lg:ascwo-w-5 lg:ascwo-h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
                                 </svg>
-                                <img v-if="configSectionIcons.cancelAnAction !== '' " :src="configSectionIcons.cancelAnAction" class="asowp-w-4 asowp-h-4 lg:asowp-w-5 lg:asowp-h-5" />                            
+                                <img v-if="configSectionIcons.cancelAnAction !== '' " :src="configSectionIcons.cancelAnAction" class="ascwo-w-4 ascwo-h-4 lg:ascwo-w-5 lg:ascwo-h-5" />                            
                             </span>
 
-                            <span @click="redo" :class="`asowp-w-fit asowp-h-fit asowp-flex asowp-full-center asowp-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] asowp-p-2 asowp-rounded-full asowp-bg-[${configColors.bars.undoRedo.backgroundColor}] asowp-text-[${configColors.bars.undoRedo.textColor}] hover:asowp-bg-[${configColors.bars.undoRedo.hoverBackgroundColor}] hover:asowp-text-[${configColors.bars.undoRedo.hoverTextColor}] asowp-border-2 asowp-border-[${configColors.bars.undoRedo.borderColor}] hover:asowp-border-[${configColors.bars.undoRedo.hoverBorderColor}] asowp-base-animation asowp-cursor-pointer`">
-                                <svg v-if="configSectionIcons.redoIcon === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4 lg:asowp-w-5 lg:asowp-h-5">
+                            <span @click="redo" :class="`ascwo-w-fit ascwo-h-fit ascwo-flex ascwo-full-center ascwo-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] ascwo-p-2 ascwo-rounded-full ascwo-bg-[${configColors.bars.undoRedo.backgroundColor}] ascwo-text-[${configColors.bars.undoRedo.textColor}] hover:ascwo-bg-[${configColors.bars.undoRedo.hoverBackgroundColor}] hover:ascwo-text-[${configColors.bars.undoRedo.hoverTextColor}] ascwo-border-2 ascwo-border-[${configColors.bars.undoRedo.borderColor}] hover:ascwo-border-[${configColors.bars.undoRedo.hoverBorderColor}] ascwo-base-animation ascwo-cursor-pointer`">
+                                <svg v-if="configSectionIcons.redoIcon === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4 lg:ascwo-w-5 lg:ascwo-h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m15 15 6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3" />
                                 </svg>
-                                <img v-if="configSectionIcons.redoIcon !== '' " :src="configSectionIcons.redoIcon" class="asowp-w-4 asowp-h-4 lg:asowp-w-5 lg:asowp-h-5" />
+                                <img v-if="configSectionIcons.redoIcon !== '' " :src="configSectionIcons.redoIcon" class="ascwo-w-4 ascwo-h-4 lg:ascwo-w-5 lg:ascwo-h-5" />
                             </span>
                         </div>
                     </div>
     
-                    <div v-show="!isLoaded" class="asowp-hidden lg:asowp-flex asowp-w-1/3 asowp-justify-center asowp-items-center asowp-space-x-4">
-                        <span @click="confirmResetAll(true)" :class="`asowp-w-fit asowp-h-fit asowp-flex asowp-full-center asowp-space-x-2 asowp-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] asowp-bg-[${configColors.bars.reset.backgroundColor}] asowp-text-[${configColors.bars.reset.textColor}] hover:asowp-bg-[${configColors.bars.reset.hoverBackgroundColor}] hover:asowp-text-[${configColors.bars.reset.hoverTextColor}] asowp-border-2 asowp-border-[${configColors.bars.reset.borderColor}] hover:asowp-border-[${configColors.bars.reset.hoverBorderColor}] asowp-p-2 asowp-px-3 asowp-rounded-full asowp-base-animation asowp-cursor-pointer`">
-                            <svg v-if="configSectionIcons.resetAllIcon === '' " class="asowp-h-5 asowp-w-5" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <div v-show="!isLoaded" class="ascwo-hidden lg:ascwo-flex ascwo-w-1/3 ascwo-justify-center ascwo-items-center ascwo-space-x-4">
+                        <span @click="confirmResetAll(true)" :class="`ascwo-w-fit ascwo-h-fit ascwo-flex ascwo-full-center ascwo-space-x-2 ascwo-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] ascwo-bg-[${configColors.bars.reset.backgroundColor}] ascwo-text-[${configColors.bars.reset.textColor}] hover:ascwo-bg-[${configColors.bars.reset.hoverBackgroundColor}] hover:ascwo-text-[${configColors.bars.reset.hoverTextColor}] ascwo-border-2 ascwo-border-[${configColors.bars.reset.borderColor}] hover:ascwo-border-[${configColors.bars.reset.hoverBorderColor}] ascwo-p-2 ascwo-px-3 ascwo-rounded-full ascwo-base-animation ascwo-cursor-pointer`">
+                            <svg v-if="configSectionIcons.resetAllIcon === '' " class="ascwo-h-5 ascwo-w-5" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="simple-line-icons:reload">
                                 <path id="Vector" d="M14.9789 0C7.48448 0 1.38745 6.09744 1.38745 13.5918C1.38745 20.6362 6.81604 26.5274 13.7967 27.1298L11.1056 28.4938C10.7732 28.6762 10.5754 29.0863 10.7723 29.4102L10.8675 29.6563C11.0653 29.9802 11.4937 30.0951 11.8251 29.9136L16.3166 27.6139C16.3223 27.6102 16.3284 27.6112 16.334 27.6074L16.6354 27.4424C16.8018 27.351 16.912 27.2015 16.956 27.0351C17.002 26.8687 16.9809 26.6835 16.882 26.5223L16.7034 26.2293C16.7006 26.2237 16.695 26.2199 16.6917 26.2148L13.9176 21.8798C13.7207 21.5559 13.2932 21.441 12.96 21.6224L12.742 21.7743C12.4096 21.9557 12.3876 22.4245 12.5845 22.7475L14.2214 25.2867C14.2125 25.2862 14.2045 25.2829 14.196 25.2825C8.06477 24.8803 3.26242 19.7442 3.26242 13.5919C3.26245 7.13109 8.51852 1.875 14.9789 1.875C21.4401 1.875 26.7257 7.13109 26.7257 13.5919C26.7257 17.3119 25.0171 20.7286 22.0382 22.966C21.6244 23.2772 21.5409 23.8651 21.8517 24.279C22.163 24.6938 22.7508 24.7763 23.1647 24.4655C26.6199 21.8701 28.6012 17.9068 28.6012 13.5919C28.6007 6.09753 22.4737 0 14.9789 0Z" fill="currentColor"/>
                                 </g>
                             </svg>
-                            <img v-if="configSectionIcons.resetAllIcon !== '' " :src="configSectionIcons.resetAllIcon" class="asowp-w-5 asowp-h-5" />                            
+                            <img v-if="configSectionIcons.resetAllIcon !== '' " :src="configSectionIcons.resetAllIcon" class="ascwo-w-5 ascwo-h-5" />                            
                             
-                            <div class="asowp-hidden lg:asowp-flex asowp-text-center">
+                            <div class="ascwo-hidden lg:ascwo-flex ascwo-text-center">
                                 {{ configVisualiserTexts.textButtonRefresh && configVisualiserTexts.textButtonRefresh.trim() !== '' ? configVisualiserTexts.textButtonRefresh : 'Reset All' }}
                             </div>
                         </span>
                             
-                        <div class="asowp-flex asowp-justify-center asowp-items-center asowp-space-x-4">
-                            <div class="asowp-flex asowp-full-center asowp-space-x-2">
-                                <span @click="undo" :class="`asowp-w-fit asowp-h-fit asowp-flex asowp-full-center asowp-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] asowp-bg-[${configColors.bars.undoRedo.backgroundColor}] asowp-text-[${configColors.bars.undoRedo.textColor}] hover:asowp-bg-[${configColors.bars.undoRedo.hoverBackgroundColor}] hover:asowp-text-[${configColors.bars.undoRedo.hoverTextColor}] asowp-border-2 asowp-border-[${configColors.bars.undoRedo.borderColor}] hover:asowp-border-[${configColors.bars.undoRedo.hoverBorderColor}] asowp-p-2 asowp-rounded-full asowp-base-animation asowp-cursor-pointer`">
-                                    <svg v-if="configSectionIcons.undoIcon === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4 lg:asowp-w-5 lg:asowp-h-5">
+                        <div class="ascwo-flex ascwo-justify-center ascwo-items-center ascwo-space-x-4">
+                            <div class="ascwo-flex ascwo-full-center ascwo-space-x-2">
+                                <span @click="undo" :class="`ascwo-w-fit ascwo-h-fit ascwo-flex ascwo-full-center ascwo-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] ascwo-bg-[${configColors.bars.undoRedo.backgroundColor}] ascwo-text-[${configColors.bars.undoRedo.textColor}] hover:ascwo-bg-[${configColors.bars.undoRedo.hoverBackgroundColor}] hover:ascwo-text-[${configColors.bars.undoRedo.hoverTextColor}] ascwo-border-2 ascwo-border-[${configColors.bars.undoRedo.borderColor}] hover:ascwo-border-[${configColors.bars.undoRedo.hoverBorderColor}] ascwo-p-2 ascwo-rounded-full ascwo-base-animation ascwo-cursor-pointer`">
+                                    <svg v-if="configSectionIcons.undoIcon === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4 lg:ascwo-w-5 lg:ascwo-h-5">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
                                     </svg>
-                                    <img v-if="configSectionIcons.undoIcon !== '' " :src="configSectionIcons.undoIcon" class="asowp-w-4 asowp-h-4 lg:asowp-w-5 lg:asowp-h-5" />                            
+                                    <img v-if="configSectionIcons.undoIcon !== '' " :src="configSectionIcons.undoIcon" class="ascwo-w-4 ascwo-h-4 lg:ascwo-w-5 lg:ascwo-h-5" />                            
                                 </span>
-                                <div class="asowp-hidden lg:asowp-flex asowp-text-sm">
+                                <div class="ascwo-hidden lg:ascwo-flex ascwo-text-sm">
                                     {{ configVisualiserTexts.textButtonBack && configVisualiserTexts.textButtonBack.trim() !== '' ? configVisualiserTexts.textButtonBack : 'Undo' }}
                                 </div>
                             </div>
     
-                            <div class="asowp-flex asowp-full-center asowp-space-x-2">
-                                <span @click="redo" :class="`asowp-w-fit asowp-h-fit asowp-flex asowp-full-center asowp-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] asowp-bg-[${configColors.bars.undoRedo.backgroundColor}] asowp-text-[${configColors.bars.undoRedo.textColor}] hover:asowp-bg-[${configColors.bars.undoRedo.hoverBackgroundColor}] hover:asowp-text-[${configColors.bars.undoRedo.hoverTextColor}] asowp-border-2 asowp-border-[${configColors.bars.undoRedo.borderColor}] hover:asowp-border-[${configColors.bars.undoRedo.hoverBorderColor}] asowp-p-2 asowp-rounded-full asowp-base-animation asowp-cursor-pointer`">
-                                    <svg v-if="configSectionIcons.redoIcon === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4 lg:asowp-w-5 lg:asowp-h-5">
+                            <div class="ascwo-flex ascwo-full-center ascwo-space-x-2">
+                                <span @click="redo" :class="`ascwo-w-fit ascwo-h-fit ascwo-flex ascwo-full-center ascwo-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] ascwo-bg-[${configColors.bars.undoRedo.backgroundColor}] ascwo-text-[${configColors.bars.undoRedo.textColor}] hover:ascwo-bg-[${configColors.bars.undoRedo.hoverBackgroundColor}] hover:ascwo-text-[${configColors.bars.undoRedo.hoverTextColor}] ascwo-border-2 ascwo-border-[${configColors.bars.undoRedo.borderColor}] hover:ascwo-border-[${configColors.bars.undoRedo.hoverBorderColor}] ascwo-p-2 ascwo-rounded-full ascwo-base-animation ascwo-cursor-pointer`">
+                                    <svg v-if="configSectionIcons.redoIcon === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4 lg:ascwo-w-5 lg:ascwo-h-5">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m15 15 6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3" />
                                     </svg>
-                                    <img v-if="configSectionIcons.redoIcon !== '' " :src="configSectionIcons.redoIcon" class="asowp-w-4 asowp-h-4 lg:asowp-w-5 lg:asowp-h-5" />                            
+                                    <img v-if="configSectionIcons.redoIcon !== '' " :src="configSectionIcons.redoIcon" class="ascwo-w-4 ascwo-h-4 lg:ascwo-w-5 lg:ascwo-h-5" />                            
                                 </span>
-                                <div class="asowp-hidden lg:asowp-flex asowp-text-sm">
+                                <div class="ascwo-hidden lg:ascwo-flex ascwo-text-sm">
                                     {{ configVisualiserTexts.textButtonNext && configVisualiserTexts.textButtonNext.trim() !== '' ? configVisualiserTexts.textButtonNext : 'Redo' }}
                                 </div>
                             </div>
@@ -90,79 +90,79 @@
                     </div>
 
                     
-                    <div v-show="!isLoaded" v-if="!hidePricing" id="asowp-price" :class="`asowp-flex asowp-w-3/4 lg:asowp-w-1/3 asowp-justify-end asowp-pr-2 asowp-items-center asowp-space-x-2 asowp-bg-[${configColors.bars.price.backgroundColor}]`">
-                        <div v-show="!isLoaded" class="asowp-flex asowp-full-center asowp-space-x-1">
-                            <p class="asowp-hidden lg:asowp-flex asowp-text-xs">Quantity:</p>
-                            <p class="lg:asowp-hidden asowp-flex asowp-text-xs">Qty:</p>
-                            <input type="number" id="asowp-quantity" name="asowp-quantity" class="asowp-w-[60px] asowp-h-[40px] asowp-p-1" min="1" v-model="configQuantity" @input="(e)=>{setQuantity()}" style=" height: 20px; width: 50px; padding: 5px">
+                    <div v-show="!isLoaded" v-if="!hidePricing" id="ascwo-price" :class="`ascwo-flex ascwo-w-3/4 lg:ascwo-w-1/3 ascwo-justify-end ascwo-pr-2 ascwo-items-center ascwo-space-x-2 ascwo-bg-[${configColors.bars.price.backgroundColor}]`">
+                        <div v-show="!isLoaded" class="ascwo-flex ascwo-full-center ascwo-space-x-1">
+                            <p class="ascwo-hidden lg:ascwo-flex ascwo-text-xs">Quantity:</p>
+                            <p class="lg:ascwo-hidden ascwo-flex ascwo-text-xs">Qty:</p>
+                            <input type="number" id="ascwo-quantity" name="ascwo-quantity" class="ascwo-w-[60px] ascwo-h-[40px] ascwo-p-1" min="1" v-model="configQuantity" @input="(e)=>{setQuantity()}" style=" height: 20px; width: 50px; padding: 5px">
                         </div>
 
-                        <div :class="`asowp-text-center asowp-text-lg asowp-font-semibold asowp-text-[${configColors.bars.price.textBeforeColor}]`">
+                        <div :class="`ascwo-text-center ascwo-text-lg ascwo-font-semibold ascwo-text-[${configColors.bars.price.textBeforeColor}]`">
                             {{configVisualiserTexts.textBeforePrice}}
                         </div>
-                        <div  :class="`asowp-flex asowp-text-lg lg:asowp-text-2xl asowp-font-bold asowp-text-center asowp-text-[${configColors.bars.price.textColor}]`">
+                        <div  :class="`ascwo-flex ascwo-text-lg lg:ascwo-text-2xl ascwo-font-bold ascwo-text-center ascwo-text-[${configColors.bars.price.textColor}]`">
                             <!-- {{formatPrice(finalPrices)}}  -->
                              {{addformatToPrice(finalPrice)}}
                         </div>
-                        <div :class="`asowp-text-center asowp-text- asowp-font-semibold asowp-text-[${configColors.bars.price.textAfterColor}]`">
+                        <div :class="`ascwo-text-center ascwo-text- ascwo-font-semibold ascwo-text-[${configColors.bars.price.textAfterColor}]`">
                             {{configVisualiserTexts.textAfterPrice}}
                         </div>
                     </div>
                 </div>
         
-                <div :class="`asowp-relative asowp-w-full asowp-h-[93%] lg:asowp-h-[90%] asowp-flex asowp-flex-col asowp-items-center asowp-bg-[${configColors.canvas.backgroundColor}]`">
-                    <div v-show="configDoublePart.active" class="asowp-w-full asowp-h-[6%] asowp-flex asowp-items-center asowp-bg-white asowp-space-x-3 asowp-px-4 asowp-border-y">
-                        <span class="asowp-text-sm asowp-font-medium">{{configDoublePart.label}}</span>
+                <div :class="`ascwo-relative ascwo-w-full ascwo-h-[93%] lg:ascwo-h-[90%] ascwo-flex ascwo-flex-col ascwo-items-center ascwo-bg-[${configColors.canvas.backgroundColor}]`">
+                    <div v-show="configDoublePart.active" class="ascwo-w-full ascwo-h-[6%] ascwo-flex ascwo-items-center ascwo-bg-white ascwo-space-x-3 ascwo-px-4 ascwo-border-y">
+                        <span class="ascwo-text-sm ascwo-font-medium">{{configDoublePart.label}}</span>
     
-                        <span @click="flipRect" :class="`asowp-mx-2 asowp-rounded-full asowp-p-1.5 asowp-font-medium asowp-h-[80%] asowp-w-fit asowp-bg-[${configColors.backgroundColorHeader}]/30 asowp-relative asowp-flex asowp-justify-between asowp-items-center asowp-border asowp-cursor-pointer`">
-                            <span :class="`${activeFace === 'front-face' ? 'asowp-left-[3%]' : 'asowp-translate-x-[105%] asowp-right-[53%]'} asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-translate-x asowp-absolute asowp-w-[50%] asowp-h-[95%] asowp-transition-all ease-in duration-200 z-0 asowp-rounded-full asowp-top-[5%]`"></span>
+                        <span @click="flipRect" :class="`ascwo-mx-2 ascwo-rounded-full ascwo-p-1.5 ascwo-font-medium ascwo-h-[80%] ascwo-w-fit ascwo-bg-[${configColors.backgroundColorHeader}]/30 ascwo-relative ascwo-flex ascwo-justify-between ascwo-items-center ascwo-border ascwo-cursor-pointer`">
+                            <span :class="`${activeFace === 'front-face' ? 'ascwo-left-[3%]' : 'ascwo-translate-x-[105%] ascwo-right-[53%]'} ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] ascwo-translate-x ascwo-absolute ascwo-w-[50%] ascwo-h-[95%] ascwo-transition-all ease-in duration-200 z-0 ascwo-rounded-full ascwo-top-[5%]`"></span>
                             
-                            <span :class="`${activeFace === 'front-face' ? `asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : `asowp-text-[${configColors.textColorHoverButton}]`} asowp-flex asowp-full-center asowp-pr-1 asowp-z-10`">
+                            <span :class="`${activeFace === 'front-face' ? `ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : `ascwo-text-[${configColors.textColorHoverButton}]`} ascwo-flex ascwo-full-center ascwo-pr-1 ascwo-z-10`">
                                 {{configDoublePart.part1}}
                             </span>
-                            <span :class="`${activeFace !== 'front-face' ? `asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : `asowp-text-[${configColors.textColorHoverButton}]`} asowp-flex asowp-full-center asowp-pl-1 asowp-z-10`">
+                            <span :class="`${activeFace !== 'front-face' ? `ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : `ascwo-text-[${configColors.textColorHoverButton}]`} ascwo-flex ascwo-full-center ascwo-pl-1 ascwo-z-10`">
                                 {{configDoublePart.part2}}
                             </span>
                         </span>
                     </div>
     
-                    <div id="asowp-canvas-containers" :class="`flipper asowp-relative asowp-w-full asowp-h-[54%] lg:asowp-h-[82%] asowp-border-4`">
-                        <div v-if="isLoaded" class="asowp-absolute asowp-top-[50%] asowp-left-[50%] asowp-translate-x-[-50%] asowp-translate-y-[-50%] asowp-w-[50%] asowp-h-[50%] asowp-bg-gradient-to-r asowp-from-zinc-400 asowp-via-zinc-200 asowp-to-zinc-400 asowp-p-4 asowp-animate-pulse"></div>
+                    <div id="ascwo-canvas-containers" :class="`flipper ascwo-relative ascwo-w-full ascwo-h-[54%] lg:ascwo-h-[82%] ascwo-border-4`">
+                        <div v-if="isLoaded" class="ascwo-absolute ascwo-top-[50%] ascwo-left-[50%] ascwo-translate-x-[-50%] ascwo-translate-y-[-50%] ascwo-w-[50%] ascwo-h-[50%] ascwo-bg-gradient-to-r ascwo-from-zinc-400 ascwo-via-zinc-200 ascwo-to-zinc-400 ascwo-p-4 ascwo-animate-pulse"></div>
     
-                        <div id="asowp-sign-recto" class="asowp-relative asowp-w-full asowp-h-full">
-                            <canvas  ref="canvasFace1Ref" id="canvaas" class="asowp-relative asowp-w-full asowp-h-full"></canvas>
+                        <div id="ascwo-sign-recto" class="ascwo-relative ascwo-w-full ascwo-h-full">
+                            <canvas  ref="canvasFace1Ref" id="canvaas" class="ascwo-relative ascwo-w-full ascwo-h-full"></canvas>
                         </div>
     
-                        <div id="asowp-sign-verso" class="asowp-absolute asowp-left-0 asowp-top-0">
-                            <canvas ref="canvasFace2Ref" class="canvas2 asowp-w-full asowp-h-full"></canvas>
+                        <div id="ascwo-sign-verso" class="ascwo-absolute ascwo-left-0 ascwo-top-0">
+                            <canvas ref="canvasFace2Ref" class="canvas2 ascwo-w-full ascwo-h-full"></canvas>
                         </div>
     
                     </div>
                     <div v-show="!isLoaded">
-                        <div id="activeObject-values" class="asowp-w-[80%] lg:asowp-w-fit asowp-invisible asowp-absolute asowp-top-[2%] asowp-left-[50%] asowp-translate-x-[-50%] asowp-bg-[#828282]/60 asowp-text-white asowp-text-lg asowp-p-2 asowp-px-3 asowp-rounded-md asowp-shadow-md asowp-z-10">
-                            <div class="asowp-space-y-1 asowp-text-sm">
+                        <div id="activeObject-values" class="ascwo-w-[80%] lg:ascwo-w-fit ascwo-invisible ascwo-absolute ascwo-top-[2%] ascwo-left-[50%] ascwo-translate-x-[-50%] ascwo-bg-[#828282]/60 ascwo-text-white ascwo-text-lg ascwo-p-2 ascwo-px-3 ascwo-rounded-md ascwo-shadow-md ascwo-z-10">
+                            <div class="ascwo-space-y-1 ascwo-text-sm">
                                 <div>
-                                    <span class="asowp-font-semibold">{{ configVisualiserTexts.textSize && configVisualiserTexts.textSize.trim() !== '' ? configVisualiserTexts.textSize : 'Size' }}:</span> {{ configVisualiserTexts.textWidth && configVisualiserTexts.textWidth.trim() !== '' ? configVisualiserTexts.textWidth : 'Width' }}: <span id="text-width"></span> {{configUnit}},  {{ configVisualiserTexts.textHeight && configVisualiserTexts.textHeight.trim() !== '' ? configVisualiserTexts.textHeight : 'Height' }}: <span id="text-height"></span> {{configUnit}}
+                                    <span class="ascwo-font-semibold">{{ configVisualiserTexts.textSize && configVisualiserTexts.textSize.trim() !== '' ? configVisualiserTexts.textSize : 'Size' }}:</span> {{ configVisualiserTexts.textWidth && configVisualiserTexts.textWidth.trim() !== '' ? configVisualiserTexts.textWidth : 'Width' }}: <span id="text-width"></span> {{configUnit}},  {{ configVisualiserTexts.textHeight && configVisualiserTexts.textHeight.trim() !== '' ? configVisualiserTexts.textHeight : 'Height' }}: <span id="text-height"></span> {{configUnit}}
                                 </div>
                                 <div v-if="selectedShape != 'cut-to-shape'">
-                                    <span class="asowp-font-semibold">{{ configVisualiserTexts.textPosition && configVisualiserTexts.textPosition.trim() !== '' ? configVisualiserTexts.textPosition : 'Position' }}:</span> {{ configVisualiserTexts.textLeft && configVisualiserTexts.textLeft.trim() !== '' ? configVisualiserTexts.textLeft : 'Left' }}: <span id="text-left"></span> {{configUnit}}, {{ configVisualiserTexts.textRight && configVisualiserTexts.textRight.trim() !== '' ? configVisualiserTexts.textRight : 'Right' }}: <span id="text-right"></span> {{configUnit}}, {{ configVisualiserTexts.textTop && configVisualiserTexts.textTop.trim() !== '' ? configVisualiserTexts.textTop : 'Top' }}: <span id="text-top"></span> {{configUnit}}, {{ configVisualiserTexts.textBottom && configVisualiserTexts.textBottom.trim() !== '' ? configVisualiserTexts.textBottom : 'Bottom' }}: <span id="text-bottom"></span> {{configUnit}}
+                                    <span class="ascwo-font-semibold">{{ configVisualiserTexts.textPosition && configVisualiserTexts.textPosition.trim() !== '' ? configVisualiserTexts.textPosition : 'Position' }}:</span> {{ configVisualiserTexts.textLeft && configVisualiserTexts.textLeft.trim() !== '' ? configVisualiserTexts.textLeft : 'Left' }}: <span id="text-left"></span> {{configUnit}}, {{ configVisualiserTexts.textRight && configVisualiserTexts.textRight.trim() !== '' ? configVisualiserTexts.textRight : 'Right' }}: <span id="text-right"></span> {{configUnit}}, {{ configVisualiserTexts.textTop && configVisualiserTexts.textTop.trim() !== '' ? configVisualiserTexts.textTop : 'Top' }}: <span id="text-top"></span> {{configUnit}}, {{ configVisualiserTexts.textBottom && configVisualiserTexts.textBottom.trim() !== '' ? configVisualiserTexts.textBottom : 'Bottom' }}: <span id="text-bottom"></span> {{configUnit}}
                                 </div>
                                 <div v-show="angleActive">
-                                    <span class="asowp-font-semibold">Angle of object:</span> <span id="text-angle"></span>
+                                    <span class="ascwo-font-semibold">Angle of object:</span> <span id="text-angle"></span>
                                 </div>
                             </div>
                         </div>
     
-                        <div id="asowp-editButtons" class="asowp-absolute asowp-hidden asowp-w-fit asowp-h-fit asowp-flex asowp-full-center asowp-space-x-1 asowp-bg-white asowp-p-2 asowp-border-2 asowp-rounded-md asowp-shadow-md asowp-translate-x-[-50%] asowp-z-10">
-                            <div @click="editObject()" id="asowp-editObject" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-bg-[${configColors.objectsOptions.edit.buttonColor}] asowp-text-[${configColors.objectsOptions.edit.textColor}] hover:asowp-bg-[${configColors.objectsOptions.edit.hoverButtonColor}] hover:asowp-text-[${configColors.objectsOptions.edit.hoverTextColor}] asowp-cursor-pointer asowp-px-1 asowp-rounded-md`">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                        <div id="ascwo-editButtons" class="ascwo-absolute ascwo-hidden ascwo-w-fit ascwo-h-fit ascwo-flex ascwo-full-center ascwo-space-x-1 ascwo-bg-white ascwo-p-2 ascwo-border-2 ascwo-rounded-md ascwo-shadow-md ascwo-translate-x-[-50%] ascwo-z-10">
+                            <div @click="editObject()" id="ascwo-editObject" :class="`ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1 ascwo-bg-[${configColors.objectsOptions.edit.buttonColor}] ascwo-text-[${configColors.objectsOptions.edit.textColor}] hover:ascwo-bg-[${configColors.objectsOptions.edit.hoverButtonColor}] hover:ascwo-text-[${configColors.objectsOptions.edit.hoverTextColor}] ascwo-cursor-pointer ascwo-px-1 ascwo-rounded-md`">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                 </svg>
-                                <p class="asowp-text-[10px] asowp-font-semibold">{{ configVisualiserTexts.textCanvasEdit && configVisualiserTexts.textCanvasEdit.trim() !== '' ? configVisualiserTexts.textCanvasEdit : 'Edit' }}</p>
+                                <p class="ascwo-text-[10px] ascwo-font-semibold">{{ configVisualiserTexts.textCanvasEdit && configVisualiserTexts.textCanvasEdit.trim() !== '' ? configVisualiserTexts.textCanvasEdit : 'Edit' }}</p>
                             </div>
 
-                            <div @click="cloneObject()" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-bg-[${configColors.objectsOptions.clone.buttonColor}] asowp-text-[${configColors.objectsOptions.clone.textColor}] hover:asowp-bg-[${configColors.objectsOptions.clone.hoverButtonColor}] hover:asowp-text-[${configColors.objectsOptions.clone.hoverTextColor}] asowp-cursor-pointer asowp-px-1 asowp-rounded-md`">
-                                <svg viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="asowp-w-5 asowp-h-5">
+                            <div @click="cloneObject()" :class="`ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1 ascwo-bg-[${configColors.objectsOptions.clone.buttonColor}] ascwo-text-[${configColors.objectsOptions.clone.textColor}] hover:ascwo-bg-[${configColors.objectsOptions.clone.hoverButtonColor}] hover:ascwo-text-[${configColors.objectsOptions.clone.hoverTextColor}] ascwo-cursor-pointer ascwo-px-1 ascwo-rounded-md`">
+                                <svg viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="ascwo-w-5 ascwo-h-5">
                                     <g clip-path="url(#clip0_65_739)">
                                         <path d="M6 6.5H22V10.5H24V6.5C24 5.96957 23.7893 5.46086 23.4142 5.08579C23.0391 4.71071 22.5304 4.5 22 4.5H6C5.46957 4.5 4.96086 4.71071 4.58579 5.08579C4.21071 5.46086 4 5.96957 4 6.5V22.5C4 23.0304 4.21071 23.5391 4.58579 23.9142C4.96086 24.2893 5.46957 24.5 6 24.5H10V22.5H6V6.5Z" fill="currentColor"/>
                                         <path d="M30 12.5H14C13.4696 12.5 12.9609 12.7107 12.5858 13.0858C12.2107 13.4609 12 13.9696 12 14.5V30.5C12 31.0304 12.2107 31.5391 12.5858 31.9142C12.9609 32.2893 13.4696 32.5 14 32.5H30C30.5304 32.5 31.0391 32.2893 31.4142 31.9142C31.7893 31.5391 32 31.0304 32 30.5V14.5C32 13.9696 31.7893 13.4609 31.4142 13.0858C31.0391 12.7107 30.5304 12.5 30 12.5ZM30 30.5H14V14.5H30V30.5Z" fill="currentColor"/>
@@ -174,156 +174,156 @@
                                         </clipPath>
                                     </defs>
                                 </svg>
-                                <p class="asowp-text-[10px] asowp-font-semibold">{{ configVisualiserTexts.textCanvasClone && configVisualiserTexts.textCanvasClone.trim() !== '' ? configVisualiserTexts.textCanvasClone : 'Clone' }}</p>
+                                <p class="ascwo-text-[10px] ascwo-font-semibold">{{ configVisualiserTexts.textCanvasClone && configVisualiserTexts.textCanvasClone.trim() !== '' ? configVisualiserTexts.textCanvasClone : 'Clone' }}</p>
                             </div>
 
-                            <div @click="moveObject('up')" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-bg-[${configColors.objectsOptions.center.buttonColor}] asowp-text-[${configColors.objectsOptions.center.textColor}] hover:asowp-bg-[${configColors.objectsOptions.center.hoverButtonColor}] hover:asowp-text-[${configColors.objectsOptions.center.hoverTextColor}] asowp-cursor-pointer asowp-px-1 asowp-rounded-md`">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                            <div @click="moveObject('up')" :class="`ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1 ascwo-bg-[${configColors.objectsOptions.center.buttonColor}] ascwo-text-[${configColors.objectsOptions.center.textColor}] hover:ascwo-bg-[${configColors.objectsOptions.center.hoverButtonColor}] hover:ascwo-text-[${configColors.objectsOptions.center.hoverTextColor}] ascwo-cursor-pointer ascwo-px-1 ascwo-rounded-md`">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 15.75 12 11.25l4.5 4.5M12 12v8.25M4.5 3.75h15" />
                                 </svg>
-                                <p class="asowp-text-[10px] asowp-font-semibold">{{ configVisualiserTexts.textCanvasUp && configVisualiserTexts.textCanvasUp.trim() !== '' ? configVisualiserTexts.textCanvasUp : 'Up' }}</p>
+                                <p class="ascwo-text-[10px] ascwo-font-semibold">{{ configVisualiserTexts.textCanvasUp && configVisualiserTexts.textCanvasUp.trim() !== '' ? configVisualiserTexts.textCanvasUp : 'Up' }}</p>
                             </div>
 
-                            <div @click="moveObject('down')" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-bg-[${configColors.objectsOptions.center.buttonColor}] asowp-text-[${configColors.objectsOptions.center.textColor}] hover:asowp-bg-[${configColors.objectsOptions.center.hoverButtonColor}] hover:asowp-text-[${configColors.objectsOptions.center.hoverTextColor}] asowp-cursor-pointer asowp-px-1 asowp-rounded-md`">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                            <div @click="moveObject('down')" :class="`ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1 ascwo-bg-[${configColors.objectsOptions.center.buttonColor}] ascwo-text-[${configColors.objectsOptions.center.textColor}] hover:ascwo-bg-[${configColors.objectsOptions.center.hoverButtonColor}] hover:ascwo-text-[${configColors.objectsOptions.center.hoverTextColor}] ascwo-cursor-pointer ascwo-px-1 ascwo-rounded-md`">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 8.25 12 12.75l-4.5-4.5M12 12v-8.25M4.5 20.25h15" />
                                 </svg>
-                                <p class="asowp-text-[10px] asowp-font-semibold">{{ configVisualiserTexts.textCanvasDown && configVisualiserTexts.textCanvasDown.trim() !== '' ? configVisualiserTexts.textCanvasDown : 'Down' }}</p>
+                                <p class="ascwo-text-[10px] ascwo-font-semibold">{{ configVisualiserTexts.textCanvasDown && configVisualiserTexts.textCanvasDown.trim() !== '' ? configVisualiserTexts.textCanvasDown : 'Down' }}</p>
                             </div>
 
-                            <div @click="deleteObject()" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-bg-[${configColors.objectsOptions.delete.buttonColor}] asowp-text-[${configColors.objectsOptions.delete.textColor}] hover:asowp-bg-[${configColors.objectsOptions.delete.hoverButtonColor}] hover:asowp-text-[${configColors.objectsOptions.delete.hoverTextColor}] asowp-cursor-pointer asowp-px-1 asowp-rounded-md`">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                            <div @click="deleteObject()" :class="`ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1 ascwo-bg-[${configColors.objectsOptions.delete.buttonColor}] ascwo-text-[${configColors.objectsOptions.delete.textColor}] hover:ascwo-bg-[${configColors.objectsOptions.delete.hoverButtonColor}] hover:ascwo-text-[${configColors.objectsOptions.delete.hoverTextColor}] ascwo-cursor-pointer ascwo-px-1 ascwo-rounded-md`">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                                 </svg>
-                                <p class="asowp-text-[10px] asowp-font-semibold">{{ configVisualiserTexts.textCanvasDelete && configVisualiserTexts.textCanvasDelete.trim() !== '' ? configVisualiserTexts.textCanvasDelete : 'Delete' }}</p>
+                                <p class="ascwo-text-[10px] ascwo-font-semibold">{{ configVisualiserTexts.textCanvasDelete && configVisualiserTexts.textCanvasDelete.trim() !== '' ? configVisualiserTexts.textCanvasDelete : 'Delete' }}</p>
                             </div>
     
-                            <div @click="centerVertically()" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-bg-[${configColors.objectsOptions.center.buttonColor}] asowp-text-[${configColors.objectsOptions.center.textColor}] hover:asowp-bg-[${configColors.objectsOptions.center.hoverButtonColor}] hover:asowp-text-[${configColors.objectsOptions.center.hoverTextColor}] asowp-cursor-pointer asowp-px-1 asowp-rounded-md`">
-                                <svg focusable="false" viewBox="0 0 24 24" class="asowp-w-5 asowp-h-5">
+                            <div @click="centerVertically()" :class="`ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1 ascwo-bg-[${configColors.objectsOptions.center.buttonColor}] ascwo-text-[${configColors.objectsOptions.center.textColor}] hover:ascwo-bg-[${configColors.objectsOptions.center.hoverButtonColor}] hover:ascwo-text-[${configColors.objectsOptions.center.hoverTextColor}] ascwo-cursor-pointer ascwo-px-1 ascwo-rounded-md`">
+                                <svg focusable="false" viewBox="0 0 24 24" class="ascwo-w-5 ascwo-h-5">
                                     <path d="M11 3a1 1 0 1 1 2 0v2.586l1.293-1.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 1.414-1.414L11 5.586V3zM9.707 19.707a1 1 0 0 1-1.414-1.414l3-3a1 1 0 0 1 1.414 0l3 3a1 1 0 0 1-1.414 1.414L13 18.414V21a1 1 0 1 1-2 0v-2.586l-1.293 1.293zM4 11a1 1 0 1 0 0 2h16a1 1 0 1 0 0-2H4z" fill="currentColor"></path>
                                 </svg>
-                                <p class="asowp-text-[10px] asowp-font-semibold">{{ configVisualiserTexts.textCanvasCenterV && configVisualiserTexts.textCanvasCenterV.trim() !== '' ? configVisualiserTexts.textCanvasCenterV : 'CenterV' }}</p>
+                                <p class="ascwo-text-[10px] ascwo-font-semibold">{{ configVisualiserTexts.textCanvasCenterV && configVisualiserTexts.textCanvasCenterV.trim() !== '' ? configVisualiserTexts.textCanvasCenterV : 'CenterV' }}</p>
                             </div>
     
-                            <div @click="centerHorizontally()" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-bg-[${configColors.objectsOptions.center.buttonColor}] asowp-text-[${configColors.objectsOptions.center.textColor}] hover:asowp-bg-[${configColors.objectsOptions.center.hoverButtonColor}] hover:asowp-text-[${configColors.objectsOptions.center.hoverTextColor}] asowp-cursor-pointer asowp-px-1 asowp-rounded-md`">
-                                <svg focusable="false" viewBox="0 0 24 24" class="asowp-w-5 asowp-h-5">
+                            <div @click="centerHorizontally()" :class="`ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1 ascwo-bg-[${configColors.objectsOptions.center.buttonColor}] ascwo-text-[${configColors.objectsOptions.center.textColor}] hover:ascwo-bg-[${configColors.objectsOptions.center.hoverButtonColor}] hover:ascwo-text-[${configColors.objectsOptions.center.hoverTextColor}] ascwo-cursor-pointer ascwo-px-1 ascwo-rounded-md`">
+                                <svg focusable="false" viewBox="0 0 24 24" class="ascwo-w-5 ascwo-h-5">
                                     <path d="M22 11a1 1 0 1 1 0 2h-3.586l1.293 1.293a1 1 0 0 1-1.414 1.414l-3-3a1 1 0 0 1 0-1.414l3-3a1 1 0 0 1 1.414 1.414L18.414 11H22zM4.293 9.707a1 1 0 0 1 1.414-1.414l3 3a1 1 0 0 1 0 1.414l-3 3a1 1 0 0 1-1.414-1.414L5.586 13H2a1 1 0 1 1 0-2h3.586L4.293 9.707zM13 4a1 1 0 1 0-2 0v16a1 1 0 1 0 2 0V4z" fill="currentColor"></path>
                                 </svg>
-                                <p class="asowp-text-[10px] asowp-font-semibold">{{ configVisualiserTexts.textCanvasCenterH && configVisualiserTexts.textCanvasCenterH.trim() !== '' ? configVisualiserTexts.textCanvasCenterH : 'CenterH' }}</p>
+                                <p class="ascwo-text-[10px] ascwo-font-semibold">{{ configVisualiserTexts.textCanvasCenterH && configVisualiserTexts.textCanvasCenterH.trim() !== '' ? configVisualiserTexts.textCanvasCenterH : 'CenterH' }}</p>
                             </div>
                         </div>
 
-                        <div v-if="selectedShape === 'cut-to-shape'" :class="`asowp-flex asowp-flex-col asowp-absolute asowp-top-[2%] asowp-left-2 asowp-bg-[#828282]/60 asowp-text-white asowp-text-[14px] asowp-p-2 asowp-px-3 asowp-rounded-md asowp-shadow-md`">
-                            <span class="asowp-font-semibold">{{ configVisualiserTexts.textSize && configVisualiserTexts.textSize.trim() !== '' ? configVisualiserTexts.textSize : 'Size' }}</span> 
+                        <div v-if="selectedShape === 'cut-to-shape'" :class="`ascwo-flex ascwo-flex-col ascwo-absolute ascwo-top-[2%] ascwo-left-2 ascwo-bg-[#828282]/60 ascwo-text-white ascwo-text-[14px] ascwo-p-2 ascwo-px-3 ascwo-rounded-md ascwo-shadow-md`">
+                            <span class="ascwo-font-semibold">{{ configVisualiserTexts.textSize && configVisualiserTexts.textSize.trim() !== '' ? configVisualiserTexts.textSize : 'Size' }}</span> 
                             <span v-if="configSettings.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.customizerSign.customizerOptions.showHideMeasurements === 'only-width'">{{ configVisualiserTexts.textWidth && configVisualiserTexts.textWidth.trim() !== '' ? configVisualiserTexts.textWidth : 'Width' }}: <span id="outline-width"> {{ currentSizeData.width }} </span> {{configUnit}}</span>
                             <span v-if="configSettings.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.customizerSign.customizerOptions.showHideMeasurements === 'only-height'">{{ configVisualiserTexts.textHeight && configVisualiserTexts.textHeight.trim() !== '' ? configVisualiserTexts.textHeight : 'Height' }}: <span id="outline-height"> {{ currentSizeData.height }} </span> {{configUnit}}</span>
                         </div>
                     </div>
     
-                    <div id="asowp-optionsButtons-container" :class="`asowp-w-full asowp-relative asowp-px-10 lg:asowp-px-2 lg:asowp-w-[60%] asowp-h-[8%] lg:asowp-h-[15%] asowp-flex asowp-full-center asowp-bg-[${configColors.backgroundColorHeader}] asowp-text-[${configColors.textColorContentHeader}] lg:asowp-bg-transparent`">
-                        <div v-if="isLoaded" class="asowp-w-full asowp-h-[80%] asowp-flex asowp-full-center asowp-space-x-4">
-                            <div class="asowp-w-[20%] asowp-bg-gradient-to-r asowp-from-zinc-400 asowp-via-zinc-200 asowp-to-zinc-400 asowp-p-4 asowp-h-full"></div>
-                            <div class="asowp-w-[20%] asowp-bg-gradient-to-r asowp-from-zinc-400 asowp-via-zinc-200 asowp-to-zinc-400 asowp-p-4 asowp-h-full"></div>
-                            <div class="asowp-w-[20%] asowp-bg-gradient-to-r asowp-from-zinc-400 asowp-via-zinc-200 asowp-to-zinc-400 asowp-p-4 asowp-h-full"></div>
-                            <div class="asowp-w-[20%] asowp-bg-gradient-to-r asowp-from-zinc-400 asowp-via-zinc-200 asowp-to-zinc-400 asowp-p-4 asowp-h-full"></div>
-                            <div class="asowp-w-[20%] asowp-bg-gradient-to-r asowp-from-zinc-400 asowp-via-zinc-200 asowp-to-zinc-400 asowp-p-4 asowp-h-full"></div>
-                            <div class="asowp-w-[20%] asowp-bg-gradient-to-r asowp-from-zinc-400 asowp-via-zinc-200 asowp-to-zinc-400 asowp-p-4 asowp-h-full"></div>
-                            <div class="asowp-w-[20%] asowp-bg-gradient-to-r asowp-from-zinc-400 asowp-via-zinc-200 asowp-to-zinc-400 asowp-p-4 asowp-h-full"></div>
-                            <div class="asowp-w-[20%] asowp-bg-gradient-to-r asowp-from-zinc-400 asowp-via-zinc-200 asowp-to-zinc-400 asowp-p-4 asowp-h-full"></div>
-                            <div class="asowp-w-[20%] asowp-bg-gradient-to-r asowp-from-zinc-400 asowp-via-zinc-200 asowp-to-zinc-400 asowp-p-4 asowp-h-full"></div>
+                    <div id="ascwo-optionsButtons-container" :class="`ascwo-w-full ascwo-relative ascwo-px-10 lg:ascwo-px-2 lg:ascwo-w-[60%] ascwo-h-[8%] lg:ascwo-h-[15%] ascwo-flex ascwo-full-center ascwo-bg-[${configColors.backgroundColorHeader}] ascwo-text-[${configColors.textColorContentHeader}] lg:ascwo-bg-transparent`">
+                        <div v-if="isLoaded" class="ascwo-w-full ascwo-h-[80%] ascwo-flex ascwo-full-center ascwo-space-x-4">
+                            <div class="ascwo-w-[20%] ascwo-bg-gradient-to-r ascwo-from-zinc-400 ascwo-via-zinc-200 ascwo-to-zinc-400 ascwo-p-4 ascwo-h-full"></div>
+                            <div class="ascwo-w-[20%] ascwo-bg-gradient-to-r ascwo-from-zinc-400 ascwo-via-zinc-200 ascwo-to-zinc-400 ascwo-p-4 ascwo-h-full"></div>
+                            <div class="ascwo-w-[20%] ascwo-bg-gradient-to-r ascwo-from-zinc-400 ascwo-via-zinc-200 ascwo-to-zinc-400 ascwo-p-4 ascwo-h-full"></div>
+                            <div class="ascwo-w-[20%] ascwo-bg-gradient-to-r ascwo-from-zinc-400 ascwo-via-zinc-200 ascwo-to-zinc-400 ascwo-p-4 ascwo-h-full"></div>
+                            <div class="ascwo-w-[20%] ascwo-bg-gradient-to-r ascwo-from-zinc-400 ascwo-via-zinc-200 ascwo-to-zinc-400 ascwo-p-4 ascwo-h-full"></div>
+                            <div class="ascwo-w-[20%] ascwo-bg-gradient-to-r ascwo-from-zinc-400 ascwo-via-zinc-200 ascwo-to-zinc-400 ascwo-p-4 ascwo-h-full"></div>
+                            <div class="ascwo-w-[20%] ascwo-bg-gradient-to-r ascwo-from-zinc-400 ascwo-via-zinc-200 ascwo-to-zinc-400 ascwo-p-4 ascwo-h-full"></div>
+                            <div class="ascwo-w-[20%] ascwo-bg-gradient-to-r ascwo-from-zinc-400 ascwo-via-zinc-200 ascwo-to-zinc-400 ascwo-p-4 ascwo-h-full"></div>
+                            <div class="ascwo-w-[20%] ascwo-bg-gradient-to-r ascwo-from-zinc-400 ascwo-via-zinc-200 ascwo-to-zinc-400 ascwo-p-4 ascwo-h-full"></div>
                         </div>
     
-                        <div v-show="!isLoaded" id="asowp-options-buttons" class="asowp-scrollDiv asowp-flex asowp-items-center asowp-w-full asowp-h-fit asowp-p-0.5 asowp-overflow-x-auto asowp-scrollBar">
+                        <div v-show="!isLoaded" id="ascwo-options-buttons" class="ascwo-scrollDiv ascwo-flex ascwo-items-center ascwo-w-full ascwo-h-fit ascwo-p-0.5 ascwo-overflow-x-auto ascwo-scrollBar">
                             {{console.log(activeConfigOptionAfterCondition, "activeConfigOptionAfterCondition")}}
-                            <div v-for="(option, id) in activeConfigOptionAfterCondition" :key="option.type" class="asowp-w-fit asowp-h-[90%] asowp-flex"> 
+                            <div v-for="(option, id) in activeConfigOptionAfterCondition" :key="option.type" class="ascwo-w-fit ascwo-h-[90%] ascwo-flex"> 
                                 <!-- {{ option.type }}{{ materialType }} -->
 
-                                <div v-if="option.type == 'materials' && option.active" @click="showOptions('material')" :class="`${step === 'material' ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1  asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg lg:asowp-shadow-[-10px_0px_10px_-1px_#e0e0e0] asowp-base-animation asowp-cursor-pointer asowp-cardDiv`">
-                                    <svg  v-if="configSectionIcons.changeIconMaterial === '' " class="asowp-w-6 asowp-h-6" viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <div v-if="option.type == 'materials' && option.active" @click="showOptions('material')" :class="`${step === 'material' ? `ascwo-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1  ascwo-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] ascwo-px-4 ascwo-py-1 ascwo-rounded-lg lg:ascwo-shadow-[-10px_0px_10px_-1px_#e0e0e0] ascwo-base-animation ascwo-cursor-pointer ascwo-cardDiv`">
+                                    <svg  v-if="configSectionIcons.changeIconMaterial === '' " class="ascwo-w-6 ascwo-h-6" viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g id="mdi:material">
                                         <path id="Vector" d="M4.21671 33.5687L6.45004 34.5254V19.0992L2.40004 29.11C1.71671 30.8525 2.50004 32.8512 4.21671 33.5687ZM36.7167 27.2479L28.45 6.83332C28.2059 6.21413 27.79 5.68187 27.2538 5.30235C26.7177 4.92282 26.0848 4.71268 25.4334 4.69791C25 4.69791 24.55 4.76624 24.1167 4.95416L11.8334 10.1646C11.2405 10.4225 10.7323 10.8492 10.3689 11.3943C10.0056 11.9393 9.80234 12.5797 9.78337 13.2396C9.76671 13.6667 9.85004 14.1621 10 14.6062L18.3334 35.0208C18.8167 36.3533 20.05 37.1391 21.35 37.1562C21.7834 37.1562 22.2167 37.0708 22.6334 36.9L34.9 31.6896C35.7154 31.3473 36.3648 30.6872 36.7055 29.8542C37.0462 29.0213 37.0502 28.0839 36.7167 27.2479ZM13.1334 14.9479C12.6913 14.9479 12.2674 14.7679 11.9549 14.4475C11.6423 14.1272 11.4667 13.6926 11.4667 13.2396C11.4667 12.7865 11.6423 12.352 11.9549 12.0316C12.2674 11.7112 12.6913 11.5312 13.1334 11.5312C14.05 11.5312 14.8 12.3 14.8 13.2396C14.8 14.1792 14.05 14.9479 13.1334 14.9479ZM9.80004 33.7396C9.80004 34.6457 10.1512 35.5148 10.7763 36.1555C11.4015 36.7963 12.2493 37.1562 13.1334 37.1562H15.55L9.80004 22.9087V33.7396Z" fill="currentColor"/>
                                         </g>
                                     </svg>
-                                    <img v-if="configSectionIcons.changeIconMaterial !== '' " :src="configSectionIcons.changeIconMaterial" class="asowp-w-6 asowp-h-6" />
-                                    <div class="asowp-text-[10px] lg:asowp-text-[13px] asowp-font-medium">
+                                    <img v-if="configSectionIcons.changeIconMaterial !== '' " :src="configSectionIcons.changeIconMaterial" class="ascwo-w-6 ascwo-h-6" />
+                                    <div class="ascwo-text-[10px] lg:ascwo-text-[13px] ascwo-font-medium">
                                         {{configVisualiserTexts.textMaterial}} 
                                     </div>
                                 </div>
                                 
-                                <div v-if="materialType == 'advance'" v-for="(component, id) in currentMaterial.data" class="asowp-cardDiv" >
-                                    <div v-if="component.options.length > 0" @click="showOptions('component', component, id)" :class="`${step === 'component' && advancedComponentId === id  ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-h-full asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1  asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg lg:asowp-shadow-[-10px_0px_10px_-1px_#e0e0e0] asowp-base-animation asowp-cursor-pointer`">
-                                        <svg v-if="component.icon === '' " class="asowp-w-6 asowp-h-6" viewBox="0 0 50 50" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <div v-if="materialType == 'advance'" v-for="(component, id) in currentMaterial.data" class="ascwo-cardDiv" >
+                                    <div v-if="component.options.length > 0" @click="showOptions('component', component, id)" :class="`${step === 'component' && advancedComponentId === id  ? `ascwo-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} ascwo-h-full ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1  ascwo-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] ascwo-px-4 ascwo-py-1 ascwo-rounded-lg lg:ascwo-shadow-[-10px_0px_10px_-1px_#e0e0e0] ascwo-base-animation ascwo-cursor-pointer`">
+                                        <svg v-if="component.icon === '' " class="ascwo-w-6 ascwo-h-6" viewBox="0 0 50 50" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <g id="fluent-mdl2:product-release">
                                             <path id="Vector" d="M21.875 37.5244V22.8516L6.25 15.0391V36.5234L19.5312 43.1885L18.7744 46.2891L3.125 38.4766V11.5234L23.4375 1.3916L43.75 11.5234V18.1152C42.6107 18.2943 41.569 18.6605 40.625 19.2139V15.0391L25 22.8516V34.3994L21.875 37.5244ZM18.4082 7.37305L32.666 15.5273L38.6963 12.5L23.4375 4.8584L18.4082 7.37305ZM23.4375 20.1416L29.2969 17.2119L15.0391 9.05762L8.17871 12.5L23.4375 20.1416ZM45.1172 21.875C45.8008 21.875 46.4355 21.9971 47.0215 22.2412C47.6074 22.4854 48.1283 22.819 48.584 23.2422C49.0397 23.6654 49.3815 24.1781 49.6094 24.7803C49.8372 25.3825 49.9674 26.0254 50 26.709C50 27.3438 49.8779 27.9622 49.6338 28.5645C49.3896 29.1667 49.0397 29.6956 48.584 30.1514L31.0791 47.6562L21.875 49.9512L24.1699 40.7471L41.6748 23.2666C42.1468 22.7946 42.6758 22.4447 43.2617 22.2168C43.8477 21.9889 44.4661 21.875 45.1172 21.875ZM46.3623 27.9541C46.7041 27.6123 46.875 27.1973 46.875 26.709C46.875 26.2044 46.7122 25.7975 46.3867 25.4883C46.0612 25.179 45.638 25.0163 45.1172 25C44.8893 25 44.6696 25.0326 44.458 25.0977C44.2464 25.1628 44.0592 25.2848 43.8965 25.4639L27.002 42.3584L26.1719 45.6543L29.4678 44.8242L46.3623 27.9541Z" fill="currentColor"/>
                                             </g>
                                         </svg>
-                                        <img v-if="component.icon !== '' " :src="component.icon" class="asowp-w-6 asowp-h-6" />
-                                        <div class="asowp-text-[10px] lg:asowp-text-[13px] asowp-font-medium">
+                                        <img v-if="component.icon !== '' " :src="component.icon" class="ascwo-w-6 ascwo-h-6" />
+                                        <div class="ascwo-text-[10px] lg:ascwo-text-[13px] ascwo-font-medium">
                                             {{component.name}}
                                         </div>
                                     </div>
                                 </div>
             
-                                <div v-if="option.type == 'sizes' && option.active" @click="showOptions('size')" :class="`${step === 'size' ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1  asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg lg:asowp-shadow-[-10px_0px_10px_-1px_#e0e0e0] asowp-base-animation asowp-cursor-pointer asowp-cardDiv`">
-                                    <svg v-if="configSectionIcons.changeIconSize === '' " class="asowp-w-6 asowp-h-6" viewBox="0 0 47 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <div v-if="option.type == 'sizes' && option.active" @click="showOptions('size')" :class="`${step === 'size' ? `ascwo-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1  ascwo-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] ascwo-px-4 ascwo-py-1 ascwo-rounded-lg lg:ascwo-shadow-[-10px_0px_10px_-1px_#e0e0e0] ascwo-base-animation ascwo-cursor-pointer ascwo-cardDiv`">
+                                    <svg v-if="configSectionIcons.changeIconSize === '' " class="ascwo-w-6 ascwo-h-6" viewBox="0 0 47 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g id="fluent:keyboard-layout-resize-24-filled">
                                         <path id="Vector" d="M41.5083 17.9375C41.8623 17.9375 42.2043 18.0496 42.4711 18.2531C42.7379 18.4566 42.9115 18.7378 42.9596 19.0445L42.9733 19.2187V33.7396C42.9734 34.7135 42.5508 35.6512 41.7908 36.3632C41.0308 37.0751 39.9901 37.5081 38.8791 37.5748L38.5783 37.5833H34.6716C34.3004 37.5832 33.9431 37.4599 33.6719 37.2383C33.4007 37.0167 33.2358 36.7133 33.2105 36.3894C33.1852 36.0655 33.3014 35.7453 33.5356 35.4935C33.7699 35.2417 34.1047 35.077 34.4724 35.0328L34.6716 35.0208H38.5783C38.9323 35.0208 39.2743 34.9087 39.5411 34.7052C39.8079 34.5017 39.9815 34.2206 40.0296 33.9138L40.0433 33.7396V19.2187C40.0433 18.8789 40.1976 18.553 40.4724 18.3128C40.7471 18.0725 41.1197 17.9375 41.5083 17.9375ZM41.5083 3.41666L41.645 3.42178L41.8423 3.45082L41.9751 3.48328L42.0923 3.52257L42.2291 3.58236L42.3892 3.67461L42.5455 3.7942L42.6451 3.88986L42.733 3.99578L42.8307 4.14953L42.8639 4.21274L42.9108 4.32549C42.9323 4.3887 42.9498 4.45532 42.9596 4.52366L42.9733 4.69791V13.2396C42.9732 13.5642 42.8322 13.8767 42.5788 14.1139C42.3254 14.3511 41.9785 14.4953 41.6081 14.5175C41.2378 14.5396 40.8717 14.4379 40.5838 14.2331C40.2958 14.0282 40.1075 13.7354 40.057 13.4138L40.0433 13.2396V7.78999L31.3119 15.4262C31.0501 15.6534 30.7001 15.7858 30.3316 15.7972C29.9631 15.8085 29.6032 15.6979 29.3239 15.4875C29.0445 15.277 28.8662 14.9821 28.8244 14.6617C28.7827 14.3413 28.8807 14.0189 29.0988 13.7589L29.2413 13.6154L37.9688 5.97916H31.7416C31.3876 5.97914 31.0456 5.86702 30.7788 5.66351C30.512 5.46001 30.3384 5.17889 30.2903 4.87216L30.2766 4.69791C30.2766 4.38829 30.4048 4.08916 30.6375 3.85582C30.8702 3.62248 31.1916 3.47072 31.5424 3.42861L31.7416 3.41666H41.5083ZM25.8816 17.9375C26.9953 17.9374 28.0674 18.307 28.8815 18.9717C29.6955 19.6363 30.1906 20.5465 30.2668 21.5182L30.2766 21.7812V33.7396C30.2768 34.7135 29.8541 35.6512 29.0941 36.3632C28.3341 37.0751 27.2935 37.5081 26.1824 37.5748L25.8816 37.5833H8.30162C7.18797 37.5834 6.11579 37.2138 5.30178 36.5492C4.48776 35.8845 3.99261 34.9743 3.91638 34.0027L3.90662 33.7396V21.7812C3.90648 20.8073 4.32911 19.8696 5.0891 19.1577C5.8491 18.4457 6.88977 18.0127 8.0008 17.946L8.30162 17.9375H25.8816ZM20.9983 29.8958H13.1849C12.3841 29.8958 11.7199 30.5279 11.7199 31.1771C11.7199 31.8262 12.2708 32.3627 12.9857 32.4464L13.1849 32.4583H20.9983C21.7991 32.4583 22.4633 31.8262 22.4633 31.1771C22.4633 30.8675 22.3351 30.5683 22.1024 30.335C21.8697 30.1016 21.5483 29.9499 21.1975 29.9078L20.9983 29.8958ZM11.7199 23.0625C11.2019 23.0625 10.7051 23.2425 10.3387 23.5629C9.97241 23.8832 9.76662 24.3177 9.76662 24.7708C9.76662 25.2239 9.97241 25.6584 10.3387 25.9788C10.7051 26.2992 11.2019 26.4792 11.7199 26.4792C12.238 26.4792 12.7348 26.2992 13.1012 25.9788C13.4675 25.6584 13.6733 25.2239 13.6733 24.7708C13.6733 24.3177 13.4675 23.8832 13.1012 23.5629C12.7348 23.2425 12.238 23.0625 11.7199 23.0625ZM22.4633 23.0625C21.9452 23.0625 21.4484 23.2425 21.0821 23.5629C20.7157 23.8832 20.5099 24.3177 20.5099 24.7708C20.5099 25.2239 20.7157 25.6584 21.0821 25.9788C21.4484 26.2992 21.9452 26.4792 22.4633 26.4792C22.9813 26.4792 23.4782 26.2992 23.8445 25.9788C24.2108 25.6584 24.4166 25.2239 24.4166 24.7708C24.4166 24.3177 24.2108 23.8832 23.8445 23.5629C23.4782 23.2425 22.9813 23.0625 22.4633 23.0625ZM17.0916 23.0625C16.5736 23.0625 16.0767 23.2425 15.7104 23.5629C15.3441 23.8832 15.1383 24.3177 15.1383 24.7708C15.1383 25.2239 15.3441 25.6584 15.7104 25.9788C16.0767 26.2992 16.5736 26.4792 17.0916 26.4792C17.6097 26.4792 18.1065 26.2992 18.4728 25.9788C18.8392 25.6584 19.0449 25.2239 19.0449 24.7708C19.0449 24.3177 18.8392 23.8832 18.4728 23.5629C18.1065 23.2425 17.6097 23.0625 17.0916 23.0625ZM24.9049 3.41666C25.2761 3.41676 25.6334 3.54007 25.9046 3.76169C26.1759 3.98331 26.3408 4.28671 26.3661 4.61058C26.3914 4.93445 26.2752 5.25464 26.0409 5.50646C25.8067 5.75828 25.4719 5.92295 25.1042 5.9672L24.9049 5.97916H8.30162C7.9476 5.97917 7.60556 6.0913 7.33876 6.2948C7.07196 6.4983 6.89844 6.77942 6.85029 7.08616L6.83662 7.26041V14.0937C6.8365 14.4184 6.6955 14.7308 6.4421 14.9681C6.18869 15.2053 5.84179 15.3495 5.47147 15.3716C5.10115 15.3937 4.73504 15.2921 4.44711 15.0873C4.15917 14.8824 3.97088 14.5896 3.92029 14.268L3.90662 14.0937V7.26041C3.90648 6.28644 4.32911 5.34875 5.0891 4.63683C5.8491 3.92491 6.88977 3.49186 8.0008 3.4252L8.30162 3.41666H24.9049Z" fill="currentColor"/>
                                         </g>
                                     </svg>
-                                    <img v-if="configSectionIcons.changeIconSize !== '' " :src="configSectionIcons.changeIconSize" class="asowp-w-6 asowp-h-6" />
-                                    <div class="asowp-text-[10px] lg:asowp-text-[13px] asowp-font-medium">
+                                    <img v-if="configSectionIcons.changeIconSize !== '' " :src="configSectionIcons.changeIconSize" class="ascwo-w-6 ascwo-h-6" />
+                                    <div class="ascwo-text-[10px] lg:ascwo-text-[13px] ascwo-font-medium">
                                         {{configVisualiserTexts.textSize}}
                                     </div>
                                 </div>
             
-                                <div v-if="option.type == 'shapes' && option.active" @click="showOptions('shape')" :class="`${step === 'shape' ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1  asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg lg:asowp-shadow-[-10px_0px_10px_-1px_#e0e0e0] asowp-base-animation asowp-cursor-pointer asowp-cardDiv`">
-                                    <svg v-if="configSectionIcons.changeIconShape === '' " class="asowp-w-6 asowp-h-6" viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <div v-if="option.type == 'shapes' && option.active" @click="showOptions('shape')" :class="`${step === 'shape' ? `ascwo-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1  ascwo-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] ascwo-px-4 ascwo-py-1 ascwo-rounded-lg lg:ascwo-shadow-[-10px_0px_10px_-1px_#e0e0e0] ascwo-base-animation ascwo-cursor-pointer ascwo-cardDiv`">
+                                    <svg v-if="configSectionIcons.changeIconShape === '' " class="ascwo-w-6 ascwo-h-6" viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g id="mdi:shape">
                                         <path id="Vector" d="M18.3333 23.0625V36.7292H5V23.0625H18.3333ZM20 3.41666L29.1667 18.7917H10.8333L20 3.41666ZM29.1667 22.2083C33.3333 22.2083 36.6667 25.625 36.6667 29.8958C36.6667 34.1667 33.3333 37.5833 29.1667 37.5833C25 37.5833 21.6667 34.1667 21.6667 29.8958C21.6667 25.625 25 22.2083 29.1667 22.2083Z" fill="currentColor"/>
                                         </g>
                                     </svg>
-                                    <img v-if="configSectionIcons.changeIconShape !== '' " :src="configSectionIcons.changeIconShape" class="asowp-w-6 asowp-h-6" />                            
-                                    <div class="asowp-text-[10px] lg:asowp-text-[13px] asowp-font-medium">
+                                    <img v-if="configSectionIcons.changeIconShape !== '' " :src="configSectionIcons.changeIconShape" class="ascwo-w-6 ascwo-h-6" />                            
+                                    <div class="ascwo-text-[10px] lg:ascwo-text-[13px] ascwo-font-medium">
                                         {{configVisualiserTexts.textShape}}
                                     </div>
                                 </div>
             
-                                <div v-if="option.type == 'fixing-methodes' && option.active" @click="showOptions('fixing-methode')" :class="`${step === 'fixing-methode' ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1  asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg lg:asowp-shadow-[-10px_0px_10px_-1px_#e0e0e0] asowp-base-animation asowp-cursor-pointer asowp-cardDiv`">
-                                    <svg v-if="configSectionIcons.changeIconFixingMethod.trim() == '' " class="asowp-w-6 asowp-h-6" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <div v-if="option.type == 'fixing-methodes' && option.active" @click="showOptions('fixing-methode')" :class="`${step === 'fixing-methode' ? `ascwo-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1  ascwo-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] ascwo-px-4 ascwo-py-1 ascwo-rounded-lg lg:ascwo-shadow-[-10px_0px_10px_-1px_#e0e0e0] ascwo-base-animation ascwo-cursor-pointer ascwo-cardDiv`">
+                                    <svg v-if="configSectionIcons.changeIconFixingMethod.trim() == '' " class="ascwo-w-6 ascwo-h-6" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g id="uil:screw">
                                         <path id="Vector" d="M36.183 16.8667L23.133 3.81666C22.9138 3.59622 22.6374 3.44147 22.3349 3.36988C22.0324 3.29829 21.716 3.31272 21.4212 3.41153C21.1265 3.51035 20.8653 3.68962 20.6671 3.92908C20.4689 4.16855 20.3417 4.45867 20.2997 4.76666L19.083 13.3333L15.7497 16.6667L15.1997 16.35C14.8408 16.1755 14.4313 16.1356 14.0455 16.2374C13.6597 16.3393 13.3232 16.5762 13.0972 16.905C12.8713 17.2339 12.7708 17.6329 12.8141 18.0296C12.8573 18.4263 13.0415 18.7942 13.333 19.0667L11.4163 21.0167L10.8663 20.7C10.5084 20.5356 10.1038 20.5033 9.72429 20.6089C9.3448 20.7144 9.01495 20.9509 8.79324 21.2765C8.57153 21.6021 8.4723 21.9956 8.51314 22.3874C8.55398 22.7792 8.73225 23.1438 9.01634 23.4167L7.06634 25.35L6.53301 25C6.34278 24.8898 6.13264 24.8183 5.91468 24.7897C5.69671 24.761 5.47524 24.7758 5.263 24.8331C5.05077 24.8904 4.85197 24.9892 4.67806 25.1237C4.50415 25.2581 4.35856 25.4257 4.24967 25.6167C4.06145 25.9599 4.00005 26.3584 4.07623 26.7424C4.15242 27.1264 4.36133 27.4713 4.66634 27.7167L3.81634 28.5667C3.662 28.7231 3.5427 28.9106 3.46634 29.1167C3.38094 29.317 3.33564 29.5322 3.33301 29.75V35C3.33301 35.442 3.5086 35.8659 3.82116 36.1785C4.13372 36.4911 4.55765 36.6667 4.99967 36.6667H10.2163C10.4341 36.664 10.6493 36.6187 10.8497 36.5333C11.0557 36.457 11.2432 36.3377 11.3997 36.1833L14.233 33.3333L14.783 33.65C14.9722 33.7609 15.1815 33.8333 15.3988 33.8632C15.6161 33.893 15.8371 33.8797 16.0492 33.824C16.2613 33.7682 16.4604 33.6712 16.6349 33.5384C16.8095 33.4055 16.9561 33.2396 17.0663 33.05C17.2609 32.7069 17.3275 32.3059 17.2543 31.9184C17.181 31.5308 16.9727 31.1818 16.6663 30.9333L18.6163 29L19.1663 29.3167C19.4154 29.4578 19.6967 29.5325 19.983 29.5333C20.302 29.5046 20.606 29.3845 20.8586 29.1875C21.1111 28.9904 21.3016 28.7248 21.4071 28.4223C21.5126 28.1199 21.5287 27.7934 21.4535 27.4821C21.3783 27.1707 21.2149 26.8876 20.983 26.6667L22.933 24.7333L23.483 25.05C23.7321 25.1912 24.0134 25.2658 24.2997 25.2667C24.64 25.2606 24.9704 25.1504 25.2462 24.951C25.5221 24.7516 25.7303 24.4725 25.8429 24.1512C25.9554 23.83 25.9669 23.4819 25.8757 23.154C25.7846 22.826 25.5952 22.5338 25.333 22.3167L26.6497 21L35.233 19.7833C35.5415 19.7395 35.8315 19.6101 36.0701 19.4097C36.3087 19.2094 36.4864 18.9462 36.583 18.65C36.6973 18.3461 36.7203 18.0154 36.6492 17.6986C36.5782 17.3818 36.4161 17.0926 36.183 16.8667ZM9.53301 33.3333H6.66634V30.4667L7.61634 29.5167L11.2497 31.6667L9.53301 33.3333ZM13.683 29.1667L9.99967 27.0833L11.8997 25.1833L15.5163 27.2667L13.683 29.1667ZM18.033 24.8333L14.3997 22.7333L16.3163 20.8333L19.9997 22.9167L18.033 24.8333ZM22.383 20.4833L18.7497 18.3333L20.6497 16.4333L23.5163 19.3L22.383 20.4833ZM26.4663 17.5833L22.4163 13.5333L23.133 8.53333L31.4663 16.8667L26.4663 17.5833Z" fill="currentColor"/>
                                         </g>
                                     </svg>
-                                    <img v-if="configSectionIcons.changeIconFixingMethod.trim() != '' " :src="configSectionIcons.changeIconFixingMethod" class="asowp-w-6 asowp-h-6" />
-                                    <div class="asowp-text-[10px] lg:asowp-text-[13px] asowp-font-medium asowp-whitespace-nowrap">
+                                    <img v-if="configSectionIcons.changeIconFixingMethod.trim() != '' " :src="configSectionIcons.changeIconFixingMethod" class="ascwo-w-6 ascwo-h-6" />
+                                    <div class="ascwo-text-[10px] lg:ascwo-text-[13px] ascwo-font-medium ascwo-whitespace-nowrap">
                                         {{configVisualiserTexts.textFixingMethods}}
                                     </div>
                                 </div>
         
-                                <div v-if="option.type == 'borders' && option.active" @click="showOptions('border')" :class="`${step === 'border' ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1  asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg lg:asowp-shadow-[-10px_0px_10px_-1px_#e0e0e0] asowp-base-animation asowp-cursor-pointer asowp-cardDiv`">
-                                    <svg v-if="configSectionIcons.changeIconBorder === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+                                <div v-if="option.type == 'borders' && option.active" @click="showOptions('border')" :class="`${step === 'border' ? `ascwo-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1  ascwo-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] ascwo-px-4 ascwo-py-1 ascwo-rounded-lg lg:ascwo-shadow-[-10px_0px_10px_-1px_#e0e0e0] ascwo-base-animation ascwo-cursor-pointer ascwo-cardDiv`">
+                                    <svg v-if="configSectionIcons.changeIconBorder === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-6 ascwo-h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 8.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v8.25A2.25 2.25 0 0 0 6 16.5h2.25m8.25-8.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-7.5A2.25 2.25 0 0 1 8.25 18v-1.5m8.25-8.25h-6a2.25 2.25 0 0 0-2.25 2.25v6" />
                                     </svg>
-                                    <img v-if="configSectionIcons.changeIconBorder !== '' " :src="configSectionIcons.changeIconBorder" class="asowp-w-6 asowp-h-6" />
-                                    <div class="asowp-text-[10px] lg:asowp-text-[13px] asowp-font-medium">
+                                    <img v-if="configSectionIcons.changeIconBorder !== '' " :src="configSectionIcons.changeIconBorder" class="ascwo-w-6 ascwo-h-6" />
+                                    <div class="ascwo-text-[10px] lg:ascwo-text-[13px] ascwo-font-medium">
                                         {{configVisualiserTexts.textBorder}}
                                     </div>
                                 </div>
             
-                                <div v-if="option.type == 'colors' && option.active" @click="showOptions('color')" :class="`${step === 'color' ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1  asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg lg:asowp-shadow-[-10px_0px_10px_-1px_#e0e0e0] asowp-base-animation asowp-cursor-pointer asowp-cardDiv`">
-                                    <svg v-if="configSectionIcons.changeIconColor === '' " class="asowp-w-6 asowp-h-6" viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <div v-if="option.type == 'colors' && option.active" @click="showOptions('color')" :class="`${step === 'color' ? `ascwo-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1  ascwo-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] ascwo-px-4 ascwo-py-1 ascwo-rounded-lg lg:ascwo-shadow-[-10px_0px_10px_-1px_#e0e0e0] ascwo-base-animation ascwo-cursor-pointer ascwo-cardDiv`">
+                                    <svg v-if="configSectionIcons.changeIconColor === '' " class="ascwo-w-6 ascwo-h-6" viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g id="tdesign:fill-color-1">
                                         <path id="Vector" d="M20.0004 0.0888367L39.9137 20.5L36.6671 23.8278V23.9167H36.5804L24.7137 36.08C23.4635 37.3611 21.7682 38.0807 20.0004 38.0807C18.2326 38.0807 16.5373 37.3611 15.2871 36.08L4.8004 25.3329C4.18131 24.6983 3.69021 23.945 3.35516 23.1159C3.02011 22.2869 2.84766 21.3983 2.84766 20.5009C2.84766 19.6035 3.02011 18.7149 3.35516 17.8858C3.69021 17.0567 4.18131 16.3034 4.8004 15.6688L12.1971 8.08554L7.64373 3.41667L10.0004 1.00109L14.5554 5.66996L20.0004 0.0888367ZM14.5554 10.5028L7.15873 18.0844C6.50873 18.7507 6.18207 19.6253 6.18207 20.5H35.1987L20.0004 4.92L16.9137 8.08554L22.3571 13.6667L20.0004 16.0823L14.5554 10.5028ZM8.13373 23.9167L17.6437 33.6644C18.2688 34.3049 19.1165 34.6648 20.0004 34.6648C20.8843 34.6648 21.732 34.3049 22.3571 33.6644L31.8671 23.9167H8.13373ZM36.2504 31.4145L38.4404 34.2504C39.4087 35.5043 39.4087 37.4074 38.4404 38.6596C38.1824 39.0048 37.8511 39.2852 37.4717 39.4797C37.0922 39.6741 36.6746 39.7775 36.2504 39.782C35.3671 39.782 34.5837 39.3378 34.0604 38.6596C33.0921 37.4074 33.0921 35.5043 34.0604 34.2504L36.2504 31.4145Z" fill="currentColor"/>
                                         </g>
                                     </svg>
-                                    <img v-if="configSectionIcons.changeIconColor !== '' " :src="configSectionIcons.changeIconColor" class="asowp-w-6 asowp-h-6" />
-                                    <div class="asowp-text-[10px] lg:asowp-text-[13px] asowp-font-medium">
+                                    <img v-if="configSectionIcons.changeIconColor !== '' " :src="configSectionIcons.changeIconColor" class="ascwo-w-6 ascwo-h-6" />
+                                    <div class="ascwo-text-[10px] lg:ascwo-text-[13px] ascwo-font-medium">
                                         {{configVisualiserTexts.textColor}}
                                     </div>
                                 </div>
             
-                                <div v-if="option.type == 'texts' && option.active" @click="showOptions('text')" :class="`${step === 'text' ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1  asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg lg:asowp-shadow-[-10px_0px_10px_-1px_#e0e0e0] asowp-base-animation asowp-cursor-pointer asowp-cardDiv`">
-                                    <svg v-if="configSectionIcons.changeIconText === '' " class="asowp-w-6 asowp-h-6" viewBox="0 0 46 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <div v-if="option.type == 'texts' && option.active" @click="showOptions('text')" :class="`${step === 'text' ? `ascwo-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1  ascwo-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] ascwo-px-4 ascwo-py-1 ascwo-rounded-lg lg:ascwo-shadow-[-10px_0px_10px_-1px_#e0e0e0] ascwo-base-animation ascwo-cursor-pointer ascwo-cardDiv`">
+                                    <svg v-if="configSectionIcons.changeIconText === '' " class="ascwo-w-6 ascwo-h-6" viewBox="0 0 46 47" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g id="clarity:text-line" clip-path="url(#clip0_457_214)">
                                             <path id="Vector" d="M15.5757 11.5411C15.453 11.1569 15.2131 10.8229 14.8912 10.588C14.5693 10.3531 14.1823 10.2296 13.7868 10.2356H13.6335C13.2341 10.226 12.8422 10.3477 12.5156 10.5827C12.189 10.8177 11.9448 11.1537 11.819 11.5411L1.45625 34.6756C1.33756 34.9142 1.27624 35.1782 1.27736 35.4458C1.27736 35.7921 1.41198 36.1242 1.65161 36.369C1.89124 36.6138 2.21625 36.7514 2.55514 36.7514C2.85996 36.7559 3.15822 36.6608 3.40645 36.4799C3.65467 36.2991 3.8399 36.042 3.93514 35.7461L6.59291 29.6753H20.6485L23.3062 35.6678C23.411 35.9742 23.6035 36.2413 23.8587 36.4345C24.1139 36.6278 24.42 36.7381 24.7374 36.7514C25.1034 36.7514 25.4544 36.6028 25.7132 36.3384C25.972 36.074 26.1174 35.7154 26.1174 35.3414C26.102 35.0844 26.0414 34.8323 25.9385 34.5972L15.5757 11.5411ZM7.76847 27.0381L13.6335 13.6953L19.5112 27.0381H7.76847Z" fill="currentColor"/>
                                             <path id="Vector_2" d="M41.1964 19.2961C40.3913 18.568 39.4525 18.0108 38.4346 17.6566C37.4168 17.3025 36.3403 17.1586 35.2676 17.2333C33.1975 17.226 31.1498 17.6711 29.262 18.5389C29.0441 18.6419 28.859 18.8055 28.7279 19.011C28.5969 19.2165 28.5251 19.4556 28.5209 19.7008C28.5451 20.0156 28.6801 20.3107 28.901 20.5315C29.1218 20.7524 29.4135 20.884 29.722 20.9019C29.8926 20.895 30.0609 20.8597 30.2203 20.7975C31.7112 20.0976 33.333 19.7368 34.9737 19.74C38.4237 19.74 40.4426 21.4764 40.4426 24.8578V25.5105C38.6082 24.9643 36.7054 24.696 34.7948 24.7142C30.1437 24.7142 26.9492 26.8161 26.9492 30.7719V30.8372C26.9492 34.6886 30.3992 36.6861 33.8109 36.6861C35.0886 36.7241 36.3568 36.4502 37.5102 35.8871C38.6635 35.324 39.6688 34.488 40.4426 33.4483V35.1194C40.4426 35.4657 40.5772 35.7978 40.8168 36.0426C41.0564 36.2874 41.3814 36.425 41.7203 36.425C41.8948 36.4253 42.0674 36.3891 42.2277 36.3187C42.3879 36.2482 42.5324 36.145 42.6521 36.0153C42.7718 35.8857 42.8643 35.7324 42.9238 35.5648C42.9833 35.3973 43.0086 35.219 42.9981 35.0411V24.8055C43.074 23.8108 42.9536 22.8105 42.6441 21.8641C42.3346 20.9178 41.8423 20.0445 41.1964 19.2961ZM40.4809 29.3489C40.4809 32.3255 37.7081 34.4275 34.3348 34.4275C31.8559 34.4275 29.722 33.0436 29.722 30.6936V30.6153C29.722 28.2653 31.6387 26.6986 35.0887 26.6986C36.9138 26.7039 38.729 26.972 40.4809 27.495V29.3489Z" fill="currentColor"/>
@@ -334,55 +334,55 @@
                                             </clipPath>
                                         </defs>
                                     </svg>
-                                    <img v-if="configSectionIcons.changeIconText !== '' " :src="configSectionIcons.changeIconText" class="asowp-w-6 asowp-h-6" />
-                                    <div class="asowp-text-[10px] lg:asowp-text-[13px] asowp-font-medium">
+                                    <img v-if="configSectionIcons.changeIconText !== '' " :src="configSectionIcons.changeIconText" class="ascwo-w-6 ascwo-h-6" />
+                                    <div class="ascwo-text-[10px] lg:ascwo-text-[13px] ascwo-font-medium">
                                         {{configVisualiserTexts.textOptionText}}
                                     </div>
                                 </div>
             
-                                <div v-if="option.type == 'images' && option.active" @click="showOptions('image')" :class="`${step === 'image' ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1  asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg lg:asowp-shadow-[-10px_0px_10px_-1px_#e0e0e0] asowp-base-animation asowp-cursor-pointer asowp-cardDiv`">
-                                    <svg v-if="configSectionIcons.changeIconImage === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+                                <div v-if="option.type == 'images' && option.active" @click="showOptions('image')" :class="`${step === 'image' ? `ascwo-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1  ascwo-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] ascwo-px-4 ascwo-py-1 ascwo-rounded-lg lg:ascwo-shadow-[-10px_0px_10px_-1px_#e0e0e0] ascwo-base-animation ascwo-cursor-pointer ascwo-cardDiv`">
+                                    <svg v-if="configSectionIcons.changeIconImage === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-6 ascwo-h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                                     </svg>
-                                    <img v-if="configSectionIcons.changeIconImage !== '' " :src="configSectionIcons.changeIconImage" class="asowp-w-6 asowp-h-6" />
-                                    <div class="asowp-text-[10px] lg:asowp-text-[13px] asowp-font-medium">
+                                    <img v-if="configSectionIcons.changeIconImage !== '' " :src="configSectionIcons.changeIconImage" class="ascwo-w-6 ascwo-h-6" />
+                                    <div class="ascwo-text-[10px] lg:ascwo-text-[13px] ascwo-font-medium">
                                         {{configVisualiserTexts.textImage}}
                                     </div>
                                 </div>
     
-                                <div v-if="option.type == 'qrcodes' && option.active" @click="showOptions('qr-code')" :class="`${step === 'qr-code' ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1  asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg lg:asowp-shadow-[-10px_0px_10px_-1px_#e0e0e0] asowp-base-animation asowp-cursor-pointer asowp-cardDiv`">
-                                    <svg v-if="!configSectionIcons?.changeIconQrCode" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+                                <div v-if="option.type == 'qrcodes' && option.active" @click="showOptions('qr-code')" :class="`${step === 'qr-code' ? `ascwo-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1  ascwo-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] ascwo-px-4 ascwo-py-1 ascwo-rounded-lg lg:ascwo-shadow-[-10px_0px_10px_-1px_#e0e0e0] ascwo-base-animation ascwo-cursor-pointer ascwo-cardDiv`">
+                                    <svg v-if="!configSectionIcons?.changeIconQrCode" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-6 ascwo-h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 3.75 9.375v-4.5ZM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 0 1-1.125-1.125v-4.5ZM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 13.5 9.375v-4.5Z" />
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 6.75h.75v.75h-.75v-.75ZM6.75 16.5h.75v.75h-.75v-.75ZM16.5 6.75h.75v.75h-.75v-.75ZM13.5 13.5h.75v.75h-.75v-.75ZM13.5 19.5h.75v.75h-.75v-.75ZM19.5 13.5h.75v.75h-.75v-.75ZM19.5 19.5h.75v.75h-.75v-.75ZM16.5 16.5h.75v.75h-.75v-.75Z" />
                                     </svg>
-                                    <img v-if="configSectionIcons?.changeIconQrCode" :src="configSectionIcons.changeIconImage" class="asowp-w-6 asowp-h-6" />
+                                    <img v-if="configSectionIcons?.changeIconQrCode" :src="configSectionIcons.changeIconImage" class="ascwo-w-6 ascwo-h-6" />
     
-                                    <div class="asowp-text-[10px] lg:asowp-text-[13px] asowp-font-medium">
+                                    <div class="ascwo-text-[10px] lg:ascwo-text-[13px] ascwo-font-medium">
                                         Qr Code
                                     </div>
                                 </div>
         
-                                <div v-if="option.type == 'additional-components' && option.active" v-for="(option, id) in additionalComponents" class=" asowp-cardDiv" >
-                                    <div v-if="option.options.length > 0" @click="showOptions('add-components', option, id)" :class="`${step === 'add-components' && addComponentId === id  ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-h-full asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1  asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg lg:asowp-shadow-[-10px_0px_10px_-1px_#e0e0e0] asowp-base-animation asowp-cursor-pointer`">
-                                        <svg v-if="option.icon === '' " class="asowp-w-6 asowp-h-6" viewBox="0 0 50 50" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <div v-if="option.type == 'additional-components' && option.active" v-for="(option, id) in additionalComponents" class=" ascwo-cardDiv" >
+                                    <div v-if="option.options.length > 0" @click="showOptions('add-components', option, id)" :class="`${step === 'add-components' && addComponentId === id  ? `ascwo-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} ascwo-h-full ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1  ascwo-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] ascwo-px-4 ascwo-py-1 ascwo-rounded-lg lg:ascwo-shadow-[-10px_0px_10px_-1px_#e0e0e0] ascwo-base-animation ascwo-cursor-pointer`">
+                                        <svg v-if="option.icon === '' " class="ascwo-w-6 ascwo-h-6" viewBox="0 0 50 50" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <g id="fluent-mdl2:product-release">
                                             <path id="Vector" d="M21.875 37.5244V22.8516L6.25 15.0391V36.5234L19.5312 43.1885L18.7744 46.2891L3.125 38.4766V11.5234L23.4375 1.3916L43.75 11.5234V18.1152C42.6107 18.2943 41.569 18.6605 40.625 19.2139V15.0391L25 22.8516V34.3994L21.875 37.5244ZM18.4082 7.37305L32.666 15.5273L38.6963 12.5L23.4375 4.8584L18.4082 7.37305ZM23.4375 20.1416L29.2969 17.2119L15.0391 9.05762L8.17871 12.5L23.4375 20.1416ZM45.1172 21.875C45.8008 21.875 46.4355 21.9971 47.0215 22.2412C47.6074 22.4854 48.1283 22.819 48.584 23.2422C49.0397 23.6654 49.3815 24.1781 49.6094 24.7803C49.8372 25.3825 49.9674 26.0254 50 26.709C50 27.3438 49.8779 27.9622 49.6338 28.5645C49.3896 29.1667 49.0397 29.6956 48.584 30.1514L31.0791 47.6562L21.875 49.9512L24.1699 40.7471L41.6748 23.2666C42.1468 22.7946 42.6758 22.4447 43.2617 22.2168C43.8477 21.9889 44.4661 21.875 45.1172 21.875ZM46.3623 27.9541C46.7041 27.6123 46.875 27.1973 46.875 26.709C46.875 26.2044 46.7122 25.7975 46.3867 25.4883C46.0612 25.179 45.638 25.0163 45.1172 25C44.8893 25 44.6696 25.0326 44.458 25.0977C44.2464 25.1628 44.0592 25.2848 43.8965 25.4639L27.002 42.3584L26.1719 45.6543L29.4678 44.8242L46.3623 27.9541Z" fill="currentColor"/>
                                             </g>
                                         </svg>
-                                        <img v-if="option.icon !== '' " :src="option.icon" class="asowp-w-6 asowp-h-6" />                    
-                                        <div class="asowp-text-[10px] lg:asowp-text-[13px] asowp-font-medium">
+                                        <img v-if="option.icon !== '' " :src="option.icon" class="ascwo-w-6 ascwo-h-6" />                    
+                                        <div class="ascwo-text-[10px] lg:ascwo-text-[13px] ascwo-font-medium">
                                             {{option.title}}
                                         </div>
                                     </div>
                                 </div>
     
-                                <div v-if="option.type == 'additional-options' && option.active" @click="showOptions('add-options')" :class="`${step === 'add-options' ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1  asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg lg:asowp-shadow-[-10px_0px_10px_-1px_#e0e0e0] asowp-base-animation asowp-cursor-pointer asowp-cardDiv`">
-                                    <svg class="asowp-w-6 asowp-h-6" viewBox="0 0 50 50" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <div v-if="option.type == 'additional-options' && option.active" @click="showOptions('add-options')" :class="`${step === 'add-options' ? `ascwo-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1  ascwo-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] ascwo-px-4 ascwo-py-1 ascwo-rounded-lg lg:ascwo-shadow-[-10px_0px_10px_-1px_#e0e0e0] ascwo-base-animation ascwo-cursor-pointer ascwo-cardDiv`">
+                                    <svg class="ascwo-w-6 ascwo-h-6" viewBox="0 0 50 50" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <g id="fluent-mdl2:product-release">
                                         <path id="Vector" d="M21.875 37.5244V22.8516L6.25 15.0391V36.5234L19.5312 43.1885L18.7744 46.2891L3.125 38.4766V11.5234L23.4375 1.3916L43.75 11.5234V18.1152C42.6107 18.2943 41.569 18.6605 40.625 19.2139V15.0391L25 22.8516V34.3994L21.875 37.5244ZM18.4082 7.37305L32.666 15.5273L38.6963 12.5L23.4375 4.8584L18.4082 7.37305ZM23.4375 20.1416L29.2969 17.2119L15.0391 9.05762L8.17871 12.5L23.4375 20.1416ZM45.1172 21.875C45.8008 21.875 46.4355 21.9971 47.0215 22.2412C47.6074 22.4854 48.1283 22.819 48.584 23.2422C49.0397 23.6654 49.3815 24.1781 49.6094 24.7803C49.8372 25.3825 49.9674 26.0254 50 26.709C50 27.3438 49.8779 27.9622 49.6338 28.5645C49.3896 29.1667 49.0397 29.6956 48.584 30.1514L31.0791 47.6562L21.875 49.9512L24.1699 40.7471L41.6748 23.2666C42.1468 22.7946 42.6758 22.4447 43.2617 22.2168C43.8477 21.9889 44.4661 21.875 45.1172 21.875ZM46.3623 27.9541C46.7041 27.6123 46.875 27.1973 46.875 26.709C46.875 26.2044 46.7122 25.7975 46.3867 25.4883C46.0612 25.179 45.638 25.0163 45.1172 25C44.8893 25 44.6696 25.0326 44.458 25.0977C44.2464 25.1628 44.0592 25.2848 43.8965 25.4639L27.002 42.3584L26.1719 45.6543L29.4678 44.8242L46.3623 27.9541Z" fill="currentColor"/>
                                         </g>
                                     </svg>
-                                    <div class="asowp-text-[10px] lg:asowp-text-[13px] asowp-leading-normal asowp-font-medium asowp-text-center">
+                                    <div class="ascwo-text-[10px] lg:ascwo-text-[13px] ascwo-leading-normal ascwo-font-medium ascwo-text-center">
                                         Add options
                                     </div>
                                 </div>
@@ -390,14 +390,14 @@
                            
 
                             <div v-if="showScrollButton">
-                                <div @click="ScrollLeft('asowp-options-buttons')" :class="`asowp-absolute asowp-top-[50%] asowp-left-0 lg:-asowp-left-1 lg:asowp-translate-x-[-80%] asowp-translate-y-[-50%] asowp-w-fit asowp-h-[60%] asowp-bg-[${configColors.optionsSideBar.scrollButtonsBackgroundColor}] asowp-text-[${configColors.optionsSideBar.scrollButtonsTextColor}] hover:asowp-bg-[${configColors.optionsSideBar.scrollButtonsHoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.scrollButtonsHoverTextColor}] asowp-flex asowp-full-center asowp-rounded-md asowp-px-2 asowp-cursor-pointer asowp-base-animation`">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="asowp-w-7 asowp-h-7">
+                                <div @click="ScrollLeft('ascwo-options-buttons')" :class="`ascwo-absolute ascwo-top-[50%] ascwo-left-0 lg:-ascwo-left-1 lg:ascwo-translate-x-[-80%] ascwo-translate-y-[-50%] ascwo-w-fit ascwo-h-[60%] ascwo-bg-[${configColors.optionsSideBar.scrollButtonsBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.scrollButtonsTextColor}] hover:ascwo-bg-[${configColors.optionsSideBar.scrollButtonsHoverBackgroundColor}] hover:ascwo-text-[${configColors.optionsSideBar.scrollButtonsHoverTextColor}] ascwo-flex ascwo-full-center ascwo-rounded-md ascwo-px-2 ascwo-cursor-pointer ascwo-base-animation`">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="ascwo-w-7 ascwo-h-7">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                                     </svg>                               
                                 </div>
                                 
-                                <div @click="ScrollRight('asowp-options-buttons')" :class="`asowp-absolute asowp-top-[50%] asowp-right-0 lg:-asowp-right-1 lg:asowp-translate-x-[80%] asowp-translate-y-[-50%] asowp-w-fit asowp-h-[60%] asowp-bg-[${configColors.optionsSideBar.scrollButtonsBackgroundColor}] asowp-text-[${configColors.optionsSideBar.scrollButtonsTextColor}] hover:asowp-bg-[${configColors.optionsSideBar.scrollButtonsHoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.scrollButtonsHoverTextColor}] asowp-flex asowp-full-center asowp-rounded-md asowp-px-2 asowp-cursor-pointer asowp-base-animation`">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="asowp-w-7 asowp-h-7">
+                                <div @click="ScrollRight('ascwo-options-buttons')" :class="`ascwo-absolute ascwo-top-[50%] ascwo-right-0 lg:-ascwo-right-1 lg:ascwo-translate-x-[80%] ascwo-translate-y-[-50%] ascwo-w-fit ascwo-h-[60%] ascwo-bg-[${configColors.optionsSideBar.scrollButtonsBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.scrollButtonsTextColor}] hover:ascwo-bg-[${configColors.optionsSideBar.scrollButtonsHoverBackgroundColor}] hover:ascwo-text-[${configColors.optionsSideBar.scrollButtonsHoverTextColor}] ascwo-flex ascwo-full-center ascwo-rounded-md ascwo-px-2 ascwo-cursor-pointer ascwo-base-animation`">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="ascwo-w-7 ascwo-h-7">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                     </svg>                                  
                                 </div>
@@ -405,34 +405,34 @@
                         </div>
                     </div>
     
-                    <div v-show="showOption" id="asowp-options-container" :class="`asowp-relative lg:asowp-absolute lg:asowp-left-4 lg:asowp-top-[20%] lg:asowp-translate-y-[-20%] asowp-w-full asowp-h-full asowp-min-h-0 lg:asowp-w-[36%] lg:asowp-h-[70%] asowp-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.textColor}] asowp-rounded-md lg:asowp-shadow-xl asowp-z-20`">
-                        <div class="asowp-hidden lg:asowp-flex asowp-absolute asowp-top-0 asowp-right-0 asowp-w-fit asowp-h-fit">
-                            <span @click="closeOption" :class="`asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-p-1 asowp-rounded-md asowp-base-animation asowp-cursor-pointer asowp-z-10`">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                    <div v-show="showOption" id="ascwo-options-container" :class="`ascwo-relative lg:ascwo-absolute lg:ascwo-left-4 lg:ascwo-top-[20%] lg:ascwo-translate-y-[-20%] ascwo-w-full ascwo-h-full ascwo-min-h-0 lg:ascwo-w-[36%] lg:ascwo-h-[70%] ascwo-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.textColor}] ascwo-rounded-md lg:ascwo-shadow-xl ascwo-z-20`">
+                        <div class="ascwo-hidden lg:ascwo-flex ascwo-absolute ascwo-top-0 ascwo-right-0 ascwo-w-fit ascwo-h-fit">
+                            <span @click="closeOption" :class="`ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] ascwo-p-1 ascwo-rounded-md ascwo-base-animation ascwo-cursor-pointer ascwo-z-10`">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                                 </svg>
                             </span>
                         </div>
     
-                        <div v-show="step == 'material'" class="asowp-relative asowp-flex asowp-flex-col lg:asowp-space-y-3 asowp-w-full asowp-h-full" id="asowp-materials-section">
-                            <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{configVisualiserTexts.textMaterial}} </p>    
+                        <div v-show="step == 'material'" class="ascwo-relative ascwo-flex ascwo-flex-col lg:ascwo-space-y-3 ascwo-w-full ascwo-h-full" id="ascwo-materials-section">
+                            <p :class="`ascwo-hidden lg:ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] ascwo-text-lg ascwo-font-semibold ascwo-p-2 ascwo-px-4`">{{configVisualiserTexts.textMaterial}} </p>    
         
-                            <div class="asowp-h-full asowp-p-2 asowp-overflow-auto asowp-scrollBar">
+                            <div class="ascwo-h-full ascwo-p-2 ascwo-overflow-auto ascwo-scrollBar">
                                 <div v-for="(material, index) in props.config.data.materials" :key="index" >
-                                    <div v-if="material.active !== false" class="asowp-space-y-3">
-                                        <input type="radio" :id="material.name + index" name="asowp-material" class=" peer asowp-hidden" @change="selectMaterial(material, index)">
-                                        <label :for="material.name + index" :class="`asowp-flex asowp-full-center asowp-space-x-2 asowp-cursor-pointer asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}]/50  hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-p-2 asowp-base-animation`">
-                                            <div :class="`${material.icon === '' ? `asowp-bg-[${configColors.backgroundColorHeader}]` : ``} asowp-w-1/4 asowp-h-20 asowp-flex asowp-full-center`">
-                                                <img v-if="material.icon != ''" :src="material.icon" class="asowp-w-auto asowp-h-full" />
+                                    <div v-if="material.active !== false" class="ascwo-space-y-3">
+                                        <input type="radio" :id="material.name + index" name="ascwo-material" class=" peer ascwo-hidden" @change="selectMaterial(material, index)">
+                                        <label :for="material.name + index" :class="`ascwo-flex ascwo-full-center ascwo-space-x-2 ascwo-cursor-pointer ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}]/50  hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] ascwo-p-2 ascwo-base-animation`">
+                                            <div :class="`${material.icon === '' ? `ascwo-bg-[${configColors.backgroundColorHeader}]` : ``} ascwo-w-1/4 ascwo-h-20 ascwo-flex ascwo-full-center`">
+                                                <img v-if="material.icon != ''" :src="material.icon" class="ascwo-w-auto ascwo-h-full" />
                                             </div>                                
-                                            <div :class="`asowp-w-3/4 asowp-flex asowp-flex-col asowp-space-y-1`">
-                                                <p class="asowp-text-sm asowp-font-medium first-letter:asowp-uppercase">{{ material.name }}</p>
-                                                <p class="asowp-text-xs">{{ material.description }}</p>
-                                                <div class="asowp-w-full asowp-flex asowp-items-center asowp-justify-between">
-                                                    <span v-if="material.popImg.trim() != ''" @click="showMaterialExample(true, material.popImg)" :class="`asowp-text-xs asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-underline asowp-cursor-pointer`">example</span>
-                                                    <span v-if="material.popImg.trim() == ''" class="asowp-invisible">example</span>                                        
-                                                    <span :class="`${selectedMaterial == material.name ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-transparent asowp-border-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-border-solid asowp-border-2`} asowp-flex asowp-w-fit asowp-h-fit asowp-rounded-full`">
-                                                        <svg fill="currentColor" class="asowp-w-6 asowp-h-6" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" stroke="currentColor">
+                                            <div :class="`ascwo-w-3/4 ascwo-flex ascwo-flex-col ascwo-space-y-1`">
+                                                <p class="ascwo-text-sm ascwo-font-medium first-letter:ascwo-uppercase">{{ material.name }}</p>
+                                                <p class="ascwo-text-xs">{{ material.description }}</p>
+                                                <div class="ascwo-w-full ascwo-flex ascwo-items-center ascwo-justify-between">
+                                                    <span v-if="material.popImg.trim() != ''" @click="showMaterialExample(true, material.popImg)" :class="`ascwo-text-xs ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-underline ascwo-cursor-pointer`">example</span>
+                                                    <span v-if="material.popImg.trim() == ''" class="ascwo-invisible">example</span>                                        
+                                                    <span :class="`${selectedMaterial == material.name ? `ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `ascwo-text-transparent ascwo-border-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-border-solid ascwo-border-2`} ascwo-flex ascwo-w-fit ascwo-h-fit ascwo-rounded-full`">
+                                                        <svg fill="currentColor" class="ascwo-w-6 ascwo-h-6" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" stroke="currentColor">
                                                             <g id="SVGRepo_bgCarrier" stroke-width="0"/>
                                                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
                                                             <g id="SVGRepo_iconCarrier"> <g> <g> <path d="M256,0C114.837,0,0,114.843,0,256s114.837,256,256,256s256-114.843,256-256S397.163,0,256,0z M376.239,227.501 L257.348,346.391c-13.043,13.043-34.174,13.044-47.218,0l-68.804-68.804c-13.044-13.038-13.044-34.179,0-47.218 c13.044-13.044,34.174-13.044,47.218,0l45.195,45.19l95.282-95.278c13.044-13.044,34.174-13.044,47.218,0 C389.283,193.321,389.283,214.462,376.239,227.501z"/> </g> </g> </g>
@@ -445,39 +445,39 @@
                                 </div>
                             </div>
 
-                            <div v-show="showMaterialEx" :class="`asowp-absolute asowp-top-0 asowp-right-0 asowp-w-[85%] lg:asowp-w-full asowp-h-[90%] asowp-overflow-auto asowp-scrollBar asowp-translate-y-[-50%] lg:asowp-translate-y-[0%] lg:asowp-translate-x-[101%] asowp-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.textColor}] asowp-p-2`">
+                            <div v-show="showMaterialEx" :class="`ascwo-absolute ascwo-top-0 ascwo-right-0 ascwo-w-[85%] lg:ascwo-w-full ascwo-h-[90%] ascwo-overflow-auto ascwo-scrollBar ascwo-translate-y-[-50%] lg:ascwo-translate-y-[0%] lg:ascwo-translate-x-[101%] ascwo-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.textColor}] ascwo-p-2`">
                                 <div v-html="materialExample"></div>
-                                <div class="asowp-absolute asowp-top-0 asowp-right-0 asowp-w-fit asowp-h-fit asowp-cursor-pointer">
-                                    <span @click="showMaterialExample(false)" :class="`asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-p-1 asowp-base-animation`">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                                <div class="ascwo-absolute ascwo-top-0 ascwo-right-0 ascwo-w-fit ascwo-h-fit ascwo-cursor-pointer">
+                                    <span @click="showMaterialExample(false)" :class="`ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] ascwo-p-1 ascwo-base-animation`">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                                         </svg>
                                     </span>
                                 </div>
                             </div>
-                            <span v-if="allowNextButton && lastActiveOption != 'materials'" @click="nextOption('materials')" :class="`asowp-absolute asowp-bottom-0 asowp-translate-y-[100%] asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
+                            <span v-if="allowNextButton && lastActiveOption != 'materials'" @click="nextOption('materials')" :class="`ascwo-absolute ascwo-bottom-0 ascwo-translate-y-[100%] ascwo-left-0 ascwo-w-full ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold ascwo-text-md ascwo-full-center ascwo-border ascwo-py-1 ascwo-base-animation ascwo-cursor-pointer`">
                                 Next
                             </span>
                         </div>
         
-                        <div v-show="step == 'component'" class="asowp-flex asowp-flex-col lg:asowp-space-y-3 asowp-w-full asowp-h-full" id="asowp-products-section">
-                            <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{advancedComponent.name}}</p>    
+                        <div v-show="step == 'component'" class="ascwo-flex ascwo-flex-col lg:ascwo-space-y-3 ascwo-w-full ascwo-h-full" id="ascwo-products-section">
+                            <p :class="`ascwo-hidden lg:ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] ascwo-text-lg ascwo-font-semibold ascwo-p-2 ascwo-px-4`">{{advancedComponent.name}}</p>    
                             
-                            <div class="asowp-w-full asowp-h-full asowp-p-2 asowp-overflow-auto asowp-scrollBar">
-                                <div v-for="(option, index) in advancedComponent.options" class="asowp-space-y-3">
-                                    <input type="radio" :id="'asowp-model' + option.name + option.size.width + index" name="asowp-advanceModel" class=" peer asowp-hidden" @change="selectSignModel(option, index)">
-                                    <label :for="'asowp-model' + option.name + option.size.width + index" :class="`asowp-flex asowp-full-center asowp-space-x-2 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}]/50  hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-p-2 asowp-base-animation`">
-                                        <div :class="`${option.icon === '' ? `asowp-bg-[${configColors.backgroundColorHeader}]` : `` } asowp-w-1/4 asowp-h-20 asowp-flex asowp-full-center`">
-                                            <img v-if="option.icon != ''" :src="option.icon" class="asowp-w-auto asowp-h-full" />
+                            <div class="ascwo-w-full ascwo-h-full ascwo-p-2 ascwo-overflow-auto ascwo-scrollBar">
+                                <div v-for="(option, index) in advancedComponent.options" class="ascwo-space-y-3">
+                                    <input type="radio" :id="'ascwo-model' + option.name + option.size.width + index" name="ascwo-advanceModel" class=" peer ascwo-hidden" @change="selectSignModel(option, index)">
+                                    <label :for="'ascwo-model' + option.name + option.size.width + index" :class="`ascwo-flex ascwo-full-center ascwo-space-x-2 ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}]/50  hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] ascwo-p-2 ascwo-base-animation`">
+                                        <div :class="`${option.icon === '' ? `ascwo-bg-[${configColors.backgroundColorHeader}]` : `` } ascwo-w-1/4 ascwo-h-20 ascwo-flex ascwo-full-center`">
+                                            <img v-if="option.icon != ''" :src="option.icon" class="ascwo-w-auto ascwo-h-full" />
                                         </div>                                
-                                        <div :class="`asowp-w-3/4 asowp-flex asowp-flex-col asowp-space-y-1`">
-                                            <p class="asowp-text-sm asowp-font-medium first-letter:asowp-uppercase">{{ option.name }}</p>
-                                            <p class="asowp-text-xs">{{ option.description }}</p>
-                                            <p class="asowp-text-xs">{{ option.size.width }}x{{ option.size.height }}</p>
-                                            <div class="asowp-w-full asowp-flex asowp-items-center asowp-justify-between">
-                                                <span class="asowp-invisible">example</span>
-                                                <span :class="`${activeSignModelName == option.name && activeSignModelId === index ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-transparent asowp-border-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-border-solid asowp-border-2`} asowp-flex asowp-w-fit asowp-h-fit asowp-rounded-full`">
-                                                    <svg fill="currentColor" class="asowp-w-6 asowp-h-6" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" stroke="currentColor">
+                                        <div :class="`ascwo-w-3/4 ascwo-flex ascwo-flex-col ascwo-space-y-1`">
+                                            <p class="ascwo-text-sm ascwo-font-medium first-letter:ascwo-uppercase">{{ option.name }}</p>
+                                            <p class="ascwo-text-xs">{{ option.description }}</p>
+                                            <p class="ascwo-text-xs">{{ option.size.width }}x{{ option.size.height }}</p>
+                                            <div class="ascwo-w-full ascwo-flex ascwo-items-center ascwo-justify-between">
+                                                <span class="ascwo-invisible">example</span>
+                                                <span :class="`${activeSignModelName == option.name && activeSignModelId === index ? `ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `ascwo-text-transparent ascwo-border-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-border-solid ascwo-border-2`} ascwo-flex ascwo-w-fit ascwo-h-fit ascwo-rounded-full`">
+                                                    <svg fill="currentColor" class="ascwo-w-6 ascwo-h-6" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" stroke="currentColor">
                                                         <g id="SVGRepo_bgCarrier" stroke-width="0"/>
                                                         <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
                                                         <g id="SVGRepo_iconCarrier"> <g> <g> <path d="M256,0C114.837,0,0,114.843,0,256s114.837,256,256,256s256-114.843,256-256S397.163,0,256,0z M376.239,227.501 L257.348,346.391c-13.043,13.043-34.174,13.044-47.218,0l-68.804-68.804c-13.044-13.038-13.044-34.179,0-47.218 c13.044-13.044,34.174-13.044,47.218,0l45.195,45.19l95.282-95.278c13.044-13.044,34.174-13.044,47.218,0 C389.283,193.321,389.283,214.462,376.239,227.501z"/> </g> </g> </g>
@@ -489,35 +489,35 @@
                                 </div>
                             </div>
 
-                            <span v-if="allowNextButton && (lastActiveOption != 'material' || (lastActiveOption == 'material' && advancedComponentId != (currentMaterial?.data?.length - 1)))" @click="nextOption('components')" :class="`asowp-absolute asowp-bottom-0 asowp-translate-y-[100%] asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
+                            <span v-if="allowNextButton && (lastActiveOption != 'material' || (lastActiveOption == 'material' && advancedComponentId != (currentMaterial?.data?.length - 1)))" @click="nextOption('components')" :class="`ascwo-absolute ascwo-bottom-0 ascwo-translate-y-[100%] ascwo-left-0 ascwo-w-full ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold ascwo-text-md ascwo-full-center ascwo-border ascwo-py-1 ascwo-base-animation ascwo-cursor-pointer`">
                                 Next
                             </span>
                         </div>
         
-                        <div v-show="step == 'size'" class="asowp-relative asowp-flex asowp-flex-col lg:asowp-space-y-2 asowp-w-full asowp-h-full" id="asowp-sizes-section">
-                            <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{configVisualiserTexts.textSize}}</p>    
-                            <div class="asowp-h-full asowp-space-y-2 asowp-p-4 asowp-overflow-auto asowp-scrollBar">
-                                <div v-if="selectedShape != 'cut-to-shape'" class="asowp-space-y-2">
-                                    <div @click="dropSizeToggle()" id="asowp-fontSelected-dropdown" :class="`asowp-cursor-pointer asowp-items-center asowp-space-x-3 asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}]  asowp-px-2 asowp-border border-gray-400 asowp-rounded-md asowp-flex asowp-justify-between asowp-text-base asowp-base-animation`">
-                                        <div class="asowp-w-fit asowp-flex asowp-items-center asowp-justify-center asowp-p-2">
-                                            <p v-show="currentSizeName != ''" :class="`lg:asowp-text-sm `" >{{ currentSizeName }}</p>
-                                            <p v-show="currentSizeName == ''" class="lg:asowp-text-sm xl:asowp-text-base" >Selected size</p>
+                        <div v-show="step == 'size'" class="ascwo-relative ascwo-flex ascwo-flex-col lg:ascwo-space-y-2 ascwo-w-full ascwo-h-full" id="ascwo-sizes-section">
+                            <p :class="`ascwo-hidden lg:ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] ascwo-text-lg ascwo-font-semibold ascwo-p-2 ascwo-px-4`">{{configVisualiserTexts.textSize}}</p>    
+                            <div class="ascwo-h-full ascwo-space-y-2 ascwo-p-4 ascwo-overflow-auto ascwo-scrollBar">
+                                <div v-if="selectedShape != 'cut-to-shape'" class="ascwo-space-y-2">
+                                    <div @click="dropSizeToggle()" id="ascwo-fontSelected-dropdown" :class="`ascwo-cursor-pointer ascwo-items-center ascwo-space-x-3 ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}]  ascwo-px-2 ascwo-border border-gray-400 ascwo-rounded-md ascwo-flex ascwo-justify-between ascwo-text-base ascwo-base-animation`">
+                                        <div class="ascwo-w-fit ascwo-flex ascwo-items-center ascwo-justify-center ascwo-p-2">
+                                            <p v-show="currentSizeName != ''" :class="`lg:ascwo-text-sm `" >{{ currentSizeName }}</p>
+                                            <p v-show="currentSizeName == ''" class="lg:ascwo-text-sm xl:ascwo-text-base" >Selected size</p>
                                         </div>
-                                        <div class="asowp-flex asowp-items-center asowp-justify-center">
-                                            <svg v-show="!showSize" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6 lg:w-5 lg:asowp-h-5">
+                                        <div class="ascwo-flex ascwo-items-center ascwo-justify-center">
+                                            <svg v-show="!showSize" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-6 ascwo-h-6 lg:w-5 lg:ascwo-h-5">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                                             </svg>
-                                            <svg v-show="showSize" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6 lg:w-5 lg:asowp-h-5">
+                                            <svg v-show="showSize" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-6 ascwo-h-6 lg:w-5 lg:ascwo-h-5">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
                                             </svg>                                  
                                         </div>
                                     </div>
-                                    <div v-if="showSize" class="asowp-flex asowp-flex-wrap asowp-gap-2 asowp-p-1">
+                                    <div v-if="showSize" class="ascwo-flex ascwo-flex-wrap ascwo-gap-2 ascwo-p-1">
                                         <div v-for="(sizee, id) in sizees">
-                                            <div class="asowp-w-full asowp-flex">
-                                                <input type="radio" :id="'aso' + sizee.label + sizee.width + index" name="asowp-sizes" class=" peer asowp-hidden" @click="changeSize({label: sizee.label, width:sizee.width, height:sizee.height}, {textNumber: sizee.textNumber, charPrice: sizee.charPrice, basePrice: sizee.basePrice, maxTextChar: sizee.maxTextChar, startPriceAtChar: sizee.startPriceAtChar}, id )">
-                                                <label :for="'aso' + sizee.label + sizee.width + index" :class="`${currentSizeName == sizee.label ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
-                                                    asowp-w-full asowp-h-full asowp-border-solid asowp-border asowp-justify-center asowp-font-semibold asowp-text-sm hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] hover:asowp-border-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-rounded-md asowp-p-2 asowp-text-center asowp-cursor-pointer asowp-transition-all asowp-ease-in-out asowp-duration-500`"
+                                            <div class="ascwo-w-full ascwo-flex">
+                                                <input type="radio" :id="'aso' + sizee.label + sizee.width + index" name="ascwo-sizes" class=" peer ascwo-hidden" @click="changeSize({label: sizee.label, width:sizee.width, height:sizee.height}, {textNumber: sizee.textNumber, charPrice: sizee.charPrice, basePrice: sizee.basePrice, maxTextChar: sizee.maxTextChar, startPriceAtChar: sizee.startPriceAtChar}, id )">
+                                                <label :for="'aso' + sizee.label + sizee.width + index" :class="`${currentSizeName == sizee.label ? `ascwo-ring-2 ascwo-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
+                                                    ascwo-w-full ascwo-h-full ascwo-border-solid ascwo-border ascwo-justify-center ascwo-font-semibold ascwo-text-sm hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] hover:ascwo-border-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-rounded-md ascwo-p-2 ascwo-text-center ascwo-cursor-pointer ascwo-transition-all ascwo-ease-in-out ascwo-duration-500`"
                                                 >
                                                     {{ sizee.label }}
                                                 </label>
@@ -526,29 +526,29 @@
                                     </div>
                                 </div>
                                 
-                                <div v-if="currentSizeThickness" class="asowp-space-y-2">
-                                    <p :class="`asowp-text-base asowp-font-semibold`">{{configVisualiserTexts.thickness}}</p>
+                                <div v-if="currentSizeThickness" class="ascwo-space-y-2">
+                                    <p :class="`ascwo-text-base ascwo-font-semibold`">{{configVisualiserTexts.thickness}}</p>
 
-                                    <div @click="dropThicknessToggle()" id="asowp-fontSelected-dropdown" :class="`asowp-cursor-pointer asowp-items-center asowp-space-x-3 asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}]  asowp-px-2 asowp-border border-gray-400 asowp-rounded-md asowp-flex asowp-justify-between asowp-text-base asowp-base-animation`">
-                                        <div class="asowp-w-fit asowp-flex asowp-items-center asowp-justify-center asowp-p-2">
-                                            <p v-show="currentSizeName != ''" :class="`lg:asowp-text-sm `" >{{ currentThickValue }} {{configUnit}}</p>
-                                            <p v-show="currentSizeName == ''" class="lg:asowp-text-sm xl:asowp-text-base" >{{configVisualiserTexts.thickness}}</p>
+                                    <div @click="dropThicknessToggle()" id="ascwo-fontSelected-dropdown" :class="`ascwo-cursor-pointer ascwo-items-center ascwo-space-x-3 ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}]  ascwo-px-2 ascwo-border border-gray-400 ascwo-rounded-md ascwo-flex ascwo-justify-between ascwo-text-base ascwo-base-animation`">
+                                        <div class="ascwo-w-fit ascwo-flex ascwo-items-center ascwo-justify-center ascwo-p-2">
+                                            <p v-show="currentSizeName != ''" :class="`lg:ascwo-text-sm `" >{{ currentThickValue }} {{configUnit}}</p>
+                                            <p v-show="currentSizeName == ''" class="lg:ascwo-text-sm xl:ascwo-text-base" >{{configVisualiserTexts.thickness}}</p>
                                         </div>
-                                        <div class="asowp-flex asowp-items-center asowp-justify-center">
-                                            <svg v-show="!showThick" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6 lg:w-5 lg:asowp-h-5">
+                                        <div class="ascwo-flex ascwo-items-center ascwo-justify-center">
+                                            <svg v-show="!showThick" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-6 ascwo-h-6 lg:w-5 lg:ascwo-h-5">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                                             </svg>
-                                            <svg v-show="showThick" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6 lg:w-5 lg:asowp-h-5">
+                                            <svg v-show="showThick" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-6 ascwo-h-6 lg:w-5 lg:ascwo-h-5">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
                                             </svg>                                  
                                         </div>
                                     </div>
-                                    <div v-show="showThick" class="asowp-flex asowp-flex-wrap asowp-gap-2 asowp-p-1">
+                                    <div v-show="showThick" class="ascwo-flex ascwo-flex-wrap ascwo-gap-2 ascwo-p-1">
                                         <div v-for="(thick, id) in thicknesss.values">
-                                            <div class="asowp-w-full asowp-flex">
-                                                <input type="radio" :id="'aso' + thick + id" name="asowp-sizes" class=" peer asowp-hidden" @click="selectSizeThickness(thick)">
-                                                <label :for="'aso' + thick + id" :class="`${currentThickValue == thick ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
-                                                    asowp-w-full asowp-h-full asowp-border-solid asowp-border asowp-justify-center asowp-font-semibold asowp-text-sm hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] hover:asowp-border-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-rounded-md asowp-p-2 asowp-text-center asowp-cursor-pointer asowp-transition-all asowp-ease-in-out asowp-duration-500`"
+                                            <div class="ascwo-w-full ascwo-flex">
+                                                <input type="radio" :id="'aso' + thick + id" name="ascwo-sizes" class=" peer ascwo-hidden" @click="selectSizeThickness(thick)">
+                                                <label :for="'aso' + thick + id" :class="`${currentThickValue == thick ? `ascwo-ring-2 ascwo-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
+                                                    ascwo-w-full ascwo-h-full ascwo-border-solid ascwo-border ascwo-justify-center ascwo-font-semibold ascwo-text-sm hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] hover:ascwo-border-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-rounded-md ascwo-p-2 ascwo-text-center ascwo-cursor-pointer ascwo-transition-all ascwo-ease-in-out ascwo-duration-500`"
                                                 >
                                                     {{ thick }} {{ configUnit }}
                                                 </label>
@@ -557,61 +557,61 @@
                                     </div>
                                 </div>
 
-                                <div v-if="customSizeActive && selectedShape != 'cut-to-shape'" class="asowp-space-y-2 asowp-w-full asowp-pb-6">
-                                    <p class="asowp-text-base asowp-font-semibold">{{configVisualiserTexts.customSize}}</p>
-                                    <div class="asowp-flex asowp-justify-between asowp-items-center asowp-space-x-2 ">
-                                        <div class="asowp-w-1/2 asowp-flex asowp-flex-col asowp-space-y-2">
-                                            <label :class="`asowp-text-xs asowp-text-[${configColors.optionsSideBar.options.modals.textColor}]`" for="sizeWidth">{{ customSizes.width.label }} ({{configUnit}})</label>
-                                            <input class="asowp-w-full asowp-border asowp-border-zinc-600 asowp-p-1 asowp-rounded-sm" type="number" name="" id="sizeWidth" :min="customSizes.width.min" :max="customSizes.width.max" v-model="customSizeValues.width" style="border-radius: 6px">
+                                <div v-if="customSizeActive && selectedShape != 'cut-to-shape'" class="ascwo-space-y-2 ascwo-w-full ascwo-pb-6">
+                                    <p class="ascwo-text-base ascwo-font-semibold">{{configVisualiserTexts.customSize}}</p>
+                                    <div class="ascwo-flex ascwo-justify-between ascwo-items-center ascwo-space-x-2 ">
+                                        <div class="ascwo-w-1/2 ascwo-flex ascwo-flex-col ascwo-space-y-2">
+                                            <label :class="`ascwo-text-xs ascwo-text-[${configColors.optionsSideBar.options.modals.textColor}]`" for="sizeWidth">{{ customSizes.width.label }} ({{configUnit}})</label>
+                                            <input class="ascwo-w-full ascwo-border ascwo-border-zinc-600 ascwo-p-1 ascwo-rounded-sm" type="number" name="" id="sizeWidth" :min="customSizes.width.min" :max="customSizes.width.max" v-model="customSizeValues.width" style="border-radius: 6px">
                                         </div>
-                                        <!-- <p class="asowp-px-2">x</p> -->
-                                        <div class="asowp-w-1/2 asowp-flex asowp-flex-col asowp-space-y-2">
-                                            <label :class="`asowp-text-xs asowp-text-[${configColors.optionsSideBar.options.modals.textColor}]`" for="sizeHeight">{{ customSizes.height.label }} ({{configUnit}})</label>
-                                            <input class="asowp-w-full asowp-border asowp-border-zinc-600 asowp-p-1 asowp-rounded-sm" type="number" name="" id="sizeHeight" :min="customSizes.height.min" :max="customSizes.height.max" v-model="customSizeValues.height" style="border-radius: 6px">
+                                        <!-- <p class="ascwo-px-2">x</p> -->
+                                        <div class="ascwo-w-1/2 ascwo-flex ascwo-flex-col ascwo-space-y-2">
+                                            <label :class="`ascwo-text-xs ascwo-text-[${configColors.optionsSideBar.options.modals.textColor}]`" for="sizeHeight">{{ customSizes.height.label }} ({{configUnit}})</label>
+                                            <input class="ascwo-w-full ascwo-border ascwo-border-zinc-600 ascwo-p-1 ascwo-rounded-sm" type="number" name="" id="sizeHeight" :min="customSizes.height.min" :max="customSizes.height.max" v-model="customSizeValues.height" style="border-radius: 6px">
                                         </div>
                                     </div>
-                                    <span @click="selectCustomSize(customSizes)" :class="` asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-rounded-md asowp-base-animation asowp-cursor-pointer`">
+                                    <span @click="selectCustomSize(customSizes)" :class="` ascwo-w-full ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold ascwo-text-md ascwo-full-center ascwo-border ascwo-py-1 ascwo-rounded-md ascwo-base-animation ascwo-cursor-pointer`">
                                         {{ configVisualiserTexts.customSizeButtonDone && configVisualiserTexts.customSizeButtonDone.trim() !== '' ? configVisualiserTexts.customSizeButtonDone : 'Done' }}
                                     </span>
                                 </div>
-                                <div v-if="selectedShape == 'cut-to-shape'" class="asowp-space-y-2 asowp-w-full asowp-pb-6">
-                                    <p class="asowp-text-base asowp-font-semibold">{{configVisualiserTexts.customSize}}</p>
-                                    <div class="asowp-flex asowp-justify-between asowp-items-center asowp-space-x-2 ">
-                                        <div class="asowp-w-1/2 asowp-flex asowp-flex-col asowp-space-y-2">
-                                            <label :class="`asowp-text-xs asowp-text-[${configColors.optionsSideBar.options.modals.textColor}]`" for="sizeWidth">{{ customSizes.width.label }} ({{configUnit}})</label>
-                                            <input class="asowp-w-full asowp-border asowp-border-zinc-600 asowp-p-1 asowp-rounded-sm" disabled type="number" name="" id="outlineSizeWidth" style="border-radius: 6px">
+                                <div v-if="selectedShape == 'cut-to-shape'" class="ascwo-space-y-2 ascwo-w-full ascwo-pb-6">
+                                    <p class="ascwo-text-base ascwo-font-semibold">{{configVisualiserTexts.customSize}}</p>
+                                    <div class="ascwo-flex ascwo-justify-between ascwo-items-center ascwo-space-x-2 ">
+                                        <div class="ascwo-w-1/2 ascwo-flex ascwo-flex-col ascwo-space-y-2">
+                                            <label :class="`ascwo-text-xs ascwo-text-[${configColors.optionsSideBar.options.modals.textColor}]`" for="sizeWidth">{{ customSizes.width.label }} ({{configUnit}})</label>
+                                            <input class="ascwo-w-full ascwo-border ascwo-border-zinc-600 ascwo-p-1 ascwo-rounded-sm" disabled type="number" name="" id="outlineSizeWidth" style="border-radius: 6px">
                                         </div>
-                                        <!-- <p class="asowp-px-2">x</p> -->
-                                        <div class="asowp-w-1/2 asowp-flex asowp-flex-col asowp-space-y-2">
-                                            <label :class="`asowp-text-xs asowp-text-[${configColors.optionsSideBar.options.modals.textColor}]`" for="sizeHeight">{{ customSizes.height.label }} ({{configUnit}})</label>
-                                            <input class="asowp-w-full asowp-border asowp-border-zinc-600 asowp-p-1 asowp-rounded-sm" disabled type="number" name="" id="outlineSizeHeight" style="border-radius: 6px">
+                                        <!-- <p class="ascwo-px-2">x</p> -->
+                                        <div class="ascwo-w-1/2 ascwo-flex ascwo-flex-col ascwo-space-y-2">
+                                            <label :class="`ascwo-text-xs ascwo-text-[${configColors.optionsSideBar.options.modals.textColor}]`" for="sizeHeight">{{ customSizes.height.label }} ({{configUnit}})</label>
+                                            <input class="ascwo-w-full ascwo-border ascwo-border-zinc-600 ascwo-p-1 ascwo-rounded-sm" disabled type="number" name="" id="outlineSizeHeight" style="border-radius: 6px">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <span v-if="allowNextButton && lastActiveOption != 'sizes'" @click="nextOption('sizes')" :class="`asowp-absolute asowp-bottom-0 asowp-translate-y-[100%] asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
+                            <span v-if="allowNextButton && lastActiveOption != 'sizes'" @click="nextOption('sizes')" :class="`ascwo-absolute ascwo-bottom-0 ascwo-translate-y-[100%] ascwo-left-0 ascwo-w-full ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold ascwo-text-md ascwo-full-center ascwo-border ascwo-py-1 ascwo-base-animation ascwo-cursor-pointer`">
                                 Next
                             </span>
                         </div>
         
-                        <div v-show="step == 'shape'" class="asowp-flex asowp-flex-col asowp-w-full asowp-h-full" id="asowp-shapes">
-                            <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{configVisualiserTexts.textShape}}</p>    
+                        <div v-show="step == 'shape'" class="ascwo-flex ascwo-flex-col ascwo-w-full ascwo-h-full" id="ascwo-shapes">
+                            <p :class="`ascwo-hidden lg:ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] ascwo-text-lg ascwo-font-semibold ascwo-p-2 ascwo-px-4`">{{configVisualiserTexts.textShape}}</p>    
         
-                            <div class="asowp-w-full asowp-h-full lg:asowp-py-2 asowp-overflow-auto asowp-scrollBar">
-                                <div class="asowp-grid asowp-grid-cols-3 lg:asowp-grid-cols-3 asowp-gap-2 asowp-full-center asowp-p-1">
+                            <div class="ascwo-w-full ascwo-h-full lg:ascwo-py-2 ascwo-overflow-auto ascwo-scrollBar">
+                                <div class="ascwo-grid ascwo-grid-cols-3 lg:ascwo-grid-cols-3 ascwo-gap-2 ascwo-full-center ascwo-p-1">
                                     <div v-for="(shapee, id) in shapees">
-                                        <div v-for="(shape, index) in allShapes" :key="shape.name" class="asowp-w-full asowp-flex">
-                                            <div class="asowp-w-full asowp-flex" v-if="shapee.shapeId == index">
-                                                <input type="radio" :id="shape.name + index" name="asowp-shape" class="peer asowp-hidden" @change="selectShape(shape.value, shapee, id)">
-                                                <label :for="shape.name + index" :class="`${selectedShape == shape.value ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
-                                                    asowp-w-full asowp-h-full asowp-flex asowp-flex-col asowp-space-y-1 asowp-full-center asowp-whitespace-nowrap asowp-font-semibold asowp-text-sm hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-rounded-md asowp-p-2 asowp-text-center asowp-cursor-pointer asowp-transition-all asowp-ease-in-out asowp-duration-500`"
+                                        <div v-for="(shape, index) in allShapes" :key="shape.name" class="ascwo-w-full ascwo-flex">
+                                            <div class="ascwo-w-full ascwo-flex" v-if="shapee.shapeId == index">
+                                                <input type="radio" :id="shape.name + index" name="ascwo-shape" class="peer ascwo-hidden" @change="selectShape(shape.value, shapee, id)">
+                                                <label :for="shape.name + index" :class="`${selectedShape == shape.value ? `ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
+                                                    ascwo-w-full ascwo-h-full ascwo-flex ascwo-flex-col ascwo-space-y-1 ascwo-full-center ascwo-whitespace-nowrap ascwo-font-semibold ascwo-text-sm hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] ascwo-rounded-md ascwo-p-2 ascwo-text-center ascwo-cursor-pointer ascwo-transition-all ascwo-ease-in-out ascwo-duration-500`"
                                                 >
-                                                    <div :class="`${shape.icon === '' ? `asowp-bg-[${configColors.backgroundColorHeader}]` : ``} asowp-w-16 asowp-h-16`">
-                                                        <img v-if="shape.icon != ''" :src="shape.icon" class="asowp-w-full asowp-h-full" />
+                                                    <div :class="`${shape.icon === '' ? `ascwo-bg-[${configColors.backgroundColorHeader}]` : ``} ascwo-w-16 ascwo-h-16`">
+                                                        <img v-if="shape.icon != ''" :src="shape.icon" class="ascwo-w-full ascwo-h-full" />
                                                     </div>
                                                     <p>{{shape.name}}</p>
-                                                    <p v-if="shapee.additionalPrice > 0" class="asowp-text-[11px] asowp-leading-normal">({{shapee.additionalPrice}} {{props.currency}})</p>
-                                                    <p v-if="!shapee.additionalPrice > 0" class="asowp-text-[11px] asowp-leading-normal asowp-invisible">none</p>
+                                                    <p v-if="shapee.additionalPrice > 0" class="ascwo-text-[11px] ascwo-leading-normal">({{shapee.additionalPrice}} {{props.currency}})</p>
+                                                    <p v-if="!shapee.additionalPrice > 0" class="ascwo-text-[11px] ascwo-leading-normal ascwo-invisible">none</p>
                                                 </label>
                                             </div>
                                         </div>
@@ -619,14 +619,14 @@
                                 </div>
                             </div>
 
-                            <div v-if="selectedShape == 'cut-to-shape'" :class="`asowp-border-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}]`" style="border-top-width: thin">
-                                <div class="asowp-grid asowp-grid-cols-3 lg:asowp-grid-cols-3 asowp-gap-2 asowp-w-full asowp-full-center asowp-p-1">
-                                    <div class="asowp-w-full asowp-flex" @click="changeOutlineSize('small')">
-                                        <div :class="`${currentOutineSize == 'small' ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
-                                            asowp-w-full asowp-h-full asowp-flex asowp-flex-col asowp-space-y-1 asowp-full-center asowp-whitespace-nowrap asowp-font-semibold asowp-text-sm hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-rounded-md asowp-p-2 asowp-text-center asowp-cursor-pointer asowp-transition-all asowp-ease-in-out asowp-duration-500`"
+                            <div v-if="selectedShape == 'cut-to-shape'" :class="`ascwo-border-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}]`" style="border-top-width: thin">
+                                <div class="ascwo-grid ascwo-grid-cols-3 lg:ascwo-grid-cols-3 ascwo-gap-2 ascwo-w-full ascwo-full-center ascwo-p-1">
+                                    <div class="ascwo-w-full ascwo-flex" @click="changeOutlineSize('small')">
+                                        <div :class="`${currentOutineSize == 'small' ? `ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
+                                            ascwo-w-full ascwo-h-full ascwo-flex ascwo-flex-col ascwo-space-y-1 ascwo-full-center ascwo-whitespace-nowrap ascwo-font-semibold ascwo-text-sm hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] ascwo-rounded-md ascwo-p-2 ascwo-text-center ascwo-cursor-pointer ascwo-transition-all ascwo-ease-in-out ascwo-duration-500`"
                                         >
                                             <div :class="``">
-                                                <svg viewBox="0 0 20 23" xmlns="http://www.w3.org/2000/svg" :class="`asowp-w-6 asowp-h-6`">
+                                                <svg viewBox="0 0 20 23" xmlns="http://www.w3.org/2000/svg" :class="`ascwo-w-6 ascwo-h-6`">
                                                     <g fill="none" fill-rule="evenodd">
                                                         <path d="M13.334 11.482c-1.002.409-2.505.756-4.509 1.043-1.135.163-1.938.347-2.408.551a2.402 2.402 0 0 0-1.089.898 2.359 2.359 0 0 0-.383 1.311c0 .736.278 1.35.836 1.84.557.492 1.372.737 2.446.737 1.063 0 2.009-.233 2.837-.698.828-.465 1.436-1.101 1.825-1.91.297-.623.445-1.543.445-2.76v-1.012zm.23 6.165c-1.022.87-2.007 1.483-2.952 1.84a8.544 8.544 0 0 1-3.044.538c-1.79 0-3.166-.438-4.126-1.312C2.48 17.84 2 16.723 2 15.363c0-.799.181-1.527.545-2.187A4.503 4.503 0 0 1 3.97 11.59c.588-.399 1.25-.7 1.986-.905.542-.143 1.36-.281 2.454-.414 2.23-.265 3.87-.583 4.923-.95.01-.38.015-.62.015-.722 0-1.124-.26-1.917-.781-2.377-.706-.624-1.754-.936-3.145-.936-1.299 0-2.257.228-2.876.683-.619.455-1.076 1.26-1.372 2.415l-2.7-.367c.246-1.156.65-2.09 1.212-2.8.562-.71 1.375-1.257 2.438-1.64C7.19 3.191 8.421 3 9.822 3c1.39 0 2.52.164 3.39.491.868.327 1.507.739 1.917 1.234.408.497.695 1.123.859 1.88.092.47.137 1.319.137 2.545v3.682c0 2.566.059 4.19.177 4.869.117.68.35 1.332.698 1.955h-2.883c-.287-.572-.47-1.242-.553-2.009z" fill="currentColor" class="fill"></path>
                                                         <path d="M1 7.215c.304-1.431.804-2.588 1.501-3.469.697-.88 1.704-1.559 3.022-2.034C6.842 1.237 8.368 1 10.104 1c1.723 0 3.123.203 4.2.608 1.078.406 1.87.915 2.377 1.53.506.614.861 1.391 1.065 2.328.114.584.17 1.635.17 3.156v4.561c0 3.18.073 5.192.219 6.035A7.56 7.56 0 0 0 19 21.642h-3.573" stroke="currentColor" class="stroke"></path>
@@ -637,12 +637,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="asowp-w-full asowp-flex" @click="changeOutlineSize('medium')">
-                                        <div :class="`${currentOutineSize == 'medium' ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
-                                            asowp-w-full asowp-h-full asowp-flex asowp-flex-col asowp-space-y-1 asowp-full-center asowp-whitespace-nowrap asowp-font-semibold asowp-text-sm hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-rounded-md asowp-p-2 asowp-text-center asowp-cursor-pointer asowp-transition-all asowp-ease-in-out asowp-duration-500`"
+                                    <div class="ascwo-w-full ascwo-flex" @click="changeOutlineSize('medium')">
+                                        <div :class="`${currentOutineSize == 'medium' ? `ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
+                                            ascwo-w-full ascwo-h-full ascwo-flex ascwo-flex-col ascwo-space-y-1 ascwo-full-center ascwo-whitespace-nowrap ascwo-font-semibold ascwo-text-sm hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] ascwo-rounded-md ascwo-p-2 ascwo-text-center ascwo-cursor-pointer ascwo-transition-all ascwo-ease-in-out ascwo-duration-500`"
                                         >
                                             <div :class="``">
-                                                <svg viewBox="0 0 22 25" xmlns="http://www.w3.org/2000/svg" :class="`asowp-w-6 asowp-h-6`">
+                                                <svg viewBox="0 0 22 25" xmlns="http://www.w3.org/2000/svg" :class="`ascwo-w-6 ascwo-h-6`">
                                                     <g fill="none" fill-rule="evenodd">
                                                         <path d="M14.334 12.482c-1.002.409-2.505.756-4.509 1.043-1.135.163-1.938.347-2.408.551a2.402 2.402 0 0 0-1.089.898 2.359 2.359 0 0 0-.383 1.311c0 .736.278 1.35.836 1.84.557.492 1.372.737 2.446.737 1.063 0 2.009-.233 2.837-.698.828-.465 1.436-1.101 1.825-1.91.297-.623.445-1.543.445-2.76v-1.012zm.23 6.165c-1.022.87-2.007 1.483-2.952 1.84a8.544 8.544 0 0 1-3.044.538c-1.79 0-3.166-.438-4.126-1.312C3.48 18.84 3 17.723 3 16.363c0-.799.181-1.527.545-2.187A4.503 4.503 0 0 1 4.97 12.59c.588-.399 1.25-.7 1.986-.905.542-.143 1.36-.281 2.454-.414 2.23-.265 3.87-.583 4.923-.95.01-.38.015-.62.015-.722 0-1.124-.26-1.917-.781-2.377-.706-.624-1.754-.936-3.145-.936-1.299 0-2.257.228-2.876.683-.619.455-1.076 1.26-1.372 2.415l-2.7-.367c.246-1.156.65-2.09 1.212-2.8.562-.71 1.375-1.257 2.438-1.64C8.19 4.191 9.421 4 10.822 4c1.39 0 2.52.164 3.39.491.868.327 1.507.739 1.917 1.234.408.497.695 1.123.859 1.88.092.47.137 1.319.137 2.545v3.682c0 2.566.059 4.19.177 4.869.117.68.35 1.332.698 1.955h-2.883c-.287-.572-.47-1.242-.553-2.009z" fill="currentColor" class="fill"></path>
                                                         <path d="M1 8.025c.344-1.618.909-2.925 1.697-3.921.787-.995 1.926-1.762 3.416-2.299C7.603 1.268 9.328 1 11.291 1c1.947 0 3.53.229 4.748.687 1.217.459 2.112 1.035 2.686 1.73.572.694.973 1.572 1.203 2.631.129.66.193 1.848.193 3.567v5.156c0 3.595.082 5.869.247 6.821a8.55 8.55 0 0 0 .978 2.74h-4.039" stroke="currentColor" class="stroke"></path>
@@ -653,12 +653,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="asowp-w-full asowp-flex" @click="changeOutlineSize('large')">
-                                        <div :class="`${currentOutineSize == 'large' ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
-                                            asowp-w-full asowp-h-full asowp-flex asowp-flex-col asowp-space-y-1 asowp-full-center asowp-whitespace-nowrap asowp-font-semibold asowp-text-sm hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-rounded-md asowp-p-2 asowp-text-center asowp-cursor-pointer asowp-transition-all asowp-ease-in-out asowp-duration-500`"
+                                    <div class="ascwo-w-full ascwo-flex" @click="changeOutlineSize('large')">
+                                        <div :class="`${currentOutineSize == 'large' ? `ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
+                                            ascwo-w-full ascwo-h-full ascwo-flex ascwo-flex-col ascwo-space-y-1 ascwo-full-center ascwo-whitespace-nowrap ascwo-font-semibold ascwo-text-sm hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] ascwo-rounded-md ascwo-p-2 ascwo-text-center ascwo-cursor-pointer ascwo-transition-all ascwo-ease-in-out ascwo-duration-500`"
                                         >
                                             <div :class="``">
-                                                <svg viewBox="0 0 25 28" xmlns="http://www.w3.org/2000/svg" :class="`asowp-w-6 asowp-h-6`">
+                                                <svg viewBox="0 0 25 28" xmlns="http://www.w3.org/2000/svg" :class="`ascwo-w-6 ascwo-h-6`">
                                                     <g fill="none" fill-rule="evenodd">
                                                         <path d="M15.334 14.482c-1.002.409-2.505.756-4.509 1.043-1.135.163-1.938.347-2.408.551a2.402 2.402 0 0 0-1.089.898 2.359 2.359 0 0 0-.383 1.311c0 .736.278 1.35.836 1.84.557.492 1.372.737 2.446.737 1.063 0 2.009-.233 2.837-.698.828-.465 1.436-1.101 1.825-1.91.297-.623.445-1.543.445-2.76v-1.012zm.23 6.165c-1.022.87-2.007 1.483-2.952 1.84a8.544 8.544 0 0 1-3.044.538c-1.79 0-3.166-.438-4.126-1.312C4.48 20.84 4 19.723 4 18.363c0-.799.181-1.527.545-2.187A4.503 4.503 0 0 1 5.97 14.59c.588-.399 1.25-.7 1.986-.905.542-.143 1.36-.281 2.454-.414 2.23-.265 3.87-.583 4.923-.95.01-.38.015-.62.015-.722 0-1.124-.26-1.917-.781-2.377-.706-.624-1.754-.936-3.145-.936-1.299 0-2.257.228-2.876.683-.619.455-1.076 1.26-1.372 2.415l-2.7-.367c.246-1.156.65-2.09 1.212-2.8.562-.71 1.375-1.257 2.438-1.64C9.19 6.191 10.421 6 11.822 6c1.39 0 2.52.164 3.39.491.868.327 1.507.739 1.917 1.234.408.497.695 1.123.859 1.88.092.47.137 1.319.137 2.545v3.682c0 2.566.059 4.19.177 4.869.117.68.35 1.332.698 1.955h-2.883c-.287-.572-.47-1.242-.553-2.009z" fill="currentColor" class="fill"></path>
                                                         <path d="M1 8.828c.383-1.803 1.013-3.26 1.891-4.37.877-1.108 2.146-1.963 3.807-2.56 1.66-.6 3.582-.898 5.77-.898 2.17 0 3.933.255 5.29.766 1.357.511 2.354 1.153 2.994 1.927.637.774 1.084 1.752 1.34 2.932.144.736.215 2.06.215 3.975v5.746c0 4.006.092 6.54.276 7.6A9.528 9.528 0 0 0 23.673 27h-4.501" stroke="currentColor" class="stroke"></path>
@@ -670,31 +670,31 @@
                                     </div>
                                 </div>
                             </div>
-                            <span v-if="allowNextButton && lastActiveOption != 'shapes'" @click="nextOption('shapes')" :class="`asowp-absolute asowp-bottom-0 asowp-translate-y-[100%] asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
+                            <span v-if="allowNextButton && lastActiveOption != 'shapes'" @click="nextOption('shapes')" :class="`ascwo-absolute ascwo-bottom-0 ascwo-translate-y-[100%] ascwo-left-0 ascwo-w-full ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold ascwo-text-md ascwo-full-center ascwo-border ascwo-py-1 ascwo-base-animation ascwo-cursor-pointer`">
                                 Next
                             </span>
                         </div>
         
-                        <div v-show="step == 'fixing-methode'" class="asowp-relative asowp-flex asowp-flex-col lg:asowp-space-y-1 asowp-w-full asowp-h-full" id="asowp-fixings-section">
-                            <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{configVisualiserTexts.textFixingMethods}}</p>    
+                        <div v-show="step == 'fixing-methode'" class="ascwo-relative ascwo-flex ascwo-flex-col lg:ascwo-space-y-1 ascwo-w-full ascwo-h-full" id="ascwo-fixings-section">
+                            <p :class="`ascwo-hidden lg:ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] ascwo-text-lg ascwo-font-semibold ascwo-p-2 ascwo-px-4`">{{configVisualiserTexts.textFixingMethods}}</p>    
         
-                            <div v-if="materialType == 'simple'" class="asowp-h-full asowp-p-2 asowp-overflow-auto asowp-scrollBar">
+                            <div v-if="materialType == 'simple'" class="ascwo-h-full ascwo-p-2 ascwo-overflow-auto ascwo-scrollBar">
                                 <div v-for="(fixingg, id) in fixinggs">
                                     <div v-for="(fixing, index) in allFixings">
-                                        <div v-if="fixingg.fixingMethodId == index && (!fixingg.excludeShapes.includes(currentShapeId) && !fixingg.excludeSizes.includes(currentSizeId))" class="asowp-space-y-3 asowp-w-full asowp-h-full">
-                                            <input type="radio" :id="fixing.name + index" name="asowp-fixings" class=" peer asowp-hidden" @change="selectFixingMethode(fixing.type, fixingg, id)">
-                                            <label :for="fixing.name + index" :class="`asowp-flex asowp-full-center asowp-space-x-2 asowp-cursor-pointer asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}]/50  hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-p-2 asowp-base-animation`">
-                                                <div :class="`${fixing.icon === '' ? `asowp-bg-[${configColors.backgroundColorHeader}]` : `` } asowp-w-[15%] asowp-h-20 asowp-flex asowp-full-center`">
-                                                    <img v-if="fixing.icon != ''" :src="fixing.icon" class="asowp-w-auto asowp-h-full" />
+                                        <div v-if="fixingg.fixingMethodId == index && (!fixingg.excludeShapes.includes(currentShapeId) && !fixingg.excludeSizes.includes(currentSizeId))" class="ascwo-space-y-3 ascwo-w-full ascwo-h-full">
+                                            <input type="radio" :id="fixing.name + index" name="ascwo-fixings" class=" peer ascwo-hidden" @change="selectFixingMethode(fixing.type, fixingg, id)">
+                                            <label :for="fixing.name + index" :class="`ascwo-flex ascwo-full-center ascwo-space-x-2 ascwo-cursor-pointer ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}]/50  hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] ascwo-p-2 ascwo-base-animation`">
+                                                <div :class="`${fixing.icon === '' ? `ascwo-bg-[${configColors.backgroundColorHeader}]` : `` } ascwo-w-[15%] ascwo-h-20 ascwo-flex ascwo-full-center`">
+                                                    <img v-if="fixing.icon != ''" :src="fixing.icon" class="ascwo-w-auto ascwo-h-full" />
                                                 </div>
-                                                <div :class="`asowp-w-3/4 asowp-flex asowp-flex-col asowp-space-y-1`">
-                                                    <p class="asowp-text-sm asowp-font-medium first-letter:asowp-uppercase">{{ fixing.name }} <span v-if="fixingg.additionalPrice > 0" class="asowp-text-[11px]">({{ fixingg.additionalPrice }} {{props.currency}})</span> </p>
-                                                    <p class="asowp-text-xs">{{ fixing.description }}</p>
-                                                    <div class="asowp-w-full asowp-flex asowp-items-center asowp-justify-between">
-                                                        <span v-if="fixing.popImg.trim() != ''" @click="showFixingExample(true, fixing.popImg)" :class="`asowp-text-xs asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-underline asowp-cursor-pointer`">example</span>
-                                                        <span v-if="fixing.popImg.trim() == ''" class="asowp-invisible">example</span>
-                                                        <span :class="`${activeFixingMethode == fixing.type ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-transparent asowp-border-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-border-solid asowp-border-2`} asowp-flex asowp-w-fit asowp-h-fit asowp-rounded-full`">
-                                                            <svg fill="currentColor" class="asowp-w-6 asowp-h-6" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" stroke="currentColor">
+                                                <div :class="`ascwo-w-3/4 ascwo-flex ascwo-flex-col ascwo-space-y-1`">
+                                                    <p class="ascwo-text-sm ascwo-font-medium first-letter:ascwo-uppercase">{{ fixing.name }} <span v-if="fixingg.additionalPrice > 0" class="ascwo-text-[11px]">({{ fixingg.additionalPrice }} {{props.currency}})</span> </p>
+                                                    <p class="ascwo-text-xs">{{ fixing.description }}</p>
+                                                    <div class="ascwo-w-full ascwo-flex ascwo-items-center ascwo-justify-between">
+                                                        <span v-if="fixing.popImg.trim() != ''" @click="showFixingExample(true, fixing.popImg)" :class="`ascwo-text-xs ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-underline ascwo-cursor-pointer`">example</span>
+                                                        <span v-if="fixing.popImg.trim() == ''" class="ascwo-invisible">example</span>
+                                                        <span :class="`${activeFixingMethode == fixing.type ? `ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `ascwo-text-transparent ascwo-border-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-border-solid ascwo-border-2`} ascwo-flex ascwo-w-fit ascwo-h-fit ascwo-rounded-full`">
+                                                            <svg fill="currentColor" class="ascwo-w-6 ascwo-h-6" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" stroke="currentColor">
                                                                 <g id="SVGRepo_bgCarrier" stroke-width="0"/>
                                                                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
                                                                 <g id="SVGRepo_iconCarrier"> <g> <g> <path d="M256,0C114.837,0,0,114.843,0,256s114.837,256,256,256s256-114.843,256-256S397.163,0,256,0z M376.239,227.501 L257.348,346.391c-13.043,13.043-34.174,13.044-47.218,0l-68.804-68.804c-13.044-13.038-13.044-34.179,0-47.218 c13.044-13.044,34.174-13.044,47.218,0l45.195,45.19l95.282-95.278c13.044-13.044,34.174-13.044,47.218,0 C389.283,193.321,389.283,214.462,376.239,227.501z"/> </g> </g> </g>
@@ -708,34 +708,34 @@
                                 </div>
                             </div>
 
-                            <div v-show="showFixingEx" :class="`asowp-absolute asowp-top-0 asowp-right-0 asowp-w-[85%] lg:asowp-w-full asowp-h-[90%] asowp-overflow-auto asowp-scrollBar asowp-translate-y-[-50%] lg:asowp-translate-y-[0%] lg:asowp-translate-x-[101%] asowp-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.textColor}] asowp-p-2`">
+                            <div v-show="showFixingEx" :class="`ascwo-absolute ascwo-top-0 ascwo-right-0 ascwo-w-[85%] lg:ascwo-w-full ascwo-h-[90%] ascwo-overflow-auto ascwo-scrollBar ascwo-translate-y-[-50%] lg:ascwo-translate-y-[0%] lg:ascwo-translate-x-[101%] ascwo-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.textColor}] ascwo-p-2`">
                                 <div v-html="fixingExample"></div>
-                                <div class="asowp-absolute asowp-top-0 asowp-right-0 asowp-w-fit asowp-h-fit asowp-cursor-pointer">
-                                    <span @click="showFixingExample(false)" :class="`asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-p-1 asowp-base-animation`">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                                <div class="ascwo-absolute ascwo-top-0 ascwo-right-0 ascwo-w-fit ascwo-h-fit ascwo-cursor-pointer">
+                                    <span @click="showFixingExample(false)" :class="`ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] ascwo-p-1 ascwo-base-animation`">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                                         </svg>
                                     </span>
                                 </div>
                             </div>
         
-                            <div v-if="materialType == 'advance'" class="asowp-h-full asowp-p-4 asowp-overflow-auto asowp-scrollBar">
+                            <div v-if="materialType == 'advance'" class="ascwo-h-full ascwo-p-4 ascwo-overflow-auto ascwo-scrollBar">
                                 <div v-for="(fixingId) in fixinggs">
                                     <div v-for="(fixing, index) in allFixings">
-                                        <div v-if="fixingId == index" class="asowp-space-y-3">
-                                            <input type="radio" :id="fixing.name + index" name="asowp-fixings" class=" peer asowp-hidden" @change="selectFixingMethode(fixing.type, fixingg)">
-                                            <label :for="fixing.name + index" class="asowp-flex asowp-full-center asowp-space-x-2 asowp-cursor-pointer">
-                                                <div :class="`${fixing.icon === '' ? `asowp-bg-[${configColors.backgroundColorHeader}]` : `` } asowp-w-[15%] asowp-h-20`">
-                                                    <img v-if="fixing.icon != ''" :src="fixing.icon" class="asowp-w-auto asowp-h-full" />
+                                        <div v-if="fixingId == index" class="ascwo-space-y-3">
+                                            <input type="radio" :id="fixing.name + index" name="ascwo-fixings" class=" peer ascwo-hidden" @change="selectFixingMethode(fixing.type, fixingg)">
+                                            <label :for="fixing.name + index" class="ascwo-flex ascwo-full-center ascwo-space-x-2 ascwo-cursor-pointer">
+                                                <div :class="`${fixing.icon === '' ? `ascwo-bg-[${configColors.backgroundColorHeader}]` : `` } ascwo-w-[15%] ascwo-h-20`">
+                                                    <img v-if="fixing.icon != ''" :src="fixing.icon" class="ascwo-w-auto ascwo-h-full" />
                                                 </div>
-                                                <div :class="`asowp-w-3/4 asowp-flex asowp-flex-col asowp-space-y-1`">
-                                                    <p class="asowp-text-sm asowp-font-medium first-letter:asowp-uppercase">{{ fixing.name }}</p>
-                                                    <p class="asowp-text-xs">{{ fixing.description }}</p>
-                                                    <div class="asowp-w-full asowp-flex asowp-items-center asowp-justify-between">
-                                                        <span v-if="fixing.popImg != ''" class="asowp-text-xs asowp-text-red-500 asowp-underline asowp-cursor-pointer">example</span>
-                                                        <span v-if="fixing.popImg == ''" class="asowp-invisible">example</span>
-                                                        <span :class="`${activeFixingMethode == fixing.type ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-transparent asowp-border-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-border-solid asowp-border-2`} asowp-flex asowp-w-fit asowp-h-fit asowp-rounded-full`">
-                                                            <svg fill="currentColor" class="asowp-w-6 asowp-h-6" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" stroke="currentColor">
+                                                <div :class="`ascwo-w-3/4 ascwo-flex ascwo-flex-col ascwo-space-y-1`">
+                                                    <p class="ascwo-text-sm ascwo-font-medium first-letter:ascwo-uppercase">{{ fixing.name }}</p>
+                                                    <p class="ascwo-text-xs">{{ fixing.description }}</p>
+                                                    <div class="ascwo-w-full ascwo-flex ascwo-items-center ascwo-justify-between">
+                                                        <span v-if="fixing.popImg != ''" class="ascwo-text-xs ascwo-text-red-500 ascwo-underline ascwo-cursor-pointer">example</span>
+                                                        <span v-if="fixing.popImg == ''" class="ascwo-invisible">example</span>
+                                                        <span :class="`${activeFixingMethode == fixing.type ? `ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `ascwo-text-transparent ascwo-border-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-border-solid ascwo-border-2`} ascwo-flex ascwo-w-fit ascwo-h-fit ascwo-rounded-full`">
+                                                            <svg fill="currentColor" class="ascwo-w-6 ascwo-h-6" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" stroke="currentColor">
                                                                 <g id="SVGRepo_bgCarrier" stroke-width="0"/>
                                                                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
                                                                 <g id="SVGRepo_iconCarrier"> <g> <g> <path d="M256,0C114.837,0,0,114.843,0,256s114.837,256,256,256s256-114.843,256-256S397.163,0,256,0z M376.239,227.501 L257.348,346.391c-13.043,13.043-34.174,13.044-47.218,0l-68.804-68.804c-13.044-13.038-13.044-34.179,0-47.218 c13.044-13.044,34.174-13.044,47.218,0l45.195,45.19l95.282-95.278c13.044-13.044,34.174-13.044,47.218,0 C389.283,193.321,389.283,214.462,376.239,227.501z"/> </g> </g> </g>
@@ -748,38 +748,38 @@
                                     </div>
                                 </div>
                             </div>
-                            <span v-if="allowNextButton && lastActiveOption != 'fixing-methodes'" @click="nextOption('fixing-methodes')" :class="`asowp-absolute asowp-bottom-0 asowp-translate-y-[100%] asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
+                            <span v-if="allowNextButton && lastActiveOption != 'fixing-methodes'" @click="nextOption('fixing-methodes')" :class="`ascwo-absolute ascwo-bottom-0 ascwo-translate-y-[100%] ascwo-left-0 ascwo-w-full ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold ascwo-text-md ascwo-full-center ascwo-border ascwo-py-1 ascwo-base-animation ascwo-cursor-pointer`">
                                 Next
                             </span>
                         </div>
         
-                        <div v-show="step == 'color'" class="asowp-flex asowp-flex-col lg:asowp-space-y-3 asowp-w-full asowp-h-full" id="asowp-colors-section">
-                            <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{configVisualiserTexts.textColor}}</p>    
+                        <div v-show="step == 'color'" class="ascwo-flex ascwo-flex-col lg:ascwo-space-y-3 ascwo-w-full ascwo-h-full" id="ascwo-colors-section">
+                            <p :class="`ascwo-hidden lg:ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] ascwo-text-lg ascwo-font-semibold ascwo-p-2 ascwo-px-4`">{{configVisualiserTexts.textColor}}</p>    
         
-                            <div v-if="materialType === 'simple'" class="asowp-w-full asowp-h-full asowp-space-y-2 asowp-p-3 asowp-overflow-auto asowp-scrollBar">
-                                <div :class="`asowp-flex asowp-flex-wrap asowp-gap-2 asowp-p-1 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`">
-                                    <div v-for="(colorr, id) in colorrs.allColors" class="asowp-flex asowp-flex-col asowp-items-center asowp-justify-start asowp-space-y-2">
-                                        <div v-if="!colorr.pattern.active" @click="changeSignColor(id, colorr.name, colorr.pattern, colorr.textColor, colorr.additionalPrice)" :class="`${activeFace === 'front-face' && activeSignColor === colorr.name && activeSignColoriD == id || activeFace === 'back-face' && activeSignFace2Color === colorr.name && activeSignFace2ColoriD == id ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-14 asowp-h-14 asowp-bg-[${colorr.pattern.codeHex}] asowp-flex asowp-full-center asowp-font-bold asowp-text-lg asowp-text-[${colorr.textColor.codeHex}] asowp-rounded-full asowp-cursor-pointer asowp-overflow-hidden asowp-relative`"> 
-                                            <img v-if="colorr.prevImg !== ''" :src="colorr.prevImg" :class="`asowp-absolute asowp-top-0 asowp-left-0 asowp-w-full asowp-h-full`" />
-                                            <span v-if="colorr.textColor.active" class="asowp-z-10">C</span>
+                            <div v-if="materialType === 'simple'" class="ascwo-w-full ascwo-h-full ascwo-space-y-2 ascwo-p-3 ascwo-overflow-auto ascwo-scrollBar">
+                                <div :class="`ascwo-flex ascwo-flex-wrap ascwo-gap-2 ascwo-p-1 ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`">
+                                    <div v-for="(colorr, id) in colorrs.allColors" class="ascwo-flex ascwo-flex-col ascwo-items-center ascwo-justify-start ascwo-space-y-2">
+                                        <div v-if="!colorr.pattern.active" @click="changeSignColor(id, colorr.name, colorr.pattern, colorr.textColor, colorr.additionalPrice)" :class="`${activeFace === 'front-face' && activeSignColor === colorr.name && activeSignColoriD == id || activeFace === 'back-face' && activeSignFace2Color === colorr.name && activeSignFace2ColoriD == id ? `ascwo-ring-2 ascwo-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } ascwo-w-14 ascwo-h-14 ascwo-bg-[${colorr.pattern.codeHex}] ascwo-flex ascwo-full-center ascwo-font-bold ascwo-text-lg ascwo-text-[${colorr.textColor.codeHex}] ascwo-rounded-full ascwo-cursor-pointer ascwo-overflow-hidden ascwo-relative`"> 
+                                            <img v-if="colorr.prevImg !== ''" :src="colorr.prevImg" :class="`ascwo-absolute ascwo-top-0 ascwo-left-0 ascwo-w-full ascwo-h-full`" />
+                                            <span v-if="colorr.textColor.active" class="ascwo-z-10">C</span>
                                         </div>
-                                        <div v-if="colorr.pattern.active" @click="changeSignColor(id, colorr.name, colorr.pattern, colorr.textColor, colorr.additionalPrice)" :class="`${activeFace === 'front-face' && activeSignColor === colorr.name && activeSignColoriD == id || activeFace === 'back-face' && activeSignFace2Color === colorr.name && activeSignFace2ColoriD == id ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-relative asowp-w-14 asowp-h-14 asowp-flex asowp-full-center asowp-font-bold asowp-text-lg asowp-text-[${colorr.textColor.codeHex}] asowp-rounded-full asowp-cursor-pointer asowp-overflow-hidden asowp-relative`"> 
-                                            <img v-if="colorr.prevImg !== ''" :src="colorr.prevImg" :class="`asowp-absolute asowp-top-0 asowp-left-0 asowp-w-full asowp-h-full`"  />
-                                            <img v-if="colorr.prevImg === ''" :src="colorr.pattern.url" :class="`asowp-absolute asowp-top-0 asowp-left-0 asowp-w-full asowp-h-full`"  />
-                                            <span v-if="colorr.textColor.active" class="asowp-z-10">C</span>
+                                        <div v-if="colorr.pattern.active" @click="changeSignColor(id, colorr.name, colorr.pattern, colorr.textColor, colorr.additionalPrice)" :class="`${activeFace === 'front-face' && activeSignColor === colorr.name && activeSignColoriD == id || activeFace === 'back-face' && activeSignFace2Color === colorr.name && activeSignFace2ColoriD == id ? `ascwo-ring-2 ascwo-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } ascwo-relative ascwo-w-14 ascwo-h-14 ascwo-flex ascwo-full-center ascwo-font-bold ascwo-text-lg ascwo-text-[${colorr.textColor.codeHex}] ascwo-rounded-full ascwo-cursor-pointer ascwo-overflow-hidden ascwo-relative`"> 
+                                            <img v-if="colorr.prevImg !== ''" :src="colorr.prevImg" :class="`ascwo-absolute ascwo-top-0 ascwo-left-0 ascwo-w-full ascwo-h-full`"  />
+                                            <img v-if="colorr.prevImg === ''" :src="colorr.pattern.url" :class="`ascwo-absolute ascwo-top-0 ascwo-left-0 ascwo-w-full ascwo-h-full`"  />
+                                            <span v-if="colorr.textColor.active" class="ascwo-z-10">C</span>
                                         </div>
         
-                                        <p class="asowp-text-sm">{{colorr.name }}</p>
-                                        <p v-if="colorr.textColor.active" class="asowp-text-sm asowp-leading-4">{{colorr.textColor.name}}</p>
-                                        <p v-if="colorr.additionalPrice > 0" class="asowp-text-[11px] asowp-leading-normal">({{colorr.additionalPrice}} {{props.currency}})</p>
+                                        <p class="ascwo-text-sm">{{colorr.name }}</p>
+                                        <p v-if="colorr.textColor.active" class="ascwo-text-sm ascwo-leading-4">{{colorr.textColor.name}}</p>
+                                        <p v-if="colorr.additionalPrice > 0" class="ascwo-text-[11px] ascwo-leading-normal">({{colorr.additionalPrice}} {{props.currency}})</p>
                                     </div>
                                 </div>
-                                <div v-if="colorrs.customColors.active" :class="`asowp-flex asowp-flex-col asowp-space-y-2`">
-                                    <p class="asowp-font-medium">{{colorrs.customColors.label}}</p>
-                                    <div :class="`asowp-relative asowp-w-fit`">
-                                        <input id="asowp-setSignColor" type="color" v-model="simpleColor" class="asowp-inputColor-hide asowp-absolute asowp-top-[30%] asowp-left-[30%]" @input="changeSignColor( -1, colorrs.customColors.label, {active: false, codeHex: simpleColor, url: ''}, {active: false, codeHex: '', sameForBorder: false}, 0)"/>
-                                        <label for="asowp-setSignColor" :class="`${activeSignColor == colorrs.customColors.label ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-14 asowp-h-14 asowp-flex asowp-full-center asowp-rounded-full asowp-overflow-hidden`">
-                                            <svg v-if="colorrs.customColors.prevImg === ''" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="asowp-w-full asowp-h-full">
+                                <div v-if="colorrs.customColors.active" :class="`ascwo-flex ascwo-flex-col ascwo-space-y-2`">
+                                    <p class="ascwo-font-medium">{{colorrs.customColors.label}}</p>
+                                    <div :class="`ascwo-relative ascwo-w-fit`">
+                                        <input id="ascwo-setSignColor" type="color" v-model="simpleColor" class="ascwo-inputColor-hide ascwo-absolute ascwo-top-[30%] ascwo-left-[30%]" @input="changeSignColor( -1, colorrs.customColors.label, {active: false, codeHex: simpleColor, url: ''}, {active: false, codeHex: '', sameForBorder: false}, 0)"/>
+                                        <label for="ascwo-setSignColor" :class="`${activeSignColor == colorrs.customColors.label ? `ascwo-ring-2 ascwo-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } ascwo-w-14 ascwo-h-14 ascwo-flex ascwo-full-center ascwo-rounded-full ascwo-overflow-hidden`">
+                                            <svg v-if="colorrs.customColors.prevImg === ''" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="ascwo-w-full ascwo-h-full">
                                                 <g fill="none" fill-rule="evenodd">
                                                     <path d="M22.015.061H.95a.866.866 0 0 0-.614.256l21.68 21.68V.061z" fill="#CE1128"></path>
                                                     <path d="M.335.317A.867.867 0 0 0 .08.93v21.066h21.935L.335.317z" fill="#ED2E8A"></path>
@@ -791,83 +791,83 @@
                                                     <path d="M.335 43.678a.867.867 0 0 0 .614.255h21.066V21.997L.335 43.677z" fill="#126EB2"></path>
                                                 </g>
                                             </svg>
-                                            <img v-if="colorrs.customColors.prevImg !== ''" class="asowp-w-full asowp-h-full"/>
+                                            <img v-if="colorrs.customColors.prevImg !== ''" class="ascwo-w-full ascwo-h-full"/>
                                         </label>
                                     </div>
                                 </div>
                             </div>
         
-                            <div v-if="materialType === 'advance' && advancedComponent.options.length > 0" class="asowp-w-full asowp-h-full asowp-p-3 asowp-overflow-auto asowp-scrollBar">
-                                <div class="asowp-flex asowp-flex-wrap asowp-gap-2 asowp-p-1">
-                                    <div v-for="(colorr, id) in colorrs" class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-full-center">
-                                        <div class="asowp-w-16 asowp-h-16 asowp-rounded-full asowp-overflow-hidden">
-                                            <img :src="colorr.image" class="asowp-w-full asowp-h-full" />
+                            <div v-if="materialType === 'advance' && advancedComponent.options.length > 0" class="ascwo-w-full ascwo-h-full ascwo-p-3 ascwo-overflow-auto ascwo-scrollBar">
+                                <div class="ascwo-flex ascwo-flex-wrap ascwo-gap-2 ascwo-p-1">
+                                    <div v-for="(colorr, id) in colorrs" class="ascwo-flex ascwo-flex-col ascwo-space-y-2 ascwo-full-center">
+                                        <div class="ascwo-w-16 ascwo-h-16 ascwo-rounded-full ascwo-overflow-hidden">
+                                            <img :src="colorr.image" class="ascwo-w-full ascwo-h-full" />
                                         </div>
-                                        <p class="asowp-text-sm">{{colorr.color.name}}</p>
+                                        <p class="ascwo-text-sm">{{colorr.color.name}}</p>
                                     </div>
                                 </div>
                             </div>
-                            <span v-if="allowNextButton && lastActiveOption != 'colors'" @click="nextOption('colors')" :class="`asowp-absolute asowp-bottom-0 asowp-translate-y-[100%] asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
+                            <span v-if="allowNextButton && lastActiveOption != 'colors'" @click="nextOption('colors')" :class="`ascwo-absolute ascwo-bottom-0 ascwo-translate-y-[100%] ascwo-left-0 ascwo-w-full ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold ascwo-text-md ascwo-full-center ascwo-border ascwo-py-1 ascwo-base-animation ascwo-cursor-pointer`">
                                 Next
                             </span>
                         </div>
         
-                        <div v-show="step == 'border'" class="asowp-flex asowp-flex-col lg:asowp-space-y-2 asowp-w-full asowp-h-full" id="asowp-borders-section">
-                            <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{configVisualiserTexts.textBorder}}</p>    
+                        <div v-show="step == 'border'" class="ascwo-flex ascwo-flex-col lg:ascwo-space-y-2 ascwo-w-full ascwo-h-full" id="ascwo-borders-section">
+                            <p :class="`ascwo-hidden lg:ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] ascwo-text-lg ascwo-font-semibold ascwo-p-2 ascwo-px-4`">{{configVisualiserTexts.textBorder}}</p>    
         
-                            <div class="asowp-borders-div asowp-h-full asowp-p-2 asowp-overflow-auto asowp-scrollBar">
-                                <div class="asowp-flex asowp-flex-wrap asowp-gap-2 asowp-p-1">
+                            <div class="ascwo-borders-div ascwo-h-full ascwo-p-2 ascwo-overflow-auto ascwo-scrollBar">
+                                <div class="ascwo-flex ascwo-flex-wrap ascwo-gap-2 ascwo-p-1">
                                     <div v-if="activeFace === 'front-face'" v-for="(borderr, id) in borderrs.allBorders">
-                                        <div v-for="(border, index) in allBorders" :key="border.name" class="asowp-w-full asowp-flex">
+                                        <div v-for="(border, index) in allBorders" :key="border.name" class="ascwo-w-full ascwo-flex">
                                             <div v-if="borderr.manageBorderId == index && (!borderr.excludeShapes.includes(currentShapeId) && !borderr.excludeSizes.includes(currentSizeId))">
-                                                <input type="radio" :id="'border' + border.name + index + 'face1'" name="asowp-borders-face1" class="peer asowp-hidden" @input="selectBorder(border.value, borderr.settings, borderr.additionalPrice, borderr.excludeShapes, borderr.excludeSizes, id)">
-                                                <label :for="'border' + border.name + index + 'face1'" :class="`${activeFace === 'front-face' && activeFace1Border === border.value ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
-                                                    asowp-w-full asowp-h-full asowp-flex asowp-flex-col asowp-space-y-1 asowp-full-center asowp-font-semibold asowp-text-sm hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-rounded-md asowp-p-2 asowp-text-center asowp-cursor-pointer asowp-transition-all asowp-ease-in-out asowp-duration-500`"
+                                                <input type="radio" :id="'border' + border.name + index + 'face1'" name="ascwo-borders-face1" class="peer ascwo-hidden" @input="selectBorder(border.value, borderr.settings, borderr.additionalPrice, borderr.excludeShapes, borderr.excludeSizes, id)">
+                                                <label :for="'border' + border.name + index + 'face1'" :class="`${activeFace === 'front-face' && activeFace1Border === border.value ? `ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
+                                                    ascwo-w-full ascwo-h-full ascwo-flex ascwo-flex-col ascwo-space-y-1 ascwo-full-center ascwo-font-semibold ascwo-text-sm hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] ascwo-rounded-md ascwo-p-2 ascwo-text-center ascwo-cursor-pointer ascwo-transition-all ascwo-ease-in-out ascwo-duration-500`"
                                                 >
-                                                    <div :class="`${border.icon != '' ? `` : `asowp-bg-[${configColors.backgroundColorHeader}]`} asowp-w-14 asowp-h-14`">
-                                                        <img v-if="border.icon != ''" :src="border.icon" class="asowp-w-full asowp-h-full" />
+                                                    <div :class="`${border.icon != '' ? `` : `ascwo-bg-[${configColors.backgroundColorHeader}]`} ascwo-w-14 ascwo-h-14`">
+                                                        <img v-if="border.icon != ''" :src="border.icon" class="ascwo-w-full ascwo-h-full" />
                                                     </div>
                                                     <p>{{border.name}}</p>
-                                                    <p v-if="borderr.additionalPrice > 0" class="asowp-text-[11px] asowp-leading-normal">({{borderr.additionalPrice}} {{props.currency}})</p>
-                                                    <p v-if="!borderr.additionalPrice > 0" class="asowp-text-[11px] asowp-leading-normal asowp-invisible">none</p>
+                                                    <p v-if="borderr.additionalPrice > 0" class="ascwo-text-[11px] ascwo-leading-normal">({{borderr.additionalPrice}} {{props.currency}})</p>
+                                                    <p v-if="!borderr.additionalPrice > 0" class="ascwo-text-[11px] ascwo-leading-normal ascwo-invisible">none</p>
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div v-if="activeFace === 'back-face'" v-for="(borderr, id) in borderrs.allBorders">
-                                        <div v-for="(border, index) in allBorders" :key="border.name" class="asowp-w-full asowp-flex">
+                                        <div v-for="(border, index) in allBorders" :key="border.name" class="ascwo-w-full ascwo-flex">
                                             <div v-if="borderr.manageBorderId == index && (!borderr.excludeShapes.includes(currentShapeId) && !borderr.excludeSizes.includes(currentSizeId))">
-                                                <input type="radio" :id="'border' + border.name + index + 'face2'" name="asowp-borders-face2" class="peer asowp-hidden" @input="selectBorder(border.value, borderr.settings, borderr.additionalPrice, borderr.excludeShapes, borderr.excludeSizes, id)">
-                                                <label :for="'border' + border.name + index + 'face2'" :class="`${activeFace === 'back-face' && activeFace2Border === border.value ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
-                                                    asowp-w-full asowp-h-full asowp-flex asowp-flex-col asowp-space-y-1 asowp-full-center asowp-font-semibold asowp-text-sm hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-rounded-md asowp-p-2 asowp-text-center asowp-cursor-pointer asowp-transition-all asowp-ease-in-out asowp-duration-500`"
+                                                <input type="radio" :id="'border' + border.name + index + 'face2'" name="ascwo-borders-face2" class="peer ascwo-hidden" @input="selectBorder(border.value, borderr.settings, borderr.additionalPrice, borderr.excludeShapes, borderr.excludeSizes, id)">
+                                                <label :for="'border' + border.name + index + 'face2'" :class="`${activeFace === 'back-face' && activeFace2Border === border.value ? `ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
+                                                    ascwo-w-full ascwo-h-full ascwo-flex ascwo-flex-col ascwo-space-y-1 ascwo-full-center ascwo-font-semibold ascwo-text-sm hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] ascwo-rounded-md ascwo-p-2 ascwo-text-center ascwo-cursor-pointer ascwo-transition-all ascwo-ease-in-out ascwo-duration-500`"
                                                 >
-                                                    <div :class="`${border.icon != '' ? `` : `asowp-bg-[${configColors.backgroundColorHeader}]`} asowp-w-14 asowp-h-14`">
-                                                        <img v-if="border.icon != ''" :src="border.icon" class="asowp-w-full asowp-h-full" />
+                                                    <div :class="`${border.icon != '' ? `` : `ascwo-bg-[${configColors.backgroundColorHeader}]`} ascwo-w-14 ascwo-h-14`">
+                                                        <img v-if="border.icon != ''" :src="border.icon" class="ascwo-w-full ascwo-h-full" />
                                                     </div>
                                                     <p>{{border.name}}</p>
-                                                    <p v-if="borderr.additionalPrice > 0" class="asowp-text-[11px] asowp-leading-normal">({{borderr.additionalPrice}} {{props.currency}})</p>
-                                                    <p v-if="!borderr.additionalPrice > 0" class="asowp-text-[11px] asowp-leading-normal asowp-invisible">none</p>
+                                                    <p v-if="borderr.additionalPrice > 0" class="ascwo-text-[11px] ascwo-leading-normal">({{borderr.additionalPrice}} {{props.currency}})</p>
+                                                    <p v-if="!borderr.additionalPrice > 0" class="ascwo-text-[11px] ascwo-leading-normal ascwo-invisible">none</p>
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
         
-                                <div v-if="(colorForBorder1 && activeFace === 'front-face' && borderColors1.length > 0) || (colorForBorder2 && activeFace === 'back-face' && borderColors2.length > 0)" class="asowp-p-2">
-                                    <p class="asowp-font-medium">Colors</p>
+                                <div v-if="(colorForBorder1 && activeFace === 'front-face' && borderColors1.length > 0) || (colorForBorder2 && activeFace === 'back-face' && borderColors2.length > 0)" class="ascwo-p-2">
+                                    <p class="ascwo-font-medium">Colors</p>
                                     <div v-if="activeFace === 'front-face'">
-                                        <div class="asowp-flex asowp-flex-wrap asowp-gap-2 asowp-p-1">
-                                            <div v-for="(color, index) in borderColors1" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-2 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`">
-                                                <div @click="changeBorderColor(color.codeHex, color.additionalPrice, color.name)" :class="`${activeFace1BorderColor === color.codeHex ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : ``} asowp-w-12 asowp-h-12 asowp-bg-[${color.codeHex}] asowp-flex asowp-full-center asowp-font-bold asowp-text-lg asowp-rounded-full asowp-cursor-pointer`"></div>           
-                                                <p class="asowp-text-xs">{{color.name}}</p>
-                                                <p v-if="color.additionalPrice > 0" class="asowp-text-[10px] asowp-leading-normal">({{color.additionalPrice}} {{props.currency}})</p>
-                                                <p v-if="!color.additionalPrice > 0" class="asowp-text-[10px] asowp-leading-normal asowp-invisible">none</p>
+                                        <div class="ascwo-flex ascwo-flex-wrap ascwo-gap-2 ascwo-p-1">
+                                            <div v-for="(color, index) in borderColors1" :class="`ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-2 ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`">
+                                                <div @click="changeBorderColor(color.codeHex, color.additionalPrice, color.name)" :class="`${activeFace1BorderColor === color.codeHex ? `ascwo-ring-2 ascwo-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : ``} ascwo-w-12 ascwo-h-12 ascwo-bg-[${color.codeHex}] ascwo-flex ascwo-full-center ascwo-font-bold ascwo-text-lg ascwo-rounded-full ascwo-cursor-pointer`"></div>           
+                                                <p class="ascwo-text-xs">{{color.name}}</p>
+                                                <p v-if="color.additionalPrice > 0" class="ascwo-text-[10px] ascwo-leading-normal">({{color.additionalPrice}} {{props.currency}})</p>
+                                                <p v-if="!color.additionalPrice > 0" class="ascwo-text-[10px] ascwo-leading-normal ascwo-invisible">none</p>
                                             </div>
-                                            <div :class="`asowp-relative`">
-                                                <input id="asowp-setBorderColor1" type="color" v-model="borderCustomColor1" class="asowp-inputColor-hide asowp-absolute asowp-top-[30%] asowp-left-[30%]" @input="changeBorderColor($event.target.value , 0)" />
-                                                <label for="asowp-setBorderColor1" v-if="customBorderColor1" :class="`${activeSignColor == 'custom' ? `asowp-ring-2 asowp-ring-[${configColors.backgroundColorHeader}]` : `` } asowp-w-12 asowp-h-12 asowp-flex asowp-full-center asowp-rounded-full asowp-overflow-hidden`">
-                                                    <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="asowp-w-full asowp-h-full">
+                                            <div :class="`ascwo-relative`">
+                                                <input id="ascwo-setBorderColor1" type="color" v-model="borderCustomColor1" class="ascwo-inputColor-hide ascwo-absolute ascwo-top-[30%] ascwo-left-[30%]" @input="changeBorderColor($event.target.value , 0)" />
+                                                <label for="ascwo-setBorderColor1" v-if="customBorderColor1" :class="`${activeSignColor == 'custom' ? `ascwo-ring-2 ascwo-ring-[${configColors.backgroundColorHeader}]` : `` } ascwo-w-12 ascwo-h-12 ascwo-flex ascwo-full-center ascwo-rounded-full ascwo-overflow-hidden`">
+                                                    <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="ascwo-w-full ascwo-h-full">
                                                         <g fill="none" fill-rule="evenodd">
                                                             <path d="M22.015.061H.95a.866.866 0 0 0-.614.256l21.68 21.68V.061z" fill="#CE1128"></path>
                                                             <path d="M.335.317A.867.867 0 0 0 .08.93v21.066h21.935L.335.317z" fill="#ED2E8A"></path>
@@ -885,17 +885,17 @@
                                     </div>
         
                                     <div v-if="activeFace === 'back-face'">
-                                        <div class="asowp-flex asowp-flex-wrap asowp-gap-2 asowp-p-1">
-                                            <div v-for="(color, index) in borderColors2"  class="asowp-flex asowp-flex-col asowp-full-center asowp-space-y-2">
-                                                <div @click="changeBorderColor(color.codeHex, color.additionalPrice, color.name)" :class="`${activeFace2BorderColor === color.codeHex ? `asowp-ring-2 asowp-ring-[${configColors.backgroundColorHeader}]` : ``} asowp-w-12 asowp-h-12 asowp-bg-[${color.codeHex}] asowp-flex asowp-full-center asowp-font-bold asowp-text-lg asowp-rounded-full asowp-cursor-pointer`"></div>
-                                                <p class="asowp-text-xs">{{color.name}}</p>    
-                                                <p v-if="color.additionalPrice > 0" class="asowp-text-[10px] asowp-leading-normal">({{color.additionalPrice}} {{props.currency}})</p>
-                                                <p v-if="!color.additionalPrice > 0" class="asowp-text-[10px] asowp-leading-normal asowp-invisible">none</p>
+                                        <div class="ascwo-flex ascwo-flex-wrap ascwo-gap-2 ascwo-p-1">
+                                            <div v-for="(color, index) in borderColors2"  class="ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-2">
+                                                <div @click="changeBorderColor(color.codeHex, color.additionalPrice, color.name)" :class="`${activeFace2BorderColor === color.codeHex ? `ascwo-ring-2 ascwo-ring-[${configColors.backgroundColorHeader}]` : ``} ascwo-w-12 ascwo-h-12 ascwo-bg-[${color.codeHex}] ascwo-flex ascwo-full-center ascwo-font-bold ascwo-text-lg ascwo-rounded-full ascwo-cursor-pointer`"></div>
+                                                <p class="ascwo-text-xs">{{color.name}}</p>    
+                                                <p v-if="color.additionalPrice > 0" class="ascwo-text-[10px] ascwo-leading-normal">({{color.additionalPrice}} {{props.currency}})</p>
+                                                <p v-if="!color.additionalPrice > 0" class="ascwo-text-[10px] ascwo-leading-normal ascwo-invisible">none</p>
                                             </div>
-                                            <div :class="`asowp-relative`">
-                                                <input id="asowp-setBorderColor2" type="color" v-model="borderCustomColor2" class="asowp-inputColor-hide asowp-absolute asowp-top-[30%] asowp-left-[30%]" @input="changeBorderColor($event.target.value , 0)" />
-                                                <label for="asowp-setBorderColor2" v-if="customBorderColor2" :class="`${activeSignColor == 'custom' ? `asowp-ring-2 asowp-ring-[${configColors.backgroundColorHeader}]` : `` } asowp-w-12 asowp-h-12 asowp-flex asowp-full-center asowp-rounded-full asowp-overflow-hidden`">
-                                                    <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="asowp-w-full asowp-h-full">
+                                            <div :class="`ascwo-relative`">
+                                                <input id="ascwo-setBorderColor2" type="color" v-model="borderCustomColor2" class="ascwo-inputColor-hide ascwo-absolute ascwo-top-[30%] ascwo-left-[30%]" @input="changeBorderColor($event.target.value , 0)" />
+                                                <label for="ascwo-setBorderColor2" v-if="customBorderColor2" :class="`${activeSignColor == 'custom' ? `ascwo-ring-2 ascwo-ring-[${configColors.backgroundColorHeader}]` : `` } ascwo-w-12 ascwo-h-12 ascwo-flex ascwo-full-center ascwo-rounded-full ascwo-overflow-hidden`">
+                                                    <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="ascwo-w-full ascwo-h-full">
                                                         <g fill="none" fill-rule="evenodd">
                                                             <path d="M22.015.061H.95a.866.866 0 0 0-.614.256l21.68 21.68V.061z" fill="#CE1128"></path>
                                                             <path d="M.335.317A.867.867 0 0 0 .08.93v21.066h21.935L.335.317z" fill="#ED2E8A"></path>
@@ -914,68 +914,68 @@
                                     </div>
                                 </div>
                             </div>
-                            <span v-if="allowNextButton && lastActiveOption != 'borders'" @click="nextOption('borders')" :class="`asowp-absolute asowp-bottom-0 asowp-translate-y-[100%] asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
+                            <span v-if="allowNextButton && lastActiveOption != 'borders'" @click="nextOption('borders')" :class="`ascwo-absolute ascwo-bottom-0 ascwo-translate-y-[100%] ascwo-left-0 ascwo-w-full ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold ascwo-text-md ascwo-full-center ascwo-border ascwo-py-1 ascwo-base-animation ascwo-cursor-pointer`">
                                 Next
                             </span>
                         </div>
         
-                        <div v-show="step == 'text'" class="asowp-flex asowp-flex-col lg:asowp-space-y-3 asowp-w-full asowp-h-full" id="asowp-texts-section">
-                            <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{configVisualiserTexts.textOptionText}}</p>    
+                        <div v-show="step == 'text'" class="ascwo-flex ascwo-flex-col lg:ascwo-space-y-3 ascwo-w-full ascwo-h-full" id="ascwo-texts-section">
+                            <p :class="`ascwo-hidden lg:ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] ascwo-text-lg ascwo-font-semibold ascwo-p-2 ascwo-px-4`">{{configVisualiserTexts.textOptionText}}</p>    
         
-                            <div :class="`asowp-bg-[${configColors.backgroundColorHeader}]/10 asowp-flex asowp-flex-col asowp-space-y-3 asowp-full-center asowp-p-4 asowp-m-1`">
-                                <span v-show="selectText" @click="changeText" :class="`asowp-w-3/4 asowp-flex asowp-full-center asowp-space-x-3 asowp-text-[${configColors.backgroundButton}] asowp-border asowp-border-solid asowp-border-[${configColors.backgroundButton}] asowp-text-md asowp-p-2 asowp-px-4 asowp-rounded-full asowp-cursor-pointer`">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="asowp-w-5 asowp-h-6">
+                            <div :class="`ascwo-bg-[${configColors.backgroundColorHeader}]/10 ascwo-flex ascwo-flex-col ascwo-space-y-3 ascwo-full-center ascwo-p-4 ascwo-m-1`">
+                                <span v-show="selectText" @click="changeText" :class="`ascwo-w-3/4 ascwo-flex ascwo-full-center ascwo-space-x-3 ascwo-text-[${configColors.backgroundButton}] ascwo-border ascwo-border-solid ascwo-border-[${configColors.backgroundButton}] ascwo-text-md ascwo-p-2 ascwo-px-4 ascwo-rounded-full ascwo-cursor-pointer`">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="ascwo-w-5 ascwo-h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                                     </svg>
-                                    <p class="asowp-text-center asowp-px-2">Change text</p>
+                                    <p class="ascwo-text-center ascwo-px-2">Change text</p>
                                 </span>
 
-                                <span v-show="!selectText" @click="addTextToSign()" :class="`asowp-w-3/4 asowp-flex asowp-full-center asowp-space-x-3 asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-border asowp-text-white asowp-text-md asowp-p-2 asowp-px-4 asowp-rounded-full asowp-cursor-pointer asowp-base-animation`">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="asowp-w-5 asowp-h-5">
+                                <span v-show="!selectText" @click="addTextToSign()" :class="`ascwo-w-3/4 ascwo-flex ascwo-full-center ascwo-space-x-3 ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] ascwo-border ascwo-text-white ascwo-text-md ascwo-p-2 ascwo-px-4 ascwo-rounded-full ascwo-cursor-pointer ascwo-base-animation`">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="ascwo-w-5 ascwo-h-5">
                                         <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
                                     </svg>
-                                    <p class="asowp-text-center">Add new text</p>
+                                    <p class="ascwo-text-center">Add new text</p>
                                 </span>
                             </div>
 
-                            <div class="asowp-h-full asowp-overflow-auto asowp-scrollBar asowp-space-y-2 asowp-p-3">
+                            <div class="ascwo-h-full ascwo-overflow-auto ascwo-scrollBar ascwo-space-y-2 ascwo-p-3">
                                         
                                 <div v-show="!selectText">
-                                    <p class="asowp-font-medium" v-show="addedTexts.length > 0">Text added</p>
-                                    <div class="asowp-p-2 asowp-space-y-2">
+                                    <p class="ascwo-font-medium" v-show="addedTexts.length > 0">Text added</p>
+                                    <div class="ascwo-p-2 ascwo-space-y-2">
                                         <div v-for="(textObject, index) in addedTexts">
-                                            <div :class="`${activeFace == textObject.canvasName ? `asowp-cursor-pointer` : `asowp-cursor-not-allowed`} asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-border asowp-border-solid asowp-border-[${configColors.optionsSideBar.options.modals.option.textColor}]/20 asowp-p-2 asowp-base-animation asowp-rounded-sm`" @click="getTextObject(textObject, true)">
-                                                <p class="asowp-text-sm">{{configVisualiserTexts.textOptionText && configVisualiserTexts.textOptionText.trim() != '' ? configVisualiserTexts.textOptionText : 'Text'}} {{ index }}</p>
-                                                <p class="asowp-text-xs">{{textObject.text}}</p>
+                                            <div :class="`${activeFace == textObject.canvasName ? `ascwo-cursor-pointer` : `ascwo-cursor-not-allowed`} ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] ascwo-border ascwo-border-solid ascwo-border-[${configColors.optionsSideBar.options.modals.option.textColor}]/20 ascwo-p-2 ascwo-base-animation ascwo-rounded-sm`" @click="getTextObject(textObject, true)">
+                                                <p class="ascwo-text-sm">{{configVisualiserTexts.textOptionText && configVisualiserTexts.textOptionText.trim() != '' ? configVisualiserTexts.textOptionText : 'Text'}} {{ index }}</p>
+                                                <p class="ascwo-text-xs">{{textObject.text}}</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
         
-                                <div v-show="selectText" class="asowp-space-1">
-                                    <textarea name="" id="asowp-text-editor" :disabled="route.name !== 'template-maker' && selectedText.object.editable === false" class="asowp-h-24 asowp-w-full asowp-border asowp-border-zinc-600 asowp-p-1 asowp-rounded-sm" v-model="selectedText.value" @input="changeTextValue" style="border-radius: 6px"></textarea>
+                                <div v-show="selectText" class="ascwo-space-1">
+                                    <textarea name="" id="ascwo-text-editor" :disabled="route.name !== 'template-maker' && selectedText.object.editable === false" class="ascwo-h-24 ascwo-w-full ascwo-border ascwo-border-zinc-600 ascwo-p-1 ascwo-rounded-sm" v-model="selectedText.value" @input="changeTextValue" style="border-radius: 6px"></textarea>
         
-                                    <div v-show="allFonts.length > 0" class="asowp-space-y-1">
-                                        <p class="asowp-font-medium">Font</p>
-                                        <div @click="dropFontToggle()" id="asowp-fontSelected-dropdown" :class="`asowp-cursor-pointer asowp-items-center asowp-space-x-3 asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}]  asowp-px-2 asowp-border border-gray-400 asowp-rounded-md asowp-flex asowp-justify-between asowp-text-base asowp-base-animation`">
-                                            <div :class="`asowp-w-fit asowp-flex asowp-items-center asowp-justify-center asowp-font-[${fontFamSelected.replaceAll(/\s+/g, '-')}] asowp-p-2`">
-                                                <p v-show="fontFamSelected != ''" :class="`lg:asowp-text-sm `" >{{ fontFamSelected }}</p>
-                                                <p v-show="fontFamSelected == ''" class="lg:asowp-text-sm xl:asowp-text-base" >Font</p>
+                                    <div v-show="allFonts.length > 0" class="ascwo-space-y-1">
+                                        <p class="ascwo-font-medium">Font</p>
+                                        <div @click="dropFontToggle()" id="ascwo-fontSelected-dropdown" :class="`ascwo-cursor-pointer ascwo-items-center ascwo-space-x-3 ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}]  ascwo-px-2 ascwo-border border-gray-400 ascwo-rounded-md ascwo-flex ascwo-justify-between ascwo-text-base ascwo-base-animation`">
+                                            <div :class="`ascwo-w-fit ascwo-flex ascwo-items-center ascwo-justify-center ascwo-font-[${fontFamSelected.replaceAll(/\s+/g, '-')}] ascwo-p-2`">
+                                                <p v-show="fontFamSelected != ''" :class="`lg:ascwo-text-sm `" >{{ fontFamSelected }}</p>
+                                                <p v-show="fontFamSelected == ''" class="lg:ascwo-text-sm xl:ascwo-text-base" >Font</p>
                                             </div>
-                                            <div class="asowp-flex asowp-items-center asowp-justify-center">
-                                                <svg v-show="!showFont" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6 lg:w-5 lg:asowp-h-5">
+                                            <div class="ascwo-flex ascwo-items-center ascwo-justify-center">
+                                                <svg v-show="!showFont" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-6 ascwo-h-6 lg:w-5 lg:ascwo-h-5">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                                                 </svg>
-                                                <svg v-show="showFont" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6 lg:w-5 lg:asowp-h-5">
+                                                <svg v-show="showFont" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-6 ascwo-h-6 lg:w-5 lg:ascwo-h-5">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
                                                 </svg>                                  
                                             </div>
                                         </div>
-                                        <div v-show="showFont" class="asowp-flex asowp-flex-wrap asowp-gap-2 asowp-p-1">
-                                            <div class="asowp-flex asowp-items-center asowp-justify-center asowp-w-fit asowp-h-10" v-for="(font, index) in allFonts">
-                                                <input type="radio" :id="font.label + index + 1" name="asowp-fonts" class=" peer asowp-hidden " @click="changeTextFontFam((font.label.replaceAll(/\s+/g, '-')), font.url, index)">
-                                                <label :for="font.label + index + 1" :class="`${fontFamSelected == font.label ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
-                                                    asowp-font-[${font.label.replaceAll(/\s+/g, '-')}] asowp-w-full asowp-border-solid asowp-border asowp-justify-center asowp-font-semibold asowp-text-sm hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] hover:asowp-border-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-rounded-md asowp-p-2 asowp-text-center asowp-cursor-pointer asowp-transition-all asowp-ease-in-out asowp-duration-500`"
+                                        <div v-show="showFont" class="ascwo-flex ascwo-flex-wrap ascwo-gap-2 ascwo-p-1">
+                                            <div class="ascwo-flex ascwo-items-center ascwo-justify-center ascwo-w-fit ascwo-h-10" v-for="(font, index) in allFonts">
+                                                <input type="radio" :id="font.label + index + 1" name="ascwo-fonts" class=" peer ascwo-hidden " @click="changeTextFontFam((font.label.replaceAll(/\s+/g, '-')), font.url, index)">
+                                                <label :for="font.label + index + 1" :class="`${fontFamSelected == font.label ? `ascwo-ring-2 ascwo-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
+                                                    ascwo-font-[${font.label.replaceAll(/\s+/g, '-')}] ascwo-w-full ascwo-border-solid ascwo-border ascwo-justify-center ascwo-font-semibold ascwo-text-sm hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] hover:ascwo-border-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-rounded-md ascwo-p-2 ascwo-text-center ascwo-cursor-pointer ascwo-transition-all ascwo-ease-in-out ascwo-duration-500`"
                                                     >
                                                     {{font.label}}
                                                 </label>
@@ -983,41 +983,41 @@
                                         </div>
                                     </div>
         
-                                    <div class="asowp-w-full asowp-flex asowp-justify-between">
-                                        <div v-if="configTextSettings.enableTextAlignment" :class="`${!configTextFontSettings.active ? `asowp-w-full` : `asowp-w-[45%]`} asowp-space-y-2 asowp-flex asowp-flex-col`">
-                                            <p class="asowp-font-medium">Text alignment</p>
-                                            <div class="asowp-flex asowp-flex-1 asowp-w-full asowp-rounded-md asowp-overflow-hidden">
-                                                <span @click="changeTextAlign('left')" :class="`${selectedText.align === 'left' ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-w-1/3 asowp-flex asowp-full-center asowp-p-1 asowp-border asowp-base-animation asowp-cursor-pointer`">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+                                    <div class="ascwo-w-full ascwo-flex ascwo-justify-between">
+                                        <div v-if="configTextSettings.enableTextAlignment" :class="`${!configTextFontSettings.active ? `ascwo-w-full` : `ascwo-w-[45%]`} ascwo-space-y-2 ascwo-flex ascwo-flex-col`">
+                                            <p class="ascwo-font-medium">Text alignment</p>
+                                            <div class="ascwo-flex ascwo-flex-1 ascwo-w-full ascwo-rounded-md ascwo-overflow-hidden">
+                                                <span @click="changeTextAlign('left')" :class="`${selectedText.align === 'left' ? `ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'ascwo-bg-transparent'} hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] ascwo-w-1/3 ascwo-flex ascwo-full-center ascwo-p-1 ascwo-border ascwo-base-animation ascwo-cursor-pointer`">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-6 ascwo-h-6">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
                                                     </svg>
                                                 </span>
-                                                <span @click="changeTextAlign('center')" :class="`${selectedText.align === 'center' ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-w-1/3 asowp-flex asowp-full-center asowp-p-1 asowp-border asowp-base-animation asowp-cursor-pointer`">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+                                                <span @click="changeTextAlign('center')" :class="`${selectedText.align === 'center' ? `ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'ascwo-bg-transparent'} hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] ascwo-w-1/3 ascwo-flex ascwo-full-center ascwo-p-1 ascwo-border ascwo-base-animation ascwo-cursor-pointer`">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-6 ascwo-h-6">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                                                     </svg>
                                                 </span>
-                                                <span @click="changeTextAlign('right')" :class="`${selectedText.align === 'right' ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-w-1/3 asowp-flex asowp-full-center asowp-p-1 asowp-border asowp-base-animation asowp-cursor-pointer`">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+                                                <span @click="changeTextAlign('right')" :class="`${selectedText.align === 'right' ? `ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'ascwo-bg-transparent'} hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] ascwo-w-1/3 ascwo-flex ascwo-full-center ascwo-p-1 ascwo-border ascwo-base-animation ascwo-cursor-pointer`">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-6 ascwo-h-6">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25" />
                                                     </svg>
                                                 </span>
                                             </div>
                                         </div>
                                         
-                                        <div v-show="configTextFontSettings.active" :class="`${!configTextSettings.enableTextAlignment ? `asowp-w-full` : `asowp-w-[45%]`} asowp-space-y-2 asowp-flex asowp-flex-col`">
-                                            <p class="asowp-font-medium">{{configVisualiserTexts.textSize && configVisualiserTexts.textSize.trim() !== '' ? configVisualiserTexts.textSize : 'Size'}}</p>
-                                            <div class="asowp-flex asowp-flex-1 asowp-w-full">
-                                                <span @click="changeTextSizeValue('down')" :class="`${route.name !== 'template-maker' && selectedText.object.lockScale ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'} asowp-w-1/3 asowp-h-full asowp-flex asowp-full-center asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-rounded-s-md asowp-base-animation`">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                                        <div v-show="configTextFontSettings.active" :class="`${!configTextSettings.enableTextAlignment ? `ascwo-w-full` : `ascwo-w-[45%]`} ascwo-space-y-2 ascwo-flex ascwo-flex-col`">
+                                            <p class="ascwo-font-medium">{{configVisualiserTexts.textSize && configVisualiserTexts.textSize.trim() !== '' ? configVisualiserTexts.textSize : 'Size'}}</p>
+                                            <div class="ascwo-flex ascwo-flex-1 ascwo-w-full">
+                                                <span @click="changeTextSizeValue('down')" :class="`${route.name !== 'template-maker' && selectedText.object.lockScale ? 'ascwo-cursor-not-allowed' : 'ascwo-cursor-pointer'} ascwo-w-1/3 ascwo-h-full ascwo-flex ascwo-full-center ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] ascwo-rounded-s-md ascwo-base-animation`">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
                                                     </svg>
                                                 </span>
 
-                                                <input type="number" name="" id="asowp-text-size" class="asowp-w-1/3 asowp-h-full asowp-border asowp-p-1 asowp-text-center" :min="configTextFontSettings.minimumFontSize" :max="configTextFontSettings.maximumFontSize" @input="changeTextSize($event.target.value, configTextFontSettings.minimumFontSize, configTextFontSettings.maximumFontSize)" disabled style="margin: 0 !important; padding: 0 !important; text-align: center !important;">
+                                                <input type="number" name="" id="ascwo-text-size" class="ascwo-w-1/3 ascwo-h-full ascwo-border ascwo-p-1 ascwo-text-center" :min="configTextFontSettings.minimumFontSize" :max="configTextFontSettings.maximumFontSize" @input="changeTextSize($event.target.value, configTextFontSettings.minimumFontSize, configTextFontSettings.maximumFontSize)" disabled style="margin: 0 !important; padding: 0 !important; text-align: center !important;">
                                                 
-                                                <span @click="changeTextSizeValue('up')" :class="`${route.name !== 'template-maker' && selectedText.object.lockScale ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'} asowp-w-1/3 asowp-h-full asowp-flex asowp-full-center asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-rounded-e-md asowp-base-animation`">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                                                <span @click="changeTextSizeValue('up')" :class="`${route.name !== 'template-maker' && selectedText.object.lockScale ? 'ascwo-cursor-not-allowed' : 'ascwo-cursor-pointer'} ascwo-w-1/3 ascwo-h-full ascwo-flex ascwo-full-center ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] ascwo-rounded-e-md ascwo-base-animation`">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                                     </svg>
                                                 </span>
@@ -1027,56 +1027,56 @@
 
                                     <div v-if="configTextType == '3D'">
                                         <div>
-                                            <div class="asowp-flex asowp-items-center asowp-justify-between">
-                                                <p class="asowp-font-semibold">Border size</p>
+                                            <div class="ascwo-flex ascwo-items-center ascwo-justify-between">
+                                                <p class="ascwo-font-semibold">Border size</p>
 
-                                                <span @click="show3DTextHelp()" :class="`asowp-flex asowp-text-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] asowp-cursor-pointer`">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="aswp-w-6 asowp-h-6">
+                                                <span @click="show3DTextHelp()" :class="`ascwo-flex ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] ascwo-cursor-pointer`">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="aswp-w-6 ascwo-h-6">
                                                         <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm11.378-3.917c-.89-.777-2.366-.777-3.255 0a.75.75 0 0 1-.988-1.129c1.454-1.272 3.776-1.272 5.23 0 1.513 1.324 1.513 3.518 0 4.842a3.75 3.75 0 0 1-.837.552c-.676.328-1.028.774-1.028 1.152v.75a.75.75 0 0 1-1.5 0v-.75c0-1.279 1.06-2.107 1.875-2.502.182-.088.351-.199.503-.331.83-.727.83-1.857 0-2.584ZM12 18a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
                                                     </svg>
                                                 </span>
                                             </div>
 
-                                            <div class="asowp-p-2 asowp-space-y-0.5">
-                                                <label for="asowp-text-firstBorderWidth" class="asop-text-[0.3em]">First border</label>
-                                                <input  type="range" name="asowp-borderSize" id="asowp-text-firstBorderWidth" :class="`asowp-cursor-pointer asowp-w-full`" :min="0" :max="25" :step="1" :value="borderLayerSize" @input="(e)=> {changeTextBorder(true, e)}">
-                                                <label for="asowp-text-secondBorderWidth" class="asop-text-[0.3em]">Second border</label>
-                                                <input  type="range" name="asowp-borderSize" id="asowp-text-secondBorderWidth" :class="`asowp-cursor-pointer asowp-w-full`" :min="0" :max="30" :step="1" :value="borderSize" @input="(e)=> {changeTextBorder(false, e)}">
+                                            <div class="ascwo-p-2 ascwo-space-y-0.5">
+                                                <label for="ascwo-text-firstBorderWidth" class="asop-text-[0.3em]">First border</label>
+                                                <input  type="range" name="ascwo-borderSize" id="ascwo-text-firstBorderWidth" :class="`ascwo-cursor-pointer ascwo-w-full`" :min="0" :max="25" :step="1" :value="borderLayerSize" @input="(e)=> {changeTextBorder(true, e)}">
+                                                <label for="ascwo-text-secondBorderWidth" class="asop-text-[0.3em]">Second border</label>
+                                                <input  type="range" name="ascwo-borderSize" id="ascwo-text-secondBorderWidth" :class="`ascwo-cursor-pointer ascwo-w-full`" :min="0" :max="30" :step="1" :value="borderSize" @input="(e)=> {changeTextBorder(false, e)}">
                                             </div>
 
-                                            <div v-if="textSideHelp" :class="`asowp-absolute asowp-top-[10%] asowp-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.textColor}] asowp-flex asowp-w-[70%] asowp-h-[80%] asowp-left-[31%] asowp-translate-x-[100%] asowp-justify-center asowp-z-10`">
-                                                <div class="asowp-flex asowp-flex-col asowp-w-full asowp-h-full asowp-space-y-2 asowp-overflow-auto asowp-p-2 asowp-scrollBar">
-                                                    <div class="asowp-flex asowp-flex-col asowp-w-full asowp-items asowp-justify-start">
-                                                        <img src="../../../../../assets/images/text-types/Help/first-border.png" alt="" class="asowp-w-[90%] asowp-h-auto">
+                                            <div v-if="textSideHelp" :class="`ascwo-absolute ascwo-top-[10%] ascwo-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.textColor}] ascwo-flex ascwo-w-[70%] ascwo-h-[80%] ascwo-left-[31%] ascwo-translate-x-[100%] ascwo-justify-center ascwo-z-10`">
+                                                <div class="ascwo-flex ascwo-flex-col ascwo-w-full ascwo-h-full ascwo-space-y-2 ascwo-overflow-auto ascwo-p-2 ascwo-scrollBar">
+                                                    <div class="ascwo-flex ascwo-flex-col ascwo-w-full ascwo-items ascwo-justify-start">
+                                                        <img src="../../../../../assets/images/text-types/Help/first-border.png" alt="" class="ascwo-w-[90%] ascwo-h-auto">
                                                         <p>First border</p>
                                                     </div>
-                                                    <div class="asowp-flex asowp-flex-col asowp-w-full asowp-items asowp-justify-start">
-                                                        <img src="../../../../../assets/images/text-types/Help/second-border.png" alt="" class="asowp-w-[90%] asowp-h-auto">
+                                                    <div class="ascwo-flex ascwo-flex-col ascwo-w-full ascwo-items ascwo-justify-start">
+                                                        <img src="../../../../../assets/images/text-types/Help/second-border.png" alt="" class="ascwo-w-[90%] ascwo-h-auto">
                                                         <p>Second border</p>
                                                     </div>
-                                                    <div class="asowp-flex asowp-flex-col asowp-w-full asowp-items asowp-justify-start">
-                                                        <img src="../../../../../assets/images/text-types/Help/side.png" alt="" class="asowp-w-[90%] asowp-h-auto">
+                                                    <div class="ascwo-flex ascwo-flex-col ascwo-w-full ascwo-items ascwo-justify-start">
+                                                        <img src="../../../../../assets/images/text-types/Help/side.png" alt="" class="ascwo-w-[90%] ascwo-h-auto">
                                                         <p>3D effect</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div v-if="(activeFace === 'front-face' && !signTextColor1.active) || (activeFace === 'back-face' && !signTextColor2.active)" class="asowp-space-y-1">
-                                            <p class="asowp-font-medium">Border color</p>
-                                            <div class="asowp-flex asowp-space-x-2">
-                                                <div @click="()=>{firstBorder = true}" :class="`${firstBorder ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded asowp-cursor-pointer asowp-base-animation`">First border</div>
-                                                <div @click="()=>{firstBorder = false}" :class="`${!firstBorder ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded asowp-cursor-pointer asowp-base-animation`">Second border</div>
+                                        <div v-if="(activeFace === 'front-face' && !signTextColor1.active) || (activeFace === 'back-face' && !signTextColor2.active)" class="ascwo-space-y-1">
+                                            <p class="ascwo-font-medium">Border color</p>
+                                            <div class="ascwo-flex ascwo-space-x-2">
+                                                <div @click="()=>{firstBorder = true}" :class="`${firstBorder ? `ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'ascwo-bg-transparent'} hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  ascwo-text-sm ascwo-p-1 ascwo-px-2 ascwo-rounded ascwo-cursor-pointer ascwo-base-animation`">First border</div>
+                                                <div @click="()=>{firstBorder = false}" :class="`${!firstBorder ? `ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'ascwo-bg-transparent'} hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  ascwo-text-sm ascwo-p-1 ascwo-px-2 ascwo-rounded ascwo-cursor-pointer ascwo-base-animation`">Second border</div>
                                             </div>
-                                            <div class="asowp-w-full asowp-flex asowp-flex-wrap asowp-gap-2 asowp-items-center asowp-p-1 asowp-border">
+                                            <div class="ascwo-w-full ascwo-flex ascwo-flex-wrap ascwo-gap-2 ascwo-items-center ascwo-p-1 ascwo-border">
                                                 <div v-for="(color, index) in configTextSettings.colors" class="">
-                                                    <div @click="changeTextBorderColor(color.codeHex)" :class="`${(firstBorder && currentTextBorder1Color === color.codeHex) || (!firstBorder && currentTextBorder2Color === color.codeHex) ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-8 asowp-h-8 asowp-bg-[${color.codeHex}] asowp-rounded-sm asowp-border asowp-cursor-pointer`"></div>
+                                                    <div @click="changeTextBorderColor(color.codeHex)" :class="`${(firstBorder && currentTextBorder1Color === color.codeHex) || (!firstBorder && currentTextBorder2Color === color.codeHex) ? `ascwo-ring-2 ascwo-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } ascwo-w-8 ascwo-h-8 ascwo-bg-[${color.codeHex}] ascwo-rounded-sm ascwo-border ascwo-cursor-pointer`"></div>
                                                 </div>
             
-                                                <div :class="`asowp-relative`">
-                                                    <input id="asowp-setBorderTextColor1" type="color" v-model="customTextColor" class="asowp-inputColor-hide asowp-absolute asowp-top-[50%]" @input="changeTextBorderColor($event.target.value)" />
-                                                    <label for="asowp-setBorderTextColor1" v-if="configTextSettings.enableCustomColor" :class="`asowp-w-8 asowp-h-8 asowp-flex asowp-full-center asowp-overflow-hidden asowp-cursor-pointer`">
-                                                        <svg v-if="configTextSettings.colorsPrevImg == ''" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="asowp-w-full asowp-h-full">
+                                                <div :class="`ascwo-relative`">
+                                                    <input id="ascwo-setBorderTextColor1" type="color" v-model="customTextColor" class="ascwo-inputColor-hide ascwo-absolute ascwo-top-[50%]" @input="changeTextBorderColor($event.target.value)" />
+                                                    <label for="ascwo-setBorderTextColor1" v-if="configTextSettings.enableCustomColor" :class="`ascwo-w-8 ascwo-h-8 ascwo-flex ascwo-full-center ascwo-overflow-hidden ascwo-cursor-pointer`">
+                                                        <svg v-if="configTextSettings.colorsPrevImg == ''" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="ascwo-w-full ascwo-h-full">
                                                             <g fill="none" fill-rule="evenodd">
                                                                 <path d="M22.015.061H.95a.866.866 0 0 0-.614.256l21.68 21.68V.061z" fill="#CE1128"></path>
                                                                 <path d="M.335.317A.867.867 0 0 0 .08.93v21.066h21.935L.335.317z" fill="#ED2E8A"></path>
@@ -1088,27 +1088,27 @@
                                                                 <path d="M.335 43.678a.867.867 0 0 0 .614.255h21.066V21.997L.335 43.677z" fill="#126EB2"></path>
                                                             </g>
                                                         </svg>
-                                                        <img v-if="configTextSettings.colorsPrevImg != ''" :src="configTextSettings.colorsPrevImg" class="asowp-w-full asowp-h-full">
+                                                        <img v-if="configTextSettings.colorsPrevImg != ''" :src="configTextSettings.colorsPrevImg" class="ascwo-w-full ascwo-h-full">
                                                     </label>
                                                 </div>
                                             </div>
                                         </div>
                                         
-                                        <div class="asowp-flex asowp-flex-col asowp-space-y-2">
-                                            <p class="asowp-font-medium">3D effect</p>
-                                            <div class="asowp-w-fit asowp-flex asowp-space-x-1 asowp-rounded-md" @click="show3dSide()">
-                                                <div :class="`${active3dSide ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded-md asowp-cursor-pointer asowp-base-animation`">Active</div>
-                                                <div :class="`${!active3dSide ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded-md asowp-cursor-pointer asowp-base-animation`">Disabled</div>
+                                        <div class="ascwo-flex ascwo-flex-col ascwo-space-y-2">
+                                            <p class="ascwo-font-medium">3D effect</p>
+                                            <div class="ascwo-w-fit ascwo-flex ascwo-space-x-1 ascwo-rounded-md" @click="show3dSide()">
+                                                <div :class="`${active3dSide ? `ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'ascwo-bg-transparent'} ascwo-text-sm ascwo-p-1 ascwo-px-2 ascwo-rounded-md ascwo-cursor-pointer ascwo-base-animation`">Active</div>
+                                                <div :class="`${!active3dSide ? `ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'ascwo-bg-transparent'} ascwo-text-sm ascwo-p-1 ascwo-px-2 ascwo-rounded-md ascwo-cursor-pointer ascwo-base-animation`">Disabled</div>
                                             </div>
-                                            <div class="asowp-w-full asowp-flex asowp-flex-wrap asowp-gap-2 asowp-items-center asowp-p-1 asowp-border">
+                                            <div class="ascwo-w-full ascwo-flex ascwo-flex-wrap ascwo-gap-2 ascwo-items-center ascwo-p-1 ascwo-border">
                                                 <div v-for="(color, index) in configTextSettings.colors" class="">
-                                                    <div @click="change3dSideColor(color.codeHex)" :class="`${active3dSideColor === color.codeHex ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-8 asowp-h-8 asowp-bg-[${color.codeHex}] asowp-rounded-sm asowp-border asowp-cursor-pointer`"></div>
+                                                    <div @click="change3dSideColor(color.codeHex)" :class="`${active3dSideColor === color.codeHex ? `ascwo-ring-2 ascwo-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } ascwo-w-8 ascwo-h-8 ascwo-bg-[${color.codeHex}] ascwo-rounded-sm ascwo-border ascwo-cursor-pointer`"></div>
                                                 </div>
             
-                                                <div :class="`asowp-relative`">
-                                                    <input id="asowp-setSideColor" type="color" v-model="customTextColor" class="asowp-inputColor-hide asowp-absolute asowp-top-[50%]" @input="change3dSideColor($event.target.value)" />
-                                                    <label for="asowp-setSideColor" v-if="configTextSettings.enableCustomColor" :class="`${active3dSideColor == 'custom' ? `asowp-border-4 asowp-border-solid asowp-border-[#016464]` : `` } asowp-w-8 asowp-h-8 asowp-flex asowp-full-center asowp-overflow-hidden asowp-cursor-pointer`">
-                                                        <svg v-if="configTextSettings.colorsPrevImg == ''" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="asowp-w-full asowp-h-full">
+                                                <div :class="`ascwo-relative`">
+                                                    <input id="ascwo-setSideColor" type="color" v-model="customTextColor" class="ascwo-inputColor-hide ascwo-absolute ascwo-top-[50%]" @input="change3dSideColor($event.target.value)" />
+                                                    <label for="ascwo-setSideColor" v-if="configTextSettings.enableCustomColor" :class="`${active3dSideColor == 'custom' ? `ascwo-border-4 ascwo-border-solid ascwo-border-[#016464]` : `` } ascwo-w-8 ascwo-h-8 ascwo-flex ascwo-full-center ascwo-overflow-hidden ascwo-cursor-pointer`">
+                                                        <svg v-if="configTextSettings.colorsPrevImg == ''" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="ascwo-w-full ascwo-h-full">
                                                             <g fill="none" fill-rule="evenodd">
                                                                 <path d="M22.015.061H.95a.866.866 0 0 0-.614.256l21.68 21.68V.061z" fill="#CE1128"></path>
                                                                 <path d="M.335.317A.867.867 0 0 0 .08.93v21.066h21.935L.335.317z" fill="#ED2E8A"></path>
@@ -1120,24 +1120,24 @@
                                                                 <path d="M.335 43.678a.867.867 0 0 0 .614.255h21.066V21.997L.335 43.677z" fill="#126EB2"></path>
                                                             </g>
                                                         </svg>
-                                                        <img v-if="configTextSettings.colorsPrevImg != ''" :src="configTextSettings.colorsPrevImg" class="asowp-w-full asowp-h-full">
+                                                        <img v-if="configTextSettings.colorsPrevImg != ''" :src="configTextSettings.colorsPrevImg" class="ascwo-w-full ascwo-h-full">
                                                     </label>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
         
-                                    <div v-if="(activeFace === 'front-face' && !signTextColor1.active) || (activeFace === 'back-face' && !signTextColor2.active)" class="asowp-space-y-1">
-                                        <p class="asowp-font-medium">{{ configVisualiserTexts.textColor && configVisualiserTexts.textColor.trim() !== '' ? configVisualiserTexts.textColor : 'Color' }}</p>
-                                        <div class="asowp-w-full asowp-flex asowp-flex-wrap asowp-gap-2 asowp-items-center asowp-p-1 asowp-border">
+                                    <div v-if="(activeFace === 'front-face' && !signTextColor1.active) || (activeFace === 'back-face' && !signTextColor2.active)" class="ascwo-space-y-1">
+                                        <p class="ascwo-font-medium">{{ configVisualiserTexts.textColor && configVisualiserTexts.textColor.trim() !== '' ? configVisualiserTexts.textColor : 'Color' }}</p>
+                                        <div class="ascwo-w-full ascwo-flex ascwo-flex-wrap ascwo-gap-2 ascwo-items-center ascwo-p-1 ascwo-border">
                                             <div v-for="(color, index) in configTextSettings.colors" class="">
-                                                <div @click="changeTextColor(color.codeHex)" :class="`${selectedText.color === color.codeHex ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-8 asowp-h-8 asowp-bg-[${color.codeHex}] asowp-rounded-sm asowp-border asowp-cursor-pointer`"></div>
+                                                <div @click="changeTextColor(color.codeHex)" :class="`${selectedText.color === color.codeHex ? `ascwo-ring-2 ascwo-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } ascwo-w-8 ascwo-h-8 ascwo-bg-[${color.codeHex}] ascwo-rounded-sm ascwo-border ascwo-cursor-pointer`"></div>
                                             </div>
         
-                                            <div :class="`asowp-relative`">
-                                                <input id="asowp-setTextColor1" type="color" v-model="customTextColor" class="asowp-inputColor-hide asowp-absolute asowp-top-[50%]" @input="changeTextColor($event.target.value)" />
-                                                <label for="asowp-setTextColor1" v-if="configTextSettings.enableCustomColor" :class="`${activeSignColor == 'custom' ? `asowp-border-4 asowp-border-solid asowp-border-[#016464]` : `` } asowp-w-8 asowp-h-8 asowp-flex asowp-full-center asowp-overflow-hidden asowp-cursor-pointer`">
-                                                    <svg v-if="configTextSettings.colorsPrevImg == ''" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="asowp-w-full asowp-h-full">
+                                            <div :class="`ascwo-relative`">
+                                                <input id="ascwo-setTextColor1" type="color" v-model="customTextColor" class="ascwo-inputColor-hide ascwo-absolute ascwo-top-[50%]" @input="changeTextColor($event.target.value)" />
+                                                <label for="ascwo-setTextColor1" v-if="configTextSettings.enableCustomColor" :class="`${activeSignColor == 'custom' ? `ascwo-border-4 ascwo-border-solid ascwo-border-[#016464]` : `` } ascwo-w-8 ascwo-h-8 ascwo-flex ascwo-full-center ascwo-overflow-hidden ascwo-cursor-pointer`">
+                                                    <svg v-if="configTextSettings.colorsPrevImg == ''" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="ascwo-w-full ascwo-h-full">
                                                     <g fill="none" fill-rule="evenodd">
                                                         <path d="M22.015.061H.95a.866.866 0 0 0-.614.256l21.68 21.68V.061z" fill="#CE1128"></path>
                                                         <path d="M.335.317A.867.867 0 0 0 .08.93v21.066h21.935L.335.317z" fill="#ED2E8A"></path>
@@ -1149,27 +1149,27 @@
                                                         <path d="M.335 43.678a.867.867 0 0 0 .614.255h21.066V21.997L.335 43.677z" fill="#126EB2"></path>
                                                     </g>
                                                     </svg>
-                                                    <img v-if="configTextSettings.colorsPrevImg != ''" :src="configTextSettings.colorsPrevImg" class="asowp-w-full asowp-h-full">
+                                                    <img v-if="configTextSettings.colorsPrevImg != ''" :src="configTextSettings.colorsPrevImg" class="ascwo-w-full ascwo-h-full">
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div v-if="configTextType == 'neon'" class="asowp-space-y-1">
-                                        <p class="asowp-font-medium">Light color</p>
-                                        <div class="asowp-flex asowp-space-x-2">
-                                            <div @click="()=>{turnNeonLightOnOff()}" :class="`${activeTextLight ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded asowp-cursor-pointer asowp-base-animation`">On</div>
-                                            <div @click="()=>{turnNeonLightOnOff()}" :class="`${!activeTextLight ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded asowp-cursor-pointer asowp-base-animation`">Off</div>
+                                    <div v-if="configTextType == 'neon'" class="ascwo-space-y-1">
+                                        <p class="ascwo-font-medium">Light color</p>
+                                        <div class="ascwo-flex ascwo-space-x-2">
+                                            <div @click="()=>{turnNeonLightOnOff()}" :class="`${activeTextLight ? `ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'ascwo-bg-transparent'} hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  ascwo-text-sm ascwo-p-1 ascwo-px-2 ascwo-rounded ascwo-cursor-pointer ascwo-base-animation`">On</div>
+                                            <div @click="()=>{turnNeonLightOnOff()}" :class="`${!activeTextLight ? `ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'ascwo-bg-transparent'} hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  ascwo-text-sm ascwo-p-1 ascwo-px-2 ascwo-rounded ascwo-cursor-pointer ascwo-base-animation`">Off</div>
                                         </div>
-                                        <div class="asowp-w-full asowp-flex asowp-flex-wrap asowp-gap-2 asowp-items-center asowp-p-1 asowp-border">
+                                        <div class="ascwo-w-full ascwo-flex ascwo-flex-wrap ascwo-gap-2 ascwo-items-center ascwo-p-1 ascwo-border">
                                             <div v-for="(color, index) in configTextSettings.colors" class="">
-                                                <div @click="changeTextLightColor(color.codeHex)" :class="`${curentTextLightColor === color.codeHex ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-8 asowp-h-8 asowp-bg-[${color.codeHex}] asowp-rounded-sm asowp-border asowp-cursor-pointer`"></div>
+                                                <div @click="changeTextLightColor(color.codeHex)" :class="`${curentTextLightColor === color.codeHex ? `ascwo-ring-2 ascwo-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } ascwo-w-8 ascwo-h-8 ascwo-bg-[${color.codeHex}] ascwo-rounded-sm ascwo-border ascwo-cursor-pointer`"></div>
                                             </div>
         
-                                            <div :class="`asowp-relative`">
-                                                <input id="asowp-setTextLightColor1" type="color" v-model="curentTextLightColor" class="asowp-inputColor-hide asowp-absolute asowp-top-[50%]" @input="changeTextLightColor($event.target.value)" />
-                                                <label for="asowp-setTextLightColor1" v-if="configTextSettings.enableCustomColor" :class="`${curentTextLightColor == 'custom' ? `asowp-border-4 asowp-border-solid asowp-border-[#016464]` : `` } asowp-w-8 asowp-h-8 asowp-flex asowp-full-center asowp-overflow-hidden asowp-cursor-pointer`">
-                                                    <svg v-if="configTextSettings.colorsPrevImg == ''" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="asowp-w-full asowp-h-full">
+                                            <div :class="`ascwo-relative`">
+                                                <input id="ascwo-setTextLightColor1" type="color" v-model="curentTextLightColor" class="ascwo-inputColor-hide ascwo-absolute ascwo-top-[50%]" @input="changeTextLightColor($event.target.value)" />
+                                                <label for="ascwo-setTextLightColor1" v-if="configTextSettings.enableCustomColor" :class="`${curentTextLightColor == 'custom' ? `ascwo-border-4 ascwo-border-solid ascwo-border-[#016464]` : `` } ascwo-w-8 ascwo-h-8 ascwo-flex ascwo-full-center ascwo-overflow-hidden ascwo-cursor-pointer`">
+                                                    <svg v-if="configTextSettings.colorsPrevImg == ''" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="ascwo-w-full ascwo-h-full">
                                                         <g fill="none" fill-rule="evenodd">
                                                             <path d="M22.015.061H.95a.866.866 0 0 0-.614.256l21.68 21.68V.061z" fill="#CE1128"></path>
                                                             <path d="M.335.317A.867.867 0 0 0 .08.93v21.066h21.935L.335.317z" fill="#ED2E8A"></path>
@@ -1181,18 +1181,18 @@
                                                             <path d="M.335 43.678a.867.867 0 0 0 .614.255h21.066V21.997L.335 43.677z" fill="#126EB2"></path>
                                                         </g>
                                                     </svg>
-                                                    <img v-if="configTextSettings.colorsPrevImg != ''" :src="configTextSettings.colorsPrevImg" class="asowp-w-full asowp-h-full">
+                                                    <img v-if="configTextSettings.colorsPrevImg != ''" :src="configTextSettings.colorsPrevImg" class="ascwo-w-full ascwo-h-full">
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
         
-                                    <div class="asowp-space-y-1">
-                                        <!-- <p class="asowp-font-medium">Other custom</p> -->
-                                        <div class="asowp-w-full asowp-flex asowp-items-center">
-                                            <div class="asowp-flex asowp-flex-wrap asowp-gap-3">
-                                                <span @click="cloneObject()" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                                                    <svg viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="asowp-w-7 asowp-h-7">
+                                    <div class="ascwo-space-y-1">
+                                        <!-- <p class="ascwo-font-medium">Other custom</p> -->
+                                        <div class="ascwo-w-full ascwo-flex ascwo-items-center">
+                                            <div class="ascwo-flex ascwo-flex-wrap ascwo-gap-3">
+                                                <span @click="cloneObject()" :class="`ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1 ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-cursor-pointer ascwo-base-animation`">
+                                                    <svg viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="ascwo-w-7 ascwo-h-7">
                                                         <g clip-path="url(#clip0_65_739)">
                                                             <path d="M6 6.5H22V10.5H24V6.5C24 5.96957 23.7893 5.46086 23.4142 5.08579C23.0391 4.71071 22.5304 4.5 22 4.5H6C5.46957 4.5 4.96086 4.71071 4.58579 5.08579C4.21071 5.46086 4 5.96957 4 6.5V22.5C4 23.0304 4.21071 23.5391 4.58579 23.9142C4.96086 24.2893 5.46957 24.5 6 24.5H10V22.5H6V6.5Z" fill="currentColor"/>
                                                             <path d="M30 12.5H14C13.4696 12.5 12.9609 12.7107 12.5858 13.0858C12.2107 13.4609 12 13.9696 12 14.5V30.5C12 31.0304 12.2107 31.5391 12.5858 31.9142C12.9609 32.2893 13.4696 32.5 14 32.5H30C30.5304 32.5 31.0391 32.2893 31.4142 31.9142C31.7893 31.5391 32 31.0304 32 30.5V14.5C32 13.9696 31.7893 13.4609 31.4142 13.0858C31.0391 12.7107 30.5304 12.5 30 12.5ZM30 30.5H14V14.5H30V30.5Z" fill="currentColor"/>
@@ -1204,72 +1204,72 @@
                                                             </clipPath>
                                                         </defs>
                                                     </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">
+                                                    <p class="ascwo-text-xs ascwo-font-semibold">
                                                         {{ configVisualiserTexts.textCanvasClone && configVisualiserTexts.textCanvasClone.trim() !== '' ? configVisualiserTexts.textCanvasClone : 'Clone' }}
                                                     </p>
                                                 </span>
         
-                                                <span @click="deleteObject()" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-7 asowp-h-7">
+                                                <span @click="deleteObject()" :class="`ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1 ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-cursor-pointer ascwo-base-animation`">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-7 ascwo-h-7">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                                                     </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">
+                                                    <p class="ascwo-text-xs ascwo-font-semibold">
                                                         {{ configVisualiserTexts.textCanvasDelete && configVisualiserTexts.textCanvasDelete.trim() !== '' ? configVisualiserTexts.textCanvasDelete : 'Delete' }}
                                                     </p>
                                                 </span>
         
-                                                <span v-if="configTextSettings.enableBold" @click="changeTextWeight" :class="`${selectedText.weight == 'bold' ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                                                    <svg  fill="none" xmlns="http://www.w3.org/2000/svg" class="asowp-w-7 asowp-h-7">
+                                                <span v-if="configTextSettings.enableBold" @click="changeTextWeight" :class="`${selectedText.weight == 'bold' ? `ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1 hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-cursor-pointer ascwo-base-animation`">
+                                                    <svg  fill="none" xmlns="http://www.w3.org/2000/svg" class="ascwo-w-7 ascwo-h-7">
                                                         <path d="M12.0151 1.84998C15.2551 1.84998 17.6851 2.25498 19.3051 3.19998C21.0601 4.14498 21.8701 5.76498 21.8701 8.05998C21.8701 9.40998 21.4651 10.625 20.9251 11.57C20.619 12.0316 20.2214 12.4255 19.757 12.7274C19.2926 13.0292 18.7712 13.2326 18.2251 13.325C18.9968 13.5052 19.7289 13.8255 20.3851 14.27C20.9251 14.675 21.4651 15.35 21.8701 16.025C22.2926 17.0029 22.4776 18.0669 22.4101 19.13C22.4578 20.1053 22.2749 21.0781 21.8761 21.9694C21.4773 22.8608 20.874 23.6455 20.1151 24.26C18.1933 25.6325 15.8569 26.3 13.5001 26.15H4.45508V1.84998H12.0151ZM12.5551 11.435C14.0401 11.435 15.1201 11.3 15.6601 10.76C16.3351 10.355 16.6051 9.54497 16.6051 8.73497C16.6051 7.78998 16.2001 7.11497 15.5251 6.70998C14.8501 6.30498 13.7701 6.03498 12.2851 6.03498H9.58508V11.435H12.5551ZM9.58508 15.485V22.1H12.9601C14.4451 22.1 15.6601 21.695 16.2001 21.155C16.8751 20.48 17.1451 19.805 17.1451 18.725C17.1612 18.3169 17.0845 17.9105 16.9208 17.5364C16.7571 17.1622 16.5107 16.8301 16.2001 16.565C15.5251 16.025 14.4451 15.755 12.8251 15.755H9.45008L9.58508 15.485Z" fill="currentColor"/>
                                                     </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">Bold</p>
+                                                    <p class="ascwo-text-xs ascwo-font-semibold">Bold</p>
                                                 </span>
         
-                                                <span v-if="configTextSettings.enableItalic" @click="changeTextStyle" :class="`${selectedText.style == 'italic' ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="asowp-w-7 asowp-h-7">
+                                                <span v-if="configTextSettings.enableItalic" @click="changeTextStyle" :class="`${selectedText.style == 'italic' ? `ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1 hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-cursor-pointer ascwo-base-animation`">
+                                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="ascwo-w-7 ascwo-h-7">
                                                         <path d="M11 5H17M7 19H13M14 5L10 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                                     </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">Italic</p>
+                                                    <p class="ascwo-text-xs ascwo-font-semibold">Italic</p>
                                                 </span>
         
-                                                <span v-if="configTextType == 'normal' && configTextSettings.enableUnderline" @click="underlineText" :class="`${selectedText.underline == true ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="asowp-w-7 asowp-h-7">
+                                                <span v-if="configTextType == 'normal' && configTextSettings.enableUnderline" @click="underlineText" :class="`${selectedText.underline == true ? `ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1 hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-cursor-pointer ascwo-base-animation`">
+                                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="ascwo-w-7 ascwo-h-7">
                                                         <path d="M7 5V10C7 11.3261 7.52678 12.5979 8.46447 13.5355C9.40215 14.4732 10.6739 15 12 15C13.3261 15 14.5979 14.4732 15.5355 13.5355C16.4732 12.5979 17 11.3261 17 10V5M5 19H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                                     </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">Underline</p>
+                                                    <p class="ascwo-text-xs ascwo-font-semibold">Underline</p>
                                                 </span>
         
-                                                <span v-if="configTextType == 'normal' && configTextSettings.enableStrike" @click="crossText" :class="`${selectedText.linethrough == true ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="asowp-w-7 asowp-h-7">
+                                                <span v-if="configTextType == 'normal' && configTextSettings.enableStrike" @click="crossText" :class="`${selectedText.linethrough == true ? `ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1 hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-cursor-pointer ascwo-base-animation`">
+                                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="ascwo-w-7 ascwo-h-7">
                                                         <path d="M7 8V13M7 13C7 14.3261 7.52678 15.5979 8.46447 16.5355C9.40215 17.4732 10.6739 18 12 18C13.3261 18 14.5979 17.4732 15.5355 16.5355C16.4732 15.5979 17 14.3261 17 13M7 13H17M17 13V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                                         <line x1="3.79883" y1="13" x2="20.1988" y2="13" stroke="currentColor"/>
                                                     </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">Crossline</p>
+                                                    <p class="ascwo-text-xs ascwo-font-semibold">Crossline</p>
                                                 </span>
         
-                                                <span v-if="configTextType == 'normal' && configTextSettings.enableOverline" @click="overlineText" :class="`${selectedText.overline == true ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="asowp-w-7 asowp-h-7">
+                                                <span v-if="configTextType == 'normal' && configTextSettings.enableOverline" @click="overlineText" :class="`${selectedText.overline == true ? `ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1 hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-cursor-pointer ascwo-base-animation`">
+                                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="ascwo-w-7 ascwo-h-7">
                                                         <path d="M7 9V14C7 15.3261 7.52678 16.5979 8.46447 17.5355C9.40215 18.4732 10.6739 19 12 19C13.3261 19 14.5979 18.4732 15.5355 17.5355C16.4732 16.5979 17 15.3261 17 14V9M5 5H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                                     </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">Overline</p>
+                                                    <p class="ascwo-text-xs ascwo-font-semibold">Overline</p>
                                                 </span>
 
-                                                <span v-if="configTextType != '3D'" @click="moveObject('up')" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="asowp-w-7 asowp-h-7">
+                                                <span v-if="configTextType != '3D'" @click="moveObject('up')" :class="`ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1 ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-cursor-pointer ascwo-base-animation`">
+                                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="ascwo-w-7 ascwo-h-7">
                                                         <path d="m12.707 3.2929c-0.3905-0.39052-1.0237-0.39052-1.4142 0l-4 4c-0.39052 0.39053-0.39052 1.0237 0 1.4142 0.39053 0.39052 1.0237 0.39052 1.4142 0l2.2929-2.2929v7.5858c0 0.5523 0.4477 1 1 1s1-0.4477 1-1v-7.5858l2.2929 2.2929c0.3905 0.39052 1.0237 0.39052 1.4142 0 0.3905-0.39053 0.3905-1.0237 0-1.4142l-4-4z" fill="currentColor"></path>
                                                         <path d="m3.1056 13.211 5.8944-2.9472v2.2361l-5 2.5 8 4 8-4-5-2.5v-2.2361l5.8944 2.9472c0.6776 0.3388 1.1056 1.0313 1.1056 1.7889 0 0.7575-0.428 1.4501-1.1056 1.7888l-8 4c-0.563 0.2816-1.2258 0.2816-1.7888 0l-8-4c-0.67757-0.3387-1.1056-1.0313-1.1056-1.7888 0-0.7576 0.428-1.4501 1.1056-1.7889z" fill="currentColor"></path>
                                                     </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">
+                                                    <p class="ascwo-text-xs ascwo-font-semibold">
                                                         {{ configVisualiserTexts.textMoveUp && configVisualiserTexts.textMoveUp.trim() !== '' ? configVisualiserTexts.textMoveUp : 'Move up' }}
                                                     </p>
                                                 </span>
 
-                                                <span v-if="configTextType != '3D'" @click="moveObject('down')" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="asowp-w-7 asowp-h-7">
+                                                <span v-if="configTextType != '3D'" @click="moveObject('down')" :class="`ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1 ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-cursor-pointer ascwo-base-animation`">
+                                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="ascwo-w-7 ascwo-h-7">
                                                         <path d="m12.707 20.707c-0.3905 0.3905-1.0237 0.3905-1.4142 0l-4-4c-0.39052-0.3905-0.39052-1.0237 0-1.4142 0.39053-0.3905 1.0237-0.3905 1.4142 0l2.2929 2.2929v-7.5858c0-0.55228 0.4477-1 1-1s1 0.44772 1 1v7.5858l2.2929-2.2929c0.3905-0.3905 1.0237-0.3905 1.4142 0s0.3905 1.0237 0 1.4142l-4 4z" fill="currentColor"></path>
                                                         <path d="m3.1056 10.789 5.8944 2.9472v-2.2361l-5-2.5 8-4 8 4-5 2.5v2.2361l5.8944-2.9472c0.6776-0.3388 1.1056-1.0314 1.1056-1.7889s-0.428-1.4501-1.1056-1.7888l-8-4c-0.563-0.28152-1.2258-0.28152-1.7888 0l-8 4c-0.67757 0.33878-1.1056 1.0313-1.1056 1.7888s0.428 1.4501 1.1056 1.7889z" fill="currentColor"></path>
                                                     </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">
+                                                    <p class="ascwo-text-xs ascwo-font-semibold">
                                                         {{ configVisualiserTexts.textMoveDown && configVisualiserTexts.textMoveDown.trim() !== '' ? configVisualiserTexts.textMoveDown : 'Move down' }}
                                                     </p>
                                                 </span>
@@ -1278,65 +1278,65 @@
                                     </div>
                                 </div>
                             </div>
-                            <span v-if="allowNextButton && lastActiveOption != 'texts'" @click="nextOption('texts')" :class="`asowp-absolute asowp-bottom-0 asowp-translate-y-[100%] asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
+                            <span v-if="allowNextButton && lastActiveOption != 'texts'" @click="nextOption('texts')" :class="`ascwo-absolute ascwo-bottom-0 ascwo-translate-y-[100%] ascwo-left-0 ascwo-w-full ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold ascwo-text-md ascwo-full-center ascwo-border ascwo-py-1 ascwo-base-animation ascwo-cursor-pointer`">
                                 Next
                             </span>
                         </div>
         
-                        <div v-show="step == 'image'" class="asowp-relative asowp-flex asowp-flex-col lg:asowp-space-y-3 asowp-w-full asowp-h-full" id="asowp-images-section">
-                            <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{configVisualiserTexts.textImage}}</p>    
+                        <div v-show="step == 'image'" class="ascwo-relative ascwo-flex ascwo-flex-col lg:ascwo-space-y-3 ascwo-w-full ascwo-h-full" id="ascwo-images-section">
+                            <p :class="`ascwo-hidden lg:ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] ascwo-text-lg ascwo-font-semibold ascwo-p-2 ascwo-px-4`">{{configVisualiserTexts.textImage}}</p>    
 
-                            <div :class="`asowp-bg-[${configColors.backgroundColorHeader}]/10 asowp-flex asowp-flex-col asowp-space-y-3 asowp-full-center asowp-p-4 asowp-m-1`">
-                                <span v-show="configImageSettingsClipart.active && !clipartSection && !editImage" :class="`asowp-w-3/4 asowp-text-[${configColors.backgroundButton}] asowp-border asowp-border-solid asowp-border-[${configColors.backgroundButton}] asowp-text-md asowp-p-2 asowp-px-4 asowp-rounded-full asowp-cursor-pointer`">
-                                    <span @click="()=> {showClipartsSection(true); editImage = false}" :class="`asowp-flex asowp-full-center asowp-space-x-3`">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+                            <div :class="`ascwo-bg-[${configColors.backgroundColorHeader}]/10 ascwo-flex ascwo-flex-col ascwo-space-y-3 ascwo-full-center ascwo-p-4 ascwo-m-1`">
+                                <span v-show="configImageSettingsClipart.active && !clipartSection && !editImage" :class="`ascwo-w-3/4 ascwo-text-[${configColors.backgroundButton}] ascwo-border ascwo-border-solid ascwo-border-[${configColors.backgroundButton}] ascwo-text-md ascwo-p-2 ascwo-px-4 ascwo-rounded-full ascwo-cursor-pointer`">
+                                    <span @click="()=> {showClipartsSection(true); editImage = false}" :class="`ascwo-flex ascwo-full-center ascwo-space-x-3`">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-6 ascwo-h-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
                                         </svg>
-                                        <p class="asowp-text-center">Browse archive image</p>
+                                        <p class="ascwo-text-center">Browse archive image</p>
                                     </span>
                                 </span>
 
-                                <span v-show="(clipartSection && !editImage) || editImage" :class="`asowp-w-3/4 asowp-text-[${configColors.backgroundButton}] asowp-border asowp-border-solid asowp-border-[${configColors.backgroundButton}] asowp-text-md asowp-p-2 asowp-px-4 asowp-rounded-full asowp-cursor-pointer`">
-                                    <span @click="()=> {showClipartsSection(false); editImage = false}" :class="`asowp-flex asowp-full-center asowp-space-x-3`">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="asowp-w-5 asowp-h-6">
+                                <span v-show="(clipartSection && !editImage) || editImage" :class="`ascwo-w-3/4 ascwo-text-[${configColors.backgroundButton}] ascwo-border ascwo-border-solid ascwo-border-[${configColors.backgroundButton}] ascwo-text-md ascwo-p-2 ascwo-px-4 ascwo-rounded-full ascwo-cursor-pointer`">
+                                    <span @click="()=> {showClipartsSection(false); editImage = false}" :class="`ascwo-flex ascwo-full-center ascwo-space-x-3`">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="ascwo-w-5 ascwo-h-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                                         </svg>
-                                        <p class="asowp-text-center">Edit image</p>
+                                        <p class="ascwo-text-center">Edit image</p>
                                     </span>
                                 </span>
 
-                                <label v-if="configImageSettings.enableUploadImage  && !clipartSection && !editImage" :class="`asowp-w-3/4 asowp-inputImage asowp-full-center asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-text-md`">
-                                    <input @click="addImageToSign()" class="asowp-hidden" id="asowp-image-input" type="file" name="asowp-pickImages" :accept="configImagesFormat" style="display: none;"/>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+                                <label v-if="configImageSettings.enableUploadImage  && !clipartSection && !editImage" :class="`ascwo-w-3/4 ascwo-inputImage ascwo-full-center ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] ascwo-text-md`">
+                                    <input @click="addImageToSign()" class="ascwo-hidden" id="ascwo-image-input" type="file" name="ascwo-pickImages" :accept="configImagesFormat" style="display: none;"/>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-6 ascwo-h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                                     </svg>
                                     <p>Upload image</p>
                                 </label>
                             </div>
 
-                            <div class="asowp-h-full asowp-space-y-2 asowp-p-2 asowp-overflow-auto asowp-scrollBar">
+                            <div class="ascwo-h-full ascwo-space-y-2 ascwo-p-2 ascwo-overflow-auto ascwo-scrollBar">
 
-                                <div v-show="!editImage && !clipartSection" class="asowp-p-2">
-                                    <div v-if="usedImages.length > 0" class="asowp-space-y-1">
-                                        <p class="asowp-font-medium">Currently in use</p>
-                                        <div class="asowp-flex asowp-items-center asowp-flex-wrap asowp-gap-2 asowp-p-1">
+                                <div v-show="!editImage && !clipartSection" class="ascwo-p-2">
+                                    <div v-if="usedImages.length > 0" class="ascwo-space-y-1">
+                                        <p class="ascwo-font-medium">Currently in use</p>
+                                        <div class="ascwo-flex ascwo-items-center ascwo-flex-wrap ascwo-gap-2 ascwo-p-1">
                                             <div v-for="(usedImage, index) in usedImages">
-                                                <div @click="editAddedImage(usedImage.object)" :class="`${activeFace == usedImage.object.canvasName ? `asowp-cursor-pointer` : `asowp-cursor-not-allowed`} asowp-w-20 asowp-h-20 asowp-flex asowp-flex-col asowp-space-y-2 asowp-full-center asowp-p-1 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] asowp-border asowp-cursor-pointer asowp-base-animation`">
-                                                    <img :src="usedImage.url" alt="" class="asowp-w-auto asowp-h-full">
-                                                    <p class="asowp-text-xs asowp-font-medium">Edit image</p>
+                                                <div @click="editAddedImage(usedImage.object)" :class="`${activeFace == usedImage.object.canvasName ? `ascwo-cursor-pointer` : `ascwo-cursor-not-allowed`} ascwo-w-20 ascwo-h-20 ascwo-flex ascwo-flex-col ascwo-space-y-2 ascwo-full-center ascwo-p-1 ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] ascwo-border ascwo-cursor-pointer ascwo-base-animation`">
+                                                    <img :src="usedImage.url" alt="" class="ascwo-w-auto ascwo-h-full">
+                                                    <p class="ascwo-text-xs ascwo-font-medium">Edit image</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div v-show="recentlyUsedImages.length > 0" class="asowp-space-y-1">
-                                        <p class="asowp-font-medium">Reccently used</p>
-                                        <div class="asowp-flex asowp-items-center asowp-flex-wrap asowp-gap-2 asowp-p-1">
+                                    <div v-show="recentlyUsedImages.length > 0" class="ascwo-space-y-1">
+                                        <p class="ascwo-font-medium">Reccently used</p>
+                                        <div class="ascwo-flex ascwo-items-center ascwo-flex-wrap ascwo-gap-2 ascwo-p-1">
                                             <div v-for="(image, index) in recentlyUsedImages">
-                                                <div @click="addImageToSign(image.url, image.object.price)" :class="`asowp-relative asowp-flex asowp-flex-col asowp-space-y-2 asowp-w-20 asowp-h-20 asowp-full-center asowp-p-1 hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}]/20 asowp-border asowp-cursor-pointer asowp-base-animation`">
-                                                    <img :src="image.url" alt="" class="asowp-w-auto asowp-h-full">
-                                                    <!-- <img @click="addImageToSign(image.url, image.object.price)" :src="image.url" alt="" class="asowp-w-20 asowp-h-auto"> -->
-                                                    <!-- <span @click="deleteFromRecentlyUsed(index, recentlyUsedImages)" :class="`asowp-absolute asowp-top-0 asowp-right-0 asowp-translate-y-[-50%] asowp-translate-x-[20%] asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-flex asowp-p-0.5 asowp-rounded-md`">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="asowp-w-4 asowp-h-4">
+                                                <div @click="addImageToSign(image.url, image.object.price)" :class="`ascwo-relative ascwo-flex ascwo-flex-col ascwo-space-y-2 ascwo-w-20 ascwo-h-20 ascwo-full-center ascwo-p-1 hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}]/20 ascwo-border ascwo-cursor-pointer ascwo-base-animation`">
+                                                    <img :src="image.url" alt="" class="ascwo-w-auto ascwo-h-full">
+                                                    <!-- <img @click="addImageToSign(image.url, image.object.price)" :src="image.url" alt="" class="ascwo-w-20 ascwo-h-auto"> -->
+                                                    <!-- <span @click="deleteFromRecentlyUsed(index, recentlyUsedImages)" :class="`ascwo-absolute ascwo-top-0 ascwo-right-0 ascwo-translate-y-[-50%] ascwo-translate-x-[20%] ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] ascwo-flex ascwo-p-0.5 ascwo-rounded-md`">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="ascwo-w-4 ascwo-h-4">
                                                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                                                         </svg>
                                                     </span> -->
@@ -1346,12 +1346,12 @@
                                     </div>
                                 </div>
 
-                                <!-- <div v-show="IAGenerate" class="asowp-p-2 asowp-space-y-2">
+                                <!-- <div v-show="IAGenerate" class="ascwo-p-2 ascwo-space-y-2">
 
-                                    <textarea name="" id="asowp-iaImage-prompt" :disabled="route.name !== 'template-maker' && selectedText.object.editable === false" class="asowp-h-24 asowp-w-full asowp-border asowp-border-zinc-600 asowp-p-1 asowp-rounded-sm" v-model="prompt" style="border-radius: 6px"></textarea>
+                                    <textarea name="" id="ascwo-iaImage-prompt" :disabled="route.name !== 'template-maker' && selectedText.object.editable === false" class="ascwo-h-24 ascwo-w-full ascwo-border ascwo-border-zinc-600 ascwo-p-1 ascwo-rounded-sm" v-model="prompt" style="border-radius: 6px"></textarea>
 
-                                    <span @click="generateImage()" :class="`asowp-w-fit asowp-flex asowp-full-center asowp-space-x-3 asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-border asowp-text-white asowp-text-md asowp-p-1 asowp-px-4 asowp-rounded-full asowp-cursor-pointer asowp-base-animation`">
-                                        <p class="asowp-text-center">{{ loading ? 'Génération...' : 'Générer' }}</p>
+                                    <span @click="generateImage()" :class="`ascwo-w-fit ascwo-flex ascwo-full-center ascwo-space-x-3 ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] ascwo-border ascwo-text-white ascwo-text-md ascwo-p-1 ascwo-px-4 ascwo-rounded-full ascwo-cursor-pointer ascwo-base-animation`">
+                                        <p class="ascwo-text-center">{{ loading ? 'Génération...' : 'Générer' }}</p>
                                     </span>
 
                                     <div v-if="imageUrl" class="mt-4">
@@ -1362,36 +1362,36 @@
                                 </div> -->
 
                                 <div v-if="clipartSection && !editImage">
-                                    <div v-if="configImageSettingsClipart.active" class="asowp-space-y-3">
-                                        <div class="asowp-flex asowp-flex-col asowp-space-y-2">
+                                    <div v-if="configImageSettingsClipart.active" class="ascwo-space-y-3">
+                                        <div class="ascwo-flex ascwo-flex-col ascwo-space-y-2">
                                             <div v-for="(clipart, index) in allClipart">
-                                                <div @click="showClipartImages(clipart.cliparts, index)" :class="`asowp-flex asowp-flex-col asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-space-y-3 asowp-justify-start asowp-py-3 asowp-px-2 asowp-rounded-lg asowp-cursor-pointer asowp-base-animation`">
-                                                    <div class="asowp-text-base asowp-font-semibold asowp-flex asowp-justify-between asowp-items-center">
+                                                <div @click="showClipartImages(clipart.cliparts, index)" :class="`ascwo-flex ascwo-flex-col ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] ascwo-space-y-3 ascwo-justify-start ascwo-py-3 ascwo-px-2 ascwo-rounded-lg ascwo-cursor-pointer ascwo-base-animation`">
+                                                    <div class="ascwo-text-base ascwo-font-semibold ascwo-flex ascwo-justify-between ascwo-items-center">
                                                         <p>{{clipart.title}}</p>
-                                                        <span :class="`asowp-flex asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]`">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" class="asowp-w-7 asowp-h-7">
+                                                        <span :class="`ascwo-flex ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]`">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" class="ascwo-w-7 ascwo-h-7">
                                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
                                                             </svg>
                                                         </span>
                                                     </div>
-                                                    <p class="asowp-text-xs">{{clipart.description}}</p>
+                                                    <p class="ascwo-text-xs">{{clipart.description}}</p>
                                                 </div>
-                                                <div v-show="showClipart && clipartId == index" :class="`asowp-relative lg:asowp-absolute lg:asowp-top-0 lg:asowp-right-0 lg:asowp-translate-x-[101%] lg:asowp-w-full lg:asowp-h-[90%] asowp-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.textColor}] lg:asowp-shadow-xl`">
-                                                    <div :class="`asowp-flex asowp-flex-col asowp-w-full asowp-h-full asowp-overflow-auto asowp-scrollBar`">
-                                                        <div class="asowp-flex asowp-flex-wrap asowp-gap-2 asowp-p-1">
+                                                <div v-show="showClipart && clipartId == index" :class="`ascwo-relative lg:ascwo-absolute lg:ascwo-top-0 lg:ascwo-right-0 lg:ascwo-translate-x-[101%] lg:ascwo-w-full lg:ascwo-h-[90%] ascwo-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.textColor}] lg:ascwo-shadow-xl`">
+                                                    <div :class="`ascwo-flex ascwo-flex-col ascwo-w-full ascwo-h-full ascwo-overflow-auto ascwo-scrollBar`">
+                                                        <div class="ascwo-flex ascwo-flex-wrap ascwo-gap-2 ascwo-p-1">
                                                             <div v-for="(image, id) in currentClipart">
-                                                                <div @click="addImageToSign(image.url, image.additionalPrice, id)" class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-full-center asowp-p-1 asowp-border asowp-cursor-pointer">
-                                                                    <img :src="image.url" alt="" :class="`asowp-w-20 asowp-h-20 asowp-border asowp-border-solid asowp-border-[${configColors.optionsSideBar.options.modals.option.textColor}] asowp-p-1 asowp-rounded-md`">
-                                                                    <p class="asowp-text-sm asowp-font-medium">{{image.title}}</p>
-                                                                    <p v-if="image.additionalPrice > 0" class="asowp-text-[11px] asowp-leading-normal">({{image.additionalPrice}} {{props.currency}})</p>
-                                                                    <p v-if="!image.additionalPrice > 0" class="asowp-text-[11px] asowp-leading-normal asowp-invisible">none</p>
+                                                                <div @click="addImageToSign(image.url, image.additionalPrice, id)" class="ascwo-flex ascwo-flex-col ascwo-space-y-2 ascwo-full-center ascwo-p-1 ascwo-border ascwo-cursor-pointer">
+                                                                    <img :src="image.url" alt="" :class="`ascwo-w-20 ascwo-h-20 ascwo-border ascwo-border-solid ascwo-border-[${configColors.optionsSideBar.options.modals.option.textColor}] ascwo-p-1 ascwo-rounded-md`">
+                                                                    <p class="ascwo-text-sm ascwo-font-medium">{{image.title}}</p>
+                                                                    <p v-if="image.additionalPrice > 0" class="ascwo-text-[11px] ascwo-leading-normal">({{image.additionalPrice}} {{props.currency}})</p>
+                                                                    <p v-if="!image.additionalPrice > 0" class="ascwo-text-[11px] ascwo-leading-normal ascwo-invisible">none</p>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="asowp-absolute asowp-top-0 asowp-right-0 asowp-w-fit asowp-h-fit asowp-cursor-pointer">
-                                                        <span @click="()=>{showClipart = false}" :class="`asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-p-1 asowp-base-animation`">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                                                    <div class="ascwo-absolute ascwo-top-0 ascwo-right-0 ascwo-w-fit ascwo-h-fit ascwo-cursor-pointer">
+                                                        <span @click="()=>{showClipart = false}" :class="`ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] ascwo-p-1 ascwo-base-animation`">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                                                             </svg>
                                                         </span>
@@ -1402,28 +1402,28 @@
                                     </div>
                                 </div>
 
-                                <div v-show="editImage" class="asowp-p-2 asowp-space-y-2">
+                                <div v-show="editImage" class="ascwo-p-2 ascwo-space-y-2">
                                     <div>
-                                        <p class="asowp-font-medium">Size</p>
-                                        <div class="asowp-p-2 asowp-space-y-1">
-                                            <!-- <label class="asowp-text-xs" for="asowp-image-sizeWidth">width</label> -->
-                                            <input :disabled="route.name !== 'template-maker' && selectedImage.object.lockScale" type="range" name="asowp-imageSize" id="asowp-image-sizeWidth" :class="`${route.name !== 'template-maker' && selectedImage.object.lockScale ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'} asowp-w-full`" :min="0.1" :max="1.4" :step="0.05" :value="0.4" @input="changeImageWidth">
-                                            <!-- <label class="asowp-text-xs" for="asowp-image-sizeHeight">height</label>
-                                            <input type="range" name="asowp-imageSize" id="asowp-image-sizeHeight" class="asowp-w-full" :min="0.1" :max="1.4" :step="0.05" :value="0.4" @change="changeImageHeight"> -->
-                                            <p class="asowp-flex asowp-full-center asowp-font-medium"> <span id="image-width"></span> x <span id="image-height"></span> </p>
+                                        <p class="ascwo-font-medium">Size</p>
+                                        <div class="ascwo-p-2 ascwo-space-y-1">
+                                            <!-- <label class="ascwo-text-xs" for="ascwo-image-sizeWidth">width</label> -->
+                                            <input :disabled="route.name !== 'template-maker' && selectedImage.object.lockScale" type="range" name="ascwo-imageSize" id="ascwo-image-sizeWidth" :class="`${route.name !== 'template-maker' && selectedImage.object.lockScale ? 'ascwo-cursor-not-allowed' : 'ascwo-cursor-pointer'} ascwo-w-full`" :min="0.1" :max="1.4" :step="0.05" :value="0.4" @input="changeImageWidth">
+                                            <!-- <label class="ascwo-text-xs" for="ascwo-image-sizeHeight">height</label>
+                                            <input type="range" name="ascwo-imageSize" id="ascwo-image-sizeHeight" class="ascwo-w-full" :min="0.1" :max="1.4" :step="0.05" :value="0.4" @change="changeImageHeight"> -->
+                                            <p class="ascwo-flex ascwo-full-center ascwo-font-medium"> <span id="image-width"></span> x <span id="image-height"></span> </p>
                                         </div>
                                     </div>
 
-                                    <div class="asowp-space-y-1" v-if="activeImageType === 'svg'">
-                                        <p class="asowp-font-medium">{{ configVisualiserTexts.textColor && configVisualiserTexts.textColor.trim() !== '' ? configVisualiserTexts.textColor : 'Color' }}</p>
-                                        <div class="asowp-w-full asowp-flex asowp-flex-wrap asowp-gap-2 asowp-items-center asowp-p-1 asowp-border">
+                                    <div class="ascwo-space-y-1" v-if="activeImageType === 'svg'">
+                                        <p class="ascwo-font-medium">{{ configVisualiserTexts.textColor && configVisualiserTexts.textColor.trim() !== '' ? configVisualiserTexts.textColor : 'Color' }}</p>
+                                        <div class="ascwo-w-full ascwo-flex ascwo-flex-wrap ascwo-gap-2 ascwo-items-center ascwo-p-1 ascwo-border">
                                             <div v-for="(color, index) in configImageSettings.colors" class="">
-                                                <div @click="changeSvgColor(color.codeHex)" :class="`${currentSvgColor === color.codeHex ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-8 asowp-h-8 asowp-bg-[${color.codeHex}] asowp-rounded-sm asowp-border asowp-cursor-pointer`"></div>
+                                                <div @click="changeSvgColor(color.codeHex)" :class="`${currentSvgColor === color.codeHex ? `ascwo-ring-2 ascwo-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } ascwo-w-8 ascwo-h-8 ascwo-bg-[${color.codeHex}] ascwo-rounded-sm ascwo-border ascwo-cursor-pointer`"></div>
                                             </div>
-                                            <div :class="`asowp-relative`">
-                                                <input id="asowp-setSvgColor" type="color" class="asowp-inputColor-hide asowp-absolute asowp-top-[50%]" @input="changeSvgColor($event.target.value)" />
-                                                <label for="asowp-setSvgColor" v-if="configImageSettings.enableCustomColor" :class="`${activeSignColor == 'custom' ? `asowp-border-4 asowp-border-solid asowp-border-[#016464]` : `` } asowp-w-8 asowp-h-8 asowp-flex asowp-full-center asowp-overflow-hidden asowp-cursor-pointer`">
-                                                    <svg v-if="configImageSettings.colorsPrevImg == ''" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="asowp-w-full asowp-h-full">
+                                            <div :class="`ascwo-relative`">
+                                                <input id="ascwo-setSvgColor" type="color" class="ascwo-inputColor-hide ascwo-absolute ascwo-top-[50%]" @input="changeSvgColor($event.target.value)" />
+                                                <label for="ascwo-setSvgColor" v-if="configImageSettings.enableCustomColor" :class="`${activeSignColor == 'custom' ? `ascwo-border-4 ascwo-border-solid ascwo-border-[#016464]` : `` } ascwo-w-8 ascwo-h-8 ascwo-flex ascwo-full-center ascwo-overflow-hidden ascwo-cursor-pointer`">
+                                                    <svg v-if="configImageSettings.colorsPrevImg == ''" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="ascwo-w-full ascwo-h-full">
                                                         <g fill="none" fill-rule="evenodd">
                                                             <path d="M22.015.061H.95a.866.866 0 0 0-.614.256l21.68 21.68V.061z" fill="#CE1128"></path>
                                                             <path d="M.335.317A.867.867 0 0 0 .08.93v21.066h21.935L.335.317z" fill="#ED2E8A"></path>
@@ -1435,41 +1435,41 @@
                                                             <path d="M.335 43.678a.867.867 0 0 0 .614.255h21.066V21.997L.335 43.677z" fill="#126EB2"></path>
                                                         </g>
                                                     </svg>
-                                                    <img v-if="configImageSettings.colorsPrevImg != ''" :src="configImageSettings.colorsPrevImg" class="asowp-w-full asowp-h-full">
+                                                    <img v-if="configImageSettings.colorsPrevImg != ''" :src="configImageSettings.colorsPrevImg" class="ascwo-w-full ascwo-h-full">
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div v-if="configImageSettingsFilters.active && activeImageType !== 'svg'" class="asowp-space-y-2">
-                                        <p class="asowp-font-medium">Filters</p>
-                                        <div class="asowp-w-full asowp-flex asowp-items-center">
-                                            <div class="asowp-flex asowp-flex-wrap asowp-gap-2">
+                                    <div v-if="configImageSettingsFilters.active && activeImageType !== 'svg'" class="ascwo-space-y-2">
+                                        <p class="ascwo-font-medium">Filters</p>
+                                        <div class="ascwo-w-full ascwo-flex ascwo-items-center">
+                                            <div class="ascwo-flex ascwo-flex-wrap ascwo-gap-2">
                                                 <div v-for="filter in validFilter">
-                                                    <span @click="selectImageFilter(filter.name)" :class="`${setFilter[filter.value] ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-4 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-base-animation asowp-cursor-pointer`">
-                                                        <div class="asowp-p-0.5 asowp-rounded-md" :class="`${setFilter[filter.value] ? `asowp-ring-1 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-ring-[${configColors.optionsSideBar.options.modals.option.textColor}]`}`">
-                                                            <img v-if="filter.name == 'Blur'" src="../../../../../assets/images/filters/im_blueify_filter.png" class="asowp-flex asowp-h-20 asowp-w-20 asowp-rounded-md">
-                                                            <img v-if="filter.name == 'Greyscale'" src="../../../../../assets/images/filters/im_greyscale_filter.png" class="asowp-flex asowp-h-20 asowp-w-20 asowp-rounded-md">
-                                                            <img v-if="filter.name == 'Sepia'" src="../../../../../assets/images/filters/im_sepia_filter.png" class="asowp-flex asowp-h-20 asowp-w-20 asowp-rounded-md">
-                                                            <img v-if="filter.name == 'Embross'" src="../../../../../assets/images/filters/im_emboss_filter.png" class="asowp-flex asowp-h-20 asowp-w-20 asowp-rounded-md">
-                                                            <img v-if="filter.name == 'Sharpen'" src="../../../../../assets/images/filters/im_sharpen_filter.png" class="asowp-flex asowp-h-20 asowp-w-20 asowp-rounded-md">
-                                                            <img v-if="filter.name == 'Greenify'" src="../../../../../assets/images/filters/im_greenify_filter.png" class="asowp-flex asowp-h-20 asowp-w-20 asowp-rounded-md">
-                                                            <img v-if="filter.name == 'Pinkify'" src="../../../../../assets/images/filters/im_pinkify_filter.png" class="asowp-flex asowp-h-20 asowp-w-20 asowp-rounded-md">
-                                                            <img v-if="filter.name == 'Orangeify'" src="../../../../../assets/images/filters/im_orangeify_filter.png" class="asowp-flex asowp-h-20 asowp-w-20 asowp-rounded-md">
-                                                            <img v-if="filter.name == 'Blueify'" src="../../../../../assets/images/filters/im_blueify_filter.png" class="asowp-flex asowp-h-20 asowp-w-20 asowp-rounded-md">
+                                                    <span @click="selectImageFilter(filter.name)" :class="`${setFilter[filter.value] ? `ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : ``} ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-4 ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-base-animation ascwo-cursor-pointer`">
+                                                        <div class="ascwo-p-0.5 ascwo-rounded-md" :class="`${setFilter[filter.value] ? `ascwo-ring-1 ascwo-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `ascwo-ring-[${configColors.optionsSideBar.options.modals.option.textColor}]`}`">
+                                                            <img v-if="filter.name == 'Blur'" src="../../../../../assets/images/filters/im_blueify_filter.png" class="ascwo-flex ascwo-h-20 ascwo-w-20 ascwo-rounded-md">
+                                                            <img v-if="filter.name == 'Greyscale'" src="../../../../../assets/images/filters/im_greyscale_filter.png" class="ascwo-flex ascwo-h-20 ascwo-w-20 ascwo-rounded-md">
+                                                            <img v-if="filter.name == 'Sepia'" src="../../../../../assets/images/filters/im_sepia_filter.png" class="ascwo-flex ascwo-h-20 ascwo-w-20 ascwo-rounded-md">
+                                                            <img v-if="filter.name == 'Embross'" src="../../../../../assets/images/filters/im_emboss_filter.png" class="ascwo-flex ascwo-h-20 ascwo-w-20 ascwo-rounded-md">
+                                                            <img v-if="filter.name == 'Sharpen'" src="../../../../../assets/images/filters/im_sharpen_filter.png" class="ascwo-flex ascwo-h-20 ascwo-w-20 ascwo-rounded-md">
+                                                            <img v-if="filter.name == 'Greenify'" src="../../../../../assets/images/filters/im_greenify_filter.png" class="ascwo-flex ascwo-h-20 ascwo-w-20 ascwo-rounded-md">
+                                                            <img v-if="filter.name == 'Pinkify'" src="../../../../../assets/images/filters/im_pinkify_filter.png" class="ascwo-flex ascwo-h-20 ascwo-w-20 ascwo-rounded-md">
+                                                            <img v-if="filter.name == 'Orangeify'" src="../../../../../assets/images/filters/im_orangeify_filter.png" class="ascwo-flex ascwo-h-20 ascwo-w-20 ascwo-rounded-md">
+                                                            <img v-if="filter.name == 'Blueify'" src="../../../../../assets/images/filters/im_blueify_filter.png" class="ascwo-flex ascwo-h-20 ascwo-w-20 ascwo-rounded-md">
                                                         </div>
-                                                        <p class="asowp-text-xs asowp-font-semibold">{{filter.name}}</p>
+                                                        <p class="ascwo-text-xs ascwo-font-semibold">{{filter.name}}</p>
                                                     </span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="asowp-space-y-3">
-                                        <!-- <p class="asowp-font-medium">Other custom</p> -->
-                                        <div class="asowp-w-full asowp-flex asowp-items-center">
-                                            <div class="asowp-flex asowp-flex-wrap asowp-gap-3">
-                                                <span @click="removeBackground()" :class="`${activeImgWithBackground? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                                                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" class="asowp-w-7 asowp-h-7" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+                                    <div class="ascwo-space-y-3">
+                                        <!-- <p class="ascwo-font-medium">Other custom</p> -->
+                                        <div class="ascwo-w-full ascwo-flex ascwo-items-center">
+                                            <div class="ascwo-flex ascwo-flex-wrap ascwo-gap-3">
+                                                <span @click="removeBackground()" :class="`${activeImgWithBackground? `ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : ``} ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1 ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-cursor-pointer ascwo-base-animation`">
+                                                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" class="ascwo-w-7 ascwo-h-7" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
                                                         <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none">
                                                             <path d="M160 2560 l0 -1840 2400 0 2400 0 0 1840 0 1840 -2400 0 -2400 0 0 -1840z m4640 458 l0 -1223 -480 480 -480 480 -460 -460 -460 -460 -660 660 -660 660 -640 -640 -640 -640 0 1183 0 1182 2240 0 2240 0 0 -1222z"/>
                                                             <path d="M480 3920 l0 -160 160 0 160 0 0 -160 0 -160 -160 0 -160 0 0 -160 0
@@ -1496,13 +1496,13 @@
                                                             <path d="M2400 3280 l0 -160 160 0 160 0 0 -160 0 -160 160 0 160 0 0 160 0 160 160 0 160 0 0 160 0 160 -160 0 -160 0 0 -160 0 -160 -160 0 -160 0 0 160 0 160 -160 0 -160 0 0 -160z"/>
                                                         </g>
                                                     </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">
+                                                    <p class="ascwo-text-xs ascwo-font-semibold">
                                                         Remove Bg
                                                     </p>
                                                 </span>
 
-                                                <span @click="cloneObject()" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                                                    <svg viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="asowp-w-7 asowp-h-7">
+                                                <span @click="cloneObject()" :class="`ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1 ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-cursor-pointer ascwo-base-animation`">
+                                                    <svg viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="ascwo-w-7 ascwo-h-7">
                                                         <g clip-path="url(#clip0_65_739)">
                                                             <path d="M6 6.5H22V10.5H24V6.5C24 5.96957 23.7893 5.46086 23.4142 5.08579C23.0391 4.71071 22.5304 4.5 22 4.5H6C5.46957 4.5 4.96086 4.71071 4.58579 5.08579C4.21071 5.46086 4 5.96957 4 6.5V22.5C4 23.0304 4.21071 23.5391 4.58579 23.9142C4.96086 24.2893 5.46957 24.5 6 24.5H10V22.5H6V6.5Z" fill="currentColor"/>
                                                             <path d="M30 12.5H14C13.4696 12.5 12.9609 12.7107 12.5858 13.0858C12.2107 13.4609 12 13.9696 12 14.5V30.5C12 31.0304 12.2107 31.5391 12.5858 31.9142C12.9609 32.2893 13.4696 32.5 14 32.5H30C30.5304 32.5 31.0391 32.2893 31.4142 31.9142C31.7893 31.5391 32 31.0304 32 30.5V14.5C32 13.9696 31.7893 13.4609 31.4142 13.0858C31.0391 12.7107 30.5304 12.5 30 12.5ZM30 30.5H14V14.5H30V30.5Z" fill="currentColor"/>
@@ -1514,57 +1514,57 @@
                                                             </clipPath>
                                                         </defs>
                                                     </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">
+                                                    <p class="ascwo-text-xs ascwo-font-semibold">
                                                         {{ configVisualiserTexts.textCanvasClone && configVisualiserTexts.textCanvasClone.trim() !== '' ? configVisualiserTexts.textCanvasClone : 'Clone' }}
                                                     </p>
                                                 </span>
 
-                                                <span @click="deleteObject()" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-7 asowp-h-7">
+                                                <span @click="deleteObject()" :class="`ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1 ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-cursor-pointer ascwo-base-animation`">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-7 ascwo-h-7">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                                                     </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">
+                                                    <p class="ascwo-text-xs ascwo-font-semibold">
                                                         {{ configVisualiserTexts.textCanvasDelete && configVisualiserTexts.textCanvasDelete.trim() !== '' ? configVisualiserTexts.textCanvasDelete : 'Delete' }}
                                                     </p>
                                                 </span>
 
-                                                <span @click="turnLeftImage()" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-4 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                                                <span @click="turnLeftImage()" :class="`ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-4 ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-cursor-pointer ascwo-base-animation`">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
                                                     </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">Turn left</p>
+                                                    <p class="ascwo-text-xs ascwo-font-semibold">Turn left</p>
                                                 </span>
 
-                                                <span @click="turnRightImage()" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-4 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                                                <span @click="turnRightImage()" :class="`ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-4 ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-cursor-pointer ascwo-base-animation`">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="m15 15 6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3" />
                                                     </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">Turn right</p>
+                                                    <p class="ascwo-text-xs ascwo-font-semibold">Turn right</p>
                                                 </span>
 
-                                                <span @click="flipImage()" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-4 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                                                    <svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="asowp-w-5 asowp-h-5">
+                                                <span @click="flipImage()" :class="`ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-4 ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-cursor-pointer ascwo-base-animation`">
+                                                    <svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="ascwo-w-5 ascwo-h-5">
                                                         <path d="m10.562 13.984c-3.1094-0.2241-5.5625-2.8177-5.5625-5.9843 0-3.3137 2.6863-6 6-6h7c0.5523 0 1 0.44771 1 1v18c0 0.5523-0.4477 1-1 1s-1-0.4477-1-1v-7h-4.4444l-3.3144 7.4573c-0.14667 0.33-0.47392 0.5427-0.83505 0.5427-0.66129 0-1.1036-0.6807-0.83505-1.2849l2.9914-6.7308zm0.4375-1.9843c-2.2091 0-4-1.7909-4-4 0-2.2091 1.7909-4 4-4h6v8h-6z" clip-rule="evenodd" fill="currentColor" fill-rule="evenodd"></path>
                                                     </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">Flip</p>
+                                                    <p class="ascwo-text-xs ascwo-font-semibold">Flip</p>
                                                 </span>
 
-                                                <span  @click="moveObject('up')" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="asowp-w-7 asowp-h-7">
+                                                <span  @click="moveObject('up')" :class="`ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1 ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-cursor-pointer ascwo-base-animation`">
+                                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="ascwo-w-7 ascwo-h-7">
                                                         <path d="m12.707 3.2929c-0.3905-0.39052-1.0237-0.39052-1.4142 0l-4 4c-0.39052 0.39053-0.39052 1.0237 0 1.4142 0.39053 0.39052 1.0237 0.39052 1.4142 0l2.2929-2.2929v7.5858c0 0.5523 0.4477 1 1 1s1-0.4477 1-1v-7.5858l2.2929 2.2929c0.3905 0.39052 1.0237 0.39052 1.4142 0 0.3905-0.39053 0.3905-1.0237 0-1.4142l-4-4z" fill="currentColor"></path>
                                                         <path d="m3.1056 13.211 5.8944-2.9472v2.2361l-5 2.5 8 4 8-4-5-2.5v-2.2361l5.8944 2.9472c0.6776 0.3388 1.1056 1.0313 1.1056 1.7889 0 0.7575-0.428 1.4501-1.1056 1.7888l-8 4c-0.563 0.2816-1.2258 0.2816-1.7888 0l-8-4c-0.67757-0.3387-1.1056-1.0313-1.1056-1.7888 0-0.7576 0.428-1.4501 1.1056-1.7889z" fill="currentColor"></path>
                                                     </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">
+                                                    <p class="ascwo-text-xs ascwo-font-semibold">
                                                         {{ configVisualiserTexts.textMoveUp && configVisualiserTexts.textMoveUp.trim() !== '' ? configVisualiserTexts.textMoveUp : 'Move up' }}
                                                     </p>
                                                 </span>
 
-                                                <span  @click="moveObject('down')" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="asowp-w-7 asowp-h-7">
+                                                <span  @click="moveObject('down')" :class="`ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-1 ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-cursor-pointer ascwo-base-animation`">
+                                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="ascwo-w-7 ascwo-h-7">
                                                         <path d="m12.707 20.707c-0.3905 0.3905-1.0237 0.3905-1.4142 0l-4-4c-0.39052-0.3905-0.39052-1.0237 0-1.4142 0.39053-0.3905 1.0237-0.3905 1.4142 0l2.2929 2.2929v-7.5858c0-0.55228 0.4477-1 1-1s1 0.44772 1 1v7.5858l2.2929-2.2929c0.3905-0.3905 1.0237-0.3905 1.4142 0s0.3905 1.0237 0 1.4142l-4 4z" fill="currentColor"></path>
                                                         <path d="m3.1056 10.789 5.8944 2.9472v-2.2361l-5-2.5 8-4 8 4-5 2.5v2.2361l5.8944-2.9472c0.6776-0.3388 1.1056-1.0314 1.1056-1.7889s-0.428-1.4501-1.1056-1.7888l-8-4c-0.563-0.28152-1.2258-0.28152-1.7888 0l-8 4c-0.67757 0.33878-1.1056 1.0313-1.1056 1.7888s0.428 1.4501 1.1056 1.7889z" fill="currentColor"></path>
                                                     </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">
+                                                    <p class="ascwo-text-xs ascwo-font-semibold">
                                                         {{ configVisualiserTexts.textMoveDown && configVisualiserTexts.textMoveDown.trim() !== '' ? configVisualiserTexts.textMoveDown : 'Move down' }}
                                                     </p>
                                                 </span>
@@ -1574,91 +1574,91 @@
 
                                 </div>
                             </div>
-                            <span v-if="allowNextButton && lastActiveOption != 'images'" @click="nextOption('images')" :class="`asowp-absolute asowp-bottom-0 asowp-translate-y-[100%] asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
+                            <span v-if="allowNextButton && lastActiveOption != 'images'" @click="nextOption('images')" :class="`ascwo-absolute ascwo-bottom-0 ascwo-translate-y-[100%] ascwo-left-0 ascwo-w-full ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold ascwo-text-md ascwo-full-center ascwo-border ascwo-py-1 ascwo-base-animation ascwo-cursor-pointer`">
                                 Next
                             </span>
                         </div>
 
-                        <div v-show="step == 'qr-code'" class="asowp-relative asowp-flex asowp-flex-col lg:asowp-space-y-3 asowp-w-full asowp-h-full" id="asowp-images-section">
-                            <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">Qr Code</p>    
-                            <!-- <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{configVisualiserTexts.textImage}}</p>     -->
+                        <div v-show="step == 'qr-code'" class="ascwo-relative ascwo-flex ascwo-flex-col lg:ascwo-space-y-3 ascwo-w-full ascwo-h-full" id="ascwo-images-section">
+                            <p :class="`ascwo-hidden lg:ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] ascwo-text-lg ascwo-font-semibold ascwo-p-2 ascwo-px-4`">Qr Code</p>    
+                            <!-- <p :class="`ascwo-hidden lg:ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] ascwo-text-lg ascwo-font-semibold ascwo-p-2 ascwo-px-4`">{{configVisualiserTexts.textImage}}</p>     -->
 
-                            <div :class="`asowp-bg-[${configColors.backgroundColorHeader}]/10 asowp-flex asowp-flex-col asowp-space-y-3 asowp-full-center asowp-p-4 asowp-m-1`">
-                                <span v-show="!addQRActive && !selectQRCode" :class="`asowp-w-3/4 asowp-text-[${configColors.backgroundButton}] asowp-border asowp-border-solid asowp-border-[${configColors.backgroundButton}] asowp-text-md asowp-p-2 asowp-px-4 asowp-rounded-full asowp-cursor-pointer`">
-                                    <span @click="()=> {showClipartsSection(false); addQRActive = true}" :class="`asowp-flex asowp-full-center asowp-space-x-3`">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+                            <div :class="`ascwo-bg-[${configColors.backgroundColorHeader}]/10 ascwo-flex ascwo-flex-col ascwo-space-y-3 ascwo-full-center ascwo-p-4 ascwo-m-1`">
+                                <span v-show="!addQRActive && !selectQRCode" :class="`ascwo-w-3/4 ascwo-text-[${configColors.backgroundButton}] ascwo-border ascwo-border-solid ascwo-border-[${configColors.backgroundButton}] ascwo-text-md ascwo-p-2 ascwo-px-4 ascwo-rounded-full ascwo-cursor-pointer`">
+                                    <span @click="()=> {showClipartsSection(false); addQRActive = true}" :class="`ascwo-flex ascwo-full-center ascwo-space-x-3`">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-6 ascwo-h-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 3.75 9.375v-4.5ZM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 0 1-1.125-1.125v-4.5ZM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 13.5 9.375v-4.5Z" />
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 6.75h.75v.75h-.75v-.75ZM6.75 16.5h.75v.75h-.75v-.75ZM16.5 6.75h.75v.75h-.75v-.75ZM13.5 13.5h.75v.75h-.75v-.75ZM13.5 19.5h.75v.75h-.75v-.75ZM19.5 13.5h.75v.75h-.75v-.75ZM19.5 19.5h.75v.75h-.75v-.75ZM16.5 16.5h.75v.75h-.75v-.75Z" />
                                         </svg>
-                                        <p class="asowp-text-center">Add QR code</p>
+                                        <p class="ascwo-text-center">Add QR code</p>
                                     </span>
                                 </span>
 
-                                <span v-show="selectQRCode || addQRActive" :class="`asowp-w-3/4 asowp-text-[${configColors.backgroundButton}] asowp-border asowp-border-solid asowp-border-[${configColors.backgroundButton}] asowp-text-md asowp-p-2 asowp-px-4 asowp-rounded-full asowp-cursor-pointer`">
-                                    <span @click="()=> {selectQRCode = false, addQRActive = false}" :class="`asowp-flex asowp-full-center asowp-space-x-3`">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="asowp-w-5 asowp-h-6">
+                                <span v-show="selectQRCode || addQRActive" :class="`ascwo-w-3/4 ascwo-text-[${configColors.backgroundButton}] ascwo-border ascwo-border-solid ascwo-border-[${configColors.backgroundButton}] ascwo-text-md ascwo-p-2 ascwo-px-4 ascwo-rounded-full ascwo-cursor-pointer`">
+                                    <span @click="()=> {selectQRCode = false, addQRActive = false}" :class="`ascwo-flex ascwo-full-center ascwo-space-x-3`">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="ascwo-w-5 ascwo-h-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                                         </svg>
-                                        <p class="asowp-text-center">Edit QR Code</p>
+                                        <p class="ascwo-text-center">Edit QR Code</p>
                                     </span>
                                 </span>
                             </div>
 
-                            <div class="asowp-h-full asowp-space-y-2 asowp-p-2 asowp-overflow-auto asowp-scrollBar">
+                            <div class="ascwo-h-full ascwo-space-y-2 ascwo-p-2 ascwo-overflow-auto ascwo-scrollBar">
 
                                 <div v-show="!selectQRCode && !addQRActive">
-                                    <p class="asowp-font-medium" v-show="usedQRCodes.length > 0">Codes added</p>
-                                    <div class="asowp-p-2 asowp-space-y-2">
+                                    <p class="ascwo-font-medium" v-show="usedQRCodes.length > 0">Codes added</p>
+                                    <div class="ascwo-p-2 ascwo-space-y-2">
                                         <div v-for="(codeObject, index) in usedQRCodes">
-                                            <div :class="`${activeFace == codeObject.object.canvasName ? `asowp-cursor-pointer` : `asowp-cursor-not-allowed`} asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-border asowp-border-solid asowp-border-[${configColors.optionsSideBar.options.modals.option.textColor}]/20 asowp-p-2 asowp-base-animation asowp-rounded-sm`" @click="editQRCode(codeObject.object, false)">
-                                                <!-- <p class="asowp-text-sm">{{configVisualiserTexts.textOptionText && configVisualiserTexts.textOptionText.trim() != '' ? configVisualiserTexts.textOptionText : 'Text'}} {{ index }}</p> -->
-                                                <p class="asowp-text-sm">Code {{ index }}</p>
-                                                <p class="asowp-text-xs">{{codeObject.text}}</p>
+                                            <div :class="`${activeFace == codeObject.object.canvasName ? `ascwo-cursor-pointer` : `ascwo-cursor-not-allowed`} ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] ascwo-border ascwo-border-solid ascwo-border-[${configColors.optionsSideBar.options.modals.option.textColor}]/20 ascwo-p-2 ascwo-base-animation ascwo-rounded-sm`" @click="editQRCode(codeObject.object, false)">
+                                                <!-- <p class="ascwo-text-sm">{{configVisualiserTexts.textOptionText && configVisualiserTexts.textOptionText.trim() != '' ? configVisualiserTexts.textOptionText : 'Text'}} {{ index }}</p> -->
+                                                <p class="ascwo-text-sm">Code {{ index }}</p>
+                                                <p class="ascwo-text-xs">{{codeObject.text}}</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div v-show="addQRActive" class="asowp-p-2 asowp-space-y-2">
-                                    <!-- <div class="asowp-flex asowp-space-x-2">
-                                        <div @click="()=>{qrCodeType = 'text'}" :class="`${qrCodeType == 'text' ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded asowp-cursor-pointer asowp-base-animation`">Text</div>
-                                        <div @click="()=>{qrCodeType = 'image'}" :class="`${qrCodeType == 'image' ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded asowp-cursor-pointer asowp-base-animation`">Image</div>
+                                <div v-show="addQRActive" class="ascwo-p-2 ascwo-space-y-2">
+                                    <!-- <div class="ascwo-flex ascwo-space-x-2">
+                                        <div @click="()=>{qrCodeType = 'text'}" :class="`${qrCodeType == 'text' ? `ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'ascwo-bg-transparent'} hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  ascwo-text-sm ascwo-p-1 ascwo-px-2 ascwo-rounded ascwo-cursor-pointer ascwo-base-animation`">Text</div>
+                                        <div @click="()=>{qrCodeType = 'image'}" :class="`${qrCodeType == 'image' ? `ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'ascwo-bg-transparent'} hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  ascwo-text-sm ascwo-p-1 ascwo-px-2 ascwo-rounded ascwo-cursor-pointer ascwo-base-animation`">Image</div>
                                     </div> -->
 
                                     <div v-if="qrCodeType == 'text'">
-                                        <!-- <textarea name="" id="asowp-QRCode-text-editor" :disabled="route.name !== 'template-maker' && selectedText.object.editable === false" class="asowp-h-24 asowp-w-full asowp-border asowp-border-zinc-600 asowp-p-1 asowp-rounded-sm" v-model="selectedText.value" @input="changeTextValue" style="border-radius: 6px"></textarea> -->
-                                        <textarea name="" id="asowp-QRCode-text-editor" :disabled="route.name !== 'template-maker' && selectedText.object.editable === false" class="asowp-h-24 asowp-w-full asowp-border asowp-border-zinc-600 asowp-p-1 asowp-rounded-sm"  @input="getQRCodeData" style="border-radius: 6px"></textarea>
+                                        <!-- <textarea name="" id="ascwo-QRCode-text-editor" :disabled="route.name !== 'template-maker' && selectedText.object.editable === false" class="ascwo-h-24 ascwo-w-full ascwo-border ascwo-border-zinc-600 ascwo-p-1 ascwo-rounded-sm" v-model="selectedText.value" @input="changeTextValue" style="border-radius: 6px"></textarea> -->
+                                        <textarea name="" id="ascwo-QRCode-text-editor" :disabled="route.name !== 'template-maker' && selectedText.object.editable === false" class="ascwo-h-24 ascwo-w-full ascwo-border ascwo-border-zinc-600 ascwo-p-1 ascwo-rounded-sm"  @input="getQRCodeData" style="border-radius: 6px"></textarea>
                                     </div>
 
-                                    <span @click="addQRCode" :class="`asowp-w-fit asowp-flex asowp-full-center asowp-space-x-3 asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-border asowp-text-white asowp-text-md asowp-p-1 asowp-px-4 asowp-rounded-full asowp-cursor-pointer asowp-base-animation`">
-                                        <p class="asowp-text-center">Add</p>
+                                    <span @click="addQRCode" :class="`ascwo-w-fit ascwo-flex ascwo-full-center ascwo-space-x-3 ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] ascwo-border ascwo-text-white ascwo-text-md ascwo-p-1 ascwo-px-4 ascwo-rounded-full ascwo-cursor-pointer ascwo-base-animation`">
+                                        <p class="ascwo-text-center">Add</p>
                                     </span>
 
 
                                 </div>
 
-                                <div v-show="selectQRCode" class="asowp-p-2 asowp-space-y-2">
+                                <div v-show="selectQRCode" class="ascwo-p-2 ascwo-space-y-2">
                                     <div>
-                                        <!-- <textarea name="" id="asowp-QRCode-text-editor" :disabled="route.name !== 'template-maker' && selectedText.object.editable === false" class="asowp-h-24 asowp-w-full asowp-border asowp-border-zinc-600 asowp-p-1 asowp-rounded-sm" v-model="selectedText.value" @input="changeTextValue" style="border-radius: 6px"></textarea> -->
-                                        <textarea name="qrCode-editor" id="asowp-QRCode-editor" class="asowp-h-24 asowp-w-full asowp-border asowp-border-zinc-600 asowp-p-1 asowp-rounded-sm" v-model="activeQrCodeData"  @input="changeQRCodeValue" style="border-radius: 6px"></textarea>
+                                        <!-- <textarea name="" id="ascwo-QRCode-text-editor" :disabled="route.name !== 'template-maker' && selectedText.object.editable === false" class="ascwo-h-24 ascwo-w-full ascwo-border ascwo-border-zinc-600 ascwo-p-1 ascwo-rounded-sm" v-model="selectedText.value" @input="changeTextValue" style="border-radius: 6px"></textarea> -->
+                                        <textarea name="qrCode-editor" id="ascwo-QRCode-editor" class="ascwo-h-24 ascwo-w-full ascwo-border ascwo-border-zinc-600 ascwo-p-1 ascwo-rounded-sm" v-model="activeQrCodeData"  @input="changeQRCodeValue" style="border-radius: 6px"></textarea>
                                     </div>
 
                                     <div>
-                                        <p class="asowp-font-medium">{{ configVisualiserTexts.textColor && configVisualiserTexts.textColor.trim() !== '' ? configVisualiserTexts.textColor : 'Color' }}</p>
+                                        <p class="ascwo-font-medium">{{ configVisualiserTexts.textColor && configVisualiserTexts.textColor.trim() !== '' ? configVisualiserTexts.textColor : 'Color' }}</p>
                                         
-                                        <div class="asowp-flex asowp-space-x-2">
-                                            <div @click="()=>{activeQrCodeColorPart = 'dark'}" :class="`${activeQrCodeColorPart == 'dark' ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded asowp-cursor-pointer asowp-base-animation`">Dark part</div>
-                                            <div @click="()=>{activeQrCodeColorPart = 'light'}" :class="`${activeQrCodeColorPart == 'light' ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded asowp-cursor-pointer asowp-base-animation`">Light part</div>
+                                        <div class="ascwo-flex ascwo-space-x-2">
+                                            <div @click="()=>{activeQrCodeColorPart = 'dark'}" :class="`${activeQrCodeColorPart == 'dark' ? `ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'ascwo-bg-transparent'} hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  ascwo-text-sm ascwo-p-1 ascwo-px-2 ascwo-rounded ascwo-cursor-pointer ascwo-base-animation`">Dark part</div>
+                                            <div @click="()=>{activeQrCodeColorPart = 'light'}" :class="`${activeQrCodeColorPart == 'light' ? `ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'ascwo-bg-transparent'} hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  ascwo-text-sm ascwo-p-1 ascwo-px-2 ascwo-rounded ascwo-cursor-pointer ascwo-base-animation`">Light part</div>
                                         </div>
-                                        <div class="asowp-w-full asowp-flex asowp-flex-wrap asowp-gap-2 asowp-items-center asowp-p-1 asowp-border">
+                                        <div class="ascwo-w-full ascwo-flex ascwo-flex-wrap ascwo-gap-2 ascwo-items-center ascwo-p-1 ascwo-border">
                                             <div v-for="(color, index) in configTextSettings.colors" class="">
-                                                <div @click="changeQRCodeColor(color.codeHex)" :class="`${(activeQrCodeColorPart === 'dark' && activeQrCodeColor.dark === color.codeHex) || (activeQrCodeColorPart === 'light' && activeQrCodeColor.light === color.codeHex) ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-8 asowp-h-8 asowp-bg-[${color.codeHex}] asowp-rounded-sm asowp-border asowp-cursor-pointer`"></div>
+                                                <div @click="changeQRCodeColor(color.codeHex)" :class="`${(activeQrCodeColorPart === 'dark' && activeQrCodeColor.dark === color.codeHex) || (activeQrCodeColorPart === 'light' && activeQrCodeColor.light === color.codeHex) ? `ascwo-ring-2 ascwo-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } ascwo-w-8 ascwo-h-8 ascwo-bg-[${color.codeHex}] ascwo-rounded-sm ascwo-border ascwo-cursor-pointer`"></div>
                                             </div>
         
-                                            <div :class="`asowp-relative`">
-                                                <input id="asowp-set-QRCodeColor" type="color" class="asowp-inputColor-hide asowp-absolute asowp-top-[50%]" @input="changeQRCodeColor($event.target.value)" />
-                                                <label for="asowp-set-QRCodeColor" v-if="configTextSettings.enableCustomColor" :class="`asowp-w-8 asowp-h-8 asowp-flex asowp-full-center asowp-overflow-hidden asowp-cursor-pointer`">
-                                                    <svg v-if="configTextSettings.colorsPrevImg == ''" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="asowp-w-full asowp-h-full">
+                                            <div :class="`ascwo-relative`">
+                                                <input id="ascwo-set-QRCodeColor" type="color" class="ascwo-inputColor-hide ascwo-absolute ascwo-top-[50%]" @input="changeQRCodeColor($event.target.value)" />
+                                                <label for="ascwo-set-QRCodeColor" v-if="configTextSettings.enableCustomColor" :class="`ascwo-w-8 ascwo-h-8 ascwo-flex ascwo-full-center ascwo-overflow-hidden ascwo-cursor-pointer`">
+                                                    <svg v-if="configTextSettings.colorsPrevImg == ''" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="ascwo-w-full ascwo-h-full">
                                                         <g fill="none" fill-rule="evenodd">
                                                             <path d="M22.015.061H.95a.866.866 0 0 0-.614.256l21.68 21.68V.061z" fill="#CE1128"></path>
                                                             <path d="M.335.317A.867.867 0 0 0 .08.93v21.066h21.935L.335.317z" fill="#ED2E8A"></path>
@@ -1670,7 +1670,7 @@
                                                             <path d="M.335 43.678a.867.867 0 0 0 .614.255h21.066V21.997L.335 43.677z" fill="#126EB2"></path>
                                                         </g>
                                                     </svg>
-                                                    <img v-if="configTextSettings.colorsPrevImg != ''" :src="configTextSettings.colorsPrevImg" class="asowp-w-full asowp-h-full">
+                                                    <img v-if="configTextSettings.colorsPrevImg != ''" :src="configTextSettings.colorsPrevImg" class="ascwo-w-full ascwo-h-full">
                                                 </label>
                                             </div>
                                         </div>
@@ -1678,30 +1678,30 @@
 
                                 </div>
                             </div>
-                            <span v-if="allowNextButton && lastActiveOption != 'qrcodes'" @click="nextOption('qrcodes')" :class="`asowp-absolute asowp-bottom-0 asowp-translate-y-[100%] asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
+                            <span v-if="allowNextButton && lastActiveOption != 'qrcodes'" @click="nextOption('qrcodes')" :class="`ascwo-absolute ascwo-bottom-0 ascwo-translate-y-[100%] ascwo-left-0 ascwo-w-full ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold ascwo-text-md ascwo-full-center ascwo-border ascwo-py-1 ascwo-base-animation ascwo-cursor-pointer`">
                                 Next
                             </span>
                         </div>
         
-                        <div v-show="step == 'add-components'" class="asowp-ralative asowp-flex asowp-flex-col lg:asowp-space-y-1 asowp-w-full asowp-h-full" id="asowp-fixings-section">
-                            <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{addComponentValue.title}}</p>    
+                        <div v-show="step == 'add-components'" class="ascwo-ralative ascwo-flex ascwo-flex-col lg:ascwo-space-y-1 ascwo-w-full ascwo-h-full" id="ascwo-fixings-section">
+                            <p :class="`ascwo-hidden lg:ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] ascwo-text-lg ascwo-font-semibold ascwo-p-2 ascwo-px-4`">{{addComponentValue.title}}</p>    
         
-                            <div v-if="materialType == 'simple'" class="asowp-h-full asowp-p-2 asowp-overflow-auto asowp-scrollBar">
+                            <div v-if="materialType == 'simple'" class="ascwo-h-full ascwo-p-2 ascwo-overflow-auto ascwo-scrollBar">
                                 <div v-for="(option, index) in addComponentValue.options">
-                                    <div class="asowp-space-y-3 asowp-w-full asowp-h-full">
-                                        <input type="radio" :id="'asowp-addOptions' + addComponentValue.title + option.title + index" name="asowp-fixings" class=" peer asowp-hidden" @change="selectAddComponent(addComponentValue.title, option.title, option)">
-                                        <label :for="'asowp-addOptions' + addComponentValue.title + option.title + index" :class="`asowp-flex asowp-full-center asowp-space-x-2 asowp-cursor-pointer asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}]/50  hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-p-2 asowp-base-animation`">
-                                            <div :class="`${option.icon === '' ? `asowp-bg-[${configColors.backgroundColorHeader}]` : `` } asowp-w-1/4 asowp-h-20 asowp-flex asowp-full-center`">
-                                                <img v-if="option.icon != ''" :src="option.icon" class="asowp-w-auto asowp-h-full" />
+                                    <div class="ascwo-space-y-3 ascwo-w-full ascwo-h-full">
+                                        <input type="radio" :id="'ascwo-addOptions' + addComponentValue.title + option.title + index" name="ascwo-fixings" class=" peer ascwo-hidden" @change="selectAddComponent(addComponentValue.title, option.title, option)">
+                                        <label :for="'ascwo-addOptions' + addComponentValue.title + option.title + index" :class="`ascwo-flex ascwo-full-center ascwo-space-x-2 ascwo-cursor-pointer ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}]/50  hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] ascwo-p-2 ascwo-base-animation`">
+                                            <div :class="`${option.icon === '' ? `ascwo-bg-[${configColors.backgroundColorHeader}]` : `` } ascwo-w-1/4 ascwo-h-20 ascwo-flex ascwo-full-center`">
+                                                <img v-if="option.icon != ''" :src="option.icon" class="ascwo-w-auto ascwo-h-full" />
                                             </div>
-                                            <div :class="`asowp-w-3/4 asowp-flex asowp-flex-col asowp-space-y-1`">
-                                                <p class="asowp-text-sm asowp-font-medium first-letter:asowp-uppercase">{{ option.title }} <span v-if="option.additionalPrice > 0" class="asowp-text-[11px]">({{option.additionalPrice}} {{props.currency}})</span></p>
-                                                <p class="asowp-text-xs">{{ option.description }}</p>
-                                                <div class="asowp-w-full asowp-flex asowp-items-center asowp-justify-between">
-                                                    <span v-if="option?.popImg?.trim() != ''" @click="showAddComponentExample(true, option.popImg, index)" :class="`asowp-text-xs asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-underline asowp-cursor-pointer`">example</span>
-                                                    <span v-if="option?.popImg?.trim() == ''" class="asowp-invisible">example</span>       
-                                                    <span :class="`${ addComponentSelected.some(item => item.option === addComponentValue.title && item.value === option.title) ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-transparent asowp-border-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-border-solid asowp-border-2`} asowp-flex asowp-w-fit asowp-h-fit asowp-rounded-full`">
-                                                        <svg fill="currentColor" class="asowp-w-6 asowp-h-6" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" stroke="currentColor">
+                                            <div :class="`ascwo-w-3/4 ascwo-flex ascwo-flex-col ascwo-space-y-1`">
+                                                <p class="ascwo-text-sm ascwo-font-medium first-letter:ascwo-uppercase">{{ option.title }} <span v-if="option.additionalPrice > 0" class="ascwo-text-[11px]">({{option.additionalPrice}} {{props.currency}})</span></p>
+                                                <p class="ascwo-text-xs">{{ option.description }}</p>
+                                                <div class="ascwo-w-full ascwo-flex ascwo-items-center ascwo-justify-between">
+                                                    <span v-if="option?.popImg?.trim() != ''" @click="showAddComponentExample(true, option.popImg, index)" :class="`ascwo-text-xs ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-underline ascwo-cursor-pointer`">example</span>
+                                                    <span v-if="option?.popImg?.trim() == ''" class="ascwo-invisible">example</span>       
+                                                    <span :class="`${ addComponentSelected.some(item => item.option === addComponentValue.title && item.value === option.title) ? `ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `ascwo-text-transparent ascwo-border-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-border-solid ascwo-border-2`} ascwo-flex ascwo-w-fit ascwo-h-fit ascwo-rounded-full`">
+                                                        <svg fill="currentColor" class="ascwo-w-6 ascwo-h-6" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" stroke="currentColor">
                                                             <g id="SVGRepo_bgCarrier" stroke-width="0"/>
                                                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
                                                             <g id="SVGRepo_iconCarrier"> <g> <g> <path d="M256,0C114.837,0,0,114.843,0,256s114.837,256,256,256s256-114.843,256-256S397.163,0,256,0z M376.239,227.501 L257.348,346.391c-13.043,13.043-34.174,13.044-47.218,0l-68.804-68.804c-13.044-13.038-13.044-34.179,0-47.218 c13.044-13.044,34.174-13.044,47.218,0l45.195,45.19l95.282-95.278c13.044-13.044,34.174-13.044,47.218,0 C389.283,193.321,389.283,214.462,376.239,227.501z"/> </g> </g> </g>
@@ -1712,11 +1712,11 @@
                                         </label>
                                     </div>
 
-                                    <div v-show="showAddComponentEx && addComponentExId === index" :class="`asowp-absolute asowp-top-0 asowp-right-0 asowp-w-[85%] lg:asowp-w-full asowp-h-[90%] asowp-overflow-auto asowp-scrollBar asowp-translate-y-[-50%] lg:asowp-translate-y-[0%] lg:asowp-translate-x-[101%] asowp-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.textColor}] asowp-p-2`">
-                                        <img :src="addComponentExample" class="asowp-w-auto asowp-h-full">
-                                        <div class="asowp-absolute asowp-top-0 asowp-right-0 asowp-w-fit asowp-h-fit asowp-cursor-pointer">
-                                            <span @click="showAddComponentExample(false)" :class="`asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-p-1 asowp-base-animation`">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                                    <div v-show="showAddComponentEx && addComponentExId === index" :class="`ascwo-absolute ascwo-top-0 ascwo-right-0 ascwo-w-[85%] lg:ascwo-w-full ascwo-h-[90%] ascwo-overflow-auto ascwo-scrollBar ascwo-translate-y-[-50%] lg:ascwo-translate-y-[0%] lg:ascwo-translate-x-[101%] ascwo-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.textColor}] ascwo-p-2`">
+                                        <img :src="addComponentExample" class="ascwo-w-auto ascwo-h-full">
+                                        <div class="ascwo-absolute ascwo-top-0 ascwo-right-0 ascwo-w-fit ascwo-h-fit ascwo-cursor-pointer">
+                                            <span @click="showAddComponentExample(false)" :class="`ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] ascwo-p-1 ascwo-base-animation`">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                                                 </svg>
                                             </span>
@@ -1725,133 +1725,133 @@
                                 </div>
                             </div>
 
-                            <span v-if="allowNextButton && (lastActiveOption != 'additional-components' && addComponentId != (additionalComponents.length - 1))" @click="nextOption('additional-components')" :class="`asowp-absolute asowp-bottom-0 asowp-translate-y-[100%] asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
+                            <span v-if="allowNextButton && (lastActiveOption != 'additional-components' && addComponentId != (additionalComponents.length - 1))" @click="nextOption('additional-components')" :class="`ascwo-absolute ascwo-bottom-0 ascwo-translate-y-[100%] ascwo-left-0 ascwo-w-full ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold ascwo-text-md ascwo-full-center ascwo-border ascwo-py-1 ascwo-base-animation ascwo-cursor-pointer`">
                                 Next
                             </span>
                         </div>
 
-                        <div v-show="step == 'add-options'" class="asowp-relative asowp-flex asowp-flex-col lg:asowp-space-y-1 asowp-w-full asowp-h-full" id="asowp-fixings-section">
-                            <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{ props.config.data.settings.languageImages.visualizer.textAdditonnalOptionsHeader && props.config.data.settings.languageImages.visualizer.textAdditonnalOptionsHeader.trim() !== '' ? props.config.data.settings.languageImages.visualizer.textAdditonnalOptionsHeader : 'Additionnals Options' }}</p>    
+                        <div v-show="step == 'add-options'" class="ascwo-relative ascwo-flex ascwo-flex-col lg:ascwo-space-y-1 ascwo-w-full ascwo-h-full" id="ascwo-fixings-section">
+                            <p :class="`ascwo-hidden lg:ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] ascwo-text-lg ascwo-font-semibold ascwo-p-2 ascwo-px-4`">{{ props.config.data.settings.languageImages.visualizer.textAdditonnalOptionsHeader && props.config.data.settings.languageImages.visualizer.textAdditonnalOptionsHeader.trim() !== '' ? props.config.data.settings.languageImages.visualizer.textAdditonnalOptionsHeader : 'Additionnals Options' }}</p>    
         
-                            <div class="asowp-h-full asowp-space-y-2 asowp-p-4 asowp-overflow-auto asowp-scrollBar">
+                            <div class="ascwo-h-full ascwo-space-y-2 ascwo-p-4 ascwo-overflow-auto ascwo-scrollBar">
                                 <div v-for="(option, indexx) in configAdditionnalOptions">
-                                    <div v-if="option.type == 'yes/no'" class="asowp-w-full">
-                                        <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-w-full">
-                                            <div class="asowp-flex asowp-justify-between asowp-items-start asowp-space-x-3">
+                                    <div v-if="option.type == 'yes/no'" class="ascwo-w-full">
+                                        <div class="ascwo-flex ascwo-flex-col ascwo-space-y-2 ascwo-w-full">
+                                            <div class="ascwo-flex ascwo-justify-between ascwo-items-start ascwo-space-x-3">
                                                 <div>
-                                                    <p :class="`asowp-text-[${configColors.backgroundColorHeader}] asowp-font-medium lowercase first-letter:uppercase asowp-text-[16px]`">
+                                                    <p :class="`ascwo-text-[${configColors.backgroundColorHeader}] ascwo-font-medium lowercase first-letter:uppercase ascwo-text-[16px]`">
                                                         {{ option.label }}
                                                         <span v-if="option.price.type == 'base'">(+{{ currentDevise }}{{ option.price.value }})</span>
                                                         <span v-if="option.price.type == 'multiplier'">(+{{ option.price.value }}%)</span>
                                                     </p>
-                                                    <p :class="` asowp-text-xs lowercase first-letter:uppercase`">{{ option.description }}</p>
+                                                    <p :class="` ascwo-text-xs lowercase first-letter:uppercase`">{{ option.description }}</p>
                                                 </div>
                                                 <div>
-                                                    <span v-if="option.popImg != ''" @click="()=>showYesNoExample(option.popImg, indexx)" :class="`asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-flex underline asowp-text-base asowp-font-medium p-1 asowp-px-2 asowp-transition-all asowp-duration-500 asowp-ease-in-out asowp-rounded-lg`">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+                                                    <span v-if="option.popImg != ''" @click="()=>showYesNoExample(option.popImg, indexx)" :class="`ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-cursor-pointer ascwo-flex underline ascwo-text-base ascwo-font-medium p-1 ascwo-px-2 ascwo-transition-all ascwo-duration-500 ascwo-ease-in-out ascwo-rounded-lg`">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-6 ascwo-h-6">
                                                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
                                                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                                         </svg>
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div class="asowp-flex asowp-space-x-4 asowp-w-full">
-                                                <div class="asowp-flex asowp-w-full">
-                                                    <input type="radio" :id="option.label.replace(/\s+/g, '-') +0" :value="option.inputs.yes" :name="option.label.toLowerCase().replace(/\s+/g, '-') " class="asowp-hidden peer" required @click="()=>addToOrUpdateArray(customAdditionalValues, indexx, option.label, option.inputs.yes, option.price)" :price-type="option.price.type" :price-value="option.price.value">
-                                                    <label :for="option.label.replace(/\s+/g, '-') +0" :class="`${(customAdditionalValues.some(item => item.id === indexx) && customAdditionalValues.some(item => item.value === option.inputs.yes) )? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]`: `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] asowp-ring-[${configColors.optionsSideBar.options.modals.option.textColor}]`} hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] hover:asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]
-                                                        asowp-relative asowp-cursor-pointer w-auto asowp-h-auto asowp-px-2 asowp-w-full asowp-p-3 xl:asowp-px-4 asowp-rounded-md  xl:asowp-space-y-3 asowp-ring-2 asowp-flex asowp-flex-col asowp-justify-center xl:asowp-justify-start asowp-transition-all asowp-duration-500 asowp-ease-in-out`"
+                                            <div class="ascwo-flex ascwo-space-x-4 ascwo-w-full">
+                                                <div class="ascwo-flex ascwo-w-full">
+                                                    <input type="radio" :id="option.label.replace(/\s+/g, '-') +0" :value="option.inputs.yes" :name="option.label.toLowerCase().replace(/\s+/g, '-') " class="ascwo-hidden peer" required @click="()=>addToOrUpdateArray(customAdditionalValues, indexx, option.label, option.inputs.yes, option.price)" :price-type="option.price.type" :price-value="option.price.value">
+                                                    <label :for="option.label.replace(/\s+/g, '-') +0" :class="`${(customAdditionalValues.some(item => item.id === indexx) && customAdditionalValues.some(item => item.value === option.inputs.yes) )? `ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]`: `ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}] ascwo-ring-[${configColors.optionsSideBar.options.modals.option.textColor}]`} hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] hover:ascwo-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]
+                                                        ascwo-relative ascwo-cursor-pointer w-auto ascwo-h-auto ascwo-px-2 ascwo-w-full ascwo-p-3 xl:ascwo-px-4 ascwo-rounded-md  xl:ascwo-space-y-3 ascwo-ring-2 ascwo-flex ascwo-flex-col ascwo-justify-center xl:ascwo-justify-start ascwo-transition-all ascwo-duration-500 ascwo-ease-in-out`"
                                                     >                           
-                                                        <div class="asowp-text-base lg:asowp-text-sm xl:asowp-text-md asowp-font-medium asowp-flex asowp-justify-center asowp-items-center">
+                                                        <div class="ascwo-text-base lg:ascwo-text-sm xl:ascwo-text-md ascwo-font-medium ascwo-flex ascwo-justify-center ascwo-items-center">
                                                             <p class="lowercase first-letter:uppercase">{{option.inputs.yes}}</p>
                                                         </div>
                                                     </label>
                                                 </div>
-                                                <div class="asowp-flex asowp-w-full">
-                                                    <input type="radio" :id="option.label.replace(/\s+/g, '-') +1" :value="option.inputs.no" :name="option.label.toLowerCase().replace(/\s+/g, '-') " class="asowp-hidden peer" required @click="()=>addToOrUpdateArray(customAdditionalValues, indexx, option.label, option.inputs.no, {type: 'none', value: 0})" price-type="none" :price-value="0">
-                                                    <label :for="option.label.replace(/\s+/g, '-') +1" :class="`${(customAdditionalValues.some(item => item.id === indexx) && customAdditionalValues.some(item => item.value === option.inputs.no) )? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]`: `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] asowp-ring-[${configColors.optionsSideBar.options.modals.option.textColor}]`} hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] hover:asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]
-                                                        asowp-relative asowp-cursor-pointer w-auto asowp-h-auto asowp-px-2 asowp-w-full asowp-p-3 xl:asowp-px-4 asowp-rounded-md  xl:asowp-space-y-3 asowp-ring-2 asowp-flex asowp-flex-col asowp-justify-center xl:asowp-justify-start asowp-transition-all asowp-duration-500 asowp-ease-in-out`"
+                                                <div class="ascwo-flex ascwo-w-full">
+                                                    <input type="radio" :id="option.label.replace(/\s+/g, '-') +1" :value="option.inputs.no" :name="option.label.toLowerCase().replace(/\s+/g, '-') " class="ascwo-hidden peer" required @click="()=>addToOrUpdateArray(customAdditionalValues, indexx, option.label, option.inputs.no, {type: 'none', value: 0})" price-type="none" :price-value="0">
+                                                    <label :for="option.label.replace(/\s+/g, '-') +1" :class="`${(customAdditionalValues.some(item => item.id === indexx) && customAdditionalValues.some(item => item.value === option.inputs.no) )? `ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]`: `ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}] ascwo-ring-[${configColors.optionsSideBar.options.modals.option.textColor}]`} hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] hover:ascwo-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]
+                                                        ascwo-relative ascwo-cursor-pointer w-auto ascwo-h-auto ascwo-px-2 ascwo-w-full ascwo-p-3 xl:ascwo-px-4 ascwo-rounded-md  xl:ascwo-space-y-3 ascwo-ring-2 ascwo-flex ascwo-flex-col ascwo-justify-center xl:ascwo-justify-start ascwo-transition-all ascwo-duration-500 ascwo-ease-in-out`"
                                                     >                           
-                                                        <div class="asowp-text-base lg:asowp-text-sm xl:asowp-text-md asowp-font-medium asowp-flex asowp-justify-center asowp-items-center">
+                                                        <div class="ascwo-text-base lg:ascwo-text-sm xl:ascwo-text-md ascwo-font-medium ascwo-flex ascwo-justify-center ascwo-items-center">
                                                             <p class="lowercase first-letter:uppercase">{{option.inputs.no}}</p>
                                                         </div>
                                                     </label>
                                                 </div>
                                             </div>
-                                            <div v-show="showYesNo && yesNoIndex == indexx" :class="`asowp-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.textColor}] asowp-absolute asowp-top-0 asowp-right-0 asowp-translate-y-[-50%] lg:asowp-translate-y-[0%] lg:asowp-translate-x-[101%] asowp-w-[85%] asowp-h-fit asowp-p-2 asowp-z-10`">
-                                                <div :class="`asowp-cursor-pointer asowp-flex asowp-items-center asowp-justify-center asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-absolute asowp-right-0 asowp-top-0 asowp-p-1`" @click="()=>showYesNoExample()">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+                                            <div v-show="showYesNo && yesNoIndex == indexx" :class="`ascwo-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.textColor}] ascwo-absolute ascwo-top-0 ascwo-right-0 ascwo-translate-y-[-50%] lg:ascwo-translate-y-[0%] lg:ascwo-translate-x-[101%] ascwo-w-[85%] ascwo-h-fit ascwo-p-2 ascwo-z-10`">
+                                                <div :class="`ascwo-cursor-pointer ascwo-flex ascwo-items-center ascwo-justify-center ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] ascwo-absolute ascwo-right-0 ascwo-top-0 ascwo-p-1`" @click="()=>showYesNoExample()">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="ascwo-w-6 ascwo-h-6">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                                                     </svg>
                                                 </div>
-                                                <img :src="showYesNoImg" class="asowp-w-auto asowp-h-full">
+                                                <img :src="showYesNoImg" class="ascwo-w-auto ascwo-h-full">
                                             </div>
                                         </div>
                                     </div>
         
                                     <div v-if="option.type == 'image-input'">
-                                        <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-w-full">
+                                        <div class="ascwo-flex ascwo-flex-col ascwo-space-y-2 ascwo-w-full">
                                             <div>
-                                                <p :class="`asowp-text-[${configColors.backgroundColorHeader}] asowp-font-medium lowercase first-letter:uppercase asowp-text-[16px]`">{{ option.label }}</p>
-                                                <p :class="` asowp-text-xs lowercase first-letter:uppercase`">{{ option.description }}</p>
+                                                <p :class="`ascwo-text-[${configColors.backgroundColorHeader}] ascwo-font-medium lowercase first-letter:uppercase ascwo-text-[16px]`">{{ option.label }}</p>
+                                                <p :class="` ascwo-text-xs lowercase first-letter:uppercase`">{{ option.description }}</p>
                                             </div>
-                                            <div v-if="selectedId == indexx" :class="` asowp-text-xs`">
+                                            <div v-if="selectedId == indexx" :class="` ascwo-text-xs`">
                                                 {{selectedOption}}
                                             </div>
-                                            <div class="asowp-grid asowp-grid-cols-4 lg:asowp-grid-cols-2 xl:asowp-grid-cols-4 asowp-gap-4">
+                                            <div class="ascwo-grid ascwo-grid-cols-4 lg:ascwo-grid-cols-2 xl:ascwo-grid-cols-4 ascwo-gap-4">
                                                 <div v-for="(element, index) in option.options" class="">
-                                                    <input type="radio" :id="'asowp-image-input'+element.label+index" :name="option.label.toLowerCase().replace(/\s+/g, '-') " class="asowp-hidden peer" required @click="()=>{addToOrUpdateArray(customAdditionalValues, indexx, option.label, element.value, element.price); selectOption(element.value, element.price, indexx)}" :price-type="element.price.type" :price-value="element.price.value">
+                                                    <input type="radio" :id="'ascwo-image-input'+element.label+index" :name="option.label.toLowerCase().replace(/\s+/g, '-') " class="ascwo-hidden peer" required @click="()=>{addToOrUpdateArray(customAdditionalValues, indexx, option.label, element.value, element.price); selectOption(element.value, element.price, indexx)}" :price-type="element.price.type" :price-value="element.price.value">
         
-                                                    <label :for="'asowp-image-input'+element.label+index" :class="`${(customAdditionalValues.some(item => item.id === indexx) && customAdditionalValues.some(item => item.value === element.value) )? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]`: `asowp-ring-[${configColors.optionsSideBar.options.modals.option.textColor}]`} asowp-border
-                                                        asowp-p-0.5 asowp-cursor-pointer asowp-w-[70px] asowp-h-[70px] asowp-flex asowp-ring-2 asowp-rounded-lg asowp-overflow-hidden`" 
+                                                    <label :for="'ascwo-image-input'+element.label+index" :class="`${(customAdditionalValues.some(item => item.id === indexx) && customAdditionalValues.some(item => item.value === element.value) )? `ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-ring-2 ascwo-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]`: `ascwo-ring-[${configColors.optionsSideBar.options.modals.option.textColor}]`} ascwo-border
+                                                        ascwo-p-0.5 ascwo-cursor-pointer ascwo-w-[70px] ascwo-h-[70px] ascwo-flex ascwo-ring-2 ascwo-rounded-lg ascwo-overflow-hidden`" 
                                                     >
-                                                        <div v-if="element.prevImg !==''" class="asowp-h-full asowp-w-full asowp-relative">
-                                                            <img class="asowp-w-full asowp-h-full asowp-rounded-lg" :src="element.prevImg" />
-                                                            <span v-if="element.popImg !== ''" @click="showInputImageExample(element.popImg, index, element.label)" :class="`asowp-cursor-pointer asowp-z-1 asowp-w-[34px] asowp-h-[30px] asowp-bottom-0 asowp-right-0 asowp-absolute asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-rounded-tl-[20px] asowp-rounded-br-[5px] asowp-border border-neutral-400 asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] asowp-flex asowp-justify-center asowp-items-center`">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-8 asowp-h-8 asowp-p-1.5">
+                                                        <div v-if="element.prevImg !==''" class="ascwo-h-full ascwo-w-full ascwo-relative">
+                                                            <img class="ascwo-w-full ascwo-h-full ascwo-rounded-lg" :src="element.prevImg" />
+                                                            <span v-if="element.popImg !== ''" @click="showInputImageExample(element.popImg, index, element.label)" :class="`ascwo-cursor-pointer ascwo-z-1 ascwo-w-[34px] ascwo-h-[30px] ascwo-bottom-0 ascwo-right-0 ascwo-absolute ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] ascwo-rounded-tl-[20px] ascwo-rounded-br-[5px] ascwo-border border-neutral-400 ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] ascwo-flex ascwo-justify-center ascwo-items-center`">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-8 ascwo-h-8 ascwo-p-1.5">
                                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
                                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                                                 </svg>
                                                             </span>
                                                         </div>
-                                                        <div v-if="element.prevImg === ''" :class="`asowp-p-4 asowp-bg-[${element.color}] asowp-w-full asowp-h-full asowp-relative asowp-rounded-lg`">
-                                                            <span v-if="element.popImg !== ''" @click="showInputImageExample(element.popImg, index, element.label)" :class="`asowp-cursor-pointer asowp-z-1 asowp-w-[34px] asowp-h-[30px] asowp-bottom-0 asowp-right-0 asowp-absolute asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-rounded-tl-[20px] asowp-rounded-br-[5px] asowp-border border-neutral-400 asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] asowp-flex asowp-justify-center asowp-items-center`">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-8 asowp-h-8 asowp-p-1.5">
+                                                        <div v-if="element.prevImg === ''" :class="`ascwo-p-4 ascwo-bg-[${element.color}] ascwo-w-full ascwo-h-full ascwo-relative ascwo-rounded-lg`">
+                                                            <span v-if="element.popImg !== ''" @click="showInputImageExample(element.popImg, index, element.label)" :class="`ascwo-cursor-pointer ascwo-z-1 ascwo-w-[34px] ascwo-h-[30px] ascwo-bottom-0 ascwo-right-0 ascwo-absolute ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] ascwo-rounded-tl-[20px] ascwo-rounded-br-[5px] ascwo-border border-neutral-400 ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] ascwo-flex ascwo-justify-center ascwo-items-center`">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-8 ascwo-h-8 ascwo-p-1.5">
                                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
                                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                                                 </svg>
                                                             </span>
                                                         </div>
                                                     </label>
-                                                    <div v-show="inputImageExample && inputImageIndex == index && inputImageLabel == element.label" :class="`asowp-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.textColor}] asowp-absolute asowp-top-0 asowp-right-0 asowp-translate-y-[-50%] lg:asowp-translate-y-[0%] lg:asowp-translate-x-[101%] asowp-w-[85%] asowp-h-fit asowp-p-2 asowp-z-10`">
-                                                        <div :class="`asowp-cursor-pointer asowp-flex asowp-items-center asowp-justify-center asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso asowp-absolute asowp-right-0 asowp-top-0 asowp-p-1`" @click="showInputImageExample()">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+                                                    <div v-show="inputImageExample && inputImageIndex == index && inputImageLabel == element.label" :class="`ascwo-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.textColor}] ascwo-absolute ascwo-top-0 ascwo-right-0 ascwo-translate-y-[-50%] lg:ascwo-translate-y-[0%] lg:ascwo-translate-x-[101%] ascwo-w-[85%] ascwo-h-fit ascwo-p-2 ascwo-z-10`">
+                                                        <div :class="`ascwo-cursor-pointer ascwo-flex ascwo-items-center ascwo-justify-center ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso ascwo-absolute ascwo-right-0 ascwo-top-0 ascwo-p-1`" @click="showInputImageExample()">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="ascwo-w-6 ascwo-h-6">
                                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                                                             </svg>
                                                         </div>
-                                                        <img :src="inputImageImg" class="asowp-w-full asowp-h-full">
+                                                        <img :src="inputImageImg" class="ascwo-w-full ascwo-h-full">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
         
-                                    <div v-if="option.type == 'dropdown'" class="asowp-space-y-4">
-                                        <div class="asowp-space-y-2 asowp-w-full">
-                                            <div class="asowp-flex asowp-justify-between asowp-items-center asowp-space-x-3">
+                                    <div v-if="option.type == 'dropdown'" class="ascwo-space-y-4">
+                                        <div class="ascwo-space-y-2 ascwo-w-full">
+                                            <div class="ascwo-flex ascwo-justify-between ascwo-items-center ascwo-space-x-3">
                                                 <div>
-                                                    <p :class="`asowp-text-[${configColors.backgroundColorHeader}] asowp-font-medium lowercase first-letter:uppercase asowp-text-[16px]`">{{ option.label }}</p>
-                                                    <p :class="` asowp-text-xs lowercase first-letter:uppercase`">{{ option.description }}</p>
+                                                    <p :class="`ascwo-text-[${configColors.backgroundColorHeader}] ascwo-font-medium lowercase first-letter:uppercase ascwo-text-[16px]`">{{ option.label }}</p>
+                                                    <p :class="` ascwo-text-xs lowercase first-letter:uppercase`">{{ option.description }}</p>
                                                 </div>
                                                 <div>
-                                                    <span v-show="dropdownExampleImg != ''" @click="()=>showDropdownExample()" :class="`asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-flex underline asowp-text-base asowp-font-medium p-1 asowp-px-2 asowp-transition-all asowp-duration-500 asowp-ease-in-out asowp-rounded-lg`">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+                                                    <span v-show="dropdownExampleImg != ''" @click="()=>showDropdownExample()" :class="`ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-cursor-pointer ascwo-flex underline ascwo-text-base ascwo-font-medium p-1 ascwo-px-2 ascwo-transition-all ascwo-duration-500 ascwo-ease-in-out ascwo-rounded-lg`">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-6 ascwo-h-6">
                                                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
                                                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                                         </svg>
                                                     </span>
                                                 </div>
                                             </div>
-                                            <select id="" class="asowp-w-full asowp-p-2 asowp-border-[1.5px] border-zinc-400 asowp-rounded-lg asowp-text-base" :name="option.label.toLowerCase().replace(/\s+/g, '-') " @change="(e)=>{addToOrUpdateArray(customAdditionalValues, indexx, option.label, dropdownValue.value, dropdownValue.price), dropdownExampleImg = e.target.options[e.target.selectedIndex].getAttribute('popImg')}" v-model="dropdownValue">
+                                            <select id="" class="ascwo-w-full ascwo-p-2 ascwo-border-[1.5px] border-zinc-400 ascwo-rounded-lg ascwo-text-base" :name="option.label.toLowerCase().replace(/\s+/g, '-') " @change="(e)=>{addToOrUpdateArray(customAdditionalValues, indexx, option.label, dropdownValue.value, dropdownValue.price), dropdownExampleImg = e.target.options[e.target.selectedIndex].getAttribute('popImg')}" v-model="dropdownValue">
                                                 <option v-for="(element, indx) in option.options" :value="element" :priceType="element.price.type" :priceValue="element.price.value" :popImg="element.popImg">
                                                     {{element.label}}
                                                     <span v-if="element.price.type == 'base'">(+{{ currentDevise }}{{ element.price.value }})</span>
@@ -1859,90 +1859,90 @@
                                                 </option>
                                             </select>
         
-                                            <div v-show="dropdownExample && dropdownIndex == indexx && dropdownExampleImg != ''" :class="`asowp-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.textColor}] asowp-absolute asowp-top-0 asowp-right-0 asowp-translate-y-[-50%] lg:asowp-translate-y-[0%] lg:asowp-translate-x-[101%] asowp-w-[85%] asowp-h-fit asowp-p-2 asowp-z-10`">
-                                                <div :class="`asowp-cursor-pointer asowp-flex asowp-items-center asowp-justify-center asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-absolute asowp-right-0 asowp-top-0 asowp-p-1`" @click="()=>showDropdownExample()">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+                                            <div v-show="dropdownExample && dropdownIndex == indexx && dropdownExampleImg != ''" :class="`ascwo-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.textColor}] ascwo-absolute ascwo-top-0 ascwo-right-0 ascwo-translate-y-[-50%] lg:ascwo-translate-y-[0%] lg:ascwo-translate-x-[101%] ascwo-w-[85%] ascwo-h-fit ascwo-p-2 ascwo-z-10`">
+                                                <div :class="`ascwo-cursor-pointer ascwo-flex ascwo-items-center ascwo-justify-center ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] ascwo-absolute ascwo-right-0 ascwo-top-0 ascwo-p-1`" @click="()=>showDropdownExample()">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="ascwo-w-6 ascwo-h-6">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                                                     </svg>
                                                 </div>
-                                                <img :src="dropdownExampleImg" class="asowp-w-full asowp-h-full">
+                                                <img :src="dropdownExampleImg" class="ascwo-w-full ascwo-h-full">
                                             </div>
                                         </div>
                                     </div>
         
                                     <div v-if="option.type == 'note'">
-                                        <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-w-full">
-                                            <div class="asowp-flex asowp-flex-col asowp-w-full">
-                                                <p :class="`asowp-text-[${configColors.backgroundColorHeader}] asowp-font-medium lowercase first-letter:uppercase asowp-text-[16px]`">{{ option.label }}</p>
-                                                <p :class="` asowp-text-xs lowercase first-letter:uppercase`">{{ option.description }}</p>
+                                        <div class="ascwo-flex ascwo-flex-col ascwo-space-y-2 ascwo-w-full">
+                                            <div class="ascwo-flex ascwo-flex-col ascwo-w-full">
+                                                <p :class="`ascwo-text-[${configColors.backgroundColorHeader}] ascwo-font-medium lowercase first-letter:uppercase ascwo-text-[16px]`">{{ option.label }}</p>
+                                                <p :class="` ascwo-text-xs lowercase first-letter:uppercase`">{{ option.description }}</p>
                                             </div>                        
-                                            <div class="asowp-w-full">
-                                                <textarea  @input="(e)=>addToOrUpdateArray(customAdditionalValues, indexx, option.label, e.target.value)"  :maxlength="option.noteLimitChar" :name="option.label.toLowerCase().replace(/\s+/g, '-') " id="" cols="20" rows="10" class="asowp-w-full asowp-h-[113px] asowp-rounded-md asowp-border asowp-border-gray-400 asowp-p-4" ></textarea>
+                                            <div class="ascwo-w-full">
+                                                <textarea  @input="(e)=>addToOrUpdateArray(customAdditionalValues, indexx, option.label, e.target.value)"  :maxlength="option.noteLimitChar" :name="option.label.toLowerCase().replace(/\s+/g, '-') " id="" cols="20" rows="10" class="ascwo-w-full ascwo-h-[113px] ascwo-rounded-md ascwo-border ascwo-border-gray-400 ascwo-p-4" ></textarea>
                                             </div>
-                                            <div v-show="noteValue.length == option.noteLimitChar"  :class="`asowp-text-xs lg:asowp-text-sm asowp-p-2 asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]`"> La limite de caratcère est atteinte </div>
+                                            <div v-show="noteValue.length == option.noteLimitChar"  :class="`ascwo-text-xs lg:ascwo-text-sm ascwo-p-2 ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]`"> La limite de caratcère est atteinte </div>
                                         </div>
                                     </div>
         
                                     <div v-if="option.type == 'include-type'" >
-                                        <div class="asowp-relative asowp-flex asowp-space-x-3 asowp-justify-between asowp-w-full">
+                                        <div class="ascwo-relative ascwo-flex ascwo-space-x-3 ascwo-justify-between ascwo-w-full">
                                             <div>
-                                                <p :class="`asowp-text-[${configColors.backgroundColorHeader}] asowp-flex space-x-2 asowp-font-medium asowp-text-[16px]`">
-                                                    <span class="asowp-lowercase first-letter:asowp-uppercase">
+                                                <p :class="`ascwo-text-[${configColors.backgroundColorHeader}] ascwo-flex space-x-2 ascwo-font-medium ascwo-text-[16px]`">
+                                                    <span class="ascwo-lowercase first-letter:ascwo-uppercase">
                                                         {{ option.label }}
                                                     </span> 
                                                     <span v-if="option.price.type == 'base'">(+{{ currentDevise }}{{ option.price.value }})</span>
                                                     <span v-if="option.price.type == 'multiplier'">(+{{ option.price.value }}%)</span>
-                                                    <span :class="`asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-flex asowp-w-fit asowp-items-center asowp-justify-center asowp-px-2 asowp-p-0.5 asowp-rounded-lg`">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                                                    <span :class="`ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-flex ascwo-w-fit ascwo-items-center ascwo-justify-center ascwo-px-2 ascwo-p-0.5 ascwo-rounded-lg`">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                                                         </svg>
                                                     </span>
                                                 </p>
-                                                <p :class="` asowp-text-xs asowp-lowercase first-letter:asowp-uppercase`">{{ option.description }}</p>
+                                                <p :class="` ascwo-text-xs ascwo-lowercase first-letter:ascwo-uppercase`">{{ option.description }}</p>
                                             </div>
                                             <div>
-                                                <span v-if="option.popImg != ''" @click="()=>showFreeExample(option.popImg, indexx)" :class="`asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-flex underline asowp-text-base asowp-font-medium asowp-p-1 asowp-px-2 asowp-transition-all asowp-duration-500 asowp-ease-in-out asowp-rounded-lg`">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+                                                <span v-if="option.popImg != ''" @click="()=>showFreeExample(option.popImg, indexx)" :class="`ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-cursor-pointer ascwo-flex underline ascwo-text-base ascwo-font-medium ascwo-p-1 ascwo-px-2 ascwo-transition-all ascwo-duration-500 ascwo-ease-in-out ascwo-rounded-lg`">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-6 ascwo-h-6">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                                     </svg>
                                                 </span>
                                             </div>                     
-                                            <div v-if="showFree && freeIndex == indexx" :class="`asowp-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.textColor}] asowp-absolute asowp-bottom-[0%] asowp-right-[0%] asowp-w-[75%] asowp-h-auto asowp-p-2 asowp-z-10`">
-                                                <span :class="`asowp-cursor-pointer asowp-flex asowp-items-center asowp-justify-center asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-absolute asowp-right-0 asowp-top-0 asowp-p-1`" @click="()=>showFreeExample()">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+                                            <div v-if="showFree && freeIndex == indexx" :class="`ascwo-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.textColor}] ascwo-absolute ascwo-bottom-[0%] ascwo-right-[0%] ascwo-w-[75%] ascwo-h-auto ascwo-p-2 ascwo-z-10`">
+                                                <span :class="`ascwo-cursor-pointer ascwo-flex ascwo-items-center ascwo-justify-center ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] ascwo-absolute ascwo-right-0 ascwo-top-0 ascwo-p-1`" @click="()=>showFreeExample()">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="ascwo-w-6 ascwo-h-6">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                                                     </svg>
                                                 </span>
-                                                <img :src="showFreeImg" class="asowp-w-full asowp-h-full">
+                                                <img :src="showFreeImg" class="ascwo-w-full ascwo-h-full">
                                             </div>
                                         </div>
                                     </div>                               
                                 </div>
                             </div>
-                            <span v-if="allowNextButton && lastActiveOption != 'additional-options'" @click="nextOption('additional-options')" :class="`asowp-absolute asowp-bottom-0 asowp-translate-y-[100%] asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
+                            <span v-if="allowNextButton && lastActiveOption != 'additional-options'" @click="nextOption('additional-options')" :class="`ascwo-absolute ascwo-bottom-0 ascwo-translate-y-[100%] ascwo-left-0 ascwo-w-full ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold ascwo-text-md ascwo-full-center ascwo-border ascwo-py-1 ascwo-base-animation ascwo-cursor-pointer`">
                                 Next
                             </span>
                         </div>
                     </div>
     
-                    <div class="asowp-w-full asowp-flex lg:asowp-hidden asowp-h-[6%] asowp-bg-red-400">
-                        <div :class="`asowp-w-1/2 asowp-h-full asowp-flex asowp-full-center asowp-bg-[${configColors.recaps.buttonEditBackgroundColor}] hover:asowp-bg-[${configColors.recaps.buttonEditHoverBackgroundColor}] asowp-text-[${configColors.recaps.buttonEditTextColor}] hover:asowp-text-[${configColors.recaps.buttonEditHoverTextColor}] asowp-buttons-rad-none`">
+                    <div class="ascwo-w-full ascwo-flex lg:ascwo-hidden ascwo-h-[6%] ascwo-bg-red-400">
+                        <div :class="`ascwo-w-1/2 ascwo-h-full ascwo-flex ascwo-full-center ascwo-bg-[${configColors.recaps.buttonEditBackgroundColor}] hover:ascwo-bg-[${configColors.recaps.buttonEditHoverBackgroundColor}] ascwo-text-[${configColors.recaps.buttonEditTextColor}] hover:ascwo-text-[${configColors.recaps.buttonEditHoverTextColor}] ascwo-buttons-rad-none`">
                             {{ configVisualiserTexts.textCanvasEdit && configVisualiserTexts.textCanvasEdit.trim() !== '' ? configVisualiserTexts.textCanvasEdit : 'Finish' }}
                         </div>
-                        <button :disabled="currentSizeData.width <= 0 || currentSizeData.height <= 0" @click="finishConfig()" :class="`asowp-w-1/2 asowp-h-full asowp-flex asowp-full-center asowp-bg-[${configColors.recaps.buttonFinishBackgroundColor}] hover:asowp-bg-[${configColors.recaps.buttonFinishHoverBackgroundColor}] asowp-text-[${configColors.recaps.buttonFinishTextColor}] hover:asowp-text-[${configColors.recaps.buttonFinishHoverTextColor}] asowp-buttons-rad-none`">
+                        <button :disabled="currentSizeData.width <= 0 || currentSizeData.height <= 0" @click="finishConfig()" :class="`ascwo-w-1/2 ascwo-h-full ascwo-flex ascwo-full-center ascwo-bg-[${configColors.recaps.buttonFinishBackgroundColor}] hover:ascwo-bg-[${configColors.recaps.buttonFinishHoverBackgroundColor}] ascwo-text-[${configColors.recaps.buttonFinishTextColor}] hover:ascwo-text-[${configColors.recaps.buttonFinishHoverTextColor}] ascwo-buttons-rad-none`">
                             {{ configVisualiserTexts.textButtonFinish && configVisualiserTexts.textButtonFinish.trim() !== '' ? configVisualiserTexts.textButtonFinish : 'Finish' }}
                         </button>
                     </div>
 
-                    <div :class="`asowp-absolute asowp-top-0 asowp-right-0 asowp-flex asowp-w-fit asowp-p-2 asowp-space-x-1`">
-                        <span @click="zoomCanvas('up')" :class="`asowp-flex asowp-cursor-pointer`">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                    <div :class="`ascwo-absolute ascwo-top-0 ascwo-right-0 ascwo-flex ascwo-w-fit ascwo-p-2 ascwo-space-x-1`">
+                        <span @click="zoomCanvas('up')" :class="`ascwo-flex ascwo-cursor-pointer`">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM10.5 7.5v6m3-3h-6" />
                             </svg>
                         </span>
-                        <span @click="zoomCanvas('down')" :class="`asowp-flex asowp-cursor-pointer`">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                        <span @click="zoomCanvas('down')" :class="`ascwo-flex ascwo-cursor-pointer`">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM13.5 10.5h-6" />
                             </svg>
                         </span>
@@ -1950,183 +1950,183 @@
                 </div>
             </div>
 
-            <div :class="`asowp-absolute asowp-top-[50%] lg:asowp-top-0 asowp-translate-y-[-70%] lg:asowp-translate-y-0 asowp-right-4 lg:asowp-right-0 lg:asowp-relative asowp-w-[8%] asowp-h-fit lg:asowp-h-full asowp-p-2 lg:asowp-p-0 asowp-flex asowp-flex-col asowp-bg-[${configColors.optionsSideBar.backgroundColor}] asowp-text-[${configColors.textColorContentSideMenu}] asowp-rounded-lg lg:asowp-rounded-none asowp-shadow-lg`">
-                <div v-if="isLoaded" class="asowp-w-full asowp-h-full asowp-flex asowp-flex-col">
-                    <div class="asowp-w-full asowp-bg-gradient-to-r asowp-from-zinc-400 asowp-via-zinc-200 asowp-to-zinc-400 asowp-p-4 asowp-h-[10%] asowp-animate-pulse"></div>
+            <div :class="`ascwo-absolute ascwo-top-[50%] lg:ascwo-top-0 ascwo-translate-y-[-70%] lg:ascwo-translate-y-0 ascwo-right-4 lg:ascwo-right-0 lg:ascwo-relative ascwo-w-[8%] ascwo-h-fit lg:ascwo-h-full ascwo-p-2 lg:ascwo-p-0 ascwo-flex ascwo-flex-col ascwo-bg-[${configColors.optionsSideBar.backgroundColor}] ascwo-text-[${configColors.textColorContentSideMenu}] ascwo-rounded-lg lg:ascwo-rounded-none ascwo-shadow-lg`">
+                <div v-if="isLoaded" class="ascwo-w-full ascwo-h-full ascwo-flex ascwo-flex-col">
+                    <div class="ascwo-w-full ascwo-bg-gradient-to-r ascwo-from-zinc-400 ascwo-via-zinc-200 ascwo-to-zinc-400 ascwo-p-4 ascwo-h-[10%] ascwo-animate-pulse"></div>
     
-                    <div class="asowp-h-[90%] asowp-flex asowp-full-center asowp-flex-col asowp-space-y-4 asowp-animate-pulse">
-                        <div class="asowp-w-[80%] asowp-bg-gradient-to-r asowp-from-zinc-400 asowp-via-zinc-200 asowp-to-zinc-400 asowp-p-4 asowp-h-[11%]"></div>
-                        <div class="asowp-w-[80%] asowp-bg-gradient-to-r asowp-from-zinc-400 asowp-via-zinc-200 asowp-to-zinc-400 asowp-p-4 asowp-h-[11%]"></div>
-                        <div class="asowp-w-[80%] asowp-bg-gradient-to-r asowp-from-zinc-400 asowp-via-zinc-200 asowp-to-zinc-400 asowp-p-4 asowp-h-[11%]"></div>
-                        <div class="asowp-w-[80%] asowp-bg-gradient-to-r asowp-from-zinc-400 asowp-via-zinc-200 asowp-to-zinc-400 asowp-p-4 asowp-h-[11%]"></div>
-                        <div class="asowp-w-[80%] asowp-bg-gradient-to-r asowp-from-zinc-400 asowp-via-zinc-200 asowp-to-zinc-400 asowp-p-4 asowp-h-[11%]"></div>
+                    <div class="ascwo-h-[90%] ascwo-flex ascwo-full-center ascwo-flex-col ascwo-space-y-4 ascwo-animate-pulse">
+                        <div class="ascwo-w-[80%] ascwo-bg-gradient-to-r ascwo-from-zinc-400 ascwo-via-zinc-200 ascwo-to-zinc-400 ascwo-p-4 ascwo-h-[11%]"></div>
+                        <div class="ascwo-w-[80%] ascwo-bg-gradient-to-r ascwo-from-zinc-400 ascwo-via-zinc-200 ascwo-to-zinc-400 ascwo-p-4 ascwo-h-[11%]"></div>
+                        <div class="ascwo-w-[80%] ascwo-bg-gradient-to-r ascwo-from-zinc-400 ascwo-via-zinc-200 ascwo-to-zinc-400 ascwo-p-4 ascwo-h-[11%]"></div>
+                        <div class="ascwo-w-[80%] ascwo-bg-gradient-to-r ascwo-from-zinc-400 ascwo-via-zinc-200 ascwo-to-zinc-400 ascwo-p-4 ascwo-h-[11%]"></div>
+                        <div class="ascwo-w-[80%] ascwo-bg-gradient-to-r ascwo-from-zinc-400 ascwo-via-zinc-200 ascwo-to-zinc-400 ascwo-p-4 ascwo-h-[11%]"></div>
                     </div>
                 </div>
     
     
-                <button v-show="!isLoaded" :disabled="currentSizeData.width <= 0 || currentSizeData.height <= 0" @click="finishConfig()" :class="`asowp-hidden lg:asowp-flex asowp-full-center asowp-w-full asowp-h-[10%] asowp-bg-[${configColors.recaps.buttonFinishBackgroundColor}] hover:asowp-bg-[${configColors.recaps.buttonFinishHoverBackgroundColor}] asowp-text-[${configColors.recaps.buttonFinishTextColor}] hover:asowp-text-[${configColors.recaps.buttonFinishHoverTextColor}] asowp-font-semibold asowp-p-2 asowp-px-3 asowp-base-animation disabled:asowp-cursor-not-allowed asowp-buttons-rad-none`">
+                <button v-show="!isLoaded" :disabled="currentSizeData.width <= 0 || currentSizeData.height <= 0" @click="finishConfig()" :class="`ascwo-hidden lg:ascwo-flex ascwo-full-center ascwo-w-full ascwo-h-[10%] ascwo-bg-[${configColors.recaps.buttonFinishBackgroundColor}] hover:ascwo-bg-[${configColors.recaps.buttonFinishHoverBackgroundColor}] ascwo-text-[${configColors.recaps.buttonFinishTextColor}] hover:ascwo-text-[${configColors.recaps.buttonFinishHoverTextColor}] ascwo-font-semibold ascwo-p-2 ascwo-px-3 ascwo-base-animation disabled:ascwo-cursor-not-allowed ascwo-buttons-rad-none`">
                     {{ configVisualiserTexts.textButtonFinish && configVisualiserTexts.textButtonFinish.trim() !== '' ? configVisualiserTexts.textButtonFinish : 'Finish' }}
                 </button>
     
-                <div v-show="!isLoaded" class="lg:asowp-h-[90%] asowp-flex asowp-flex-col asowp-full-center asowp-space-y-4">
-                    <div class="asowp-flex asowp-flex-col asowp-full-center asowp-space-y-2">
-                        <span @click="showConfigRender()" :class="`asowp-flex asowp-full-center asowp-rounded-full asowp-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] asowp-p-2 lg:asowp-p-3 asowp-bg-[${configColors.bars.preview.backgroundColor}] asowp-text-[${configColors.bars.preview.textColor}] hover:asowp-bg-[${configColors.bars.preview.hoverBackgroundColor}] hover:asowp-text-[${configColors.bars.preview.hoverTextColor}] asowp-border-2 asowp-border-[${configColors.bars.preview.borderColor}] hover:asowp-border-[${configColors.bars.preview.hoverBorderColor}] asowp-base-animation asowp-cursor-pointer`">
-                            <svg v-if="configSectionIcons.changeIconPreview === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4 lg:asowp-w-5 lg:asowp-h-5">
+                <div v-show="!isLoaded" class="lg:ascwo-h-[90%] ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-4">
+                    <div class="ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-2">
+                        <span @click="showConfigRender()" :class="`ascwo-flex ascwo-full-center ascwo-rounded-full ascwo-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] ascwo-p-2 lg:ascwo-p-3 ascwo-bg-[${configColors.bars.preview.backgroundColor}] ascwo-text-[${configColors.bars.preview.textColor}] hover:ascwo-bg-[${configColors.bars.preview.hoverBackgroundColor}] hover:ascwo-text-[${configColors.bars.preview.hoverTextColor}] ascwo-border-2 ascwo-border-[${configColors.bars.preview.borderColor}] hover:ascwo-border-[${configColors.bars.preview.hoverBorderColor}] ascwo-base-animation ascwo-cursor-pointer`">
+                            <svg v-if="configSectionIcons.changeIconPreview === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4 lg:ascwo-w-5 lg:ascwo-h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                             </svg>
-                            <img v-if="configSectionIcons.changeIconPreview !== '' " :src="configSectionIcons.changeIconPreview" class="asowp-w-4 asowp-h-4 lg:asowp-w-5 lg:asowp-h-5" />                                                            
+                            <img v-if="configSectionIcons.changeIconPreview !== '' " :src="configSectionIcons.changeIconPreview" class="ascwo-w-4 ascwo-h-4 lg:ascwo-w-5 lg:ascwo-h-5" />                                                            
                         </span>
-                        <p :class="`asowp-hidden lg:asowp-flex asowp-text-sm asowp-font-medium asowp-text-[${configColors.optionsSideBar.textColor}]  `">
+                        <p :class="`ascwo-hidden lg:ascwo-flex ascwo-text-sm ascwo-font-medium ascwo-text-[${configColors.optionsSideBar.textColor}]  `">
                             {{ configVisualiserTexts.textPreview && configVisualiserTexts.textPreview.trim() !== '' ? configVisualiserTexts.textPreview : 'Preview' }}
                         </p>
                     </div>
     
-                    <div v-if="configImageSettings.enableDownloadImage" class="asowp-flex asowp-flex-col asowp-full-center asowp-space-y-2">
-                        <span @click="downLoadConfigRender()" :class="`asowp-flex asowp-full-center asowp-rounded-full asowp-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] asowp-p-2 lg:asowp-p-3 asowp-bg-[${configColors.bars.preview.backgroundColor}] asowp-text-[${configColors.bars.preview.textColor}] hover:asowp-bg-[${configColors.bars.preview.hoverBackgroundColor}] hover:asowp-text-[${configColors.bars.preview.hoverTextColor}] asowp-border-2 asowp-border-[${configColors.bars.preview.borderColor}] hover:asowp-border-[${configColors.bars.preview.hoverBorderColor}] asowp-base-animation asowp-cursor-pointer`">
-                            <svg v-if="configSectionIcons.changeIconDownload === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4 lg:asowp-w-5 lg:asowp-h-5">
+                    <div v-if="configImageSettings.enableDownloadImage" class="ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-2">
+                        <span @click="downLoadConfigRender()" :class="`ascwo-flex ascwo-full-center ascwo-rounded-full ascwo-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] ascwo-p-2 lg:ascwo-p-3 ascwo-bg-[${configColors.bars.preview.backgroundColor}] ascwo-text-[${configColors.bars.preview.textColor}] hover:ascwo-bg-[${configColors.bars.preview.hoverBackgroundColor}] hover:ascwo-text-[${configColors.bars.preview.hoverTextColor}] ascwo-border-2 ascwo-border-[${configColors.bars.preview.borderColor}] hover:ascwo-border-[${configColors.bars.preview.hoverBorderColor}] ascwo-base-animation ascwo-cursor-pointer`">
+                            <svg v-if="configSectionIcons.changeIconDownload === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4 lg:ascwo-w-5 lg:ascwo-h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                             </svg>
-                            <img v-if="configSectionIcons.changeIconDownload !== '' " :src="configSectionIcons.changeIconDownload" class="asowp-w-5 asowp-h-5" />
+                            <img v-if="configSectionIcons.changeIconDownload !== '' " :src="configSectionIcons.changeIconDownload" class="ascwo-w-5 ascwo-h-5" />
                         </span>
-                        <p :class="`asowp-hidden lg:asowp-flex asowp-text-sm asowp-font-medium asowp-text-[${configColors.optionsSideBar.textColor}]  `">
+                        <p :class="`ascwo-hidden lg:ascwo-flex ascwo-text-sm ascwo-font-medium ascwo-text-[${configColors.optionsSideBar.textColor}]  `">
                             {{ configVisualiserTexts.textDownload && configVisualiserTexts.textDownload.trim() !== '' ? configVisualiserTexts.textDownload : 'Preview' }}
                         </p>
                     </div>
     
-                    <div v-if="props.config.data.settings.languageImages.uploadDesign.helpContent != ''" class="asowp-flex asowp-flex-col asowp-full-center asowp-space-y-2">
-                        <span @click="()=> showHelpSection = !showHelpSection" :class="`asowp-flex asowp-full-center asowp-rounded-full asowp-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] asowp-p-2 lg:asowp-p-3 asowp-bg-[${configColors.bars.help.backgroundColor}] asowp-text-[${configColors.bars.help.textColor}] hover:asowp-bg-[${configColors.bars.help.hoverBackgroundColor}] hover:asowp-text-[${configColors.bars.help.hoverTextColor}] asowp-border-2 asowp-border-[${configColors.bars.help.borderColor}] hover:asowp-border-[${configColors.bars.help.hoverBorderColor}] asowp-base-animation asowp-cursor-pointer`">
-                            <svg v-if="configSectionIcons.changeIconHelp === '' " viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg" class="asowp-w-4 asowp-h-4 lg:asowp-w-5 lg:asowp-h-5">
+                    <div v-if="props.config.data.settings.languageImages.uploadDesign.helpContent != ''" class="ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-2">
+                        <span @click="()=> showHelpSection = !showHelpSection" :class="`ascwo-flex ascwo-full-center ascwo-rounded-full ascwo-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] ascwo-p-2 lg:ascwo-p-3 ascwo-bg-[${configColors.bars.help.backgroundColor}] ascwo-text-[${configColors.bars.help.textColor}] hover:ascwo-bg-[${configColors.bars.help.hoverBackgroundColor}] hover:ascwo-text-[${configColors.bars.help.hoverTextColor}] ascwo-border-2 ascwo-border-[${configColors.bars.help.borderColor}] hover:ascwo-border-[${configColors.bars.help.hoverBorderColor}] ascwo-base-animation ascwo-cursor-pointer`">
+                            <svg v-if="configSectionIcons.changeIconHelp === '' " viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg" class="ascwo-w-4 ascwo-h-4 lg:ascwo-w-5 lg:ascwo-h-5">
                                 <path d="M9.375 9.92967C9.375 9.92967 9.45937 7.93162 11.3402 6.32955C12.457 5.37836 13.7982 5.10287 15 5.08592C16.0975 5.07199 17.0783 5.26392 17.6648 5.55939C18.6674 6.06677 20.625 7.30193 20.625 9.92967C20.625 12.6948 18.9152 13.9482 16.9717 15.3292C15.0281 16.7103 14.5312 18.0647 14.5312 19.6172" stroke="currentColor" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"/>
                                 <path d="M14.5312 26.1556C15.5668 26.1556 16.4062 25.2882 16.4062 24.2181C16.4062 23.1481 15.5668 22.2806 14.5312 22.2806C13.4957 22.2806 12.6562 23.1481 12.6562 24.2181C12.6562 25.2882 13.4957 26.1556 14.5312 26.1556Z" fill="currentColor"/>
                             </svg>
-                            <img v-if="configSectionIcons.changeIconHelp !== '' " :src="configSectionIcons.changeIconHelp" class="asowp-w-5 asowp-h-5" />
+                            <img v-if="configSectionIcons.changeIconHelp !== '' " :src="configSectionIcons.changeIconHelp" class="ascwo-w-5 ascwo-h-5" />
                         </span>
-                        <p :class="`asowp-hidden lg:asowp-flex asowp-text-sm asowp-font-medium asowp-text-[${configColors.optionsSideBar.textColor}]`">
+                        <p :class="`ascwo-hidden lg:ascwo-flex ascwo-text-sm ascwo-font-medium ascwo-text-[${configColors.optionsSideBar.textColor}]`">
                             {{ configVisualiserTexts.textHelp && configVisualiserTexts.textHelp.trim() !== '' ? configVisualiserTexts.textHelp : 'Help' }}
                         </p>
                     </div>
 
-                    <div v-if="props.config.data.settings.languageImages.uploadDesign.activate" class="asowp-flex asowp-flex-col asowp-full-center asowp-space-y-2">
-                        <a :href="props.config.data.settings.languageImages.uploadDesign.link" :class="`asowp-flex asowp-full-center asowp-rounded-full asowp-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] asowp-p-2 lg:asowp-p-3 asowp-bg-[${configColors.bars.preview.backgroundColor}] asowp-text-[${configColors.bars.preview.textColor}] hover:asowp-bg-[${configColors.bars.preview.hoverBackgroundColor}] hover:asowp-text-[${configColors.bars.preview.hoverTextColor}] asowp-border-2 asowp-border-[${configColors.bars.preview.borderColor}] hover:asowp-border-[${configColors.bars.preview.hoverBorderColor}] asowp-base-animation asowp-cursor-pointer`">
-                            <svg v-if="configSectionIcons.changeIconImport === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4 lg:asowp-w-5 lg:asowp-h-5">
+                    <div v-if="props.config.data.settings.languageImages.uploadDesign.activate" class="ascwo-flex ascwo-flex-col ascwo-full-center ascwo-space-y-2">
+                        <a :href="props.config.data.settings.languageImages.uploadDesign.link" :class="`ascwo-flex ascwo-full-center ascwo-rounded-full ascwo-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] ascwo-p-2 lg:ascwo-p-3 ascwo-bg-[${configColors.bars.preview.backgroundColor}] ascwo-text-[${configColors.bars.preview.textColor}] hover:ascwo-bg-[${configColors.bars.preview.hoverBackgroundColor}] hover:ascwo-text-[${configColors.bars.preview.hoverTextColor}] ascwo-border-2 ascwo-border-[${configColors.bars.preview.borderColor}] hover:ascwo-border-[${configColors.bars.preview.hoverBorderColor}] ascwo-base-animation ascwo-cursor-pointer`">
+                            <svg v-if="configSectionIcons.changeIconImport === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-4 ascwo-h-4 lg:ascwo-w-5 lg:ascwo-h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
                             </svg>
-                            <img v-if="configSectionIcons.changeIconImport !== '' " :src="configSectionIcons.changeIconImport" class="asowp-w-5 asowp-h-5" />
+                            <img v-if="configSectionIcons.changeIconImport !== '' " :src="configSectionIcons.changeIconImport" class="ascwo-w-5 ascwo-h-5" />
                         </a>
-                        <p :class="`asowp-hidden lg:asowp-flex asowp-text-sm asowp-font-medium asowp-text-[${configColors.optionsSideBar.textColor}] asowp-text-center`">
+                        <p :class="`ascwo-hidden lg:ascwo-flex ascwo-text-sm ascwo-font-medium ascwo-text-[${configColors.optionsSideBar.textColor}] ascwo-text-center`">
                             {{ props.config.data.settings.languageImages.uploadDesign.phraseSubmitCustom && props.config.data.settings.languageImages.uploadDesign.phraseSubmitCustom.trim() !== '' ? props.config.data.settings.languageImages.uploadDesign.phraseSubmitCustom : 'Preview' }}
                         </p>
                     </div>
                 </div>
                 
-                <div v-if="showHelpSection" :class="`asowp-absolute asowp-left-0 asowp-bottom-0 asowp-flex asowp-flex-col asowp-translate-x-[-105%] lg:asowp-translate-y-[-50%] asowp-w-[250px] lg:asowp-w-[350px] asowp-h-[100%] lg:asowp-h-[50%] asowp-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.textColor}]`">
-                    <div class="asowp-flex asowp-w-full asowp-h-fit asowp-justify-end asowp-cursor-pointer">
-                        <span @click="()=> showHelpSection = false" :class="`asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-p-1 asowp-base-animation`">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                <div v-if="showHelpSection" :class="`ascwo-absolute ascwo-left-0 ascwo-bottom-0 ascwo-flex ascwo-flex-col ascwo-translate-x-[-105%] lg:ascwo-translate-y-[-50%] ascwo-w-[250px] lg:ascwo-w-[350px] ascwo-h-[100%] lg:ascwo-h-[50%] ascwo-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.textColor}]`">
+                    <div class="ascwo-flex ascwo-w-full ascwo-h-fit ascwo-justify-end ascwo-cursor-pointer">
+                        <span @click="()=> showHelpSection = false" :class="`ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] ascwo-p-1 ascwo-base-animation`">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                             </svg>
                         </span>
                     </div>
-                    <div v-html="props.config.data.settings.languageImages.uploadDesign.helpContent" class="asowp-flex asowp-flex-col asowp-w-full asowp-overflow-auto"></div>
+                    <div v-html="props.config.data.settings.languageImages.uploadDesign.helpContent" class="ascwo-flex ascwo-flex-col ascwo-w-full ascwo-overflow-auto"></div>
                 </div>
             </div>
         </div>
 
-        <div v-if="showImg" :class="`asowp-absolute asowp-z-20 asowp-top-0 asowp-bg-[${configColors.bars.reset.modalBackgroundColor}]/70 aso asowp-w-full asowp-h-full asowp-flex asowp-full-center`">
-            <div :class="`asowp-relative asowp-w-[90%] lg:asowp-h-[80%] asowp-flex asowp-flex-col asowp-space-y-2 asowp-full-center asowp-bg-[${configColors.canvas.backgroundColor}] asowp-border-solid asowp-p-2 asowp-overflow-hidden`">
-                <span @click="closeprevImg" :class="`asowp-absolute asowp-top-0 asowp-right-0 asowp-flex asowp-full-centerasowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-p-0.5 asowp-base-animation asowp-cursor-pointer asowp-z-20`">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+        <div v-if="showImg" :class="`ascwo-absolute ascwo-z-20 ascwo-top-0 ascwo-bg-[${configColors.bars.reset.modalBackgroundColor}]/70 aso ascwo-w-full ascwo-h-full ascwo-flex ascwo-full-center`">
+            <div :class="`ascwo-relative ascwo-w-[90%] lg:ascwo-h-[80%] ascwo-flex ascwo-flex-col ascwo-space-y-2 ascwo-full-center ascwo-bg-[${configColors.canvas.backgroundColor}] ascwo-border-solid ascwo-p-2 ascwo-overflow-hidden`">
+                <span @click="closeprevImg" :class="`ascwo-absolute ascwo-top-0 ascwo-right-0 ascwo-flex ascwo-full-centerascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] ascwo-p-0.5 ascwo-base-animation ascwo-cursor-pointer ascwo-z-20`">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="ascwo-w-6 ascwo-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                     </svg>
                 </span>
 
-                <div v-if="configImageSettings.scenes.length > 0" class="asowp-z-20">
-                    <span @click="slideSceneImage('left')" :class="`asowp-absolute asowp-top-[50%] asowp-translate-y-[-50%] asowp-left-[4%] asowp-flex asowp-full-centerasowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-p-0.5 asowp-base-animation asowp-cursor-pointer asowp-rounded-sm asowp-z-10`">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6 lg:asowp-w-7 lg:asowp-h-7">
+                <div v-if="configImageSettings.scenes.length > 0" class="ascwo-z-20">
+                    <span @click="slideSceneImage('left')" :class="`ascwo-absolute ascwo-top-[50%] ascwo-translate-y-[-50%] ascwo-left-[4%] ascwo-flex ascwo-full-centerascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] ascwo-p-0.5 ascwo-base-animation ascwo-cursor-pointer ascwo-rounded-sm ascwo-z-10`">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-6 ascwo-h-6 lg:ascwo-w-7 lg:ascwo-h-7">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                         </svg>
                     </span>
-                    <span @click="slideSceneImage('right')" :class="`asowp-absolute asowp-top-[50%] asowp-translate-y-[-50%] asowp-right-[4%] asowp-flex asowp-full-centerasowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-p-0.5 asowp-base-animation asowp-cursor-pointer asowp-rounded-sm asowp-z-10`">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6 lg:asowp-w-7 lg:asowp-h-7">
+                    <span @click="slideSceneImage('right')" :class="`ascwo-absolute ascwo-top-[50%] ascwo-translate-y-[-50%] ascwo-right-[4%] ascwo-flex ascwo-full-centerascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] ascwo-p-0.5 ascwo-base-animation ascwo-cursor-pointer ascwo-rounded-sm ascwo-z-10`">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-6 ascwo-h-6 lg:ascwo-w-7 lg:ascwo-h-7">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                         </svg>
                     </span>
                 </div>
     
-                <div v-if="configTextType == 'neon'" id="showPreview" :class="`asowp-w-full asowp-h-[88%] asowp-flex asowp-items-center asowp-justify-center asowp-rounded asowp-relative asowp-overflow-hidden`">
-                    <img id="asowp-showPreview" :src="prevImg" class="asowp-w-auto asowp-h-full asowp-z-10" style="pointer-events: none; user-select: none; -webkit-user-select: none" />
+                <div v-if="configTextType == 'neon'" id="showPreview" :class="`ascwo-w-full ascwo-h-[88%] ascwo-flex ascwo-items-center ascwo-justify-center ascwo-rounded ascwo-relative ascwo-overflow-hidden`">
+                    <img id="ascwo-showPreview" :src="prevImg" class="ascwo-w-auto ascwo-h-full ascwo-z-10" style="pointer-events: none; user-select: none; -webkit-user-select: none" />
                 </div>
-                <div v-if="configTextType != 'neon'" id="showPreview" :class="`asowp-w-full asowp-h-[88%] asowp-flex asowp-rounded asowp-relative asowp-overflow-hidden`"></div>
+                <div v-if="configTextType != 'neon'" id="showPreview" :class="`ascwo-w-full ascwo-h-[88%] ascwo-flex ascwo-rounded ascwo-relative ascwo-overflow-hidden`"></div>
                 
-                <div v-if="configImageSettings.scenes.length > 0" class="asowp-w-full asowp-h-[10%] asowp-flex">
-                    <div class="asowp-w-full asowp-h-full asowp-flex asowp-items-center asowp-justify-center asowp-space-x-2">
-                        <div id="asowp-miniPreview" @click="setPreviewScene('none', -1)" :class="`${currentSceneUrl == 'none' && currentSceneId == -1 ? `asowp-ring asowp-ring-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}]` : `` } asowp-flex asowp-w-[60px] asowp-h-[40px] asowp-rounded asowp-overflow-hidden asowp-cursor-pointer`">
-                            <!-- <img :src="scene" class="asowp-w-full asowp-h-full" > -->
+                <div v-if="configImageSettings.scenes.length > 0" class="ascwo-w-full ascwo-h-[10%] ascwo-flex">
+                    <div class="ascwo-w-full ascwo-h-full ascwo-flex ascwo-items-center ascwo-justify-center ascwo-space-x-2">
+                        <div id="ascwo-miniPreview" @click="setPreviewScene('none', -1)" :class="`${currentSceneUrl == 'none' && currentSceneId == -1 ? `ascwo-ring ascwo-ring-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}]` : `` } ascwo-flex ascwo-w-[60px] ascwo-h-[40px] ascwo-rounded ascwo-overflow-hidden ascwo-cursor-pointer`">
+                            <!-- <img :src="scene" class="ascwo-w-full ascwo-h-full" > -->
                         </div>
-                        <div @click="setPreviewScene(scene, index)" v-for="(scene, index) in configImageSettings.scenes" :class="`${currentSceneUrl == scene && currentSceneId == index ? `asowp-ring asowp-ring-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}]` : `` } asowp-flex asowp-w-auto asowp-h-[40px] asowp-rounded asowp-overflow-hidden asowp-cursor-pointer`">
-                            <img :src="scene" class="asowp-w-full asowp-h-full" >
+                        <div @click="setPreviewScene(scene, index)" v-for="(scene, index) in configImageSettings.scenes" :class="`${currentSceneUrl == scene && currentSceneId == index ? `ascwo-ring ascwo-ring-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}]` : `` } ascwo-flex ascwo-w-auto ascwo-h-[40px] ascwo-rounded ascwo-overflow-hidden ascwo-cursor-pointer`">
+                            <img :src="scene" class="ascwo-w-full ascwo-h-full" >
                         </div>
                     </div>
                 </div>
                 
-                <canvas  ref="imageCanvasRef"  class="asowp-w-[90%] asowp-hidden" style="display: none"></canvas>
+                <canvas  ref="imageCanvasRef"  class="ascwo-w-[90%] ascwo-hidden" style="display: none"></canvas>
             </div>
         </div>
 
-        <div v-if="route.name == 'template-maker'" v-show="showTempSettings" id="asowp-templateObjects-options" :class="`asowp-absolute asowp-top-[11%] asowp-right-0 lg:asowp-right-[10%] asowp-w-fit asowp-h-fit asowp-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.textColor}]`">
-            <div class="asowp-relative asowp-flex asowp-flex-col lg:asowp-space-y-3 asowp-w-full asowp-h-full">
-                <p :class="`asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-base asowp-font-semibold asowp-p-2 asowp-px-4`">Custom options</p>    
+        <div v-if="route.name == 'template-maker'" v-show="showTempSettings" id="ascwo-templateObjects-options" :class="`ascwo-absolute ascwo-top-[11%] ascwo-right-0 lg:ascwo-right-[10%] ascwo-w-fit ascwo-h-fit ascwo-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.textColor}]`">
+            <div class="ascwo-relative ascwo-flex ascwo-flex-col lg:ascwo-space-y-3 ascwo-w-full ascwo-h-full">
+                <p :class="`ascwo-flex ascwo-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] ascwo-text-base ascwo-font-semibold ascwo-p-2 ascwo-px-4`">Custom options</p>    
 
-                <div class="asowp-h-full asowp-p-3 asowp-overflow-auto asowp-scrollBar">
-                    <div class="asowp-flex asowp-flex-col asowp-flex-wrap asowp-gap-3">
-                        <span @click="lockMoving('x')" :class="`${lockingXobject === true ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} asowp-flex asowp-items-center asowp-space-x-2 hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                            <p class="asowp-text-xs asowp-font-semibold">Lock X</p>
+                <div class="ascwo-h-full ascwo-p-3 ascwo-overflow-auto ascwo-scrollBar">
+                    <div class="ascwo-flex ascwo-flex-col ascwo-flex-wrap ascwo-gap-3">
+                        <span @click="lockMoving('x')" :class="`${lockingXobject === true ? `ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} ascwo-flex ascwo-items-center ascwo-space-x-2 hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-cursor-pointer ascwo-base-animation`">
+                            <p class="ascwo-text-xs ascwo-font-semibold">Lock X</p>
 
-                            <svg v-if="lockingXobject" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                            <svg v-if="lockingXobject" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                             </svg>
-                            <svg v-if="!lockingXobject" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                            <svg v-if="!lockingXobject" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 1 1 9 0v3.75M3.75 21.75h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H3.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                             </svg>
                         </span>
-                        <span @click="lockMoving('y')" :class="`${lockingYobject === true ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} asowp-flex asowp-items-center asowp-space-x-2 hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                            <p class="asowp-text-xs asowp-font-semibold">Lock Y</p>
+                        <span @click="lockMoving('y')" :class="`${lockingYobject === true ? `ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} ascwo-flex ascwo-items-center ascwo-space-x-2 hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-cursor-pointer ascwo-base-animation`">
+                            <p class="ascwo-text-xs ascwo-font-semibold">Lock Y</p>
 
-                            <svg v-if="lockingYobject" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                            <svg v-if="lockingYobject" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                             </svg>
-                            <svg v-if="!lockingYobject" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                            <svg v-if="!lockingYobject" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 1 1 9 0v3.75M3.75 21.75h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H3.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                             </svg>
                         </span>
-                        <span @click="lockScaling()" :class="`${lockObjectScale === true ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} asowp-flex asowp-items-center asowp-space-x-2 hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                            <p class="asowp-text-xs asowp-font-semibold">Lock Resize</p>
+                        <span @click="lockScaling()" :class="`${lockObjectScale === true ? `ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} ascwo-flex ascwo-items-center ascwo-space-x-2 hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-cursor-pointer ascwo-base-animation`">
+                            <p class="ascwo-text-xs ascwo-font-semibold">Lock Resize</p>
                             
-                            <svg v-if="lockObjectScale" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                            <svg v-if="lockObjectScale" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                             </svg>
-                            <svg v-if="!lockObjectScale" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                            <svg v-if="!lockObjectScale" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 1 1 9 0v3.75M3.75 21.75h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H3.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                             </svg>
                         </span>
-                        <span @click="lockRotation()" :class="`${lockObjectRotation === true ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} asowp-flex asowp-items-center asowp-space-x-2 hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                            <p class="asowp-text-xs asowp-font-semibold">Lock Rotation</p>
+                        <span @click="lockRotation()" :class="`${lockObjectRotation === true ? `ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} ascwo-flex ascwo-items-center ascwo-space-x-2 hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-cursor-pointer ascwo-base-animation`">
+                            <p class="ascwo-text-xs ascwo-font-semibold">Lock Rotation</p>
                             
-                            <svg v-if="lockObjectRotation" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                            <svg v-if="lockObjectRotation" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                             </svg>
-                            <svg v-if="!lockObjectRotation" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                            <svg v-if="!lockObjectRotation" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 1 1 9 0v3.75M3.75 21.75h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H3.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                             </svg>
                         </span>
-                        <span @click="lockEdition()" :class="`${lockObjectEdition === true ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} asowp-flex asowp-items-center asowp-space-x-2 hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                            <p class="asowp-text-xs asowp-font-semibold">Lock text Edition</p>
+                        <span @click="lockEdition()" :class="`${lockObjectEdition === true ? `ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `ascwo-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} ascwo-flex ascwo-items-center ascwo-space-x-2 hover:ascwo-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] ascwo-cursor-pointer ascwo-base-animation`">
+                            <p class="ascwo-text-xs ascwo-font-semibold">Lock text Edition</p>
                             
-                            <svg v-if="lockObjectEdition" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                            <svg v-if="lockObjectEdition" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                             </svg>
-                            <svg v-if="!lockObjectEdition" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                            <svg v-if="!lockObjectEdition" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ascwo-w-5 ascwo-h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 1 1 9 0v3.75M3.75 21.75h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H3.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                             </svg>
                         </span>
@@ -2135,65 +2135,65 @@
             </div>
         </div>
 
-        <div v-if="finish" :class="`asowp-absolute asowp-top-0 asowp-z-30 asowp-w-full asowp-h-[100%] asowp-flex asowp-flex-col asowp-bg-[${configColors.recaps.backgroundColor}]`">
-            <div :class="`asowp-w-full asowp-p-4 asowp-bg-[${configColors.recaps.headerBackgroundColor}] asowp-text-[${configColors.recaps.headerTextColor}]`">
-                <p class="asowp-text-xl asowp-font-bold asowp-text-center">Summary</p>
+        <div v-if="finish" :class="`ascwo-absolute ascwo-top-0 ascwo-z-30 ascwo-w-full ascwo-h-[100%] ascwo-flex ascwo-flex-col ascwo-bg-[${configColors.recaps.backgroundColor}]`">
+            <div :class="`ascwo-w-full ascwo-p-4 ascwo-bg-[${configColors.recaps.headerBackgroundColor}] ascwo-text-[${configColors.recaps.headerTextColor}]`">
+                <p class="ascwo-text-xl ascwo-font-bold ascwo-text-center">Summary</p>
             </div>
 
-            <div :class="`asowp-flex asowp-flex-col asowp-flex-1 asowp-overflow-auto asowp-scrollBar asowp-text-[${configColors.recaps.optionTextColor}]`">
-                <div :class="`asowp-flex asowp-items-center asowp-justify-between asowp-px-4 asowp-py-3 asowp-border-b-2 asowp-border-[${configColors.recaps.optionBorderColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:asowp-text-[${configColors.recaps.optionHoverTextColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBorderColor}]`">
-                    <p :class="`asowp-text-[16px] asowp-font-semibold`">
+            <div :class="`ascwo-flex ascwo-flex-col ascwo-flex-1 ascwo-overflow-auto ascwo-scrollBar ascwo-text-[${configColors.recaps.optionTextColor}]`">
+                <div :class="`ascwo-flex ascwo-items-center ascwo-justify-between ascwo-px-4 ascwo-py-3 ascwo-border-b-2 ascwo-border-[${configColors.recaps.optionBorderColor}] hover:ascwo-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:ascwo-text-[${configColors.recaps.optionHoverTextColor}] hover:ascwo-bg-[${configColors.recaps.optionHoverBorderColor}]`">
+                    <p :class="`ascwo-text-[16px] ascwo-font-semibold`">
                         {{ configVisualiserTexts.textPreview && configVisualiserTexts.textPreview.trim() !== '' ? configVisualiserTexts.textPreview : 'Preview' }}
                     </p>
 
-                    <div class="asowp-text-[14px] asowp-space-y-1 asowp-flex asowp-flex-col asowp-items-center w-2/3 justify-end">
-                        <div class="asowp-flex asowp-space-x-2 asowp-full-center">
-                            <span v-if="configDoublePart.active"  class="asowp-font-medium">{{configDoublePart.part1}}: </span>
-                            <div v-if="configTextType != 'neon'" id="asowp-previewFinish1" class="asowp-w-auto asowp-h-[70px]"></div>
-                            <img v-if="configTextType == 'neon'" :src="prevImg" alt="" class="asowp-w-auto asowp-h-[70px]" style="pointer-events: none; user-select: none; -webkit-user-select: none">
+                    <div class="ascwo-text-[14px] ascwo-space-y-1 ascwo-flex ascwo-flex-col ascwo-items-center w-2/3 justify-end">
+                        <div class="ascwo-flex ascwo-space-x-2 ascwo-full-center">
+                            <span v-if="configDoublePart.active"  class="ascwo-font-medium">{{configDoublePart.part1}}: </span>
+                            <div v-if="configTextType != 'neon'" id="ascwo-previewFinish1" class="ascwo-w-auto ascwo-h-[70px]"></div>
+                            <img v-if="configTextType == 'neon'" :src="prevImg" alt="" class="ascwo-w-auto ascwo-h-[70px]" style="pointer-events: none; user-select: none; -webkit-user-select: none">
                         </div>
 
-                        <div v-if="configDoublePart.active" class="asowp-flex asowp-space-x-2 asowp-full-center">
-                            <span class="asowp-font-medium">{{configDoublePart.part2}}: </span>
-                            <!-- <img :src="configData.designImages.face2[0].url" class="asowp-w-auto asowp-h-[70px]" > -->
-                            <div v-if="configTextType != 'neon'" id="asowp-previewFinish2" class="asowp-w-auto asowp-h-[70px]"></div>
-                            <img v-if="configTextType == 'neon'" :src="prevImgBack" alt="" class="asowp-w-auto asowp-h-[70px]" style="pointer-events: none; user-select: none; -webkit-user-select: none">
+                        <div v-if="configDoublePart.active" class="ascwo-flex ascwo-space-x-2 ascwo-full-center">
+                            <span class="ascwo-font-medium">{{configDoublePart.part2}}: </span>
+                            <!-- <img :src="configData.designImages.face2[0].url" class="ascwo-w-auto ascwo-h-[70px]" > -->
+                            <div v-if="configTextType != 'neon'" id="ascwo-previewFinish2" class="ascwo-w-auto ascwo-h-[70px]"></div>
+                            <img v-if="configTextType == 'neon'" :src="prevImgBack" alt="" class="ascwo-w-auto ascwo-h-[70px]" style="pointer-events: none; user-select: none; -webkit-user-select: none">
                         </div>
                     </div>
                 </div>
 
-                <div :class="`asowp-flex asowp-items-center asowp-justify-between asowp-px-4 asowp-py-3 asowp-border-b-2 asowp-border-[${configColors.recaps.optionBorderColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:asowp-text-[${configColors.recaps.optionHoverTextColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBorderColor}] asowp-base-animation`">
-                    <p :class="`asowp-text-[16px] asowp-font-semibold`">{{ configVisualiserTexts.textQuantity ?? 'Quantity' }}</p>
-                    <p :class="`asowp-text-[14px] lowercase first-letter:uppercase`">{{configQuantity}}</p>
+                <div :class="`ascwo-flex ascwo-items-center ascwo-justify-between ascwo-px-4 ascwo-py-3 ascwo-border-b-2 ascwo-border-[${configColors.recaps.optionBorderColor}] hover:ascwo-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:ascwo-text-[${configColors.recaps.optionHoverTextColor}] hover:ascwo-bg-[${configColors.recaps.optionHoverBorderColor}] ascwo-base-animation`">
+                    <p :class="`ascwo-text-[16px] ascwo-font-semibold`">{{ configVisualiserTexts.textQuantity ?? 'Quantity' }}</p>
+                    <p :class="`ascwo-text-[14px] lowercase first-letter:uppercase`">{{configQuantity}}</p>
                 </div>
                 
-                <div v-if=" selectedMaterial != '' " :class="`asowp-flex asowp-items-center asowp-justify-between asowp-px-4 asowp-py-3 asowp-border-b-2 asowp-border-[${configColors.recaps.optionBorderColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:asowp-text-[${configColors.recaps.optionHoverTextColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBorderColor}] asowp-base-animation`">
-                    <p :class="`asowp-text-[16px] asowp-font-semibold`">{{ configVisualiserTexts.textMaterial ?? 'Material' }}</p>
-                    <p :class="`asowp-text-[14px]`">{{ selectedMaterial}}</p>
+                <div v-if=" selectedMaterial != '' " :class="`ascwo-flex ascwo-items-center ascwo-justify-between ascwo-px-4 ascwo-py-3 ascwo-border-b-2 ascwo-border-[${configColors.recaps.optionBorderColor}] hover:ascwo-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:ascwo-text-[${configColors.recaps.optionHoverTextColor}] hover:ascwo-bg-[${configColors.recaps.optionHoverBorderColor}] ascwo-base-animation`">
+                    <p :class="`ascwo-text-[16px] ascwo-font-semibold`">{{ configVisualiserTexts.textMaterial ?? 'Material' }}</p>
+                    <p :class="`ascwo-text-[14px]`">{{ selectedMaterial}}</p>
                 </div>
 
-                <div v-if="selectedShape != '' " :class="`asowp-flex asowp-items-center asowp-justify-between asowp-px-4 asowp-py-3 asowp-border-b-2 asowp-border-[${configColors.recaps.optionBorderColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:asowp-text-[${configColors.recaps.optionHoverTextColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBorderColor}] asowp-base-animation`">
-                    <p :class="`asowp-text-[16px] asowp-font-semibold`">{{ configVisualiserTexts.textShape ?? 'Shape' }}</p>
-                    <p :class="`asowp-text-[14px] lowercase first-letter:uppercase`">{{selectedShape}}</p>
+                <div v-if="selectedShape != '' " :class="`ascwo-flex ascwo-items-center ascwo-justify-between ascwo-px-4 ascwo-py-3 ascwo-border-b-2 ascwo-border-[${configColors.recaps.optionBorderColor}] hover:ascwo-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:ascwo-text-[${configColors.recaps.optionHoverTextColor}] hover:ascwo-bg-[${configColors.recaps.optionHoverBorderColor}] ascwo-base-animation`">
+                    <p :class="`ascwo-text-[16px] ascwo-font-semibold`">{{ configVisualiserTexts.textShape ?? 'Shape' }}</p>
+                    <p :class="`ascwo-text-[14px] lowercase first-letter:uppercase`">{{selectedShape}}</p>
                 </div>
 
-                <div v-if="currentSizeName != '' " :class="`asowp-flex asowp-items-center asowp-justify-between asowp-px-4 asowp-py-3 asowp-border-b-2 asowp-border-[${configColors.recaps.optionBorderColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:asowp-text-[${configColors.recaps.optionHoverTextColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBorderColor}] asowp-base-animation`">
+                <div v-if="currentSizeName != '' " :class="`ascwo-flex ascwo-items-center ascwo-justify-between ascwo-px-4 ascwo-py-3 ascwo-border-b-2 ascwo-border-[${configColors.recaps.optionBorderColor}] hover:ascwo-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:ascwo-text-[${configColors.recaps.optionHoverTextColor}] hover:ascwo-bg-[${configColors.recaps.optionHoverBorderColor}] ascwo-base-animation`">
                     <div :class="``">
-                        <p v-if="configVisualiserTexts.textSize" class="asowp-text-[16px] asowp-font-semibold">{{configVisualiserTexts.textSize}}</p>
-                        <p v-if="!configVisualiserTexts.textSize" class="asowp-text-[16px] asowp-font-semibold">Sizes</p>
+                        <p v-if="configVisualiserTexts.textSize" class="ascwo-text-[16px] ascwo-font-semibold">{{configVisualiserTexts.textSize}}</p>
+                        <p v-if="!configVisualiserTexts.textSize" class="ascwo-text-[16px] ascwo-font-semibold">Sizes</p>
                     </div>
-                    <div :class="`asowp-flex asowp-flex-col`"> 
-                        <p class="asowp-text-[13px]" v-show="configSettings.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-height'"><span class="asowp-font-semibold">{{ configVisualiserTexts.textHeight && configVisualiserTexts.textHeight.trim() !== '' ? configVisualiserTexts.textHeight : 'Height' }}: </span> 
+                    <div :class="`ascwo-flex ascwo-flex-col`"> 
+                        <p class="ascwo-text-[13px]" v-show="configSettings.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-height'"><span class="ascwo-font-semibold">{{ configVisualiserTexts.textHeight && configVisualiserTexts.textHeight.trim() !== '' ? configVisualiserTexts.textHeight : 'Height' }}: </span> 
                             <span>
                                 {{configData.sign.size.value.height.value}}
                             </span>
                         </p>
-                        <p class="asowp-text-[13px]" v-show="configSettings.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-width'"><span class="asowp-font-semibold">{{ configVisualiserTexts.textWidth && configVisualiserTexts.textWidth.trim() !== '' ? configVisualiserTexts.textWidth : 'Width' }}: </span> 
+                        <p class="ascwo-text-[13px]" v-show="configSettings.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-width'"><span class="ascwo-font-semibold">{{ configVisualiserTexts.textWidth && configVisualiserTexts.textWidth.trim() !== '' ? configVisualiserTexts.textWidth : 'Width' }}: </span> 
                             <span>
                                 {{configData.sign.size.value.width.value}}
                             </span>
                         </p>
-                        <p class="asowp-text-[13px]" v-if="materialType === 'simple' && thicknesss.active"><span class="asowp-font-semibold">{{configVisualiserTexts.thickness}}: </span> 
+                        <p class="ascwo-text-[13px]" v-if="materialType === 'simple' && thicknesss.active"><span class="ascwo-font-semibold">{{configVisualiserTexts.thickness}}: </span> 
                             <span>
                                 {{currentThickValue}} {{configUnit}}
                             </span>
@@ -2201,177 +2201,177 @@
                     </div>
                 </div>
 
-                <div v-if="activeSignColor != '' " :class="`asowp-flex asowp-items-center asowp-justify-between asowp-px-4 asowp-py-3 asowp-border-b-2 asowp-border-[${configColors.recaps.optionBorderColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:asowp-text-[${configColors.recaps.optionHoverTextColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBorderColor}] asowp-base-animation`">
-                    <div :class="`asowp-w-1/3`">
-                        <p v-if="configVisualiserTexts.textColor" class="asowp-text-[16px] text-black asowp-font-semibold">{{configVisualiserTexts.textColor}}</p>
-                        <p v-if="!configVisualiserTexts.textColor" class="asowp-text-[16px] text-black asowp-font-semibold">Color</p>
+                <div v-if="activeSignColor != '' " :class="`ascwo-flex ascwo-items-center ascwo-justify-between ascwo-px-4 ascwo-py-3 ascwo-border-b-2 ascwo-border-[${configColors.recaps.optionBorderColor}] hover:ascwo-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:ascwo-text-[${configColors.recaps.optionHoverTextColor}] hover:ascwo-bg-[${configColors.recaps.optionHoverBorderColor}] ascwo-base-animation`">
+                    <div :class="`ascwo-w-1/3`">
+                        <p v-if="configVisualiserTexts.textColor" class="ascwo-text-[16px] text-black ascwo-font-semibold">{{configVisualiserTexts.textColor}}</p>
+                        <p v-if="!configVisualiserTexts.textColor" class="ascwo-text-[16px] text-black ascwo-font-semibold">Color</p>
                     </div>
-                    <div class="asowp-text-[14px] asowp-space-y-1 asowp-flex asowp-flex-col asowp-items-center w-2/3 justify-end">
-                        <div class="asowp-flex asowp-space-x-2 asowp-full-center">
-                            <span v-if="configDoublePart.active"  class="asowp-font-medium">{{configDoublePart.part1}}: </span>
+                    <div class="ascwo-text-[14px] ascwo-space-y-1 ascwo-flex ascwo-flex-col ascwo-items-center w-2/3 justify-end">
+                        <div class="ascwo-flex ascwo-space-x-2 ascwo-full-center">
+                            <span v-if="configDoublePart.active"  class="ascwo-font-medium">{{configDoublePart.part1}}: </span>
                             <span class="lowercase first-letter:uppercase">{{activeSignColor}}</span>
-                            <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                <span v-if="!patternActive1" :class="`asowp-h-[35px] asowp-w-[35px] asowp-bg-[${activeSignColorCode1}] asowp-flex`"></span>
-                                <img v-if="patternActive1" :src="activeSignColorCode1" class="asowp-w-[35px] asowp-h-[35px]" />
+                            <span :class="`ascwo-h-fit ascwo-w-fit ascwo-p-[1px] ascwo-ring-[1px] ascwo-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                <span v-if="!patternActive1" :class="`ascwo-h-[35px] ascwo-w-[35px] ascwo-bg-[${activeSignColorCode1}] ascwo-flex`"></span>
+                                <img v-if="patternActive1" :src="activeSignColorCode1" class="ascwo-w-[35px] ascwo-h-[35px]" />
                             </span>
 
                             <span v-if="signTextColor1.active" class="lowercase first-letter:uppercase">{{colorTextColorName1}}</span>
-                            <span v-if="signTextColor1.active" :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-bg-[${colorTextCodeHex1}] asowp-flex`"></span>
+                            <span v-if="signTextColor1.active" :class="`ascwo-h-fit ascwo-w-fit ascwo-p-[1px] ascwo-ring-[1px] ascwo-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                <span :class="`ascwo-h-[35px] ascwo-w-[35px] ascwo-bg-[${colorTextCodeHex1}] ascwo-flex`"></span>
                             </span>
                         </div>
 
-                        <div v-if="configDoublePart.active" class="asowp-flex asowp-space-x-2 asowp-full-center">
-                            <span class="asowp-font-medium">{{configDoublePart.part2}}: </span>
+                        <div v-if="configDoublePart.active" class="ascwo-flex ascwo-space-x-2 ascwo-full-center">
+                            <span class="ascwo-font-medium">{{configDoublePart.part2}}: </span>
                             <span class="lowercase first-letter:uppercase">{{activeSignFace2Color}}</span>
-                            <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                <span v-if="!patternActive2" :class="`asowp-h-[35px] asowp-w-[35px] asowp-bg-[${activeSignColorCode2}] asowp-flex`"></span>
-                                <img v-if="patternActive2" :src="activeSignColorCode1" class="asowp-w-[35px] asowp-h-[35px]" />
+                            <span :class="`ascwo-h-fit ascwo-w-fit ascwo-p-[1px] ascwo-ring-[1px] ascwo-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                <span v-if="!patternActive2" :class="`ascwo-h-[35px] ascwo-w-[35px] ascwo-bg-[${activeSignColorCode2}] ascwo-flex`"></span>
+                                <img v-if="patternActive2" :src="activeSignColorCode1" class="ascwo-w-[35px] ascwo-h-[35px]" />
                             </span>
                             
                             <span v-if="signTextColor2.active" class="lowercase first-letter:uppercase">{{colorTextColorName2}}</span>
-                            <span v-if="signTextColor2.active" :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-bg-[${colorTextCodeHex2}] asowp-flex`"></span>
+                            <span v-if="signTextColor2.active" :class="`ascwo-h-fit ascwo-w-fit ascwo-p-[1px] ascwo-ring-[1px] ascwo-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                <span :class="`ascwo-h-[35px] ascwo-w-[35px] ascwo-bg-[${colorTextCodeHex2}] ascwo-flex`"></span>
                             </span>
                         </div>
                     </div>
                 </div>
 
-                <div v-if="activeFixingMethode != '' " :class="`asowp-flex asowp-items-center asowp-justify-between asowp-px-4 asowp-py-3 asowp-border-b-2 asowp-border-[${configColors.recaps.optionBorderColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:asowp-text-[${configColors.recaps.optionHoverTextColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBorderColor}] asowp-base-animation`">
+                <div v-if="activeFixingMethode != '' " :class="`ascwo-flex ascwo-items-center ascwo-justify-between ascwo-px-4 ascwo-py-3 ascwo-border-b-2 ascwo-border-[${configColors.recaps.optionBorderColor}] hover:ascwo-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:ascwo-text-[${configColors.recaps.optionHoverTextColor}] hover:ascwo-bg-[${configColors.recaps.optionHoverBorderColor}] ascwo-base-animation`">
                     <div :class="``">
-                        <p v-if="configVisualiserTexts.textFixingMethods" class="asowp-text-[16px] asowp-font-semibold">{{configVisualiserTexts.textFixingMethods}}</p>
-                        <p v-if="!configVisualiserTexts.textFixingMethods" class="asowp-text-[16px] asowp-font-semibold">Fixing methode</p>
+                        <p v-if="configVisualiserTexts.textFixingMethods" class="ascwo-text-[16px] ascwo-font-semibold">{{configVisualiserTexts.textFixingMethods}}</p>
+                        <p v-if="!configVisualiserTexts.textFixingMethods" class="ascwo-text-[16px] ascwo-font-semibold">Fixing methode</p>
                     </div>
-                    <p :class="`asowp-text-[15px] lowercase first-letter:uppercase`">{{activeFixingMethode}}</p>
+                    <p :class="`ascwo-text-[15px] lowercase first-letter:uppercase`">{{activeFixingMethode}}</p>
                 </div>
 
-                <div v-if="materialType === 'simple' && (activeFace1Border != '' || activeFace2Border != '') " :class="`asowp-flex asowp-items-center asowp-justify-between asowp-px-4 asowp-py-3 asowp-border-b-2 asowp-border-[${configColors.recaps.optionBorderColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:asowp-text-[${configColors.recaps.optionHoverTextColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBorderColor}] asowp-base-animation`">
-                    <div :class="`asowp-w-1/3`">
-                        <p v-if="configVisualiserTexts.textBorder" class="asowp-text-[16px] text-black asowp-font-semibold">{{configVisualiserTexts.textBorder}}</p>
-                        <p v-if="!configVisualiserTexts.textBorder" class="asowp-text-[16px] text-black asowp-font-semibold">Border</p>
+                <div v-if="materialType === 'simple' && (activeFace1Border != '' || activeFace2Border != '') " :class="`ascwo-flex ascwo-items-center ascwo-justify-between ascwo-px-4 ascwo-py-3 ascwo-border-b-2 ascwo-border-[${configColors.recaps.optionBorderColor}] hover:ascwo-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:ascwo-text-[${configColors.recaps.optionHoverTextColor}] hover:ascwo-bg-[${configColors.recaps.optionHoverBorderColor}] ascwo-base-animation`">
+                    <div :class="`ascwo-w-1/3`">
+                        <p v-if="configVisualiserTexts.textBorder" class="ascwo-text-[16px] text-black ascwo-font-semibold">{{configVisualiserTexts.textBorder}}</p>
+                        <p v-if="!configVisualiserTexts.textBorder" class="ascwo-text-[16px] text-black ascwo-font-semibold">Border</p>
                     </div>
-                    <div class="asowp-text-[14px] asowp-space-y-1 asowp-flex asowp-flex-col asowp-items-center w-2/3 justify-end">
-                        <div class="asowp-flex asowp-space-x-2 asowp-full-center">
-                            <span v-if="configDoublePart.active"  class="asowp-font-medium">{{configDoublePart.part1}}: </span>
+                    <div class="ascwo-text-[14px] ascwo-space-y-1 ascwo-flex ascwo-flex-col ascwo-items-center w-2/3 justify-end">
+                        <div class="ascwo-flex ascwo-space-x-2 ascwo-full-center">
+                            <span v-if="configDoublePart.active"  class="ascwo-font-medium">{{configDoublePart.part1}}: </span>
                             <span class="lowercase first-letter:uppercase">{{selectedShape != 'cut-to-shape' ? activeFace1Border : "none"}}</span>
 
-                            <div v-if="selectedShape != 'cut-to-shape' && activeFace1Border !== 'none' && (signTextColor1.active && !colorForBorder1)" class="asowp-flex asowp-space-x-1 asowp-full-center">
+                            <div v-if="selectedShape != 'cut-to-shape' && activeFace1Border !== 'none' && (signTextColor1.active && !colorForBorder1)" class="ascwo-flex ascwo-space-x-1 ascwo-full-center">
                                 <span class="lowercase first-letter:uppercase">color: {{colorTextColorName1}}</span>
-                                <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                    <span v-if="!configDoublePart.active" :class="`asowp-h-[35px] asowp-w-[35px] asowp-p-4 asowp-bg-[${configData.sign.border.value.codeHex}] asowp-flex`"></span>
-                                    <span v-if="configDoublePart.active" :class="`asowp-h-[35px] asowp-w-[35px] asowp-p-4 asowp-bg-[${configData.sign.border.value.face1.codeHex}] asowp-flex`"></span>
+                                <span :class="`ascwo-h-fit ascwo-w-fit ascwo-p-[1px] ascwo-ring-[1px] ascwo-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                    <span v-if="!configDoublePart.active" :class="`ascwo-h-[35px] ascwo-w-[35px] ascwo-p-4 ascwo-bg-[${configData.sign.border.value.codeHex}] ascwo-flex`"></span>
+                                    <span v-if="configDoublePart.active" :class="`ascwo-h-[35px] ascwo-w-[35px] ascwo-p-4 ascwo-bg-[${configData.sign.border.value.face1.codeHex}] ascwo-flex`"></span>
                                 </span>
                             </div>
 
-                            <div v-if="selectedShape != 'cut-to-shape' && activeFace1Border !== 'none' && colorForBorder1" class="asowp-flex asowp-space-x-1 asowp-full-center">
+                            <div v-if="selectedShape != 'cut-to-shape' && activeFace1Border !== 'none' && colorForBorder1" class="ascwo-flex ascwo-space-x-1 ascwo-full-center">
                                 <span class="lowercase first-letter:uppercase">color: {{borderColorName1}}</span>
-                                <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                    <span v-if="!configDoublePart.active" :class="`asowp-h-[35px] asowp-w-[35px] asowp-p-4 asowp-bg-[${configData.sign.border.value.codeHex}] asowp-flex`"></span>
-                                    <span v-if="configDoublePart.active" :class="`asowp-h-[35px] asowp-w-[35px] asowp-p-4 asowp-bg-[${configData.sign.border.value.face1.codeHex}] asowp-flex`"></span>
+                                <span :class="`ascwo-h-fit ascwo-w-fit ascwo-p-[1px] ascwo-ring-[1px] ascwo-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                    <span v-if="!configDoublePart.active" :class="`ascwo-h-[35px] ascwo-w-[35px] ascwo-p-4 ascwo-bg-[${configData.sign.border.value.codeHex}] ascwo-flex`"></span>
+                                    <span v-if="configDoublePart.active" :class="`ascwo-h-[35px] ascwo-w-[35px] ascwo-p-4 ascwo-bg-[${configData.sign.border.value.face1.codeHex}] ascwo-flex`"></span>
                                 </span>
                             </div>
                         </div>
 
-                        <div v-if="configDoublePart.active" class="asowp-flex asowp-space-x-2 asowp-full-center">
-                            <span class="asowp-font-medium">{{configDoublePart.part2}}: </span>
+                        <div v-if="configDoublePart.active" class="ascwo-flex ascwo-space-x-2 ascwo-full-center">
+                            <span class="ascwo-font-medium">{{configDoublePart.part2}}: </span>
                             <span class="lowercase first-letter:uppercase">{{selectedShape != 'cut-to-shape' ? activeFace2Border : "none"}}</span>
                         
-                            <div v-if="selectedShape != 'cut-to-shape' && activeFace2Border !== 'none' && (signTextColor2.active && !colorForBorder2)" class="asowp-flex asowp-space-x-1 asowp-full-center">
+                            <div v-if="selectedShape != 'cut-to-shape' && activeFace2Border !== 'none' && (signTextColor2.active && !colorForBorder2)" class="ascwo-flex ascwo-space-x-1 ascwo-full-center">
                                 <span class="lowercase first-letter:uppercase">color: {{colorTextColorName2}}</span>    
-                                <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                    <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-p-4 asowp-bg-[${configData.sign.border.value.face2.codeHex}] asowp-flex`"></span>
+                                <span :class="`ascwo-h-fit ascwo-w-fit ascwo-p-[1px] ascwo-ring-[1px] ascwo-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                    <span :class="`ascwo-h-[35px] ascwo-w-[35px] ascwo-p-4 ascwo-bg-[${configData.sign.border.value.face2.codeHex}] ascwo-flex`"></span>
                                 </span>
                             </div>
 
-                            <div v-if="selectedShape != 'cut-to-shape' && activeFace2Border !== 'none' && colorForBorder2" class="asowp-flex asowp-space-x-1 asowp-full-center">
+                            <div v-if="selectedShape != 'cut-to-shape' && activeFace2Border !== 'none' && colorForBorder2" class="ascwo-flex ascwo-space-x-1 ascwo-full-center">
                                 <span class="lowercase first-letter:uppercase">color: {{borderColorName2}}</span>
-                                <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                    <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-p-4 asowp-bg-[${configData.sign.border.value.face2.codeHex}] asowp-flex`"></span>
+                                <span :class="`ascwo-h-fit ascwo-w-fit ascwo-p-[1px] ascwo-ring-[1px] ascwo-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                    <span :class="`ascwo-h-[35px] ascwo-w-[35px] ascwo-p-4 ascwo-bg-[${configData.sign.border.value.face2.codeHex}] ascwo-flex`"></span>
                                 </span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div v-if="materialType === 'simple' && addComponentSelected.length > 0" :class="`asowp-flex asowp-items-center asowp-justify-between asowp-px-4 asowp-py-3 asowp-border-b-2 asowp-border-[${configColors.recaps.optionBorderColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:asowp-text-[${configColors.recaps.optionHoverTextColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBorderColor}] asowp-base-animation`" v-for="(option, index) in addComponentSelected">
-                    <p :class="`asowp-text-[16px] asowp-font-semibold`">{{option.option}}</p>
-                    <p :class="`asowp-text-[14px] lowercase first-letter:uppercase`">{{ option.value }}</p>
+                <div v-if="materialType === 'simple' && addComponentSelected.length > 0" :class="`ascwo-flex ascwo-items-center ascwo-justify-between ascwo-px-4 ascwo-py-3 ascwo-border-b-2 ascwo-border-[${configColors.recaps.optionBorderColor}] hover:ascwo-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:ascwo-text-[${configColors.recaps.optionHoverTextColor}] hover:ascwo-bg-[${configColors.recaps.optionHoverBorderColor}] ascwo-base-animation`" v-for="(option, index) in addComponentSelected">
+                    <p :class="`ascwo-text-[16px] ascwo-font-semibold`">{{option.option}}</p>
+                    <p :class="`ascwo-text-[14px] lowercase first-letter:uppercase`">{{ option.value }}</p>
                 </div>
 
-                <div v-if="(!configDoublePart.active && configData.texts.value.length > 0) || (configDoublePart.active && (configData.texts.value.face1.length > 0 || configData.texts.value.face2.length > 0))" :class="`asowp-flex asowp-items-center asowp-justify-between asowp-px-4 asowp-py-3 asowp-border-b-2 asowp-border-[${configColors.recaps.optionBorderColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:asowp-text-[${configColors.recaps.optionHoverTextColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBorderColor}] asowp-base-animation`">
-                    <div :class="`asowp-w-1/3`">
-                        <p v-if="configVisualiserTexts.textOptionText" class="asowp-text-[16px] text-black asowp-font-semibold">{{configVisualiserTexts.textOptionText}}</p>
-                        <p v-if="!configVisualiserTexts.textOptionText" class="asowp-text-[16px] text-black asowp-font-semibold">Text</p>
+                <div v-if="(!configDoublePart.active && configData.texts.value.length > 0) || (configDoublePart.active && (configData.texts.value.face1.length > 0 || configData.texts.value.face2.length > 0))" :class="`ascwo-flex ascwo-items-center ascwo-justify-between ascwo-px-4 ascwo-py-3 ascwo-border-b-2 ascwo-border-[${configColors.recaps.optionBorderColor}] hover:ascwo-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:ascwo-text-[${configColors.recaps.optionHoverTextColor}] hover:ascwo-bg-[${configColors.recaps.optionHoverBorderColor}] ascwo-base-animation`">
+                    <div :class="`ascwo-w-1/3`">
+                        <p v-if="configVisualiserTexts.textOptionText" class="ascwo-text-[16px] text-black ascwo-font-semibold">{{configVisualiserTexts.textOptionText}}</p>
+                        <p v-if="!configVisualiserTexts.textOptionText" class="ascwo-text-[16px] text-black ascwo-font-semibold">Text</p>
                     </div>
                     
-                    <div class="asowp-text-[14px] asowp-space-y-1 asowp-flex asowp-flex-col asowp-items-center w-2/3 justify-end">
-                        <div v-if="!configDoublePart.active && configData.texts.value.length > 0" clss="asowp-space-y-1">
-                            <div v-for="(text, id) in configData.texts.value" class="asowp-flex asowp-full-center">
+                    <div class="ascwo-text-[14px] ascwo-space-y-1 ascwo-flex ascwo-flex-col ascwo-items-center w-2/3 justify-end">
+                        <div v-if="!configDoublePart.active && configData.texts.value.length > 0" clss="ascwo-space-y-1">
+                            <div v-for="(text, id) in configData.texts.value" class="ascwo-flex ascwo-full-center">
                                 {{text.textContent}}: {{text.values.width.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{text.values.height.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}
-                                <div class="asowp-flex asowp-space-x-2 asowp-mx-1">
-                                    <span :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                        <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.color}]`"></span>
+                                <div class="ascwo-flex ascwo-space-x-2 ascwo-mx-1">
+                                    <span :class="`ascwo-h-fit ascwo-w-fit ascwo-flex ascwo-p-[1px] ascwo-ring-[1px] ascwo-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                        <span :class="`ascwo-h-[35px] ascwo-w-[35px] ascwo-flex ascwo-bg-[${text.color}]`"></span>
                                     </span>
-                                    <span v-if="configTextType == 'neon'" :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                        <span  :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.neonColor}]`"></span>
+                                    <span v-if="configTextType == 'neon'" :class="`ascwo-h-fit ascwo-w-fit ascwo-flex ascwo-p-[1px] ascwo-ring-[1px] ascwo-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                        <span  :class="`ascwo-h-[35px] ascwo-w-[35px] ascwo-flex ascwo-bg-[${text.neonColor}]`"></span>
                                     </span>
-                                    <span v-if="configTextType == '3D' && text.firstBorder.size > 0" :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                        <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.firstBorder.color}]`"></span>
+                                    <span v-if="configTextType == '3D' && text.firstBorder.size > 0" :class="`ascwo-h-fit ascwo-w-fit ascwo-flex ascwo-p-[1px] ascwo-ring-[1px] ascwo-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                        <span :class="`ascwo-h-[35px] ascwo-w-[35px] ascwo-flex ascwo-bg-[${text.firstBorder.color}]`"></span>
                                     </span>
-                                    <span v-if="configTextType == '3D' && text.secondBorder.size > 0" :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                        <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.secondBorder.color}]`"></span>
+                                    <span v-if="configTextType == '3D' && text.secondBorder.size > 0" :class="`ascwo-h-fit ascwo-w-fit ascwo-flex ascwo-p-[1px] ascwo-ring-[1px] ascwo-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                        <span :class="`ascwo-h-[35px] ascwo-w-[35px] ascwo-flex ascwo-bg-[${text.secondBorder.color}]`"></span>
                                     </span>
-                                    <span v-if="configTextType == '3D' && text.side == true" :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                        <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.sideColor}]`"></span>
+                                    <span v-if="configTextType == '3D' && text.side == true" :class="`ascwo-h-fit ascwo-w-fit ascwo-flex ascwo-p-[1px] ascwo-ring-[1px] ascwo-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                        <span :class="`ascwo-h-[35px] ascwo-w-[35px] ascwo-flex ascwo-bg-[${text.sideColor}]`"></span>
                                     </span>
                                 </div>
                             </div>
                         </div>
 
                         <div v-if="configDoublePart.active">
-                            <div v-if="configData.texts.value.face1.length > 0" clss="asowp-space-y-1">
-                                <span v-if="configDoublePart.active"  class="asowp-font-medium">{{configDoublePart.part1}}: </span>
-                                <div v-for="(text, id) in configData.texts.value.face1" class="asowp-flex asowp-full-center">
+                            <div v-if="configData.texts.value.face1.length > 0" clss="ascwo-space-y-1">
+                                <span v-if="configDoublePart.active"  class="ascwo-font-medium">{{configDoublePart.part1}}: </span>
+                                <div v-for="(text, id) in configData.texts.value.face1" class="ascwo-flex ascwo-full-center">
                                     {{text.textContent}}: {{text.values.width.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{text.values.height.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}
-                                    <div class="asowp-flex asowp-space-x-2 asowp-mx-1">
-                                        <span :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                            <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.color}]`"></span>
+                                    <div class="ascwo-flex ascwo-space-x-2 ascwo-mx-1">
+                                        <span :class="`ascwo-h-fit ascwo-w-fit ascwo-flex ascwo-p-[1px] ascwo-ring-[1px] ascwo-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                            <span :class="`ascwo-h-[35px] ascwo-w-[35px] ascwo-flex ascwo-bg-[${text.color}]`"></span>
                                         </span>
-                                        <span v-if="configTextType == 'neon'" :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                            <span  :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.neonColor}]`"></span>
+                                        <span v-if="configTextType == 'neon'" :class="`ascwo-h-fit ascwo-w-fit ascwo-flex ascwo-p-[1px] ascwo-ring-[1px] ascwo-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                            <span  :class="`ascwo-h-[35px] ascwo-w-[35px] ascwo-flex ascwo-bg-[${text.neonColor}]`"></span>
                                         </span>
-                                        <span v-if="configTextType == '3D' && text.firstBorder.size > 0" :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                            <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.firstBorder.color}]`"></span>
+                                        <span v-if="configTextType == '3D' && text.firstBorder.size > 0" :class="`ascwo-h-fit ascwo-w-fit ascwo-flex ascwo-p-[1px] ascwo-ring-[1px] ascwo-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                            <span :class="`ascwo-h-[35px] ascwo-w-[35px] ascwo-flex ascwo-bg-[${text.firstBorder.color}]`"></span>
                                         </span>
-                                        <span v-if="configTextType == '3D' && text.secondBorder.size > 0" :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                            <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.secondBorder.color}]`"></span>
+                                        <span v-if="configTextType == '3D' && text.secondBorder.size > 0" :class="`ascwo-h-fit ascwo-w-fit ascwo-flex ascwo-p-[1px] ascwo-ring-[1px] ascwo-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                            <span :class="`ascwo-h-[35px] ascwo-w-[35px] ascwo-flex ascwo-bg-[${text.secondBorder.color}]`"></span>
                                         </span>
-                                        <span v-if="configTextType == '3D' && text.side == true" :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                            <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.sideColor}]`"></span>
+                                        <span v-if="configTextType == '3D' && text.side == true" :class="`ascwo-h-fit ascwo-w-fit ascwo-flex ascwo-p-[1px] ascwo-ring-[1px] ascwo-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                            <span :class="`ascwo-h-[35px] ascwo-w-[35px] ascwo-flex ascwo-bg-[${text.sideColor}]`"></span>
                                         </span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div v-if="configDoublePart.active && configData.texts.value.face2.length > 0" clss="asowp-space-y-1">
-                                <span class="asowp-font-medium">{{configDoublePart.part2}}: </span>
-                                <div v-for="(text, id) in configData.texts.value.face2" class="asowp-flex asowp-full-center">
+                            <div v-if="configDoublePart.active && configData.texts.value.face2.length > 0" clss="ascwo-space-y-1">
+                                <span class="ascwo-font-medium">{{configDoublePart.part2}}: </span>
+                                <div v-for="(text, id) in configData.texts.value.face2" class="ascwo-flex ascwo-full-center">
                                     {{text.textContent}}: {{text.values.width.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{text.values.height.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}
-                                    <div class="asowp-flex asowp-space-x-2 asowp-mx-1">
-                                        <span :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                            <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.color}]`"></span>
+                                    <div class="ascwo-flex ascwo-space-x-2 ascwo-mx-1">
+                                        <span :class="`ascwo-h-fit ascwo-w-fit ascwo-flex ascwo-p-[1px] ascwo-ring-[1px] ascwo-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                            <span :class="`ascwo-h-[35px] ascwo-w-[35px] ascwo-flex ascwo-bg-[${text.color}]`"></span>
                                         </span>
-                                        <span v-if="configTextType == 'neon'" :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                            <span  :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.neonColor}]`"></span>
+                                        <span v-if="configTextType == 'neon'" :class="`ascwo-h-fit ascwo-w-fit ascwo-flex ascwo-p-[1px] ascwo-ring-[1px] ascwo-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                            <span  :class="`ascwo-h-[35px] ascwo-w-[35px] ascwo-flex ascwo-bg-[${text.neonColor}]`"></span>
                                         </span>
-                                        <span v-if="configTextType == '3D' && text.firstBorder.size > 0" :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                            <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.firstBorder.color}]`"></span>
+                                        <span v-if="configTextType == '3D' && text.firstBorder.size > 0" :class="`ascwo-h-fit ascwo-w-fit ascwo-flex ascwo-p-[1px] ascwo-ring-[1px] ascwo-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                            <span :class="`ascwo-h-[35px] ascwo-w-[35px] ascwo-flex ascwo-bg-[${text.firstBorder.color}]`"></span>
                                         </span>
-                                        <span v-if="configTextType == '3D' && text.secondBorder.size > 0" :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                            <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.secondBorder.color}]`"></span>
+                                        <span v-if="configTextType == '3D' && text.secondBorder.size > 0" :class="`ascwo-h-fit ascwo-w-fit ascwo-flex ascwo-p-[1px] ascwo-ring-[1px] ascwo-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                            <span :class="`ascwo-h-[35px] ascwo-w-[35px] ascwo-flex ascwo-bg-[${text.secondBorder.color}]`"></span>
                                         </span>
-                                        <span v-if="configTextType == '3D' && text.side == true" :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                            <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.sideColor}]`"></span>
+                                        <span v-if="configTextType == '3D' && text.side == true" :class="`ascwo-h-fit ascwo-w-fit ascwo-flex ascwo-p-[1px] ascwo-ring-[1px] ascwo-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                            <span :class="`ascwo-h-[35px] ascwo-w-[35px] ascwo-flex ascwo-bg-[${text.sideColor}]`"></span>
                                         </span>
                                     </div>
                                 </div>
@@ -2380,17 +2380,17 @@
                     </div>
                 </div>
 
-                <div v-if="(!configDoublePart.active && configData.images.value.length > 0) || (configDoublePart.active && (configData.images.value.face1.length > 0 || configData.images.value.face2.length > 0))" :class="`asowp-flex asowp-items-center asowp-justify-between asowp-px-4 asowp-py-3 asowp-border-b-2 asowp-border-[${configColors.recaps.optionBorderColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:asowp-text-[${configColors.recaps.optionHoverTextColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBorderColor}] asowp-base-animation`">
-                    <div :class="`asowp-w-1/3`">
-                        <p v-if="configVisualiserTexts.textImage" class="asowp-text-[16px] text-black asowp-font-semibold">{{configVisualiserTexts.textImage}}</p>
-                        <p v-if="!configVisualiserTexts.textImage" class="asowp-text-[16px] text-black asowp-font-semibold">Text</p>
+                <div v-if="(!configDoublePart.active && configData.images.value.length > 0) || (configDoublePart.active && (configData.images.value.face1.length > 0 || configData.images.value.face2.length > 0))" :class="`ascwo-flex ascwo-items-center ascwo-justify-between ascwo-px-4 ascwo-py-3 ascwo-border-b-2 ascwo-border-[${configColors.recaps.optionBorderColor}] hover:ascwo-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:ascwo-text-[${configColors.recaps.optionHoverTextColor}] hover:ascwo-bg-[${configColors.recaps.optionHoverBorderColor}] ascwo-base-animation`">
+                    <div :class="`ascwo-w-1/3`">
+                        <p v-if="configVisualiserTexts.textImage" class="ascwo-text-[16px] text-black ascwo-font-semibold">{{configVisualiserTexts.textImage}}</p>
+                        <p v-if="!configVisualiserTexts.textImage" class="ascwo-text-[16px] text-black ascwo-font-semibold">Text</p>
                     </div>
                     
-                    <div class="asowp-text-[14px] asowp-space-y-1 asowp-flex asowp-flex-col asowp-items-center w-2/3 justify-end">
+                    <div class="ascwo-text-[14px] ascwo-space-y-1 ascwo-flex ascwo-flex-col ascwo-items-center w-2/3 justify-end">
                         <div v-if="!configDoublePart.active && configData.images.value.length > 0">
-                            <div v-for="(image, id) in configData.images.value" class="asowp-flex asowp-space-x-1 asowp-full-center">
-                                <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-border asowp-border-[${configColors.backgroundColorHeader}]`">
-                                    <img :src="image.url" :class="`asowp-h-[40px] asowp-w-[40px] asowp-flex`" />
+                            <div v-for="(image, id) in configData.images.value" class="ascwo-flex ascwo-space-x-1 ascwo-full-center">
+                                <span :class="`ascwo-h-fit ascwo-w-fit ascwo-p-[1px] ascwo-border ascwo-border-[${configColors.backgroundColorHeader}]`">
+                                    <img :src="image.url" :class="`ascwo-h-[40px] ascwo-w-[40px] ascwo-flex`" />
                                 </span>
                                 <span>
                                     <p>{{image.values.width.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{image.values.height.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}</p>
@@ -2400,10 +2400,10 @@
 
                         <div v-if="configDoublePart.active">
                             <div v-if="configData.images.value.face1.length > 0">
-                                <span v-if="configDoublePart.active"  class="asowp-font-medium">{{configDoublePart.part1}}: </span>
-                                <div v-for="(image, id) in configData.images.value.face1" class="asowp-flex asowp-space-x-1 asowp-full-center">                              
-                                    <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-border asowp-border-[${configColors.backgroundColorHeader}]`">
-                                        <img :src="image.url" :class="`asowp-h-[40px] asowp-w-[40px] asowp-flex`" />
+                                <span v-if="configDoublePart.active"  class="ascwo-font-medium">{{configDoublePart.part1}}: </span>
+                                <div v-for="(image, id) in configData.images.value.face1" class="ascwo-flex ascwo-space-x-1 ascwo-full-center">                              
+                                    <span :class="`ascwo-h-fit ascwo-w-fit ascwo-p-[1px] ascwo-border ascwo-border-[${configColors.backgroundColorHeader}]`">
+                                        <img :src="image.url" :class="`ascwo-h-[40px] ascwo-w-[40px] ascwo-flex`" />
                                     </span>
                                     <span>
                                         <p>{{image.values.width.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{image.values.height.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}</p>
@@ -2416,10 +2416,10 @@
                             </div>
 
                             <div v-if="configDoublePart.active && configData.images.value.face2.length > 0">
-                                <span class="asowp-font-medium">{{configDoublePart.part2}}: </span>
-                                <div v-for="(image, id) in configData.images.value.face2" class="asowp-flex asowp-space-x-1 asowp-full-center">
-                                    <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-border asowp-border-[${configColors.backgroundColorHeader}]`">
-                                        <img :src="image.url" :class="`asowp-h-[40px] asowp-w-[40px] asowp-flex`" />
+                                <span class="ascwo-font-medium">{{configDoublePart.part2}}: </span>
+                                <div v-for="(image, id) in configData.images.value.face2" class="ascwo-flex ascwo-space-x-1 ascwo-full-center">
+                                    <span :class="`ascwo-h-fit ascwo-w-fit ascwo-p-[1px] ascwo-border ascwo-border-[${configColors.backgroundColorHeader}]`">
+                                        <img :src="image.url" :class="`ascwo-h-[40px] ascwo-w-[40px] ascwo-flex`" />
                                     </span>
                                     <span>
                                         <p>{{image.values.width.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{image.values.height.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit.value}}</p>
@@ -2430,18 +2430,18 @@
                     </div>
                 </div>
 
-                <div v-if="(!configDoublePart.active && configData.qrCodes.value.length > 0) || (configDoublePart.active && (configData.qrCodes.value.face1.length > 0 || configData.qrCodes.value.face2.length > 0))" :class="`asowp-flex asowp-items-center asowp-justify-between asowp-px-4 asowp-py-3 asowp-border-b-2 asowp-border-[${configColors.recaps.optionBorderColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:asowp-text-[${configColors.recaps.optionHoverTextColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBorderColor}] asowp-base-animation`">
-                    <div :class="`asowp-w-1/3`">
-                        <!-- <p v-if="configVisualiserTexts.textImage" class="asowp-text-[16px] text-black asowp-font-semibold">{{configVisualiserTexts.textImage}}</p> -->
-                        <!-- <p v-if="!configVisualiserTexts.textImage" class="asowp-text-[16px] text-black asowp-font-semibold">Text</p> -->
-                        <p class="asowp-text-[16px] text-black asowp-font-semibold">Qr Code</p>
+                <div v-if="(!configDoublePart.active && configData.qrCodes.value.length > 0) || (configDoublePart.active && (configData.qrCodes.value.face1.length > 0 || configData.qrCodes.value.face2.length > 0))" :class="`ascwo-flex ascwo-items-center ascwo-justify-between ascwo-px-4 ascwo-py-3 ascwo-border-b-2 ascwo-border-[${configColors.recaps.optionBorderColor}] hover:ascwo-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:ascwo-text-[${configColors.recaps.optionHoverTextColor}] hover:ascwo-bg-[${configColors.recaps.optionHoverBorderColor}] ascwo-base-animation`">
+                    <div :class="`ascwo-w-1/3`">
+                        <!-- <p v-if="configVisualiserTexts.textImage" class="ascwo-text-[16px] text-black ascwo-font-semibold">{{configVisualiserTexts.textImage}}</p> -->
+                        <!-- <p v-if="!configVisualiserTexts.textImage" class="ascwo-text-[16px] text-black ascwo-font-semibold">Text</p> -->
+                        <p class="ascwo-text-[16px] text-black ascwo-font-semibold">Qr Code</p>
                     </div>
                     
-                    <div class="asowp-text-[14px] asowp-space-y-1 asowp-flex asowp-flex-col asowp-items-center w-2/3 justify-end">
+                    <div class="ascwo-text-[14px] ascwo-space-y-1 ascwo-flex ascwo-flex-col ascwo-items-center w-2/3 justify-end">
                         <div v-if="!configDoublePart.active && configData.qrCodes.value.length > 0">
-                            <div v-for="(code, id) in configData.qrCodes.value" class="asowp-flex asowp-space-x-1 asowp-full-center">
-                                <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-border asowp-border-[${configColors.backgroundColorHeader}]`">
-                                    <img :src="code.url" :class="`asowp-h-[40px] asowp-w-[40px] asowp-flex`" />
+                            <div v-for="(code, id) in configData.qrCodes.value" class="ascwo-flex ascwo-space-x-1 ascwo-full-center">
+                                <span :class="`ascwo-h-fit ascwo-w-fit ascwo-p-[1px] ascwo-border ascwo-border-[${configColors.backgroundColorHeader}]`">
+                                    <img :src="code.url" :class="`ascwo-h-[40px] ascwo-w-[40px] ascwo-flex`" />
                                 </span>
                                 <span>
                                     <p>{{code.values.width.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{code.values.height.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}</p>
@@ -2451,10 +2451,10 @@
 
                         <div v-if="configDoublePart.active">
                             <div v-if="configData.qrCodes.value.face1.length > 0">
-                                <span v-if="configDoublePart.active"  class="asowp-font-medium">{{configDoublePart.part1}}: </span>
-                                <div v-for="(code, id) in configData.qrCodes.value.face1" class="asowp-flex asowp-space-x-1 asowp-full-center">                              
-                                    <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-border asowp-border-[${configColors.backgroundColorHeader}]`">
-                                        <img :src="code.url" :class="`asowp-h-[40px] asowp-w-[40px] asowp-flex`" />
+                                <span v-if="configDoublePart.active"  class="ascwo-font-medium">{{configDoublePart.part1}}: </span>
+                                <div v-for="(code, id) in configData.qrCodes.value.face1" class="ascwo-flex ascwo-space-x-1 ascwo-full-center">                              
+                                    <span :class="`ascwo-h-fit ascwo-w-fit ascwo-p-[1px] ascwo-border ascwo-border-[${configColors.backgroundColorHeader}]`">
+                                        <img :src="code.url" :class="`ascwo-h-[40px] ascwo-w-[40px] ascwo-flex`" />
                                     </span>
                                     <span>
                                         <p>{{code.values.width.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{code.values.height.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}</p>
@@ -2467,10 +2467,10 @@
                             </div>
 
                             <div v-if="configDoublePart.active && configData.qrCodes.value.face2.length > 0">
-                                <span class="asowp-font-medium">{{configDoublePart.part2}}: </span>
-                                <div v-for="(code, id) in configData.qrCodes.value.face2" class="asowp-flex asowp-space-x-1 asowp-full-center">
-                                    <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-border asowp-border-[${configColors.backgroundColorHeader}]`">
-                                        <img :src="code.url" :class="`asowp-h-[40px] asowp-w-[40px] asowp-flex`" />
+                                <span class="ascwo-font-medium">{{configDoublePart.part2}}: </span>
+                                <div v-for="(code, id) in configData.qrCodes.value.face2" class="ascwo-flex ascwo-space-x-1 ascwo-full-center">
+                                    <span :class="`ascwo-h-fit ascwo-w-fit ascwo-p-[1px] ascwo-border ascwo-border-[${configColors.backgroundColorHeader}]`">
+                                        <img :src="code.url" :class="`ascwo-h-[40px] ascwo-w-[40px] ascwo-flex`" />
                                     </span>
                                     <span>
                                         <p>{{code.values.width.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{code.values.height.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit.value}}</p>
@@ -2481,75 +2481,75 @@
                     </div>
                 </div>
 
-                <div v-if="customAdditionalValues != [] " :class="`asowp-flex asowp-items-center asowp-justify-between asowp-px-4 asowp-py-3 asowp-border-b-2 asowp-border-[${configColors.recaps.optionBorderColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:asowp-text-[${configColors.recaps.optionHoverTextColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBorderColor}] asowp-base-animation`" v-for="(option, index) in customAdditionalValues">
-                    <p :class="`asowp-text-[16px] asowp-font-semibold`">{{option.label}}</p>
-                    <p :class="`asowp-text-[14px] lowercase first-letter:uppercase`">{{ option.value }}</p>
+                <div v-if="customAdditionalValues != [] " :class="`ascwo-flex ascwo-items-center ascwo-justify-between ascwo-px-4 ascwo-py-3 ascwo-border-b-2 ascwo-border-[${configColors.recaps.optionBorderColor}] hover:ascwo-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:ascwo-text-[${configColors.recaps.optionHoverTextColor}] hover:ascwo-bg-[${configColors.recaps.optionHoverBorderColor}] ascwo-base-animation`" v-for="(option, index) in customAdditionalValues">
+                    <p :class="`ascwo-text-[16px] ascwo-font-semibold`">{{option.label}}</p>
+                    <p :class="`ascwo-text-[14px] lowercase first-letter:uppercase`">{{ option.value }}</p>
                 </div>
             </div>
 
-            <div class="asowp-h-[15%] asowp-flex asowp-flex-col asowp-text-[16px] asowp-leading-normal">
-                <div v-if="!hidePricing" :class="`asowp-h-[40%] asowp-flex asowp-text-center asowp-justify-center asowp-items-center asowp-text-[${configColors.recaps.optionTextColor}] asowp-bg-transparent asowp-text-xl asowp-font-bold`">
+            <div class="ascwo-h-[15%] ascwo-flex ascwo-flex-col ascwo-text-[16px] ascwo-leading-normal">
+                <div v-if="!hidePricing" :class="`ascwo-h-[40%] ascwo-flex ascwo-text-center ascwo-justify-center ascwo-items-center ascwo-text-[${configColors.recaps.optionTextColor}] ascwo-bg-transparent ascwo-text-xl ascwo-font-bold`">
                     <!-- {{formatPrice(finalPrices)}} -->
                     {{addformatToPrice(finalPrice)}}
                 </div>
                 
-                <div class="asowp-flex asowp-h-[60%]">
-                    <button :disabled="isAddingToCart" @click="() => finish = false" :class="`asowp-w-1/2 asowp-h-full asowp-bg-[${configColors.recaps.buttonEditBackgroundColor}] hover:asowp-bg-[${configColors.recaps.buttonEditHoverBackgroundColor}] asowp-text-[${configColors.recaps.buttonEditTextColor}] hover:asowp-text-[${configColors.recaps.buttonEditHoverTextColor}] asowp-flex asowp-full-center asowp-buttons-rad-none asowp-base-animation asowp-cursor-pointer`" >
+                <div class="ascwo-flex ascwo-h-[60%]">
+                    <button :disabled="isAddingToCart" @click="() => finish = false" :class="`ascwo-w-1/2 ascwo-h-full ascwo-bg-[${configColors.recaps.buttonEditBackgroundColor}] hover:ascwo-bg-[${configColors.recaps.buttonEditHoverBackgroundColor}] ascwo-text-[${configColors.recaps.buttonEditTextColor}] hover:ascwo-text-[${configColors.recaps.buttonEditHoverTextColor}] ascwo-flex ascwo-full-center ascwo-buttons-rad-none ascwo-base-animation ascwo-cursor-pointer`" >
                         {{ configVisualiserTexts.textCanvasEdit && configVisualiserTexts.textCanvasEdit.trim() !== '' ? configVisualiserTexts.textCanvasEdit : 'Finish' }}
                     </button>
-                    <button v-if="route.name != 'template-maker'" :disabled="isAddingToCart || isAdminPreview" @click="addToCart" :class="`asowp-w-1/2 asowp-h-full asowp-bg-[${configColors.recaps.buttonAddToCartBackgroundColor}] hover:asowp-bg-[${configColors.recaps.buttonAddToCartHoverBackgroundColor}] asowp-text-[${configColors.recaps.buttonAddToCartTextColor}] hover:asowp-text-[${configColors.recaps.buttonAddToCartHoverTextColor}] asowp-flex asowp-full-center asowp-buttons-rad-none asowp-base-animation ${isAdminPreview ? 'asowp-opacity-60 asowp-cursor-not-allowed' : 'asowp-cursor-pointer'}`" >
-                        <img src="../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isAddingToCart"/>
+                    <button v-if="route.name != 'template-maker'" :disabled="isAddingToCart || isAdminPreview" @click="addToCart" :class="`ascwo-w-1/2 ascwo-h-full ascwo-bg-[${configColors.recaps.buttonAddToCartBackgroundColor}] hover:ascwo-bg-[${configColors.recaps.buttonAddToCartHoverBackgroundColor}] ascwo-text-[${configColors.recaps.buttonAddToCartTextColor}] hover:ascwo-text-[${configColors.recaps.buttonAddToCartHoverTextColor}] ascwo-flex ascwo-full-center ascwo-buttons-rad-none ascwo-base-animation ${isAdminPreview ? 'ascwo-opacity-60 ascwo-cursor-not-allowed' : 'ascwo-cursor-pointer'}`" >
+                        <img src="../../../../../assets/icons/ic_loading_gray.svg" class="ascwo-w-5 ascwo-w-5" v-if="isAddingToCart"/>
                         {{ configVisualiserTexts.textAddToCart && configVisualiserTexts.textAddToCart.trim() !== '' ? configVisualiserTexts.textAddToCart : 'Finish' }}
                     </button>
-                    <button v-if="route.name == 'template-maker'" :disabled="isSavingTemplate" @click="saveTemplate" :class="`asowp-w-1/2 asowp-h-full asowp-bg-[${configColors.recaps.buttonAddToCartBackgroundColor}] hover:asowp-bg-[${configColors.recaps.buttonAddToCartHoverBackgroundColor}] asowp-text-[${configColors.recaps.buttonAddToCartTextColor}] hover:asowp-text-[${configColors.recaps.buttonAddToCartHoverTextColor}] asowp-flex asowp-full-center asowp-buttons-rad-none asowp-base-animation asowp-cursor-pointer`" >
-                        <img src="../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isSavingTemplate"/>
+                    <button v-if="route.name == 'template-maker'" :disabled="isSavingTemplate" @click="saveTemplate" :class="`ascwo-w-1/2 ascwo-h-full ascwo-bg-[${configColors.recaps.buttonAddToCartBackgroundColor}] hover:ascwo-bg-[${configColors.recaps.buttonAddToCartHoverBackgroundColor}] ascwo-text-[${configColors.recaps.buttonAddToCartTextColor}] hover:ascwo-text-[${configColors.recaps.buttonAddToCartHoverTextColor}] ascwo-flex ascwo-full-center ascwo-buttons-rad-none ascwo-base-animation ascwo-cursor-pointer`" >
+                        <img src="../../../../../assets/icons/ic_loading_gray.svg" class="ascwo-w-5 ascwo-w-5" v-if="isSavingTemplate"/>
                         Save
                     </button>
                 </div>
             </div>
         </div>
 
-        <div v-if="resetAllBool" :class="`asowp-absolute asowp-z-20 asowp-top-0 asowp-bg-[${configColors.bars.reset.modalBackgroundColor}]/70 aso asowp-w-full asowp-h-full asowp-flex asowp-full-center`">
-            <div :class="`asowp-w-[80%] lg:asowp-w-[40%] asowp-h-[40%] asowp-bg-[${configColors.bars.reset.modalContainerBackground}] asowp-text-[${configColors.bars.reset.modalTextColor}] asowp-p-2 asowp-shadow-2xl`">
-                <div class="asowp-h-[70%] asowp-flex asowp-full-center asowp-font-medium asowp-text-lg">
+        <div v-if="resetAllBool" :class="`ascwo-absolute ascwo-z-20 ascwo-top-0 ascwo-bg-[${configColors.bars.reset.modalBackgroundColor}]/70 aso ascwo-w-full ascwo-h-full ascwo-flex ascwo-full-center`">
+            <div :class="`ascwo-w-[80%] lg:ascwo-w-[40%] ascwo-h-[40%] ascwo-bg-[${configColors.bars.reset.modalContainerBackground}] ascwo-text-[${configColors.bars.reset.modalTextColor}] ascwo-p-2 ascwo-shadow-2xl`">
+                <div class="ascwo-h-[70%] ascwo-flex ascwo-full-center ascwo-font-medium ascwo-text-lg">
                     {{ configVisualiserTexts.resetModalText && configVisualiserTexts.resetModalText.trim() !== '' ? configVisualiserTexts.resetModalText : 'Reset all for real ??' }}
                 </div>
-                <div class="asowp-h-[30%] asowp-flex asowp-items-center asowp-justify-between">
-                    <div @click="clearAll" :class="`asowp-bg-[${configColors.bars.reset.modalYesButtonBackgroundColor}] asowp-text-[${configColors.bars.reset.modalYesButtonTextColor}] asowp-px-6 asowp-p-2 asowp-rounded-md asowp-cursor-pointer asowp-base-animation`">
+                <div class="ascwo-h-[30%] ascwo-flex ascwo-items-center ascwo-justify-between">
+                    <div @click="clearAll" :class="`ascwo-bg-[${configColors.bars.reset.modalYesButtonBackgroundColor}] ascwo-text-[${configColors.bars.reset.modalYesButtonTextColor}] ascwo-px-6 ascwo-p-2 ascwo-rounded-md ascwo-cursor-pointer ascwo-base-animation`">
                         {{ configVisualiserTexts.resetModalYes && configVisualiserTexts.resetModalYes.trim() !== '' ? configVisualiserTexts.resetModalYes : 'Yes' }}
                     </div>
-                    <div @click="confirmResetAll(false)" :class="`asowp-bg-[${configColors.bars.reset.modalNoButtonBackgroundColor}] asowp-text-[${configColors.bars.reset.modalNoButtonTextColor}] hover:asowp-text-white/80 asowp-px-6 asowp-p-2 asowp-rounded-md asowp-cursor-pointer asowp-base-animation`">
+                    <div @click="confirmResetAll(false)" :class="`ascwo-bg-[${configColors.bars.reset.modalNoButtonBackgroundColor}] ascwo-text-[${configColors.bars.reset.modalNoButtonTextColor}] hover:ascwo-text-white/80 ascwo-px-6 ascwo-p-2 ascwo-rounded-md ascwo-cursor-pointer ascwo-base-animation`">
                         {{ configVisualiserTexts.resetModalNo && configVisualiserTexts.resetModalNo.trim() !== '' ? configVisualiserTexts.resetModalNo : 'No' }}
                     </div>
                 </div>
             </div>
         </div>
 
-        <div v-if="showNoTextModal" class="asowp-absolute asowp-z-20 asowp-top-0 asowp-w-full asowp-h-full asowp-flex asowp-full-center asowp-bg-black/40 asowp-backdrop-blur-sm">
-            <div class="asowp-w-[85%] lg:asowp-w-[35%] asowp-bg-white asowp-rounded-2xl asowp-shadow-2xl asowp-p-6 asowp-space-y-4">
-                <div class="asowp-flex asowp-items-center asowp-justify-between">
-                    <h3 class="asowp-text-lg asowp-font-semibold asowp-text-gray-900">
+        <div v-if="showNoTextModal" class="ascwo-absolute ascwo-z-20 ascwo-top-0 ascwo-w-full ascwo-h-full ascwo-flex ascwo-full-center ascwo-bg-black/40 ascwo-backdrop-blur-sm">
+            <div class="ascwo-w-[85%] lg:ascwo-w-[35%] ascwo-bg-white ascwo-rounded-2xl ascwo-shadow-2xl ascwo-p-6 ascwo-space-y-4">
+                <div class="ascwo-flex ascwo-items-center ascwo-justify-between">
+                    <h3 class="ascwo-text-lg ascwo-font-semibold ascwo-text-gray-900">
                         {{
                           noTextModalType === 'font'
                             ? (configVisualiserTexts.textNoFontModalTitle && configVisualiserTexts.textNoFontModalTitle.trim() !== '' ? configVisualiserTexts.textNoFontModalTitle : 'No fonts available')
                             : (configVisualiserTexts.textNoTextModalTitle && configVisualiserTexts.textNoTextModalTitle.trim() !== '' ? configVisualiserTexts.textNoTextModalTitle : 'Add text to continue')
                         }}
                     </h3>
-                    <button @click="closeNoTextModal" class="asowp-text-gray-500 hover:asowp-text-gray-700 asowp-bg-transparent asowp-border-none asowp-cursor-pointer">
+                    <button @click="closeNoTextModal" class="ascwo-text-gray-500 hover:ascwo-text-gray-700 ascwo-bg-transparent ascwo-border-none ascwo-cursor-pointer">
                         ✕
                     </button>
                 </div>
-                <p class="asowp-text-sm asowp-text-gray-600">
+                <p class="ascwo-text-sm ascwo-text-gray-600">
                     {{
                       noTextModalType === 'font'
                         ? (configVisualiserTexts.textNoFontModalMessage && configVisualiserTexts.textNoFontModalMessage.trim() !== '' ? configVisualiserTexts.textNoFontModalMessage : 'Please add at least one font to continue.')
                         : (configVisualiserTexts.textNoTextModalMessage && configVisualiserTexts.textNoTextModalMessage.trim() !== '' ? configVisualiserTexts.textNoTextModalMessage : 'Please add a text to continue.')
                     }}
                 </p>
-                <div class="asowp-flex asowp-justify-end">
+                <div class="ascwo-flex ascwo-justify-end">
                     <button
                         @click="closeNoTextModal"
-                        :class="`asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-px-5 asowp-py-2 asowp-rounded-full asowp-text-sm asowp-font-semibold asowp-border-none asowp-cursor-pointer asowp-base-animation`"
+                        :class="`ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:ascwo-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:ascwo-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] ascwo-px-5 ascwo-py-2 ascwo-rounded-full ascwo-text-sm ascwo-font-semibold ascwo-border-none ascwo-cursor-pointer ascwo-base-animation`"
                     >
                         {{
                           noTextModalType === 'font'
@@ -2561,8 +2561,8 @@
             </div>
         </div>
 
-        <!-- <div v-if="!finishLoading && !finish" :class="`asowp-absolute asowp-z-20 asowp-top-0 asowp-bg-[${configColors.bars.reset.modalBackgroundColor}]/70 aso asowp-w-full asowp-h-full asowp-flex asowp-full-center`">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="asowp-w-[40%] asowp-h-[30%]" style="shape-rendering: auto; display: block; background: transparent;" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <!-- <div v-if="!finishLoading && !finish" :class="`ascwo-absolute ascwo-z-20 ascwo-top-0 ascwo-bg-[${configColors.bars.reset.modalBackgroundColor}]/70 aso ascwo-w-full ascwo-h-full ascwo-flex ascwo-full-center`">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="ascwo-w-[40%] ascwo-h-[30%]" style="shape-rendering: auto; display: block; background: transparent;" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <g>
                     <path d="M11 50A39 39 0 0 0 89 50A39 42.6 0 0 1 11 50" fill="#ece8e8" stroke="none">
                         <animateTransform attributeName="transform" type="rotate" dur="1s" repeatCount="indefinite" keyTimes="0;1" values="0 50 51.8;360 50 51.8"></animateTransform>
@@ -2572,27 +2572,27 @@
             </svg>
         </div> -->
 
-        <div v-if="isCutToShapeLoading" class="asowp-absolute asowp-left-0 asowp-top-0 asowp-flex asowp-flex-col asowp-justify-center asowp-items-center asowp-w-full asowp-h-full asowp-bg-black/30 asowp-backdrop-blur-md asowp-z-20 asowp-gap-3">
-            <span :class="`asowp-flex asowp-text-cyan-600`">
-                <svg class="asowp-w-[120px] aswop-h-[120px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><radialGradient id="a12" cx=".66" fx=".66" cy=".3125" fy=".3125" gradientTransform="scale(1.5)"><stop offset="0" stop-color="currentColor"></stop><stop offset=".3" stop-color="currentColor" stop-opacity=".9"></stop><stop offset=".6" stop-color="currentColor" stop-opacity=".6"></stop><stop offset=".8" stop-color="currentColor" stop-opacity=".3"></stop><stop offset="1" stop-color="currentColor" stop-opacity="0"></stop></radialGradient><circle transform-origin="center" fill="none" stroke="url(#a12)" stroke-width="14" stroke-linecap="round" stroke-dasharray="200 1000" stroke-dashoffset="0" cx="100" cy="100" r="70"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="2" values="360;0" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></circle><circle transform-origin="center" fill="none" opacity=".2" stroke="currentColor" stroke-width="14" stroke-linecap="round" cx="100" cy="100" r="70"></circle></svg>
+        <div v-if="isCutToShapeLoading" class="ascwo-absolute ascwo-left-0 ascwo-top-0 ascwo-flex ascwo-flex-col ascwo-justify-center ascwo-items-center ascwo-w-full ascwo-h-full ascwo-bg-black/30 ascwo-backdrop-blur-md ascwo-z-20 ascwo-gap-3">
+            <span :class="`ascwo-flex ascwo-text-cyan-600`">
+                <svg class="ascwo-w-[120px] aswop-h-[120px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><radialGradient id="a12" cx=".66" fx=".66" cy=".3125" fy=".3125" gradientTransform="scale(1.5)"><stop offset="0" stop-color="currentColor"></stop><stop offset=".3" stop-color="currentColor" stop-opacity=".9"></stop><stop offset=".6" stop-color="currentColor" stop-opacity=".6"></stop><stop offset=".8" stop-color="currentColor" stop-opacity=".3"></stop><stop offset="1" stop-color="currentColor" stop-opacity="0"></stop></radialGradient><circle transform-origin="center" fill="none" stroke="url(#a12)" stroke-width="14" stroke-linecap="round" stroke-dasharray="200 1000" stroke-dashoffset="0" cx="100" cy="100" r="70"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="2" values="360;0" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></circle><circle transform-origin="center" fill="none" opacity=".2" stroke="currentColor" stroke-width="14" stroke-linecap="round" cx="100" cy="100" r="70"></circle></svg>
             </span>
-            <p class="asowp-text-sm asowp-font-semibold asowp-text-white">
+            <p class="ascwo-text-sm ascwo-font-semibold ascwo-text-white">
                 {{ configVisualiserTexts.textShape && configVisualiserTexts.textShape.trim() !== '' ? configVisualiserTexts.textShape : 'Cut to shape' }}...
             </p>
         </div>
 
-        <div v-if="isTextContourLoading" class="asowp-absolute asowp-left-0 asowp-top-0 asowp-flex asowp-flex-col asowp-justify-center asowp-items-center asowp-w-full asowp-h-full asowp-bg-black/25 asowp-backdrop-blur-sm asowp-z-20 asowp-gap-3">
-            <span :class="`asowp-flex asowp-text-cyan-600`">
-                <svg class="asowp-w-[100px] aswop-h-[100px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><radialGradient id="a12" cx=".66" fx=".66" cy=".3125" fy=".3125" gradientTransform="scale(1.5)"><stop offset="0" stop-color="currentColor"></stop><stop offset=".3" stop-color="currentColor" stop-opacity=".9"></stop><stop offset=".6" stop-color="currentColor" stop-opacity=".6"></stop><stop offset=".8" stop-color="currentColor" stop-opacity=".3"></stop><stop offset="1" stop-color="currentColor" stop-opacity="0"></stop></radialGradient><circle transform-origin="center" fill="none" stroke="url(#a12)" stroke-width="14" stroke-linecap="round" stroke-dasharray="200 1000" stroke-dashoffset="0" cx="100" cy="100" r="70"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="2" values="360;0" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></circle><circle transform-origin="center" fill="none" opacity=".2" stroke="currentColor" stroke-width="14" stroke-linecap="round" cx="100" cy="100" r="70"></circle></svg>
+        <div v-if="isTextContourLoading" class="ascwo-absolute ascwo-left-0 ascwo-top-0 ascwo-flex ascwo-flex-col ascwo-justify-center ascwo-items-center ascwo-w-full ascwo-h-full ascwo-bg-black/25 ascwo-backdrop-blur-sm ascwo-z-20 ascwo-gap-3">
+            <span :class="`ascwo-flex ascwo-text-cyan-600`">
+                <svg class="ascwo-w-[100px] aswop-h-[100px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><radialGradient id="a12" cx=".66" fx=".66" cy=".3125" fy=".3125" gradientTransform="scale(1.5)"><stop offset="0" stop-color="currentColor"></stop><stop offset=".3" stop-color="currentColor" stop-opacity=".9"></stop><stop offset=".6" stop-color="currentColor" stop-opacity=".6"></stop><stop offset=".8" stop-color="currentColor" stop-opacity=".3"></stop><stop offset="1" stop-color="currentColor" stop-opacity="0"></stop></radialGradient><circle transform-origin="center" fill="none" stroke="url(#a12)" stroke-width="14" stroke-linecap="round" stroke-dasharray="200 1000" stroke-dashoffset="0" cx="100" cy="100" r="70"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="2" values="360;0" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></circle><circle transform-origin="center" fill="none" opacity=".2" stroke="currentColor" stroke-width="14" stroke-linecap="round" cx="100" cy="100" r="70"></circle></svg>
             </span>
-            <p class="asowp-text-sm asowp-font-semibold asowp-text-white">
+            <p class="ascwo-text-sm ascwo-font-semibold ascwo-text-white">
                 {{ configVisualiserTexts.textBorder && configVisualiserTexts.textBorder.trim() !== '' ? configVisualiserTexts.textBorder : 'Text border' }}...
             </p>
         </div>
 
-        <div v-if="isLoading || removeBgImageLoading" class="asowp-absolute asowp-left-0 asowp-top-0 asowp-flex asowp-justify-center asowp-items-center asowp-w-full asowp-h-full asowp-bg-black/30 asowp-backdrop-blur-md asowp-z-10">
-            <span :class="`asowp-flex asowp-text-cyan-600`">
-                <svg class="asowp-w-[200px] aswop-h-[200px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><radialGradient id="a12" cx=".66" fx=".66" cy=".3125" fy=".3125" gradientTransform="scale(1.5)"><stop offset="0" stop-color="currentColor"></stop><stop offset=".3" stop-color="currentColor" stop-opacity=".9"></stop><stop offset=".6" stop-color="currentColor" stop-opacity=".6"></stop><stop offset=".8" stop-color="currentColor" stop-opacity=".3"></stop><stop offset="1" stop-color="currentColor" stop-opacity="0"></stop></radialGradient><circle transform-origin="center" fill="none" stroke="url(#a12)" stroke-width="14" stroke-linecap="round" stroke-dasharray="200 1000" stroke-dashoffset="0" cx="100" cy="100" r="70"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="2" values="360;0" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></circle><circle transform-origin="center" fill="none" opacity=".2" stroke="currentColor" stroke-width="14" stroke-linecap="round" cx="100" cy="100" r="70"></circle></svg>
+        <div v-if="isLoading || removeBgImageLoading" class="ascwo-absolute ascwo-left-0 ascwo-top-0 ascwo-flex ascwo-justify-center ascwo-items-center ascwo-w-full ascwo-h-full ascwo-bg-black/30 ascwo-backdrop-blur-md ascwo-z-10">
+            <span :class="`ascwo-flex ascwo-text-cyan-600`">
+                <svg class="ascwo-w-[200px] aswop-h-[200px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><radialGradient id="a12" cx=".66" fx=".66" cy=".3125" fy=".3125" gradientTransform="scale(1.5)"><stop offset="0" stop-color="currentColor"></stop><stop offset=".3" stop-color="currentColor" stop-opacity=".9"></stop><stop offset=".6" stop-color="currentColor" stop-opacity=".6"></stop><stop offset=".8" stop-color="currentColor" stop-opacity=".3"></stop><stop offset="1" stop-color="currentColor" stop-opacity="0"></stop></radialGradient><circle transform-origin="center" fill="none" stroke="url(#a12)" stroke-width="14" stroke-linecap="round" stroke-dasharray="200 1000" stroke-dashoffset="0" cx="100" cy="100" r="70"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="2" values="360;0" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></circle><circle transform-origin="center" fill="none" opacity=".2" stroke="currentColor" stroke-width="14" stroke-linecap="round" cx="100" cy="100" r="70"></circle></svg>
             </span>
         </div>
     </div>
@@ -2681,7 +2681,7 @@
         showLoader,
         handleGetCutlineData,
         handleGetMaterialType,
-    } from '@/frontend/utils/asowp-editor-script.js';
+    } from '@/frontend/utils/ascwo-editor-script.js';
     import { add_to_cart, formatPrice, addformatToPrice, setScrollColor } from '@/frontend/utils/functions.js'
     import toastMessage from '@/admin/utils/functions';
     import { useRoute } from "vue-router";
@@ -2744,11 +2744,11 @@
     }
 
     const handleDocumentClick = (e) => {
-        var optionss = document.querySelector('#asowp-options-container')
-        var optionButton = document.querySelector('#asowp-optionsButtons-container')
-        var editButton = document.querySelector('#asowp-editObject')
-        var templateButton = document.querySelector('#asowp-templateObjects-button')
-        var templateOptions = document.querySelector('#asowp-templateObjects-options')
+        var optionss = document.querySelector('#ascwo-options-container')
+        var optionButton = document.querySelector('#ascwo-optionsButtons-container')
+        var editButton = document.querySelector('#ascwo-editObject')
+        var templateButton = document.querySelector('#ascwo-templateObjects-button')
+        var templateOptions = document.querySelector('#ascwo-templateObjects-options')
 
         if(window.innerWidth > 688){
             if(!optionss.contains(e.target) && !optionButton.contains(e.target) && !editButton.contains(e.target)) {
@@ -2909,16 +2909,16 @@
 
     var showScrollButton = ref(false)
     function verifierScrollabilite() {
-        const monDiv = document.getElementById('asowp-options-buttons');
+        const monDiv = document.getElementById('ascwo-options-buttons');
         if(monDiv){
             if (monDiv.scrollWidth > monDiv.clientWidth) {
                 showScrollButton.value = true;
-                monDiv.classList.remove("asowp-justify-center");
-                monDiv.classList.add("asowp-justify-start");
+                monDiv.classList.remove("ascwo-justify-center");
+                monDiv.classList.add("ascwo-justify-start");
             } else {
                 showScrollButton.value = false;
-                monDiv.classList.remove("asowp-justify-start");
-                monDiv.classList.add("asowp-justify-center");
+                monDiv.classList.remove("ascwo-justify-start");
+                monDiv.classList.add("ascwo-justify-center");
             }
         }
     }
@@ -4271,9 +4271,9 @@
     var flipped = ref(false)
     var activeFace = ref('front-face')
     function flipRect() {
-        var flipper = document.getElementById('asowp-canvas-containers')
-        var signFace = document.getElementById('asowp-sign-recto')
-        var signBack = document.getElementById('asowp-sign-verso')
+        var flipper = document.getElementById('ascwo-canvas-containers')
+        var signFace = document.getElementById('ascwo-sign-recto')
+        var signBack = document.getElementById('ascwo-sign-verso')
         if(!flipped.value){
             flipper.classList.add('flipper-switch')
             handleCheckActiveSignFace('back')
@@ -4295,8 +4295,8 @@
 
         // Obtenir tous les objets exportables
         const exportObjects = canvasInstance.getObjects().filter(obj => 
-            // ['safeObject', 'normal-border', 'asowp-SignText', 'asowp-SignTextLayer', 'asowp-SignImage', 'asowp-QRCode', 'asowp-cutline1', 'asowp-cutline2'].includes(obj.name)
-            ['safeObject', 'normal-border', 'asowp-SignText', 'asowp-SignTextLayer', 'asowp-SignImage', 'asowp-QRCode'].includes(obj.name)
+            // ['safeObject', 'normal-border', 'ascwo-SignText', 'ascwo-SignTextLayer', 'ascwo-SignImage', 'ascwo-QRCode', 'ascwo-cutline1', 'ascwo-cutline2'].includes(obj.name)
+            ['safeObject', 'normal-border', 'ascwo-SignText', 'ascwo-SignTextLayer', 'ascwo-SignImage', 'ascwo-QRCode'].includes(obj.name)
         );
 
         if (exportObjects.length === 0) {
@@ -4399,7 +4399,7 @@
     function checkScreenSize(width, height, fillFactor) {
         handleReadyToSaveState(false);
 
-        var canvasContainer = document.getElementById("asowp-canvas-containers");
+        var canvasContainer = document.getElementById("ascwo-canvas-containers");
         var canvasWidth = width ? width : canvasContainer.clientWidth;
         var canvasHeight = height ? height : canvasContainer.clientHeight;
 
@@ -4545,14 +4545,14 @@
             group._restoreObjectsState();
             canva.remove(group);
             canva.getObjects().forEach((obj) => {
-                if(obj.name === 'asowp-signText'){
+                if(obj.name === 'ascwo-signText'){
                     if(obj.isEditing){
                         obj.exitEditing();
                     }
                     obj.clipPath = handleClipAddedObject(canva);
 
                 }
-                if (obj.name === 'asowp-SignImage') {
+                if (obj.name === 'ascwo-SignImage') {
                     obj.clipPath = handleClipAddedObject(canva);
                 }
                 obj.setCoords()
@@ -4562,9 +4562,9 @@
     }   
     
     function updateInfoDiv(obj) {
-        var infoDiv = document.getElementById('asowp-editButtons');
+        var infoDiv = document.getElementById('ascwo-editButtons');
         if (obj) {
-            infoDiv.classList.remove("asowp-hidden");
+            infoDiv.classList.remove("ascwo-hidden");
 
             var boundingRect = obj.getBoundingRect(false);
             // console.log(obj, "555", boundingRect)
@@ -4577,8 +4577,8 @@
     }
 
     function closeInfoDiv(){
-        var infoDiv = document.getElementById('asowp-editButtons');
-        infoDiv.classList.add("asowp-hidden");
+        var infoDiv = document.getElementById('ascwo-editButtons');
+        infoDiv.classList.add("ascwo-hidden");
         // console.log("closeInfoDiv")
     }
 
@@ -4591,7 +4591,7 @@
             // showOptions('image')
             // editAddedImage(object)
         }
-        div.classList.remove("asowp-invisible");
+        div.classList.remove("ascwo-invisible");
         textsPrices.value = handleSetPrice()
         var priceObject = {
             name: 'none',
@@ -4613,7 +4613,7 @@
 
     function closeObjectValues(){
         var div = document.getElementById('activeObject-values');
-        div.classList.add("asowp-invisible");
+        div.classList.add("ascwo-invisible");
         textsPrices.value = handleSetPrice()
         var priceObject = {
             name: 'none',
@@ -4850,15 +4850,15 @@
         var currentObject = activeCanvas.getActiveObject()
         if(currentObject !== undefined){
             if(currentObject !== null){
-                if(currentObject.name === 'asowp-SignText'){
+                if(currentObject.name === 'ascwo-SignText'){
                     showOptions('text')
                     getTextObject(currentObject, true)
                 }
-                if(currentObject.name === 'asowp-SignImage'){
+                if(currentObject.name === 'ascwo-SignImage'){
                     showOptions('image')
                     editAddedImage(currentObject)
                 }
-                if(currentObject.name === 'asowp-QRCode'){
+                if(currentObject.name === 'ascwo-QRCode'){
                     showOptions('qr-code')
                     editQRCode(currentObject)
                 }
@@ -4871,7 +4871,7 @@
             if(activeCanvas.getActiveObject() !== null){
                 var object = activeCanvas.getActiveObject();
                 // addedTexts.value = handleDeleteObject(object)
-                if(object.name == 'asowp-SignText'){
+                if(object.name == 'ascwo-SignText'){
                     addedTexts.value = handleDeleteObject(object)
                     selectText.value = false
                     // console.log(addedTexts.value)
@@ -4884,11 +4884,11 @@
                     getOptionPrice(priceObject)
                 }
 
-                if(object.name == 'asowp-QRCode'){
+                if(object.name == 'ascwo-QRCode'){
                     usedQRCodes.value = handleDeleteObject(object)
                     selectQRCode.value = false
                 }
-                if(object.name == 'asowp-SignImage'){
+                if(object.name == 'ascwo-SignImage'){
                     usedImages.value = handleDeleteObject(object)
                     // selectText.value = false
                     // console.log(usedImages.value, 'image')
@@ -4922,14 +4922,14 @@
             if(activeCanvas.getActiveObject() !== null){
                 newImagePriceId.value = newImagePriceId.value + 1
                 var object = activeCanvas.getActiveObject();
-                if(object.name === 'asowp-SignText'){
+                if(object.name === 'ascwo-SignText'){
                     handleCloneObject(object)
                     saveStep('clonage du text');
                 }
                 textsPrices.value = handleSetPrice()
         
                 var stop = false
-                if(object.name === 'asowp-SignImage'){
+                if(object.name === 'ascwo-SignImage'){
                     optionsPrices.value.forEach(element => {
                         if(element.type){
                             var objectUrl = (object.objectType === "svg" ? object.imageUrl : object.getSrc())
@@ -4952,7 +4952,7 @@
                     // console.log(usedImages.value)
                 }
 
-                if(object.name === 'asowp-QRCode'){
+                if(object.name === 'ascwo-QRCode'){
                     let qrObject = await handleAddQRCode(object.fromData, object)
                     usedQRCodes.value = qrObject.codes
                     saveStep('clonage du code Qr');
@@ -5316,13 +5316,13 @@
             getOptionPrice(fixingPriceObject)
         }
         if(activeFace.value == 'front-face'){
-            const container = document.getElementById('asowp-borders-section');
-            const target = container.querySelector('.asowp-borders-div'); // ou '.target-div' si elle a une classe spécifique
+            const container = document.getElementById('ascwo-borders-section');
+            const target = container.querySelector('.ascwo-borders-div'); // ou '.target-div' si elle a une classe spécifique
             if(selectedShape.value == 'cut-to-shape'){
-                target.classList.add('asowp-disabled-div');
+                target.classList.add('ascwo-disabled-div');
             }
             else{
-                target.classList.remove('asowp-disabled-div');
+                target.classList.remove('ascwo-disabled-div');
             }
             if(border1ExcludeShapes.value.includes(shapeId)){
                 // if(face1BorderId.value === matchingBorders.value.length-1){
@@ -6136,7 +6136,7 @@
         function getImages(canva){
             var objects = canva.getObjects();
             for (var i = 0; i < objects.length; i++) {
-                if (objects[i].name === "asowp-SignImage") {
+                if (objects[i].name === "ascwo-SignImage") {
                     function addUniqueObject(arr, obj, key1, key2) {
                         const exists = arr.some(item => item[key1] === obj[key1]);
                         if (!exists) {
@@ -6347,7 +6347,7 @@
             selectedText.value.value = object.text
             
             activeCanvas.getObjects().forEach(function(obj){
-                if(obj.name === "asowp-SignText" && obj.id === object.id){
+                if(obj.name === "ascwo-SignText" && obj.id === object.id){
                     if(setActive){
                         activeCanvas.setActiveObject(obj);
                     }
@@ -6411,7 +6411,7 @@
     function changeTextSizeValue(statut){
         var max = configTextFontSettings.value.maximumFontSize
         var min = configTextFontSettings.value.minimumFontSize
-        var input = document.getElementById('asowp-text-size')
+        var input = document.getElementById('ascwo-text-size')
 
         if(route.name === 'template-maker'){
             if(statut === 'up'){
@@ -6554,8 +6554,8 @@
     let removeBgImageLoading = ref(false)
     async function removeBackground(){
         let activeImg = activeCanvas.getActiveObject()
-        // if(activeImg.name == "asowp-SignImage" && activeImg.objectType == "no-svg" && (activeImg.imageNoBgUrl && activeImg.imageNoBgUrl != "")){
-        if(activeImg.name == "asowp-SignImage" && activeImg.objectType == "no-svg"){
+        // if(activeImg.name == "ascwo-SignImage" && activeImg.objectType == "no-svg" && (activeImg.imageNoBgUrl && activeImg.imageNoBgUrl != "")){
+        if(activeImg.name == "ascwo-SignImage" && activeImg.objectType == "no-svg"){
             removeBgImageLoading.value = true
             let images = await handleRemoveBgImage(activeImg)
             usedImages.value = images.images
@@ -6662,7 +6662,7 @@
             if(activeFace.value == code.canvasName){
                 if(active == true){
                     let activeCode = activeCanvas.getActiveObject()
-                    if(code.name == "asowp-QRCode" && code.id == activeCode.id){
+                    if(code.name == "ascwo-QRCode" && code.id == activeCode.id){
                         selectQRCode.value = true
                         
                         activeQrCode.value = code
@@ -6670,7 +6670,7 @@
                         activeQrCodeColor.value = code.color
                     }
                 }else{
-                    if(code.name == "asowp-QRCode"){
+                    if(code.name == "ascwo-QRCode"){
                         selectQRCode.value = true
                         activeCanvas.setActiveObject(code)
                         
@@ -6873,7 +6873,7 @@
         
         var objects = canvas.getObjects();
         for (var i = 0; i < objects.length; i++) {
-            if (objects[i].name === "asowp-SignText") {
+            if (objects[i].name === "ascwo-SignText") {
                 function addUniqueObject(arr, obj, key) {
                     const exists = arr.some(item => item[key] === obj[key]);
                     if (!exists) {
@@ -6882,7 +6882,7 @@
                 }
                 addUniqueObject(textObjects, objects[i], 'id')
             }
-            if (objects[i].name === "asowp-SignImage") {
+            if (objects[i].name === "ascwo-SignImage") {
                 function addUniqueObject(arr, obj, key) {
                     const exists = arr.some(item => item[key] === obj[key]);
                     if (!exists) {
@@ -6891,7 +6891,7 @@
                 }
                 addUniqueObject(imageObjects, objects[i], 'id')
             }
-            if (objects[i].name === "asowp-QRCode") {
+            if (objects[i].name === "ascwo-QRCode") {
                 function addUniqueObject(arr, obj, key) {
                     const exists = arr.some(item => item[key] === obj[key]);
                     if (!exists) {
@@ -7024,7 +7024,7 @@
             var objects = canvasBack.getObjects();
 
             for (var i = 0; i < objects.length; i++) {
-                if (objects[i].name === "asowp-SignText") {
+                if (objects[i].name === "ascwo-SignText") {
                     function addUniqueObject(arr, obj, key) {
                         const exists = arr.some(item => item[key] === obj[key]);
                         if (!exists) {
@@ -7033,7 +7033,7 @@
                     }
                     addUniqueObject(face2TextObjects, objects[i], 'id')
                 }
-                if (objects[i].name === "asowp-SignImage") {
+                if (objects[i].name === "ascwo-SignImage") {
                     function addUniqueObject(arr, obj, key) {
                         const exists = arr.some(item => item[key] === obj[key]);
                         if (!exists) {
@@ -7042,7 +7042,7 @@
                     }
                     addUniqueObject(face2ImageObjects, objects[i], 'id')
                 }
-                if (objects[i].name === "asowp-QRCode") {
+                if (objects[i].name === "ascwo-QRCode") {
                     function addUniqueObject(arr, obj, key) {
                         const exists = arr.some(item => item[key] === obj[key]);
                         if (!exists) {
@@ -7295,7 +7295,7 @@
                     face2: current2State,
                 },
                 price: {
-                    value: parseFloat(asowp_configurator_data.regularPrice) + finalPrices.value,
+                    value: parseFloat(ascwo_configurator_data.regularPrice) + finalPrices.value,
                     array: optionsPrices.value,
                     textAfter: configVisualiserTexts.value.textAfterPrice,
                 },
@@ -7471,7 +7471,7 @@
                     previewDiv.removeChild(removableDiv);
                 }
     
-                var sceneClass = 'animated-bg asowp-w-full asowp-h-full asowp-absolute asowp-z-0 asowp-animate-slideToleft asowp-duration-300'
+                var sceneClass = 'animated-bg ascwo-w-full ascwo-h-full ascwo-absolute ascwo-z-0 ascwo-animate-slideToleft ascwo-duration-300'
                 currentSceneId.value = index
                 currentSceneUrl.value = url
     
@@ -7507,7 +7507,7 @@
         
         let objects = canva.getObjects();
         objects.forEach(obj => {
-            if(obj.name == "asowp-SignText"){
+            if(obj.name == "ascwo-SignText"){
                 fonts.push({
                     label: obj.fontFamily,
                     url: obj.fontFamilyUrl
@@ -7552,7 +7552,7 @@
     }
 
     function applyNeonEffectToSVG(svgString, canva) {
-        var neonTextArray = canva.getObjects().filter(obj => obj.name === "asowp-SignText" && obj.type === "neon-Text")
+        var neonTextArray = canva.getObjects().filter(obj => obj.name === "ascwo-SignText" && obj.type === "neon-Text")
         // Parser le SVG en un document DOM
         const parser = new DOMParser();
         const svgDoc = parser.parseFromString(svgString, 'image/svg+xml');
@@ -7638,7 +7638,7 @@
                                     // console.log(img._objects, "Image")
 
                                     img._objects.forEach((obj) => {
-                                        if (obj.name === 'asowp-SignText') {
+                                        if (obj.name === 'ascwo-SignText') {
                                             console.log('Loaded Text Object:', {
                                                 left: obj.left,
                                                 top: obj.top,
@@ -7715,7 +7715,7 @@
 
                                                 img.clipPath = handleClipAddedObject(canva);
                                                 
-                                                img.name = 'asowp-signPattern';
+                                                img.name = 'ascwo-signPattern';
 
                                                 img.scaleX = scaleX;
                                                 img.scaleY = scaleY;
@@ -7767,7 +7767,7 @@
                     heightVisibility = object.visible
                     object.set('visible', false);
                 }
-                if(object.name === 'asowp-SignText'){
+                if(object.name === 'ascwo-SignText'){
                     // object.set('visible', false);
                 }
                 if(object.name === 'thickness-value'){
@@ -7778,7 +7778,7 @@
                     borderPositionId = index
                     object.bringToFront();
                 }
-                if(object.objectType === 'asowp-fixingMethods'){
+                if(object.objectType === 'ascwo-fixingMethods'){
                     fixingPositionId = index
                     object.bringToFront();
                 }
@@ -7866,13 +7866,13 @@
                 if(object.name === 'heightLine' || object.name === 'height-value'){
                     object.set('visible', heightVisibility);
                 }
-                if(object.name === 'asowp-SignText'){
+                if(object.name === 'ascwo-SignText'){
                     object.set('visible', true);
                 }
                 if(object.name === 'thickness-value'){
                     object.set('visible', thickVisibility);
                 }
-                if(object.name === 'watermark' || object.name === 'asowp-svg-path' || object.name === 'asowp-signPattern'){
+                if(object.name === 'watermark' || object.name === 'ascwo-svg-path' || object.name === 'ascwo-signPattern'){
                     // console.log(object, "watermark")
                     canva.remove(object)
                 }
@@ -7887,7 +7887,7 @@
                 if(object.name === 'old-world-border' || object.name === 'rounded-corners-border'){
                     object.moveTo(borderPositionId);
                 }
-                if(object.objectType === 'asowp-fixingMethods'){
+                if(object.objectType === 'ascwo-fixingMethods'){
                     object.moveTo(fixingPositionId);
                 }
             });
@@ -7912,11 +7912,11 @@
     
                     const svgElement = previewScreen.querySelector('svg');
     
-                    svgElement.classList.add('asowp-z-10');
+                    svgElement.classList.add('ascwo-z-10');
                 }
                 
                 if(configImageSettings.value.scenes.length > 0){
-                    var miniPreview = document.getElementById('asowp-miniPreview')
+                    var miniPreview = document.getElementById('ascwo-miniPreview')
                     miniPreview.innerHTML = svgDataPreview;
                 }
             }else if(purpose === 'download'){
@@ -7926,10 +7926,10 @@
                 link.download = 'img'+'.'+format;
                 link.click();
             }else if(purpose === 'finish-1'){
-                var previewFinish1 = document.getElementById('asowp-previewFinish1')
+                var previewFinish1 = document.getElementById('ascwo-previewFinish1')
                 previewFinish1.innerHTML = svgDataPreview;
             }else if(purpose === 'finish-2'){
-                var previewFinish1 = document.getElementById('asowp-previewFinish2')
+                var previewFinish1 = document.getElementById('ascwo-previewFinish2')
                 previewFinish1.innerHTML = svgDataPreview;
             }
 
@@ -8001,7 +8001,7 @@
                     const optionsPreview = {
                         width: '100%',
                         height: '100%',
-                        class: 'asowp-z-10',
+                        class: 'ascwo-z-10',
                         // viewBox: {
                         //     x: -100,
                         //     y: -50,
@@ -8075,7 +8075,7 @@
     
                                                         img.clipPath = handleClipAddedObject(canva);
                                                         
-                                                        img.name = 'asowp-signPattern';
+                                                        img.name = 'ascwo-signPattern';
 
                                                         img.scaleX = scaleX;
                                                         img.scaleY = scaleY;
@@ -8282,7 +8282,7 @@
                     var borderPositionId
                     var fixingPositionId
                     canva.getObjects().forEach((object, index) => {
-                        // if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'asowp-SignText'){
+                        // if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'ascwo-SignText'){
                         //     object.set('visible', false);
                         // }
                         if(object.name === 'widthLine' || object.name === 'width-value'){
@@ -8293,7 +8293,7 @@
                             heightVisibility = object.visible
                             object.set('visible', false);
                         }
-                        if(object.name === 'asowp-SignText'){
+                        if(object.name === 'ascwo-SignText'){
                             // object.set('visible', true);
                         }
                         if(object.name === 'thickness-value'){
@@ -8304,7 +8304,7 @@
                             borderPositionId = index
                             object.bringToFront();
                         }
-                        if(object.objectType === 'asowp-fixingMethods'){
+                        if(object.objectType === 'ascwo-fixingMethods'){
                             fixingPositionId = index
                             object.bringToFront();
                         }
@@ -8383,7 +8383,7 @@
                     // Restaure les dimensions et l'affichage originales du canvas
                     canvas.setBackgroundColor('transparent', canvas.renderAll.bind(canvas));
                     canva.getObjects().forEach(object => {
-                        // if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'asowp-SignText'){
+                        // if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'ascwo-SignText'){
                         //     object.set('visible', true);
                         // }
                         if(object.name === 'widthLine' || object.name === 'width-value'){
@@ -8392,13 +8392,13 @@
                         if(object.name === 'heightLine' || object.name === 'height-value'){
                             object.set('visible', heightVisibility);
                         }
-                        if(object.name === 'asowp-SignText'){
+                        if(object.name === 'ascwo-SignText'){
                             // object.set('visible', false);
                         }
                         if(object.name === 'thickness-value'){
                             object.set('visible', thickVisibility);
                         }
-                        if(object.name === 'watermark' || object.name === 'asowp-svg-path' || object.name === 'asowp-signPattern'){
+                        if(object.name === 'watermark' || object.name === 'ascwo-svg-path' || object.name === 'ascwo-signPattern'){
                             // console.log(object, "watermark")
                             canva.remove(object)
                         }
@@ -8414,7 +8414,7 @@
                         // borderPositionId = index
                             object.moveTo(borderPositionId);
                         }
-                        if(object.objectType === 'asowp-fixingMethods'){
+                        if(object.objectType === 'ascwo-fixingMethods'){
                             object.moveTo(fixingPositionId);
                         }
                     });
@@ -8427,11 +8427,11 @@
                             const svgElement = previewScreen.querySelector('svg');
         
                             // Ajoutez une classe à l'élément SVG
-                            svgElement.classList.add('asowp-z-10');
+                            svgElement.classList.add('ascwo-z-10');
                         }
     
                         if(configImageSettings.value.scenes.length > 0){
-                            var miniPreview = document.getElementById('asowp-miniPreview')
+                            var miniPreview = document.getElementById('ascwo-miniPreview')
                             miniPreview.innerHTML = svgDataPreview;
     
                         }
@@ -8510,7 +8510,7 @@
                                     // console.log(img._objects, "Image")
 
                                     img._objects.forEach((obj) => {
-                                        if (obj.name === 'asowp-SignText') {
+                                        if (obj.name === 'ascwo-SignText') {
                                             console.log('Loaded Text Object:', {
                                                 left: obj.left,
                                                 top: obj.top,
@@ -8587,7 +8587,7 @@
 
                                                 img.clipPath = handleClipAddedObject(canva);
                                                 
-                                                img.name = 'asowp-signPattern';
+                                                img.name = 'ascwo-signPattern';
 
                                                 img.scaleX = scaleX;
                                                 img.scaleY = scaleY;
@@ -8649,7 +8649,7 @@
                     heightVisibility = object.visible
                     object.set('visible', false);
                 }
-                if(object.name === 'asowp-SignText'){
+                if(object.name === 'ascwo-SignText'){
                     // object.set('visible', false);
                 }
                 if(object.name === 'thickness-value'){
@@ -8660,7 +8660,7 @@
                     borderPositionId = index
                     object.bringToFront();
                 }
-                if(object.objectType === 'asowp-fixingMethods'){
+                if(object.objectType === 'ascwo-fixingMethods'){
                     fixingVisibility = object.visible
                     fixingPositionId = index
                     object.bringToFront();
@@ -8758,13 +8758,13 @@
                 if(object.name === 'heightLine' || object.name === 'height-value'){
                     object.set('visible', heightVisibility);
                 }
-                if(object.name === 'asowp-SignText'){
+                if(object.name === 'ascwo-SignText'){
                     object.set('visible', true);
                 }
                 if(object.name === 'thickness-value'){
                     object.set('visible', thickVisibility);
                 }
-                if(object.name === 'watermark' || object.name === 'asowp-svg-path' || object.name === 'asowp-signPattern'){
+                if(object.name === 'watermark' || object.name === 'ascwo-svg-path' || object.name === 'ascwo-signPattern'){
                     // console.log(object, "watermark")
                     canva.remove(object)
                 }
@@ -8779,7 +8779,7 @@
                 if(object.name === 'old-world-border' || object.name === 'rounded-corners-border'){
                     object.moveTo(borderPositionId);
                 }
-                if(object.objectType === 'asowp-fixingMethods'){
+                if(object.objectType === 'ascwo-fixingMethods'){
                     object.moveTo(fixingPositionId);
                     object.set('visible', fixingVisibility);
                 }
@@ -8811,11 +8811,11 @@
     
                     const svgElement = previewScreen.querySelector('svg');
     
-                    svgElement.classList.add('asowp-z-10');
+                    svgElement.classList.add('ascwo-z-10');
                 }
                 
                 if(configImageSettings.value.scenes.length > 0){
-                    var miniPreview = document.getElementById('asowp-miniPreview')
+                    var miniPreview = document.getElementById('ascwo-miniPreview')
                     miniPreview.innerHTML = svgDataPreview;
                 }
             }else if(purpose === 'download'){
@@ -8825,10 +8825,10 @@
                 link.download = 'img'+'.'+format;
                 link.click();
             }else if(purpose === 'finish-1'){
-                var previewFinish1 = document.getElementById('asowp-previewFinish1')
+                var previewFinish1 = document.getElementById('ascwo-previewFinish1')
                 previewFinish1.innerHTML = svgDataPreview;
             }else if(purpose === 'finish-2'){
-                var previewFinish1 = document.getElementById('asowp-previewFinish2')
+                var previewFinish1 = document.getElementById('ascwo-previewFinish2')
                 previewFinish1.innerHTML = svgDataPreview;
             }
 
@@ -8872,7 +8872,7 @@
     function checkScreenSizeSvg(width, height) {
         handleReadyToSaveState(false);
 
-        var canvasContainer = document.getElementById("asowp-canvas-containers");
+        var canvasContainer = document.getElementById("ascwo-canvas-containers");
         
         // let canvasWidth, canvasHeight;
         // if (width && height) {
@@ -8889,8 +8889,8 @@
 
             // Obtenir tous les objets exportables
             const exportObjects = canvasInstance.getObjects().filter(obj => 
-                // ['safeObject', 'normal-border', 'asowp-SignText', 'asowp-SignTextLayer', 'asowp-SignImage', 'asowp-QRCode', 'asowp-cutline1', 'asowp-cutline2'].includes(obj.name)
-                ['safeObject', 'normal-border', 'asowp-SignText', 'asowp-SignTextLayer', 'asowp-SignImage', 'asowp-QRCode'].includes(obj.name)
+                // ['safeObject', 'normal-border', 'ascwo-SignText', 'ascwo-SignTextLayer', 'ascwo-SignImage', 'ascwo-QRCode', 'ascwo-cutline1', 'ascwo-cutline2'].includes(obj.name)
+                ['safeObject', 'normal-border', 'ascwo-SignText', 'ascwo-SignTextLayer', 'ascwo-SignImage', 'ascwo-QRCode'].includes(obj.name)
             );
 
             if (exportObjects.length === 0) {
@@ -8991,8 +8991,8 @@
             await hideCanvasForWaiting(true)
             // Récupérer tous les objets à inclure
             const exportObjects = canva.getObjects().filter(obj => 
-                // ['safeObject', 'normal-border', 'asowp-SignText', 'asowp-SignTextLayer', 'asowp-SignImage', 'asowp-QRCode', 'normal-border', 'asowp-cutline1', 'asowp-cutline2'].includes(obj.name)
-                ['safeObject', 'normal-border', 'asowp-SignText', 'asowp-SignTextLayer', 'asowp-SignImage', 'asowp-QRCode', 'normal-border'].includes(obj.name)
+                // ['safeObject', 'normal-border', 'ascwo-SignText', 'ascwo-SignTextLayer', 'ascwo-SignImage', 'ascwo-QRCode', 'normal-border', 'ascwo-cutline1', 'ascwo-cutline2'].includes(obj.name)
+                ['safeObject', 'normal-border', 'ascwo-SignText', 'ascwo-SignTextLayer', 'ascwo-SignImage', 'ascwo-QRCode', 'normal-border'].includes(obj.name)
             );
 
             if (exportObjects.length === 0) {
@@ -9020,7 +9020,7 @@
 
                                                 img.clipPath = handleClipAddedObject(canva);
                                                 
-                                                img.name = 'asowp-signPattern';
+                                                img.name = 'ascwo-signPattern';
 
                                                 img.scaleX = scaleX;
                                                 img.scaleY = scaleY;
@@ -9168,7 +9168,7 @@
                 if (visibilityStates.hasOwnProperty(object.name)) {
                     object.set('visible', visibilityStates[object.name]);
                 }
-                if (['watermark', 'asowp-svg-path', 'asowp-signPattern'].includes(object.name)) {
+                if (['watermark', 'ascwo-svg-path', 'ascwo-signPattern'].includes(object.name)) {
                     canva.remove(object);
                 }
             });
@@ -9548,15 +9548,15 @@
                     ...configData.value,
                     custom_price: parseFloat(
                         finalPrice.value
-                    ).toFixed(asowp_configurator_data.decimals)
+                    ).toFixed(ascwo_configurator_data.decimals)
                     // custom_price: parseFloat(
-                    //     finalPrices.value + parseFloat(asowp_configurator_data.regularPrice)
-                    // ).toFixed(asowp_configurator_data.decimals)
+                    //     finalPrices.value + parseFloat(ascwo_configurator_data.regularPrice)
+                    // ).toFixed(ascwo_configurator_data.decimals)
                 },
-                variation_id:asowp_configurator_data.productID,
+                variation_id:ascwo_configurator_data.productID,
                 quantity:1
             }
-            const add = await add_to_cart(asowp_data.ajax_url, cart_data,asowp_configurator_data.frontend_nonce, props.config.data.settings.generals.product.redirectToCheckOutPage);
+            const add = await add_to_cart(ascwo_data.ajax_url, cart_data,ascwo_configurator_data.frontend_nonce, props.config.data.settings.generals.product.redirectToCheckOutPage);
             redirecting = !!add?.redirecting;
             if(!add?.success){
                 toastMessage(add?.message || "A problem occured while adding the product to the cart. Please try again.","error");
@@ -9864,8 +9864,8 @@
         try{
             await document.fonts.ready;
 
-            if(document.querySelector("#asowp-configurator-loader")){
-                document.querySelector("#asowp-configurator-loader").remove();
+            if(document.querySelector("#ascwo-configurator-loader")){
+                document.querySelector("#ascwo-configurator-loader").remove();
             }
             configSettings.value = props.config.data.settings
             configDoublePart.value = props.config.data.settings.customizerSign.signPart.doublePart
@@ -9931,7 +9931,7 @@
                 )
             }
 
-            var optionss = document.querySelector('#asowp-options-container')
+            var optionss = document.querySelector('#ascwo-options-container')
             document.addEventListener('click', handleDocumentClick)
             console.log(fabric.version)
 
@@ -9940,7 +9940,7 @@
 
             // document.addEventListener("DOMContentLoaded", function() {
 
-                var canvasContainer = document.getElementById("asowp-canvas-containers")
+                var canvasContainer = document.getElementById("ascwo-canvas-containers")
                 var canvasWidth = canvasContainer.clientWidth;
                 var canvasHeight = canvasContainer.clientHeight;
 
@@ -10091,7 +10091,7 @@
 
                 if(route.name == 'template-maker'){
                     template.value = await api.getTemplate(template_config_id,template_id);
-                    asowp_configurator_data.regularPrice = template.value.basePrice;
+                    ascwo_configurator_data.regularPrice = template.value.basePrice;
                 }
 
                 handleCheckTemplate(props.template.designFromTemplate)
@@ -10169,14 +10169,14 @@
                     var sign = handleGetObjectByName('safeObject');
                     let clipPath = handleClipAddedObject(canvas)
                     canvas.getObjects().forEach(function(obj) {
-                        if (obj.name === 'asowp-SignText' || obj.name === "asowp-SignTextLayer") {
+                        if (obj.name === 'ascwo-SignText' || obj.name === "ascwo-SignTextLayer") {
                             if(obj.isEditing){
                                 obj.exitEditing();
                             }
                             obj.clipPath = selectedShape.value != "cut-to-shape" ? clipPath : null;
                             canvas.renderAll();
                         }
-                        if (obj.name === 'asowp-SignImage' || obj.name === 'asowp-QRCode') {
+                        if (obj.name === 'ascwo-SignImage' || obj.name === 'ascwo-QRCode') {
                             obj.clipPath = selectedShape.value != "cut-to-shape" ? clipPath : null;
                             canvas.renderAll();
                         }
@@ -10185,14 +10185,14 @@
                 canvas.on('object:added', function(e) {
                     var activeObject = e.target;
                     if(!isTemplate.value){
-                        if(activeObject.name === 'asowp-SignImage'){
+                        if(activeObject.name === 'ascwo-SignImage'){
                             updateInfoDiv(activeObject);
                         }
                     }
                 });
                 canvas.on('object:moving', function(e) {
                     var activeObject = e.target;
-                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage' || activeObject.name === 'asowp-QRCode'){
+                    if(activeObject.name === 'ascwo-SignText' || activeObject.name === 'ascwo-SignImage' || activeObject.name === 'ascwo-QRCode'){
                         updateInfoDiv(activeObject);
                     }
 
@@ -10206,7 +10206,7 @@
                 });
                 canvas.on('object:scaling', function(e) {
                     var activeObject = e.target;
-                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage' || activeObject.name === 'asowp-QRCode'){
+                    if(activeObject.name === 'ascwo-SignText' || activeObject.name === 'ascwo-SignImage' || activeObject.name === 'ascwo-QRCode'){
                         updateInfoDiv(activeObject);
                     }
 
@@ -10220,7 +10220,7 @@
                 });
                 canvas.on('object:rotating', function(e) {
                     var activeObject = e.target;
-                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage' || activeObject.name === 'asowp-QRCode'){
+                    if(activeObject.name === 'ascwo-SignText' || activeObject.name === 'ascwo-SignImage' || activeObject.name === 'ascwo-QRCode'){
                         updateInfoDiv(activeObject);
                     }
 
@@ -10267,14 +10267,14 @@
                     var sign = handleGetObjectByName('safeObject');
                     let clipPath = handleClipAddedObject(canvasBack)
                     canvasBack.getObjects().forEach(function(obj) {
-                        if (obj.name === 'asowp-SignText' || obj.name === "asowp-SignTextLayer") {
+                        if (obj.name === 'ascwo-SignText' || obj.name === "ascwo-SignTextLayer") {
                             if(obj.isEditing){
                                 obj.exitEditing();
                             }
                             obj.clipPath = selectedShape.value != "cut-to-shape" ? clipPath : null;
                             canvasBack.renderAll();
                         }
-                        if (obj.name === 'asowp-SignImage' || obj.name === 'asowp-QRCode') {
+                        if (obj.name === 'ascwo-SignImage' || obj.name === 'ascwo-QRCode') {
                             obj.clipPath = selectedShape.value != "cut-to-shape" ? clipPath : null;
                             canvasBack.renderAll();
                         }
@@ -10282,13 +10282,13 @@
                 });
                 canvasBack.on('object:added', function(e) {
                     var activeObject = e.target;
-                    if(activeObject.name === 'asowp-SignImage'){
+                    if(activeObject.name === 'ascwo-SignImage'){
                         updateInfoDiv(activeObject);
                     }
                 });
                 canvasBack.on('object:moving', function(e) {
                     var activeObject = e.target;
-                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage' || activeObject.name === 'asowp-QRCode'){
+                    if(activeObject.name === 'ascwo-SignText' || activeObject.name === 'ascwo-SignImage' || activeObject.name === 'ascwo-QRCode'){
                         updateInfoDiv(activeObject);
                     }
 
@@ -10302,7 +10302,7 @@
                 });
                 canvasBack.on('object:scaling', function(e) {
                     var activeObject = e.target;
-                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage' || activeObject.name === 'asowp-QRCode'){
+                    if(activeObject.name === 'ascwo-SignText' || activeObject.name === 'ascwo-SignImage' || activeObject.name === 'ascwo-QRCode'){
                         updateInfoDiv(activeObject);
                     }
 
@@ -10316,7 +10316,7 @@
                 });
                 canvasBack.on('object:rotating', function(e) {
                     var activeObject = e.target;
-                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage' || activeObject.name === 'asowp-QRCode'){
+                    if(activeObject.name === 'ascwo-SignText' || activeObject.name === 'ascwo-SignImage' || activeObject.name === 'ascwo-QRCode'){
                         updateInfoDiv(activeObject);
                     }
 
@@ -10392,7 +10392,7 @@
 </script>
 
 <style scoped>
-    .asowp-hide{
+    .ascwo-hide{
         display: none;
     }
 
@@ -10411,17 +10411,17 @@
 
 
 
-    #asowp-sign-recto, #asowp-sign-verso {
+    #ascwo-sign-recto, #ascwo-sign-verso {
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
     }
 
-    #asowp-sign-recto {
+    #ascwo-sign-recto {
         /* background-color: #bbb; */
         color: black;
     }
 
-    #asowp-sign-verso {
+    #ascwo-sign-verso {
         /* background-color: dodgerblue; */
         color: white;
         transform: rotateY(180deg);

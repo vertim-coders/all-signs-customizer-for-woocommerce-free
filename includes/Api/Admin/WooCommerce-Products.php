@@ -1,5 +1,5 @@
 <?php
-namespace ASOWP\Api\Admin;
+namespace ASCWO\Api\Admin;
 
 use WP_Error;
 use WP_Query;
@@ -8,12 +8,12 @@ use WP_REST_Controller;
 /**
  * REST API: WooCommerce products helpers.
  */
-class ASOWP_Api_WooCommerce_Products extends WP_REST_Controller
+class ASCWO_Api_WooCommerce_Products extends WP_REST_Controller
 {
 
     public function __construct()
     {
-        $this->namespace = 'asowp/v1';
+        $this->namespace = 'ascwo/v1';
         $this->rest_base = 'woocommerce-products';
     }
 
@@ -71,7 +71,7 @@ class ASOWP_Api_WooCommerce_Products extends WP_REST_Controller
         if (!$post) {
             return false;
         }
-        if ($post->post_type !== 'asowp-configs') {
+        if ($post->post_type !== 'ascwo-configs') {
             return false;
         }
         if ($post->post_status !== 'publish') {
@@ -89,7 +89,7 @@ class ASOWP_Api_WooCommerce_Products extends WP_REST_Controller
             return;
         }
 
-        $meta_key = 'product-asowp-metas';
+        $meta_key = 'product-ascwo-metas';
         $meta = get_post_meta($product_id, $meta_key, true);
         if (!is_array($meta)) {
             return;
@@ -110,7 +110,7 @@ class ASOWP_Api_WooCommerce_Products extends WP_REST_Controller
 
     private function get_assigned_config_id(int $product_id): int
     {
-        $meta = get_post_meta($product_id, 'product-asowp-metas', true);
+        $meta = get_post_meta($product_id, 'product-ascwo-metas', true);
         if (!is_array($meta)) {
             return 0;
         }
@@ -155,8 +155,8 @@ class ASOWP_Api_WooCommerce_Products extends WP_REST_Controller
     {
         if (!function_exists('wc_get_product')) {
             return new WP_Error(
-                'asowp_woocommerce_missing',
-                __('WooCommerce is required to list products.', 'all-signs-options-pro'),
+                'ascwo_woocommerce_missing',
+                __('WooCommerce is required to list products.', 'all-signs-customizer-for-woocommerce-pro'),
                 array('status' => 400)
             );
         }

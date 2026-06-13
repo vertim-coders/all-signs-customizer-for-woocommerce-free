@@ -3,12 +3,12 @@
 /**
  * REST_API Handler
  */
-class ASOWP_Updater
+class ASCWO_Updater
 {
 	private static $remote_cache = null;
-	private const REMOTE_TRANSIENT_KEY = ASOWP_CHECK_TRANSIENT_NAME;
-	private const REMOTE_LOCK_TRANSIENT_KEY = ASOWP_CHECK_TRANSIENT_NAME . '_lock';
-	private const REMOTE_SUCCESS_TTL = ASOWP_CHECK_TRANSIENT_EXPIRATION;
+	private const REMOTE_TRANSIENT_KEY = ASCWO_CHECK_TRANSIENT_NAME;
+	private const REMOTE_LOCK_TRANSIENT_KEY = ASCWO_CHECK_TRANSIENT_NAME . '_lock';
+	private const REMOTE_SUCCESS_TTL = ASCWO_CHECK_TRANSIENT_EXPIRATION;
 	private const REMOTE_ERROR_TTL = HOUR_IN_SECONDS;
 	private const REMOTE_RATE_LIMIT_TTL = 6 * HOUR_IN_SECONDS;
 	private const REMOTE_LOCK_TTL = MINUTE_IN_SECONDS;
@@ -27,18 +27,18 @@ class ASOWP_Updater
 		}
 
 		// Define the alternative response for information checking
-		add_filter('plugins_api', [$this, 'asowp_plugin_info'], 20, 3);
+		add_filter('plugins_api', [$this, 'ascwo_plugin_info'], 20, 3);
 		// define the alternative API for updating checking
-		add_filter('pre_set_site_transient_update_plugins', [$this, 'asowp_push_update']);
+		add_filter('pre_set_site_transient_update_plugins', [$this, 'ascwo_push_update']);
 	}
 
-	public function asowp_plugin_info($res, $action, $args)
+	public function ascwo_plugin_info($res, $action, $args)
 	{
 		// do nothing if this is not about getting plugin information
 		if ('plugin_information' !== $action) {
 			return $res;
 		}
-		$plugin_slug = explode('/', plugin_basename(ASOWP_FILE))[0];
+		$plugin_slug = explode('/', plugin_basename(ASCWO_FILE))[0];
 
 		// do nothing if it is not our plugin
 		if ($plugin_slug !== $args->slug) {
@@ -54,7 +54,7 @@ class ASOWP_Updater
 
 		return $res;
 	}
-	public function asowp_push_update($transient)
+	public function ascwo_push_update($transient)
 	{
 		if (!is_object($transient)) {
 			$transient = new stdClass();
@@ -65,7 +65,7 @@ class ASOWP_Updater
 		}
 
 		$remote = $this->get_remote_version_data();
-		$plugin = plugin_basename(ASOWP_FILE);
+		$plugin = plugin_basename(ASCWO_FILE);
 		if (is_object($remote)) {
 			if (!isset($transient->response) || !is_array($transient->response)) {
 				$transient->response = [];
@@ -84,7 +84,7 @@ class ASOWP_Updater
 
 			if (
 				$remote
-				&& version_compare(ASOWP_VERSION, $remote->version, '<')
+				&& version_compare(ASCWO_VERSION, $remote->version, '<')
 				&& version_compare($remote->requires, get_bloginfo('version'), '<')
 				&& version_compare($remote->requires_php, PHP_VERSION, '<')
 			) {
@@ -118,7 +118,7 @@ class ASOWP_Updater
 		}
 
 		set_site_transient(self::REMOTE_LOCK_TRANSIENT_KEY, 1, self::REMOTE_LOCK_TTL);
-		$remote = $this->check_asowp_other_version();
+		$remote = $this->check_ascwo_other_version();
 		delete_site_transient(self::REMOTE_LOCK_TRANSIENT_KEY);
 
 		$expiration = is_object($remote) ? self::REMOTE_SUCCESS_TTL : $this->get_error_cache_ttl($remote);
@@ -137,15 +137,15 @@ class ASOWP_Updater
 		return self::REMOTE_ERROR_TTL;
 	}
 
-	private function check_asowp_other_version()
+	private function check_ascwo_other_version()
 	{
 		if (self::$remote_cache !== null) {
 			return self::$remote_cache;
 		}
 
 		$site_url = get_site_url();
-		$purchase_code = get_option("asowp_product_pro");
-		if (empty($purchase_code) || !apply_filters('asowp_remote_update_checks_enabled', true)) {
+		$purchase_code = get_option("ascwo_product_pro");
+		if (empty($purchase_code) || !apply_filters('ascwo_remote_update_checks_enabled', true)) {
 			self::$remote_cache = array(
 				'status' => 0,
 				'message' => 'disabled',
@@ -153,11 +153,11 @@ class ASOWP_Updater
 			return self::$remote_cache;
 		}
 
-		$url = 'https://signsdesigner.us/wp-json/vlc/update/?lcde=' . $purchase_code . '&siteurl=' . urlencode($site_url) . "&vertim=" . ASOWP_ID;
+		$url = 'https://signsdesigner.us/wp-json/vlc/update/?lcde=' . $purchase_code . '&siteurl=' . urlencode($site_url) . "&vertim=" . ASCWO_ID;
 
 		$args = array(
 			'timeout' => 8,
-			'user-agent' => 'ASOWP/' . ASOWP_VERSION . '; ' . home_url('/'),
+			'user-agent' => 'ASCWO/' . ASCWO_VERSION . '; ' . home_url('/'),
 		);
 		$response = wp_remote_get($url, $args);
 		if (is_wp_error($response)) {
@@ -179,7 +179,7 @@ class ASOWP_Updater
 		$remote = json_decode($response['body']);
 		if (is_object($remote)) {
 			if (isset($remote->version) && isset($remote->download_url)) {
-				$plugin_slug = explode('/', plugin_basename(ASOWP_FILE))[0];
+				$plugin_slug = explode('/', plugin_basename(ASCWO_FILE))[0];
 				$res = new stdClass();
 				$res->name = $remote->name;
 				$res->slug = $plugin_slug;
@@ -205,8 +205,8 @@ class ASOWP_Updater
 							} */
 
 				$res->banners = array(
-					'low' => ASOWP_ASSETS . '/images/home/im_home-skin-vue.png',
-					'high' => ASOWP_ASSETS . '/images/home/im_home-skin-vue.png'
+					'low' => ASCWO_ASSETS . '/images/home/im_home-skin-vue.png',
+					'high' => ASCWO_ASSETS . '/images/home/im_home-skin-vue.png'
 				);
 				self::$remote_cache = $res;
 				return $res;

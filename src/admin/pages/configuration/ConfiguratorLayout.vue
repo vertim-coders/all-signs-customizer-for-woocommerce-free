@@ -1,18 +1,18 @@
 <template>
-  <div class="asowp-configurator-layout">
+  <div class="ascwo-configurator-layout">
     <!-- Sidebar navigation -->
     <div
-      class="asowp-configurator-sidebar"
+      class="ascwo-configurator-sidebar"
     >
       <!-- Config info card -->
-      <div class="asowp-shopify-card">
-        <div class="asowp-configurator-info-card">
-          <div class="asowp-configurator-actions">
+      <div class="ascwo-ui-card">
+        <div class="ascwo-configurator-info-card">
+          <div class="ascwo-configurator-actions">
             <button
               @click="goToConfigList"
               type="button"
               style="display: inline-flex; align-items: center; justify-content: center; cursor: pointer; width: 30px; height: 30px; border-radius: 8px; border: 1px solid #d1d5db; background: #fff; color: #111827; text-decoration: none;"
-              :title="__('Back to configurations', 'all-signs-options-pro')"
+              :title="__('Back to configurations', 'all-signs-customizer-for-woocommerce-pro')"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M19 12H5M12 19l-7-7 7-7"/>
@@ -21,7 +21,7 @@
             <button
               @click="goToPreview"
               type="button"
-              :title="__('Preview configuration', 'all-signs-options-pro')"
+              :title="__('Preview configuration', 'all-signs-customizer-for-woocommerce-pro')"
               style="display: inline-flex; align-items: center; justify-content: center; cursor: pointer; width: 30px; height: 30px; border-radius: 8px; border: 1px solid #d1d5db; background: #fff; color: #111827; text-decoration: none;"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -32,27 +32,27 @@
           </div>
 
           <!-- Config name and badges -->
-          <div class="asowp-configurator-title-wrap">
-            <h2 class="asowp-configurator-title">
+          <div class="ascwo-configurator-title-wrap">
+            <h2 class="ascwo-configurator-title">
               {{ configName }}
             </h2>
           </div>
-          <div class="asowp-configurator-badges">
-            <span class="asowp-shopify-pill">ID: {{ configId }}</span>
-            <span v-if="materialType" class="asowp-shopify-pill">{{ materialTypeLabel }}</span>
-            <span v-if="configData?.productType" class="asowp-shopify-pill asowp-shopify-pill-info">{{ productTypeLabel }}</span>
+          <div class="ascwo-configurator-badges">
+            <span class="ascwo-ui-pill">ID: {{ configId }}</span>
+            <span v-if="materialType" class="ascwo-ui-pill">{{ materialTypeLabel }}</span>
+            <span v-if="configData?.productType" class="ascwo-ui-pill ascwo-ui-pill-info">{{ productTypeLabel }}</span>
           </div>
 
           <!-- Search field -->
-          <div class="asowp-configurator-search">
-            <h3 class="asowp-configurator-menu-title">
-              {{ __('Configurator Menu', 'all-signs-options-pro') }}
+          <div class="ascwo-configurator-search">
+            <h3 class="ascwo-configurator-menu-title">
+              {{ __('Configurator Menu', 'all-signs-customizer-for-woocommerce-pro') }}
             </h3>
             <input
               v-model="searchMenu"
               type="text"
-              :placeholder="__('Search configurator items...', 'all-signs-options-pro')"
-              class="asowp-shopify-input"
+              :placeholder="__('Search configurator items...', 'all-signs-customizer-for-woocommerce-pro')"
+              class="ascwo-ui-input"
             />
           </div>
         </div>
@@ -60,13 +60,13 @@
 
       <!-- Navigation groups -->
       <div
-        class="asowp-configurator-nav-scroll"
+        class="ascwo-configurator-nav-scroll"
       >
-        <div class="asowp-shopify-card">
-          <div class="asowp-configurator-nav-groups">
+        <div class="ascwo-ui-card">
+          <div class="ascwo-configurator-nav-groups">
             <!-- Main groups (everything except Settings) -->
             <template v-for="group in filteredMainGroups" :key="group.title">
-              <div class="asowp-configurator-nav-group">
+              <div class="ascwo-configurator-nav-group">
                 <button
                   type="button"
                   @click="toggleGroup(group.title)"
@@ -83,7 +83,7 @@
                   </div>
                 </button>
 
-                <div v-if="isGroupExpanded(group.title)" class="asowp-configurator-subnav">
+                <div v-if="isGroupExpanded(group.title)" class="ascwo-configurator-subnav">
                   <div style="display: flex; flex-direction: column; gap: 4px; margin-left: 12px; padding-left: 10px; border-left: 1px solid #e5e7eb;">
                     <div
                       v-for="item in group.items"
@@ -105,7 +105,7 @@
 
             <!-- Settings group (always at bottom) -->
             <template v-if="filteredSettingsGroup">
-              <div class="asowp-configurator-nav-group">
+              <div class="ascwo-configurator-nav-group">
                 <button
                   type="button"
                   @click="toggleGroup(filteredSettingsGroup.title)"
@@ -122,7 +122,7 @@
                   </div>
                 </button>
 
-                <div v-if="isGroupExpanded(filteredSettingsGroup.title)" class="asowp-configurator-subnav">
+                <div v-if="isGroupExpanded(filteredSettingsGroup.title)" class="ascwo-configurator-subnav">
                   <div style="display: flex; flex-direction: column; gap: 4px; margin-left: 12px; padding-left: 10px; border-left: 1px solid #e5e7eb;">
                     <div
                       v-for="item in filteredSettingsGroup.items"
@@ -147,7 +147,7 @@
     </div>
 
     <!-- Main content area -->
-    <div class="asowp-configurator-main">
+    <div class="ascwo-configurator-main">
       <router-view />
     </div>
   </div>
@@ -171,15 +171,15 @@ const expandedGroup = ref('Core Setup');
 // Config info from route param
 const configId = computed(() => route.params.configId);
 
-// Material type label helper (same logic as Shopify's getClassicMaterialTypeLabel)
+// Material type label helper
 const materialTypeLabel = computed(() => {
   const type = configData.value?.materialType;
-  if (type === 'advance' || type === 'advanced') return __('Preset Components', 'all-signs-options-pro');
-  if (type === 'layer' || type === 'layers') return __('Layered Setup', 'all-signs-options-pro');
-  return __('Direct Options', 'all-signs-options-pro');
+  if (type === 'advance' || type === 'advanced') return __('Preset Components', 'all-signs-customizer-for-woocommerce-pro');
+  if (type === 'layer' || type === 'layers') return __('Layered Setup', 'all-signs-customizer-for-woocommerce-pro');
+  return __('Direct Options', 'all-signs-customizer-for-woocommerce-pro');
 });
 
-// Product type label helper (same logic as Shopify's getClassicProductTypeLabel)
+// Product type label helper
 const productTypeLabel = computed(() => {
   const type = (configData.value?.productType || '').toLowerCase();
   if (
@@ -188,13 +188,13 @@ const productTypeLabel = computed(() => {
     type === 'signs-and-panels' ||
     type === 'signs & panels' ||
     type === 'signboard'
-  ) return __('Signs & Panels', 'all-signs-options-pro');
-  if (type === 'banners' || type === 'banner') return __('Banners', 'all-signs-options-pro');
-  if (type === 'stickers' || type === 'sticker') return __('Stickers', 'all-signs-options-pro');
-  if (type === 'lettering' || type === 'letter-signs') return __('Letter signs', 'all-signs-options-pro');
-  if (type === 'lightbox') return __('Lightbox', 'all-signs-options-pro');
-  if (type === 'neon') return __('Neon', 'all-signs-options-pro');
-  if (type === 'channel') return __('Channel', 'all-signs-options-pro');
+  ) return __('Signs & Panels', 'all-signs-customizer-for-woocommerce-pro');
+  if (type === 'banners' || type === 'banner') return __('Banners', 'all-signs-customizer-for-woocommerce-pro');
+  if (type === 'stickers' || type === 'sticker') return __('Stickers', 'all-signs-customizer-for-woocommerce-pro');
+  if (type === 'lettering' || type === 'letter-signs') return __('Letter signs', 'all-signs-customizer-for-woocommerce-pro');
+  if (type === 'lightbox') return __('Lightbox', 'all-signs-customizer-for-woocommerce-pro');
+  if (type === 'neon') return __('Neon', 'all-signs-customizer-for-woocommerce-pro');
+  if (type === 'channel') return __('Channel', 'all-signs-customizer-for-woocommerce-pro');
   // Return the formatted original value if no match
   const raw = configData.value?.productType || '';
   return raw ? raw.charAt(0).toUpperCase() + raw.slice(1).replace(/-/g, ' ') : '';
@@ -204,7 +204,7 @@ const materialType = computed(() => configData.value?.materialType || 'simple');
 
 // Config name
 const configName = computed(() => {
-  return adminConfigName.value || __('Loading...', 'all-signs-options-pro');
+  return adminConfigName.value || __('Loading...', 'all-signs-customizer-for-woocommerce-pro');
 });
 
 // Check if has advanced materials (NCPC-like)
@@ -266,53 +266,53 @@ const groups = computed(() => {
 
   const coreItems = hasAdvancedMaterials.value
     ? [
-        { label: __('Fonts', 'all-signs-options-pro'), path: `${basePath}/required-options/fonts`, icon: icons.fonts },
-        { label: __('Components', 'all-signs-options-pro'), path: `${basePath}/required-options/components`, icon: icons.components },
-        { label: __('Pricings', 'all-signs-options-pro'), path: `${basePath}/required-options/pricings`, icon: icons.pricing },
+        { label: __('Fonts', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/fonts`, icon: icons.fonts },
+        { label: __('Components', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/components`, icon: icons.components },
+        { label: __('Pricings', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/pricings`, icon: icons.pricing },
       ]
     : [
-        { label: __('Sizes', 'all-signs-options-pro'), path: `${basePath}/required-options/sizes`, icon: icons.sizes },
-        { label: __('Pricings', 'all-signs-options-pro'), path: `${basePath}/required-options/pricings`, icon: icons.pricing },
-        { label: __('Fonts', 'all-signs-options-pro'), path: `${basePath}/required-options/fonts`, icon: icons.fonts },
-        { label: __('Colors', 'all-signs-options-pro'), path: `${basePath}/required-options/colors`, icon: icons.colors },
-        { label: __('Fixing Methods', 'all-signs-options-pro'), path: `${basePath}/required-options/fixing-methods`, icon: icons.fixing },
-        { label: __('Shapes', 'all-signs-options-pro'), path: `${basePath}/required-options/shapes`, icon: icons.shapes },
-        { label: __('Materials', 'all-signs-options-pro'), path: `${basePath}/required-options/materials`, icon: icons.materials },
-        { label: __('Borders', 'all-signs-options-pro'), path: `${basePath}/required-options/borders`, icon: icons.borders },
+        { label: __('Sizes', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/sizes`, icon: icons.sizes },
+        { label: __('Pricings', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/pricings`, icon: icons.pricing },
+        { label: __('Fonts', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/fonts`, icon: icons.fonts },
+        { label: __('Colors', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/colors`, icon: icons.colors },
+        { label: __('Fixing Methods', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/fixing-methods`, icon: icons.fixing },
+        { label: __('Shapes', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/shapes`, icon: icons.shapes },
+        { label: __('Materials', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/materials`, icon: icons.materials },
+        { label: __('Borders', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/borders`, icon: icons.borders },
       ];
 
   const editorItems = [
-    { label: __('Text Setting', 'all-signs-options-pro'), path: `${basePath}/design-setup/text`, icon: icons.text },
-    { label: __('Image Setup', 'all-signs-options-pro'), path: `${basePath}/design-setup/images`, icon: icons.image },
-    { label: __('Sign Part', 'all-signs-options-pro'), path: `${basePath}/design-setup/sign-part`, icon: icons.signpart },
+    { label: __('Text Setting', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/design-setup/text`, icon: icons.text },
+    { label: __('Image Setup', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/design-setup/images`, icon: icons.image },
+    { label: __('Sign Part', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/design-setup/sign-part`, icon: icons.signpart },
   ];
 
   const additionalItems = [];
   if (!hasAdvancedMaterials.value) {
     additionalItems.push({
-      label: __('Components', 'all-signs-options-pro'),
+      label: __('Components', 'all-signs-customizer-for-woocommerce-pro'),
       path: `${basePath}/additional-options/additional-components`,
       icon: icons.components,
     });
   }
   additionalItems.push({
-    label: __('Inputs', 'all-signs-options-pro'),
+    label: __('Inputs', 'all-signs-customizer-for-woocommerce-pro'),
     path: `${basePath}/additional-options/inputs`,
     icon: icons.inputs,
   });
 
   const settingsItems = [
-    { label: __('General', 'all-signs-options-pro'), path: `${basePath}/settings/general`, icon: icons.general },
-    { label: __('Customizer Setup', 'all-signs-options-pro'), path: `${basePath}/settings/customizer-sign`, icon: icons.customizer },
-    { label: __('Language & Images', 'all-signs-options-pro'), path: `${basePath}/settings/language-text`, icon: icons.language },
-    { label: __('Theme & Color', 'all-signs-options-pro'), path: `${basePath}/settings/theme-color`, icon: icons.theme },
+    { label: __('General', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/settings/general`, icon: icons.general },
+    { label: __('Customizer Setup', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/settings/customizer-sign`, icon: icons.customizer },
+    { label: __('Language & Images', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/settings/language-text`, icon: icons.language },
+    { label: __('Theme & Color', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/settings/theme-color`, icon: icons.theme },
   ];
 
   return [
-    { title: __('Core Setup', 'all-signs-options-pro'), items: coreItems },
-    { title: __('Editor Setup', 'all-signs-options-pro'), items: editorItems },
-    { title: __('Additional Options', 'all-signs-options-pro'), items: additionalItems },
-    { title: __('Settings', 'all-signs-options-pro'), items: settingsItems },
+    { title: __('Core Setup', 'all-signs-customizer-for-woocommerce-pro'), items: coreItems },
+    { title: __('Editor Setup', 'all-signs-customizer-for-woocommerce-pro'), items: editorItems },
+    { title: __('Additional Options', 'all-signs-customizer-for-woocommerce-pro'), items: additionalItems },
+    { title: __('Settings', 'all-signs-customizer-for-woocommerce-pro'), items: settingsItems },
   ];
 });
 
@@ -334,11 +334,11 @@ const filteredGroups = computed(() => {
 
 // Separate Settings from main groups
 const filteredMainGroups = computed(() =>
-  filteredGroups.value.filter(g => g.title !== __('Settings', 'all-signs-options-pro'))
+  filteredGroups.value.filter(g => g.title !== __('Settings', 'all-signs-customizer-for-woocommerce-pro'))
 );
 
 const filteredSettingsGroup = computed(() =>
-  filteredGroups.value.find(g => g.title === __('Settings', 'all-signs-options-pro')) || null
+  filteredGroups.value.find(g => g.title === __('Settings', 'all-signs-customizer-for-woocommerce-pro')) || null
 );
 
 // Active item detection based on current route path
@@ -354,7 +354,7 @@ const activeGroupTitle = computed(() => {
       return route.path === item.path || route.path.startsWith(item.path + '/');
     })
   );
-  return activeGroup?.title || __('Core Setup', 'all-signs-options-pro');
+  return activeGroup?.title || __('Core Setup', 'all-signs-customizer-for-woocommerce-pro');
 });
 
 // Auto-expand active group
@@ -442,7 +442,7 @@ watch(configId, () => {
   display: none;
 }
 
-.asowp-configurator-layout {
+.ascwo-configurator-layout {
   display: flex;
   gap: 32px;
   align-items: flex-start;
@@ -451,7 +451,7 @@ watch(configId, () => {
   padding: 12px 16px 0 16px;
 }
 
-.asowp-configurator-sidebar {
+.ascwo-configurator-sidebar {
   width: 240px;
   position: sticky;
   top: calc(var(--wp-admin--admin-bar--height, 32px) + 12px);
@@ -461,7 +461,7 @@ watch(configId, () => {
   overflow: hidden;
 }
 
-.asowp-configurator-nav-scroll {
+.ascwo-configurator-nav-scroll {
   flex: 1;
   min-height: 0;
   padding-top: 8px;
@@ -471,7 +471,7 @@ watch(configId, () => {
   scrollbar-width: none;
 }
 
-.asowp-configurator-nav-groups {
+.ascwo-configurator-nav-groups {
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -480,35 +480,35 @@ watch(configId, () => {
   padding: 12px;
 }
 
-.asowp-configurator-nav-group {
+.ascwo-configurator-nav-group {
   padding: 4px 0;
 }
 
-.asowp-configurator-subnav {
+.ascwo-configurator-subnav {
   padding-top: 8px;
 }
 
-.asowp-configurator-main {
+.ascwo-configurator-main {
   flex: 1;
   min-width: 0;
   padding-bottom: 24px;
 }
 
-.asowp-configurator-info-card {
+.ascwo-configurator-info-card {
   padding: 10px;
 }
 
-.asowp-configurator-actions {
+.ascwo-configurator-actions {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.asowp-configurator-title-wrap {
+.ascwo-configurator-title-wrap {
   padding-top: 6px;
 }
 
-.asowp-configurator-title {
+.ascwo-configurator-title {
   margin: 0;
   color: #111827;
   font-size: 20px;
@@ -516,19 +516,19 @@ watch(configId, () => {
   line-height: 24px;
 }
 
-.asowp-configurator-badges {
+.ascwo-configurator-badges {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
   padding-top: 4px;
 }
 
-.asowp-configurator-search {
+.ascwo-configurator-search {
   padding-top: 8px;
   margin-bottom: 0;
 }
 
-.asowp-configurator-menu-title {
+.ascwo-configurator-menu-title {
   margin: 0 0 4px 0;
   color: #303030;
   font-size: 13px;
@@ -536,7 +536,7 @@ watch(configId, () => {
   line-height: 20px;
 }
 
-.asowp-configurator-sidebar :deep(.asowp-shopify-pill) {
+.ascwo-configurator-sidebar :deep(.ascwo-ui-pill) {
   min-height: 20px;
   padding: 2px 8px;
   font-size: 12px;

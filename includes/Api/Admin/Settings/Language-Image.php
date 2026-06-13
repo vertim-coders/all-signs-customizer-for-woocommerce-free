@@ -1,7 +1,6 @@
 <?php
-namespace ASOWP\Api\Admin\Settings;
+namespace ASCWO\Api\Admin\Settings;
 
-use ASOWP\Support\ConfigSchemaNormalizer;
 use WP_Error;
 use WP_Post;
 use WP_Query;
@@ -10,7 +9,7 @@ use WP_REST_Controller;
 /**
  * class for api routes reaching language images settings
  */
-class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
+class ASCWO_Api_Language_Images_Settings extends WP_REST_Controller
 {
 
     /**
@@ -18,14 +17,16 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
      */
     public function __construct()
     {
-        $this->namespace = 'asowp/v1';
+        $this->namespace = 'ascwo/v1';
         $this->rest_base = 'configs/(?P<config_id>\d+)/settings/language-images';
     }
 
     private function get_normalized_meta(int $config_id): array
     {
-        $meta = get_post_meta($config_id, 'asowp-configs-meta', true);
-        return ConfigSchemaNormalizer::normalize_meta(is_array($meta) ? $meta : array());
+        $meta = get_post_meta($config_id, 'ascwo-configs-meta', true);
+        $meta = is_array($meta) ? $meta : array();
+        $meta['settings'] = isset($meta['settings']) && is_array($meta['settings']) ? $meta['settings'] : array();
+        return $meta;
     }
 
     private function get_language_images_from_meta(array $meta): array
@@ -50,7 +51,7 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
         }
 
         $meta['settings']['languageImages'][$section] = $section_options;
-        return ConfigSchemaNormalizer::save_meta($config_id, $meta);
+        return update_post_meta($config_id, 'ascwo-configs-meta', $meta);
     }
     /**
      * Register the routes
@@ -165,13 +166,13 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
                     if (!empty($language_images)) {
                         return rest_ensure_response($language_images);
                     }
-                    return rest_ensure_response(["message" => __("No language Images Settings found", "all-signs-options-pro")]);
+                    return rest_ensure_response(["message" => __("No language Images Settings found", "all-signs-customizer-for-woocommerce-pro")]);
                 }
             } else {
-                return rest_ensure_response(["message" => __("Custom ID invalid", "all-signs-options-pro")]);
+                return rest_ensure_response(["message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["message" => __("Custom ID invalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
     /**
@@ -188,18 +189,18 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
             if ($post) {
                 $response = $this->save_language_images_section((int) $id, 'main', is_array($main_options) ? $main_options : array());
                 if ($response === 'same') {
-                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in Main options in language Images settings failed", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in Main options in language Images settings failed", "all-signs-customizer-for-woocommerce-pro")]);
                 }
                 if ($response) {
-                    return rest_ensure_response(["success" => true, "message" => __("Main options in language Images settings updated successfully", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => true, "message" => __("Main options in language Images settings updated successfully", "all-signs-customizer-for-woocommerce-pro")]);
                 } else {
-                    return rest_ensure_response(["success" => false, "message" => __("Update Main options in language Images settings failed", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => false, "message" => __("Update Main options in language Images settings failed", "all-signs-customizer-for-woocommerce-pro")]);
                 }
             } else {
-                return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
     /**
@@ -216,18 +217,18 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
             if ($post) {
                 $response = $this->save_language_images_section((int) $id, 'uploadDesign', is_array($customizer_options) ? $customizer_options : array());
                 if ($response === 'same') {
-                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in Customizer Design options in language Images settings", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in Customizer Design options in language Images settings", "all-signs-customizer-for-woocommerce-pro")]);
                 }
                 if ($response) {
-                    return rest_ensure_response(["success" => true, "message" => __("Customizer Design options in language Images settings updated successfully", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => true, "message" => __("Customizer Design options in language Images settings updated successfully", "all-signs-customizer-for-woocommerce-pro")]);
                 } else {
-                    return rest_ensure_response(["success" => false, "message" => __("Update Customizer Design options in language Images settings failed", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => false, "message" => __("Update Customizer Design options in language Images settings failed", "all-signs-customizer-for-woocommerce-pro")]);
                 }
             } else {
-                return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
     /**
@@ -244,18 +245,18 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
             if ($post) {
                 $response = $this->save_language_images_section((int) $id, 'visualizer', is_array($visualizer_options) ? $visualizer_options : array());
                 if ($response === 'same') {
-                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in Visualizer options in language Images", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in Visualizer options in language Images", "all-signs-customizer-for-woocommerce-pro")]);
                 }
                 if ($response) {
-                    return rest_ensure_response(["success" => true, "message" => __("Visualizer options in language Images settings updated successfully", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => true, "message" => __("Visualizer options in language Images settings updated successfully", "all-signs-customizer-for-woocommerce-pro")]);
                 } else {
-                    return rest_ensure_response(["success" => false, "message" => __("update Visualizer options in language Images settings failed", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => false, "message" => __("update Visualizer options in language Images settings failed", "all-signs-customizer-for-woocommerce-pro")]);
                 }
             } else {
-                return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
     /**
@@ -272,18 +273,18 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
             if ($post) {
                 $response = $this->save_language_images_section((int) $id, 'images', is_array($image_options) ? $image_options : array());
                 if ($response === 'same') {
-                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in Images options in language Images settings", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in Images options in language Images settings", "all-signs-customizer-for-woocommerce-pro")]);
                 }
                 if ($response) {
-                    return rest_ensure_response(["success" => true, "message" => __("Images options in language Images settings updated successfully", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => true, "message" => __("Images options in language Images settings updated successfully", "all-signs-customizer-for-woocommerce-pro")]);
                 } else {
-                    return rest_ensure_response(["success" => false, "message" => __("Update Images options in language Images settings failed", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => false, "message" => __("Update Images options in language Images settings failed", "all-signs-customizer-for-woocommerce-pro")]);
                 }
             } else {
-                return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
     /**

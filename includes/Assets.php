@@ -1,5 +1,5 @@
 <?php
-namespace ASOWP;
+namespace ASCWO;
 
 /**
  * Scripts and Styles Class
@@ -38,14 +38,14 @@ class Assets
     private function register_scripts($scripts)
     {
         // Return if JS folder not exists
-        if (!is_dir(ASOWP_PATH . '/assets/js')) {
+        if (!is_dir(ASCWO_PATH . '/assets/js')) {
             return;
         }
 
         foreach ($scripts as $handle => $script) {
             $deps = isset($script['deps']) ? $script['deps'] : false;
             $in_footer = isset($script['in_footer']) ? $script['in_footer'] : false;
-            $version = isset($script['version']) ? $script['version'] : ASOWP_VERSION;
+            $version = isset($script['version']) ? $script['version'] : ASCWO_VERSION;
 
             wp_register_script($handle, $script['src'], $deps, $version, $in_footer);
         }
@@ -63,7 +63,7 @@ class Assets
         foreach ($styles as $handle => $style) {
             $deps = isset($style['deps']) ? $style['deps'] : false;
 
-            wp_register_style($handle, $style['src'], $deps, ASOWP_VERSION);
+            wp_register_style($handle, $style['src'], $deps, ASCWO_VERSION);
         }
     }
 
@@ -75,61 +75,61 @@ class Assets
     public function get_scripts()
     {
         // Return if JS folder not exists
-        if (!is_dir(ASOWP_PATH . '/assets/js')) {
+        if (!is_dir(ASCWO_PATH . '/assets/js')) {
             return;
         }
 
         $prefix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '.min' : '';
 
         $scripts = [
-            'asowp-runtime' => [
-                'src' => ASOWP_ASSETS . '/js/runtime.js',
-                'version' => filemtime(ASOWP_PATH . '/assets/js/runtime.js'),
+            'ascwo-runtime' => [
+                'src' => ASCWO_ASSETS . '/js/runtime.js',
+                'version' => filemtime(ASCWO_PATH . '/assets/js/runtime.js'),
                 'in_footer' => true
             ],
-            'asowp-vendor' => [
-                'src' => ASOWP_ASSETS . '/js/vendors.js',
-                'version' => filemtime(ASOWP_PATH . '/assets/js/vendors.js'),
+            'ascwo-vendor' => [
+                'src' => ASCWO_ASSETS . '/js/vendors.js',
+                'version' => filemtime(ASCWO_PATH . '/assets/js/vendors.js'),
                 'in_footer' => true
             ],
-            'asowp-frontend' => [
-                'src' => ASOWP_ASSETS . '/js/frontend.js',
-                'deps' => ['jquery', 'asowp-vendor', 'asowp-runtime'],
-                'version' => filemtime(ASOWP_PATH . '/assets/js/frontend.js'),
+            'ascwo-frontend' => [
+                'src' => ASCWO_ASSETS . '/js/frontend.js',
+                'deps' => ['jquery', 'ascwo-vendor', 'ascwo-runtime'],
+                'version' => filemtime(ASCWO_PATH . '/assets/js/frontend.js'),
                 'in_footer' => true
             ],
-            'asowp-admin' => [
-                'src' => ASOWP_ASSETS . '/js/admin.js',
-                'deps' => ['jquery', 'asowp-vendor', 'asowp-runtime'],
-                'version' => filemtime(ASOWP_PATH . '/assets/js/admin.js'),
+            'ascwo-admin' => [
+                'src' => ASCWO_ASSETS . '/js/admin.js',
+                'deps' => ['jquery', 'ascwo-vendor', 'ascwo-runtime'],
+                'version' => filemtime(ASCWO_PATH . '/assets/js/admin.js'),
                 'in_footer' => true
             ],
-            'asowp-omodal' => [
-                'src' => ASOWP_ASSETS . '/utilities/modal.min.js',
+            'ascwo-omodal' => [
+                'src' => ASCWO_ASSETS . '/utilities/modal.min.js',
                 'in_footer' => true
             ],
-            'asowp-fabric' => [
-                'src' => ASOWP_ASSETS . '/utilities/fabric.min.js',
+            'ascwo-fabric' => [
+                'src' => ASCWO_ASSETS . '/utilities/fabric.min.js',
                 'in_footer' => true
             ],
-            'asowp-paper' => [
-                'src' => ASOWP_ASSETS . '/utilities/paper.min.js',
+            'ascwo-paper' => [
+                'src' => ASCWO_ASSETS . '/utilities/paper.min.js',
                 'in_footer' => true
             ],
-            'asowp-sortable' => [
-                'src' => ASOWP_ASSETS . '/utilities/sortable.js',
+            'ascwo-sortable' => [
+                'src' => ASCWO_ASSETS . '/utilities/sortable.js',
                 'in_footer' => true
             ],
-            'asowp-toast' => [
-                'src' => ASOWP_ASSETS . '/utilities/toast.min.js',
+            'ascwo-toast' => [
+                'src' => ASCWO_ASSETS . '/utilities/toast.min.js',
                 'in_footer' => true
             ],
-            'asowp-tinymce-script' => [
+            'ascwo-tinymce-script' => [
                 'src' => includes_url('/js/tinymce/') . 'tinymce.min.js',
                 'in_footer' => true
             ],
-            'asowp-product-min' => [
-                'src' => ASOWP_ASSETS . '/utilities/asowp-product-min.js',
+            'ascwo-product-min' => [
+                'src' => ASCWO_ASSETS . '/utilities/ascwo-product-min.js',
                 'in_footer' => true
             ]
         ];
@@ -146,20 +146,20 @@ class Assets
     {
 
         $styles = [
-            'asowp-style' => [
-                'src' => ASOWP_ASSETS . '/css/style.css'
+            'ascwo-style' => [
+                'src' => ASCWO_ASSETS . '/css/style.css'
             ],
-            'asowp-frontend' => [
-                'src' => ASOWP_ASSETS . '/css/frontend.css'
+            'ascwo-frontend' => [
+                'src' => ASCWO_ASSETS . '/css/frontend.css'
             ],
-            'asowp-admin' => [
-                'src' => ASOWP_ASSETS . '/css/admin.css'
+            'ascwo-admin' => [
+                'src' => ASCWO_ASSETS . '/css/admin.css'
             ],
-            'asowp-omodal' => [
-                'src' => ASOWP_ASSETS . '/utilities/modal.min.css'
+            'ascwo-omodal' => [
+                'src' => ASCWO_ASSETS . '/utilities/modal.min.css'
             ],
-            'asowp-toast' => [
-                'src' => ASOWP_ASSETS . '/utilities/toast.min.css'
+            'ascwo-toast' => [
+                'src' => ASCWO_ASSETS . '/utilities/toast.min.css'
             ],
         ];
 

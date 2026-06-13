@@ -1,5 +1,5 @@
 <?php
-namespace ASOWP\Api\Admin;
+namespace ASCWO\Api\Admin;
 
 use WP_Error;
 use WP_Post;
@@ -8,7 +8,7 @@ use WP_REST_Controller;
 
 
 
-class ASOWP_Api_Manage_cliparts extends WP_REST_Controller
+class ASCWO_Api_Manage_cliparts extends WP_REST_Controller
 {
 
     /**
@@ -16,7 +16,7 @@ class ASOWP_Api_Manage_cliparts extends WP_REST_Controller
      */
     public function __construct()
     {
-        $this->namespace = 'asowp/v1';
+        $this->namespace = 'ascwo/v1';
         $this->rest_base = 'manage-cliparts';
     }
 
@@ -172,7 +172,7 @@ class ASOWP_Api_Manage_cliparts extends WP_REST_Controller
     public function create_manage_cliparts_group($request)
     {
 
-        $all_groups = get_option("asowp-manages-cliparts", []);
+        $all_groups = get_option("ascwo-manages-cliparts", []);
         $req_data = json_decode($request->get_body(), true);
         $clipartsGroup = [
             "title" => $req_data["title"],
@@ -180,11 +180,11 @@ class ASOWP_Api_Manage_cliparts extends WP_REST_Controller
             "cliparts" => []
         ];
         array_push($all_groups, $clipartsGroup);
-        $update = update_option("asowp-manages-cliparts", $all_groups);
+        $update = update_option("ascwo-manages-cliparts", $all_groups);
         if ($update) {
-            return rest_ensure_response(["success" => true, "message" => __("Cliparts group created with success", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => true, "message" => __("Cliparts group created with success", "all-signs-customizer-for-woocommerce-pro")]);
         } else {
-            return rest_ensure_response(["success" => false, "message" => __("Registration failed", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __("Registration failed", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
     /**
@@ -195,11 +195,11 @@ class ASOWP_Api_Manage_cliparts extends WP_REST_Controller
     public function get_manage_cliparts_groups($request)
     {
         $id = $request->get_param('group_id');
-        $all_groups = get_option("asowp-manages-cliparts", []);
+        $all_groups = get_option("ascwo-manages-cliparts", []);
         if (isset($all_groups[$id])) {
             return rest_ensure_response($all_groups[$id]);
         } else {
-            return rest_ensure_response(["message" => __("Not Cliparts data found", "all-signs-options-pro")]);
+            return rest_ensure_response(["message" => __("Not Cliparts data found", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
     /**
@@ -210,25 +210,25 @@ class ASOWP_Api_Manage_cliparts extends WP_REST_Controller
     public function update_manage_cliparts_group($request)
     {
         $id = $request->get_param('group_id');
-        $all_groups = get_option("asowp-manages-cliparts", []);
+        $all_groups = get_option("ascwo-manages-cliparts", []);
         $req_data = json_decode($request->get_body(), true);
 
         if (isset($all_groups[$id])) {
             if ($all_groups[$id]['title'] != $req_data["title"] || $all_groups[$id]['description'] != $req_data["description"]) {
                 $all_groups[$id]['title'] = $req_data["title"];
                 $all_groups[$id]['description'] = $req_data["description"];
-                $update = update_option("asowp-manages-cliparts", $all_groups);
+                $update = update_option("ascwo-manages-cliparts", $all_groups);
                 if ($update) {
-                    return rest_ensure_response(["success" => true, "message" => __("Cliparts group updated with success", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => true, "message" => __("Cliparts group updated with success", "all-signs-customizer-for-woocommerce-pro")]);
                 } else {
-                    return rest_ensure_response(["success" => false, "message" => __("Update failed", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => false, "message" => __("Update failed", "all-signs-customizer-for-woocommerce-pro")]);
                 }
             } else {
-                return rest_ensure_response(["success" => "same", "message" => __("No change observed in clipart group", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => "same", "message" => __("No change observed in clipart group", "all-signs-customizer-for-woocommerce-pro")]);
 
             }
         } else {
-            return rest_ensure_response(["message" => __("Not Cliparts data found", "all-signs-options-pro")]);
+            return rest_ensure_response(["message" => __("Not Cliparts data found", "all-signs-customizer-for-woocommerce-pro")]);
         }
 
     }
@@ -242,18 +242,18 @@ class ASOWP_Api_Manage_cliparts extends WP_REST_Controller
     public function delete_manage_cliparts_group($request)
     {
         $id = $request->get_param('group_id');
-        $all_groups = get_option("asowp-manages-cliparts", []);
+        $all_groups = get_option("ascwo-manages-cliparts", []);
 
         if (isset($all_groups[$id])) {
             array_splice($all_groups, $id, 1);
-            $update = update_option("asowp-manages-cliparts", $all_groups);
+            $update = update_option("ascwo-manages-cliparts", $all_groups);
             if ($update) {
-                return rest_ensure_response(["success" => true, "message" => __("Cliparts group deleted with success", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => true, "message" => __("Cliparts group deleted with success", "all-signs-customizer-for-woocommerce-pro")]);
             } else {
-                return rest_ensure_response(["success" => false, "message" => __("Delete Cliparts group failed", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => false, "message" => __("Delete Cliparts group failed", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["message" => __("Not Cliparts data found", "all-signs-options-pro")]);
+            return rest_ensure_response(["message" => __("Not Cliparts data found", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
 
@@ -267,10 +267,10 @@ class ASOWP_Api_Manage_cliparts extends WP_REST_Controller
     public function get_manage_cliparts_configs($request)
     {
 
-        $all_groups = get_option("asowp-manages-cliparts", []);
+        $all_groups = get_option("ascwo-manages-cliparts", []);
         // Check the results and return the response
         $groups = array(
-            "noGroupsFound" => __("No Cliparts Group Found", "all-signs-options-pro"),
+            "noGroupsFound" => __("No Cliparts Group Found", "all-signs-customizer-for-woocommerce-pro"),
             "data" => $all_groups,
         );
 
@@ -300,20 +300,20 @@ class ASOWP_Api_Manage_cliparts extends WP_REST_Controller
     public function create_manage_cliparts_item($request)
     {
         $group_id = $request->get_param('group_id');
-        $all_groups = get_option("asowp-manages-cliparts", []);
+        $all_groups = get_option("ascwo-manages-cliparts", []);
         if (isset($all_groups[$group_id])) {
             $new_items = json_decode($request->get_body(), true);
             foreach ($new_items as $key => $item) {
                 array_push($all_groups[$group_id]["cliparts"], $item);
             }
-            $update = update_option("asowp-manages-cliparts", $all_groups);
+            $update = update_option("ascwo-manages-cliparts", $all_groups);
             if ($update) {
-                return rest_ensure_response(["success" => true, "message" => __("Cliparts  added with success", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => true, "message" => __("Cliparts  added with success", "all-signs-customizer-for-woocommerce-pro")]);
             } else {
-                return rest_ensure_response(["success" => false, "message" => __("Clipart has not been added", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => false, "message" => __("Clipart has not been added", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __("Clipart has not been added", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __("Clipart has not been added", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
     /**
@@ -328,11 +328,11 @@ class ASOWP_Api_Manage_cliparts extends WP_REST_Controller
     {
         $group_id = $request->get_param('group_id');
         $clipart_id = $request->get_param('clipart_id');
-        $all_groups = get_option("asowp-manages-cliparts", []);
+        $all_groups = get_option("ascwo-manages-cliparts", []);
         if (isset($all_groups[$group_id]["cliparts"][$clipart_id])) {
             return rest_ensure_response($all_groups[$group_id]["cliparts"][$clipart_id]);
         } else {
-            return rest_ensure_response(["success" => false, "message" => __("Clipart has not been added", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __("Clipart has not been added", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
     /**
@@ -345,11 +345,11 @@ class ASOWP_Api_Manage_cliparts extends WP_REST_Controller
     public function get_manage_cliparts_group_cliparts($request)
     {
         $group_id = $request->get_param('group_id');
-        $all_groups = get_option("asowp-manages-cliparts", []);
+        $all_groups = get_option("ascwo-manages-cliparts", []);
         if (count($all_groups[$group_id]["cliparts"]) > 0) {
             return rest_ensure_response(["groupTitle" => $all_groups[$group_id]["title"], "cliparts" => $all_groups[$group_id]["cliparts"]]);
         } else {
-            return rest_ensure_response(["groupTitle" => $all_groups[$group_id]["title"], "notFoundMessage" => __("No cliparts found", "all-signs-options-pro")]);
+            return rest_ensure_response(["groupTitle" => $all_groups[$group_id]["title"], "notFoundMessage" => __("No cliparts found", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
 
@@ -365,22 +365,22 @@ class ASOWP_Api_Manage_cliparts extends WP_REST_Controller
     {
         $group_id = $request->get_param('group_id');
         $clipart_id = $request->get_param('clipart_id');
-        $all_groups = get_option("asowp-manages-cliparts", []);
+        $all_groups = get_option("ascwo-manages-cliparts", []);
         if (isset($all_groups[$group_id]["cliparts"][$clipart_id])) {
             $update_clipart = json_decode($request->get_body(), true);
             if ($all_groups[$group_id]["cliparts"][$clipart_id] != $update_clipart) {
                 $all_groups[$group_id]["cliparts"][$clipart_id] = $update_clipart;
-                $update = update_option("asowp-manages-cliparts", $all_groups);
+                $update = update_option("ascwo-manages-cliparts", $all_groups);
                 if ($update) {
-                    return rest_ensure_response(["success" => true, "message" => __("Cliparts  updated with success", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => true, "message" => __("Cliparts  updated with success", "all-signs-customizer-for-woocommerce-pro")]);
                 } else {
-                    return rest_ensure_response(["success" => false, "message" => __("Clipart has not been updated", "all-signs-options-pro")]);
+                    return rest_ensure_response(["success" => false, "message" => __("Clipart has not been updated", "all-signs-customizer-for-woocommerce-pro")]);
                 }
             } else {
-                return rest_ensure_response(["success" => "same", "message" => __("No change observed in clipart", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => "same", "message" => __("No change observed in clipart", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __("Clipart has not been updated", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __("Clipart has not been updated", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
 
@@ -396,17 +396,17 @@ class ASOWP_Api_Manage_cliparts extends WP_REST_Controller
     {
         $group_id = $request->get_param('group_id');
         $clipart_id = $request->get_param('clipart_id');
-        $all_groups = get_option("asowp-manages-cliparts", []);
+        $all_groups = get_option("ascwo-manages-cliparts", []);
         if (isset($all_groups[$group_id]["cliparts"][$clipart_id])) {
             array_splice($all_groups[$group_id]["cliparts"], $clipart_id, 1);
-            $update = update_option("asowp-manages-cliparts", $all_groups);
+            $update = update_option("ascwo-manages-cliparts", $all_groups);
             if ($update) {
-                return rest_ensure_response(["success" => true, "message" => __("Cliparts  deleted with success", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => true, "message" => __("Cliparts  deleted with success", "all-signs-customizer-for-woocommerce-pro")]);
             } else {
-                return rest_ensure_response(["success" => false, "message" => __("Clipart has not been deleted", "all-signs-options-pro")]);
+                return rest_ensure_response(["success" => false, "message" => __("Clipart has not been deleted", "all-signs-customizer-for-woocommerce-pro")]);
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __("Clipart has not been deleted", "all-signs-options-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __("Clipart has not been deleted", "all-signs-customizer-for-woocommerce-pro")]);
         }
     }
 
