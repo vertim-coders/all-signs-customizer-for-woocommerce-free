@@ -35,9 +35,9 @@ class ASCWO_Design
 	 */
 	public function ascwo_change_product_price_in_cart($cart)
 	{
-
-		if (is_admin() && !defined('DOING_AJAX'))
+		if (is_admin() && !wp_doing_ajax()) {
 			return;
+		}
 
 
 		foreach ($cart->cart_contents as $cart_item_key => $cart_item) {
@@ -172,6 +172,8 @@ class ASCWO_Design
 				}
 			}
 		}
+
+		return $item_data;
 	}
 
 	private function display_custom_recaps($recaps, $admin = true)
@@ -662,7 +664,7 @@ class ASCWO_Design
 				$height = 800;
 				$response = wp_remote_get($face[0]);
 				if (is_wp_error($response)) {
-					echo "File not found : " . $response->get_error_message();
+					error_log('ASCWO PDF generation failed: ' . $response->get_error_message());
 				} else {
 					$file_content = wp_remote_retrieve_body($response);
 
@@ -694,8 +696,8 @@ class ASCWO_Design
 
 					$pdf = new TCPDF($pdf_orientation, $pdf_unit, $pdf_format, true, 'UTF-8', false);
 
-					$pdf->SetCreator('All Signs Customizer for WooCommerce by Vertim Coders');
-					$pdf->SetAuthor('All Signs Customizer for WooCommerce by Vertim Coders');
+					$pdf->SetCreator('All Sign Customizer for WooCommerce by Vertim Coders');
+					$pdf->SetAuthor('All Sign Customizer for WooCommerce by Vertim Coders');
 					$pdf->SetTitle('Output');
 					$pdf->setPrintHeader(false);
 					$pdf->setPrintFooter(false);
@@ -783,8 +785,8 @@ class ASCWO_Design
 
 				$pdf = new TCPDF($pdf_orientation, $pdf_unit, $pdf_format, true, 'UTF-8', false);
 
-				$pdf->SetCreator('All Signs Customizer for WooCommerce by Vertim Coders');
-				$pdf->SetAuthor('All Signs Customizer for WooCommerce by Vertim Coders');
+				$pdf->SetCreator('All Sign Customizer for WooCommerce by Vertim Coders');
+				$pdf->SetAuthor('All Sign Customizer for WooCommerce by Vertim Coders');
 				$pdf->SetTitle('Output');
 				$pdf->setPrintHeader(false);
 				$pdf->setPrintFooter(false);

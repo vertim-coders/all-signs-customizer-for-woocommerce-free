@@ -20,3 +20,5 @@ assets/css/[0-9]*.css
 assets/js/[0-9]*.js
 node_modules
 package-lock.json
+vendor
+composer.lock

@@ -151,7 +151,7 @@ class ASCWO_Api_Required_Options_Sizes extends ASCWO_Api_Required_Options_Base
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        $payload = json_decode($request->get_body(), true);
+        $payload = $request->get_json_params();
         $payload = is_array($payload) ? $payload : array();
         $settings = isset($payload['settings']) && is_array($payload['settings']) ? $payload['settings'] : array();
 
@@ -240,7 +240,7 @@ class ASCWO_Api_Required_Options_Sizes extends ASCWO_Api_Required_Options_Base
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        $payload = json_decode($request->get_body(), true);
+        $payload = $request->get_json_params();
         $payload = is_array($payload) ? $payload : array();
 
         $required_options = $this->get_required_options($config_id);
@@ -270,7 +270,7 @@ class ASCWO_Api_Required_Options_Sizes extends ASCWO_Api_Required_Options_Base
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        $payload = json_decode($request->get_body(), true);
+        $payload = $request->get_json_params();
         $payload = is_array($payload) ? $this->normalize_size_item($payload, $item_id, $config_id) : array();
 
         $required_options = $this->get_required_options($config_id);

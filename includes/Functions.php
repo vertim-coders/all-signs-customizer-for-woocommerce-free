@@ -1,9 +1,20 @@
 <?php
-if (!defined('ABSPATH'))
+/**
+ * Shared helper functions for the plugin.
+ *
+ * @package ASCWO
+ */
+
+if (!defined('ABSPATH')) {
     exit;
+}
 
 /**
- * save preview image
+ * Save preview images to the uploads directory.
+ *
+ * @param array $images Preview image payload.
+ *
+ * @return array
  */
 function ascwo_save_prev_images($images)
 {
@@ -35,7 +46,11 @@ function ascwo_save_prev_images($images)
 }
 
 /**
- * save preview image
+ * Save uploaded images to the uploads directory.
+ *
+ * @param array $images Uploaded image payload.
+ *
+ * @return array
  */
 function ascwo_save_upload_images($images)
 {
@@ -102,7 +117,9 @@ function ascwo_save_upload_images($images)
 
 
 /**
- * add or edit product to cart
+ * Add or edit a product in the cart from the configurator.
+ *
+ * @return void
  */
 function ascwo_add_custom_design_to_cart_ajax()
 {
@@ -176,7 +193,14 @@ function ascwo_add_custom_design_to_cart_ajax()
 }
 
 /**
- *  add product to cart
+ * Add a product to the cart with ASCWO metadata.
+ *
+ * @param int   $product_id Product ID.
+ * @param array $recaps     Configurator recap data.
+ * @param mixed $images     Generated preview images.
+ * @param int   $quantity   Quantity to add.
+ *
+ * @return mixed
  */
 function ascwo_add_designs_to_cart(int $product_id, array $recaps, $images, int $quantity = 1)
 {
@@ -217,20 +241,6 @@ function ascwo_add_designs_to_cart(int $product_id, array $recaps, $images, int 
         );
     }
 
-    /* if ( isset( $_SESSION['npd_key'] ) ) {
-                 $variations = get_transient( $_SESSION['npd_key'] );
-             }
-
-             foreach ( $variation as $key => $value ) {
-                 if ( isset( $variations[ $key ] ) && '' === $value ) {
-                     $variation[ $key ] = $variations[ $key ];
-                 }
-             }
-
-             if ( isset( $_SESSION['combinaison'][ $variation_name ] ) ) {
-                 $variation = $_SESSION['combinaison'][ $variation_name ];
-             } */
-
     if ($newly_added_cart_item_key) {
         WC()->cart->calculate_totals();
 
@@ -247,10 +257,17 @@ function ascwo_add_designs_to_cart(int $product_id, array $recaps, $images, int 
 }
 
 /**
- *  includes ajax in plugin 
+ * Register cart AJAX endpoints.
+ *
+ * @return void
  */
 add_action('wp_ajax_ascwo_add_custom_design_to_cart', 'ascwo_add_custom_design_to_cart_ajax');
 add_action('wp_ajax_nopriv_ascwo_add_custom_design_to_cart', 'ascwo_add_custom_design_to_cart_ajax');
+/**
+ * Get the WooCommerce price format for the current currency position.
+ *
+ * @return string
+ */
 function ascwo_get_price_format()
 {
     $currency_pos = get_option('woocommerce_currency_pos');
@@ -275,6 +292,11 @@ function ascwo_get_price_format()
     }
     return $format;
 }
+/**
+ * Get IDs of products that are not already bound to a configuration.
+ *
+ * @return array
+ */
 function ascwo_get_custom_products()
 {
     $args = [
@@ -311,69 +333,102 @@ function ascwo_get_custom_products()
  */
 function ascwo_save_large_data($data, $name, $path)
 {
-    // Vérifier si les données sont valides
     if (empty($data)) {
         return null;
     }
 
-    // Définition des chemins
     $base_dir = trailingslashit(ASCWO_DATA_PATH) . trim($path, '/') . '/';
     $base_url = trailingslashit(ASCWO_DATA_URL) . trim($path, '/') . '/';
 
-    // Création du dossier s'il n'existe pas
     wp_mkdir_p($base_dir);
 
-    // Générer un nom de fichier propre
     $file_name = sanitize_file_name($name) . '.json';
     $file_path = $base_dir . $file_name;
     $file_url = $base_url . $file_name;
 
-    // Sauvegarder les données dans le fichier JSON
-    if (file_put_contents($file_path, json_encode($data, JSON_PRETTY_PRINT))) {
-        return $file_url; // Retourne l'URL du fichier JSON
+    $encoded_data = wp_json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+    if (false === $encoded_data) {
+        return null;
     }
 
-    return null; // En cas d'échec
+    if (file_put_contents($file_path, $encoded_data, LOCK_EX) !== false) {
+        return $file_url;
+    }
+
+    return null;
 }
 
 
 
 /**
- * Récupère des données depuis un fichier JSON en convertissant l'URL en chemin.
+ * Retrieve decoded JSON data from a file path or URL.
  *
- * @param string $path URL ou chemin du fichier JSON.
+ * @param string $path URL or path to the JSON file.
  *
- * @return mixed Données JSON décodées ou null si fichier inexistant.
+ * @return mixed Decoded JSON data, or null when the file does not exist.
  */
 function ascwo_get_large_data($path)
 {
-    // Remplace l'URL par le chemin réel
     $path = stripslashes($path);
     $path = str_replace(ASCWO_DATA_URL, ASCWO_DATA_PATH, $path);
 
-    // Vérifier si le fichier existe et récupérer son contenu
     if (file_exists($path)) {
+        if (function_exists('wp_json_file_decode')) {
+            $decoded = wp_json_file_decode($path, array('associative' => true));
+            if (null !== $decoded) {
+                return $decoded;
+            }
+        }
+
         $json_data = file_get_contents($path);
+        if (false === $json_data) {
+            return null;
+        }
+
         return json_decode($json_data, true);
     }
 
-    return null; // Retourne null si le fichier n'existe pas
+    return null;
 }
 
+/**
+ * Get a filename without its extension.
+ *
+ * @param string $file_url URL or path to the file.
+ *
+ * @return string
+ */
 function ascwo_get_filename_without_extension($file_url)
 {
-    // Convertir l'URL en chemin système si nécessaire
     $file_path = str_replace(ASCWO_DATA_URL, ASCWO_DATA_PATH, $file_url);
 
-    // Extraire uniquement le nom du fichier
     $file_name = pathinfo($file_path, PATHINFO_FILENAME);
 
     return $file_name;
 }
 
+/**
+ * Get the current license status snapshot.
+ *
+ * The status is stored in the `ascwo_license_data` option and normalized into
+ * a server-time based payload so admin screens can compare timestamps without
+ * relying on the browser clock.
+ *
+ * @return array{
+ *     timestamp:int,
+ *     time:int,
+ *     seconds_until:int,
+ *     source:string,
+ *     needs_fallback:bool,
+ *     date:string,
+ *     last_checked:string,
+ *     timezone:string
+ * }
+ */
 function ascwo_get_license_status()
 {
     $option_data = get_option('ascwo_license_data', false);
+    $timezone = function_exists('wp_timezone_string') ? wp_timezone_string() : get_option('timezone_string', 'UTC');
     if (is_array($option_data)) {
         $timestamp = isset($option_data['timestamp']) ? (int) $option_data['timestamp'] : 0;
         $seconds_until = max(0, $timestamp - time());
@@ -386,6 +441,7 @@ function ascwo_get_license_status()
             'needs_fallback' => false,
             'date' => isset($option_data['date']) ? (string) $option_data['date'] : '',
             'last_checked' => isset($option_data['last_checked']) ? (string) $option_data['last_checked'] : '',
+            'timezone' => isset($option_data['timezone']) ? (string) $option_data['timezone'] : (string) $timezone,
         ];
     }
 
@@ -397,9 +453,18 @@ function ascwo_get_license_status()
         'needs_fallback' => true,
         'date' => '',
         'last_checked' => '',
+        'timezone' => (string) $timezone,
     ];
 }
 
+/**
+ * Return the cached license expiry timestamp.
+ *
+ * Expired timestamps are flushed from the option cache so the admin always
+ * works with a fresh activation state.
+ *
+ * @return int
+ */
 function ascwo_get_license_cache_timestamp(): int
 {
     $status = ascwo_get_license_status();

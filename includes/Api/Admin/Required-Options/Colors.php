@@ -179,7 +179,7 @@ class ASCWO_Api_Required_Options_Colors extends ASCWO_Api_Required_Options_Base
         $meta = $this->get_normalized_meta($config_id);
         $productType = isset($meta['productType']) ? (string) $meta['productType'] : '';
 
-        $payload = json_decode($request->get_body(), true);
+        $payload = $request->get_json_params();
         $payload = is_array($payload) ? $payload : array();
 
         // Generate stable item id
@@ -209,7 +209,7 @@ class ASCWO_Api_Required_Options_Colors extends ASCWO_Api_Required_Options_Base
         $meta = $this->get_normalized_meta($config_id);
         $productType = isset($meta['productType']) ? (string) $meta['productType'] : '';
 
-        $payload = json_decode($request->get_body(), true);
+        $payload = $request->get_json_params();
         $payload = is_array($payload) ? $payload : array();
 
         $required_options = $this->get_required_options($config_id);

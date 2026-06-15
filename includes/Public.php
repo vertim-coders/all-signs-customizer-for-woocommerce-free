@@ -9,16 +9,35 @@ class ASCWO_Public
 
     public function __construct()
     {
+        add_action('wp_enqueue_scripts', [$this, 'enqueue_public_styles'], 5);
         add_action('wp_enqueue_scripts', [$this, 'render_public'], 20);
     }
 
     /**
-     * Render public app
+     * Enqueue the shared frontend stylesheet.
      *
-     * @param  array $atts
-     * @param  string $content
+     * The plugin uses these base styles across multiple public-facing pieces,
+     * so they must be available on the frontend even when the configurator
+     * scripts are not loaded.
+     */
+    public function enqueue_public_styles()
+    {
+        if (is_admin()) {
+            return;
+        }
+
+        if (!wp_style_is('ascwo-style', 'registered')) {
+            wp_register_style('ascwo-style', ASCWO_ASSETS . '/css/style.css', false, ASCWO_VERSION);
+        }
+
+        wp_enqueue_style('ascwo-style');
+        $this->add_button_styles_inline();
+    }
+
+    /**
+     * Render public assets for the configurator on WooCommerce pages.
      *
-     * @return string
+     * @return void
      */
     public function render_public()
     {
@@ -26,8 +45,6 @@ class ASCWO_Public
             return;
         }
 
-        wp_enqueue_style('ascwo-style', ASCWO_ASSETS . '/css/style.css', false, ASCWO_VERSION);
-        $this->add_button_styles_inline();
         wp_enqueue_style('ascwo-omodal', ASCWO_ASSETS . '/utilities/modal.min.css', false, ASCWO_VERSION);
         wp_enqueue_script('ascwo-omodal', ASCWO_ASSETS . '/utilities/modal.min.js', [], ASCWO_VERSION, true);
         wp_enqueue_script('ascwo-tinymce-script', includes_url('/js/tinymce/') . 'tinymce.min.js', [], ASCWO_VERSION, true);

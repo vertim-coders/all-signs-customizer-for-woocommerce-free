@@ -40,10 +40,6 @@ import Cliparts from "@/admin/pages/manage-cliparts/cliparts.vue";
 // import global settings pages
 import GlobalSettings from "@/admin/pages/global-settings/index.vue";
 
-// import templates pages
-import Templates from "@/admin/pages/templates/index.vue";
-import ConfigurateTemplate from "@/admin/pages/templates/configurate-template.vue";
-
 // import request a quote page
 import RequestQuotes from "@/admin/pages/request-quotes/index.vue";
 
@@ -322,25 +318,6 @@ const router = createRouter({
       component: RequestQuotes,
     },
     {
-      path: "/templates",
-      redirect: "/templates/main",
-    },
-    {
-      path: "/templates/main",
-      name: "templates-main",
-      component: Templates,
-    },
-    {
-      path: "/templates/categories",
-      name: "templates-categories",
-      component: Templates,
-    },
-    {
-      path: "/configs/template/:configId/:templateId",
-      name: "template-maker",
-      component: ConfigurateTemplate,
-    },
-    {
       path: "/not-found",
       name: "NotFound",
       component: NotFound,
@@ -351,6 +328,36 @@ const router = createRouter({
       component: NotFound,
     },
   ],
+});
+
+const getLicenseStatus = () => {
+  if (typeof window === "undefined" || !window.ascwo_data) {
+    return {};
+  }
+
+  return window.ascwo_data.license_status || {};
+};
+
+const isLicenseActive = () => {
+  const licenseStatus = getLicenseStatus();
+  const licenseExpiry = Number(licenseStatus.timestamp || window.ascwo_data?.caches || 0);
+  const serverNow = Number(licenseStatus.time || Math.floor(Date.now() / 1000));
+
+  return licenseExpiry > serverNow;
+};
+
+router.beforeEach((to) => {
+  // License-free installs are restricted to the public settings surface.
+  if (isLicenseActive()) {
+    return true;
+  }
+
+  const routeName = String(to.name || "");
+  if (routeName.startsWith("global-settings-")) {
+    return true;
+  }
+
+  return { name: "global-settings-license" };
 });
 
 export default router;

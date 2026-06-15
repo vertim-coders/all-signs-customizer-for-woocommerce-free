@@ -11,7 +11,7 @@
         <button
           v-for="tab in tabs"
           :key="tab.name"
-          v-show="tab.name !== 'global-settings-license' || !actualLink.includes(excludeLink)"
+          v-show="showTab(tab)"
           type="button"
           @click="router.push(tab.path)"
           :class="['ascwo-tab', route.name === tab.name ? 'is-active' : '']"
@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import Licences from "./license/index.vue";
 import ConfigurationPage from "./configuration-page/index.vue";
@@ -50,6 +50,19 @@ const route = useRoute();
 
 const excludeLink = ref("https://signsdesigner.us/public-demos");
 const actualLink = ref(window.location.href);
+const licenseStatus = ascwo_data.license_status || {};
+const licenseExpiry = Number(licenseStatus.timestamp || ascwo_data.caches || 0);
+const serverNow = Number(licenseStatus.time || Math.floor(Date.now() / 1000));
+const activateProduct = computed(() => licenseExpiry > serverNow);
+
+const showTab = (tab) => {
+  if (activateProduct.value) {
+    return true;
+  }
+
+  // When the license is inactive, only the license tab stays available.
+  return tab.name === "global-settings-license";
+};
 
 const tabs = [
   { label: __("License", "all-signs-customizer-for-woocommerce-pro"), icon: KeyRoundIcon, name: "global-settings-license", path: "/settings/license" },
@@ -61,8 +74,13 @@ const tabs = [
 ];
 
 onMounted(() => {
+  if (!activateProduct.value && route.name !== "global-settings-license") {
+    router.replace("/settings/license");
+    return;
+  }
+
   if (route.path === "/settings" || route.path === "/global-settings") {
-    router.replace("/settings/output");
+    router.replace(activateProduct.value ? "/settings/output" : "/settings/license");
   }
 });
 </script>

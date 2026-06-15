@@ -31937,7 +31937,7 @@ class ASCWO_Api_GoogleFonts extends WP_REST_Controller
      */
     public function get_config_permissions_check($request)
     {
-        return true;
+        return current_user_can('manage_options');
     }
 
     /**

@@ -258,9 +258,9 @@ class ASCWO_Api_Templates extends WP_REST_Controller
 
     public function get_template_info($request)
     {
-        $config_id = $request->get_param('config_id');
-        $template_id = $request->get_param('template_id');
-        if ($config_id != 0) {
+        $config_id = (int) $request->get_param('config_id');
+        $template_id = (int) $request->get_param('template_id');
+        if ($config_id !== 0) {
             $templates = get_post_meta($config_id, 'ascwo-templates', true);
 
             if (!empty($templates)) {
@@ -288,10 +288,13 @@ class ASCWO_Api_Templates extends WP_REST_Controller
     public function create_template($request)
     {
 
-        $config_id = $request->get_param('config_id');
-        $template_data = json_decode($request->get_body(), true);
+        $config_id = (int) $request->get_param('config_id');
+        $template_data = $request->get_json_params();
+        if (!is_array($template_data)) {
+            $template_data = array();
+        }
 
-        if ($config_id != 0) {
+        if ($config_id !== 0) {
             $post = get_post($config_id);
             if ($post) {
                 $template_data = $this->normalize_show_on_frontend($template_data);
@@ -326,11 +329,14 @@ class ASCWO_Api_Templates extends WP_REST_Controller
      */
     public function update_template($request)
     {
-        $config_id = $request->get_param('config_id');
-        $template_id = $request->get_param('template_id');
+        $config_id = (int) $request->get_param('config_id');
+        $template_id = (int) $request->get_param('template_id');
 
-        $template = json_decode($request->get_body(), true);
-        if ($config_id != 0) {
+        $template = $request->get_json_params();
+        if (!is_array($template)) {
+            $template = array();
+        }
+        if ($config_id !== 0) {
             $post = get_post($config_id);
             if ($post) {
                 $meta_value = get_post_meta($config_id, 'ascwo-templates', true);
@@ -403,9 +409,9 @@ class ASCWO_Api_Templates extends WP_REST_Controller
      */
     public function delete_template($request)
     {
-        $config_id = $request->get_param('config_id');
-        $template_id = $request->get_param('template_id');
-        if ($config_id != 0) {
+        $config_id = (int) $request->get_param('config_id');
+        $template_id = (int) $request->get_param('template_id');
+        if ($config_id !== 0) {
             $post = get_post($config_id);
             if ($post) {
                 $meta_value = get_post_meta($config_id, 'ascwo-templates', true);
@@ -440,6 +446,6 @@ class ASCWO_Api_Templates extends WP_REST_Controller
      */
     public function get_config_permissions_check($request)
     {
-        return true;
+        return current_user_can('manage_options');
     }
 }

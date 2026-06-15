@@ -12,7 +12,7 @@
 - Fixed duplicate configurator mount containers that could create extra blank space on the page
 - Fixed frontend canvas warnings caused by an invalid text baseline value
 - Stabilized configurator skin rendering after the frontend container CSS adjustments
-- Restored the All Signs Customizer for WooCommerce column styling on WooCommerce product admin tables
+- Restored the All Sign Customizer for WooCommerce column styling on WooCommerce product admin tables
 - Fixed TinyMCE initialization issues in admin configuration, materials, and fixing methods screens
 - Added layer up and layer down actions to the object selection toolbar in configurator skins
 

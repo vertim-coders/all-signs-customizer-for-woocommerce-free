@@ -155,7 +155,7 @@ class ASCWO_Api_Required_Options_Fonts extends ASCWO_Api_Required_Options_Base
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        $payload = json_decode($request->get_body(), true);
+        $payload = $request->get_json_params();
         $payload = is_array($payload) ? $payload : array();
 
         if (isset($payload['items']) && is_array($payload['items'])) {
@@ -199,7 +199,7 @@ class ASCWO_Api_Required_Options_Fonts extends ASCWO_Api_Required_Options_Base
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        $payload = json_decode($request->get_body(), true);
+        $payload = $request->get_json_params();
         $font_id = isset($payload['font_id']) && is_numeric($payload['font_id']) ? (int) $payload['font_id'] : null;
         if ($font_id === null) {
             return rest_ensure_response(array('success' => false, 'message' => __('Font not found', 'all-signs-customizer-for-woocommerce-pro')));
@@ -232,7 +232,7 @@ class ASCWO_Api_Required_Options_Fonts extends ASCWO_Api_Required_Options_Base
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        $payload = json_decode($request->get_body(), true);
+        $payload = $request->get_json_params();
         $payload = is_array($payload) ? $payload : array();
         $position = isset($payload['position']) ? max(0, absint($payload['position'])) : null;
 

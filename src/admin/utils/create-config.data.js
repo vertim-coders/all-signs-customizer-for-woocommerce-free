@@ -458,6 +458,70 @@ export const RequiredOptionsPricings = {
       },
     },
     {
+      id: "pricing-banner-standard",
+      label: "Standard banner pricing",
+      customPricing: {
+        type: "unit",
+        unit: {
+          surface: 80000,
+          basePrice: 18,
+          charPrice: 0,
+        },
+        range: [],
+        shippingMethod: "per-surface",
+        divisorVolumetric: 5000,
+        rangePricingPerUnit: false,
+      },
+    },
+    {
+      id: "pricing-banner-premium",
+      label: "Premium banner pricing",
+      customPricing: {
+        type: "unit",
+        unit: {
+          surface: 120000,
+          basePrice: 26,
+          charPrice: 0,
+        },
+        range: [],
+        shippingMethod: "per-surface",
+        divisorVolumetric: 5000,
+        rangePricingPerUnit: false,
+      },
+    },
+    {
+      id: "pricing-sticker-standard",
+      label: "Standard sticker pricing",
+      customPricing: {
+        type: "unit",
+        unit: {
+          surface: 20000,
+          basePrice: 12,
+          charPrice: 0,
+        },
+        range: [],
+        shippingMethod: "per-surface",
+        divisorVolumetric: 5000,
+        rangePricingPerUnit: false,
+      },
+    },
+    {
+      id: "pricing-sticker-premium",
+      label: "Premium sticker pricing",
+      customPricing: {
+        type: "unit",
+        unit: {
+          surface: 40000,
+          basePrice: 19,
+          charPrice: 0,
+        },
+        range: [],
+        shippingMethod: "per-surface",
+        divisorVolumetric: 5000,
+        rangePricingPerUnit: false,
+      },
+    },
+    {
       id: "pricing-signs-acrylic",
       label: "Premium acrylic pricing",
       customPricing: {
@@ -662,6 +726,19 @@ export const AdditionalOptionsInputs = {
   description: "",
 };
 
+const signboardComponentRules = {
+  acrylic: { enabled: true },
+  aluminium: { enabled: true },
+  brass: { enabled: true },
+  "eco-friendly": { enabled: true },
+  magnet: { enabled: true },
+  "photo-paper": { enabled: true },
+  plastic: { enabled: true },
+  "stainless-steel": { enabled: true },
+  vinyl: { enabled: true },
+  wood: { enabled: true },
+};
+
 export const AdditionalOptionsComponents = {
   items: [
     {
@@ -695,7 +772,7 @@ export const AdditionalOptionsComponents = {
         },
       ],
       description: "Offer finish options for rigid signs and panels.",
-      rulesByMaterial: {},
+      rulesByMaterial: signboardComponentRules,
     },
     {
       id: "additional-component-corners",
@@ -728,7 +805,7 @@ export const AdditionalOptionsComponents = {
         },
       ],
       description: "Offer corner finishing options.",
-      rulesByMaterial: {},
+      rulesByMaterial: signboardComponentRules,
     },
     {
       id: "additional-component-protective-layer",
@@ -761,7 +838,7 @@ export const AdditionalOptionsComponents = {
         },
       ],
       description: "Add extra protection for outdoor use.",
-      rulesByMaterial: {},
+      rulesByMaterial: signboardComponentRules,
     },
     {
       id: "additional-component-drill-holes",
@@ -794,7 +871,7 @@ export const AdditionalOptionsComponents = {
         },
       ],
       description: "Offer pre-drilled holes for installation.",
-      rulesByMaterial: {},
+      rulesByMaterial: signboardComponentRules,
     },
     {
       id: "additional-component-texture",
@@ -827,7 +904,7 @@ export const AdditionalOptionsComponents = {
         },
       ],
       description: "Apply a premium texture treatment.",
-      rulesByMaterial: {},
+      rulesByMaterial: signboardComponentRules,
     },
   ],
   label: "Additional Components",

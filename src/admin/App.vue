@@ -1,6 +1,6 @@
 <template>
     <div id="ascwo-backend-app" class="ascwo-min-h-screen ascwo-bg-[#f6f6f7]">
-        <Headerbar
+        <!-- <Headerbar
             v-if="
                 $route &&
                 $route.name &&
@@ -22,22 +22,24 @@
                     $route.name == 'config-additional-options'
                 )
             "
-        />
+        /> -->
 
         <div class="ascwo-flex">
             <!-- Sidebar temporarily disabled while the internal navigation is rebuilt. -->
             <!-- <Sidebar v-if="$route && $route.name && $route.name !== 'home'" /> -->
 
             <div class="ascwo-flex-1">
-                <router-view />
+                <!-- Keep the shell on the license screen when the product is inactive. -->
+                <router-view v-if="showRouterView" />
+                <GlobalSettings v-else />
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import {computed, onMounted, ref} from 'vue';
-import { useRoute } from 'vue-router';
+import {computed, onMounted, ref, watch} from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import '@/admin/utils/tailwindcss.min.js'
 import Sidebar from './pages/components/sidebar.vue'
 import Headerbar from './pages/components/headerbar.vue';
@@ -50,33 +52,39 @@ import { t } from './utils/i18n';
 import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 
 const $route = useRoute();
-const activateProduct = ref(!isNaN(ascwo_data.caches) && parseInt(ascwo_data.caches) > 1704067200? true : false);
-const showProductContent = computed(() => {
-    if (!activateProduct.value && !$route) return false;
-    const alwaysAllowedRoutes = ['configurations','create-configuration','edit-configuration'];
-    return activateProduct.value || ( $route && alwaysAllowedRoutes.includes($route.name));
+const router = useRouter();
+const licenseStatus = ascwo_data.license_status || {};
+const licenseExpiry = Number(licenseStatus.timestamp || ascwo_data.caches || 0);
+const serverNow = Number(licenseStatus.time || Math.floor(Date.now() / 1000));
+const activateProduct = ref(licenseExpiry > serverNow);
+const allowedWithoutLicense = new Set(['global-settings-license']);
+const showRouterView = computed(() => {
+    if (activateProduct.value) {
+        return true;
+    }
+
+    // The inactive-license state is intentionally limited to the license screen.
+    return Boolean($route && allowedWithoutLicense.has($route.name));
 });
 const product = ref('');
 const productId = ascwo_data.author;
 onMounted(async() => {
 
 });
-const activateLicenseKey = async () => {
-    try {
-        const url = 'https://signsdesigner.us/wp-json/vlc/license/?lcde='+ product.value +"&siteurl="+ascwo_data.site_url+"&vertim="+productId;
-        const response = await axios.get(url);
-        if (response.data.key) {
-            activateProduct.value = true;
-            await api.saveGlobalSettingsProduct(licenses.value);
-        }else if(response.data.message){
-            toastMessage(t(response.data.message), 'error');
-        }else{
-            toastMessage(t(response.data), 'error');
+watch(
+    () => [$route.name, activateProduct.value],
+    ([routeName]) => {
+        if (activateProduct.value) {
+            return;
         }
-    } catch (error) {
-        toastMessage(__('An unknown error occurred.', 'all-signs-customizer-for-woocommerce-pro'), "error");
-    }
-}
+
+        // Deep links to protected routes bounce back to the license screen.
+        if (routeName !== 'global-settings-license') {
+            router.replace({ name: 'global-settings-license' });
+        }
+    },
+    { immediate: true }
+);
 tailwind.config ={
     prefix: 'ascwo-',
     corePlugins: {

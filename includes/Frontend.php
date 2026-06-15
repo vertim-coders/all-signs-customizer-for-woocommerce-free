@@ -1,4 +1,10 @@
 <?php
+/**
+ * Frontend pages handler.
+ *
+ * @package ASCWO
+ */
+
 namespace ASCWO;
 
 use ASCWO_Product_Config;
@@ -9,25 +15,39 @@ use ASCWO_Product_Config;
 class ASCWO_Frontend
 {
 
+    /**
+     * Register the public shortcodes used by the plugin.
+     */
     public function __construct()
     {
         add_shortcode('ascwo-configurator', [$this, 'render_ascwo_configurator']);
-        add_shortcode('ascwo-templates', [$this, 'render_ascwo_templates']);
         add_shortcode('ascwo-products', [$this, 'render_ascwo_products']);
     }
 
+    /**
+     * Render the products shortcode output.
+     *
+     * @param array|string $atts    Shortcode attributes.
+     * @param string       $content Optional shortcode content.
+     *
+     * @return string
+     */
     public function render_ascwo_products($atts, $content = '')
     {
         wp_enqueue_style('ascwo-frontend', ASCWO_ASSETS . '/css/frontend.css', false, ASCWO_VERSION);
         wp_enqueue_style('ascwo-style', ASCWO_ASSETS . '/css/style.css', false, ASCWO_VERSION);
 
-        $atts = shortcode_atts([
-            'cols' => '3',
-            'ids' => '',
-            'limit' => '-1',
-            'orderby' => 'date',
-            'order' => 'DESC',
-        ], $atts, 'ascwo-products');
+        $atts = shortcode_atts(
+            array(
+                'cols' => '3',
+                'ids' => '',
+                'limit' => '-1',
+                'orderby' => 'date',
+                'order' => 'DESC',
+            ),
+            $atts,
+            'ascwo-products'
+        );
 
         $cols = absint($atts['cols']);
         if ($cols < 1) {
@@ -44,37 +64,36 @@ class ASCWO_Frontend
 
         $ids = array_filter(array_map('absint', preg_split('/[,\s]+/', (string) $atts['ids'])));
 
-        $query_args = [
+        $query_args = array(
             'post_type' => 'product',
             'post_status' => 'publish',
             'posts_per_page' => $limit,
             'orderby' => sanitize_key($atts['orderby']),
-            'order' => strtoupper($atts['order']) === 'ASC' ? 'ASC' : 'DESC',
+            'order' => 'ASC' === strtoupper($atts['order']) ? 'ASC' : 'DESC',
             'no_found_rows' => true,
             'ignore_sticky_posts' => true,
             'update_post_meta_cache' => false,
             'update_post_term_cache' => false,
-        ];
+        );
 
         if (!empty($ids)) {
             $query_args['post__in'] = $ids;
             $query_args['orderby'] = 'post__in';
         } else {
-            $query_args['meta_query'] = [
-                [
+            $query_args['meta_query'] = array(
+                array(
                     'key' => 'product-ascwo-metas',
                     'value' => 'config-id";s:1:"0"',
                     'compare' => 'NOT LIKE',
-                ],
-            ];
+                ),
+            );
         }
 
         $products = new \WP_Query($query_args);
         $visible_cards = 0;
-        $page_settings = get_option("ascwo_config_page");
+        $page_settings = get_option('ascwo_config_page');
         $button_labels = isset($page_settings['buttons']) && is_array($page_settings['buttons']) ? $page_settings['buttons'] : [];
         $customize_label = isset($button_labels['productDesignButton']) && $button_labels['productDesignButton'] !== '' ? $button_labels['productDesignButton'] : __('Customize', 'all-signs-customizer-for-woocommerce-pro');
-        $template_label = isset($button_labels['productTemplateButton']) && $button_labels['productTemplateButton'] !== '' ? $button_labels['productTemplateButton'] : __('Templates', 'all-signs-customizer-for-woocommerce-pro');
 
         ob_start();
 
@@ -112,18 +131,10 @@ class ASCWO_Frontend
                         continue;
                     }
 
-                    $templates = get_post_meta($config_id, 'ascwo-templates', true);
-                    if (!is_array($templates)) {
-                        $templates = [];
-                    }
-                    $templates = array_values(array_filter($templates, [$this, 'is_template_visible']));
-                    $has_templates = count($templates) > 0;
-
                     $design_url = $ascwo_product->get_design_page_url();
                     if ($design_url === '') {
                         $design_url = get_permalink($product_id);
                     }
-                    $templates_url = $has_templates ? $ascwo_product->get_templates_page_url() : '';
 
                     $description = $product->get_short_description();
                     if ($description === '') {
@@ -149,18 +160,6 @@ class ASCWO_Frontend
                                     href="<?php echo esc_url($design_url); ?>">
                                     <?php echo esc_html($customize_label); ?>
                                 </a>
-                                <?php if ($has_templates && $templates_url !== '') { ?>
-                                    <a class="ascwo-product-card__btn ascwo-product-card__btn--template"
-                                        href="<?php echo esc_url($templates_url); ?>">
-                                        <?php echo esc_html($template_label); ?>
-                                    </a>
-                                <?php } else { ?>
-                                    <span
-                                        class="ascwo-product-card__btn ascwo-product-card__btn--template ascwo-product-card__btn--disabled"
-                                        aria-disabled="true">
-                                        <?php echo esc_html($template_label); ?>
-                                    </span>
-                                <?php } ?>
                             </div>
                         </div>
                     </article>
@@ -186,9 +185,26 @@ class ASCWO_Frontend
         return $content;
     }
 
+    /**
+     * Render the configurator shortcode output.
+     *
+     * @param array|string $atts    Shortcode attributes.
+     * @param string       $content Optional shortcode content.
+     *
+     * @return string
+     */
     public function render_ascwo_configurator($atts, $content = '')
     {
-        extract(shortcode_atts(['productid' => '0', 'tplid' => false], $atts, 'ascwo-products'));
+        $atts = shortcode_atts(
+            array(
+                'productid' => '0',
+                'tplid' => false,
+            ),
+            $atts,
+            'ascwo-products'
+        );
+        $productid = absint($atts['productid']);
+        $tplid = false !== $atts['tplid'] && '' !== $atts['tplid'] ? absint($atts['tplid']) : false;
 
         ob_start();
         $product = wc_get_product($productid);
@@ -197,18 +213,20 @@ class ASCWO_Frontend
 
             if (!empty($meta) && isset($meta[$productid]['config-id'])) {
                 $configId = $meta[$productid]['config-id'];
-                if ($configId != 0) {
-                    $config = get_post_meta($configId, "ascwo-configs-meta", true);
-                    $page_settings = get_option("ascwo_config_page", []);
+                if (0 !== (int) $configId) {
+                    $config = get_post_meta($configId, 'ascwo-configs-meta', true);
+                    $page_settings = get_option('ascwo_config_page', array());
                     $pageSettings = isset($page_settings['others']) && is_array($page_settings['others']) ? $page_settings['others'] : [];
-                    $all_cliparts_groups = get_option("ascwo-manages-cliparts", []);
-                    $all_fonts = get_option("ascwo-manages-fonts", []);
-                    $all_shapes = get_option("ascwo_all_shapes", []);
-                    $all_fixingMethods = get_option("ascwo_all_fixingMethods", []);
-                    $all_borders = get_option("ascwo_all_borders", []);
-                    $outputOptions = get_option("ascwo_output_options", []);
+                    $all_cliparts_groups = get_option('ascwo-manages-cliparts', array());
+                    $all_fonts = get_option('ascwo-manages-fonts', array());
+                    $all_shapes = get_option('ascwo_all_shapes', array());
+                    $all_fixingMethods = get_option('ascwo_all_fixingMethods', array());
+                    $all_borders = get_option('ascwo_all_borders', array());
+                    $outputOptions = get_option('ascwo_output_options', array());
 
                     if (is_array($config) && !empty($config)) {
+                        $config_meta = $config;
+                        $frontend_data = isset($config['data']) && is_array($config['data']) ? $config['data'] : array();
                         $this->enqueue_frontend_app_assets();
                         ?>
                         <div id="ascwo-configurator-loader" class="ascwo-configurator-skeleton">
@@ -235,14 +253,16 @@ class ASCWO_Frontend
                             </div>
                         </div>
                         <?php
-                        $configData = [
+                        $configData = array(
                             'name' => get_post_field('post_title', $configId),
                             'description' => get_post_field('post_content', $configId),
-                            'icon' => $config['icon'],
-                            'popImg' => $config['popImg'],
-                            'data' => $frontend_data
-                        ];
-                        $visibleFonts = ConfigSchemaNormalizer::to_frontend_fonts($config_meta, is_array($all_fonts) ? $all_fonts : []);
+                            'icon' => isset($config['icon']) ? $config['icon'] : '',
+                            'popImg' => isset($config['popImg']) ? $config['popImg'] : '',
+                            'data' => isset($frontend_data) ? $frontend_data : array(),
+                        );
+                        $visibleFonts = isset($config['requiredOptions']['fonts']['items']) && is_array($config['requiredOptions']['fonts']['items'])
+                            ? $config['requiredOptions']['fonts']['items']
+                            : (is_array($all_fonts) ? $all_fonts : array());
                         $enable_clipart = isset($frontend_data['settings']['customizerSign']['images']['enableClipart'])
                             ? $frontend_data['settings']['customizerSign']['images']['enableClipart']
                             : false;
@@ -285,7 +305,7 @@ class ASCWO_Frontend
                             }
                         }
 
-                        $ASO = [
+                        $ASO = array(
                             'skin' => isset($frontend_data['settings']['themeColors']['skin']) ? $frontend_data['settings']['themeColors']['skin'] : 'default',
                             'productID' => $productid,
                             'currentConfig' => $configData,
@@ -299,22 +319,22 @@ class ASCWO_Frontend
                             'currency_pos' => get_option('woocommerce_currency_pos'),
                             'fixing_methods_url' => ASCWO_ASSETS . '/images/fixing-methodes',
                             'borders_url' => ASCWO_ASSETS . '/images/borders',
-                            'templates' => [
+                            'templates' => array(
                                 'designFromTemplate' => isset($template) && !is_string($template),
-                                'template' => isset($template) && !is_string($template) ? $template : []
-                            ],
+                                'template' => isset($template) && !is_string($template) ? $template : array(),
+                            ),
                             'frontend_nonce' => wp_create_nonce('ascwo_add_to_cart_after_custom')
-                        ];
+                        );
 
                         wp_localize_script('ascwo-frontend', 'ascwo_configurator_data', $ASO);
-                        wp_localize_script('ascwo-frontend', 'ascwo_data', [
+                        wp_localize_script('ascwo-frontend', 'ascwo_data', array(
                             'rest_url' => get_rest_url() . 'ascwo/v1',
-                            'ajax_url' => esc_url(admin_url('admin-ajax.php')),
+                            'ajax_url' => esc_url_raw(admin_url('admin-ajax.php')),
                             'caches' => function_exists('ascwo_get_license_cache_timestamp') ? \ascwo_get_license_cache_timestamp() : 0,
                             'page' => 'configurator',
-                            'site_url' => urlencode(get_site_url()),
-                            'author' => ASCWO_ID
-                        ]);
+                            'site_url' => esc_url_raw(get_site_url()),
+                            'author' => ASCWO_ID,
+                        ));
                         ?>
                         <div class="ascwo-frontend-app ascwo-configurator-container" data-ascwo-page="configurator"></div>
                         <?php
@@ -327,132 +347,13 @@ class ASCWO_Frontend
         return $content;
     }
 
-    public function render_ascwo_templates($atts, $content = '')
-    {
-        extract(shortcode_atts(['productid' => '0', 'cols' => '3'], $atts, 'ascwo-products'));
-
-        ob_start();
-
-        $product = wc_get_product($productid);
-        if ($product) {
-            $meta = get_post_meta($productid, 'product-ascwo-metas', true);
-            $product_price = $product->get_price();
-            if (!empty($meta) && isset($meta[$productid]['config-id'])) {
-                $configId = $meta[$productid]['config-id'];
-                if ($configId != 0) {
-                    $templates = get_post_meta($configId, 'ascwo-templates', true);
-                    if (!is_array($templates)) {
-                        $templates = [];
-                    }
-                    $templates = array_values(array_filter($templates, [$this, 'is_template_visible']));
-                    $all_categories = get_option('ascwo-templates-categories', []);
-                    $categories = [];
-                    foreach ($templates as $template) {
-                        if (isset($all_categories[$template['categoryId']])) {
-                            $cat = ["value" => $template["categoryId"], "name" => $all_categories[$template["categoryId"]]];
-                            if (!in_array($cat, $categories)) {
-                                $categories[] = $cat;
-                            }
-                        }
-                    }
-
-                    $ascwo_product = new ASCWO_Product_Config($productid);
-                    $page_settings = get_option("ascwo_config_page", []);
-                    $this->enqueue_frontend_app_assets();
-                    ?>
-                    <div id="ascwo-templates-loader">
-                        <div class="ascwo-templates-skeleton-grid">
-                            <div class="ascwo-skeleton-card">
-                                <div class="ascwo-skeleton ascwo-skeleton-image"></div>
-                                <div class="ascwo-skeleton-body">
-                                    <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--lg"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--md"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--sm"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-button"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-button"></div>
-                                </div>
-                            </div>
-                            <div class="ascwo-skeleton-card">
-                                <div class="ascwo-skeleton ascwo-skeleton-image"></div>
-                                <div class="ascwo-skeleton-body">
-                                    <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--lg"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--md"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--sm"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-button"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-button"></div>
-                                </div>
-                            </div>
-                            <div class="ascwo-skeleton-card">
-                                <div class="ascwo-skeleton ascwo-skeleton-image"></div>
-                                <div class="ascwo-skeleton-body">
-                                    <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--lg"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--md"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--sm"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-button"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-button"></div>
-                                </div>
-                            </div>
-                            <div class="ascwo-skeleton-card">
-                                <div class="ascwo-skeleton ascwo-skeleton-image"></div>
-                                <div class="ascwo-skeleton-body">
-                                    <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--lg"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--md"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-line ascwo-skeleton-line--sm"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-button"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-button"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ascwo-frontend-app ascwo-templates" data-ascwo-page="templates"></div>
-                    <?php
-                    wp_localize_script('ascwo-frontend', 'ascwo_templates', [
-                        "data" => $templates,
-                        "categories" => $categories,
-                        "productId" => $productid,
-                        "grid_cols" => $cols,
-                        'regularPrice' => trim($product_price) !== '' ? $product_price : 0,
-                        'thousandSep' => wc_get_price_thousand_separator(),
-                        'decimalSep' => wc_get_price_decimal_separator(),
-                        'decimals' => wc_get_price_decimals(),
-                        'nbDecimals' => wc_get_price_decimals(),
-                        'currencySymbol' => html_entity_decode(get_woocommerce_currency_symbol()),
-                        'currency_pos' => get_option('woocommerce_currency_pos'),
-                        "buttons" => isset($page_settings['buttons']) && is_array($page_settings['buttons']) ? $page_settings['buttons'] : [],
-                        "frontend_nonce" => wp_create_nonce('ascwo_add_to_cart_after_custom'),
-                        "design_page_url" => $ascwo_product->get_design_page_url(),
-                    ]);
-                    wp_localize_script('ascwo-frontend', 'ascwo_data', [
-                        "rest_url" => get_rest_url() . "ascwo/v1",
-                        'ajax_url' => esc_url(admin_url('admin-ajax.php')),
-                        "caches" => function_exists('ascwo_get_license_cache_timestamp') ? \ascwo_get_license_cache_timestamp() : 0,
-                        "page" => "templates",
-                        "site_url" => urlencode(get_site_url()),
-                        "author" => ASCWO_ID
-                    ]);
-                }
-            }
-        }
-
-        $content .= ob_get_clean();
-        return $content;
-    }
-
-    private function is_template_visible($template)
-    {
-        if (!is_array($template)) {
-            return false;
-        }
-        if (!array_key_exists('showOnFrontend', $template)) {
-            return true;
-        }
-        $visible = filter_var($template['showOnFrontend'], FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
-        if ($visible === null) {
-            $visible = (bool) $template['showOnFrontend'];
-        }
-        return $visible;
-    }
-
+    /**
+     * Get the config ID attached to a product.
+     *
+     * @param int $product_id Product ID.
+     *
+     * @return int
+     */
     private function get_product_config_id($product_id)
     {
         $meta = get_post_meta($product_id, 'product-ascwo-metas', true);
@@ -462,6 +363,11 @@ class ASCWO_Frontend
         return absint($meta[$product_id]['config-id']);
     }
 
+    /**
+     * Enqueue the frontend app assets.
+     *
+     * @return void
+     */
     private function enqueue_frontend_app_assets()
     {
         wp_enqueue_style('ascwo-frontend', ASCWO_ASSETS . '/css/frontend.css', false, ASCWO_VERSION);
@@ -471,6 +377,13 @@ class ASCWO_Frontend
         wp_enqueue_script('ascwo-frontend', ASCWO_ASSETS . '/js/frontend.js', ['jquery', 'ascwo-vendor', 'ascwo-runtime', 'wp-i18n'], ASCWO_VERSION, true);
     }
 
+    /**
+     * Include config fonts used by the frontend UI.
+     *
+     * @param array $all_fonts Font definitions.
+     *
+     * @return void
+     */
     private function includes_config_fonts($all_fonts)
     {
         foreach ($all_fonts as $font) {
@@ -483,17 +396,29 @@ class ASCWO_Frontend
         }
     }
 
+    /**
+     * Inject an inline @font-face declaration.
+     *
+     * @param string $font_label Font family label.
+     * @param string $url        Font URL.
+     *
+     * @return void
+     */
     private function include_config_ttf_font_style($font_label, $url)
     {
-        $font_label = str_replace(" ", "-", $font_label);
-        $inline_style = "@font-face {
-            font-family: " . esc_html($font_label) . ";
-            src: url('" . esc_url($url) . "') format('truetype');
-        }";
+        $font_label = str_replace(' ', '-', $font_label);
+        $inline_style = "@font-face {\n            font-family: " . esc_attr($font_label) . ";\n            src: url('" . esc_url_raw($url) . "') format('truetype');\n        }";
         wp_add_inline_style('ascwo-frontend', $inline_style);
         wp_add_inline_style('ascwo-style', $inline_style);
     }
 
+    /**
+     * Add custom CSS to the frontend shell.
+     *
+     * @param string $css CSS content.
+     *
+     * @return void
+     */
     private function include_custom_css($css)
     {
         wp_add_inline_style('ascwo-frontend', $css);

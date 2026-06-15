@@ -10,10 +10,18 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {},
     "autoload": {
         "psr-4": {
             "App\\": "includes/"
+        }
+    },
+    "require-dev": {
+        "wp-coding-standards/wpcs": "dev-develop",
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.2"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     }
 }

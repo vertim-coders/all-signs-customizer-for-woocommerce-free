@@ -1,4 +1,10 @@
 <?php
+/**
+ * Admin pages handler.
+ *
+ * @package ASCWO
+ */
+
 namespace ASCWO;
 
 /**
@@ -18,38 +24,30 @@ class ASCWO_Admin
     }
 
     /**
-     * Register our menu page
+     * Register the plugin admin menu and submenus.
      *
      * @return void
      */
     public function admin_menu()
     {
         if (is_plugin_active('woocommerce/woocommerce.php')) {
-            global $submenu;
-
             $capability = 'manage_options';
             $slug = 'ascwo';
 
-            $hook = add_menu_page(__('All Signs Customizer for WooCommerce', "all-signs-customizer-for-woocommerce-pro"), __('All Signs Customizer for WooCommerce', "all-signs-customizer-for-woocommerce-pro"), $capability, $slug, [$this, 'plugin_page'], ASCWO_ASSETS . '/images/im_icon_ascwo.png');
-
-            if (current_user_can($capability)) {
-                $submenu[$slug][] = array(__('Home', "all-signs-customizer-for-woocommerce-pro"), $capability, 'admin.php?page=' . $slug . '#/');
-                $submenu[$slug][] = array(__('Configurations', "all-signs-customizer-for-woocommerce-pro"), $capability, 'admin.php?page=' . $slug . '#/configuration');
-                $submenu[$slug][] = array(__('Request quotes', "all-signs-customizer-for-woocommerce-pro"), $capability, 'admin.php?page=' . $slug . '#/request-quotes');
-                $submenu[$slug][] = array(__('Global Settings', "all-signs-customizer-for-woocommerce-pro"), $capability, 'admin.php?page=' . $slug . '#/settings/output');
-                $submenu[$slug][] = array(__('Templates', "all-signs-customizer-for-woocommerce-pro"), $capability, 'admin.php?page=' . $slug . '#/templates');
-                $submenu[$slug][] = array(__('Manage Fonts', "all-signs-customizer-for-woocommerce-pro"), $capability, 'admin.php?page=' . $slug . '#/manage-font');
-                $submenu[$slug][] = array(__('Manage Cliparts', "all-signs-customizer-for-woocommerce-pro"), $capability, 'admin.php?page=' . $slug . '#/manage-cliparts');
-
-
-            }
+            $hook = add_menu_page(__('All Sign Customizer for WooCommerce', 'all-signs-customizer-for-woocommerce-pro'), __('All Sign Customizer for WooCommerce', 'all-signs-customizer-for-woocommerce-pro'), $capability, $slug, [$this, 'plugin_page'], ASCWO_ASSETS . '/images/im_icon_ascwo.png');
+            add_submenu_page($slug, __('Home', 'all-signs-customizer-for-woocommerce-pro'), __('Home', 'all-signs-customizer-for-woocommerce-pro'), $capability, 'admin.php?page=' . $slug . '#/');
+            add_submenu_page($slug, __('Configurations', 'all-signs-customizer-for-woocommerce-pro'), __('Configurations', 'all-signs-customizer-for-woocommerce-pro'), $capability, 'admin.php?page=' . $slug . '#/configuration');
+            add_submenu_page($slug, __('Request quotes', 'all-signs-customizer-for-woocommerce-pro'), __('Request quotes', 'all-signs-customizer-for-woocommerce-pro'), $capability, 'admin.php?page=' . $slug . '#/request-quotes');
+            add_submenu_page($slug, __('Global Settings', 'all-signs-customizer-for-woocommerce-pro'), __('Global Settings', 'all-signs-customizer-for-woocommerce-pro'), $capability, 'admin.php?page=' . $slug . '#/settings/output');
+            add_submenu_page($slug, __('Manage Fonts', 'all-signs-customizer-for-woocommerce-pro'), __('Manage Fonts', 'all-signs-customizer-for-woocommerce-pro'), $capability, 'admin.php?page=' . $slug . '#/manage-font');
+            add_submenu_page($slug, __('Manage Cliparts', 'all-signs-customizer-for-woocommerce-pro'), __('Manage Cliparts', 'all-signs-customizer-for-woocommerce-pro'), $capability, 'admin.php?page=' . $slug . '#/manage-cliparts');
 
             add_action('load-' . $hook, [$this, 'init_hooks']);
         }
     }
 
     /**
-     * Initialize our hooks for the admin page
+     * Register the scripts for the plugin admin shell.
      *
      * @return void
      */
@@ -59,7 +57,7 @@ class ASCWO_Admin
     }
 
     /**
-     * Load scripts and styles for the app
+     * Enqueue the plugin admin assets.
      *
      * @return void
      */
@@ -76,7 +74,7 @@ class ASCWO_Admin
         wp_enqueue_style('ascwo-frontend', ASCWO_ASSETS . '/css/frontend.css', false, ASCWO_VERSION);
 
         wp_enqueue_script('ascwo-admin', ASCWO_ASSETS . '/js/admin.js', ['jquery', 'ascwo-vendor', 'ascwo-runtime', 'wp-i18n', 'editor'], ASCWO_VERSION, true);
-        wp_set_script_translations('ascwo-admin', "all-signs-customizer-for-woocommerce-pro");
+        wp_set_script_translations('ascwo-admin', 'all-signs-customizer-for-woocommerce-pro');
         wp_enqueue_script('ascwo-fabric', ASCWO_ASSETS . '/utilities/fabric.min.js', [], ASCWO_VERSION, true);
         wp_enqueue_script('ascwo-frontend', ASCWO_ASSETS . '/js/frontend.js', ['jquery', 'ascwo-vendor', 'ascwo-runtime', 'ascwo-fabric'], ASCWO_VERSION, true);
 
@@ -108,11 +106,15 @@ class ASCWO_Admin
             return;
         }
 
-        wp_enqueue_style('ascwo-style', ASCWO_ASSETS . '/css/style.css', false, ASCWO_VERSION);
+        if (!wp_style_is('ascwo-style', 'registered')) {
+            wp_register_style('ascwo-style', ASCWO_ASSETS . '/css/style.css', false, ASCWO_VERSION);
+        }
+
+        wp_enqueue_style('ascwo-style');
     }
 
     /**
-     * Render our admin page
+     * Render the plugin admin application root.
      *
      * @return void
      */
@@ -125,9 +127,11 @@ class ASCWO_Admin
         <?php $script_data = [
             "rest_url" => $api_url . "ascwo/v1",
             "rest_nonce" => wp_create_nonce('wp_rest'),
-            "ajax_url" => esc_url(admin_url('admin-ajax.php')),
-            "site_url" => urlencode(get_site_url()),
+            "ajax_url" => esc_url_raw(admin_url('admin-ajax.php')),
+            "site_url" => esc_url_raw(get_site_url()),
             "caches" => function_exists('ascwo_get_license_cache_timestamp') ? \ascwo_get_license_cache_timestamp() : 0,
+            "license_status" => function_exists('ascwo_get_license_status') ? \ascwo_get_license_status() : array(),
+            "site_timezone" => function_exists('wp_timezone_string') ? wp_timezone_string() : get_option('timezone_string', 'UTC'),
             "author" => ASCWO_ID,
             "assets_url" => ASCWO_ASSETS,
             "page" => "admin",
@@ -145,6 +149,13 @@ class ASCWO_Admin
         wp_localize_script("ascwo-frontend", "ascwo_configurator_data", $configurator_data);
     }
 
+    /**
+     * Allow the media uploader to handle the asset formats used by the plugin.
+     *
+     * @param array<string, string> $mimes Registered mime types.
+     *
+     * @return array<string, string>
+     */
     public function ascwo_add_custom_mime_types($mimes)
     {
         return array_merge(
@@ -160,13 +171,14 @@ class ASCWO_Admin
     }
 
     /**
-     * Check file type and extension.
+     * Validate the file type and extension for uploaded plugin assets.
      *
-     * @param array  $data The data.
-     * @param mixed  $file The file.
-     * @param string $filename The file name.
-     * @param array $mimes The mimes.
-     * @param string $real_mime The real mimes.
+     * @param array  $data       File data from WordPress.
+     * @param mixed  $file       File path or upload payload.
+     * @param string $filename   File name.
+     * @param array  $mimes      Allowed mime types.
+     * @param string $real_mime  Detected mime type.
+     *
      * @return array
      */
     public function ascwo_check_filetype_and_ext($data, $file, $filename, $mimes, $real_mime)

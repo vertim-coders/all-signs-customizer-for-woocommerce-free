@@ -1,10 +1,15 @@
 <?php
+/**
+ * REST controller for global plugin settings.
+ *
+ * @package ASCWO
+ */
+
 namespace ASCWO\Api\Admin\Globals_Settings;
 
 use DateTime;
 use DateTimeZone;
 use WP_Error;
-use WP_Poste;
 use WP_Query;
 use WP_REST_Controller;
 
@@ -16,7 +21,7 @@ use WP_REST_Controller;
 class ASCWO_Api_Globals_Settings extends WP_REST_Controller
 {
   /**
-   * [__construct description]
+   * Register the globals settings REST controller.
    */
   public function __construct()
   {
@@ -47,17 +52,6 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
         ),
       )
     );
-    /* register_rest_route(
-      $this->namespace,
-      '/' . $this->rest_base . "/product/checking",
-      array(
-        array(
-          'methods' => \WP_REST_Server::READABLE,
-          'callback' => array($this, 'check_product_health'),
-          'permission_callback' => array($this, 'get_config_permissions_check'),
-        ),
-      )
-    ); */
     register_rest_route(
       $this->namespace,
       '/' . $this->rest_base . "/config-page",
@@ -90,22 +84,6 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
         ),
       )
     );
-    /* register_rest_route(
-      $this->namespace,
-      '/' . $this->rest_base."/template-page",
-      array(
-        array(
-          'methods'             => \WP_REST_Server::CREATABLE,
-          'callback'            => array( $this, 'save_config_theme' ),
-          'permission_callback' => array( $this, 'get_config_permissions_check' ),
-        ),
-        array(
-          'methods'             => \WP_REST_Server::READABLE,
-          'callback'            => array( $this, 'get_config_theme' ),
-          'permission_callback' => array( $this, 'get_config_permissions_check' ),
-        ),
-      )
-    ); */
     register_rest_route(
       $this->namespace,
       '/' . $this->rest_base . "/output",
@@ -216,13 +194,17 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
    */
   public function save_ascwo_product($request)
   {
-    $data = json_decode($request->get_body(), true);
+    $data = $request->get_json_params();
+    if (!is_array($data)) {
+      $data = array();
+    }
     if (!is_array($data)) {
       return rest_ensure_response(["message" => __("ASO Product Pro not found", "all-signs-customizer-for-woocommerce-pro")]);
     }
 
     $has_product = isset($data["product"]);
     $has_auto_update = array_key_exists('auto_update', $data);
+    $should_activate_license = !empty($data['activate_license']);
 
     if (!$has_product && !$has_auto_update) {
       return rest_ensure_response(["message" => __("ASO Product Pro not found", "all-signs-customizer-for-woocommerce-pro")]);
@@ -236,12 +218,40 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
       $product = get_option("ascwo_product_pro", false);
       $next_product = sanitize_text_field((string) $data["product"]);
 
-      if (!empty($next_product) && $product != $next_product) {
+      if (!empty($next_product) && $product !== $next_product) {
         update_option("ascwo_product_pro", $next_product);
         $this->clear_license_data();
       } elseif (empty($next_product)) {
         delete_option("ascwo_product_pro");
         $this->clear_license_data();
+      }
+
+      if ($should_activate_license && !empty($next_product)) {
+        $activation = $this->activate_remote_license($next_product);
+
+        if (is_wp_error($activation)) {
+          return rest_ensure_response([
+            "success" => false,
+            "message" => $activation->get_error_message(),
+            "auto_update" => $this->get_auto_update_enabled(),
+          ]);
+        }
+
+        if (isset($activation['key'])) {
+          $timestamp = (int) $activation['key'];
+          if ($timestamp > 0) {
+            $license_data = $this->process_license_validity($timestamp);
+            $this->save_license_data_robust($license_data);
+          } else {
+            $this->clear_license_data();
+          }
+        } elseif (isset($activation['message'])) {
+          return rest_ensure_response([
+            "success" => false,
+            "message" => sanitize_text_field((string) $activation['message']),
+            "auto_update" => $this->get_auto_update_enabled(),
+          ]);
+        }
       }
 
       if (isset($data["valid"])) {
@@ -260,11 +270,81 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
     }
 
     return rest_ensure_response([
-      "success" => __("ASO Product Pro saved successfully", "all-signs-customizer-for-woocommerce-pro"),
+      "success" => $should_activate_license ? __("Activation successful! Your product is ready to use", "all-signs-customizer-for-woocommerce-pro") : __("ASO Product Pro saved successfully", "all-signs-customizer-for-woocommerce-pro"),
+      "message" => $should_activate_license ? __("Activation successful! Your product is ready to use", "all-signs-customizer-for-woocommerce-pro") : __("ASO Product Pro saved successfully", "all-signs-customizer-for-woocommerce-pro"),
       "auto_update" => $this->get_auto_update_enabled(),
     ]);
   }
 
+  /**
+   * Activate a license key against the remote server from PHP.
+   *
+   * This keeps the license check server-side so the browser does not need to
+   * hit the remote WP REST endpoint directly and avoids cookie/nonce issues.
+   *
+   * @param string $product License key.
+   *
+   * @return array|WP_Error Decoded response data or error.
+   */
+  private function activate_remote_license($product)
+  {
+    $site_url = get_site_url();
+    $url = add_query_arg(
+      array(
+        'lcde' => $product,
+        'siteurl' => $site_url,
+        'vertim' => ASCWO_ID,
+      ),
+      'https://signsdesigner.us/wp-json/vlc/license/'
+    );
+
+    $response = wp_remote_get(
+      $url,
+      array(
+        'timeout' => 8,
+        'user-agent' => 'ASCWO/' . ASCWO_VERSION . '; ' . home_url('/'),
+      )
+    );
+
+    if (is_wp_error($response)) {
+      return $response;
+    }
+
+    $status_code = (int) wp_remote_retrieve_response_code($response);
+    if ($status_code < 200 || $status_code >= 300) {
+      return new WP_Error(
+        'ascwo_license_http_error',
+        wp_remote_retrieve_response_message($response)
+      );
+    }
+
+    $body = wp_remote_retrieve_body($response);
+    if ('' === trim((string) $body)) {
+      return new WP_Error('ascwo_license_empty_body', __('Empty response received from the license server.', 'all-signs-customizer-for-woocommerce-pro'));
+    }
+
+    $decoded = json_decode($body, true);
+    if (!is_array($decoded)) {
+      return new WP_Error('ascwo_license_invalid_json', __('Invalid response received from the license server.', 'all-signs-customizer-for-woocommerce-pro'));
+    }
+
+    if (isset($decoded['message'])) {
+      $decoded['message'] = sanitize_text_field((string) $decoded['message']);
+    }
+
+    return $decoded;
+  }
+
+  /**
+   * Persist the license expiry timestamp returned by the remote checker.
+   *
+   * The stored payload keeps both the raw timestamp and the site timezone so
+   * the admin UI can compare values using server-side time only.
+   *
+   * @param int|string $timestamp Remote expiry timestamp.
+   *
+   * @return void
+   */
   private function process_license_validity($timestamp)
   {
     $expiryTimestamp = (int) $timestamp;
@@ -278,7 +358,8 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
       'timestamp' => $expiryTimestamp,
       'date' => $date->format('Y-m-d H:i:s'),
       'seconds_until' => $secondsUntil,
-      'last_checked' => current_time('mysql')
+      'last_checked' => current_time('mysql'),
+      'timezone' => function_exists('wp_timezone_string') ? wp_timezone_string() : get_option('timezone_string', 'UTC'),
     ];
   }
 
@@ -308,7 +389,7 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
       'auto_update' => $this->get_auto_update_enabled(),
     ];
 
-    if ($option == false || empty($option)) {
+    if (false === $option || empty($option)) {
       $response["message"] = __("No ASO Product Pro available", "all-signs-customizer-for-woocommerce-pro");
       return rest_ensure_response($response);
     } else {
@@ -374,12 +455,15 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
    */
   public function save_config_page($request)
   {
-    $data = json_decode($request->get_body(), true);
+    $data = $request->get_json_params();
+    if (!is_array($data)) {
+      $data = array();
+    }
     if (isset($data['configuratorPage'])) {
 
       $config_page = get_option("ascwo_config_page", []);
 
-      if ($config_page != $data) {
+      if ($config_page !== $data) {
         update_option("ascwo_config_page", $data);
         return rest_ensure_response(["success" => true, "message" => __("Data updated successfully", "all-signs-customizer-for-woocommerce-pro")]);
       } else {
@@ -400,7 +484,7 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
 
     $option = get_option("ascwo_config_page");
 
-    if ($option == false || empty($option)) {
+    if (false === $option || empty($option)) {
       return rest_ensure_response(["message" => __("Config page not found", "all-signs-customizer-for-woocommerce-pro")]);
     } else {
       return rest_ensure_response($option);
@@ -415,17 +499,17 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
   function get_available_pages()
   {
     $args = array(
-      'post_type' => 'page', // Type de contenu "page"
-      'post_status' => 'publish', // Statut "publié"
-      'posts_per_page' => -1, // Tous les articles (-1 pour afficher tous les articles)
+      'post_type' => 'page',
+      'post_status' => 'publish',
+      'posts_per_page' => -1,
     );
 
     $existing_pages = get_posts($args);
     $pages = [];
-    $pages[] = ["id" => 0, "title" => esc_html_x("None", "all-signs-customizer-for-woocommerce-pro")];
+    $pages[] = ["id" => 0, "title" => esc_html_x("None", "none page option", "all-signs-customizer-for-woocommerce-pro")];
 
     foreach ($existing_pages as $page) {
-      $pages[] = ["id" => $page->ID, "title" => $page->post_title];
+      $pages[] = ["id" => $page->ID, "title" => esc_html($page->post_title)];
     }
 
     return rest_ensure_response($pages);
@@ -439,11 +523,14 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
    */
   function create_new_page($request)
   {
-    $params = json_decode($request->get_body());
-    if (isset($params->title) && !empty($params->title)) {
+    $params = $request->get_json_params();
+    if (!is_array($params)) {
+      $params = array();
+    }
+    if (isset($params['title']) && !empty($params['title'])) {
 
       $new_page = array(
-        'post_title' => $params->title,
+        'post_title' => sanitize_text_field(wp_unslash($params['title'])),
         'post_status' => 'publish',
         'post_type' => 'page'
       );
@@ -469,16 +556,20 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
   public function get_output_options_globals_settings($request)
   {
     $outputOptions = get_option("ascwo_output_options", []);
-    if (count($outputOptions) > 0)
+    if (!empty($outputOptions)) {
       return rest_ensure_response($outputOptions);
-    else
+    }
+
       return rest_ensure_response(["message" => __("No output options found", "all-signs-customizer-for-woocommerce-pro")]);
   }
   public function update_output_options_globals_settings($request)
   {
-    $data = json_decode($request->get_body(), true);
+    $data = $request->get_json_params();
+    if (!is_array($data)) {
+      $data = array();
+    }
     $outputOptions = get_option("ascwo_output_options", []);
-    if ($data != $outputOptions) {
+    if ($data !== $outputOptions) {
       $update = update_option("ascwo_output_options", $data);
       if ($update) {
         return rest_ensure_response(array('success' => true, "message" => __("The ouput settings has been updated with success", "all-signs-customizer-for-woocommerce-pro")));
@@ -509,12 +600,14 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
    */
   public function update_shapes_options_globals_settings($request)
   {
-    $shape = json_decode($request->get_body(), true);
-    $shape_id = $request->get_param('shape_id');
+    $shape = $request->get_json_params();
+    if (!is_array($shape)) {
+      $shape = array();
+    }
+    $shape_id = (int) $request->get_param('shape_id');
     $all_shapes = get_option("ascwo_all_shapes", []);
-    ;
-    if ($all_shapes[$shape_id]) {
-      if ($all_shapes[$shape_id] != $shape) {
+    if (isset($all_shapes[$shape_id])) {
+      if ($all_shapes[$shape_id] !== $shape) {
         $all_shapes[$shape_id] = $shape;
         $update = update_option("ascwo_all_shapes", $all_shapes);
         if ($update) {
@@ -549,11 +642,14 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
    */
   public function update_fixing_methods_options_globals_settings($request)
   {
-    $fixingMethod = json_decode($request->get_body(), true);
-    $fixingMethod_id = $request->get_param('fixingMethod_id');
+    $fixingMethod = $request->get_json_params();
+    if (!is_array($fixingMethod)) {
+      $fixingMethod = array();
+    }
+    $fixingMethod_id = (int) $request->get_param('fixingMethod_id');
     $all_fixingMethods = get_option("ascwo_all_fixingMethods", []);
-    if ($all_fixingMethods[$fixingMethod_id]) {
-      if ($all_fixingMethods[$fixingMethod_id] != $fixingMethod) {
+    if (isset($all_fixingMethods[$fixingMethod_id])) {
+      if ($all_fixingMethods[$fixingMethod_id] !== $fixingMethod) {
         $all_fixingMethods[$fixingMethod_id] = $fixingMethod;
         $update = update_option("ascwo_all_fixingMethods", $all_fixingMethods);
         if ($update) {
@@ -587,12 +683,14 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
    */
   public function update_borders_options_globals_settings($request)
   {
-    $border = json_decode($request->get_body(), true);
-    $border_id = $request->get_param('border_id');
+    $border = $request->get_json_params();
+    if (!is_array($border)) {
+      $border = array();
+    }
+    $border_id = (int) $request->get_param('border_id');
     $all_borders = get_option("ascwo_all_borders", []);
-    ;
-    if ($all_borders[$border_id]) {
-      if ($all_borders[$border_id] != $border) {
+    if (isset($all_borders[$border_id])) {
+      if ($all_borders[$border_id] !== $border) {
         $all_borders[$border_id] = $border;
         $update = update_option("ascwo_all_borders", $all_borders);
         if ($update) {
@@ -616,6 +714,6 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
    */
   public function get_config_permissions_check($request)
   {
-    return true;
+    return current_user_can('manage_options');
   }
 }

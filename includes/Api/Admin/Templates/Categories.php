@@ -2,8 +2,6 @@
 namespace ASCWO\Api\Admin;
 
 use WP_Error;
-use WP_Post;
-use WP_Query;
 use WP_REST_Controller;
 
 
@@ -90,10 +88,13 @@ class ASCWO_Api_Templates_Categories extends WP_REST_Controller
      */
     public function add_category_to_templates_categories($request)
     {
-        $data = $request->get_body();
+        $data = $request->get_json_params();
+        if (!is_array($data)) {
+            $data = array();
+        }
         $all_categories = get_option("ascwo-templates-categories", []);
         $key = uniqid();
-        $all_categories[$key] = $data;
+        $all_categories[$key] = isset($data['title']) ? sanitize_text_field(wp_unslash($data['title'])) : '';
         $update = update_option("ascwo-templates-categories", $all_categories);
         if ($update) {
             return rest_ensure_response(["success" => true, "message" => __("Category created with success", "all-signs-customizer-for-woocommerce-pro"), "categories" => $all_categories, "key" => $key]);
@@ -142,12 +143,15 @@ class ASCWO_Api_Templates_Categories extends WP_REST_Controller
      */
     public function update_category($request)
     {
-        $category = $request->get_body();
-        $category_id = $request->get_param('category_id');
+        $category = $request->get_json_params();
+        if (!is_array($category)) {
+            $category = array();
+        }
+        $category_id = (string) $request->get_param('category_id');
         $all_categories = get_option("ascwo-templates-categories", []);
         if (isset($all_categories[$category_id])) {
             if ($all_categories[$category_id] != $category) {
-                $all_categories[$category_id] = $category;
+                $all_categories[$category_id] = isset($category['title']) ? sanitize_text_field(wp_unslash($category['title'])) : '';
                 $update = update_option("ascwo-templates-categories", $all_categories);
                 if ($update) {
                     return rest_ensure_response(array('success' => true, "message" => __("The category has been updated with success", "all-signs-customizer-for-woocommerce-pro"), "categories" => $all_categories));
@@ -171,7 +175,7 @@ class ASCWO_Api_Templates_Categories extends WP_REST_Controller
      */
     public function delete_templates_categories_config($request)
     {
-        $category_id = $request->get_param('category_id');
+        $category_id = (string) $request->get_param('category_id');
         $all_categories = get_option("ascwo-templates-categories", []);
         if (isset($all_categories[$category_id])) {
             unset($all_categories[$category_id]);
@@ -196,8 +200,7 @@ class ASCWO_Api_Templates_Categories extends WP_REST_Controller
      */
     public function get_config_permissions_check($request)
     {
-        // If the user is logged in and has the rights to the posts, access to the route is authorized.
-        return true;
+        return current_user_can('manage_options');
     }
     /**
      * Create an item in category group

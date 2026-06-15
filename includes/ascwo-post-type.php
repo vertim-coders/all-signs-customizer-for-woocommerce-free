@@ -33,7 +33,7 @@ class ASCWO_Post_Type
 			'view_item' => _x('View ASO configuration', "all-signs-customizer-for-woocommerce-pro"),
 			'not_found' => _x('No ASO configuration found', "all-signs-customizer-for-woocommerce-pro"),
 			'not_found_in_trash' => _x('No ASO configuration in the trash', "all-signs-customizer-for-woocommerce-pro"),
-			'menu_name' => _x('All Signs Customizer for WooCommerce', "all-signs-customizer-for-woocommerce-pro"),
+			'menu_name' => _x('All Sign Customizer for WooCommerce', "all-signs-customizer-for-woocommerce-pro"),
 			'all_items' => _x('ASO Configurations', "all-signs-customizer-for-woocommerce-pro"),
 		);
 
@@ -172,7 +172,7 @@ class ASCWO_Post_Type
 				?>
 				<div class="ascwo-config-page-error">
 					<div class="ascwo-config-page-error-title">
-						<?php echo esc_html__("All Signs Customizer for WooCommerce Warning", "all-signs-customizer-for-woocommerce-pro") ?>
+						<?php echo esc_html__("All Sign Customizer for WooCommerce Warning", "all-signs-customizer-for-woocommerce-pro") ?>
 					</div>
 					<div>
 						<p>
@@ -197,7 +197,7 @@ class ASCWO_Post_Type
 				?>
 				<div class="ascwo-config-page-error">
 					<div class="ascwo-config-page-error-title">
-						<?php echo esc_html__("All Signs Customizer for WooCommerce Warning", "all-signs-customizer-for-woocommerce-pro") ?>
+						<?php echo esc_html__("All Sign Customizer for WooCommerce Warning", "all-signs-customizer-for-woocommerce-pro") ?>
 					</div>
 					<div>
 						<p>

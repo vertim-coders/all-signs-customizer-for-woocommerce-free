@@ -738,6 +738,17 @@ const buildConfigData = () => {
   const selectedMaterials = wizard.value.selectedMaterials.length
     ? wizard.value.selectedMaterials
     : filteredMaterials.value.slice(0, 1).map((material) => material.id);
+  const demoPricingId = Array.isArray(demo.requiredOptions?.pricings?.items) && demo.requiredOptions.pricings.items.length
+    ? String(demo.requiredOptions.pricings.items[0]?.id || '')
+    : '';
+  const pricingByFamily = {
+    signboard: 'pricing-signs-standard',
+    banner: 'pricing-banner-standard',
+    sticker: 'pricing-sticker-standard',
+  };
+  const selectedPricingId = wizard.value.includeDemo
+    ? String(pricingByFamily[wizard.value.productType] || demoPricingId || '')
+    : '';
 
   const cloneSections = (sections = {}, emptyItems = false) => Object.fromEntries(
     Object.entries(sections).map(([key, section]) => {
@@ -771,7 +782,7 @@ const buildConfigData = () => {
       popupImg: '',
       active: true,
       isDefault: index === 0,
-      pricingId: '',
+      pricingId: selectedPricingId,
       additionalPrice: 0,
       excludeComponentIds: [],
     };
@@ -798,15 +809,6 @@ const buildConfigData = () => {
     return clonedSections;
   };
 
-  const baseData = {
-    productFamily: selectedFamilyTitle.value,
-    productFamilySlug: selectedFamilySlug.value,
-    productType: wizard.value.productType,
-    materialType: wizard.value.materialType,
-    pricingMode: demo.pricingMode || 'frame-fit',
-    selectedMaterialIds: selectedMaterials,
-  };
-
   const baseSettings = {
     ...(demo.settings || {}),
     productFamily: selectedFamilyTitle.value,
@@ -829,7 +831,6 @@ const buildConfigData = () => {
 
     return {
       ...demoPayload,
-      ...baseData,
       settings: baseSettings,
       requiredOptions: cloneSections(demoPayload.requiredOptions || {}, false),
       additionalOptions: applySelectedMaterialsSection(demoPayload.additionalOptions || {}, false),
@@ -837,7 +838,6 @@ const buildConfigData = () => {
   }
 
   return {
-    ...baseData,
     settings: baseSettings,
     requiredOptions: cloneSections(demo.requiredOptions || {}, true),
     additionalOptions: applySelectedMaterialsSection(demo.additionalOptions || {}, true),
@@ -944,10 +944,12 @@ const finalCreate = async () => {
      const response = await api.addConfig({
         name: newConfig.value.name,
         description: newConfig.value.description,
+        productFamily: selectedFamilyTitle.value,
         materialType: wizard.value.materialType,
+        productType: wizard.value.productType,
+        pricingMode: 'frame-fit',
         icon: newConfig.value.icon,
         popImg: '',
-        ...data,
         data,
         product_ids: selectedWooProductIds.value,
      });

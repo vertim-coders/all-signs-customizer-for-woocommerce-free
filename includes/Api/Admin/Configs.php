@@ -7,10 +7,39 @@ use WP_Query;
 use WP_REST_Controller;
 
 /**
- * REST_API Handler
+ * REST API handler for configurations.
  */
 class ASCWO_Api_Configs extends WP_REST_Controller
 {
+    /**
+     * Get a config post by ID.
+     *
+     * @param int $config_id Config post ID.
+     * @return WP_Post|false
+     */
+    private function get_config_post_by_id($config_id)
+    {
+        $config_id = (int) $config_id;
+        if (0 === $config_id) {
+            return false;
+        }
+
+        $post = get_post($config_id);
+        return $post instanceof WP_Post ? $post : false;
+    }
+
+    /**
+     * Get the request body as an array.
+     *
+     * @param \WP_REST_Request $request Request object.
+     * @return array
+     */
+    private function get_request_data($request)
+    {
+        $data = $request->get_json_params();
+        return is_array($data) ? $data : array();
+    }
+
     private function is_valid_config_id(int $config_id): bool
     {
         if (!$config_id) {
@@ -238,7 +267,7 @@ class ASCWO_Api_Configs extends WP_REST_Controller
                 array(
                     'methods' => \WP_REST_Server::READABLE,
                     'callback' => array($this, 'get_config_post'),
-                    'permission_callback' => array($this, 'get_config_permissions_check'),
+                    'permission_callback' => '__return_true',
                     'args' => array(
                         'config_id' => array(
                             'type' => 'integer',
@@ -282,7 +311,7 @@ class ASCWO_Api_Configs extends WP_REST_Controller
      */
     public function create_config_post($request)
     {
-        $params = json_decode($request->get_body(), true);
+        $params = $this->get_request_data($request);
         $product_ids = array();
         if (isset($params['product_ids']) && is_array($params['product_ids'])) {
             $product_ids = $params['product_ids'];
@@ -296,17 +325,14 @@ class ASCWO_Api_Configs extends WP_REST_Controller
         $required_options = $this->pick_config_payload_section($params, $data_payload, 'requiredOptions', array());
         $additional_options = $this->pick_config_payload_section($params, $data_payload, 'additionalOptions', array());
         $product_type = isset($params['productType']) ? $params['productType'] : (isset($data_payload['productType']) ? $data_payload['productType'] : 'signs-panels');
+        $product_family = isset($params['productFamily']) ? sanitize_text_field(wp_unslash($params['productFamily'])) : (isset($data_payload['productFamily']) ? sanitize_text_field((string) $data_payload['productFamily']) : '');
         $pricing_mode = isset($params['pricingMode']) ? $params['pricingMode'] : (isset($data_payload['pricingMode']) ? $data_payload['pricingMode'] : 'frame-fit');
-        $data = [
-            'post_title' => $params["name"],
-            'post_content' => $params["description"],
+        $data = array(
+            'post_title' => isset($params['name']) ? sanitize_text_field(wp_unslash($params['name'])) : '',
+            'post_content' => isset($params['description']) ? sanitize_textarea_field(wp_unslash($params['description'])) : '',
             'post_type' => 'ascwo-configs',
-            'post_meta' => [
-                "ascwo-configs-meta" => [],
-                "ascwo-templates" => [],
-            ],
-            'post_status' => 'publish'
-        ];
+            'post_status' => 'publish',
+        );
         if (!empty($data_payload) || !empty($required_options) || !empty($additional_options) || !empty($settings)) {
             $post_id = wp_insert_post($data);
             if ($post_id != 0 && !is_wp_error($post_id)) {
@@ -316,6 +342,7 @@ class ASCWO_Api_Configs extends WP_REST_Controller
                     "icon" => isset($params["icon"]) ? $params["icon"] : '',
                     "popImg" => isset($params["popImg"]) ? $params["popImg"] : '',
                     "materialType" => $material_type,
+                    "productFamily" => $product_family,
                     "productType" => $product_type,
                     "pricingMode" => $pricing_mode,
                     "settings" => is_array($settings) ? $settings : array(),
@@ -350,27 +377,27 @@ class ASCWO_Api_Configs extends WP_REST_Controller
      */
     public function get_config_post($request)
     {
-        $id = $request->get_param('config_id');
-        if ($id != 0) {
+        $id = (int) $request->get_param('config_id');
+        if ($id !== 0) {
             $meta_value = get_post_meta($id, 'ascwo-configs-meta', true);
             if (is_array($meta_value) && !empty($meta_value)) {
-                if (isset($meta_value['data']) && is_array($meta_value['data'])) {
-                    foreach (array('settings', 'requiredOptions', 'additionalOptions', 'productType', 'pricingMode', 'materialType') as $section_key) {
-                        if (!isset($meta_value[$section_key]) || $meta_value[$section_key] === array() || $meta_value[$section_key] === '') {
-                            if (isset($meta_value['data'][$section_key])) {
-                                $meta_value[$section_key] = $meta_value['data'][$section_key];
-                            }
-                        }
-                    }
-                }
-                return rest_ensure_response(array_merge(
-                    array(
-                        'id' => (int) $id,
-                        'name' => get_the_title($id),
-                        'description' => get_post_field('post_content', $id),
-                    ),
-                    $meta_value
-                ));
+                $data = isset($meta_value['data']) && is_array($meta_value['data']) ? $meta_value['data'] : array();
+                $response = array(
+                    'id' => (int) $id,
+                    'name' => get_the_title($id),
+                    'description' => get_post_field('post_content', $id),
+                    'schemaVersion' => isset($meta_value['schemaVersion']) ? $meta_value['schemaVersion'] : 1,
+                    'schemaSource' => isset($meta_value['schemaSource']) ? $meta_value['schemaSource'] : 'raw',
+                    'icon' => isset($meta_value['icon']) ? $meta_value['icon'] : '',
+                    'popImg' => isset($meta_value['popImg']) ? $meta_value['popImg'] : '',
+                    'materialType' => isset($meta_value['materialType']) ? $meta_value['materialType'] : (isset($data['materialType']) ? $data['materialType'] : 'simple'),
+                    'productType' => isset($meta_value['productType']) ? $meta_value['productType'] : (isset($data['productType']) ? $data['productType'] : ''),
+                    'productFamily' => isset($meta_value['productFamily']) ? $meta_value['productFamily'] : (isset($data['productFamily']) ? $data['productFamily'] : ''),
+                    'pricingMode' => isset($meta_value['pricingMode']) ? $meta_value['pricingMode'] : (isset($data['pricingMode']) ? $data['pricingMode'] : ''),
+                    'data' => $data,
+                );
+
+                return rest_ensure_response($response);
             } else {
                 return rest_ensure_response(["message" => __("Not ASO Config Post", "all-signs-customizer-for-woocommerce-pro")]);
             }
@@ -384,7 +411,7 @@ class ASCWO_Api_Configs extends WP_REST_Controller
 
     public function get_preview_config_data($request)
     {
-        $configId = $request->get_param('config_id');
+        $configId = (int) $request->get_param('config_id');
         $config = get_post_meta($configId, "ascwo-configs-meta", true);
         $config = is_array($config) ? $config : array();
         $config['settings'] = isset($config['settings']) && is_array($config['settings']) ? $config['settings'] : array();
@@ -396,17 +423,20 @@ class ASCWO_Api_Configs extends WP_REST_Controller
         $all_fixingMethods = get_option("ascwo_all_fixingMethods", []);
         $all_borders = get_option("ascwo_all_borders", []);
         $outputOptions = get_option("ascwo_output_options", []);
-        $configData = [
+        $frontend_data = isset($config['data']) && is_array($config['data']) ? $config['data'] : array();
+        $configData = array(
             'name' => get_post_field('post_title', $configId),
-            "description" => get_post_field('post_content', $configId),
-            "icon" => $config["icon"],
-            "popImg" => $config["popImg"],
-            "materialType" => $material_type,
-            "data" => $frontend_data
-        ];
-        $visibleFonts = ConfigSchemaNormalizer::to_frontend_fonts($config_meta, is_array($all_fonts) ? $all_fonts : []);
-        $enable_clipart = isset($frontend_data["settings"]["customizerSign"]["images"]["enableClipart"])
-            ? $frontend_data["settings"]["customizerSign"]["images"]["enableClipart"]
+            'description' => get_post_field('post_content', $configId),
+            'icon' => isset($config['icon']) ? $config['icon'] : '',
+            'popImg' => isset($config['popImg']) ? $config['popImg'] : '',
+            'materialType' => $material_type,
+            'data' => $frontend_data,
+        );
+        $visibleFonts = isset($config['requiredOptions']['fonts']['items']) && is_array($config['requiredOptions']['fonts']['items'])
+            ? $config['requiredOptions']['fonts']['items']
+            : (is_array($all_fonts) ? $all_fonts : array());
+        $enable_clipart = isset($frontend_data['settings']['customizerSign']['images']['enableClipart'])
+            ? $frontend_data['settings']['customizerSign']['images']['enableClipart']
             : false;
         $config_cliparts = is_array($enable_clipart) && isset($enable_clipart["selectedClipartGroups"]) && is_array($enable_clipart["selectedClipartGroups"])
             ? $enable_clipart["selectedClipartGroups"]
@@ -430,9 +460,9 @@ class ASCWO_Api_Configs extends WP_REST_Controller
         ];
 
         $preview_data = array(
-            'skin' => isset($frontend_data["settings"]['themeColors']['skin']) ? $frontend_data["settings"]['themeColors']['skin'] : (isset($config['settings']['themeColors']['skin']) ? $config['settings']['themeColors']['skin'] : 'default'),
+            'skin' => isset($frontend_data['settings']['themeColors']['skin']) ? $frontend_data['settings']['themeColors']['skin'] : (isset($config['settings']['themeColors']['skin']) ? $config['settings']['themeColors']['skin'] : 'default'),
             'currentConfig' => $configData,
-            "managesData" => $all_manages,
+            'managesData' => $all_manages,
             'regularPrice' => 0,
             'thousandSep' => wc_get_price_thousand_separator(),
             'decimalSep' => wc_get_price_decimal_separator(),
@@ -440,9 +470,9 @@ class ASCWO_Api_Configs extends WP_REST_Controller
             'nbDecimals' => wc_get_price_decimals(),
             'currencySymbol' => html_entity_decode(get_woocommerce_currency_symbol()),
             'currency_pos' => get_option('woocommerce_currency_pos'),
-            "fixing_methods_url" => ASCWO_ASSETS . '/images/fixing-methodes',
-            "borders_url" => ASCWO_ASSETS . '/images/borders',
-            "frontend_nonce" => wp_create_nonce('ascwo_add_to_cart_after_custom')
+            'fixing_methods_url' => ASCWO_ASSETS . '/images/fixing-methodes',
+            'borders_url' => ASCWO_ASSETS . '/images/borders',
+            'frontend_nonce' => wp_create_nonce('ascwo_add_to_cart_after_custom'),
         );
         return rest_ensure_response($preview_data);
     }
@@ -454,10 +484,10 @@ class ASCWO_Api_Configs extends WP_REST_Controller
 
     public function update_config_post($request)
     {
-        $params = json_decode($request->get_body(), true);
-        $post_id = $request->get_param('config_id');
+        $params = $this->get_request_data($request);
+        $post_id = (int) $request->get_param('config_id');
         $data_payload = isset($params["data"]) && is_array($params["data"]) ? $this->sanitize_config_data($params["data"]) : array();
-        $existing_post = get_post($post_id);
+        $existing_post = $this->get_config_post_by_id($post_id);
         $existing_meta = get_post_meta($post_id, 'ascwo-configs-meta', true);
         $args = array(
             'ID' => $post_id,
@@ -478,12 +508,16 @@ class ASCWO_Api_Configs extends WP_REST_Controller
             $material_type = isset($params['materialType'])
                 ? $this->sanitize_material_type($params['materialType'])
                 : (isset($meta['materialType']) ? $this->sanitize_material_type($meta['materialType']) : 'simple');
+            $product_family = isset($params['productFamily'])
+                ? sanitize_text_field(wp_unslash($params['productFamily']))
+                : (isset($meta['productFamily']) ? sanitize_text_field((string) $meta['productFamily']) : '');
             $data = array(
                 'schemaVersion' => isset($meta['schemaVersion']) ? $meta['schemaVersion'] : 1,
                 'schemaSource' => 'raw',
                 "icon" => isset($params["icon"]) ? $params["icon"] : (is_array($existing_meta) && isset($existing_meta["icon"]) ? $existing_meta["icon"] : ''),
                 "popImg" => isset($params["popImg"]) ? $params["popImg"] : (is_array($existing_meta) && isset($existing_meta["popImg"]) ? $existing_meta["popImg"] : ''),
                 "materialType" => $material_type,
+                "productFamily" => $product_family,
                 "data" => $existing_data,
                 "settings" => $settings,
                 "productType" => isset($params["productType"]) ? $params["productType"] : (isset($meta["productType"]) ? $meta["productType"] : null),
@@ -518,9 +552,9 @@ class ASCWO_Api_Configs extends WP_REST_Controller
     public function delete_config($request)
     {
 
-        $id = $request->get_param('config_id');
+        $id = (int) $request->get_param('config_id');
 
-        if ($id != 0) {
+        if ($id !== 0) {
             // Detach all products assigned to this config.
             $assigned_products = $this->get_products_assigned_to_config((int) $id);
             foreach ($assigned_products as $product_id) {
@@ -640,8 +674,7 @@ class ASCWO_Api_Configs extends WP_REST_Controller
      */
     public function get_config_permissions_check($request)
     {
-        // If the user is logged in and has the rights to the posts, access to the route is authorized.
-        return true;
+        return current_user_can('manage_options');
     }
 
     /**

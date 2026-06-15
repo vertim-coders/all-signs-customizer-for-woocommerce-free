@@ -18,9 +18,6 @@ function menuFix(slug) {
     const hash = window.location.hash || "#/";
     const route = hash.replace(/^#/, "").split("?")[0];
 
-    if (route.startsWith("/templates") || route.startsWith("/configs/template")) {
-      return "templates";
-    }
     if (route.startsWith("/settings") || route.startsWith("/global-settings")) {
       return "global-settings";
     }
@@ -60,7 +57,6 @@ function menuFix(slug) {
       const routeMatch = {
         home: "#/",
         configurations: "#/configuration",
-        templates: "#/templates/main",
         "global-settings": "#/settings",
         "manage-fonts": "#/manage-font",
         "manage-cliparts": "#/manage-cliparts",

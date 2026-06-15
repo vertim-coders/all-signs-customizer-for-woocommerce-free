@@ -10,23 +10,6 @@
                     <input type="text" v-model="licenses.product" class="ascwo-w-full"/>
                 </div>
             </div>
-            <div class="ascwo-bg-[#F8F9FB] ascwo-px-8 ascwo-py-4">
-                <label class="ascwo-flex ascwo-items-start ascwo-justify-between ascwo-gap-4">
-                    <div class="ascwo-flex ascwo-flex-col ascwo-space-y-1">
-                        <span class="ascwo-text-[14px] ascwo-font-semibold ascwo-text-[#1f2937]">
-                            {{ __('Enable plugin auto-updates', 'all-signs-customizer-for-woocommerce-pro') }}
-                        </span>
-                        <span class="ascwo-text-[12px] ascwo-text-[#6b7280]">
-                            {{ __('When enabled, WordPress will automatically install new versions of this plugin when an update is available.', 'all-signs-customizer-for-woocommerce-pro') }}
-                        </span>
-                    </div>
-                    <input
-                        type="checkbox"
-                        v-model="licenses.auto_update"
-                        class="ascwo-mt-1 ascwo-h-4 ascwo-w-4 ascwo-cursor-pointer"
-                    />
-                </label>
-            </div>
             <div class="ascwo-bg-[#F8F9FB] ascwo-flex ascwo-space-x-4 ascwo-px-4 ascwo-py-3 ascwo-justify-end ascwo-items-end">
                 <div class="ascwo-bg-[#016464] ascwo-rounded">
                     <button :disabled="isLoading" @click="updateGlobalLicenses" class="ascwo-flex ascwo-bg-transparent ascwo-w-fit ascwo-space-x-2 ascwo-h-fit ascwo-text-white ascwo-px-8 ascwo-p-2.5 ascwo-rounded ascwo-border-none ascwo-opacity-90 hover:ascwo-opacity-100 hover:ascwo-border-none hover:ascwo-text-white hover:ascwo-bg-[#016464] ascwo-cursor-pointer">
@@ -48,7 +31,6 @@
 import api from '@/admin/Api/api';
 import {ref, onMounted} from 'vue';
 import toastMessage from '@/admin/utils/functions';
-import axios from 'axios';
 import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 // Import du helper de traduction
 
@@ -60,7 +42,6 @@ const licenses = ref({
     product:"",
     auto_update:false,
 });
-const productId = ascwo_data.author;
 onMounted(async() => {
     isFetching.value = true;
     await fetchLicenses();
@@ -75,43 +56,25 @@ const fetchLicenses = async () => {
 const updateGlobalLicenses = async () => {
     isLoading.value = true;
     try {
-        const result = await api.saveGlobalSettingsProduct(licenses.value);
-        if(result.success){
-            const shouldActivateLicense = licenses.value.product?.trim() && licenses.value.product !== initialProduct.value;
+        const shouldActivateLicense = licenses.value.product?.trim() && licenses.value.product !== initialProduct.value;
+        const payload = {
+            ...licenses.value,
+            activate_license: shouldActivateLicense,
+        };
 
+        const result = await api.saveGlobalSettingsProduct(payload);
+        if (result.success) {
+            initialProduct.value = licenses.value.product;
+            toastMessage(result.message || result.success);
             if (shouldActivateLicense) {
-                await activateLicenseKey();
-            } else {
-                initialProduct.value = licenses.value.product;
-                toastMessage(result.success);
+                document.location.href = 'admin.php?page=ascwo#/';
+                document.location.reload(true);
             }
         }else{
             toastMessage(result.message,"error");
         }
     } finally {
         isLoading.value = false;
-    }
-}
-const activateLicenseKey = async () => {
-    try {
-        const url = 'https://signsdesigner.us/wp-json/vlc/license/?lcde='+ licenses.value.product +"&siteurl="+ascwo_data.site_url+"&vertim="+productId;
-        const response = await axios.get(url);
-        if (response.data.key) {
-            licenses.value.valid = response.data.key;
-            await api.saveGlobalSettingsProduct(licenses.value);
-            initialProduct.value = licenses.value.product;
-            toastMessage(__("Activation successful! Your product is ready to use", "all-signs-customizer-for-woocommerce-pro"));
-            document.location.href = 'admin.php?page=ascwo#/'
-            document.location.reload(true);
-        }else if(response.data.message){
-            await api.saveGlobalSettingsProduct(licenses.value);
-            toastMessage(response.data.message, 'error');
-            document.location.reload(true);
-        }else{
-            toastMessage(response.data, 'error');
-        }
-    } catch (error) {
-        toastMessage(__('An unknown error occurred.', 'all-signs-customizer-for-woocommerce-pro'), "error");
     }
 }
 </script>

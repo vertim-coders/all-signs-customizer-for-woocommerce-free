@@ -1427,7 +1427,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
 
     public function permissions_check($request)
     {
-        return true;
+        return current_user_can('manage_options');
     }
 
     public function get_collection_params()

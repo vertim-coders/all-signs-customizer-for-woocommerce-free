@@ -38,6 +38,10 @@ class ASCWO_Updater
 		if ('plugin_information' !== $action) {
 			return $res;
 		}
+
+		if (!is_object($args) || empty($args->slug)) {
+			return $res;
+		}
 		$plugin_slug = explode('/', plugin_basename(ASCWO_FILE))[0];
 
 		// do nothing if it is not our plugin
@@ -144,7 +148,7 @@ class ASCWO_Updater
 		}
 
 		$site_url = get_site_url();
-		$purchase_code = get_option("ascwo_product_pro");
+		$purchase_code = get_option('ascwo_product_pro', '');
 		if (empty($purchase_code) || !apply_filters('ascwo_remote_update_checks_enabled', true)) {
 			self::$remote_cache = array(
 				'status' => 0,
@@ -153,7 +157,14 @@ class ASCWO_Updater
 			return self::$remote_cache;
 		}
 
-		$url = 'https://signsdesigner.us/wp-json/vlc/update/?lcde=' . $purchase_code . '&siteurl=' . urlencode($site_url) . "&vertim=" . ASCWO_ID;
+		$url = add_query_arg(
+			array(
+				'lcde' => $purchase_code,
+				'siteurl' => $site_url,
+				'vertim' => ASCWO_ID,
+			),
+			'https://signsdesigner.us/wp-json/vlc/update/'
+		);
 
 		$args = array(
 			'timeout' => 8,
@@ -176,26 +187,35 @@ class ASCWO_Updater
 			return self::$remote_cache;
 		}
 
-		$remote = json_decode($response['body']);
+		$body = wp_remote_retrieve_body($response);
+		if ('' === trim((string) $body)) {
+			self::$remote_cache = array(
+				'status' => $status_code,
+				'message' => 'empty_body',
+			);
+			return self::$remote_cache;
+		}
+
+		$remote = json_decode($body);
 		if (is_object($remote)) {
 			if (isset($remote->version) && isset($remote->download_url)) {
 				$plugin_slug = explode('/', plugin_basename(ASCWO_FILE))[0];
 				$res = new stdClass();
-				$res->name = $remote->name;
+				$res->name = isset($remote->name) ? (string) $remote->name : '';
 				$res->slug = $plugin_slug;
-				$res->author = $remote->author;
-				$res->author_profile = $remote->author_profil;
-				$res->version = $remote->version;
-				$res->tested = $remote->tested;
-				$res->requires = $remote->requires;
-				$res->requires_php = $remote->requires_php;
-				$res->download_link = $remote->download_url;
-				$res->trunk = $remote->download_url;
-				$res->last_updated = $remote->last_updated;
+				$res->author = isset($remote->author) ? (string) $remote->author : '';
+				$res->author_profile = isset($remote->author_profil) ? (string) $remote->author_profil : '';
+				$res->version = (string) $remote->version;
+				$res->tested = isset($remote->tested) ? (string) $remote->tested : '';
+				$res->requires = isset($remote->requires) ? (string) $remote->requires : '';
+				$res->requires_php = isset($remote->requires_php) ? (string) $remote->requires_php : '';
+				$res->download_link = esc_url_raw((string) $remote->download_url);
+				$res->trunk = $res->download_link;
+				$res->last_updated = isset($remote->last_updated) ? (string) $remote->last_updated : '';
 				$res->sections = array(
-					'description' => $remote->sections->description,
-					'installation' => $remote->sections->installation,
-					'changelog' => $remote->sections->changelog
+					'description' => isset($remote->sections->description) ? (string) $remote->sections->description : '',
+					'installation' => isset($remote->sections->installation) ? (string) $remote->sections->installation : '',
+					'changelog' => isset($remote->sections->changelog) ? (string) $remote->sections->changelog : ''
 					// you can add your custom sections (tabs) here
 				);
 				// in case you want the screenshots tab, use the following HTML format for its content:

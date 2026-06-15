@@ -99,12 +99,12 @@ class ASCWO_Product_Config
 			$configs_ids[$config->ID] = ['title' => $config->post_title];
 		}
 		?>
-				<div class="ascwo_config_data show_if_simple">
-					<?php
-					$this->display_ascwo_config_on_WC_product_config($id, $configs_ids, __('Attach this product to All Signs Customizer for WooCommerce configuration', "all-signs-customizer-for-woocommerce-pro"));
-					?>
-				</div>
-				<?php
+		<div class="ascwo_config_data show_if_simple">
+			<?php
+			$this->display_ascwo_config_on_WC_product_config($id, $configs_ids, __('Attach this product to All Sign Customizer for WooCommerce configuration', "all-signs-customizer-for-woocommerce-pro"));
+			?>
+		</div>
+		<?php
 	}
 
 	/**
@@ -176,16 +176,16 @@ class ASCWO_Product_Config
 			$configs_ids[$config->ID] = ['title' => $config->post_title];
 		}
 		?>
-				<tr>
-					<td>
-						<div class="ascwo_config_data show_if_simple">
-							<?php
-							$this->display_ascwo_config_on_WC_product_config($id, $configs_ids, __('Attach this product to All Signs Customizer for WooCommerce configuration', "all-signs-customizer-for-woocommerce-pro"));
-							?>
-						</div>
-					</td>
-				</tr>
-				<?php
+		<tr>
+			<td>
+				<div class="ascwo_config_data show_if_simple">
+					<?php
+					$this->display_ascwo_config_on_WC_product_config($id, $configs_ids, __('Attach this product to All Sign Customizer for WooCommerce configuration', "all-signs-customizer-for-woocommerce-pro"));
+					?>
+				</div>
+			</td>
+		</tr>
+		<?php
 	}
 
 	/**
@@ -208,7 +208,7 @@ class ASCWO_Product_Config
 	 */
 	function get_product_columns($defaults)
 	{
-		$defaults['is_ascwo_customizable'] = __("All Signs Customizer for WooCommerce", "all-signs-customizer-for-woocommerce-pro");
+		$defaults['is_ascwo_customizable'] = __("All Sign Customizer for WooCommerce", "all-signs-customizer-for-woocommerce-pro");
 		return $defaults;
 	}
 	/**
@@ -266,26 +266,26 @@ class ASCWO_Product_Config
 		} else {
 
 			?>
-						<div class="ascwo-buttons-wrap-<?php echo esc_attr($product->get_type()); ?>"
-							data-id="<?php echo esc_attr($this->variation_id); ?>">
+			<div class="ascwo-buttons-wrap-<?php echo esc_attr($product->get_type()); ?>"
+				data-id="<?php echo esc_attr($this->variation_id); ?>">
 
-							<?php
+				<?php
 
 
-							$default_design_btn_url = $this->get_design_page_url();
-							$have_pages_settings = get_option("ascwo_config_page");
-							$content .= '<a  href="' . $default_design_btn_url . '" class="button ascwo-design-product">' . $have_pages_settings["buttons"]["productDesignButton"] . '</a>';
+				$default_design_btn_url = $this->get_design_page_url();
+				$have_pages_settings = get_option("ascwo_config_page");
+				$content .= '<a  href="' . $default_design_btn_url . '" class="button ascwo-design-product">' . $have_pages_settings["buttons"]["productDesignButton"] . '</a>';
 
-							if (!isset($item_id)) {
-								$item_id = '';
-							}
-							if (!isset($default_design_btn_url)) {
-								$default_design_btn_url = '';
-							}
-							echo wp_kses_post(apply_filters('ascwo_show_customization_buttons_in_modal', wp_kses_post($content), $item_id, $default_design_btn_url, $product->get_type()));
-							?>
-						</div>
-						<?php
+				if (!isset($item_id)) {
+					$item_id = '';
+				}
+				if (!isset($default_design_btn_url)) {
+					$default_design_btn_url = '';
+				}
+				echo wp_kses_post(apply_filters('ascwo_show_customization_buttons_in_modal', wp_kses_post($content), $item_id, $default_design_btn_url, $product->get_type()));
+				?>
+			</div>
+			<?php
 		}
 
 		$output = ob_get_clean();
@@ -319,27 +319,27 @@ class ASCWO_Product_Config
 		} else {
 
 			?>
-						<div class="ascwo-buttons-wrap-<?php echo esc_attr($product->get_type()); ?>"
-							data-id="<?php echo esc_attr($this->variation_id); ?>">
+			<div class="ascwo-buttons-wrap-<?php echo esc_attr($product->get_type()); ?>"
+				data-id="<?php echo esc_attr($this->variation_id); ?>">
 
-							<?php
+				<?php
 
 
-							$default_template_btn_url = $this->get_templates_page_url();
-							$have_pages_settings = get_option("ascwo_config_page");
+				$default_template_btn_url = $this->get_templates_page_url();
+				$have_pages_settings = get_option("ascwo_config_page");
 
-							$content .= '<a  href="' . $default_template_btn_url . '" class="button ascwo-template-product">' . $have_pages_settings["buttons"]["productTemplateButton"] . '</a>';
+				$content .= '<a  href="' . $default_template_btn_url . '" class="button ascwo-template-product">' . $have_pages_settings["buttons"]["productTemplateButton"] . '</a>';
 
-							if (!isset($item_id)) {
-								$item_id = '';
-							}
-							if (!isset($default_template_btn_url)) {
-								$default_template_btn_url = '';
-							}
-							echo wp_kses_post(apply_filters('ascwo_show_templates_buttons_in_modal', wp_kses_post($content), $item_id, $default_template_btn_url, $product->get_type()));
-							?>
-						</div>
-						<?php
+				if (!isset($item_id)) {
+					$item_id = '';
+				}
+				if (!isset($default_template_btn_url)) {
+					$default_template_btn_url = '';
+				}
+				echo wp_kses_post(apply_filters('ascwo_show_templates_buttons_in_modal', wp_kses_post($content), $item_id, $default_template_btn_url, $product->get_type()));
+				?>
+			</div>
+			<?php
 		}
 
 		$output = ob_get_clean();
@@ -599,18 +599,18 @@ class ASCWO_Product_Config
 			$meta_design = get_post_meta($configs[$product_id]['config-id'], 'ascwo-configs-meta', true);
 			if ('simple' === $product->get_type() || 'variable' === $product->get_type()) {
 				ob_start(); ?>
-								<div class="ascwo-buttons-url">
-									<?php
-									$general_product_options = $meta_design["data"]["settings"]["generals"]["product"] ?? null;
-									if ($general_product_options != null && $general_product_options["designFromScratch"] === true) {
-										echo wp_kses_post($ascwo_product->get_design_buttons(true));
-									}
-									if (is_array($meta_templates) && count($meta_templates) > 0) {
-										echo wp_kses_post($ascwo_product->get_templates_buttons());
-									}
-									?>
-								</div>
-								<?php
+				<div class="ascwo-buttons-url">
+					<?php
+					$general_product_options = $meta_design["data"]["settings"]["generals"]["product"] ?? null;
+					if ($general_product_options != null && $general_product_options["designFromScratch"] === true) {
+						echo wp_kses_post($ascwo_product->get_design_buttons(true));
+					}
+					if (is_array($meta_templates) && count($meta_templates) > 0) {
+						echo wp_kses_post($ascwo_product->get_templates_buttons());
+					}
+					?>
+				</div>
+				<?php
 			}
 		}
 	}

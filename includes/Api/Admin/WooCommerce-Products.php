@@ -59,7 +59,7 @@ class ASCWO_Api_WooCommerce_Products extends WP_REST_Controller
 
     public function permissions_check($request)
     {
-        return true;
+        return current_user_can('manage_options');
     }
 
     private function is_valid_config_id(int $config_id): bool

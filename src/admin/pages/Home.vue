@@ -27,7 +27,7 @@
         </div>
         <div class="ascwo-dashboard-banner-text ascwo-text-[13px]">
           {{ __('Click', 'all-signs-customizer-for-woocommerce-pro') }}
-          <a href="#" @click.prevent="openInstallTemplatesModal">{{ __('here to add template screen', 'all-signs-customizer-for-woocommerce-pro') }}</a>
+          <a href="#" @click.prevent="openInstallConfigModal">{{ __('here to install configuration screen', 'all-signs-customizer-for-woocommerce-pro') }}</a>
           {{ __(' to your online store', 'all-signs-customizer-for-woocommerce-pro') }}
         </div>
       </div>
@@ -228,7 +228,6 @@ import {
   ThumbsDownIcon,
   SettingsIcon,
   LibraryIcon,
-  FileTextIcon,
   PlusCircleIcon,
   HelpCircleIcon,
   CreditCardIcon,
@@ -245,7 +244,6 @@ const kpis = ref([
 const kpisLoading = ref(false)
 const recentConfigs = ref([])
 const showInstallConfigModal = ref(false)
-const showInstallTemplatesModal = ref(false)
 const copiedKey = ref(null)
 const router = useRouter();
 
@@ -307,10 +305,8 @@ const getProductFamilyLabel = (config) => {
 };
 
 const openInstallConfigModal = () => { showInstallConfigModal.value = true }
-const openInstallTemplatesModal = () => { showInstallTemplatesModal.value = true }
 const closeInstallModals = () => {
   showInstallConfigModal.value = false
-  showInstallTemplatesModal.value = false
 }
 
 const copySnippet = async (text, key) => {
@@ -375,12 +371,6 @@ const mainMenu = [
     title: __('Configurations', 'all-signs-customizer-for-woocommerce-pro'),
     desc: __('Manage your sign configurations', 'all-signs-customizer-for-woocommerce-pro'),
     icon: LayoutGridIcon
-  },
-  {
-    to: '/templates/main',
-    title: __('Templates', 'all-signs-customizer-for-woocommerce-pro'),
-    desc: __('Manage your sign templates', 'all-signs-customizer-for-woocommerce-pro'),
-    icon: FileTextIcon
   },
   {
     to: '/settings/output',
