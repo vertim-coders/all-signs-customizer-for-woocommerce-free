@@ -911,6 +911,344 @@ export const AdditionalOptionsComponents = {
   description: "",
 };
 
+export const RequiredOptionsLightings = {
+  items: [
+    {
+      id: "lighting-panel-soft-white",
+      label: "Soft White",
+      hexCode: "#F5F5F4",
+      isDefault: true,
+      additionalPrice: 0,
+    },
+    {
+      id: "lighting-panel-amber",
+      label: "Amber Glow",
+      hexCode: "#F59E0B",
+      isDefault: false,
+      additionalPrice: 4,
+    },
+    {
+      id: "lighting-panel-warm-white",
+      label: "Warm White",
+      hexCode: "#FFF4D6",
+      isDefault: false,
+      additionalPrice: 2,
+    },
+    {
+      id: "lighting-panel-cool-white",
+      label: "Cool White",
+      hexCode: "#E8F1FF",
+      isDefault: false,
+      additionalPrice: 3,
+    },
+    {
+      id: "lighting-panel-rose",
+      label: "Rose Glow",
+      hexCode: "#F472B6",
+      isDefault: false,
+      additionalPrice: 5,
+    },
+    {
+      id: "lighting-panel-neon-blue",
+      label: "Neon Blue",
+      hexCode: "#38BDF8",
+      isDefault: false,
+      additionalPrice: 5,
+    },
+  ],
+  label: "Lighting",
+  description: "",
+};
+
+const createComponentOption = ({
+  componentId,
+  suffix,
+  label,
+  sizeId,
+  shape,
+  border,
+  fixingMethods,
+  backgroundColorId,
+  additionalPrice = 0,
+  isDefault = false,
+}) => ({
+  id: `${componentId}-${suffix}`,
+  icon: "",
+  image: "",
+  label,
+  sizes: {
+    items: [
+      {
+        id: sizeId,
+        isDefault: true,
+      },
+    ],
+  },
+  shapes: {
+    items: [
+      {
+        ...shape,
+        custom: false,
+        isDefault: true,
+      },
+    ],
+  },
+  borders: {
+    items: [
+      {
+        ...border,
+        custom: false,
+        isDefault: true,
+      },
+    ],
+  },
+  isDefault,
+  lightings: {
+    items: [
+      {
+        id: `${componentId}-${suffix}-glow-soft`,
+        label: "Soft Glow",
+        hexCode: "#F4F4F5",
+        isDefault: true,
+        additionalPrice: 0,
+      },
+      {
+        id: `${componentId}-${suffix}-glow-amber`,
+        label: "Amber Glow",
+        hexCode: "#F59E0B",
+        isDefault: false,
+        additionalPrice: 4,
+      },
+    ],
+    customColorLabel: "Custom Color",
+    enableCustomColor: false,
+  },
+  overrides: {
+    additionalPrice,
+  },
+  textZones: [
+    {
+      x: 50,
+      y: 56,
+      id: `${componentId}-${suffix}-text-main`,
+      bold: true,
+      color: "#111827",
+      label: "Main text",
+      value: label,
+      italic: false,
+      fontSize: 42,
+      textAlign: "center",
+      defaultFont: "Arial",
+    },
+    {
+      x: 50,
+      y: 76,
+      id: `${componentId}-${suffix}-text-sub`,
+      bold: false,
+      color: "#475467",
+      label: "Subtitle",
+      value: label.split(" ").slice(0, -1).join(" ") || label,
+      italic: false,
+      fontSize: 18,
+      textAlign: "center",
+      defaultFont: "Arial",
+    },
+  ],
+  imageZones: [
+    {
+      x: 50,
+      y: 24,
+      id: `${componentId}-${suffix}-image-logo`,
+      tint: "#111827",
+      image: "/aso_default_files/demos/logo.webp",
+      label: "Logo",
+      width: 96,
+      height: 96,
+      fitMode: "contain",
+      lockAspectRatio: true,
+    },
+  ],
+  backgrounds: {
+    items: [
+      {
+        id: backgroundColorId,
+        isDefault: true,
+      },
+    ],
+    customColorLabel: "Custom Color",
+    enableCustomColor: false,
+  },
+  description: `${label} preset.`,
+  fixingMethods: {
+    items: fixingMethods,
+  },
+});
+
+const rectangleShape = {
+  id: "shape-rectangle",
+  url: "/aso_default_files/demos/shape-preview.svg",
+  label: "Rectangle",
+  shapeId: 1,
+  additionalPrice: 0,
+};
+
+const squareShape = {
+  id: "shape-square",
+  url: "/aso_default_files/demos/shape-preview.svg",
+  label: "Square",
+  shapeId: 2,
+  additionalPrice: 0,
+};
+
+const standardBorder = {
+  id: "border-standard",
+  url: "/aso_default_files/demos/border-preview.svg",
+  label: "Standard border",
+  description: "",
+  manageBorderId: 1,
+  additionalPrice: 0,
+};
+
+const roundedBorder = {
+  id: "border-rounded",
+  url: "/aso_default_files/demos/border-preview.svg",
+  label: "Rounded corners",
+  description: "",
+  manageBorderId: 2,
+  additionalPrice: 6,
+};
+
+const fixingWallScrews = (sizeId, isDefault = true) => ({
+  id: "fixing-wall-screws",
+  url: "/aso_default_files/demos/fixing-preview.svg",
+  label: "Wall screws",
+  custom: false,
+  sizeId,
+  isDefault,
+  description: "",
+  fixingMethodId: 1,
+  additionalPrice: 0,
+});
+
+const fixingHangingKit = (sizeId, isDefault = false) => ({
+  id: "fixing-hanging-kit",
+  url: "/aso_default_files/demos/fixing-preview.svg",
+  label: "Hanging kit",
+  custom: false,
+  sizeId,
+  isDefault,
+  description: "",
+  fixingMethodId: 2,
+  additionalPrice: 0,
+});
+
+const fixingStandoffKit = (sizeId, isDefault = false) => ({
+  id: "fixing-standoff-kit",
+  url: "/aso_default_files/demos/fixing-preview.svg",
+  label: "Standoff kit",
+  custom: false,
+  sizeId,
+  isDefault,
+  description: "",
+  fixingMethodId: 3,
+  additionalPrice: 10,
+});
+
+export const RequiredOptionsComponentsAdvanced = {
+  items: [
+    {
+      id: "component-panel-office",
+      icon: "",
+      label: "Office plaque",
+      name: "Office plaque",
+      title: "Office plaque",
+      options: [
+        createComponentOption({
+          componentId: "component-panel-office",
+          suffix: "office-plaque-standard",
+          label: "Office plaque Standard",
+          sizeId: "size-panel-small",
+          shape: rectangleShape,
+          border: standardBorder,
+          fixingMethods: [
+            fixingWallScrews("size-panel-small", true),
+            fixingHangingKit("size-panel-small", false),
+          ],
+          backgroundColorId: "color-panel-white",
+          isDefault: true,
+        }),
+        createComponentOption({
+          componentId: "component-panel-office",
+          suffix: "office-plaque-premium",
+          label: "Office plaque Premium",
+          sizeId: "size-panel-medium",
+          shape: squareShape,
+          border: roundedBorder,
+          fixingMethods: [
+            fixingHangingKit("size-panel-medium", true),
+            fixingStandoffKit("size-panel-medium", false),
+          ],
+          backgroundColorId: "color-panel-black",
+          additionalPrice: 8,
+        }),
+      ],
+      isDefault: true,
+      isVisible: true,
+      description: "Ready combination for office door and desk signs.",
+    },
+    {
+      id: "component-panel-directional",
+      icon: "",
+      label: "Directional sign",
+      name: "Directional sign",
+      title: "Directional sign",
+      options: [
+        createComponentOption({
+          componentId: "component-panel-directional",
+          suffix: "directional-sign-wall-mount",
+          label: "Directional sign Wall mount",
+          sizeId: "size-panel-medium",
+          shape: rectangleShape,
+          border: standardBorder,
+          fixingMethods: [
+            fixingWallScrews("size-panel-medium", true),
+            fixingHangingKit("size-panel-medium", false),
+          ],
+          backgroundColorId: "color-panel-white",
+          isDefault: true,
+        }),
+        createComponentOption({
+          componentId: "component-panel-directional",
+          suffix: "directional-sign-standoff",
+          label: "Directional sign Standoff",
+          sizeId: "size-panel-large",
+          shape: squareShape,
+          border: roundedBorder,
+          fixingMethods: [
+            fixingStandoffKit("size-panel-large", true),
+            fixingHangingKit("size-panel-large", false),
+          ],
+          backgroundColorId: "color-panel-blue",
+          additionalPrice: 8,
+        }),
+      ],
+      isDefault: false,
+      isVisible: true,
+      description: "Preset combinations for directional and wayfinding signs.",
+    },
+  ],
+  label: "Components",
+  settings: {
+    label: "Components",
+    tabIcon: "",
+    behavior: "show-options-directly",
+    description: "Choose your design",
+    emptyStateMessage: "No designs available.",
+    showTabWhenSingleItem: true,
+  },
+  description: "",
+};
+
 export const configurationDemoData = [
   {
     data: {
@@ -1347,6 +1685,7 @@ export const configurationDemoData = [
         borders: RequiredOptionsBorders,
         pricings: RequiredOptionsPricings,
         fonts: RequiredOptionsFonts,
+        lightings: RequiredOptionsLightings,
       }),
       additionalOptions: clone({
         inputs: AdditionalOptionsInputs,

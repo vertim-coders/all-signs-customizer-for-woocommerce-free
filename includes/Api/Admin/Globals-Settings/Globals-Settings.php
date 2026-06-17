@@ -28,6 +28,67 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
     $this->namespace = 'ascwo/v1';
     $this->rest_base = 'globals-settings';
   }
+
+  private function normalize_global_asset_url($url)
+  {
+    $url = is_string($url) ? trim($url) : '';
+    if ($url === '') {
+      return '';
+    }
+
+    if (strpos($url, 'data:') === 0 || strpos($url, 'blob:') === 0) {
+      return $url;
+    }
+
+    $asset_markers = array(
+      '/assets/images/',
+      '/assets/icons/',
+      'assets/images/',
+      'assets/icons/',
+    );
+
+    foreach ($asset_markers as $marker) {
+      $position = strpos($url, $marker);
+      if ($position !== false) {
+        $asset_path = substr($url, $position);
+        $asset_path = ltrim($asset_path, '/');
+        $asset_path = preg_replace('#^assets/#', '', $asset_path);
+        return trailingslashit(ASCWO_ASSETS) . $asset_path;
+      }
+    }
+
+    if (preg_match('#^https?://#i', $url)) {
+      return $url;
+    }
+
+    return trailingslashit(ASCWO_ASSETS) . ltrim($url, '/');
+  }
+
+  private function normalize_global_icon_items($option_name)
+  {
+    $items = get_option($option_name, array());
+    if (!is_array($items)) {
+      return array();
+    }
+
+    $changed = false;
+    foreach ($items as $index => $item) {
+      if (!is_array($item) || !isset($item['icon'])) {
+        continue;
+      }
+      $normalized_icon = $this->normalize_global_asset_url($item['icon']);
+      if ($normalized_icon !== $item['icon']) {
+        $items[$index]['icon'] = $normalized_icon;
+        $changed = true;
+      }
+    }
+
+    if ($changed) {
+      update_option($option_name, $items);
+    }
+
+    return $items;
+  }
   /**
    * Register the routes
    *
@@ -589,7 +650,7 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
    */
   public function get_shapes_options_globals_settings($request)
   {
-    $all_shapes = get_option("ascwo_all_shapes", []);
+    $all_shapes = $this->normalize_global_icon_items("ascwo_all_shapes");
     return rest_ensure_response($all_shapes);
   }
   /**
@@ -603,6 +664,9 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
     $shape = $request->get_json_params();
     if (!is_array($shape)) {
       $shape = array();
+    }
+    if (isset($shape['icon'])) {
+      $shape['icon'] = $this->normalize_global_asset_url($shape['icon']);
     }
     $shape_id = (int) $request->get_param('shape_id');
     $all_shapes = get_option("ascwo_all_shapes", []);
@@ -631,7 +695,7 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
    */
   public function get_fixing_methods_options_globals_settings($request)
   {
-    $all_fixingMethods = get_option("ascwo_all_fixingMethods", []);
+    $all_fixingMethods = $this->normalize_global_icon_items("ascwo_all_fixingMethods");
     return rest_ensure_response($all_fixingMethods);
   }
   /**
@@ -645,6 +709,9 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
     $fixingMethod = $request->get_json_params();
     if (!is_array($fixingMethod)) {
       $fixingMethod = array();
+    }
+    if (isset($fixingMethod['icon'])) {
+      $fixingMethod['icon'] = $this->normalize_global_asset_url($fixingMethod['icon']);
     }
     $fixingMethod_id = (int) $request->get_param('fixingMethod_id');
     $all_fixingMethods = get_option("ascwo_all_fixingMethods", []);
@@ -672,7 +739,7 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
    */
   public function get_borders_options_globals_settings($request)
   {
-    $all_borders = get_option("ascwo_all_borders", []);
+    $all_borders = $this->normalize_global_icon_items("ascwo_all_borders");
     return rest_ensure_response($all_borders);
   }
   /**
@@ -686,6 +753,9 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
     $border = $request->get_json_params();
     if (!is_array($border)) {
       $border = array();
+    }
+    if (isset($border['icon'])) {
+      $border['icon'] = $this->normalize_global_asset_url($border['icon']);
     }
     $border_id = (int) $request->get_param('border_id');
     $all_borders = get_option("ascwo_all_borders", []);

@@ -586,19 +586,29 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref, watch } from "vue";
+/* global defineProps, defineEmits, wp */
+import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import api from "@/admin/Api/api";
 import toastMessage from "@/admin/utils/functions";
-import { configurationDemoData } from "@/admin/utils/create-config.data";
+import {
+  configurationDemoData,
+  RequiredOptionsBorders,
+  RequiredOptionsColors,
+  RequiredOptionsComponentsAdvanced,
+  RequiredOptionsFixingMethods,
+  RequiredOptionsFonts,
+  RequiredOptionsLightings,
+  RequiredOptionsPricings,
+  RequiredOptionsShapes,
+  RequiredOptionsSizes,
+} from "@/admin/utils/create-config.data";
 import { resolveAdminImageUrl, adminImageUrl } from "@/admin/utils/admin-assets";
 import {
   ChevronRightIcon,
   ChevronDownIcon,
-  ChevronLeftIcon,
   EyeIcon,
   ImageIcon,
-  CheckIcon,
   XIcon,
   InfoIcon,
   SearchIcon,
@@ -691,6 +701,11 @@ const selectedFamilySlug = computed(() => {
   if (wizard.value.productType === 'sticker') return 'stickers';
   return 'signs-panels';
 });
+const canonicalConfigProductType = computed(() => (
+  wizard.value.materialType === 'advance'
+    ? selectedFamilySlug.value
+    : wizard.value.productType
+));
 const selectedMaterialsNames = computed(() => wizard.value.selectedMaterials.map(mid => availableMaterials.value.find(m => m.id === mid)?.title).filter(Boolean).join(', '));
 const previewImages = computed(() => {
   if (!previewItem.value) return [];
@@ -735,6 +750,7 @@ const stripIdsDeep = (value) => {
 
 const buildConfigData = () => {
   const demo = configurationDemoData?.[0]?.data || {};
+  const isAdvanceMode = wizard.value.materialType === 'advance';
   const selectedMaterials = wizard.value.selectedMaterials.length
     ? wizard.value.selectedMaterials
     : filteredMaterials.value.slice(0, 1).map((material) => material.id);
@@ -750,9 +766,11 @@ const buildConfigData = () => {
     ? String(pricingByFamily[wizard.value.productType] || demoPricingId || '')
     : '';
 
-  const cloneSections = (sections = {}, emptyItems = false) => Object.fromEntries(
+  const cloneSections = (sections = {}, emptyItems = false, stripIds = true) => Object.fromEntries(
     Object.entries(sections).map(([key, section]) => {
-      const cleanSection = stripIdsDeep(section);
+      const cleanSection = stripIds
+        ? stripIdsDeep(section)
+        : JSON.parse(JSON.stringify(section || {}));
 
       return [
         key,
@@ -766,9 +784,12 @@ const buildConfigData = () => {
 
   const buildMaterialItem = (materialId, index, withType = true) => {
     const material = availableMaterials.value.find(item => item.id === materialId);
+    const canonicalMaterialId = isAdvanceMode && !String(materialId).startsWith('material-')
+      ? `material-${materialId}`
+      : materialId;
 
     const item = {
-      id: materialId,
+      id: canonicalMaterialId,
       materialKey: materialId,
       sourceMaterialId: materialId,
       sourceIndex: index,
@@ -797,7 +818,7 @@ const buildConfigData = () => {
   const selectedAdditionalMaterials = selectedMaterials.map((materialId, index) => buildMaterialItem(materialId, index, false));
 
   const applySelectedMaterialsSection = (sections = {}, emptyItems = false) => {
-    const clonedSections = cloneSections(sections, emptyItems);
+    const clonedSections = cloneSections(sections, emptyItems, !isAdvanceMode);
 
     clonedSections.materials = {
       ...(clonedSections.materials || {}),
@@ -813,7 +834,7 @@ const buildConfigData = () => {
     ...(demo.settings || {}),
     productFamily: selectedFamilyTitle.value,
     productFamilySlug: selectedFamilySlug.value,
-    productType: wizard.value.productType,
+    productType: canonicalConfigProductType.value,
     selectedMaterialIds: selectedMaterials,
     customizerSign: {
       ...((demo.settings && demo.settings.customizerSign) || {}),
@@ -826,11 +847,53 @@ const buildConfigData = () => {
     },
   };
 
+  const advancedRequiredOptions = {
+    fonts: RequiredOptionsFonts,
+    sizes: RequiredOptionsSizes,
+    colors: RequiredOptionsColors,
+    shapes: RequiredOptionsShapes,
+    borders: RequiredOptionsBorders,
+    pricings: RequiredOptionsPricings,
+    lightings: RequiredOptionsLightings,
+    components: RequiredOptionsComponentsAdvanced,
+    fixingMethods: RequiredOptionsFixingMethods,
+  };
+
+  const advancedAdditionalOptions = {
+    inputs: demo.additionalOptions?.inputs || {},
+    materials: {
+      items: [],
+      label: 'Materials',
+      description: '',
+    },
+  };
+
+  const sourceRequiredOptions = isAdvanceMode ? advancedRequiredOptions : (demo.requiredOptions || {});
+  const sourceAdditionalOptions = isAdvanceMode ? advancedAdditionalOptions : (demo.additionalOptions || {});
+
   if (wizard.value.includeDemo) {
     const demoPayload = stripIdsDeep(demo);
 
+    if (isAdvanceMode) {
+      return {
+        settings: baseSettings,
+        pricingMode: 'frame-fit',
+        productType: canonicalConfigProductType.value,
+        materialType: 'advance',
+        requiredOptions: cloneSections(sourceRequiredOptions, false, false),
+        additionalOptions: applySelectedMaterialsSection(sourceAdditionalOptions, false),
+        configuratorMeta: {
+          version: 1,
+          mode: 'classic-advanced',
+        },
+      };
+    }
+
     return {
       ...demoPayload,
+      pricingMode: 'frame-fit',
+      productType: canonicalConfigProductType.value,
+      materialType: wizard.value.materialType,
       settings: baseSettings,
       requiredOptions: cloneSections(demoPayload.requiredOptions || {}, false),
       additionalOptions: applySelectedMaterialsSection(demoPayload.additionalOptions || {}, false),
@@ -838,9 +901,20 @@ const buildConfigData = () => {
   }
 
   return {
+    pricingMode: 'frame-fit',
+    productType: canonicalConfigProductType.value,
+    materialType: wizard.value.materialType,
     settings: baseSettings,
-    requiredOptions: cloneSections(demo.requiredOptions || {}, true),
-    additionalOptions: applySelectedMaterialsSection(demo.additionalOptions || {}, true),
+    requiredOptions: cloneSections(sourceRequiredOptions, true, !isAdvanceMode),
+    additionalOptions: applySelectedMaterialsSection(sourceAdditionalOptions || {}, true),
+    ...(isAdvanceMode
+      ? {
+          configuratorMeta: {
+            version: 1,
+            mode: 'classic-advanced',
+          },
+        }
+      : {}),
   };
 };
 
@@ -946,7 +1020,7 @@ const finalCreate = async () => {
         description: newConfig.value.description,
         productFamily: selectedFamilyTitle.value,
         materialType: wizard.value.materialType,
-        productType: wizard.value.productType,
+        productType: canonicalConfigProductType.value,
         pricingMode: 'frame-fit',
         icon: newConfig.value.icon,
         popImg: '',
@@ -957,7 +1031,7 @@ const finalCreate = async () => {
         toastMessage(response.message, 'success');
         if (response.post_id) {
           router.push({
-            name: 'sizes',
+            name: wizard.value.materialType === 'advance' ? 'required-components' : 'sizes',
             params: {
               configId: String(response.post_id),
             },

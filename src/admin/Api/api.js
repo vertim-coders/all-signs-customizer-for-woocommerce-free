@@ -1,3 +1,4 @@
+/* global ascwo_data */
 import axios from "axios";
 const ascwo_api_url = ascwo_data.rest_url;
 if (ascwo_data?.rest_nonce) {
@@ -643,6 +644,62 @@ const api = {
     return del.data;
   },
 
+  //Function related to lightings
+  updateRequiredOptionLightings: async (configId, lightings) => {
+    const edit = await axios.put(
+      ascwo_api_url + "/configs/" + configId + "/required-options/lightings",
+      lightings,
+    );
+    return edit.data;
+  },
+  getRequiredOptionLightings: async (configId) => {
+    const result = await axios.get(
+      ascwo_api_url + "/configs/" + configId + "/required-options/lightings",
+    );
+    return result.data?.data?.lightings ?? result.data;
+  },
+  addRequiredOptionLightingItem: async (configId, lighting) => {
+    const add = await axios.post(
+      ascwo_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/lightings/items",
+      lighting,
+    );
+    return add.data;
+  },
+  getRequiredOptionLightingItem: async (configId, itemId) => {
+    const result = await axios.get(
+      ascwo_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/lightings/items/" +
+        itemId,
+    );
+    return result.data?.data?.lighting ?? result.data;
+  },
+  updateRequiredOptionLightingItem: async (configId, itemId, lighting) => {
+    const edit = await axios.put(
+      ascwo_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/lightings/items/" +
+        itemId,
+      lighting,
+    );
+    return edit.data;
+  },
+  deleteRequiredOptionLightingItem: async (configId, itemId) => {
+    const del = await axios.delete(
+      ascwo_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/lightings/items/" +
+        itemId,
+    );
+    return del.data;
+  },
+
   //Function related to borders
   updateRequiredOptionBorders: async (configId, borders) => {
     const edit = await axios.put(
@@ -766,14 +823,14 @@ const api = {
   // create additional options component
   addRequiredOptionComponent: async (configId, component) => {
     const post = await axios.post(
-      ascwo_api_url + "/configs/" + configId + "/additional-options/components",
+      ascwo_api_url + "/configs/" + configId + "/required-options/components",
       component,
     );
     return post.data;
   },
   getRequiredOptionComponents: async (configId) => {
     const material = await axios.get(
-      ascwo_api_url + "/configs/" + configId + "/additional-options/components",
+      ascwo_api_url + "/configs/" + configId + "/required-options/components",
     );
     return material.data?.data?.components ?? material.data;
   },
@@ -782,7 +839,7 @@ const api = {
       ascwo_api_url +
         "/configs/" +
         configId +
-        "/additional-options/components/items/" +
+        "/required-options/components/items/" +
         componentId,
       component,
     );
@@ -793,7 +850,7 @@ const api = {
       ascwo_api_url +
         "/configs/" +
         configId +
-        "/additional-options/components/items/" +
+        "/required-options/components/items/" +
         componentId,
     );
     return material.data;
@@ -804,7 +861,7 @@ const api = {
       ascwo_api_url +
         "/configs/" +
         config +
-        "/additional-options/components/items/" +
+        "/required-options/components/items/" +
         component +
         "/options",
       option,
@@ -816,7 +873,7 @@ const api = {
       ascwo_api_url +
         "/configs/" +
         configId +
-        "/additional-options/components/items/" +
+        "/required-options/components/items/" +
         componentId +
         "/options",
     );
@@ -832,7 +889,7 @@ const api = {
       ascwo_api_url +
         "/configs/" +
         configId +
-        "/additional-options/components/items/" +
+        "/required-options/components/items/" +
         componentId +
         "/options/" +
         optionId,
@@ -850,7 +907,7 @@ const api = {
       ascwo_api_url +
         "/configs/" +
         configId +
-        "/additional-options/components/items/" +
+        "/required-options/components/items/" +
         componentId +
         "/options/" +
         optionId,
@@ -862,7 +919,7 @@ const api = {
   //Function related to Material with component
   updateRequiredOptionComponents: async (configId, components) => {
     const post = await axios.put(
-      ascwo_api_url + "/configs/" + configId + "/additional-options/components",
+      ascwo_api_url + "/configs/" + configId + "/required-options/components",
       components,
     );
     return post.data;
