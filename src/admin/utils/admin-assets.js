@@ -24,7 +24,7 @@ export const adminAssetUrl = (path = "") => {
     ? normalized.replace(/^assets\//, "")
     : normalized;
 
-  return `${assetsBaseUrl()}/assets/${relativePath}`;
+  return `${assetsBaseUrl()}/${relativePath}`;
 };
 
 export const demoImageUrl = (path = "") => {

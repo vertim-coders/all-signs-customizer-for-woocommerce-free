@@ -14,6 +14,60 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         $this->rest_base = '/configs';
     }
 
+    protected function normalize_global_asset_url($url): string
+    {
+        $url = is_string($url) ? trim($url) : '';
+        if ($url === '') {
+            return '';
+        }
+
+        if (strpos($url, 'data:') === 0 || strpos($url, 'blob:') === 0) {
+            return $url;
+        }
+
+        foreach (array('/assets/images/', '/assets/icons/', 'assets/images/', 'assets/icons/') as $marker) {
+            $position = strpos($url, $marker);
+            if ($position !== false) {
+                $asset_path = substr($url, $position);
+                $asset_path = ltrim($asset_path, '/');
+                $asset_path = preg_replace('#^assets/#', '', $asset_path);
+                return trailingslashit(ASCWO_ASSETS) . $asset_path;
+            }
+        }
+
+        if (preg_match('#^https?://#i', $url)) {
+            return $url;
+        }
+
+        return trailingslashit(ASCWO_ASSETS) . ltrim($url, '/');
+    }
+
+    protected function get_normalized_global_icon_items(string $option_name): array
+    {
+        $items = get_option($option_name, array());
+        if (!is_array($items)) {
+            return array();
+        }
+
+        $changed = false;
+        foreach ($items as $index => $item) {
+            if (!is_array($item) || !isset($item['icon'])) {
+                continue;
+            }
+            $normalized_icon = $this->normalize_global_asset_url($item['icon']);
+            if ($normalized_icon !== $item['icon']) {
+                $items[$index]['icon'] = $normalized_icon;
+                $changed = true;
+            }
+        }
+
+        if ($changed) {
+            update_option($option_name, $items);
+        }
+
+        return $items;
+    }
+
     protected function register_components_routes(string $base_route): void
     {
         register_rest_route(
@@ -329,6 +383,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             'materials' => 'materials',
             'components' => 'components',
             'fonts' => 'fonts',
+            'lightings' => 'lightings',
         );
 
         return isset($map[$section]) ? $map[$section] : $section;
@@ -410,13 +465,27 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
                 );
             case 'components':
                 return array(
-                    'label' => 'Additional Components',
-                    'description' => '',
+                    'label' => 'Components',
+                    'description' => 'Choose your design',
+                    'settings' => array(
+                        'label' => 'Components',
+                        'description' => 'Choose your design',
+                        'tabIcon' => '',
+                        'behavior' => 'show-options-directly',
+                        'showTabWhenSingleItem' => true,
+                        'emptyStateMessage' => 'No designs available.',
+                    ),
                     'items' => array(),
                 );
             case 'fonts':
                 return array(
                     'label' => 'Fonts',
+                    'description' => '',
+                    'items' => array(),
+                );
+            case 'lightings':
+                return array(
+                    'label' => 'Lighting',
                     'description' => '',
                     'items' => array(),
                 );
@@ -446,6 +515,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             'fonts' => 'items',
             'pricing' => 'items',
             'borders' => 'items',
+            'lightings' => 'items',
         );
 
         return isset($map[$section]) ? $map[$section] : 'items';
@@ -666,7 +736,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
 
         return array(
             'items' => $items,
-            'manageShapes' => get_option('ascwo_all_shapes', array()),
+            'manageShapes' => $this->get_normalized_global_icon_items('ascwo_all_shapes'),
         );
     }
 
@@ -696,7 +766,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         return array(
             'settings' => $settings,
             'items' => isset($value['items']) && is_array($value['items']) ? array_values($value['items']) : array(),
-            'manageBorders' => get_option('ascwo_all_borders', array()),
+            'manageBorders' => $this->get_normalized_global_icon_items('ascwo_all_borders'),
             'sizes' => isset($sizes['items']) && is_array($sizes['items']) ? $sizes['items'] : array(),
             'shapes' => isset($shapes['items']) && is_array($shapes['items']) ? array_values($shapes['items']) : array(),
         );
@@ -786,14 +856,92 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
 
     protected function normalize_component(array $component, int $index = 0): array
     {
+        $label = isset($component['label']) ? $component['label'] : (isset($component['title']) ? $component['title'] : (isset($component['name']) ? $component['name'] : ''));
+
         return array(
-            'title' => isset($component['title']) ? $component['title'] : (isset($component['name']) ? $component['name'] : ''),
-            'name' => isset($component['name']) ? $component['name'] : (isset($component['label']) ? $component['label'] : ''),
+            'id' => isset($component['id']) && $component['id'] !== '' ? (string) $component['id'] : 'component-' . ($index + 1),
+            'label' => $label,
+            'title' => isset($component['title']) ? $component['title'] : $label,
+            'name' => isset($component['name']) ? $component['name'] : $label,
             'description' => isset($component['description']) ? $component['description'] : '',
             'icon' => isset($component['icon']) ? $component['icon'] : '',
             'options' => isset($component['options']) && is_array($component['options']) ? array_values($component['options']) : array(),
             'isDefault' => isset($component['isDefault']) ? (bool) $component['isDefault'] : $index === 0,
+            'isVisible' => isset($component['isVisible']) ? (bool) $component['isVisible'] : true,
         );
+    }
+
+    protected function normalize_components_settings(array $settings = array(), array $section = array()): array
+    {
+        $defaults = $this->simple_section_default('components');
+        $default_settings = isset($defaults['settings']) && is_array($defaults['settings'])
+            ? $defaults['settings']
+            : array();
+
+        $label = isset($section['label']) && $section['label'] !== ''
+            ? (string) $section['label']
+            : (isset($settings['label']) && $settings['label'] !== '' ? (string) $settings['label'] : (string) ($default_settings['label'] ?? 'Designs'));
+        $description = isset($section['description']) && $section['description'] !== ''
+            ? (string) $section['description']
+            : (isset($settings['description']) && $settings['description'] !== '' ? (string) $settings['description'] : (string) ($default_settings['description'] ?? 'Choose your design'));
+
+        return array(
+            'label' => $label,
+            'description' => $description,
+            'tabIcon' => isset($settings['tabIcon']) ? (string) $settings['tabIcon'] : (string) ($default_settings['tabIcon'] ?? ''),
+            'behavior' => isset($settings['behavior']) && $settings['behavior'] === 'choose-before-customization'
+                ? 'choose-before-customization'
+                : 'show-options-directly',
+            'showTabWhenSingleItem' => isset($settings['showTabWhenSingleItem'])
+                ? (bool) $settings['showTabWhenSingleItem']
+                : !isset($default_settings['showTabWhenSingleItem']) || (bool) $default_settings['showTabWhenSingleItem'],
+            'emptyStateMessage' => isset($settings['emptyStateMessage']) && $settings['emptyStateMessage'] !== ''
+                ? (string) $settings['emptyStateMessage']
+                : (string) ($default_settings['emptyStateMessage'] ?? 'No designs available.'),
+        );
+    }
+
+    protected function get_components_section(array $required_options): array
+    {
+        $default = $this->simple_section_default('components');
+        $stored = $this->section_value($required_options, 'components', $default);
+        $stored = is_array($stored) ? $stored : $default;
+
+        $items = isset($stored['items']) && is_array($stored['items'])
+            ? array_values($stored['items'])
+            : array();
+        $settings = $this->normalize_components_settings(
+            isset($stored['settings']) && is_array($stored['settings']) ? $stored['settings'] : array(),
+            $stored
+        );
+
+        return array(
+            'label' => isset($stored['label']) && $stored['label'] !== '' ? (string) $stored['label'] : $settings['label'],
+            'description' => isset($stored['description']) ? (string) $stored['description'] : $settings['description'],
+            'settings' => $settings,
+            'items' => $items,
+        );
+    }
+
+    protected function save_components_section(int $config_id, array $required_options, array $section)
+    {
+        $items = isset($section['items']) && is_array($section['items'])
+            ? array_values($section['items'])
+            : array();
+        $settings = $this->normalize_components_settings(
+            isset($section['settings']) && is_array($section['settings']) ? $section['settings'] : array(),
+            $section
+        );
+
+        $payload = array(
+            'label' => isset($section['label']) && $section['label'] !== '' ? (string) $section['label'] : $settings['label'],
+            'description' => isset($section['description']) ? (string) $section['description'] : $settings['description'],
+            'settings' => $settings,
+            'items' => $items,
+        );
+
+        $required_options = $this->set_section_items($required_options, 'components', $payload);
+        return $this->save_required_options($config_id, $required_options);
     }
 
     protected function normalize_component_option(array $option, int $index = 0): array
@@ -1024,16 +1172,15 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         }
 
         $required_options = $this->get_required_options($config_id);
-        $components = $this->get_section_items($required_options, 'components');
+        $components_section = $this->get_components_section($required_options);
 
         return rest_ensure_response(array(
             'success' => true,
             'data' => array(
-                'components' => array(
-                    'items' => is_array($components) ? array_values($components) : array(),
-                    'manageShapes' => get_option('ascwo_all_shapes', array()),
-                    'manageFixingMethods' => $this->get_manage_fixing_methods(),
-                ),
+                'components' => array_merge($components_section, array(
+                    'manageShapes' => $this->get_normalized_global_icon_items('ascwo_all_shapes'),
+                    'manageFixingMethods' => $this->get_normalized_global_icon_items('ascwo_all_fixingMethods'),
+                )),
             ),
         ));
     }
@@ -1046,7 +1193,8 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         }
 
         $required_options = $this->get_required_options($config_id);
-        $components = $this->get_section_items($required_options, 'components');
+        $components_section = $this->get_components_section($required_options);
+        $components = $components_section['items'];
         $new_component = json_decode($request->get_body(), true);
         $new_component = is_array($new_component) ? $this->normalize_component($new_component, count($components)) : array();
 
@@ -1061,17 +1209,17 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         }
 
         $components[] = $new_component;
-        $required_options = $this->set_section_items($required_options, 'components', array('items' => $components, 'label' => 'Additional Components', 'description' => ''));
-        $update = $this->save_required_options($config_id, $required_options);
+        $components_section['items'] = $components;
+        $update = $this->save_components_section($config_id, $required_options, $components_section);
 
         return rest_ensure_response($update === true
             ? array(
                 'success' => true,
                 'message' => __('Component successfully added', 'all-signs-customizer-for-woocommerce-pro'),
                 'data' => array(
-                    'components' => array(
+                    'components' => array_merge($components_section, array(
                         'items' => array_values($components),
-                    ),
+                    )),
                 ),
             )
             : array('success' => false, 'message' => __('Component has not been added', 'all-signs-customizer-for-woocommerce-pro')));
@@ -1085,24 +1233,46 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         }
 
         $required_options = $this->get_required_options($config_id);
-        $components = json_decode($request->get_body(), true);
-        $components = is_array($components) ? array_values($components) : array();
-        $current = $this->get_section_items($required_options, 'components');
-        if ($current === $components) {
+        $current_section = $this->get_components_section($required_options);
+        $payload = json_decode($request->get_body(), true);
+        $next_section = $current_section;
+
+        if (is_array($payload) && $this->is_list_array($payload)) {
+            $next_section['items'] = array_values(array_map(array($this, 'normalize_component'), $payload, array_keys(array_values($payload))));
+        } elseif (is_array($payload)) {
+            $raw_items = isset($payload['items']) && is_array($payload['items']) ? array_values($payload['items']) : array();
+            $normalized_items = array();
+            foreach ($raw_items as $index => $component) {
+                $normalized_items[] = is_array($component) ? $this->normalize_component($component, $index) : array();
+            }
+            $next_section['items'] = $normalized_items;
+            if (array_key_exists('label', $payload)) {
+                $next_section['label'] = (string) $payload['label'];
+            }
+            if (array_key_exists('description', $payload)) {
+                $next_section['description'] = (string) $payload['description'];
+            }
+            if (isset($payload['settings']) && is_array($payload['settings'])) {
+                $next_section['settings'] = $this->normalize_components_settings($payload['settings'], $next_section);
+            } else {
+                $next_section['settings'] = $this->normalize_components_settings(array(), $next_section);
+            }
+        }
+
+        $next_section['items'] = $this->ensure_single_default_item($next_section['items'], 'isDefault');
+
+        if ($current_section === $next_section) {
             return rest_ensure_response(array('success' => 'same', 'message' => __('No change observed in components', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        $required_options = $this->set_section_items($required_options, 'components', array('items' => $components, 'label' => 'Additional Components', 'description' => ''));
-        $update = $this->save_required_options($config_id, $required_options);
+        $update = $this->save_components_section($config_id, $required_options, $next_section);
 
         return rest_ensure_response($update === true
             ? array(
                 'success' => true,
                 'message' => __('Components successfully updated', 'all-signs-customizer-for-woocommerce-pro'),
                 'data' => array(
-                    'components' => array(
-                        'items' => array_values($components),
-                    ),
+                    'components' => $next_section,
                 ),
             )
             : array('success' => false, 'message' => __('Components have not been updated', 'all-signs-customizer-for-woocommerce-pro')));
@@ -1113,7 +1283,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         $config_id = absint($request->get_param('config_id'));
         $component_id = absint($request->get_param('component_id'));
         $required_options = $this->get_required_options($config_id);
-        $components = $this->get_section_items($required_options, 'components');
+        $components = $this->get_components_section($required_options)['items'];
         $component = isset($components[$component_id]) ? $components[$component_id] : null;
 
         if (!$component) {
@@ -1133,15 +1303,27 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         $config_id = absint($request->get_param('config_id'));
         $component_id = absint($request->get_param('component_id'));
         $required_options = $this->get_required_options($config_id);
-        $components = $this->get_section_items($required_options, 'components');
+        $components_section = $this->get_components_section($required_options);
+        $components = $components_section['items'];
         $component = isset($components[$component_id]) ? $components[$component_id] : null;
 
         return rest_ensure_response(array(
             'success' => true,
             'data' => array(
                 'componentOptions' => array(
-                    'manageShapes' => get_option('ascwo_all_shapes', array()),
-                    'manageFixingMethods' => $this->get_manage_fixing_methods(),
+                    'manageShapes' => $this->get_normalized_global_icon_items('ascwo_all_shapes'),
+                    'manageFixingMethods' => $this->get_normalized_global_icon_items('ascwo_all_fixingMethods'),
+                    'manageBorders' => $this->get_normalized_global_icon_items('ascwo_all_borders'),
+                    'requiredOptions' => array(
+                        'sizes' => isset($required_options['sizes']) && is_array($required_options['sizes']) ? $required_options['sizes'] : array('items' => array()),
+                        'colors' => isset($required_options['colors']) && is_array($required_options['colors']) ? $required_options['colors'] : array('items' => array()),
+                        'shapes' => isset($required_options['shapes']) && is_array($required_options['shapes']) ? $required_options['shapes'] : array('items' => array()),
+                        'fixingMethods' => isset($required_options['fixingMethods']) && is_array($required_options['fixingMethods']) ? $required_options['fixingMethods'] : array('items' => array()),
+                        'borders' => isset($required_options['borders']) && is_array($required_options['borders']) ? $required_options['borders'] : array('items' => array()),
+                        'lightings' => isset($required_options['lightings']) && is_array($required_options['lightings']) ? $required_options['lightings'] : array('items' => array()),
+                        'fonts' => isset($required_options['fonts']) && is_array($required_options['fonts']) ? $required_options['fonts'] : array('items' => array()),
+                        'pricings' => isset($required_options['pricings']) && is_array($required_options['pricings']) ? $required_options['pricings'] : array('items' => array()),
+                    ),
                     'component' => $component,
                 ),
             ),
@@ -1154,7 +1336,8 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         $config_id = absint($request->get_param('config_id'));
         $component_id = absint($request->get_param('component_id'));
         $required_options = $this->get_required_options($config_id);
-        $components = $this->get_section_items($required_options, 'components');
+        $components_section = $this->get_components_section($required_options);
+        $components = $components_section['items'];
         $component = json_decode($request->get_body(), true);
         $component = is_array($component) ? $this->normalize_component($component, $component_id) : array();
 
@@ -1167,17 +1350,15 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         }
 
         $components[$component_id] = $component;
-        $required_options = $this->set_section_items($required_options, 'components', array('items' => $components, 'label' => 'Additional Components', 'description' => ''));
-        $update = $this->save_required_options($config_id, $required_options);
+        $components_section['items'] = $this->ensure_single_default_item($components, 'isDefault');
+        $update = $this->save_components_section($config_id, $required_options, $components_section);
 
         return rest_ensure_response($update === true
             ? array(
                 'success' => true,
                 'message' => __('Component successfully edited', 'all-signs-customizer-for-woocommerce-pro'),
                 'data' => array(
-                    'components' => array(
-                        'items' => array_values($components),
-                    ),
+                    'components' => $components_section,
                 ),
             )
             : array('success' => false, 'message' => __('Component has not been edited', 'all-signs-customizer-for-woocommerce-pro')));
@@ -1188,24 +1369,23 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         $config_id = absint($request->get_param('config_id'));
         $component_id = absint($request->get_param('component_id'));
         $required_options = $this->get_required_options($config_id);
-        $components = $this->get_section_items($required_options, 'components');
+        $components_section = $this->get_components_section($required_options);
+        $components = $components_section['items'];
 
         if (!isset($components[$component_id])) {
             return rest_ensure_response(array('success' => false, 'message' => __('No materials component found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         array_splice($components, $component_id, 1);
-        $required_options = $this->set_section_items($required_options, 'components', array('items' => $components, 'label' => 'Additional Components', 'description' => ''));
-        $update = $this->save_required_options($config_id, $required_options);
+        $components_section['items'] = $this->ensure_single_default_item($components, 'isDefault');
+        $update = $this->save_components_section($config_id, $required_options, $components_section);
 
         return rest_ensure_response($update === true
             ? array(
                 'success' => true,
                 'message' => __('Component successfully deleted', 'all-signs-customizer-for-woocommerce-pro'),
                 'data' => array(
-                    'components' => array(
-                        'items' => array_values($components),
-                    ),
+                    'components' => $components_section,
                 ),
             )
             : array('success' => false, 'message' => __('Component has not been deleted', 'all-signs-customizer-for-woocommerce-pro')));
@@ -1216,7 +1396,8 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         $config_id = absint($request->get_param('config_id'));
         $component_id = absint($request->get_param('component_id'));
         $required_options = $this->get_required_options($config_id);
-        $components = $this->get_section_items($required_options, 'components');
+        $components_section = $this->get_components_section($required_options);
+        $components = $components_section['items'];
         $option = json_decode($request->get_body(), true);
         $option = is_array($option) ? $this->normalize_component_option($option, 0) : array();
 
@@ -1239,8 +1420,8 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         }
 
         $components[$component_id]['options'][] = $option;
-        $required_options = $this->set_section_items($required_options, 'components', array('items' => $components, 'label' => 'Additional Components', 'description' => ''));
-        $update = $this->save_required_options($config_id, $required_options);
+        $components_section['items'] = $components;
+        $update = $this->save_components_section($config_id, $required_options, $components_section);
 
         return rest_ensure_response($update === true
             ? array(
@@ -1249,8 +1430,8 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
                 'data' => array(
                     'componentOptions' => array(
                         'component' => $components[$component_id],
-                        'manageShapes' => get_option('ascwo_all_shapes', array()),
-                        'manageFixingMethods' => $this->get_manage_fixing_methods(),
+                        'manageShapes' => $this->get_normalized_global_icon_items('ascwo_all_shapes'),
+                        'manageFixingMethods' => $this->get_normalized_global_icon_items('ascwo_all_fixingMethods'),
                     ),
                 ),
             )
@@ -1263,7 +1444,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         $component_id = absint($request->get_param('component_id'));
         $option_id = absint($request->get_param('option_id'));
         $required_options = $this->get_required_options($config_id);
-        $components = $this->get_section_items($required_options, 'components');
+        $components = $this->get_components_section($required_options)['items'];
 
         if (!isset($components[$component_id]['options'][$option_id])) {
             return rest_ensure_response(array('message' => __('No materials component found', 'all-signs-customizer-for-woocommerce-pro')));
@@ -1283,7 +1464,8 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         $component_id = absint($request->get_param('component_id'));
         $option_id = absint($request->get_param('option_id'));
         $required_options = $this->get_required_options($config_id);
-        $components = $this->get_section_items($required_options, 'components');
+        $components_section = $this->get_components_section($required_options);
+        $components = $components_section['items'];
         $option = json_decode($request->get_body(), true);
         $option = is_array($option) ? $this->normalize_component_option($option, $option_id) : array();
 
@@ -1296,8 +1478,8 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         }
 
         $components[$component_id]['options'][$option_id] = $option;
-        $required_options = $this->set_section_items($required_options, 'components', array('items' => $components, 'label' => 'Additional Components', 'description' => ''));
-        $update = $this->save_required_options($config_id, $required_options);
+        $components_section['items'] = $components;
+        $update = $this->save_components_section($config_id, $required_options, $components_section);
 
         return rest_ensure_response($update === true
             ? array(
@@ -1306,8 +1488,8 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
                 'data' => array(
                     'componentOptions' => array(
                         'component' => $components[$component_id],
-                        'manageShapes' => get_option('ascwo_all_shapes', array()),
-                        'manageFixingMethods' => $this->get_manage_fixing_methods(),
+                        'manageShapes' => $this->get_normalized_global_icon_items('ascwo_all_shapes'),
+                        'manageFixingMethods' => $this->get_normalized_global_icon_items('ascwo_all_fixingMethods'),
                     ),
                 ),
             )
@@ -1320,15 +1502,16 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         $component_id = absint($request->get_param('component_id'));
         $option_id = absint($request->get_param('option_id'));
         $required_options = $this->get_required_options($config_id);
-        $components = $this->get_section_items($required_options, 'components');
+        $components_section = $this->get_components_section($required_options);
+        $components = $components_section['items'];
 
         if (!isset($components[$component_id]['options'][$option_id])) {
             return rest_ensure_response(array('success' => false, 'message' => __('No materials component found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         array_splice($components[$component_id]['options'], $option_id, 1);
-        $required_options = $this->set_section_items($required_options, 'components', array('items' => $components, 'label' => 'Additional Components', 'description' => ''));
-        $update = $this->save_required_options($config_id, $required_options);
+        $components_section['items'] = $components;
+        $update = $this->save_components_section($config_id, $required_options, $components_section);
 
         return rest_ensure_response($update === true
             ? array(
@@ -1337,8 +1520,8 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
                 'data' => array(
                     'componentOptions' => array(
                         'component' => $components[$component_id],
-                        'manageShapes' => get_option('ascwo_all_shapes', array()),
-                        'manageFixingMethods' => $this->get_manage_fixing_methods(),
+                        'manageShapes' => $this->get_normalized_global_icon_items('ascwo_all_shapes'),
+                        'manageFixingMethods' => $this->get_normalized_global_icon_items('ascwo_all_fixingMethods'),
                     ),
                 ),
             )
@@ -1447,6 +1630,14 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         $fontId = isset($font['managedFontId']) ? $font['managedFontId'] : '';
 
         return 'font-' . $this->slugify($label ?: $fontId ?: "f-{$index}", "f-{$index}");
+    }
+
+    protected function generate_lighting_id(array $lighting): string
+    {
+        $label = isset($lighting['label']) ? (string) $lighting['label'] : '';
+        $hex = isset($lighting['hexCode']) ? (string) $lighting['hexCode'] : '';
+
+        return 'lighting-' . $this->slugify($label ?: $hex ?: 'lighting', 'lighting');
     }
 
     protected function generate_additional_input_id(array $option): string

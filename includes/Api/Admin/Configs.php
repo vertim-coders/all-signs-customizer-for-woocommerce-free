@@ -58,6 +58,56 @@ class ASCWO_Api_Configs extends WP_REST_Controller
         return true;
     }
 
+    private function normalize_global_asset_url($url): string
+    {
+        $url = is_string($url) ? trim($url) : '';
+        if ($url === '' || strpos($url, 'data:') === 0 || strpos($url, 'blob:') === 0) {
+            return $url;
+        }
+
+        foreach (array('/assets/images/', '/assets/icons/', 'assets/images/', 'assets/icons/') as $marker) {
+            $position = strpos($url, $marker);
+            if ($position !== false) {
+                $asset_path = substr($url, $position);
+                $asset_path = ltrim($asset_path, '/');
+                $asset_path = preg_replace('#^assets/#', '', $asset_path);
+                return trailingslashit(ASCWO_ASSETS) . $asset_path;
+            }
+        }
+
+        if (preg_match('#^https?://#i', $url)) {
+            return $url;
+        }
+
+        return trailingslashit(ASCWO_ASSETS) . ltrim($url, '/');
+    }
+
+    private function get_normalized_global_icon_items(string $option_name): array
+    {
+        $items = get_option($option_name, array());
+        if (!is_array($items)) {
+            return array();
+        }
+
+        $changed = false;
+        foreach ($items as $index => $item) {
+            if (!is_array($item) || !isset($item['icon'])) {
+                continue;
+            }
+            $normalized_icon = $this->normalize_global_asset_url($item['icon']);
+            if ($normalized_icon !== $item['icon']) {
+                $items[$index]['icon'] = $normalized_icon;
+                $changed = true;
+            }
+        }
+
+        if ($changed) {
+            update_option($option_name, $items);
+        }
+
+        return $items;
+    }
+
     private function sanitize_config_data($value)
     {
         if (is_array($value)) {
@@ -412,6 +462,9 @@ class ASCWO_Api_Configs extends WP_REST_Controller
                     'productType' => isset($meta_value['productType']) ? $meta_value['productType'] : (isset($data['productType']) ? $data['productType'] : ''),
                     'productFamily' => isset($meta_value['productFamily']) ? $meta_value['productFamily'] : (isset($data['productFamily']) ? $data['productFamily'] : ''),
                     'pricingMode' => isset($meta_value['pricingMode']) ? $meta_value['pricingMode'] : (isset($data['pricingMode']) ? $data['pricingMode'] : ''),
+                    'settings' => isset($meta_value['settings']) && is_array($meta_value['settings']) ? $meta_value['settings'] : (isset($data['settings']) && is_array($data['settings']) ? $data['settings'] : array()),
+                    'requiredOptions' => isset($meta_value['requiredOptions']) && is_array($meta_value['requiredOptions']) ? $meta_value['requiredOptions'] : (isset($data['requiredOptions']) && is_array($data['requiredOptions']) ? $data['requiredOptions'] : array()),
+                    'additionalOptions' => isset($meta_value['additionalOptions']) && is_array($meta_value['additionalOptions']) ? $meta_value['additionalOptions'] : (isset($data['additionalOptions']) && is_array($data['additionalOptions']) ? $data['additionalOptions'] : array()),
                     'data' => $data,
                 );
 

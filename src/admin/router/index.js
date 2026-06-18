@@ -14,6 +14,7 @@ import ShapesPage from "@/admin/pages/configuration/required-options/ShapesPage.
 import PricingsPage from "@/admin/pages/configuration/required-options/PricingsPage.vue";
 import FontsPage from "@/admin/pages/configuration/required-options/FontsPage.vue";
 import MaterialsPage from "@/admin/pages/configuration/required-options/MaterialsPage.vue";
+import LightingsPage from "@/admin/pages/configuration/required-options/LightingsPage.vue";
 import RequiredComponentsPage from "@/admin/pages/configuration/required-options/ComponentsPage.vue";
 import RequiredComponentOptionsPage from "@/admin/pages/configuration/required-options/components/options.vue";
 
@@ -113,6 +114,11 @@ const router = createRouter({
           component: ColorsPage,
         },
         {
+          path: "required-options/lightings",
+          name: "lightings",
+          component: LightingsPage,
+        },
+        {
           path: "required-options/fixing-methods",
           name: "fixing-methods",
           component: FixingMethodsPage,
@@ -145,6 +151,11 @@ const router = createRouter({
         {
           path: "required-options/components/:componentId/options",
           name: "required-component-options",
+          component: RequiredComponentOptionsPage,
+        },
+        {
+          path: "required-options/components/:componentId/options/:optionId",
+          name: "required-component-option-detail",
           component: RequiredComponentOptionsPage,
         },
         {

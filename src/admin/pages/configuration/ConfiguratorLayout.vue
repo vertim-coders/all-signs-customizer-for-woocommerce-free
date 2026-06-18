@@ -1,9 +1,23 @@
 <template>
-  <div class="ascwo-configurator-layout">
+  <div :class="['ascwo-configurator-layout', sidebarCollapsed ? 'is-sidebar-collapsed' : '']">
     <!-- Sidebar navigation -->
     <div
       class="ascwo-configurator-sidebar"
     >
+      <button
+        v-if="sidebarCollapsed"
+        type="button"
+        class="ascwo-sidebar-open-button"
+        :aria-label="__('Open configuration sidebar', 'all-signs-customizer-for-woocommerce-pro')"
+        :title="__('Open configuration sidebar', 'all-signs-customizer-for-woocommerce-pro')"
+        @click="toggleDesignsSidebar"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
+      </button>
+
+      <template v-else>
       <!-- Config info card -->
       <div class="ascwo-ui-card">
         <div class="ascwo-configurator-info-card">
@@ -144,6 +158,20 @@
           </div>
         </div>
       </div>
+      </template>
+
+      <button
+        v-if="isDesignsView && !sidebarCollapsed"
+        type="button"
+        class="ascwo-sidebar-collapse-button"
+        :aria-label="__('Collapse configuration sidebar', 'all-signs-customizer-for-woocommerce-pro')"
+        :title="__('Collapse configuration sidebar', 'all-signs-customizer-for-woocommerce-pro')"
+        @click="toggleDesignsSidebar"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+      </button>
     </div>
 
     <!-- Main content area -->
@@ -167,6 +195,7 @@ const configData = ref(null);
 const adminConfigName = ref('');
 const searchMenu = ref('');
 const expandedGroup = ref('Core Setup');
+const designsSidebarCollapsed = ref(false);
 
 // Config info from route param
 const configId = computed(() => route.params.configId);
@@ -200,7 +229,9 @@ const productTypeLabel = computed(() => {
   return raw ? raw.charAt(0).toUpperCase() + raw.slice(1).replace(/-/g, ' ') : '';
 });
 
-const materialType = computed(() => configData.value?.materialType || 'simple');
+const materialType = computed(() => configData.value?.materialType || '');
+const isDesignsView = computed(() => route.path.includes(`/configuration/${configId.value}/required-options/components`));
+const sidebarCollapsed = computed(() => isDesignsView.value && designsSidebarCollapsed.value);
 
 // Config name
 const configName = computed(() => {
@@ -210,13 +241,15 @@ const configName = computed(() => {
 // Check if has advanced materials (NCPC-like)
 const hasAdvancedMaterials = computed(() => {
   const type = configData.value?.materialType;
-  return type === 'advance' || type === 'layers';
+  return type === 'advance' || type === 'advanced' || type === 'layers';
 });
 
 // Load config data
 const loadConfig = async () => {
   if (!configId.value) return;
   try {
+    configData.value = null;
+    adminConfigName.value = '';
     const data = await api.getConfig(configId.value);
     configData.value = data;
     await loadConfigName();
@@ -242,6 +275,7 @@ const icons = {
   pricing: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 100 4h4a2 2 0 110 4h-6"/><path d="M12 18V6"/></svg>',
   fonts: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V4h16v16"/><path d="M8 16V8h8v8"/><path d="M10 12h4"/></svg>',
   colors: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>',
+  lighting: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M8 14a6 6 0 118 0c-.8.7-1.2 1.5-1.2 2.4H9.2c0-.9-.4-1.7-1.2-2.4z"/></svg>',
   fixing: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
   shapes: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 22h20L12 2z"/></svg>',
   materials: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M2 12h20"/></svg>',
@@ -260,21 +294,24 @@ const icons = {
 
 // Build navigation groups dynamically
 const groups = computed(() => {
+  if (!configData.value) return [];
+
   const id = configId.value;
-  const search = route.query ? '?' + new URLSearchParams(route.query).toString() : '';
   const basePath = `/configuration/${id}`;
 
   const coreItems = hasAdvancedMaterials.value
     ? [
         { label: __('Fonts', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/fonts`, icon: icons.fonts },
-        { label: __('Components', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/components`, icon: icons.components },
+        { label: __('Designs', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/components`, icon: icons.components },
         { label: __('Pricings', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/pricings`, icon: icons.pricing },
+        { label: __('Materials', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/materials`, icon: icons.materials },
       ]
     : [
         { label: __('Sizes', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/sizes`, icon: icons.sizes },
         { label: __('Pricings', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/pricings`, icon: icons.pricing },
         { label: __('Fonts', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/fonts`, icon: icons.fonts },
         { label: __('Colors', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/colors`, icon: icons.colors },
+        { label: __('Lighting', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/lightings`, icon: icons.lighting },
         { label: __('Fixing Methods', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/fixing-methods`, icon: icons.fixing },
         { label: __('Shapes', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/shapes`, icon: icons.shapes },
         { label: __('Materials', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/materials`, icon: icons.materials },
@@ -413,6 +450,25 @@ const navigateTo = (path) => {
   router.push(path);
 };
 
+const sidebarStorageKey = computed(() => `aso:designs-sidebar-collapsed:${configId.value}`);
+
+const syncDesignsSidebarState = () => {
+  if (!isDesignsView.value || typeof window === 'undefined') {
+    designsSidebarCollapsed.value = false;
+    return;
+  }
+  designsSidebarCollapsed.value = window.sessionStorage.getItem(sidebarStorageKey.value) === 'true';
+};
+
+const toggleDesignsSidebar = () => {
+  if (!isDesignsView.value) return;
+  const next = !designsSidebarCollapsed.value;
+  designsSidebarCollapsed.value = next;
+  if (typeof window !== 'undefined') {
+    window.sessionStorage.setItem(sidebarStorageKey.value, String(next));
+  }
+};
+
 // Go back to config list
 const goToConfigList = () => {
   router.push('/configuration');
@@ -429,12 +485,15 @@ const goToPreview = () => {
 // Load config on mount
 onMounted(() => {
   loadConfig();
+  syncDesignsSidebarState();
 });
 
 // Reload config when configId changes
 watch(configId, () => {
   loadConfig();
 });
+
+watch(() => route.path, syncDesignsSidebarState);
 </script>
 
 <style scoped>
@@ -449,6 +508,11 @@ watch(configId, () => {
   max-width: 1600px;
   margin: 0 auto;
   padding: 12px 16px 0 16px;
+  transition: gap 180ms ease;
+}
+
+.ascwo-configurator-layout.is-sidebar-collapsed {
+  gap: 16px;
 }
 
 .ascwo-configurator-sidebar {
@@ -458,7 +522,45 @@ watch(configId, () => {
   max-height: calc(100vh - var(--wp-admin--admin-bar--height, 32px) - 24px);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: visible;
+  flex-shrink: 0;
+  transition: width 180ms ease;
+}
+
+.ascwo-configurator-layout.is-sidebar-collapsed .ascwo-configurator-sidebar {
+  width: 44px;
+}
+
+.ascwo-sidebar-open-button,
+.ascwo-sidebar-collapse-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #fff;
+  color: #6b7280;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.08);
+  cursor: pointer;
+}
+
+.ascwo-sidebar-collapse-button {
+  position: absolute;
+  right: -15px;
+  top: 64px;
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.14);
+}
+
+.ascwo-sidebar-open-button:hover,
+.ascwo-sidebar-collapse-button:hover {
+  color: #303030;
+  background: #f8fafc;
 }
 
 .ascwo-configurator-nav-scroll {

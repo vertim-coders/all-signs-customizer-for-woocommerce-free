@@ -24,6 +24,56 @@ class ASCWO_Frontend
         add_shortcode('ascwo-products', [$this, 'render_ascwo_products']);
     }
 
+    private function normalize_global_asset_url($url)
+    {
+        $url = is_string($url) ? trim($url) : '';
+        if ($url === '' || strpos($url, 'data:') === 0 || strpos($url, 'blob:') === 0) {
+            return $url;
+        }
+
+        foreach (array('/assets/images/', '/assets/icons/', 'assets/images/', 'assets/icons/') as $marker) {
+            $position = strpos($url, $marker);
+            if ($position !== false) {
+                $asset_path = substr($url, $position);
+                $asset_path = ltrim($asset_path, '/');
+                $asset_path = preg_replace('#^assets/#', '', $asset_path);
+                return trailingslashit(ASCWO_ASSETS) . $asset_path;
+            }
+        }
+
+        if (preg_match('#^https?://#i', $url)) {
+            return $url;
+        }
+
+        return trailingslashit(ASCWO_ASSETS) . ltrim($url, '/');
+    }
+
+    private function get_normalized_global_icon_items($option_name)
+    {
+        $items = get_option($option_name, array());
+        if (!is_array($items)) {
+            return array();
+        }
+
+        $changed = false;
+        foreach ($items as $index => $item) {
+            if (!is_array($item) || !isset($item['icon'])) {
+                continue;
+            }
+            $normalized_icon = $this->normalize_global_asset_url($item['icon']);
+            if ($normalized_icon !== $item['icon']) {
+                $items[$index]['icon'] = $normalized_icon;
+                $changed = true;
+            }
+        }
+
+        if ($changed) {
+            update_option($option_name, $items);
+        }
+
+        return $items;
+    }
+
     /**
      * Render the products shortcode output.
      *
@@ -219,9 +269,9 @@ class ASCWO_Frontend
                     $pageSettings = isset($page_settings['others']) && is_array($page_settings['others']) ? $page_settings['others'] : [];
                     $all_cliparts_groups = get_option('ascwo-manages-cliparts', array());
                     $all_fonts = get_option('ascwo-manages-fonts', array());
-                    $all_shapes = get_option('ascwo_all_shapes', array());
-                    $all_fixingMethods = get_option('ascwo_all_fixingMethods', array());
-                    $all_borders = get_option('ascwo_all_borders', array());
+                    $all_shapes = $this->get_normalized_global_icon_items('ascwo_all_shapes');
+                    $all_fixingMethods = $this->get_normalized_global_icon_items('ascwo_all_fixingMethods');
+                    $all_borders = $this->get_normalized_global_icon_items('ascwo_all_borders');
                     $outputOptions = get_option('ascwo_output_options', array());
 
                     if (is_array($config) && !empty($config)) {

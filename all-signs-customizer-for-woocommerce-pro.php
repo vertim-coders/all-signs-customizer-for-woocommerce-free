@@ -461,6 +461,7 @@ final class ASCWO_All_Signs_Options_Pro
         $shapes_updated = false;
         $default_shapes = [
             [
+                "id" => "shape-cut-to-shape",
                 'name' => 'Cut To Shape',
                 'icon' => ASCWO_ASSETS . '/images/shapes/ic_shape_cut_to_shape.svg',
                 'value' => 'cut-to-shape'
