@@ -35,7 +35,7 @@
                   <span>{{ __("Create a fixing method to use it inside configurations.", "all-signs-customizer-for-woocommerce-pro") }}</span>
                 </td>
               </tr>
-              <tr v-for="(method, key) in fixingMethods" :key="key">
+              <tr v-for="(method, key) in fixingMethods" :key="method.id || method.type || key">
                 <td class="ascwo-row-strong">{{ method.name }}</td>
                 <td>{{ method.description || "-" }}</td>
                 <td>
@@ -47,7 +47,7 @@
                 </td>
                 <td>
                   <div class="ascwo-flex ascwo-items-center ascwo-gap-3">
-                    <button type="button" @click="selectFixingMethod(key, method)" class="ascwo-outline-button">
+                    <button type="button" @click="selectFixingMethod(method.id || method.type || key, method)" class="ascwo-outline-button">
                       <Edit2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
                       {{ __("Edit", "all-signs-customizer-for-woocommerce-pro") }}
                     </button>
@@ -108,7 +108,7 @@ import { __ } from "@wordpress/i18n";
 const isFetching = ref(false);
 const isLoading = ref(false);
 const isEdit = ref(false);
-const fixingMethodId = ref(null);
+const fixingMethodId = ref("");
 const fixingMethods = ref([]);
 const fixingMethod = ref({ name: "", description: "", icon: "", popImg: "", type: "" });
 
@@ -125,8 +125,8 @@ const fetchFixingMethods = async () => {
 const isNewFixingMethod = ref(false);
 
 const selectFixingMethod = (id, method) => {
-  fixingMethodId.value = id;
-  fixingMethod.value = JSON.parse(JSON.stringify({ name: "", description: "", icon: "", popImg: "", type: "", ...method }));
+  fixingMethodId.value = String(id || "");
+  fixingMethod.value = JSON.parse(JSON.stringify({ id: "", name: "", description: "", icon: "", popImg: "", type: "", ...method }));
   isEdit.value = true;
   isNewFixingMethod.value = true;
 };
@@ -168,8 +168,8 @@ const selectFixingMethodIcon = () => {
 
 const back = () => {
   isNewFixingMethod.value = false;
-  fixingMethodId.value = null;
-  fixingMethod.value = { name: "", description: "", icon: "", popImg: "", type: "" };
+  fixingMethodId.value = "";
+  fixingMethod.value = { id: "", name: "", description: "", icon: "", popImg: "", type: "" };
 };
 
 onMounted(fetchFixingMethods);

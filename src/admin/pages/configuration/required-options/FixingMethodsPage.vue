@@ -112,7 +112,7 @@
 
         <label class="ascwo-field-block">
           <span class="ascwo-form-label">{{ __("Fixing method", "all-signs-customizer-for-woocommerce-pro") }}</span>
-          <select v-model.number="fixingMethod.fixingMethodId" class="ascwo-form-input">
+          <select v-model="fixingMethod.fixingMethodId" class="ascwo-form-input">
             <option :value="-1">{{ __("None", "all-signs-customizer-for-woocommerce-pro") }}</option>
             <option v-for="option in availableManagedMethods" :key="option.value" :value="option.value">
               {{ option.name }}
@@ -199,7 +199,7 @@
       </div>
       <div class="ascwo-form-footer">
         <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Back to fixing methods", "all-signs-customizer-for-woocommerce-pro") }}</button>
-        <button type="button" @click="isEdit ? updateMaterialFixingMethods() : addFixingMethods()" :disabled="isLoading || fixingMethod.fixingMethodId < 0" class="ascwo-primary-button">
+        <button type="button" @click="isEdit ? updateMaterialFixingMethods() : addFixingMethods()" :disabled="isLoading || !fixingMethod.fixingMethodId || fixingMethod.fixingMethodId === -1" class="ascwo-primary-button">
           {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce-pro") : __("Save fixing method", "all-signs-customizer-for-woocommerce-pro") }}
         </button>
       </div>
@@ -245,19 +245,39 @@ const exclusionSearch = ref({ sizes: "", shapes: "" });
 
 const fixingMethods = ref([]);
 const manageFixingMethods = ref([]);
-const fixingMethod = ref({ isDefault: false, fixingMethodId: -1, excludeSizes: [], excludeShapes: [], additionalPrice: 0 });
+const fixingMethod = ref({ isDefault: false, fixingMethodId: "", excludeSizes: [], excludeShapes: [], additionalPrice: 0 });
 
 const normalizeArray = (value) => Array.isArray(value) ? value : [];
 
-const getManagedMethod = (fx) => manageFixingMethods.value[Number(fx?.fixingMethodId)] || null;
+const managedMethodKey = (method) => String(method?.id ?? method?.type ?? "");
 
-const selectedManagedMethod = computed(() => manageFixingMethods.value[Number(fixingMethod.value.fixingMethodId)] || null);
+const resolveManagedMethodId = (value, methods = manageFixingMethods.value) => {
+  const raw = String(value ?? "");
+  if (!raw || raw === "-1") return "";
+
+  const direct = methods.find((method) => managedMethodKey(method) === raw);
+  if (direct) return managedMethodKey(direct);
+
+  const index = Number(raw);
+  if (Number.isInteger(index) && index >= 0 && methods[index]) {
+    return managedMethodKey(methods[index]);
+  }
+
+  return raw;
+};
+
+const getManagedMethod = (fx) => {
+  const resolvedId = resolveManagedMethodId(fx?.fixingMethodId);
+  return manageFixingMethods.value.find((method) => managedMethodKey(method) === resolvedId) || null;
+};
+
+const selectedManagedMethod = computed(() => manageFixingMethods.value.find((method) => managedMethodKey(method) === resolveManagedMethodId(fixingMethod.value.fixingMethodId)) || null);
 
 const availableManagedMethods = computed(() => manageFixingMethods.value
-  .map((method, index) => ({ ...method, value: index }))
+  .map((method, index) => ({ ...method, value: managedMethodKey(method) || String(index) }))
   .filter((method) => {
-    if (method.value === Number(fixingMethod.value.fixingMethodId)) return true;
-    return !fixingMethods.value.some((fx) => Number(fx.fixingMethodId) === method.value);
+    if (String(method.value) === String(fixingMethod.value.fixingMethodId)) return true;
+    return !fixingMethods.value.some((fx) => String(fx.fixingMethodId) === String(method.value));
   }));
 
 const getExclusionOptions = (type) => (type === "sizes" ? fixingMethodSizes.value : fixingMethodShapes.value)
@@ -306,10 +326,10 @@ const exclusionSummaryLabels = (field, type, fallback, prefix) => {
 const fetchMaterialShapes = async () => {
   const res = await api.getRequiredOptionShapes(configID.value);
   if (!res.message && res.items) {
-    fixingMethodShapes.value = res.items.map((shape) => ({
-      name: res.manageShapes?.[shape.shapeId]?.name || "Shape",
-      value: shape.shapeId,
-    }));
+      fixingMethodShapes.value = res.items.map((shape) => ({
+        name: res.manageShapes?.find?.((item) => String(item?.id ?? item?.value ?? "") === String(shape.shapeId))?.name || "Shape",
+        value: shape.shapeId,
+      }));
   }
 };
 
@@ -320,14 +340,17 @@ const fetchMaterialFixingMethods = async () => {
     const fixingMethodsData = res;
     fixingMethodSizes.value = (fixingMethodsData?.sizes || []).map((size, index) => ({ name: size.label, value: index }));
     if (!res.message && fixingMethodsData) {
+      manageFixingMethods.value = (fixingMethodsData.manageFixingMethods || []).map((method) => ({
+        ...method,
+        id: managedMethodKey(method),
+      }));
       fixingMethods.value = (fixingMethodsData.items || []).map((fx) => ({
         isDefault: Boolean(fx.isDefault),
-        fixingMethodId: Number(fx.fixingMethodId ?? -1),
+        fixingMethodId: resolveManagedMethodId(fx.fixingMethodId, manageFixingMethods.value),
         excludeSizes: normalizeArray(fx.excludeSizes),
         excludeShapes: normalizeArray(fx.excludeShapes),
         additionalPrice: Number(fx.additionalPrice || 0),
       }));
-      manageFixingMethods.value = fixingMethodsData.manageFixingMethods || [];
     }
   } finally {
     isFetching.value = false;
@@ -411,7 +434,7 @@ const selectMaterialFixingMethod = (id, fx, isDeleting = false) => {
   fixingMethodId.value = id;
   fixingMethod.value = JSON.parse(JSON.stringify({
     isDefault: Boolean(fx.isDefault),
-    fixingMethodId: Number(fx.fixingMethodId ?? -1),
+    fixingMethodId: resolveManagedMethodId(fx.fixingMethodId),
     excludeSizes: normalizeArray(fx.excludeSizes),
     excludeShapes: normalizeArray(fx.excludeShapes),
     additionalPrice: Number(fx.additionalPrice || 0),
@@ -443,7 +466,7 @@ const newFixing = () => {
     toastMessage(__("No more fixing methods available", "all-signs-customizer-for-woocommerce-pro"), "warning");
     return;
   }
-  fixingMethod.value = { isDefault: false, fixingMethodId: firstAvailable.value, excludeSizes: [], excludeShapes: [], additionalPrice: 0 };
+  fixingMethod.value = { isDefault: false, fixingMethodId: firstAvailable.value?.value || "", excludeSizes: [], excludeShapes: [], additionalPrice: 0 };
   fixingMethodId.value = null;
   isEdit.value = false;
   isNewFixing.value = true;

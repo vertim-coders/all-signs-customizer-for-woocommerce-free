@@ -33,7 +33,7 @@
                   <span>{{ __("Create borders to use them inside configurations.", "all-signs-customizer-for-woocommerce-pro") }}</span>
                 </td>
               </tr>
-              <tr v-for="(item, key) in borders" :key="key">
+              <tr v-for="(item, key) in borders" :key="item.id || item.value || key">
                 <td class="ascwo-row-strong">{{ item.name }}</td>
                 <td>
                   <div class="ascwo-preview-box">
@@ -42,7 +42,7 @@
                   </div>
                 </td>
                 <td>
-                  <button type="button" @click="selectBorder(key, item)" class="ascwo-outline-button">
+                  <button type="button" @click="selectBorder(item.id || item.value || key, item)" class="ascwo-outline-button">
                     <Edit2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
                     {{ __("Edit", "all-signs-customizer-for-woocommerce-pro") }}
                   </button>
@@ -105,7 +105,7 @@ import { __ } from "@wordpress/i18n";
 const isFetching = ref(false);
 const isLoading = ref(false);
 const isNewBorder = ref(false);
-const borderId = ref(null);
+const borderId = ref("");
 const borders = ref([]);
 const border = ref(emptyBorder());
 
@@ -124,7 +124,7 @@ const fetchBorders = async () => {
 };
 
 const selectBorder = (id, item) => {
-  borderId.value = id;
+  borderId.value = String(id || "");
   border.value = JSON.parse(JSON.stringify({ ...emptyBorder(), ...item }));
   isNewBorder.value = true;
 };
@@ -164,7 +164,7 @@ const selectBorderIcon = () => {
 
 const back = () => {
   isNewBorder.value = false;
-  borderId.value = null;
+  borderId.value = "";
   border.value = emptyBorder();
 };
 

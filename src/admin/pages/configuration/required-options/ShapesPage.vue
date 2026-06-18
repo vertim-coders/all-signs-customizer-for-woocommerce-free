@@ -72,11 +72,11 @@
                 </td>
                 <td>
                   <div class="ascwo-flex ascwo-items-center ascwo-gap-3">
-                    <button type="button" @click="selectMaterialShape(key, sh)" class="ascwo-outline-button">
+                    <button type="button" @click="selectMaterialShape(sh.shapeId, sh)" class="ascwo-outline-button">
                       <Edit2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
                       {{ __("Edit", "all-signs-customizer-for-woocommerce-pro") }}
                     </button>
-                    <button type="button" @click="selectMaterialShape(key, sh, true)" class="ascwo-link-danger">
+                    <button type="button" @click="selectMaterialShape(sh.shapeId, sh, true)" class="ascwo-link-danger">
                       <Trash2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
                       {{ __("Delete", "all-signs-customizer-for-woocommerce-pro") }}
                     </button>
@@ -98,7 +98,7 @@
 
         <label class="ascwo-field-block">
           <span class="ascwo-form-label">{{ __("Shape", "all-signs-customizer-for-woocommerce-pro") }}</span>
-          <select v-model.number="shape.shapeId" class="ascwo-form-input">
+          <select v-model="shape.shapeId" class="ascwo-form-input">
             <option v-for="option in availableManagedShapes" :key="option.value" :value="option.value">
               {{ option.name }}
             </option>
@@ -130,7 +130,7 @@
       </div>
       <div class="ascwo-form-footer">
         <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Back to shapes", "all-signs-customizer-for-woocommerce-pro") }}</button>
-        <button type="button" @click="isEdit ? updateMaterialShapes() : addShapes()" :disabled="isLoading || shape.shapeId < 0" class="ascwo-primary-button">
+        <button type="button" @click="isEdit ? updateMaterialShapes() : addShapes()" :disabled="isLoading || !shape.shapeId" class="ascwo-primary-button">
           {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce-pro") : __("Save shape", "all-signs-customizer-for-woocommerce-pro") }}
         </button>
       </div>
@@ -167,14 +167,14 @@ const isNewShape = ref(false);
 const isLoading = ref(false);
 const isEdit = ref(false);
 const openModal = ref(false);
-const shapeId = ref(null);
+const shapeId = ref("");
 const draggedIndex = ref(null);
 
 const shapes = ref([]);
 const manageShapes = ref([]);
 const shape = ref(createShape());
 
-function createShape(shapeIdValue = -1) {
+function createShape(shapeIdValue = "") {
   return {
     isDefault: false,
     shapeId: shapeIdValue,
@@ -184,22 +184,22 @@ function createShape(shapeIdValue = -1) {
   };
 }
 
-const getManagedShape = (sh) => manageShapes.value[Number(sh?.shapeId)] || null;
+const getManagedShape = (sh) => manageShapes.value.find((item) => String(item?.id ?? item?.value ?? "") === String(sh?.shapeId)) || null;
 
-const selectedManagedShape = computed(() => manageShapes.value[Number(shape.value.shapeId)] || null);
+const selectedManagedShape = computed(() => manageShapes.value.find((item) => String(item?.id ?? item?.value ?? "") === String(shape.value.shapeId)) || null);
 
 const availableManagedShapes = computed(() => manageShapes.value
-  .map((item, index) => ({ ...item, value: index }))
+  .map((item, index) => ({ ...item, value: String(item?.id ?? item?.value ?? index) }))
   .filter((item) => {
-    if (item.value === Number(shape.value.shapeId)) return true;
-    return !shapes.value.some((sh) => Number(sh.shapeId) === item.value);
+    if (String(item.value) === String(shape.value.shapeId)) return true;
+    return !shapes.value.some((sh) => String(sh.shapeId) === String(item.value));
   }));
 
 const normalizeShape = (item) => ({
   ...createShape(),
   ...item,
   isDefault: Boolean(item?.isDefault),
-  shapeId: Number(item?.shapeId ?? -1),
+  shapeId: String(item?.shapeId ?? ""),
   additionalPrice: Number(item?.additionalPrice || 0),
   enablePricingBySurface: false,
   surface: Number(item?.surface || 0),
@@ -258,7 +258,7 @@ const addShapes = async () => {
 };
 
 const updateMaterialShapes = async () => {
-  if (shapeId.value === null) return;
+  if (!shapeId.value) return;
   isLoading.value = true;
   try {
     const payload = normalizeShape(shape.value);
@@ -278,7 +278,7 @@ const updateMaterialShapes = async () => {
 };
 
 const deleteShapes = async () => {
-  if (shapeId.value === null) return;
+  if (!shapeId.value) return;
   openModal.value = false;
   isLoading.value = true;
   try {
@@ -297,7 +297,7 @@ const deleteShapes = async () => {
 };
 
 const selectMaterialShape = (id, sh, isDeleting = false) => {
-  shapeId.value = id;
+  shapeId.value = String(id || "");
   shape.value = normalizeShape(JSON.parse(JSON.stringify(sh)));
   if (isDeleting) {
     openModal.value = true;
@@ -327,7 +327,7 @@ const newShape = () => {
     toastMessage(__("No more shapes available", "all-signs-customizer-for-woocommerce-pro"), "warning");
     return;
   }
-  shapeId.value = null;
+  shapeId.value = "";
   shape.value = createShape(firstAvailable);
   isEdit.value = false;
   isNewShape.value = true;
@@ -336,7 +336,7 @@ const newShape = () => {
 const back = () => {
   isNewShape.value = false;
   isEdit.value = false;
-  shapeId.value = null;
+  shapeId.value = "";
   shape.value = createShape();
 };
 

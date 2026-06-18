@@ -14,6 +14,19 @@ export const adminImageUrl = (path = "") => {
   return `${assetsBaseUrl()}/images/${relativePath}`;
 };
 
+export const adminAssetUrl = (path = "") => {
+  const value = Array.isArray(path) ? path[0] : path;
+  if (!value) return "";
+  if (/^(https?:)?\/\//i.test(value) || value.startsWith("data:")) return value;
+
+  const normalized = String(value).replace(/\\/g, "/").replace(/^\/+/, "");
+  const relativePath = normalized.startsWith("assets/")
+    ? normalized.replace(/^assets\//, "")
+    : normalized;
+
+  return `${assetsBaseUrl()}/assets/${relativePath}`;
+};
+
 export const demoImageUrl = (path = "") => {
   const value = Array.isArray(path) ? path[0] : path;
   if (!value) return "";

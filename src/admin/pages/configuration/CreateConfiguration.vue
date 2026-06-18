@@ -721,17 +721,7 @@ const removeSelectedProduct = (productId) => {
   selectedWooProductIds.value = selectedWooProductIds.value.filter(id => String(id) !== String(productId));
 };
 
-const stripIdsDeep = (value) => {
-  if (Array.isArray(value)) return value.map(stripIdsDeep);
-  if (value && typeof value === 'object') {
-    return Object.fromEntries(
-      Object.entries(value)
-        .filter(([key]) => key !== 'id')
-        .map(([key, item]) => [key, stripIdsDeep(item)])
-    );
-  }
-  return value;
-};
+const cloneDeep = (value) => JSON.parse(JSON.stringify(value));
 
 const buildConfigData = () => {
   const demo = configurationDemoData?.[0]?.data || {};
@@ -752,7 +742,7 @@ const buildConfigData = () => {
 
   const cloneSections = (sections = {}, emptyItems = false) => Object.fromEntries(
     Object.entries(sections).map(([key, section]) => {
-      const cleanSection = stripIdsDeep(section);
+      const cleanSection = cloneDeep(section);
 
       return [
         key,
@@ -827,7 +817,7 @@ const buildConfigData = () => {
   };
 
   if (wizard.value.includeDemo) {
-    const demoPayload = stripIdsDeep(demo);
+    const demoPayload = cloneDeep(demo);
 
     return {
       ...demoPayload,

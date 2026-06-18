@@ -63,9 +63,6 @@ class ASCWO_Api_Configs extends WP_REST_Controller
         if (is_array($value)) {
             $clean = array();
             foreach ($value as $key => $item) {
-                if ($key === 'id') {
-                    continue;
-                }
                 $clean[$key] = $this->sanitize_config_data($item);
             }
             return $clean;
@@ -81,6 +78,27 @@ class ASCWO_Api_Configs extends WP_REST_Controller
             return $value;
         }
         return 'simple';
+    }
+
+    private function get_managed_fixing_methods(): array
+    {
+        $methods = get_option("ascwo_all_fixingMethods", []);
+        if (!is_array($methods)) {
+            return array();
+        }
+
+        $normalized = array();
+        foreach (array_values($methods) as $method) {
+            if (!is_array($method)) {
+                continue;
+            }
+            if (!isset($method['id']) || $method['id'] === '') {
+                $method['id'] = !empty($method['type']) ? sanitize_title((string) $method['type']) : sanitize_title((string) ($method['name'] ?? 'fixing-method'));
+            }
+            $normalized[] = $method;
+        }
+
+        return $normalized;
     }
 
     private function pick_config_payload_section(array $params, array $data_payload, string $key, $default = array())
@@ -420,7 +438,7 @@ class ASCWO_Api_Configs extends WP_REST_Controller
         $all_cliparts_groups = get_option("ascwo-manages-cliparts", []);
         $all_fonts = get_option("ascwo-manages-fonts", []);
         $all_shapes = get_option("ascwo_all_shapes", []);
-        $all_fixingMethods = get_option("ascwo_all_fixingMethods", []);
+        $all_fixingMethods = $this->get_managed_fixing_methods();
         $all_borders = get_option("ascwo_all_borders", []);
         $outputOptions = get_option("ascwo_output_options", []);
         $frontend_data = isset($config['data']) && is_array($config['data']) ? $config['data'] : array();

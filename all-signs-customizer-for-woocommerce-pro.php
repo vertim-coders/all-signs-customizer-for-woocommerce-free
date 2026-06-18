@@ -287,21 +287,25 @@ final class ASCWO_All_Signs_Options_Pro
     {
         $borders = [
             [
+                'id' => 'border-none',
                 'name' => 'None',
                 "icon" => ASCWO_ASSETS . '/images/borders/ic_border_none.svg',
                 'value' => 'none'
             ],
             [
+                'id' => 'border-normal',
                 'name' => 'Normal',
                 "icon" => ASCWO_ASSETS . '/images/borders/ic_border_thin.svg',
                 'value' => 'normal'
             ],
             [
+                'id' => 'border-rounded-corners',
                 'name' => 'Rounded Corners',
                 "icon" => ASCWO_ASSETS . '/images/borders/ic_border_rounded_corners.svg',
                 'value' => 'rounded-corners'
             ],
             [
+                'id' => 'border-old-world',
                 'name' => 'Old World',
                 "icon" => ASCWO_ASSETS . '/images/borders/ic_border_old_world.svg',
                 'value' => 'old-world'
@@ -343,66 +347,79 @@ final class ASCWO_All_Signs_Options_Pro
     {
         $shapes = [
             [
+                'id' => 'shape-oval',
                 'name' => 'Oval',
                 "icon" => ASCWO_ASSETS . '/images/shapes/ic_shape_oval.svg',
                 'value' => 'oval'
             ],
             [
+                'id' => 'shape-square',
                 'name' => 'Square',
                 "icon" => ASCWO_ASSETS . '/images/shapes/ic_shape_square.svg',
                 'value' => 'square'
             ],
             [
+                'id' => 'shape-triangle',
                 'name' => 'Triangle',
                 "icon" => ASCWO_ASSETS . '/images/shapes/ic_shape_triangle.svg',
                 'value' => 'triangle'
             ],
             [
+                'id' => 'shape-rounded-square',
                 'name' => 'Rounded Square',
                 "icon" => ASCWO_ASSETS . '/images/shapes/ic_shape_rounded.svg',
                 'value' => 'rounded-square'
             ],
             [
+                'id' => 'shape-rotated-square',
                 'name' => 'Rotated Square',
                 "icon" => ASCWO_ASSETS . '/images/shapes/ic_shape_rotated_square.svg',
                 'value' => 'rotated-square'
             ],
             [
+                'id' => 'shape-turn-left',
                 'name' => 'Turn Left',
                 "icon" => ASCWO_ASSETS . '/images/shapes/ic_shape_turn_left.svg',
                 'value' => 'turn-left'
             ],
             [
+                'id' => 'shape-turn-right',
                 'name' => 'Turn Right',
                 "icon" => ASCWO_ASSETS . '/images/shapes/ic_shape_turn_right.svg',
                 'value' => 'turn-right'
             ],
             [
+                'id' => 'shape-arrow-left',
                 'name' => 'Arrow Left',
                 "icon" => ASCWO_ASSETS . '/images/shapes/ic_shape_arrow_left.svg',
                 'value' => 'arrow-left'
             ],
             [
+                'id' => 'shape-arrow-right',
                 'name' => 'Arrow Right',
                 "icon" => ASCWO_ASSETS . '/images/shapes/ic_shape_arrow_right.svg',
                 'value' => 'arrow-right'
             ],
             [
+                'id' => 'shape-stop',
                 'name' => 'Stop',
                 "icon" => ASCWO_ASSETS . '/images/shapes/ic_shape_stop.svg',
                 'value' => 'stop'
             ],
             [
+                'id' => 'shape-rounded-top',
                 'name' => 'Rounded Top',
                 "icon" => ASCWO_ASSETS . '/images/shapes/ic_shape_rounded_top.svg',
                 'value' => 'rounded-top'
             ],
             [
+                'id' => 'shape-rounded-sides',
                 'name' => 'Rounded Sides',
                 "icon" => ASCWO_ASSETS . '/images/shapes/ic_shape_rounded_sides.svg',
                 'value' => 'rounded-sides'
             ],
             [
+                'id' => 'shape-cut-to-shape',
                 'name' => 'Cut To Shape',
                 "icon" => ASCWO_ASSETS . '/images/shapes/ic_shape_cut_to_shape.svg',
                 'value' => 'cut-to-shape'
@@ -477,6 +494,7 @@ final class ASCWO_All_Signs_Options_Pro
     {
         $fixingMethods = [
             [
+                'id' => 'fixing-none',
                 'name' => 'None',
                 "description" => "",
                 "icon" => ASCWO_ASSETS . '/images/fixing-methodes/ic_fixmethod_none.svg',
@@ -484,6 +502,7 @@ final class ASCWO_All_Signs_Options_Pro
                 'type' => 'none'
             ],
             [
+                'id' => 'fixing-adhesive-tape',
                 'name' => 'Adhesive Tape',
                 "description" => "",
                 "icon" => ASCWO_ASSETS . '/images/fixing-methodes/ic_fixmethod_adhesive_tape.svg',
@@ -491,6 +510,7 @@ final class ASCWO_All_Signs_Options_Pro
                 'type' => 'adhesive-tape'
             ],
             [
+                'id' => 'fixing-screw',
                 'name' => 'Screw',
                 "description" => "",
                 "icon" => ASCWO_ASSETS . '/images/fixing-methodes/ic_fixmethod_screw.svg',
@@ -498,6 +518,7 @@ final class ASCWO_All_Signs_Options_Pro
                 'type' => 'screw'
             ],
             [
+                'id' => 'fixing-screw-cap',
                 'name' => 'Screw Cap',
                 "description" => "",
                 "icon" => ASCWO_ASSETS . '/images/fixing-methodes/ic_fixmethod_screw_cap.svg',
@@ -505,6 +526,7 @@ final class ASCWO_All_Signs_Options_Pro
                 'type' => 'screw-cap'
             ],
             [
+                'id' => 'fixing-stand-off',
                 'name' => 'Stand Off',
                 "description" => "",
                 "icon" => ASCWO_ASSETS . '/images/fixing-methodes/ic_fixmethod_standoff.svg',
@@ -512,6 +534,7 @@ final class ASCWO_All_Signs_Options_Pro
                 'type' => 'standoff'
             ],
             [
+                'id' => 'fixing-hanging',
                 'name' => 'Hanging',
                 "description" => "",
                 "icon" => ASCWO_ASSETS . '/images/fixing-methodes/ic_fixmethod_hanging.svg',
@@ -519,6 +542,7 @@ final class ASCWO_All_Signs_Options_Pro
                 'type' => 'hanging'
             ],
             [
+                'id' => 'fixing-flag',
                 'name' => 'Flag',
                 "description" => "",
                 "icon" => ASCWO_ASSETS . '/images/fixing-methodes/ic_fixmethod_flag.svg',
@@ -526,6 +550,7 @@ final class ASCWO_All_Signs_Options_Pro
                 'type' => 'flag'
             ],
             [
+                'id' => 'fixing-suction-cup',
                 'name' => 'Suction Cup',
                 "description" => "",
                 "icon" => ASCWO_ASSETS . '/images/fixing-methodes/ic_fixmethod_suction_cup.svg',
@@ -533,6 +558,7 @@ final class ASCWO_All_Signs_Options_Pro
                 'type' => 'suction-cup'
             ],
             [
+                'id' => 'fixing-table-stand',
                 'name' => 'Table Stand',
                 "description" => "",
                 "icon" => ASCWO_ASSETS . '/images/fixing-methodes/ic_fixmethod_table_stand.svg',
@@ -540,6 +566,7 @@ final class ASCWO_All_Signs_Options_Pro
                 'type' => 'table-stand'
             ],
             [
+                'id' => 'fixing-ceiling',
                 'name' => 'Ceiling',
                 "description" => "",
                 "icon" => ASCWO_ASSETS . '/images/fixing-methodes/ic_fixmethod_ceiling.svg',
@@ -547,6 +574,7 @@ final class ASCWO_All_Signs_Options_Pro
                 'type' => 'ceiling'
             ],
             [
+                'id' => 'fixing-pole-attachment',
                 'name' => 'Pole Attachment',
                 "description" => "",
                 "icon" => ASCWO_ASSETS . '/images/fixing-methodes/ic_fixmethod_pole_attachment.svg',
@@ -554,6 +582,7 @@ final class ASCWO_All_Signs_Options_Pro
                 'type' => 'pole-attachment'
             ],
             [
+                'id' => 'fixing-cable-labeling',
                 'name' => 'Cable Labeling',
                 "description" => "",
                 "icon" => ASCWO_ASSETS . '/images/fixing-methodes/ic_fixmethod_cable_label.svg',
@@ -561,6 +590,7 @@ final class ASCWO_All_Signs_Options_Pro
                 'type' => 'cable-labeling'
             ],
             [
+                'id' => 'fixing-table-clamp',
                 'name' => 'Table Clamp',
                 "description" => "",
                 "icon" => ASCWO_ASSETS . '/images/fixing-methodes/ic_fixmethod_table_clamp.svg',
@@ -568,6 +598,7 @@ final class ASCWO_All_Signs_Options_Pro
                 'type' => 'table-clamp'
             ],
             [
+                'id' => 'fixing-base-support',
                 'name' => 'Base Support',
                 "description" => "",
                 "icon" => ASCWO_ASSETS . '/images/fixing-methodes/ic_fixmethod_base_support.svg',
@@ -575,6 +606,7 @@ final class ASCWO_All_Signs_Options_Pro
                 'type' => 'base-support'
             ],
             [
+                'id' => 'fixing-magnetic-strip',
                 'name' => 'Magnetic Strip',
                 "description" => "",
                 "icon" => ASCWO_ASSETS . '/images/fixing-methodes/ic_fixmethod_magnetic_strip.svg',
@@ -582,6 +614,7 @@ final class ASCWO_All_Signs_Options_Pro
                 'type' => 'magnetic-strip'
             ],
             [
+                'id' => 'fixing-keyring',
                 'name' => 'Keyring',
                 "description" => "",
                 "icon" => ASCWO_ASSETS . '/images/fixing-methodes/ic_fixmethod_keyring.svg',
@@ -589,6 +622,7 @@ final class ASCWO_All_Signs_Options_Pro
                 'type' => 'keyring'
             ],
             [
+                'id' => 'fixing-sign-holder',
                 'name' => 'Sign Holder',
                 "description" => "",
                 "icon" => ASCWO_ASSETS . '/images/fixing-methodes/ic_fixmethod_sign_holder.svg',
@@ -596,6 +630,7 @@ final class ASCWO_All_Signs_Options_Pro
                 'type' => 'sign-holder'
             ],
             [
+                'id' => 'fixing-eyelets',
                 'name' => 'Eyelets',
                 "description" => "",
                 "icon" => ASCWO_ASSETS . '/images/fixing-methodes/ic_fixmethod_eyelets.svg',
@@ -603,6 +638,7 @@ final class ASCWO_All_Signs_Options_Pro
                 'type' => 'eyelets'
             ],
             [
+                'id' => 'fixing-s-hook',
                 'name' => 'S Hook',
                 "description" => "",
                 "icon" => ASCWO_ASSETS . '/images/fixing-methodes/ic_fixmethod_s_hook.svg',
@@ -610,6 +646,7 @@ final class ASCWO_All_Signs_Options_Pro
                 'type' => 's-hook'
             ],
             [
+                'id' => 'fixing-roll-up',
                 'name' => 'Roll Up',
                 "description" => "",
                 "icon" => ASCWO_ASSETS . '/images/fixing-methodes/ic_fixmethod_roll_up.svg',

@@ -32,13 +32,18 @@ class ASCWO_Api_Customizer_Sign_Settings extends WP_REST_Controller {
 	private function get_normalized_meta( $config_id ) {
 		$meta = get_post_meta( (int) $config_id, 'ascwo-configs-meta', true );
 		$meta = is_array( $meta ) ? $meta : array();
+		$meta['data'] = isset( $meta['data'] ) && is_array( $meta['data'] ) ? $meta['data'] : array();
 
 		if ( ! isset( $meta['settings'] ) || ! is_array( $meta['settings'] ) ) {
 			$meta['settings'] = array();
 		}
 
-		if ( empty( $meta['settings'] ) && isset( $meta['data']['settings'] ) && is_array( $meta['data']['settings'] ) ) {
+		if ( isset( $meta['data']['settings'] ) && is_array( $meta['data']['settings'] ) ) {
 			$meta['settings'] = $meta['data']['settings'];
+		}
+
+		if ( ! isset( $meta['data']['settings'] ) || ! is_array( $meta['data']['settings'] ) ) {
+			$meta['data']['settings'] = $meta['settings'];
 		}
 
 		return $meta;

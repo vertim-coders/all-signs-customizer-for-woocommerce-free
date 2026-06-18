@@ -61,11 +61,11 @@
                 </td>
                 <td>
                   <div class="ascwo-flex ascwo-items-center ascwo-gap-3">
-                    <button type="button" @click="selectMaterialBorder(key, bd)" class="ascwo-outline-button">
+                    <button type="button" @click="selectMaterialBorder(bd.manageBorderId, bd)" class="ascwo-outline-button">
                       <Edit2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
                       {{ __("Edit", "all-signs-customizer-for-woocommerce-pro") }}
                     </button>
-                    <button type="button" @click="selectMaterialBorder(key, bd, true)" class="ascwo-link-danger">
+                    <button type="button" @click="selectMaterialBorder(bd.manageBorderId, bd, true)" class="ascwo-link-danger">
                       <Trash2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
                       {{ __("Delete", "all-signs-customizer-for-woocommerce-pro") }}
                     </button>
@@ -168,7 +168,7 @@
 
         <label class="ascwo-field-block">
           <span class="ascwo-form-label">{{ __("Border", "all-signs-customizer-for-woocommerce-pro") }}</span>
-          <select v-model.number="border.manageBorderId" class="ascwo-form-input">
+          <select v-model="border.manageBorderId" class="ascwo-form-input">
             <option v-for="option in availableManagedBorders" :key="option.value" :value="option.value">
               {{ option.name }}
             </option>
@@ -223,7 +223,7 @@
       </div>
       <div class="ascwo-form-footer">
         <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Back to borders", "all-signs-customizer-for-woocommerce-pro") }}</button>
-        <button type="button" @click="isEdit ? updateMaterialBorders() : addBorders()" :disabled="isLoading || border.manageBorderId < 0" class="ascwo-primary-button">
+        <button type="button" @click="isEdit ? updateMaterialBorders() : addBorders()" :disabled="isLoading || !border.manageBorderId" class="ascwo-primary-button">
           {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce-pro") : __("Save border", "all-signs-customizer-for-woocommerce-pro") }}
         </button>
       </div>
@@ -264,7 +264,7 @@ const defaultSettings = () => ({
   customColorsPrevImg: "",
 });
 
-const createBorder = (manageBorderId = -1) => ({
+const createBorder = (manageBorderId = "") => ({
   manageBorderId,
   additionalPrice: 0,
   excludeSizes: [],
@@ -277,7 +277,7 @@ const isNewBorder = ref(false);
 const isLoading = ref(false);
 const isEdit = ref(false);
 const openModal = ref(false);
-const borderId = ref(null);
+const borderId = ref("");
 const colorDragIndex = ref(null);
 const colorDropIndex = ref(null);
 
@@ -288,21 +288,21 @@ const borderShapes = ref([]);
 const border = ref(createBorder());
 
 const normalizeArray = (value) => Array.isArray(value) ? value : [];
-const getManagedBorder = (bd) => manageBorders.value[Number(bd?.manageBorderId)] || null;
+const getManagedBorder = (bd) => manageBorders.value.find((item) => String(item?.id ?? item?.value ?? "") === String(bd?.manageBorderId)) || null;
 
-const selectedManagedBorder = computed(() => manageBorders.value[Number(border.value.manageBorderId)] || null);
+const selectedManagedBorder = computed(() => manageBorders.value.find((item) => String(item?.id ?? item?.value ?? "") === String(border.value.manageBorderId)) || null);
 
 const availableManagedBorders = computed(() => manageBorders.value
-  .map((item, index) => ({ ...item, value: index }))
+  .map((item, index) => ({ ...item, value: String(item?.id ?? item?.value ?? index) }))
   .filter((item) => {
-    if (item.value === Number(border.value.manageBorderId)) return true;
-    return !borders.value.items.some((bd) => Number(bd.manageBorderId) === item.value);
+    if (String(item.value) === String(border.value.manageBorderId)) return true;
+    return !borders.value.items.some((bd) => String(bd.manageBorderId) === String(item.value));
   }));
 
 const normalizeBorder = (item) => ({
   ...createBorder(),
   ...item,
-  manageBorderId: Number(item?.manageBorderId ?? -1),
+  manageBorderId: String(item?.manageBorderId ?? ""),
   additionalPrice: Number(item?.additionalPrice || 0),
   isDefault: Boolean(item?.isDefault),
   excludeSizes: normalizeArray(item?.excludeSizes),
@@ -321,7 +321,7 @@ const fetchMaterialShapes = async () => {
   const res = await api.getRequiredOptionShapes(configID.value);
   if (!res.message && res.items) {
     borderShapes.value = res.items.map((item) => ({
-      name: res.manageShapes?.[item.shapeId]?.name || "Shape",
+      name: res.manageShapes?.find?.((shape) => String(shape?.id ?? shape?.value ?? "") === String(item.shapeId))?.name || "Shape",
       value: item.shapeId,
     }));
   }
@@ -383,7 +383,7 @@ const addBorders = async () => {
 };
 
 const updateMaterialBorders = async () => {
-  if (borderId.value === null) return;
+  if (!borderId.value) return;
   isLoading.value = true;
   try {
     const res = await api.updateRequiredOptionBorderItem(configID.value, borderId.value, normalizeBorder(border.value));
@@ -401,7 +401,7 @@ const updateMaterialBorders = async () => {
 };
 
 const deleteBorders = async () => {
-  if (borderId.value === null) return;
+  if (!borderId.value) return;
   openModal.value = false;
   isLoading.value = true;
   try {
@@ -420,7 +420,7 @@ const deleteBorders = async () => {
 };
 
 const selectMaterialBorder = (id, bd, isDeleting = false) => {
-  borderId.value = id;
+  borderId.value = String(id || "");
   border.value = normalizeBorder(JSON.parse(JSON.stringify(bd)));
   if (isDeleting) {
     openModal.value = true;
@@ -450,7 +450,7 @@ const newBorder = () => {
     toastMessage(__("No more borders available", "all-signs-customizer-for-woocommerce-pro"), "warning");
     return;
   }
-  borderId.value = null;
+  borderId.value = "";
   border.value = createBorder(firstAvailable);
   isEdit.value = false;
   isNewBorder.value = true;
@@ -459,7 +459,7 @@ const newBorder = () => {
 const back = () => {
   isNewBorder.value = false;
   isEdit.value = false;
-  borderId.value = null;
+  borderId.value = "";
   border.value = createBorder();
 };
 

@@ -402,10 +402,10 @@ const fetchComponentOptions = async () => {
     const result = await api.getRequiredOptionComponentOptions(configId.value, componentId.value);
     const componentOptions = result;
     shapes.value = (componentOptions?.manageShapes || []).map((sh,key)=>{
-        return {name:sh.name,value:key,icon:sh.icon};
+        return {name:sh.name,value:String(sh.id || sh.value || key),icon:sh.icon};
     });
     fixingMethods.value = (componentOptions?.manageFixingMethods || []).map((fx,key)=>{
-        return {name:fx.name,value:key,icon:fx.icon};
+        return {name:fx.name,value:String(fx.id || fx.type || key),icon:fx.icon};
     });
     componentAdvance.value = componentOptions?.component;
     noOptionsFound.value = result.message;

@@ -113,7 +113,7 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
     );
     register_rest_route(
       $this->namespace,
-      '/' . $this->rest_base . "/shapes/(?P<shape_id>\d+)",
+      '/' . $this->rest_base . "/shapes/(?P<shape_id>[^/]+)",
       array(
         array(
           'methods' => \WP_REST_Server::EDITABLE,
@@ -121,7 +121,7 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
           'permission_callback' => array($this, 'get_config_permissions_check'),
           'args' => array(
             'shape_id' => array(
-              'type' => 'integer',
+              'type' => 'string',
               'required' => true,
             )
           )
@@ -142,7 +142,7 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
     );
     register_rest_route(
       $this->namespace,
-      '/' . $this->rest_base . "/fixing-methods/(?P<fixingMethod_id>\d+)",
+      '/' . $this->rest_base . "/fixing-methods/(?P<fixingMethod_id>[^/]+)",
       array(
         array(
           'methods' => \WP_REST_Server::EDITABLE,
@@ -150,7 +150,7 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
           'permission_callback' => array($this, 'get_config_permissions_check'),
           'args' => array(
             'fixingMethod_id' => array(
-              'type' => 'integer',
+              'type' => 'string',
               'required' => true,
             )
           )
@@ -170,7 +170,7 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
     );
     register_rest_route(
       $this->namespace,
-      '/' . $this->rest_base . "/borders/(?P<border_id>\d+)",
+      '/' . $this->rest_base . "/borders/(?P<border_id>[^/]+)",
       array(
         array(
           'methods' => \WP_REST_Server::EDITABLE,
@@ -178,7 +178,7 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
           'permission_callback' => array($this, 'get_config_permissions_check'),
           'args' => array(
             'border_id' => array(
-              'type' => 'integer',
+              'type' => 'string',
               'required' => true,
             )
           )
@@ -604,11 +604,15 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
     if (!is_array($shape)) {
       $shape = array();
     }
-    $shape_id = (int) $request->get_param('shape_id');
+    $shape_id = sanitize_text_field((string) $request->get_param('shape_id'));
     $all_shapes = get_option("ascwo_all_shapes", []);
-    if (isset($all_shapes[$shape_id])) {
-      if ($all_shapes[$shape_id] !== $shape) {
-        $all_shapes[$shape_id] = $shape;
+    $shape_index = $this->find_shape_index($all_shapes, $shape_id);
+    if ($shape_index !== null) {
+      if (!isset($shape['id']) || $shape['id'] === '') {
+        $shape['id'] = isset($all_shapes[$shape_index]['id']) ? $all_shapes[$shape_index]['id'] : $shape_id;
+      }
+      if ($all_shapes[$shape_index] !== $shape) {
+        $all_shapes[$shape_index] = $shape;
         $update = update_option("ascwo_all_shapes", $all_shapes);
         if ($update) {
           return rest_ensure_response(array('success' => true, "message" => __("The Shape has been updated with success", "all-signs-customizer-for-woocommerce-pro")));
@@ -631,7 +635,7 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
    */
   public function get_fixing_methods_options_globals_settings($request)
   {
-    $all_fixingMethods = get_option("ascwo_all_fixingMethods", []);
+    $all_fixingMethods = $this->normalize_fixing_methods(get_option("ascwo_all_fixingMethods", []));
     return rest_ensure_response($all_fixingMethods);
   }
   /**
@@ -646,11 +650,15 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
     if (!is_array($fixingMethod)) {
       $fixingMethod = array();
     }
-    $fixingMethod_id = (int) $request->get_param('fixingMethod_id');
-    $all_fixingMethods = get_option("ascwo_all_fixingMethods", []);
-    if (isset($all_fixingMethods[$fixingMethod_id])) {
-      if ($all_fixingMethods[$fixingMethod_id] !== $fixingMethod) {
-        $all_fixingMethods[$fixingMethod_id] = $fixingMethod;
+    $fixingMethod_id = sanitize_text_field((string) $request->get_param('fixingMethod_id'));
+    $all_fixingMethods = $this->normalize_fixing_methods(get_option("ascwo_all_fixingMethods", []));
+    $targetIndex = $this->find_fixing_method_index($all_fixingMethods, $fixingMethod_id);
+    if ($targetIndex !== null) {
+      if (!isset($fixingMethod['id']) || $fixingMethod['id'] === '') {
+        $fixingMethod['id'] = $all_fixingMethods[$targetIndex]['id'];
+      }
+      if ($all_fixingMethods[$targetIndex] !== $fixingMethod) {
+        $all_fixingMethods[$targetIndex] = $fixingMethod;
         $update = update_option("ascwo_all_fixingMethods", $all_fixingMethods);
         if ($update) {
           return rest_ensure_response(array('success' => true, "message" => __("The Fixing Method has been updated with success", "all-signs-customizer-for-woocommerce-pro")));
@@ -663,6 +671,43 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
     } else {
       return rest_ensure_response(["success" => false, "message" => __('FixingMethod not found', "all-signs-customizer-for-woocommerce-pro")]);
     }
+  }
+
+  private function normalize_fixing_methods($fixingMethods)
+  {
+    if (!is_array($fixingMethods)) {
+      return array();
+    }
+
+    $normalized = array();
+    foreach (array_values($fixingMethods) as $index => $method) {
+      if (!is_array($method)) {
+        continue;
+      }
+
+      if (!isset($method['id']) || $method['id'] === '') {
+        $method['id'] = !empty($method['type'])
+          ? sanitize_title((string) $method['type'])
+          : sanitize_title((string) ($method['name'] ?? 'fixing-method'));
+      }
+
+      $normalized[] = $method;
+    }
+
+    return $normalized;
+  }
+
+  private function find_fixing_method_index($fixingMethods, string $fixingMethodId)
+  {
+    foreach ($fixingMethods as $index => $method) {
+      $methodId = isset($method['id']) ? (string) $method['id'] : '';
+      $methodType = isset($method['type']) ? (string) $method['type'] : '';
+      if ($methodId === $fixingMethodId || $methodType === $fixingMethodId) {
+        return $index;
+      }
+    }
+
+    return null;
   }
   /**
    * get all borders function 
@@ -687,11 +732,15 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
     if (!is_array($border)) {
       $border = array();
     }
-    $border_id = (int) $request->get_param('border_id');
+    $border_id = sanitize_text_field((string) $request->get_param('border_id'));
     $all_borders = get_option("ascwo_all_borders", []);
-    if (isset($all_borders[$border_id])) {
-      if ($all_borders[$border_id] !== $border) {
-        $all_borders[$border_id] = $border;
+    $border_index = $this->find_border_index($all_borders, $border_id);
+    if ($border_index !== null) {
+      if (!isset($border['id']) || $border['id'] === '') {
+        $border['id'] = isset($all_borders[$border_index]['id']) ? $all_borders[$border_index]['id'] : $border_id;
+      }
+      if ($all_borders[$border_index] !== $border) {
+        $all_borders[$border_index] = $border;
         $update = update_option("ascwo_all_borders", $all_borders);
         if ($update) {
           return rest_ensure_response(array('success' => true, "message" => __("The Border has been updated with success", "all-signs-customizer-for-woocommerce-pro")));
@@ -715,5 +764,37 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
   public function get_config_permissions_check($request)
   {
     return current_user_can('manage_options');
+  }
+
+  private function find_shape_index($shapes, string $shapeId)
+  {
+    foreach ($shapes as $index => $shape) {
+      if (!is_array($shape)) {
+        continue;
+      }
+      $currentId = isset($shape['id']) ? (string) $shape['id'] : '';
+      $currentValue = isset($shape['value']) ? (string) $shape['value'] : '';
+      if ($currentId === $shapeId || $currentValue === $shapeId) {
+        return $index;
+      }
+    }
+
+    return null;
+  }
+
+  private function find_border_index($borders, string $borderId)
+  {
+    foreach ($borders as $index => $border) {
+      if (!is_array($border)) {
+        continue;
+      }
+      $currentId = isset($border['id']) ? (string) $border['id'] : '';
+      $currentValue = isset($border['value']) ? (string) $border['value'] : '';
+      if ($currentId === $borderId || $currentValue === $borderId) {
+        return $index;
+      }
+    }
+
+    return null;
   }
 }

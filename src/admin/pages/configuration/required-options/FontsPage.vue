@@ -146,7 +146,9 @@
               <span class="ascwo-form-label">{{ __('Fonts', 'all-signs-customizer-for-woocommerce-pro') }}</span>
               <select v-model="selectedExistingFontId" class="ascwo-form-input">
                 <option value="">{{ __('Select fonts', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-                <option v-for="font in availableFontRows" :key="font.id" :value="font.id">{{ font.label }}</option>
+                <option v-for="font in availableFontRows" :key="`${font.source || 'managed'}:${font.id}`" :value="`${font.source || 'managed'}:${font.source === 'google' ? font.key : font.id}`">
+                  {{ font.label }}
+                </option>
               </select>
               <span class="ascwo-help-text">{{ __('Add one or many fonts already available in your shared library.', 'all-signs-customizer-for-woocommerce-pro') }}</span>
             </label>
@@ -316,6 +318,7 @@ const getFontIdentity = (font) => {
 const normalizeFontRow = (font, index) => font ? ({
     ...font,
     id: index,
+    source: "managed",
     label: String(font?.label || font?.name || `Font ${index + 1}`),
     url: String(font?.url || ""),
     previewImg: String(font?.previewImg || font?.preview || ""),
@@ -343,8 +346,29 @@ const selectedIds = computed(() => {
 
 const selectedFontRows = ref([]);
 
+const googleFontRows = computed(() => {
+  return (Array.isArray(googleFonts.value) ? googleFonts.value : [])
+    .map((font, index) => {
+      const variants = Array.isArray(font?.variants) ? font.variants.map(String) : [];
+      const files = font?.files && typeof font.files === "object" ? font.files : {};
+      const firstUrl = String(files.regular || Object.values(files)[0] || "");
+      return {
+        id: index,
+        source: "google",
+        key: String(font?.family || "").trim(),
+        label: String(font?.family || "").trim(),
+        url: firstUrl,
+        previewImg: "",
+        isGoogleFont: true,
+        variants,
+        files,
+      };
+    })
+    .filter((font) => font.label && font.url);
+});
+
 const availableFontRows = computed(() => {
-  return fontRows.value;
+  return fontRows.value.length ? fontRows.value : googleFontRows.value;
 });
 
 const filteredGoogleFonts = computed(() => {
@@ -512,8 +536,40 @@ const resetForm = () => {
 
 const addExistingFont = async () => {
   if (selectedExistingFontId.value === "") return;
-  const targetIndex = Number(selectedExistingFontId.value);
-  const targetFont = normalizeFontRow(managedFonts.value[targetIndex], targetIndex);
+  const [source, rawId] = String(selectedExistingFontId.value).split(":", 2);
+  let targetIndex = Number(rawId);
+  let targetFont = null;
+
+  if (source === "managed") {
+    targetFont = normalizeFontRow(managedFonts.value[targetIndex], targetIndex);
+  } else if (source === "google") {
+    const googleFont = googleFonts.value.find((font) => String(font?.family || "") === rawId);
+    if (!googleFont) {
+      toastMessage(__("Font not found", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      return;
+    }
+
+    const payload = {
+      label: String(googleFont.family || rawId),
+      url: String(googleFont.files?.regular || Object.values(googleFont.files || {})[0] || ""),
+      previewImg: "",
+      isGoogleFont: true,
+    };
+
+    const created = await api.addManagefont({ many: false, font: payload });
+    if (!created?.success) {
+      toastMessage(created?.message || __("Unable to add Google font to manage fonts", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      return;
+    }
+
+    await fetchFonts();
+    targetIndex = managedFonts.value.findIndex((font, index) => {
+      const row = normalizeFontRow(font, index);
+      return getFontIdentity(row) === getFontIdentity(payload);
+    });
+    targetFont = targetIndex >= 0 ? normalizeFontRow(managedFonts.value[targetIndex], targetIndex) : null;
+  }
+
   const targetKey = getFontIdentity(targetFont);
   if (!targetKey) return;
   const alreadySelected = selectedFontRows.value.some((font) => getFontIdentity(font) === targetKey);
@@ -522,6 +578,7 @@ const addExistingFont = async () => {
     resetForm();
     return;
   }
+
   const result = await api.addRequiredOptionFontItem(configID.value, targetIndex);
   if (result?.success) {
     toastMessage(result.message || __("Font successfully added", "all-signs-customizer-for-woocommerce-pro"));

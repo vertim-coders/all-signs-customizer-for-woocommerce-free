@@ -1,3 +1,5 @@
+import { adminAssetUrl } from "./admin-assets";
+
 const clone = (value) => JSON.parse(JSON.stringify(value));
 
 export const RequiredOptionsSizes = {
@@ -85,7 +87,7 @@ export const RequiredOptionsColors = {
       textColor: {
         name: "White",
         active: true,
-        codeHex: "#FFFFFF",
+        codeHex: "#000000",
         sameForBorder: true,
       },
       additionalPrice: 0,
@@ -104,7 +106,7 @@ export const RequiredOptionsColors = {
       textColor: {
         name: "Black",
         active: true,
-        codeHex: "#111827",
+        codeHex: "#ffffff",
         sameForBorder: true,
       },
       additionalPrice: 0,
@@ -123,7 +125,7 @@ export const RequiredOptionsColors = {
       textColor: {
         name: "Blue",
         active: true,
-        codeHex: "#1D4ED8",
+        codeHex: "#ffffff",
         sameForBorder: true,
       },
       additionalPrice: 0,
@@ -142,7 +144,7 @@ export const RequiredOptionsColors = {
       textColor: {
         name: "Red",
         active: true,
-        codeHex: "#DC2626",
+        codeHex: "#ffffff",
         sameForBorder: true,
       },
       additionalPrice: 0,
@@ -161,7 +163,7 @@ export const RequiredOptionsColors = {
       textColor: {
         name: "Gold",
         active: true,
-        codeHex: "#C99700",
+        codeHex: "#ffffff",
         sameForBorder: true,
       },
       additionalPrice: 6,
@@ -182,7 +184,7 @@ export const RequiredOptionsShapes = {
     {
       id: "shape-rectangle",
       label: "Rectangle",
-      shapeId: 1,
+      shapeId: "shape-rectangle",
       surface: 0,
       isDefault: true,
       shapeSize: {
@@ -197,7 +199,7 @@ export const RequiredOptionsShapes = {
     {
       id: "shape-square",
       label: "Square",
-      shapeId: 2,
+      shapeId: "shape-square",
       surface: 0,
       isDefault: false,
       shapeSize: {
@@ -212,7 +214,7 @@ export const RequiredOptionsShapes = {
     {
       id: "shape-rounded-rectangle",
       label: "Rounded rectangle",
-      shapeId: 3,
+      shapeId: "shape-rounded-rectangle",
       surface: 0,
       isDefault: false,
       shapeSize: {
@@ -227,7 +229,7 @@ export const RequiredOptionsShapes = {
     {
       id: "shape-oval",
       label: "Oval",
-      shapeId: 4,
+      shapeId: "shape-oval",
       surface: 0,
       isDefault: false,
       shapeSize: {
@@ -247,72 +249,67 @@ export const RequiredOptionsShapes = {
 export const RequiredOptionsFixingMethods = {
   items: [
     {
-      id: "fixing-wall-screws",
-      mode: "custom",
-      label: "Wall screws",
+      id: "fixing-table-stand",
+      label: "Table Stand",
       isDefault: true,
       isVisible: true,
       previewImg: "",
       description: "",
       excludeSizes: [],
       excludeShapes: [],
-      fixingMethodId: 1,
+      fixingMethodId: "table-stand",
       additionalPrice: 0,
       excludeMaterials: [],
     },
     {
-      id: "fixing-hanging-kit",
-      mode: "custom",
-      label: "Hanging kit",
+      id: "fixing-ceiling",
+      label: "Ceiling",
       isDefault: false,
       isVisible: true,
       previewImg: "",
       description: "",
       excludeSizes: [],
       excludeShapes: [],
-      fixingMethodId: 2,
+      fixingMethodId: "ceiling",
       additionalPrice: 0,
       excludeMaterials: [],
     },
     {
-      id: "fixing-standoff-kit",
-      mode: "custom",
-      label: "Standoff kit",
+      id: "fixing-pole-attachment",
+      label: "Pole Attachment",
       isDefault: false,
       isVisible: true,
       previewImg: "",
       description: "",
       excludeSizes: [],
       excludeShapes: [],
-      fixingMethodId: 3,
+      fixingMethodId: "pole-attachment",
       additionalPrice: 10,
       excludeMaterials: [],
     },
     {
-      id: "fixing-adhesive-pad",
-      mode: "custom",
-      label: "Adhesive pad",
+      id: "fixing-cable-labeling",
+      label: "Cable Labeling",
       isDefault: false,
       isVisible: true,
       previewImg: "",
       description: "",
       excludeSizes: [],
       excludeShapes: [],
-      fixingMethodId: 4,
+      fixingMethodId: "cable-labeling",
       additionalPrice: 4,
       excludeMaterials: [],
     },
     {
-      id: "fixing-rail-system",
-      mode: "custom",
-      label: "Rail system",
+      id: "fixing-table-clamp",
+      label: "Table Clamp",
       isDefault: false,
       isVisible: true,
       previewImg: "",
       description: "",
       excludeSizes: [],
       excludeShapes: [],
-      fixingMethodId: 5,
+      fixingMethodId: "table-clamp",
       additionalPrice: 18,
       excludeMaterials: [],
     },
@@ -329,7 +326,7 @@ export const RequiredOptionsBorders = {
       isDefault: true,
       excludeSizes: [],
       excludeShapes: [],
-      manageBorderId: 1,
+      manageBorderId: "border-normal",
       additionalPrice: 0,
     },
     {
@@ -338,7 +335,7 @@ export const RequiredOptionsBorders = {
       isDefault: false,
       excludeSizes: [],
       excludeShapes: [],
-      manageBorderId: 2,
+      manageBorderId: "border-rounded-corners",
       additionalPrice: 6,
     },
     {
@@ -347,7 +344,7 @@ export const RequiredOptionsBorders = {
       isDefault: false,
       excludeSizes: [],
       excludeShapes: [],
-      manageBorderId: 3,
+      manageBorderId: "border-old-world",
       additionalPrice: 10,
     },
     {
@@ -356,7 +353,7 @@ export const RequiredOptionsBorders = {
       isDefault: false,
       excludeSizes: [],
       excludeShapes: [],
-      manageBorderId: 4,
+      manageBorderId: "border-none",
       additionalPrice: 8,
     },
     {
@@ -365,7 +362,7 @@ export const RequiredOptionsBorders = {
       isDefault: false,
       excludeSizes: [],
       excludeShapes: [],
-      manageBorderId: 5,
+      manageBorderId: "border-none",
       additionalPrice: 12,
     },
   ],
@@ -373,56 +370,67 @@ export const RequiredOptionsBorders = {
   settings: {
     colors: [
       {
+        id: "border-color-white",
         name: "White",
         codeHex: "#FFFFFF",
         additionalPrice: 0,
       },
       {
+        id: "border-color-black",
         name: "Black",
         codeHex: "#000000",
         additionalPrice: 0,
       },
       {
+        id: "border-color-blue",
         name: "Blue",
         codeHex: "#004f86",
         additionalPrice: 0,
       },
       {
+        id: "border-color-red",
         name: "Red",
         codeHex: "#c4271d",
         additionalPrice: 0,
       },
       {
+        id: "border-color-green",
         name: "Green",
         codeHex: "#009251",
         additionalPrice: 0,
       },
       {
+        id: "border-color-yellow",
         name: "Yellow",
         codeHex: "#fee900",
         additionalPrice: 0,
       },
       {
+        id: "border-color-gray",
         name: "Gray",
         codeHex: "#4f5756",
         additionalPrice: 0,
       },
       {
+        id: "border-color-pink",
         name: "Pink",
         codeHex: "#bc4077",
         additionalPrice: 0,
       },
       {
+        id: "border-color-purple",
         name: "Purple",
         codeHex: "#554585",
         additionalPrice: 0,
       },
       {
+        id: "border-color-orange",
         name: "Orange",
         codeHex: "#e15616",
         additionalPrice: 0,
       },
       {
+        id: "border-color-brown",
         name: "Brown",
         codeHex: "#523d2a",
         additionalPrice: 0,
@@ -614,25 +622,52 @@ export const RequiredOptionsFonts = {
     {
       id: "font-arial",
       label: "Arial",
-      url: "Arial",
+      url: adminAssetUrl("fonts/arial.ttf"),
       previewImg: "",
       isGoogleFont: false,
       isDefault: true,
       managedFontId: 0,
     },
     {
-      id: "font-roboto",
-      label: "Roboto",
-      url: "https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap",
+      id: "font-allura",
+      label: "Allura",
+      url: adminAssetUrl("fonts/allura.ttf"),
       previewImg: "",
       isGoogleFont: true,
       isDefault: false,
       managedFontId: 1,
     },
     {
-      id: "font-poppins",
-      label: "Poppins",
-      url: "https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap",
+      id: "font-avante",
+      label: "Avante",
+      url: adminAssetUrl("fonts/avante.ttf"),
+      previewImg: "",
+      isGoogleFont: true,
+      isDefault: false,
+      managedFontId: 2,
+    },
+    {
+      id: "font-barcelona",
+      label: "Barcelona",
+      url: adminAssetUrl("fonts/barcelona.ttf"),
+      previewImg: "",
+      isGoogleFont: true,
+      isDefault: false,
+      managedFontId: 2,
+    },
+    {
+      id: "font-corinthia",
+      label: "Corinthia",
+      url: adminAssetUrl("fonts/corinthia.ttf"),
+      previewImg: "",
+      isGoogleFont: true,
+      isDefault: false,
+      managedFontId: 2,
+    },
+    {
+      id: "font-type-machine",
+      label: "Type Machine",
+      url: adminAssetUrl("fonts/type-machine.ttf"),
       previewImg: "",
       isGoogleFont: true,
       isDefault: false,
@@ -747,6 +782,7 @@ export const AdditionalOptionsComponents = {
       title: "Surface finish",
       options: [
         {
+          id: "additional-component-surface-finish-matte",
           icon: "",
           image: "",
           title: "Matte",
@@ -759,6 +795,7 @@ export const AdditionalOptionsComponents = {
           enablePricingBySurface: false,
         },
         {
+          id: "additional-component-surface-finish-gloss",
           icon: "",
           image: "",
           title: "Gloss",
@@ -780,6 +817,7 @@ export const AdditionalOptionsComponents = {
       title: "Corner finish",
       options: [
         {
+          id: "additional-component-corners-sharp",
           icon: "",
           image: "",
           title: "Sharp corners",
@@ -792,6 +830,7 @@ export const AdditionalOptionsComponents = {
           enablePricingBySurface: false,
         },
         {
+          id: "additional-component-corners-rounded",
           icon: "",
           image: "",
           title: "Rounded corners",
@@ -813,6 +852,7 @@ export const AdditionalOptionsComponents = {
       title: "Protective layer",
       options: [
         {
+          id: "additional-component-protective-layer-standard",
           icon: "",
           image: "",
           title: "Standard",
@@ -825,6 +865,7 @@ export const AdditionalOptionsComponents = {
           enablePricingBySurface: false,
         },
         {
+          id: "additional-component-protective-layer-uv",
           icon: "",
           image: "",
           title: "UV protection",
@@ -846,6 +887,7 @@ export const AdditionalOptionsComponents = {
       title: "Drill holes",
       options: [
         {
+          id: "additional-component-drill-holes-no-holes",
           icon: "",
           image: "",
           title: "No holes",
@@ -858,6 +900,7 @@ export const AdditionalOptionsComponents = {
           enablePricingBySurface: false,
         },
         {
+          id: "additional-component-drill-holes-4-corner-holes",
           icon: "",
           image: "",
           title: "4 corner holes",
@@ -879,6 +922,7 @@ export const AdditionalOptionsComponents = {
       title: "Texture style",
       options: [
         {
+          id: "additional-component-texture-smooth",
           icon: "",
           image: "",
           title: "Smooth",
@@ -891,6 +935,7 @@ export const AdditionalOptionsComponents = {
           enablePricingBySurface: false,
         },
         {
+          id: "additional-component-texture-brushed",
           icon: "",
           image: "",
           title: "Brushed",
@@ -1099,46 +1144,57 @@ export const configurationDemoData = [
           text: {
             colors: [
               {
+                id: "sign-text-color-black",
                 name: "black",
                 codeHex: "#000000",
               },
               {
+                id: "sign-text-color-white",
                 name: "White",
                 codeHex: "#FFFFFF",
               },
               {
+                id: "sign-text-color-blue",
                 name: "Blue",
                 codeHex: "#004f86",
               },
               {
+                id: "sign-text-color-red",
                 name: "Red",
                 codeHex: "#c4271d",
               },
               {
+                id: "sign-text-color-pink",
                 name: "Pink",
                 codeHex: "#eb3f77",
               },
               {
+                id: "sign-text-color-green",
                 name: "Green",
                 codeHex: "#009251",
               },
               {
+                id: "sign-text-color-yellow",
                 name: "Yellow",
                 codeHex: "#fee900",
               },
               {
+                id: "sign-text-color-gray",
                 name: "Gray",
                 codeHex: "#4f575b",
               },
               {
+                id: "sign-text-color-orange",
                 name: "Orange",
                 codeHex: "#e15616",
               },
               {
+                id: "sign-text-color-purple",
                 name: "Purple",
                 codeHex: "#554585",
               },
               {
+                id: "sign-text-color-brown",
                 name: "Brown",
                 codeHex: "#523d2a",
               },
@@ -1151,7 +1207,7 @@ export const configurationDemoData = [
             enableStrike: true,
             colorsPrevImg: "",
             enableOpacity: true,
-            selectedFonts: [1, 2, 3, 4, 5],
+            selectedFonts: [0, 1, 2],
             enableCurvedUp: false,
             enableFontSize: {
               active: true,

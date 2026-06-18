@@ -34,7 +34,7 @@
                   <span>{{ __("Create shapes to use them inside configurations.", "all-signs-customizer-for-woocommerce-pro") }}</span>
                 </td>
               </tr>
-              <tr v-for="(item, key) in manageShapes" :key="key">
+              <tr v-for="(item, key) in manageShapes" :key="item.id || item.value || key">
                 <td class="ascwo-row-strong">{{ item.name }}</td>
                 <td>
                   <div class="ascwo-preview-box">
@@ -43,7 +43,7 @@
                   </div>
                 </td>
                 <td>
-                  <button type="button" @click="selectShapes(key, item)" class="ascwo-outline-button">
+                  <button type="button" @click="selectShapes(item.id || item.value || key, item)" class="ascwo-outline-button">
                     <Edit2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
                     {{ __("Edit", "all-signs-customizer-for-woocommerce-pro") }}
                   </button>
@@ -105,7 +105,7 @@ const isFetching = ref(false);
 const isLoading = ref(false);
 const isEdit = ref(false);
 const isNewShapes = ref(false);
-const shapeId = ref(null);
+const shapeId = ref("");
 const manageShapes = ref([]);
 const shape = ref(emptyShape());
 
@@ -124,7 +124,7 @@ const fetchShapes = async () => {
 };
 
 const selectShapes = (id, item) => {
-  shapeId.value = id;
+  shapeId.value = String(id || "");
   shape.value = JSON.parse(JSON.stringify({ ...emptyShape(), ...item }));
   isEdit.value = true;
   isNewShapes.value = true;
@@ -165,7 +165,7 @@ const selectShapeIcon = () => {
 
 const back = () => {
   isNewShapes.value = false;
-  shapeId.value = null;
+  shapeId.value = "";
   shape.value = emptyShape();
   isEdit.value = false;
 };

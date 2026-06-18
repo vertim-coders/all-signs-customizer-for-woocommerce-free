@@ -221,8 +221,11 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         $meta = $this->get_meta($config_id);
         $meta['data'] = isset($meta['data']) && is_array($meta['data']) ? $meta['data'] : array();
         $meta['requiredOptions'] = isset($meta['requiredOptions']) && is_array($meta['requiredOptions']) ? $meta['requiredOptions'] : array();
-        if (empty($meta['requiredOptions']) && isset($meta['data']['requiredOptions']) && is_array($meta['data']['requiredOptions'])) {
+        if (isset($meta['data']['requiredOptions']) && is_array($meta['data']['requiredOptions'])) {
             $meta['requiredOptions'] = $meta['data']['requiredOptions'];
+        }
+        if (!isset($meta['data']['requiredOptions']) || !is_array($meta['data']['requiredOptions'])) {
+            $meta['data']['requiredOptions'] = $meta['requiredOptions'];
         }
         return $meta;
     }
@@ -231,6 +234,10 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
     {
         $meta = $this->get_meta($config_id);
         $meta['requiredOptions'] = $required_options;
+        if (!isset($meta['data']) || !is_array($meta['data'])) {
+            $meta['data'] = array();
+        }
+        $meta['data']['requiredOptions'] = $required_options;
         $this->save_raw_meta($config_id, $meta);
 
         clean_post_cache($config_id);
@@ -671,7 +678,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
 
         return array(
             'items' => is_array($value) && isset($value['items']) && is_array($value['items']) ? array_values($value['items']) : array(),
-            'manageFixingMethods' => get_option('ascwo_all_fixingMethods', array()),
+            'manageFixingMethods' => $this->get_manage_fixing_methods(),
             'sizes' => isset($sizes['items']) && is_array($sizes['items']) ? $sizes['items'] : array(),
             'shapes' => isset($shapes['items']) && is_array($shapes['items']) ? array_values($shapes['items']) : array(),
         );
@@ -1025,7 +1032,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
                 'components' => array(
                     'items' => is_array($components) ? array_values($components) : array(),
                     'manageShapes' => get_option('ascwo_all_shapes', array()),
-                    'manageFixingMethods' => get_option('ascwo_all_fixingMethods', array()),
+                    'manageFixingMethods' => $this->get_manage_fixing_methods(),
                 ),
             ),
         ));
@@ -1134,7 +1141,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             'data' => array(
                 'componentOptions' => array(
                     'manageShapes' => get_option('ascwo_all_shapes', array()),
-                    'manageFixingMethods' => get_option('ascwo_all_fixingMethods', array()),
+                    'manageFixingMethods' => $this->get_manage_fixing_methods(),
                     'component' => $component,
                 ),
             ),
@@ -1243,7 +1250,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
                     'componentOptions' => array(
                         'component' => $components[$component_id],
                         'manageShapes' => get_option('ascwo_all_shapes', array()),
-                        'manageFixingMethods' => get_option('ascwo_all_fixingMethods', array()),
+                        'manageFixingMethods' => $this->get_manage_fixing_methods(),
                     ),
                 ),
             )
@@ -1300,7 +1307,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
                     'componentOptions' => array(
                         'component' => $components[$component_id],
                         'manageShapes' => get_option('ascwo_all_shapes', array()),
-                        'manageFixingMethods' => get_option('ascwo_all_fixingMethods', array()),
+                        'manageFixingMethods' => $this->get_manage_fixing_methods(),
                     ),
                 ),
             )
@@ -1331,7 +1338,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
                     'componentOptions' => array(
                         'component' => $components[$component_id],
                         'manageShapes' => get_option('ascwo_all_shapes', array()),
-                        'manageFixingMethods' => get_option('ascwo_all_fixingMethods', array()),
+                        'manageFixingMethods' => $this->get_manage_fixing_methods(),
                     ),
                 ),
             )
@@ -1339,6 +1346,31 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
     }
 
     // ===== Stable ID generation =====
+
+    protected function get_manage_fixing_methods(): array
+    {
+        $fixingMethods = get_option('ascwo_all_fixingMethods', array());
+        if (!is_array($fixingMethods)) {
+            return array();
+        }
+
+        $normalized = array();
+        foreach (array_values($fixingMethods) as $method) {
+            if (!is_array($method)) {
+                continue;
+            }
+
+            if (!isset($method['id']) || $method['id'] === '') {
+                $method['id'] = !empty($method['type'])
+                    ? sanitize_title((string) $method['type'])
+                    : sanitize_title((string) ($method['name'] ?? 'fixing-method'));
+            }
+
+            $normalized[] = $method;
+        }
+
+        return $normalized;
+    }
 
     protected function slugify($value, $fallback = 'item'): string
     {

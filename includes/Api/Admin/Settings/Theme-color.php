@@ -33,7 +33,14 @@ class ASCWO_Api_Theme_color_Settings extends WP_REST_Controller {
 	private function get_normalized_meta( $config_id ) {
 		$meta = get_post_meta( (int) $config_id, 'ascwo-configs-meta', true );
 		$meta = is_array( $meta ) ? $meta : array();
+		$meta['data'] = isset( $meta['data'] ) && is_array( $meta['data'] ) ? $meta['data'] : array();
 		$meta['settings'] = isset( $meta['settings'] ) && is_array( $meta['settings'] ) ? $meta['settings'] : array();
+		if ( isset( $meta['data']['settings'] ) && is_array( $meta['data']['settings'] ) ) {
+			$meta['settings'] = $meta['data']['settings'];
+		}
+		if ( ! isset( $meta['data']['settings'] ) || ! is_array( $meta['data']['settings'] ) ) {
+			$meta['data']['settings'] = $meta['settings'];
+		}
 
 		return $meta;
 	}
@@ -68,6 +75,13 @@ class ASCWO_Api_Theme_color_Settings extends WP_REST_Controller {
 		}
 
 		$meta['settings']['themeColors'] = $theme_colors;
+		if ( ! isset( $meta['data'] ) || ! is_array( $meta['data'] ) ) {
+			$meta['data'] = array();
+		}
+		if ( ! isset( $meta['data']['settings'] ) || ! is_array( $meta['data']['settings'] ) ) {
+			$meta['data']['settings'] = array();
+		}
+		$meta['data']['settings']['themeColors'] = $theme_colors;
 
 		return update_post_meta( (int) $config_id, 'ascwo-configs-meta', $meta );
 	}
