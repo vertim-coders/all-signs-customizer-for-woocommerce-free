@@ -368,7 +368,7 @@ const googleFontRows = computed(() => {
 });
 
 const availableFontRows = computed(() => {
-  return fontRows.value.length ? fontRows.value : googleFontRows.value;
+  return fontRows.value;
 });
 
 const filteredGoogleFonts = computed(() => {
