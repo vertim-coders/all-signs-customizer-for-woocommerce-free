@@ -82,7 +82,7 @@
                     <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
                       <span class="ascwo-text-[12px] ascwo-text-[#616161]">{{ __('No', 'all-signs-customizer-for-woocommerce-pro') }}</span>
                       <button
-                        @click="setDefaultFont(index)"
+                      @click="setDefaultFont(font.id)"
                         :class="['ascwo-toggle', font.isDefault ? 'is-active' : '']"
                         :aria-label="__('Set default font', 'all-signs-customizer-for-woocommerce-pro')"
                       >
@@ -92,7 +92,7 @@
                     </div>
                   </td>
                   <td class="ascwo-py-2.5 ascwo-px-3 ascwo-text-left">
-                    <button @click="removeFont(index)" class="ascwo-remove-button">
+                    <button @click="removeFont(font.id)" class="ascwo-remove-button">
                       <TrashIcon class="ascwo-w-4 ascwo-h-4" />
                       {{ __('Remove', 'all-signs-customizer-for-woocommerce-pro') }}
                     </button>
@@ -662,16 +662,16 @@ const editSelectedFont = (font) => {
   showForm.value = true;
 };
 
-const removeFont = async (itemIndex) => {
-  const result = await api.deleteRequiredOptionFontItem(configID.value, itemIndex);
+const removeFont = async (itemId) => {
+  const result = await api.deleteRequiredOptionFontItem(configID.value, itemId);
   if (result?.success) {
     toastMessage(result.message || __("Font successfully deleted", "all-signs-customizer-for-woocommerce-pro"));
   }
   await fetchSelectedFonts();
 };
 
-const setDefaultFont = async (itemIndex) => {
-  const result = await api.setRequiredOptionFontDefault(configID.value, itemIndex);
+const setDefaultFont = async (itemId) => {
+  const result = await api.setRequiredOptionFontDefault(configID.value, itemId);
   if (result?.success) {
     toastMessage(result.message || __("Default font successfully updated", "all-signs-customizer-for-woocommerce-pro"));
     await fetchSelectedFonts();
@@ -685,8 +685,9 @@ const dragStartFont = (index) => {
 const dropFont = async (targetIndex) => {
   if (draggedFontIndex.value === null || draggedFontIndex.value === targetIndex) return;
   const movedIndex = draggedFontIndex.value;
+  const movedFont = selectedFontRows.value[movedIndex];
   draggedFontIndex.value = null;
-  const result = await api.updateRequiredOptionFontItem(configID.value, movedIndex, targetIndex);
+  const result = await api.updateRequiredOptionFontItem(configID.value, movedFont?.id ?? movedIndex, targetIndex);
   if (result?.success) {
     toastMessage(result.message || __("Font successfully updated", "all-signs-customizer-for-woocommerce-pro"));
   }

@@ -58,7 +58,7 @@ class ASCWO_Api_Required_Options_Colors extends ASCWO_Api_Required_Options_Base
 
         register_rest_route(
             $this->namespace,
-            $config_route . '/colors/items/(?P<item_id>\d+)',
+            $config_route . '/colors/items/(?P<item_id>[^/]+)',
             array(
                 array(
                     'methods' => WP_REST_Server::READABLE,
@@ -70,7 +70,7 @@ class ASCWO_Api_Required_Options_Colors extends ASCWO_Api_Required_Options_Base
                             'required' => true,
                         ),
                         'item_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -85,7 +85,7 @@ class ASCWO_Api_Required_Options_Colors extends ASCWO_Api_Required_Options_Base
                             'required' => true,
                         ),
                         'item_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -100,7 +100,7 @@ class ASCWO_Api_Required_Options_Colors extends ASCWO_Api_Required_Options_Base
                             'required' => true,
                         ),
                         'item_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -110,7 +110,7 @@ class ASCWO_Api_Required_Options_Colors extends ASCWO_Api_Required_Options_Base
 
         register_rest_route(
             $this->namespace,
-            $config_route . '/colors/items/(?P<item_id>\d+)/default',
+            $config_route . '/colors/items/(?P<item_id>[^/]+)/default',
             array(
                 array(
                     'methods' => WP_REST_Server::EDITABLE,
@@ -122,7 +122,7 @@ class ASCWO_Api_Required_Options_Colors extends ASCWO_Api_Required_Options_Base
                             'required' => true,
                         ),
                         'item_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -155,18 +155,19 @@ class ASCWO_Api_Required_Options_Colors extends ASCWO_Api_Required_Options_Base
     public function get_color_item($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $item_id = absint($request->get_param('item_id'));
+        $item_id = sanitize_text_field((string) $request->get_param('item_id'));
         if (!$config_id) {
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $required_options = $this->get_required_options($config_id);
         $colors = $this->section_item_list($required_options, 'colors');
-        if (!isset($colors[$item_id])) {
+        $item_index = $this->find_section_item_index_by_id($colors, $item_id);
+        if ($item_index === null) {
             return rest_ensure_response(array('success' => false, 'message' => __('Color not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        return rest_ensure_response(array('success' => true, 'data' => array('color' => $colors[$item_id])));
+        return rest_ensure_response(array('success' => true, 'data' => array('color' => $colors[$item_index])));
     }
 
     public function add_color_item($request)
@@ -201,7 +202,7 @@ class ASCWO_Api_Required_Options_Colors extends ASCWO_Api_Required_Options_Base
     public function update_color_item($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $item_id = absint($request->get_param('item_id'));
+        $item_id = sanitize_text_field((string) $request->get_param('item_id'));
         if (!$config_id) {
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
@@ -214,39 +215,41 @@ class ASCWO_Api_Required_Options_Colors extends ASCWO_Api_Required_Options_Base
 
         $required_options = $this->get_required_options($config_id);
         $colors = $this->section_item_list($required_options, 'colors');
-        if (!isset($colors[$item_id])) {
+        $item_index = $this->find_section_item_index_by_id($colors, $item_id);
+        if ($item_index === null) {
             return rest_ensure_response(array('success' => false, 'message' => __('Color not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        $colors[$item_id] = array_merge($colors[$item_id], $payload);
+        $colors[$item_index] = array_merge($colors[$item_index], $payload);
 
         // Update ID dynamically
-        $colors[$item_id]['id'] = $this->generate_color_id($colors[$item_id], $productType);
+        $colors[$item_index]['id'] = $this->generate_color_id($colors[$item_index], $productType);
 
         $colors = $this->ensure_single_default_item($colors);
         $required_options = $this->set_section_items($required_options, 'colors', $this->section_value_with_items($required_options, 'colors', $colors));
         $saved = $this->save_required_options($config_id, $required_options);
 
         return rest_ensure_response($saved === true
-            ? array('success' => true, 'message' => __('Color successfully edited', 'all-signs-customizer-for-woocommerce-pro'), 'data' => array('color' => $colors[$item_id]))
+            ? array('success' => true, 'message' => __('Color successfully edited', 'all-signs-customizer-for-woocommerce-pro'), 'data' => array('color' => $colors[$item_index]))
             : array('success' => false, 'message' => __('Color has not been edited', 'all-signs-customizer-for-woocommerce-pro')));
     }
 
     public function delete_color_item($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $item_id = absint($request->get_param('item_id'));
+        $item_id = sanitize_text_field((string) $request->get_param('item_id'));
         if (!$config_id) {
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $required_options = $this->get_required_options($config_id);
         $colors = $this->section_item_list($required_options, 'colors');
-        if (!isset($colors[$item_id])) {
+        $item_index = $this->find_section_item_index_by_id($colors, $item_id);
+        if ($item_index === null) {
             return rest_ensure_response(array('success' => false, 'message' => __('Color not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        array_splice($colors, $item_id, 1);
+        array_splice($colors, $item_index, 1);
         $colors = $this->ensure_single_default_item($colors);
         $required_options = $this->set_section_items($required_options, 'colors', $this->section_value_with_items($required_options, 'colors', $colors));
         $saved = $this->save_required_options($config_id, $required_options);

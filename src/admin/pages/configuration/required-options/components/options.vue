@@ -82,7 +82,7 @@
                 :class="['ascwo-clickable-row', design.isDefault ? 'is-highlighted' : '']"
                 @dragover.prevent
                 @drop="dropDesign($event, index)"
-                @click="goToDesign(index)"
+                @click="goToDesign(design.id || index)"
               >
                 <td>
                   <button
@@ -121,7 +121,7 @@
                 <td>
                   <div class="ascwo-toggle-cell">
                     <span>{{ __('No', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-                    <button type="button" @click.stop="setDefaultDesign(index)" :class="['ascwo-toggle', design.isDefault ? 'is-active' : '']">
+                    <button type="button" @click.stop="setDefaultDesign(design.id || index)" :class="['ascwo-toggle', design.isDefault ? 'is-active' : '']">
                       <span></span>
                     </button>
                     <span>{{ __('Yes', 'all-signs-customizer-for-woocommerce-pro') }}</span>
@@ -1192,7 +1192,7 @@
                   </template>
 
                   <template v-else-if="subMode === 'create'">
-                    <label><span class="ascwo-form-label">{{ __('From Manage Borders', 'all-signs-customizer-for-woocommerce-pro') }}</span><select v-model="customDraft.manageBorderId" class="ascwo-form-input" @change="syncManagedBorderDraft"><option value="">{{ __('None', 'all-signs-customizer-for-woocommerce-pro') }}</option><option v-for="item in managedBorderChoices" :key="item.value" :value="item.value">{{ item.label }}</option></select></label>
+                    <label><span class="ascwo-form-label">{{ __('From Manage Borders', 'all-signs-customizer-for-woocommerce-pro') }}</span><select v-model="customDraft.borderId" class="ascwo-form-input" @change="syncManagedBorderDraft"><option value="">{{ __('None', 'all-signs-customizer-for-woocommerce-pro') }}</option><option v-for="item in managedBorderChoices" :key="item.value" :value="item.value">{{ item.label }}</option></select></label>
                     <div v-if="selectedManagedBorder" class="ascwo-preview-choice">
                       <span class="ascwo-mini-preview" v-html="borderPreview(selectedManagedBorder)"></span>
                       <span><strong>{{ selectedManagedBorder.label }}</strong><small>{{ selectedManagedBorder.description || selectedManagedBorder.borderKey || '' }}</small></span>
@@ -1275,7 +1275,7 @@ const configId = computed(() => route.params.configId);
 const componentId = computed(() => route.params.componentId);
 const optionId = computed(() => route.params.optionId);
 const isDesignDetail = computed(() => optionId.value !== undefined && optionId.value !== null);
-const activeDesignIndex = computed(() => Number(optionId.value || 0));
+const activeDesignIndex = computed(() => designs.value.findIndex((item, index) => String(item.id || `design-${index + 1}`) === String(optionId.value)));
 const currencySymbol = '$';
 
 const isFetching = ref(false);
@@ -1372,7 +1372,7 @@ const sectionItems = (section) => {
 };
 
 const makeOptionRows = (items, fallbackPrefix) => items.map((item, index) => {
-  const id = String(item.id || item.value || item.shapeId || item.fixingMethodId || item.manageBorderId || `${fallbackPrefix}-${index + 1}`);
+  const id = String(item.id || item.value || item.shapeId || item.fixingMethodId || `${fallbackPrefix}-${index + 1}`);
   const label = String(item.label || item.title || item.name || item.fontFamily || `${fallbackPrefix} ${index + 1}`);
   return {
     ...item,
@@ -1405,14 +1405,15 @@ const keyAliases = {
 const expandKeys = (keys) => Array.from(new Set(keys.flatMap((key) => keyAliases[key] || [key])));
 
 const managedRow = (item, index, prefix) => {
-  const managedId = index + 1;
-  const label = String(item?.name || item?.label || item?.title || `${prefix} ${managedId}`).trim();
-  const value = String(managedId);
+  const fallbackId = `${prefix}-${index + 1}`;
+  const managedId = String(item?.id || item?.value || fallbackId);
+  const label = String(item?.name || item?.label || item?.title || `${prefix} ${index + 1}`).trim();
   return {
     ...item,
-    id: String(item?.id || item?.value || `${prefix}-${managedId}`),
-    value,
+    id: managedId,
+    value: managedId,
     managedId,
+    managedIndex: index + 1,
     label,
     name: String(item?.name || label),
     description: String(item?.description || item?.type || item?.key || ''),
@@ -1468,7 +1469,7 @@ const resolveManagedItem = (library, item, idKeys = []) => {
     }
   }
 
-  const managedId = Number(item?.managedId);
+  const managedId = Number(item?.managedIndex || item?.managedId);
   if (Number.isInteger(managedId) && managedId > 0 && library[managedId - 1]) {
     return library[managedId - 1];
   }
@@ -1562,7 +1563,7 @@ const shapeOptions = computed(() => makeOptionRows(sectionItems('shapes'), 'shap
   .filter(Boolean));
 const managedShapeChoices = computed(() => {
   const requiredShapeIds = new Set(shapeOptions.value.map((item) => String(item.shapeId || '')));
-  const rows = managedChoices(managedShapeLibrary.value, 'shape').map((item) => ({ ...item, shapeId: item.managedId }));
+  const rows = managedChoices(managedShapeLibrary.value, 'shape').map((item) => ({ ...item, shapeId: item.id }));
   const filtered = rows.filter((item) => !requiredShapeIds.has(String(item.shapeId)));
   return filtered.length ? filtered : rows;
 });
@@ -1575,16 +1576,16 @@ const fixingOptions = computed(() => {
     .filter(Boolean);
 });
 const borderOptions = computed(() => makeOptionRows(sectionItems('borders'), 'border')
-  .map((item) => enrichManagedReference(item, managedBorderLibrary.value, ['manageBorderId', 'borderId'], 'Border'))
+  .map((item) => enrichManagedReference(item, managedBorderLibrary.value, ['borderId'], 'Border'))
   .filter(Boolean)
   .map((item) => ({
     ...item,
     previewHtml: globalPreview(item.managedItem, borderFallbackPreview(item)),
   })));
 const managedBorderChoices = computed(() => {
-  const requiredBorderIds = new Set(borderOptions.value.map((item) => String(item.manageBorderId || item.borderId || '')));
-  const rows = managedChoices(managedBorderLibrary.value, 'border').map((item) => ({ ...item, manageBorderId: item.managedId }));
-  const filtered = rows.filter((item) => !requiredBorderIds.has(String(item.manageBorderId)));
+  const requiredBorderIds = new Set(borderOptions.value.map((item) => String(item.borderId || '')));
+  const rows = managedChoices(managedBorderLibrary.value, 'border').map((item) => ({ ...item, borderId: item.id }));
+  const filtered = rows.filter((item) => !requiredBorderIds.has(String(item.borderId)));
   return filtered.length ? filtered : rows;
 });
 const lightingOptions = computed(() => makeOptionRows(sectionItems('lightings'), 'lighting'));
@@ -1750,12 +1751,12 @@ const selectedFixingRows = computed(() => (designForm.value.fixingMethods.items 
 const selectedManagedShape = computed(() => managedShapeChoices.value.find((item) => String(item.value) === String(customDraft.value.shapeId || '')) || null);
 const managedFixingChoices = computed(() => {
   const requiredFixingIds = new Set(fixingOptions.value.map((item) => String(item.fixingMethodId || '')));
-  const rows = managedChoices(managedFixingLibrary.value, 'fixing').map((item) => ({ ...item, fixingMethodId: item.managedId }));
+  const rows = managedChoices(managedFixingLibrary.value, 'fixing').map((item) => ({ ...item, fixingMethodId: item.id }));
   const filtered = rows.filter((item) => !requiredFixingIds.has(String(item.fixingMethodId)));
   return filtered.length ? filtered : rows;
 });
 const selectedManagedFixing = computed(() => managedFixingChoices.value.find((item) => String(item.value) === String(customDraft.value.fixingMethodId || '')) || null);
-const selectedManagedBorder = computed(() => managedBorderChoices.value.find((item) => String(item.value) === String(customDraft.value.manageBorderId || '')) || null);
+const selectedManagedBorder = computed(() => managedBorderChoices.value.find((item) => String(item.value) === String(customDraft.value.borderId || '')) || null);
 const canSaveShapeEditor = computed(() => {
   if (subMode.value === 'existing') return draftIds.value.length > 0;
   if (subMode.value === 'create') return Boolean(String(customDraft.value.shapeId || '').trim());
@@ -1769,7 +1770,7 @@ const canSaveFixingEditor = computed(() => {
 });
 const canSaveBorderEditor = computed(() => {
   if (subMode.value === 'existing') return draftIds.value.length > 0;
-  if (subMode.value === 'create') return Boolean(String(customDraft.value.manageBorderId || '').trim());
+  if (subMode.value === 'create') return Boolean(String(customDraft.value.id || '').trim());
   return Boolean(String(customDraft.value.label || '').trim() && String(customDraft.value.url || '').trim());
 });
 
@@ -1885,10 +1886,10 @@ const goBackToCollection = () => {
   router.push({ name: 'required-component-options', params: { configId: configId.value, componentId: componentId.value } });
 };
 
-const goToDesign = (index) => {
+const goToDesign = (itemId) => {
   router.push({
     name: 'required-component-option-detail',
-    params: { configId: configId.value, componentId: componentId.value, optionId: String(index) },
+    params: { configId: configId.value, componentId: componentId.value, optionId: String(itemId) },
   });
 };
 
@@ -2043,7 +2044,7 @@ const addDesign = async () => {
     options: nextOptions,
   }, __('Design added.', 'all-signs-customizer-for-woocommerce-pro'));
   if (saved) {
-    goToDesign(index);
+    goToDesign(designs.value[index]?.id || index);
   }
 };
 
@@ -2166,7 +2167,7 @@ const openPicker = (mode) => {
       label: '',
       url: '',
       additionalPrice: 0,
-      manageBorderId: '',
+      id: '',
       excludeSizes: [],
       excludeShapes: [],
     };
@@ -2342,7 +2343,7 @@ const syncManagedFixingDraft = () => {
 
 const fixingDesignItemFromSource = (source) => ({
   id: String(source?.id || ''),
-  fixingMethodId: Number(source?.fixingMethodId || source?.id || 0),
+  fixingMethodId: String(source?.fixingMethodId || source?.id || ''),
   custom: false,
   isDefault: false,
   label: String(source?.label || ''),
@@ -2379,7 +2380,7 @@ const createAndAddFixingMethod = async () => {
     const payload = {
       label,
       name: label,
-      fixingMethodId: Number(selected?.fixingMethodId || customDraft.value.fixingMethodId || 0),
+      fixingMethodId: String(selected?.fixingMethodId || customDraft.value.fixingMethodId || ''),
       previewImg: String(selected?.image || selected?.icon || ''),
       icon: String(selected?.icon || selected?.image || ''),
       additionalPrice: Number(customDraft.value.additionalPrice || 0),
@@ -2431,7 +2432,7 @@ const saveCustomFixingMethod = async () => {
 
 const shapeDesignItemFromSource = (source) => ({
   id: String(source?.id || ''),
-  shapeId: Number(source?.shapeId || 0),
+  shapeId: String(source?.shapeId || ''),
   custom: false,
   isDefault: true,
   label: String(source?.label || ''),
@@ -2475,7 +2476,7 @@ const saveShapeEditor = async () => {
     if (subMode.value === 'create') {
       const selected = selectedManagedShape.value;
       const response = await api.addRequiredOptionShapeItem(configId.value, {
-        shapeId: Number(selected?.shapeId || customDraft.value.shapeId || 0),
+        shapeId: String(selected?.shapeId || customDraft.value.shapeId || ''),
         label: String(selected?.label || customDraft.value.label || '').trim(),
         additionalPrice: Number(customDraft.value.additionalPrice || 0),
         isDefault: false,
@@ -2556,7 +2557,7 @@ const saveLightingEditor = async () => {
 
 const borderDesignItemFromSource = (source = {}) => ({
   id: String(source.id || ''),
-  manageBorderId: Number(source.manageBorderId || source.borderId || source.managedId || 0),
+  borderId: String(source.borderId || source.managedId || ''),
   custom: false,
   isDefault: false,
   label: String(source.label || source.name || ''),
@@ -2571,6 +2572,7 @@ const syncManagedBorderDraft = () => {
   customDraft.value = {
     ...customDraft.value,
     label: String(selected.label || customDraft.value.label || ''),
+    borderId: String(selected.value || customDraft.value.borderId || ''),
   };
 };
 
@@ -2583,7 +2585,7 @@ const setBorderSubMode = (mode) => {
     label: '',
     url: '',
     additionalPrice: 0,
-    manageBorderId: mode === 'create' ? String(managedBorderChoices.value[0]?.value || '') : '',
+    borderId: mode === 'create' ? String(managedBorderChoices.value[0]?.value || '') : '',
     excludeSizes: [],
     excludeShapes: [],
   };
@@ -2605,7 +2607,7 @@ const saveBorderEditor = async () => {
     if (subMode.value === 'create') {
       const selected = selectedManagedBorder.value;
       const response = await api.addRequiredOptionBorderItem(configId.value, {
-        manageBorderId: Number(selected?.manageBorderId || customDraft.value.manageBorderId || 0),
+        borderId: String(selected?.value || customDraft.value.borderId || ''),
         label: String(selected?.label || customDraft.value.label || '').trim(),
         additionalPrice: Number(customDraft.value.additionalPrice || 0),
         excludeSizes: Array.isArray(customDraft.value.excludeSizes) ? customDraft.value.excludeSizes : [],
@@ -2632,6 +2634,7 @@ const saveBorderEditor = async () => {
       url: String(customDraft.value.url || ''),
       additionalPrice: Number(customDraft.value.additionalPrice || 0),
       custom: true,
+      borderId: String(customDraft.value.borderId || ''),
       isDefault: false,
     };
     const current = Array.isArray(designForm.value.borders.items) ? designForm.value.borders.items : [];
@@ -2738,7 +2741,7 @@ const managedBorderFor = (border) => {
   if (border?.managedItem) return border.managedItem;
   if (border?.source?.managedItem) return border.source.managedItem;
   if (border?.item?.managedItem) return border.item.managedItem;
-  return resolveManagedItem(managedBorderLibrary.value, border?.item || border, ['manageBorderId', 'borderId']);
+  return resolveManagedItem(managedBorderLibrary.value, border?.item || border, ['id', 'borderId']);
 };
 
 const borderPreview = (border) => {
@@ -2952,10 +2955,12 @@ const removeImageZone = (id) => {
   designForm.value.imageZones = zones.filter((zone) => String(zone.id) !== String(id));
 };
 
-const setDefaultDesign = async (index) => {
+const setDefaultDesign = async (itemId) => {
+  const targetIndex = designs.value.findIndex((item, index) => String(item.id || `design-${index + 1}`) === String(itemId));
+  if (targetIndex < 0) return;
   const nextOptions = designs.value.map((item, itemIndex) => ({
     ...item,
-    isDefault: itemIndex === index,
+    isDefault: itemIndex === targetIndex,
   }));
   await persistComponent({ ...componentForm.value, options: nextOptions }, __('Default design updated.', 'all-signs-customizer-for-woocommerce-pro'));
 };

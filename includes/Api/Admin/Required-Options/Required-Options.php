@@ -87,90 +87,97 @@ class ASCWO_Api_Required_Options extends ASCWO_Api_Required_Options_Base
             if (!is_array($meta)) {
                 continue;
             }
+            $config_data = isset($meta['data']) && is_array($meta['data']) ? $meta['data'] : array();
+            $required_options = isset($config_data['requiredOptions']) && is_array($config_data['requiredOptions']) ? $config_data['requiredOptions'] : array();
+            $additional_options = isset($config_data['additionalOptions']) && is_array($config_data['additionalOptions']) ? $config_data['additionalOptions'] : array();
 
             $changed = false;
 
-            // Get productType from meta for generating context-aware IDs
-            $product_type = isset($meta['productType']) ? (string) $meta['productType'] : '';
+            // Get productType from data for generating context-aware IDs
+            $product_type = isset($config_data['productType']) ? (string) $config_data['productType'] : (isset($meta['productType']) ? (string) $meta['productType'] : '');
 
             // Migrate sizes IDs
-            if (isset($meta['requiredOptions']['sizes']['items']) && is_array($meta['requiredOptions']['sizes']['items'])) {
-                foreach ($meta['requiredOptions']['sizes']['items'] as $index => $size) {
+            if (isset($required_options['sizes']['items']) && is_array($required_options['sizes']['items'])) {
+                foreach ($required_options['sizes']['items'] as $index => $size) {
                     $new_id = $this->generate_size_id($size);
                     if ($size['id'] !== $new_id) {
-                        $meta['requiredOptions']['sizes']['items'][$index]['id'] = $new_id;
+                        $required_options['sizes']['items'][$index]['id'] = $new_id;
                         $changed = true;
                     }
                 }
             }
 
             // Migrate colors IDs
-            if (isset($meta['requiredOptions']['colors']['items']) && is_array($meta['requiredOptions']['colors']['items'])) {
-                foreach ($meta['requiredOptions']['colors']['items'] as $index => $color) {
+            if (isset($required_options['colors']['items']) && is_array($required_options['colors']['items'])) {
+                foreach ($required_options['colors']['items'] as $index => $color) {
                     $new_id = $this->generate_color_id($color);
                     if ($color['id'] !== $new_id) {
-                        $meta['requiredOptions']['colors']['items'][$index]['id'] = $new_id;
+                        $required_options['colors']['items'][$index]['id'] = $new_id;
                         $changed = true;
                     }
                 }
             }
 
             // Migrate shapes IDs
-            if (isset($meta['requiredOptions']['shapes']['items']) && is_array($meta['requiredOptions']['shapes']['items'])) {
-                foreach ($meta['requiredOptions']['shapes']['items'] as $index => $shape) {
+            if (isset($required_options['shapes']['items']) && is_array($required_options['shapes']['items'])) {
+                foreach ($required_options['shapes']['items'] as $index => $shape) {
                     $new_id = $this->generate_shape_id($shape);
                     if ($shape['id'] !== $new_id) {
-                        $meta['requiredOptions']['shapes']['items'][$index]['id'] = $new_id;
+                        $required_options['shapes']['items'][$index]['id'] = $new_id;
                         $changed = true;
                     }
                 }
             }
 
             // Migrate borders IDs
-            if (isset($meta['requiredOptions']['borders']['items']) && is_array($meta['requiredOptions']['borders']['items'])) {
-                foreach ($meta['requiredOptions']['borders']['items'] as $index => $border) {
+            if (isset($required_options['borders']['items']) && is_array($required_options['borders']['items'])) {
+                foreach ($required_options['borders']['items'] as $index => $border) {
                     $new_id = $this->generate_border_id($border);
                     if ($border['id'] !== $new_id) {
-                        $meta['requiredOptions']['borders']['items'][$index]['id'] = $new_id;
+                        $required_options['borders']['items'][$index]['id'] = $new_id;
                         $changed = true;
                     }
                 }
             }
 
             // Migrate fixing-methods IDs
-            if (isset($meta['requiredOptions']['fixingMethods']['items']) && is_array($meta['requiredOptions']['fixingMethods']['items'])) {
-                foreach ($meta['requiredOptions']['fixingMethods']['items'] as $index => $method) {
+            if (isset($required_options['fixingMethods']['items']) && is_array($required_options['fixingMethods']['items'])) {
+                foreach ($required_options['fixingMethods']['items'] as $index => $method) {
                     $new_id = $this->generate_fixing_method_id($method);
                     if ($method['id'] !== $new_id) {
-                        $meta['requiredOptions']['fixingMethods']['items'][$index]['id'] = $new_id;
+                        $required_options['fixingMethods']['items'][$index]['id'] = $new_id;
                         $changed = true;
                     }
                 }
             }
 
             // Migrate fonts IDs
-            if (isset($meta['requiredOptions']['fonts']['items']) && is_array($meta['requiredOptions']['fonts']['items'])) {
-                foreach ($meta['requiredOptions']['fonts']['items'] as $index => $font) {
+            if (isset($required_options['fonts']['items']) && is_array($required_options['fonts']['items'])) {
+                foreach ($required_options['fonts']['items'] as $index => $font) {
                     $new_id = $this->generate_font_id($font, $index);
                     if ($font['id'] !== $new_id) {
-                        $meta['requiredOptions']['fonts']['items'][$index]['id'] = $new_id;
+                        $required_options['fonts']['items'][$index]['id'] = $new_id;
                         $changed = true;
                     }
                 }
             }
 
             // Also migrate additionalOptions->materials
-            if (isset($meta['additionalOptions']['materials']['items']) && is_array($meta['additionalOptions']['materials']['items'])) {
-                foreach ($meta['additionalOptions']['materials']['items'] as $index => $material) {
+            if (isset($additional_options['materials']['items']) && is_array($additional_options['materials']['items'])) {
+                foreach ($additional_options['materials']['items'] as $index => $material) {
                     $new_id = $this->generate_material_id($material, $index);
                     if ($material['id'] !== $new_id) {
-                        $meta['additionalOptions']['materials']['items'][$index]['id'] = $new_id;
+                        $additional_options['materials']['items'][$index]['id'] = $new_id;
                         $changed = true;
                     }
                 }
             }
 
             if ($changed) {
+                $meta['data'] = $config_data;
+                $meta['data']['requiredOptions'] = $required_options;
+                $meta['data']['additionalOptions'] = $additional_options;
+                unset($meta['requiredOptions'], $meta['additionalOptions']);
                 update_post_meta($config_id, 'ascwo-configs-meta', $meta);
                 clean_post_cache($config_id);
                 $updated_count++;

@@ -88,11 +88,11 @@ class ASCWO_Api_Customs_Additionals_Base extends WP_REST_Controller
     protected function save_additional_options(int $config_id, array $additional_options)
     {
         $meta = $this->get_meta($config_id);
-        $meta['additionalOptions'] = $additional_options;
         if (!isset($meta['data']) || !is_array($meta['data'])) {
             $meta['data'] = array();
         }
         $meta['data']['additionalOptions'] = $additional_options;
+        unset($meta['additionalOptions']);
         return $this->save_meta($config_id, $meta);
     }
 

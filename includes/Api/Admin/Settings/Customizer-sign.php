@@ -109,6 +109,7 @@ class ASCWO_Api_Customizer_Sign_Settings extends WP_REST_Controller {
 
 		$meta['settings']['customizerSign'][ $section ] = $section_options;
 		$meta['data']['settings']['customizerSign'][ $section ] = $section_options;
+		unset( $meta['settings'] );
 
 		return update_post_meta( (int) $config_id, 'ascwo-configs-meta', $meta );
 	}

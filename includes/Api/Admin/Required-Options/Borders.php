@@ -58,7 +58,7 @@ class ASCWO_Api_Required_Options_Borders extends ASCWO_Api_Required_Options_Base
 
         register_rest_route(
             $this->namespace,
-            $config_route . '/borders/items/(?P<item_id>\d+)',
+            $config_route . '/borders/items/(?P<item_id>[^/]+)',
             array(
                 array(
                     'methods' => WP_REST_Server::READABLE,
@@ -70,7 +70,7 @@ class ASCWO_Api_Required_Options_Borders extends ASCWO_Api_Required_Options_Base
                             'required' => true,
                         ),
                         'item_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -85,7 +85,7 @@ class ASCWO_Api_Required_Options_Borders extends ASCWO_Api_Required_Options_Base
                             'required' => true,
                         ),
                         'item_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -100,7 +100,7 @@ class ASCWO_Api_Required_Options_Borders extends ASCWO_Api_Required_Options_Base
                             'required' => true,
                         ),
                         'item_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -110,7 +110,7 @@ class ASCWO_Api_Required_Options_Borders extends ASCWO_Api_Required_Options_Base
 
         register_rest_route(
             $this->namespace,
-            $config_route . '/borders/items/(?P<item_id>\d+)/default',
+            $config_route . '/borders/items/(?P<item_id>[^/]+)/default',
             array(
                 array(
                     'methods' => WP_REST_Server::EDITABLE,
@@ -122,7 +122,7 @@ class ASCWO_Api_Required_Options_Borders extends ASCWO_Api_Required_Options_Base
                             'required' => true,
                         ),
                         'item_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -168,18 +168,19 @@ class ASCWO_Api_Required_Options_Borders extends ASCWO_Api_Required_Options_Base
     public function get_border_item($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $item_id = absint($request->get_param('item_id'));
+        $item_id = sanitize_text_field((string) $request->get_param('item_id'));
         if (!$config_id) {
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $required_options = $this->get_required_options($config_id);
         $borders = $this->section_item_list($required_options, 'borders');
-        if (!isset($borders[$item_id])) {
+        $item_index = $this->find_section_item_index_by_id($borders, $item_id);
+        if ($item_index === null) {
             return rest_ensure_response(array('success' => false, 'message' => __('Border not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        return rest_ensure_response(array('success' => true, 'data' => array('border' => $borders[$item_id])));
+        return rest_ensure_response(array('success' => true, 'data' => array('border' => $borders[$item_index])));
     }
 
     public function add_border_item($request)
@@ -213,7 +214,7 @@ class ASCWO_Api_Required_Options_Borders extends ASCWO_Api_Required_Options_Base
     public function update_border_item($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $item_id = absint($request->get_param('item_id'));
+        $item_id = sanitize_text_field((string) $request->get_param('item_id'));
         if (!$config_id) {
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
@@ -223,35 +224,37 @@ class ASCWO_Api_Required_Options_Borders extends ASCWO_Api_Required_Options_Base
 
         $required_options = $this->get_required_options($config_id);
         $borders = $this->section_item_list($required_options, 'borders');
-        if (!isset($borders[$item_id])) {
+        $item_index = $this->find_section_item_index_by_id($borders, $item_id);
+        if ($item_index === null) {
             return rest_ensure_response(array('success' => false, 'message' => __('Border not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        $borders[$item_id] = array_merge($borders[$item_id], $payload);
+        $borders[$item_index] = array_merge($borders[$item_index], $payload);
         $borders = $this->ensure_single_default_item($borders);
         $required_options = $this->set_section_items($required_options, 'borders', $this->section_value_with_items($required_options, 'borders', $borders));
         $saved = $this->save_required_options($config_id, $required_options);
 
         return rest_ensure_response($saved === true
-            ? array('success' => true, 'message' => __('Border successfully edited', 'all-signs-customizer-for-woocommerce-pro'), 'data' => array('border' => $borders[$item_id]))
+            ? array('success' => true, 'message' => __('Border successfully edited', 'all-signs-customizer-for-woocommerce-pro'), 'data' => array('border' => $borders[$item_index]))
             : array('success' => false, 'message' => __('Border has not been edited', 'all-signs-customizer-for-woocommerce-pro')));
     }
 
     public function delete_border_item($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $item_id = absint($request->get_param('item_id'));
+        $item_id = sanitize_text_field((string) $request->get_param('item_id'));
         if (!$config_id) {
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $required_options = $this->get_required_options($config_id);
         $borders = $this->section_item_list($required_options, 'borders');
-        if (!isset($borders[$item_id])) {
+        $item_index = $this->find_section_item_index_by_id($borders, $item_id);
+        if ($item_index === null) {
             return rest_ensure_response(array('success' => false, 'message' => __('Border not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        array_splice($borders, $item_id, 1);
+        array_splice($borders, $item_index, 1);
         $borders = $this->ensure_single_default_item($borders);
         $required_options = $this->set_section_items($required_options, 'borders', $this->section_value_with_items($required_options, 'borders', $borders));
         $saved = $this->save_required_options($config_id, $required_options);

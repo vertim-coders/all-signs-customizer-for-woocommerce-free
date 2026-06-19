@@ -81,6 +81,21 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
         $items[$index]['icon'] = $normalized_icon;
         $changed = true;
       }
+
+      $prefix = null;
+      if ($option_name === 'ascwo_all_shapes') {
+        $prefix = 'shape';
+      } elseif ($option_name === 'ascwo_all_borders') {
+        $prefix = 'border';
+      }
+
+      if ($prefix !== null && (!isset($items[$index]['id']) || $items[$index]['id'] === '')) {
+        $label = isset($item['label']) ? (string) $item['label'] : '';
+        $name = isset($item['name']) ? (string) $item['name'] : '';
+        $value = isset($item['value']) ? (string) $item['value'] : '';
+        $items[$index]['id'] = $prefix . '-' . sanitize_title($label ?: $name ?: $value ?: ('item-' . ($index + 1)));
+        $changed = true;
+      }
     }
 
     if ($changed) {

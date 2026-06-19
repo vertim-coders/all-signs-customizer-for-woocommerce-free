@@ -38,7 +38,7 @@
                   {{ __("No colors configured.", "all-signs-customizer-for-woocommerce-pro") }}
                 </td>
               </tr>
-              <tr v-for="(col, key) in colors.items" :key="key">
+              <tr v-for="(col, key) in colors.items" :key="col.id || key">
                 <td>
                   <div class="ascwo-color-preview" :style="getPreviewStyle(col)">
                     <img v-if="col.pattern?.active && col.pattern?.url" :src="col.pattern.url" :alt="col.name" />
@@ -49,17 +49,17 @@
                 <td>
                   <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
                     <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</span>
-                    <button type="button" @click="!isLoading && selectDefault(key)" :class="['ascwo-toggle', col.isDefault ? 'is-active' : '']"><span></span></button>
+                    <button type="button" @click="!isLoading && selectDefault(col.id || key)" :class="['ascwo-toggle', col.isDefault ? 'is-active' : '']"><span></span></button>
                     <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</span>
                   </div>
                 </td>
                 <td>
                   <div class="ascwo-flex ascwo-items-center ascwo-gap-3">
-                    <button type="button" @click="selectMaterialColor(key, col)" class="ascwo-outline-button">
+                    <button type="button" @click="selectMaterialColor(col.id || key, col)" class="ascwo-outline-button">
                       <Edit2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
                       {{ __("Edit", "all-signs-customizer-for-woocommerce-pro") }}
                     </button>
-                    <button type="button" @click="selectMaterialColor(key, col, true)" class="ascwo-link-danger">
+                    <button type="button" @click="selectMaterialColor(col.id || key, col, true)" class="ascwo-link-danger">
                       <Trash2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
                       {{ __("Delete", "all-signs-customizer-for-woocommerce-pro") }}
                     </button>

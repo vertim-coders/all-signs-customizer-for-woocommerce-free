@@ -58,7 +58,7 @@ class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Bas
 
         register_rest_route(
             $this->namespace,
-            $config_route . '/pricings/items/(?P<item_id>\d+)',
+            $config_route . '/pricings/items/(?P<item_id>[^/]+)',
             array(
                 array(
                     'methods' => WP_REST_Server::READABLE,
@@ -70,7 +70,7 @@ class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Bas
                             'required' => true,
                         ),
                         'item_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -85,7 +85,7 @@ class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Bas
                             'required' => true,
                         ),
                         'item_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -100,7 +100,7 @@ class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Bas
                             'required' => true,
                         ),
                         'item_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -174,9 +174,9 @@ class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Bas
         return $normalized;
     }
 
-    private function find_pricing_item_index(array $items, int $item_id): ?int
+    private function find_pricing_item_index(array $items, string $item_id): ?int
     {
-        return isset($items[$item_id]) ? $item_id : null;
+        return $this->find_section_item_index_by_id($items, $item_id);
     }
 
     private function save_pricing_items(int $config_id, array $items)
@@ -252,7 +252,7 @@ class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Bas
     public function get_pricing_item($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $item_id = absint($request->get_param('item_id'));
+        $item_id = sanitize_text_field((string) $request->get_param('item_id'));
         if (!$config_id) {
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
@@ -290,7 +290,7 @@ class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Bas
     public function update_pricing_item($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $item_id = absint($request->get_param('item_id'));
+        $item_id = sanitize_text_field((string) $request->get_param('item_id'));
         if (!$config_id) {
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
@@ -317,7 +317,7 @@ class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Bas
     public function delete_pricing_item($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $item_id = absint($request->get_param('item_id'));
+        $item_id = sanitize_text_field((string) $request->get_param('item_id'));
         if (!$config_id) {
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }

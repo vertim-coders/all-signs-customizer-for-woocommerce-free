@@ -43,7 +43,7 @@
                   {{ __("No borders configured.", "all-signs-customizer-for-woocommerce-pro") }}
                 </td>
               </tr>
-              <tr v-for="(bd, key) in borders.items" :key="`${bd.manageBorderId}-${key}`">
+              <tr v-for="(bd, key) in borders.items" :key="`${bd.id}-${key}`">
                 <td>
                   <div class="ascwo-preview-box">
                     <img v-if="getManagedBorder(bd)?.icon" :src="getManagedBorder(bd).icon" :alt="getManagedBorder(bd).name" />
@@ -55,17 +55,17 @@
                 <td>
                   <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
                     <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</span>
-                    <button type="button" @click="!isLoading && selectDefault(key)" :class="['ascwo-toggle', bd.isDefault ? 'is-active' : '']"><span></span></button>
+                    <button type="button" @click="!isLoading && selectDefault(bd.borderId)" :class="['ascwo-toggle', bd.isDefault ? 'is-active' : '']"><span></span></button>
                     <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</span>
                   </div>
                 </td>
                 <td>
                   <div class="ascwo-flex ascwo-items-center ascwo-gap-3">
-                    <button type="button" @click="selectMaterialBorder(bd.manageBorderId, bd)" class="ascwo-outline-button">
+                    <button type="button" @click="selectMaterialBorder(bd.id, bd)" class="ascwo-outline-button">
                       <Edit2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
                       {{ __("Edit", "all-signs-customizer-for-woocommerce-pro") }}
                     </button>
-                    <button type="button" @click="selectMaterialBorder(bd.manageBorderId, bd, true)" class="ascwo-link-danger">
+                    <button type="button" @click="selectMaterialBorder(bd.id, bd, true)" class="ascwo-link-danger">
                       <Trash2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
                       {{ __("Delete", "all-signs-customizer-for-woocommerce-pro") }}
                     </button>
@@ -168,7 +168,7 @@
 
         <label class="ascwo-field-block">
           <span class="ascwo-form-label">{{ __("Border", "all-signs-customizer-for-woocommerce-pro") }}</span>
-          <select v-model="border.manageBorderId" class="ascwo-form-input">
+          <select v-model="border.borderId" class="ascwo-form-input">
             <option v-for="option in availableManagedBorders" :key="option.value" :value="option.value">
               {{ option.name }}
             </option>
@@ -223,7 +223,7 @@
       </div>
       <div class="ascwo-form-footer">
         <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Back to borders", "all-signs-customizer-for-woocommerce-pro") }}</button>
-        <button type="button" @click="isEdit ? updateMaterialBorders() : addBorders()" :disabled="isLoading || !border.manageBorderId" class="ascwo-primary-button">
+        <button type="button" @click="isEdit ? updateMaterialBorders() : addBorders()" :disabled="isLoading || !border.borderId" class="ascwo-primary-button">
           {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce-pro") : __("Save border", "all-signs-customizer-for-woocommerce-pro") }}
         </button>
       </div>
@@ -264,8 +264,9 @@ const defaultSettings = () => ({
   customColorsPrevImg: "",
 });
 
-const createBorder = (manageBorderId = "") => ({
-  manageBorderId,
+const createBorder = (id = "", borderId = "") => ({
+  id,
+  borderId,
   additionalPrice: 0,
   excludeSizes: [],
   excludeShapes: [],
@@ -288,21 +289,25 @@ const borderShapes = ref([]);
 const border = ref(createBorder());
 
 const normalizeArray = (value) => Array.isArray(value) ? value : [];
-const getManagedBorder = (bd) => manageBorders.value.find((item) => String(item?.id ?? item?.value ?? "") === String(bd?.manageBorderId)) || null;
+const getManagedBorder = (bd) => manageBorders.value.find((item) => String(item?.id ?? item?.value ?? "") === String(bd?.borderId)) || null;
 
-const selectedManagedBorder = computed(() => manageBorders.value.find((item) => String(item?.id ?? item?.value ?? "") === String(border.value.manageBorderId)) || null);
+const selectedManagedBorder = computed(() => manageBorders.value.find((item) => String(item?.id ?? item?.value ?? "") === String(border.value.borderId)) || null);
 
 const availableManagedBorders = computed(() => manageBorders.value
-  .map((item, index) => ({ ...item, value: String(item?.id ?? item?.value ?? index) }))
+  .map((item, index) => {
+    const value = String(item?.id ?? item?.value ?? `border-${index + 1}`);
+    return { ...item, value };
+  })
   .filter((item) => {
-    if (String(item.value) === String(border.value.manageBorderId)) return true;
-    return !borders.value.items.some((bd) => String(bd.manageBorderId) === String(item.value));
+    if (String(item.value) === String(border.value.borderId)) return true;
+    return !borders.value.items.some((bd) => String(bd.borderId) === String(item.value));
   }));
 
 const normalizeBorder = (item) => ({
   ...createBorder(),
   ...item,
-  manageBorderId: String(item?.manageBorderId ?? ""),
+  id: String(item?.id ?? ""),
+  borderId: String(item?.borderId ?? ""),
   additionalPrice: Number(item?.additionalPrice || 0),
   isDefault: Boolean(item?.isDefault),
   excludeSizes: normalizeArray(item?.excludeSizes),
@@ -321,8 +326,8 @@ const fetchMaterialShapes = async () => {
   const res = await api.getRequiredOptionShapes(configID.value);
   if (!res.message && res.items) {
     borderShapes.value = res.items.map((item) => ({
-      name: res.manageShapes?.find?.((shape) => String(shape?.id ?? shape?.value ?? "") === String(item.shapeId))?.name || "Shape",
-      value: item.shapeId,
+      name: res.manageShapes?.find?.((shape) => String(shape?.id ?? shape?.value ?? "") === String(item.shapeId))?.name || String(item.shapeId || "Shape"),
+      value: String(item.shapeId),
     }));
   }
 };
@@ -338,7 +343,10 @@ const fetchMaterialBorders = async () => {
         items: normalizeArray(bordersData.items).map(normalizeBorder),
       };
       manageBorders.value = bordersData.manageBorders || [];
-      borderSizes.value = (bordersData.sizes || []).map((item, index) => ({ name: item.label, value: index }));
+      borderSizes.value = (bordersData.sizes || []).map((item, index) => ({
+        name: item.label,
+        value: String(item?.id ?? item?.value ?? `size-${index + 1}`),
+      }));
     }
   } finally {
     isFetching.value = false;
@@ -451,7 +459,7 @@ const newBorder = () => {
     return;
   }
   borderId.value = "";
-  border.value = createBorder(firstAvailable);
+  border.value = createBorder("", firstAvailable);
   isEdit.value = false;
   isNewBorder.value = true;
 };

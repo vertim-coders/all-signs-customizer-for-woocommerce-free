@@ -58,7 +58,7 @@ class ASCWO_Api_Required_Options_Shapes extends ASCWO_Api_Required_Options_Base
 
         register_rest_route(
             $this->namespace,
-            $config_route . '/shapes/items/(?P<item_id>\d+)',
+            $config_route . '/shapes/items/(?P<item_id>[^/]+)',
             array(
                 array(
                     'methods' => WP_REST_Server::READABLE,
@@ -70,7 +70,7 @@ class ASCWO_Api_Required_Options_Shapes extends ASCWO_Api_Required_Options_Base
                             'required' => true,
                         ),
                         'item_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -85,7 +85,7 @@ class ASCWO_Api_Required_Options_Shapes extends ASCWO_Api_Required_Options_Base
                             'required' => true,
                         ),
                         'item_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -100,7 +100,7 @@ class ASCWO_Api_Required_Options_Shapes extends ASCWO_Api_Required_Options_Base
                             'required' => true,
                         ),
                         'item_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -110,7 +110,7 @@ class ASCWO_Api_Required_Options_Shapes extends ASCWO_Api_Required_Options_Base
 
         register_rest_route(
             $this->namespace,
-            $config_route . '/shapes/items/(?P<item_id>\d+)/default',
+            $config_route . '/shapes/items/(?P<item_id>[^/]+)/default',
             array(
                 array(
                     'methods' => WP_REST_Server::EDITABLE,
@@ -122,7 +122,7 @@ class ASCWO_Api_Required_Options_Shapes extends ASCWO_Api_Required_Options_Base
                             'required' => true,
                         ),
                         'item_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -168,18 +168,19 @@ class ASCWO_Api_Required_Options_Shapes extends ASCWO_Api_Required_Options_Base
     public function get_shape_item($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $item_id = absint($request->get_param('item_id'));
+        $item_id = sanitize_text_field((string) $request->get_param('item_id'));
         if (!$config_id) {
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $required_options = $this->get_required_options($config_id);
         $shapes = $this->section_item_list($required_options, 'shapes');
-        if (!isset($shapes[$item_id])) {
+        $item_index = $this->find_section_item_index_by_id($shapes, $item_id);
+        if ($item_index === null) {
             return rest_ensure_response(array('success' => false, 'message' => __('Shape not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        return rest_ensure_response(array('success' => true, 'data' => array('shape' => $this->sanitize_shape_item($shapes[$item_id]))));
+        return rest_ensure_response(array('success' => true, 'data' => array('shape' => $this->sanitize_shape_item($shapes[$item_index]))));
     }
 
     public function add_shape_item($request)
@@ -213,7 +214,7 @@ class ASCWO_Api_Required_Options_Shapes extends ASCWO_Api_Required_Options_Base
     public function update_shape_item($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $item_id = absint($request->get_param('item_id'));
+        $item_id = sanitize_text_field((string) $request->get_param('item_id'));
         if (!$config_id) {
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
@@ -223,35 +224,37 @@ class ASCWO_Api_Required_Options_Shapes extends ASCWO_Api_Required_Options_Base
 
         $required_options = $this->get_required_options($config_id);
         $shapes = $this->section_item_list($required_options, 'shapes');
-        if (!isset($shapes[$item_id])) {
+        $item_index = $this->find_section_item_index_by_id($shapes, $item_id);
+        if ($item_index === null) {
             return rest_ensure_response(array('success' => false, 'message' => __('Shape not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        $shapes[$item_id] = $this->sanitize_shape_item(array_merge($shapes[$item_id], $payload));
+        $shapes[$item_index] = $this->sanitize_shape_item(array_merge($shapes[$item_index], $payload));
         $shapes = $this->ensure_single_default_item($shapes);
         $required_options = $this->set_section_items($required_options, 'shapes', $this->section_value_with_items($required_options, 'shapes', $shapes));
         $saved = $this->save_required_options($config_id, $required_options);
 
         return rest_ensure_response($saved === true
-            ? array('success' => true, 'message' => __('Shape successfully edited', 'all-signs-customizer-for-woocommerce-pro'), 'data' => array('shape' => $shapes[$item_id]))
+            ? array('success' => true, 'message' => __('Shape successfully edited', 'all-signs-customizer-for-woocommerce-pro'), 'data' => array('shape' => $shapes[$item_index]))
             : array('success' => false, 'message' => __('Shape has not been edited', 'all-signs-customizer-for-woocommerce-pro')));
     }
 
     public function delete_shape_item($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $item_id = absint($request->get_param('item_id'));
+        $item_id = sanitize_text_field((string) $request->get_param('item_id'));
         if (!$config_id) {
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $required_options = $this->get_required_options($config_id);
         $shapes = $this->section_item_list($required_options, 'shapes');
-        if (!isset($shapes[$item_id])) {
+        $item_index = $this->find_section_item_index_by_id($shapes, $item_id);
+        if ($item_index === null) {
             return rest_ensure_response(array('success' => false, 'message' => __('Shape not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        array_splice($shapes, $item_id, 1);
+        array_splice($shapes, $item_index, 1);
         $shapes = $this->ensure_single_default_item($shapes);
         $required_options = $this->set_section_items($required_options, 'shapes', $this->section_value_with_items($required_options, 'shapes', $shapes));
         $saved = $this->save_required_options($config_id, $required_options);

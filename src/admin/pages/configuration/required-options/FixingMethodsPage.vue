@@ -66,7 +66,7 @@
                 <td>
                   <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
                     <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</span>
-                    <button type="button" @click="!isLoading && selectDefault(key)" :class="['ascwo-toggle', fx.isDefault ? 'is-active' : '']"><span></span></button>
+                    <button type="button" @click="!isLoading && selectDefault(fx.fixingMethodId)" :class="['ascwo-toggle', fx.isDefault ? 'is-active' : '']"><span></span></button>
                     <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</span>
                   </div>
                 </td>
@@ -274,7 +274,10 @@ const getManagedMethod = (fx) => {
 const selectedManagedMethod = computed(() => manageFixingMethods.value.find((method) => managedMethodKey(method) === resolveManagedMethodId(fixingMethod.value.fixingMethodId)) || null);
 
 const availableManagedMethods = computed(() => manageFixingMethods.value
-  .map((method, index) => ({ ...method, value: managedMethodKey(method) || String(index) }))
+  .map((method, index) => {
+    const value = managedMethodKey(method) || String(method?.value ?? `fixing-${index + 1}`);
+    return { ...method, value };
+  })
   .filter((method) => {
     if (String(method.value) === String(fixingMethod.value.fixingMethodId)) return true;
     return !fixingMethods.value.some((fx) => String(fx.fixingMethodId) === String(method.value));
@@ -327,8 +330,8 @@ const fetchMaterialShapes = async () => {
   const res = await api.getRequiredOptionShapes(configID.value);
   if (!res.message && res.items) {
       fixingMethodShapes.value = res.items.map((shape) => ({
-        name: res.manageShapes?.find?.((item) => String(item?.id ?? item?.value ?? "") === String(shape.shapeId))?.name || "Shape",
-        value: shape.shapeId,
+        name: res.manageShapes?.find?.((item) => String(item?.id ?? item?.value ?? "") === String(shape.shapeId))?.name || String(shape.shapeId || "Shape"),
+        value: String(shape.shapeId),
       }));
   }
 };
@@ -338,7 +341,10 @@ const fetchMaterialFixingMethods = async () => {
   try {
     const res = await api.getRequiredOptionFixingMethods(configID.value);
     const fixingMethodsData = res;
-    fixingMethodSizes.value = (fixingMethodsData?.sizes || []).map((size, index) => ({ name: size.label, value: index }));
+    fixingMethodSizes.value = (fixingMethodsData?.sizes || []).map((size, index) => ({
+      name: size.label,
+      value: String(size?.id ?? size?.value ?? `size-${index + 1}`),
+    }));
     if (!res.message && fixingMethodsData) {
       manageFixingMethods.value = (fixingMethodsData.manageFixingMethods || []).map((method) => ({
         ...method,
@@ -466,7 +472,7 @@ const newFixing = () => {
     toastMessage(__("No more fixing methods available", "all-signs-customizer-for-woocommerce-pro"), "warning");
     return;
   }
-  fixingMethod.value = { isDefault: false, fixingMethodId: firstAvailable.value?.value || "", excludeSizes: [], excludeShapes: [], additionalPrice: 0 };
+  fixingMethod.value = { isDefault: false, fixingMethodId: firstAvailable?.value || "", excludeSizes: [], excludeShapes: [], additionalPrice: 0 };
   fixingMethodId.value = null;
   isEdit.value = false;
   isNewFixing.value = true;

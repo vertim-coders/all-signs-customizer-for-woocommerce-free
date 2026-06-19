@@ -66,7 +66,7 @@
                 <td>
                   <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
                     <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</span>
-                    <button type="button" @click="!isLoading && selectDefault(key)" :class="['ascwo-toggle', sh.isDefault ? 'is-active' : '']"><span></span></button>
+                    <button type="button" @click="!isLoading && selectDefault(sh.shapeId)" :class="['ascwo-toggle', sh.isDefault ? 'is-active' : '']"><span></span></button>
                     <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</span>
                   </div>
                 </td>
@@ -189,7 +189,10 @@ const getManagedShape = (sh) => manageShapes.value.find((item) => String(item?.i
 const selectedManagedShape = computed(() => manageShapes.value.find((item) => String(item?.id ?? item?.value ?? "") === String(shape.value.shapeId)) || null);
 
 const availableManagedShapes = computed(() => manageShapes.value
-  .map((item, index) => ({ ...item, value: String(item?.id ?? item?.value ?? index) }))
+  .map((item, index) => {
+    const value = String(item?.id ?? item?.value ?? `shape-${index + 1}`);
+    return { ...item, value };
+  })
   .filter((item) => {
     if (String(item.value) === String(shape.value.shapeId)) return true;
     return !shapes.value.some((sh) => String(sh.shapeId) === String(item.value));

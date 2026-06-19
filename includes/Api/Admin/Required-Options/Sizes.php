@@ -58,7 +58,7 @@ class ASCWO_Api_Required_Options_Sizes extends ASCWO_Api_Required_Options_Base
 
         register_rest_route(
             $this->namespace,
-            $config_route . '/sizes/items/(?P<item_id>\d+)',
+            $config_route . '/sizes/items/(?P<item_id>[^/]+)',
             array(
                 array(
                     'methods' => WP_REST_Server::READABLE,
@@ -70,7 +70,7 @@ class ASCWO_Api_Required_Options_Sizes extends ASCWO_Api_Required_Options_Base
                             'required' => true,
                         ),
                         'item_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -85,7 +85,7 @@ class ASCWO_Api_Required_Options_Sizes extends ASCWO_Api_Required_Options_Base
                             'required' => true,
                         ),
                         'item_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -100,7 +100,7 @@ class ASCWO_Api_Required_Options_Sizes extends ASCWO_Api_Required_Options_Base
                             'required' => true,
                         ),
                         'item_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -110,7 +110,7 @@ class ASCWO_Api_Required_Options_Sizes extends ASCWO_Api_Required_Options_Base
 
         register_rest_route(
             $this->namespace,
-            $config_route . '/sizes/items/(?P<item_id>\d+)/default',
+            $config_route . '/sizes/items/(?P<item_id>[^/]+)/default',
             array(
                 array(
                     'methods' => WP_REST_Server::EDITABLE,
@@ -122,7 +122,7 @@ class ASCWO_Api_Required_Options_Sizes extends ASCWO_Api_Required_Options_Base
                             'required' => true,
                         ),
                         'item_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -213,7 +213,7 @@ class ASCWO_Api_Required_Options_Sizes extends ASCWO_Api_Required_Options_Base
     public function get_size_item($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $item_id = absint($request->get_param('item_id'));
+        $item_id = sanitize_text_field((string) $request->get_param('item_id'));
         if (!$config_id) {
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
@@ -221,14 +221,15 @@ class ASCWO_Api_Required_Options_Sizes extends ASCWO_Api_Required_Options_Base
         $required_options = $this->get_required_options($config_id);
         $sizes = $this->section_item_list($required_options, 'sizes');
 
-        if (!isset($sizes[$item_id])) {
+        $item_index = $this->find_section_item_index_by_id($sizes, $item_id);
+        if ($item_index === null) {
             return rest_ensure_response(array('success' => false, 'message' => __('Size not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         return rest_ensure_response(array(
             'success' => true,
             'data' => array(
-                'size' => $this->normalize_size_item($sizes[$item_id], $item_id, $config_id),
+                'size' => $this->normalize_size_item($sizes[$item_index], $item_index, $config_id),
             ),
         ));
     }
@@ -265,7 +266,7 @@ class ASCWO_Api_Required_Options_Sizes extends ASCWO_Api_Required_Options_Base
     public function update_size_item($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $item_id = absint($request->get_param('item_id'));
+        $item_id = sanitize_text_field((string) $request->get_param('item_id'));
         if (!$config_id) {
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
@@ -275,15 +276,16 @@ class ASCWO_Api_Required_Options_Sizes extends ASCWO_Api_Required_Options_Base
 
         $required_options = $this->get_required_options($config_id);
         $sizes = $this->section_item_list($required_options, 'sizes');
-        if (!isset($sizes[$item_id])) {
+        $item_index = $this->find_section_item_index_by_id($sizes, $item_id);
+        if ($item_index === null) {
             return rest_ensure_response(array('success' => false, 'message' => __('Size not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        if ($sizes[$item_id] === $payload) {
+        if ($sizes[$item_index] === $payload) {
             return rest_ensure_response(array('success' => 'same', 'message' => __('No change was observed', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        $sizes[$item_id] = $payload;
+        $sizes[$item_index] = $payload;
         $sizes = $this->ensure_single_default_item($sizes);
         $required_options = $this->set_section_items($required_options, 'sizes', $this->section_value_with_items($required_options, 'sizes', $sizes));
         $saved = $this->save_required_options($config_id, $required_options);
@@ -292,7 +294,7 @@ class ASCWO_Api_Required_Options_Sizes extends ASCWO_Api_Required_Options_Base
             ? array(
                 'success' => true,
                 'message' => __('Size successfully edited', 'all-signs-customizer-for-woocommerce-pro'),
-                'data' => array('size' => $sizes[$item_id]),
+                'data' => array('size' => $sizes[$item_index]),
             )
             : array('success' => false, 'message' => __('Size has not been edited', 'all-signs-customizer-for-woocommerce-pro')));
     }
@@ -300,18 +302,19 @@ class ASCWO_Api_Required_Options_Sizes extends ASCWO_Api_Required_Options_Base
     public function delete_size_item($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $item_id = absint($request->get_param('item_id'));
+        $item_id = sanitize_text_field((string) $request->get_param('item_id'));
         if (!$config_id) {
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $required_options = $this->get_required_options($config_id);
         $sizes = $this->section_item_list($required_options, 'sizes');
-        if (!isset($sizes[$item_id])) {
+        $item_index = $this->find_section_item_index_by_id($sizes, $item_id);
+        if ($item_index === null) {
             return rest_ensure_response(array('success' => false, 'message' => __('Size not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        array_splice($sizes, $item_id, 1);
+        array_splice($sizes, $item_index, 1);
         $sizes = $this->ensure_single_default_item($sizes);
         $required_options = $this->set_section_items($required_options, 'sizes', $this->section_value_with_items($required_options, 'sizes', $sizes));
         $saved = $this->save_required_options($config_id, $required_options);
@@ -328,19 +331,20 @@ class ASCWO_Api_Required_Options_Sizes extends ASCWO_Api_Required_Options_Base
     public function set_default_size_item($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $item_id = absint($request->get_param('item_id'));
+        $item_id = sanitize_text_field((string) $request->get_param('item_id'));
         if (!$config_id) {
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $required_options = $this->get_required_options($config_id);
         $sizes = $this->section_item_list($required_options, 'sizes');
-        if (!isset($sizes[$item_id])) {
+        $item_index = $this->find_section_item_index_by_id($sizes, $item_id);
+        if ($item_index === null) {
             return rest_ensure_response(array('success' => false, 'message' => __('Size not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         foreach ($sizes as $index => $size) {
-            $sizes[$index]['isDefault'] = $index === $item_id;
+            $sizes[$index]['isDefault'] = $index === $item_index;
         }
 
         $required_options = $this->set_section_items($required_options, 'sizes', $this->section_value_with_items($required_options, 'sizes', $sizes));
@@ -350,7 +354,7 @@ class ASCWO_Api_Required_Options_Sizes extends ASCWO_Api_Required_Options_Base
             ? array(
                 'success' => true,
                 'message' => __('Default size successfully updated', 'all-signs-customizer-for-woocommerce-pro'),
-                'data' => array('size' => $sizes[$item_id]),
+                'data' => array('size' => $sizes[$item_index]),
             )
             : array('success' => false, 'message' => __('Size has not been edited', 'all-signs-customizer-for-woocommerce-pro')));
     }

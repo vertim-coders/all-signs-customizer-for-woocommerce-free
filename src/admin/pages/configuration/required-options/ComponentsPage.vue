@@ -99,7 +99,7 @@
               class="ascwo-clickable-row"
               @dragover.prevent
               @drop="dropCollection($event, index)"
-              @click="goToCollection(index)"
+              @click="goToCollection(collection.id || index)"
             >
               <td>
                 <div v-if="false" class="ascwo-move-buttons ascwo-shopify-drag-wrap" @click.stop>
@@ -131,7 +131,7 @@
               <td>
                 <div class="ascwo-toggle-cell">
                   <span>{{ __('No', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-                  <button type="button" @click.stop="setDefaultCollection(index)" :class="['ascwo-toggle', collection.isDefault ? 'is-active' : '']">
+                  <button type="button" @click.stop="setDefaultCollection(collection.id || index)" :class="['ascwo-toggle', collection.isDefault ? 'is-active' : '']">
                     <span></span>
                   </button>
                   <span>{{ __('Yes', 'all-signs-customizer-for-woocommerce-pro') }}</span>
@@ -140,7 +140,7 @@
               <td>
                 <div class="ascwo-toggle-cell">
                   <span>{{ __('No', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-                  <button type="button" @click.stop="toggleVisibility(index)" :class="['ascwo-toggle', collection.isVisible !== false ? 'is-active' : '']">
+                  <button type="button" @click.stop="toggleVisibility(collection.id || index)" :class="['ascwo-toggle', collection.isVisible !== false ? 'is-active' : '']">
                     <span></span>
                   </button>
                   <span>{{ __('Yes', 'all-signs-customizer-for-woocommerce-pro') }}</span>
@@ -148,10 +148,10 @@
               </td>
               <td>
                 <div class="ascwo-row-actions">
-                  <button type="button" @click.stop="goToCollection(index)" class="ascwo-secondary-button ascwo-small-button">
+                  <button type="button" @click.stop="goToCollection(collection.id || index)" class="ascwo-secondary-button ascwo-small-button">
                     {{ __('Edit', 'all-signs-customizer-for-woocommerce-pro') }}
                   </button>
-                  <button type="button" @click.stop="deleteCollection(index)" class="ascwo-danger-button ascwo-small-button">
+                  <button type="button" @click.stop="deleteCollection(collection.id || index)" class="ascwo-danger-button ascwo-small-button">
                     {{ __('Delete', 'all-signs-customizer-for-woocommerce-pro') }}
                   </button>
                 </div>
@@ -419,7 +419,9 @@ const saveCollection = async () => {
   }
 };
 
-const setDefaultCollection = async (index) => {
+const setDefaultCollection = async (itemId) => {
+  const index = collections.value.findIndex((item, itemIndex) => String(item.id || `component-${itemIndex + 1}`) === String(itemId));
+  if (index < 0) return;
   const nextItems = collections.value.map((item, itemIndex) => ({
     ...item,
     isDefault: itemIndex === index,
@@ -431,7 +433,9 @@ const setDefaultCollection = async (index) => {
   }, __('Default collection updated.', 'all-signs-customizer-for-woocommerce-pro'));
 };
 
-const toggleVisibility = async (index) => {
+const toggleVisibility = async (itemId) => {
+  const index = collections.value.findIndex((item, itemIndex) => String(item.id || `component-${itemIndex + 1}`) === String(itemId));
+  if (index < 0) return;
   const nextItems = collections.value.map((item, itemIndex) => itemIndex === index
     ? { ...item, isVisible: item.isVisible === false }
     : { ...item });
@@ -489,11 +493,13 @@ const endCollectionDrag = () => {
   draggingCollectionIndex.value = null;
 };
 
-const deleteCollection = async (index) => {
+const deleteCollection = async (itemId) => {
   if (!window.confirm(__('Delete this design collection?', 'all-signs-customizer-for-woocommerce-pro'))) {
     return;
   }
 
+  const index = collections.value.findIndex((item, itemIndex) => String(item.id || `component-${itemIndex + 1}`) === String(itemId));
+  if (index < 0) return;
   const nextItems = collections.value.map((item) => ({ ...item }));
   nextItems.splice(index, 1);
 
@@ -503,12 +509,12 @@ const deleteCollection = async (index) => {
   }, __('Design collection deleted.', 'all-signs-customizer-for-woocommerce-pro'));
 };
 
-const goToCollection = (index) => {
+const goToCollection = (itemId) => {
   router.push({
     name: 'required-component-options',
     params: {
       configId: configId.value,
-      componentId: String(index),
+      componentId: String(itemId),
     },
   });
 };

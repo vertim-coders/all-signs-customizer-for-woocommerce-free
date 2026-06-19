@@ -40,7 +40,7 @@
               </tr>
               <tr
                 v-for="(sz, key) in sizes.items"
-                :key="key"
+                :key="sz.id || key"
                 class="ascwo-border-b ascwo-border-solid ascwo-border-[#eceff2] last:ascwo-border-b-0"
                 draggable="true"
                 @dragstart="dragStart(key)"
@@ -53,8 +53,8 @@
                 <td class="ascwo-py-2.5 ascwo-px-3 ascwo-text-[13px] ascwo-font-[900] ascwo-text-[#303030]">{{ sz.label }}</td>
                 <td class="ascwo-py-2.5 ascwo-px-3 ascwo-text-[13px] ascwo-text-[#303030]">{{ sz.width }} x {{ sz.height }}</td>
                 <td class="ascwo-py-2.5 ascwo-px-3">
-                  <div
-                    @click="!isLoading && selectDefault(key)"
+                    <div
+                    @click="!isLoading && selectDefault(sz.id)"
                     :class="[
                       'ascwo-w-9 ascwo-h-5 ascwo-rounded-full ascwo-relative ascwo-cursor-pointer ascwo-transition-colors',
                       sz.isDefault ? 'ascwo-bg-[#007a72]' : 'ascwo-bg-[#d9dee8]'
@@ -65,11 +65,11 @@
                 </td>
                 <td class="ascwo-py-2.5 ascwo-px-3">
                   <div class="ascwo-flex ascwo-items-center ascwo-gap-3">
-                    <button @click="selectSize(key, sz)" class="ascwo-inline-flex ascwo-items-center ascwo-gap-1 ascwo-px-2 ascwo-py-1 ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-rounded-md ascwo-text-[#303030] ascwo-text-[12px] ascwo-font-bold hover:ascwo-bg-[#f7f8fa] ascwo-cursor-pointer">
+                    <button @click="selectSize(sz.id, sz)" class="ascwo-inline-flex ascwo-items-center ascwo-gap-1 ascwo-px-2 ascwo-py-1 ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-rounded-md ascwo-text-[#303030] ascwo-text-[12px] ascwo-font-bold hover:ascwo-bg-[#f7f8fa] ascwo-cursor-pointer">
                       <Edit2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
                       {{ __('Edit', 'all-signs-customizer-for-woocommerce-pro') }}
                     </button>
-                    <button @click="selectSize(key, sz, true)" class="ascwo-inline-flex ascwo-items-center ascwo-gap-1 ascwo-bg-transparent ascwo-border-none ascwo-text-[#8e1f0b] ascwo-text-[12px] ascwo-font-bold hover:ascwo-text-[#641707] ascwo-cursor-pointer">
+                    <button @click="selectSize(sz.id, sz, true)" class="ascwo-inline-flex ascwo-items-center ascwo-gap-1 ascwo-bg-transparent ascwo-border-none ascwo-text-[#8e1f0b] ascwo-text-[12px] ascwo-font-bold hover:ascwo-text-[#641707] ascwo-cursor-pointer">
                       <Trash2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
                       {{ __('Delete', 'all-signs-customizer-for-woocommerce-pro') }}
                     </button>

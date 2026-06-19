@@ -40,7 +40,7 @@ class ASCWO_Api_Required_Options_Materials extends ASCWO_Api_Required_Options_Ba
 
         register_rest_route(
             $this->namespace,
-            $config_route . '/materials/items/(?P<material_id>\d+)',
+            $config_route . '/materials/items/(?P<material_id>[^/]+)',
             array(
                 array(
                     'methods' => WP_REST_Server::READABLE,
@@ -52,7 +52,7 @@ class ASCWO_Api_Required_Options_Materials extends ASCWO_Api_Required_Options_Ba
                             'required' => true,
                         ),
                         'material_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -67,7 +67,7 @@ class ASCWO_Api_Required_Options_Materials extends ASCWO_Api_Required_Options_Ba
                             'required' => true,
                         ),
                         'material_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -82,7 +82,7 @@ class ASCWO_Api_Required_Options_Materials extends ASCWO_Api_Required_Options_Ba
                             'required' => true,
                         ),
                         'material_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -92,7 +92,7 @@ class ASCWO_Api_Required_Options_Materials extends ASCWO_Api_Required_Options_Ba
 
         register_rest_route(
             $this->namespace,
-            $config_route . '/materials/items/(?P<item_id>\d+)/default',
+            $config_route . '/materials/items/(?P<item_id>[^/]+)/default',
             array(
                 array(
                     'methods' => WP_REST_Server::EDITABLE,
@@ -104,7 +104,7 @@ class ASCWO_Api_Required_Options_Materials extends ASCWO_Api_Required_Options_Ba
                             'required' => true,
                         ),
                         'item_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),

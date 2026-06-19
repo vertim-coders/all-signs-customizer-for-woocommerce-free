@@ -58,7 +58,7 @@ class ASCWO_Api_Required_Options_Lightings extends ASCWO_Api_Required_Options_Ba
 
         register_rest_route(
             $this->namespace,
-            $config_route . '/lightings/items/(?P<item_id>\d+)',
+            $config_route . '/lightings/items/(?P<item_id>[^/]+)',
             array(
                 array(
                     'methods' => WP_REST_Server::READABLE,
@@ -70,7 +70,7 @@ class ASCWO_Api_Required_Options_Lightings extends ASCWO_Api_Required_Options_Ba
                             'required' => true,
                         ),
                         'item_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -85,7 +85,7 @@ class ASCWO_Api_Required_Options_Lightings extends ASCWO_Api_Required_Options_Ba
                             'required' => true,
                         ),
                         'item_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -100,7 +100,7 @@ class ASCWO_Api_Required_Options_Lightings extends ASCWO_Api_Required_Options_Ba
                             'required' => true,
                         ),
                         'item_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -110,7 +110,7 @@ class ASCWO_Api_Required_Options_Lightings extends ASCWO_Api_Required_Options_Ba
 
         register_rest_route(
             $this->namespace,
-            $config_route . '/lightings/items/(?P<item_id>\d+)/default',
+            $config_route . '/lightings/items/(?P<item_id>[^/]+)/default',
             array(
                 array(
                     'methods' => WP_REST_Server::EDITABLE,
@@ -122,7 +122,7 @@ class ASCWO_Api_Required_Options_Lightings extends ASCWO_Api_Required_Options_Ba
                             'required' => true,
                         ),
                         'item_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -155,18 +155,19 @@ class ASCWO_Api_Required_Options_Lightings extends ASCWO_Api_Required_Options_Ba
     public function get_lighting_item($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $item_id = absint($request->get_param('item_id'));
+        $item_id = sanitize_text_field((string) $request->get_param('item_id'));
         if (!$config_id) {
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $required_options = $this->get_required_options($config_id);
         $items = $this->section_item_list($required_options, 'lightings');
-        if (!isset($items[$item_id])) {
+        $item_index = $this->find_section_item_index_by_id($items, $item_id);
+        if ($item_index === null) {
             return rest_ensure_response(array('success' => false, 'message' => __('Lighting not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        return rest_ensure_response(array('success' => true, 'data' => array('lighting' => $this->sanitize_lighting_item($items[$item_id]))));
+        return rest_ensure_response(array('success' => true, 'data' => array('lighting' => $this->sanitize_lighting_item($items[$item_index]))));
     }
 
     public function add_lighting_item($request)
@@ -199,7 +200,7 @@ class ASCWO_Api_Required_Options_Lightings extends ASCWO_Api_Required_Options_Ba
     public function update_lighting_item($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $item_id = absint($request->get_param('item_id'));
+        $item_id = sanitize_text_field((string) $request->get_param('item_id'));
         if (!$config_id) {
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
@@ -209,35 +210,37 @@ class ASCWO_Api_Required_Options_Lightings extends ASCWO_Api_Required_Options_Ba
 
         $required_options = $this->get_required_options($config_id);
         $items = $this->section_item_list($required_options, 'lightings');
-        if (!isset($items[$item_id])) {
+        $item_index = $this->find_section_item_index_by_id($items, $item_id);
+        if ($item_index === null) {
             return rest_ensure_response(array('success' => false, 'message' => __('Lighting not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        $items[$item_id] = $this->sanitize_lighting_item(array_merge($items[$item_id], $payload));
+        $items[$item_index] = $this->sanitize_lighting_item(array_merge($items[$item_index], $payload));
         $items = $this->ensure_single_default_item($items);
         $required_options = $this->set_section_items($required_options, 'lightings', $this->section_value_with_items($required_options, 'lightings', $items));
         $saved = $this->save_required_options($config_id, $required_options);
 
         return rest_ensure_response($saved === true
-            ? array('success' => true, 'message' => __('Lighting successfully edited', 'all-signs-customizer-for-woocommerce-pro'), 'data' => array('lighting' => $items[$item_id]))
+            ? array('success' => true, 'message' => __('Lighting successfully edited', 'all-signs-customizer-for-woocommerce-pro'), 'data' => array('lighting' => $items[$item_index]))
             : array('success' => false, 'message' => __('Lighting has not been edited', 'all-signs-customizer-for-woocommerce-pro')));
     }
 
     public function delete_lighting_item($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $item_id = absint($request->get_param('item_id'));
+        $item_id = sanitize_text_field((string) $request->get_param('item_id'));
         if (!$config_id) {
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $required_options = $this->get_required_options($config_id);
         $items = $this->section_item_list($required_options, 'lightings');
-        if (!isset($items[$item_id])) {
+        $item_index = $this->find_section_item_index_by_id($items, $item_id);
+        if ($item_index === null) {
             return rest_ensure_response(array('success' => false, 'message' => __('Lighting not found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        array_splice($items, $item_id, 1);
+        array_splice($items, $item_index, 1);
         $items = $this->ensure_single_default_item($items);
         $required_options = $this->set_section_items($required_options, 'lightings', $this->section_value_with_items($required_options, 'lightings', $items));
         $saved = $this->save_required_options($config_id, $required_options);

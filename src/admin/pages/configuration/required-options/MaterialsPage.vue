@@ -42,7 +42,7 @@
               <tr
                 v-for="(material, index) in materials"
                 v-else
-                :key="index"
+                :key="material.id || index"
                 class="ascwo-border-b ascwo-border-solid ascwo-border-[#e5e7eb] hover:ascwo-bg-[#f7f8fa]"
               >
                 <td class="ascwo-py-2.5 ascwo-px-3">
@@ -58,7 +58,7 @@
                     <span class="ascwo-text-[12px] ascwo-text-[#616161]">{{ __('No', 'all-signs-customizer-for-woocommerce-pro') }}</span>
                     <button
                       type="button"
-                      @click="!isLoading && selectDefault(index)"
+                      @click="!isLoading && selectDefault(material.id || index)"
                       :class="['ascwo-toggle', material?.isDefault ? 'is-active' : '']"
                     >
                       <span></span>
@@ -68,11 +68,11 @@
                 </td>
                 <td class="ascwo-py-2.5 ascwo-px-3">
                   <div class="ascwo-flex ascwo-items-center ascwo-gap-2">
-                    <button type="button" @click="editMaterial(index)" class="ascwo-outline-button">
+                    <button type="button" @click="editMaterial(material.id || index)" class="ascwo-outline-button">
                       <Edit2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
                       {{ __('Edit', 'all-signs-customizer-for-woocommerce-pro') }}
                     </button>
-                    <button type="button" @click="selectDeleteMaterial(index)" class="ascwo-link-danger">
+                    <button type="button" @click="selectDeleteMaterial(material.id || index)" class="ascwo-link-danger">
                       <Trash2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
                       {{ __('Delete', 'all-signs-customizer-for-woocommerce-pro') }}
                     </button>
@@ -322,7 +322,7 @@ const updateMaterial = async () => {
   isLoading.value = true;
   try {
     const current = materials.value[editingIndex.value] || {};
-    const result = await api.updateMaterial(configID.value, editingIndex.value, {
+    const result = await api.updateMaterial(configID.value, current.id || editingIndex.value, {
       ...current,
       ...newMaterial.value,
       previewImg: newMaterial.value.previewImg || newMaterial.value.image || current.previewImg || current.image || "",
@@ -340,7 +340,9 @@ const updateMaterial = async () => {
   }
 };
 
-const editMaterial = (index) => {
+const editMaterial = (itemId) => {
+  const index = materials.value.findIndex((material, key) => String(material.id || key) === String(itemId));
+  if (index < 0) return;
   editingIndex.value = index;
   const m = materials.value[index];
   newMaterial.value = {
@@ -361,7 +363,9 @@ const editMaterial = (index) => {
   isNewComponent.value = true;
 };
 
-const selectDeleteMaterial = (index) => {
+const selectDeleteMaterial = (itemId) => {
+  const index = materials.value.findIndex((material, key) => String(material.id || key) === String(itemId));
+  if (index < 0) return;
   editingIndex.value = index;
   selectedMaterial.value = materials.value[index];
   openModal.value = true;
@@ -371,7 +375,7 @@ const deleteMaterial = async () => {
   if (editingIndex.value === null) return;
   isLoading.value = true;
   try {
-    const result = await api.deleteMaterial(configID.value, editingIndex.value);
+    const result = await api.deleteMaterial(configID.value, selectedMaterial.value?.id || editingIndex.value);
     if (result?.success) {
       openModal.value = false;
       await fetchMaterials();
@@ -384,12 +388,13 @@ const deleteMaterial = async () => {
   }
 };
 
-const selectDefault = async (index) => {
+const selectDefault = async (itemId) => {
+  const index = materials.value.findIndex((material, key) => String(material.id || key) === String(itemId));
   const current = materials.value[index];
   if (!current || current.isDefault || isLoading.value) return;
   isLoading.value = true;
   try {
-    const result = await api.setDefaultMaterial(configID.value, current.id || index);
+    const result = await api.setDefaultMaterial(configID.value, current.id || itemId);
     if (result?.success || result?.success === "same") {
       await fetchMaterials();
       toastMessage(result.message || __("Default material updated", "all-signs-customizer-for-woocommerce-pro"));

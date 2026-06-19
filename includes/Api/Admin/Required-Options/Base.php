@@ -59,6 +59,21 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
                 $items[$index]['icon'] = $normalized_icon;
                 $changed = true;
             }
+
+            $prefix = null;
+            if ($option_name === 'ascwo_all_shapes') {
+                $prefix = 'shape';
+            } elseif ($option_name === 'ascwo_all_borders') {
+                $prefix = 'border';
+            }
+
+            if ($prefix !== null && (!isset($items[$index]['id']) || $items[$index]['id'] === '')) {
+                $label = isset($item['label']) ? (string) $item['label'] : '';
+                $name = isset($item['name']) ? (string) $item['name'] : '';
+                $value = isset($item['value']) ? (string) $item['value'] : '';
+                $items[$index]['id'] = $prefix . '-' . $this->slugify($label ?: $name ?: $value ?: ('item-' . ($index + 1)), 'item');
+                $changed = true;
+            }
         }
 
         if ($changed) {
@@ -112,7 +127,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
 
         register_rest_route(
             $this->namespace,
-            $base_route . '/components/(?P<component_id>\d+)',
+            $base_route . '/components/(?P<component_id>[^/]+)',
             array(
                 array(
                     'methods' => \WP_REST_Server::READABLE,
@@ -124,7 +139,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
                             'required' => true,
                         ),
                         'component_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -139,7 +154,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
                             'required' => true,
                         ),
                         'component_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -154,7 +169,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
                             'required' => true,
                         ),
                         'component_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -164,7 +179,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
 
         register_rest_route(
             $this->namespace,
-            $base_route . '/components/(?P<component_id>\d+)/options',
+            $base_route . '/components/(?P<component_id>[^/]+)/options',
             array(
                 array(
                     'methods' => \WP_REST_Server::READABLE,
@@ -176,7 +191,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
                             'required' => true,
                         ),
                         'component_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -191,7 +206,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
                             'required' => true,
                         ),
                         'component_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -201,7 +216,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
 
         register_rest_route(
             $this->namespace,
-            $base_route . '/components/(?P<component_id>\d+)/options/(?P<option_id>\d+)',
+            $base_route . '/components/(?P<component_id>[^/]+)/options/(?P<option_id>[^/]+)',
             array(
                 array(
                     'methods' => \WP_REST_Server::READABLE,
@@ -213,11 +228,11 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
                             'required' => true,
                         ),
                         'component_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                         'option_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -232,11 +247,11 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
                             'required' => true,
                         ),
                         'component_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                         'option_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -251,11 +266,11 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
                             'required' => true,
                         ),
                         'component_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                         'option_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -287,11 +302,11 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
     protected function save_required_options(int $config_id, array $required_options)
     {
         $meta = $this->get_meta($config_id);
-        $meta['requiredOptions'] = $required_options;
         if (!isset($meta['data']) || !is_array($meta['data'])) {
             $meta['data'] = array();
         }
         $meta['data']['requiredOptions'] = $required_options;
+        unset($meta['requiredOptions']);
         $this->save_raw_meta($config_id, $meta);
 
         clean_post_cache($config_id);
@@ -575,19 +590,20 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
     protected function set_default_section_item($request, string $section, string $response_key, string $not_found_message, string $success_message)
     {
         $config_id = absint($request->get_param('config_id'));
-        $item_id = absint($request->get_param('item_id'));
+        $item_id = sanitize_text_field((string) $request->get_param('item_id'));
         if (!$config_id) {
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         $required_options = $this->get_required_options($config_id);
         $items = $this->section_item_list($required_options, $section);
-        if (!isset($items[$item_id])) {
+        $item_index = $this->find_section_item_index_by_id($items, $item_id);
+        if ($item_index === null) {
             return rest_ensure_response(array('success' => false, 'message' => $not_found_message));
         }
 
         foreach ($items as $index => $item) {
-            $items[$index]['isDefault'] = $index === $item_id;
+            $items[$index]['isDefault'] = $index === $item_index;
         }
 
         $required_options = $this->set_section_items($required_options, $section, $this->section_value_with_items($required_options, $section, $items));
@@ -597,9 +613,35 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             ? array(
                 'success' => true,
                 'message' => $success_message,
-                'data' => array($response_key => $items[$item_id]),
+                'data' => array($response_key => $items[$item_index]),
             )
             : array('success' => false, 'message' => __('Default option has not been updated', 'all-signs-customizer-for-woocommerce-pro')));
+    }
+
+    protected function find_section_item_index_by_id(array $items, string $item_id, array $keys = array('id', 'value'))
+    {
+        $item_id = sanitize_text_field((string) $item_id);
+        if ($item_id === '') {
+            return null;
+        }
+
+        foreach ($items as $index => $item) {
+            if (!is_array($item)) {
+                continue;
+            }
+
+            foreach ($keys as $key) {
+                if (!isset($item[$key])) {
+                    continue;
+                }
+
+                if (sanitize_text_field((string) $item[$key]) === $item_id) {
+                    return $index;
+                }
+            }
+        }
+
+        return null;
     }
 
     protected function section_items_match(array $actual, array $expected): bool
@@ -983,7 +1025,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
     public function get_materials_material($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $material_id = absint($request->get_param('material_id'));
+        $material_id = sanitize_text_field((string) $request->get_param('material_id'));
 
         if (!$config_id) {
             return rest_ensure_response(array('message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
@@ -994,14 +1036,15 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             ? $meta['additionalOptions']
             : array();
         $materials = $this->get_materials_items($additional_options);
-        if (!isset($materials[$material_id])) {
+        $material_index = $this->find_section_item_index_by_id($materials, $material_id);
+        if ($material_index === null) {
             return rest_ensure_response(array('success' => false, 'message' => __('No materials component found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         return rest_ensure_response(array(
             'success' => true,
             'data' => array(
-                'material' => $this->normalize_material($materials[$material_id], $material_id, $config_id),
+                'material' => $this->normalize_material($materials[$material_index], $material_index, $config_id),
             ),
         ));
     }
@@ -1050,7 +1093,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
     public function update_materials_material($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $material_id = absint($request->get_param('material_id'));
+        $material_id = sanitize_text_field((string) $request->get_param('material_id'));
         if (!$config_id) {
             return rest_ensure_response(array('message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
@@ -1061,13 +1104,14 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             : array();
         $materials = $this->get_materials_items($additional_options);
         $material = json_decode($request->get_body(), true);
-        $material = is_array($material) ? $this->normalize_material($material, $material_id, $config_id) : array();
+        $material = is_array($material) ? $this->normalize_material($material, 0, $config_id) : array();
 
-        if (!isset($materials[$material_id])) {
+        $material_index = $this->find_section_item_index_by_id($materials, $material_id);
+        if ($material_index === null) {
             return rest_ensure_response(array('success' => false, 'message' => __('Materiel component has not been edited', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        $old_material = $materials[$material_id];
+        $old_material = $materials[$material_index];
         if ($old_material === $material) {
             return rest_ensure_response(array('success' => 'same', 'message' => __('No change was observed', 'all-signs-customizer-for-woocommerce-pro')));
         }
@@ -1075,7 +1119,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         $target_active = isset($material['active']) ? (bool) $material['active'] : true;
         $active_count = 0;
         foreach ($materials as $idx => $existing) {
-            if ($idx === $material_id) {
+            if ($idx === $material_index) {
                 continue;
             }
             if (!empty($existing['active'])) {
@@ -1088,10 +1132,10 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             return rest_ensure_response(array('success' => false, 'message' => __('At least one material must remain active', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        $materials[$material_id] = array_merge($old_material, $material);
-        if (!empty($materials[$material_id]['isDefault'])) {
+        $materials[$material_index] = array_merge($old_material, $material);
+        if (!empty($materials[$material_index]['isDefault'])) {
             foreach ($materials as $idx => $existing) {
-                if ($idx !== $material_id) {
+                if ($idx !== $material_index) {
                     $materials[$idx]['isDefault'] = false;
                 }
             }
@@ -1115,7 +1159,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
     public function delete_materials_material($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $material_id = absint($request->get_param('material_id'));
+        $material_id = sanitize_text_field((string) $request->get_param('material_id'));
         if (!$config_id) {
             return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
         }
@@ -1125,8 +1169,9 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             ? $meta['additionalOptions']
             : array();
         $materials = $this->get_materials_items($additional_options);
+        $material_index = $this->find_section_item_index_by_id($materials, $material_id);
 
-        if (!isset($materials[$material_id])) {
+        if ($material_index === null) {
             return rest_ensure_response(array('success' => false, 'message' => __('No materials component found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
@@ -1134,10 +1179,10 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             return rest_ensure_response(array('success' => false, 'message' => __('At least one material must remain', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        $target_active = isset($materials[$material_id]['active']) ? (bool) $materials[$material_id]['active'] : true;
+        $target_active = isset($materials[$material_index]['active']) ? (bool) $materials[$material_index]['active'] : true;
         $active_remaining = 0;
         foreach ($materials as $idx => $existing) {
-            if ($idx === $material_id) {
+            if ($idx === $material_index) {
                 continue;
             }
             if (!empty($existing['active'])) {
@@ -1148,7 +1193,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             return rest_ensure_response(array('success' => false, 'message' => __('At least one active material must remain', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        array_splice($materials, $material_id, 1);
+        array_splice($materials, $material_index, 1);
         $update = $this->save_materials_items($config_id, $materials);
 
         return rest_ensure_response($update === true
@@ -1281,10 +1326,11 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
     public function get_component($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $component_id = absint($request->get_param('component_id'));
+        $component_id = sanitize_text_field((string) $request->get_param('component_id'));
         $required_options = $this->get_required_options($config_id);
         $components = $this->get_components_section($required_options)['items'];
-        $component = isset($components[$component_id]) ? $components[$component_id] : null;
+        $component_index = $this->find_section_item_index_by_id($components, $component_id);
+        $component = $component_index !== null ? $components[$component_index] : null;
 
         if (!$component) {
             return rest_ensure_response(array('success' => false, 'message' => __('No materials component found', 'all-signs-customizer-for-woocommerce-pro')));
@@ -1301,11 +1347,12 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
     public function get_component_options($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $component_id = absint($request->get_param('component_id'));
+        $component_id = sanitize_text_field((string) $request->get_param('component_id'));
         $required_options = $this->get_required_options($config_id);
         $components_section = $this->get_components_section($required_options);
         $components = $components_section['items'];
-        $component = isset($components[$component_id]) ? $components[$component_id] : null;
+        $component_index = $this->find_section_item_index_by_id($components, $component_id);
+        $component = $component_index !== null ? $components[$component_index] : null;
 
         return rest_ensure_response(array(
             'success' => true,
@@ -1334,22 +1381,24 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
     public function update_component($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $component_id = absint($request->get_param('component_id'));
+        $component_id = sanitize_text_field((string) $request->get_param('component_id'));
         $required_options = $this->get_required_options($config_id);
         $components_section = $this->get_components_section($required_options);
         $components = $components_section['items'];
         $component = json_decode($request->get_body(), true);
-        $component = is_array($component) ? $this->normalize_component($component, $component_id) : array();
+        $component = is_array($component) ? $this->normalize_component($component, 0) : array();
 
-        if (!isset($components[$component_id])) {
+        $component_index = $this->find_section_item_index_by_id($components, $component_id);
+        if ($component_index === null) {
             return rest_ensure_response(array('success' => false, 'message' => __('Materiel component has not been edited', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        if ($components[$component_id] === $component) {
+        if ($components[$component_index] === $component) {
             return rest_ensure_response(array('success' => 'same', 'message' => __('No change was observed', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        $components[$component_id] = $component;
+        $component['id'] = isset($components[$component_index]['id']) ? $components[$component_index]['id'] : $component_id;
+        $components[$component_index] = $component;
         $components_section['items'] = $this->ensure_single_default_item($components, 'isDefault');
         $update = $this->save_components_section($config_id, $required_options, $components_section);
 
@@ -1367,16 +1416,17 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
     public function delete_component($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $component_id = absint($request->get_param('component_id'));
+        $component_id = sanitize_text_field((string) $request->get_param('component_id'));
         $required_options = $this->get_required_options($config_id);
         $components_section = $this->get_components_section($required_options);
         $components = $components_section['items'];
 
-        if (!isset($components[$component_id])) {
+        $component_index = $this->find_section_item_index_by_id($components, $component_id);
+        if ($component_index === null) {
             return rest_ensure_response(array('success' => false, 'message' => __('No materials component found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        array_splice($components, $component_id, 1);
+        array_splice($components, $component_index, 1);
         $components_section['items'] = $this->ensure_single_default_item($components, 'isDefault');
         $update = $this->save_components_section($config_id, $required_options, $components_section);
 
@@ -1394,32 +1444,33 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
     public function create_option($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $component_id = absint($request->get_param('component_id'));
+        $component_id = sanitize_text_field((string) $request->get_param('component_id'));
         $required_options = $this->get_required_options($config_id);
         $components_section = $this->get_components_section($required_options);
         $components = $components_section['items'];
         $option = json_decode($request->get_body(), true);
         $option = is_array($option) ? $this->normalize_component_option($option, 0) : array();
 
-        if (!isset($components[$component_id])) {
+        $component_index = $this->find_section_item_index_by_id($components, $component_id);
+        if ($component_index === null) {
             return rest_ensure_response(array('success' => false, 'message' => __('No materials component found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        if (!isset($components[$component_id]['options']) || !is_array($components[$component_id]['options'])) {
-            $components[$component_id]['options'] = array();
+        if (!isset($components[$component_index]['options']) || !is_array($components[$component_index]['options'])) {
+            $components[$component_index]['options'] = array();
         }
 
-        if (empty($components[$component_id]['options'])) {
+        if (empty($components[$component_index]['options'])) {
             $option['isDefault'] = true;
         } elseif (
-            !array_reduce($components[$component_id]['options'], function ($carry, $item) {
+            !array_reduce($components[$component_index]['options'], function ($carry, $item) {
                 return $carry || !empty($item['isDefault']);
             }, false)
         ) {
-            $components[$component_id]['options'][0]['isDefault'] = true;
+            $components[$component_index]['options'][0]['isDefault'] = true;
         }
 
-        $components[$component_id]['options'][] = $option;
+        $components[$component_index]['options'][] = $option;
         $components_section['items'] = $components;
         $update = $this->save_components_section($config_id, $required_options, $components_section);
 
@@ -1429,7 +1480,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
                 'message' => __('Component option successfully added', 'all-signs-customizer-for-woocommerce-pro'),
                 'data' => array(
                     'componentOptions' => array(
-                        'component' => $components[$component_id],
+                        'component' => $components[$component_index],
                         'manageShapes' => $this->get_normalized_global_icon_items('ascwo_all_shapes'),
                         'manageFixingMethods' => $this->get_normalized_global_icon_items('ascwo_all_fixingMethods'),
                     ),
@@ -1441,19 +1492,25 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
     public function get_option($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $component_id = absint($request->get_param('component_id'));
-        $option_id = absint($request->get_param('option_id'));
+        $component_id = sanitize_text_field((string) $request->get_param('component_id'));
+        $option_id = sanitize_text_field((string) $request->get_param('option_id'));
         $required_options = $this->get_required_options($config_id);
         $components = $this->get_components_section($required_options)['items'];
+        $component_index = $this->find_section_item_index_by_id($components, $component_id);
 
-        if (!isset($components[$component_id]['options'][$option_id])) {
+        if ($component_index === null || !isset($components[$component_index]['options'])) {
+            return rest_ensure_response(array('message' => __('No materials component found', 'all-signs-customizer-for-woocommerce-pro')));
+        }
+
+        $option_index = $this->find_section_item_index_by_id($components[$component_index]['options'], $option_id);
+        if ($option_index === null) {
             return rest_ensure_response(array('message' => __('No materials component found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
         return rest_ensure_response(array(
             'success' => true,
             'data' => array(
-                'option' => $components[$component_id]['options'][$option_id],
+                'option' => $components[$component_index]['options'][$option_index],
             ),
         ));
     }
@@ -1461,23 +1518,30 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
     public function update_option($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $component_id = absint($request->get_param('component_id'));
-        $option_id = absint($request->get_param('option_id'));
+        $component_id = sanitize_text_field((string) $request->get_param('component_id'));
+        $option_id = sanitize_text_field((string) $request->get_param('option_id'));
         $required_options = $this->get_required_options($config_id);
         $components_section = $this->get_components_section($required_options);
         $components = $components_section['items'];
         $option = json_decode($request->get_body(), true);
-        $option = is_array($option) ? $this->normalize_component_option($option, $option_id) : array();
+        $option = is_array($option) ? $this->normalize_component_option($option, 0) : array();
 
-        if (!isset($components[$component_id]['options'][$option_id])) {
+        $component_index = $this->find_section_item_index_by_id($components, $component_id);
+        if ($component_index === null) {
             return rest_ensure_response(array('success' => false, 'message' => __('Materiel component option has not been edited', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        if ($components[$component_id]['options'][$option_id] === $option) {
+        $option_index = $this->find_section_item_index_by_id($components[$component_index]['options'] ?? array(), $option_id);
+        if ($option_index === null) {
+            return rest_ensure_response(array('success' => false, 'message' => __('Materiel component option has not been edited', 'all-signs-customizer-for-woocommerce-pro')));
+        }
+
+        if ($components[$component_index]['options'][$option_index] === $option) {
             return rest_ensure_response(array('success' => 'same', 'message' => __('No change was observed', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        $components[$component_id]['options'][$option_id] = $option;
+        $option['id'] = isset($components[$component_index]['options'][$option_index]['id']) ? $components[$component_index]['options'][$option_index]['id'] : $option_id;
+        $components[$component_index]['options'][$option_index] = $option;
         $components_section['items'] = $components;
         $update = $this->save_components_section($config_id, $required_options, $components_section);
 
@@ -1487,7 +1551,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
                 'message' => __('Component option successfully edited', 'all-signs-customizer-for-woocommerce-pro'),
                 'data' => array(
                     'componentOptions' => array(
-                        'component' => $components[$component_id],
+                        'component' => $components[$component_index],
                         'manageShapes' => $this->get_normalized_global_icon_items('ascwo_all_shapes'),
                         'manageFixingMethods' => $this->get_normalized_global_icon_items('ascwo_all_fixingMethods'),
                     ),
@@ -1499,17 +1563,23 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
     public function delete_option($request)
     {
         $config_id = absint($request->get_param('config_id'));
-        $component_id = absint($request->get_param('component_id'));
-        $option_id = absint($request->get_param('option_id'));
+        $component_id = sanitize_text_field((string) $request->get_param('component_id'));
+        $option_id = sanitize_text_field((string) $request->get_param('option_id'));
         $required_options = $this->get_required_options($config_id);
         $components_section = $this->get_components_section($required_options);
         $components = $components_section['items'];
+        $component_index = $this->find_section_item_index_by_id($components, $component_id);
 
-        if (!isset($components[$component_id]['options'][$option_id])) {
+        if ($component_index === null || !isset($components[$component_index]['options'])) {
             return rest_ensure_response(array('success' => false, 'message' => __('No materials component found', 'all-signs-customizer-for-woocommerce-pro')));
         }
 
-        array_splice($components[$component_id]['options'], $option_id, 1);
+        $option_index = $this->find_section_item_index_by_id($components[$component_index]['options'], $option_id);
+        if ($option_index === null) {
+            return rest_ensure_response(array('success' => false, 'message' => __('No materials component found', 'all-signs-customizer-for-woocommerce-pro')));
+        }
+
+        array_splice($components[$component_index]['options'], $option_index, 1);
         $components_section['items'] = $components;
         $update = $this->save_components_section($config_id, $required_options, $components_section);
 
@@ -1519,7 +1589,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
                 'message' => __('Material Component option successfully deleted', 'all-signs-customizer-for-woocommerce-pro'),
                 'data' => array(
                     'componentOptions' => array(
-                        'component' => $components[$component_id],
+                        'component' => $components[$component_index],
                         'manageShapes' => $this->get_normalized_global_icon_items('ascwo_all_shapes'),
                         'manageFixingMethods' => $this->get_normalized_global_icon_items('ascwo_all_fixingMethods'),
                     ),
@@ -1618,10 +1688,10 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
 
     protected function generate_border_id(array $border): string
     {
-        $borderId = isset($border['manageBorderId']) ? $border['manageBorderId'] : '';
+        $borderId = isset($border['borderId']) ? $border['borderId'] : (isset($border['id']) ? $border['id'] : '');
         $name = isset($border['name']) ? (string) $border['name'] : '';
 
-        return 'border-' . $this->slugify($borderId ?: $name ?: 'border', 'border');
+        return $this->slugify($borderId ?: $name ?: 'border', 'border');
     }
 
     protected function generate_font_id(array $font, int $index): string

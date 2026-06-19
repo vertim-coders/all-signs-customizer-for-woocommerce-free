@@ -39,7 +39,7 @@
                   v-for="(item, key) in pricingSettings.items"
                   :key="getPricingItemId(item, key)"
                   class="ascwo-pricing-row ascwo-border-b ascwo-border-solid ascwo-border-[#eceff2] last:ascwo-border-b-0"
-                  @click="editPricing(key)"
+                @click="editPricing(getPricingItemId(item, key))"
                 >
                   <td class="ascwo-py-2.5 ascwo-px-3">
                     <span class="ascwo-text-[13px] ascwo-font-[900] ascwo-text-[#303030]">
@@ -55,15 +55,15 @@
                         <MoreHorizontalIcon class="ascwo-w-4 ascwo-h-4" />
                       </button>
                       <div v-if="openActionIndex === key" class="ascwo-actions-popover">
-                        <button @click="editPricing(key)">
+                        <button @click="editPricing(getPricingItemId(item, key))">
                           <Edit2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
                           {{ __('Edit', 'all-signs-customizer-for-woocommerce-pro') }}
                         </button>
-                        <button @click="duplicatePricing(key)">
+                        <button @click="duplicatePricing(getPricingItemId(item, key))">
                           <CopyIcon class="ascwo-w-3.5 ascwo-h-3.5" />
                           {{ __('Duplicate', 'all-signs-customizer-for-woocommerce-pro') }}
                         </button>
-                        <button class="is-danger" @click="deletePricing(key)">
+                        <button class="is-danger" @click="deletePricing(getPricingItemId(item, key))">
                           <Trash2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
                           {{ __('Delete', 'all-signs-customizer-for-woocommerce-pro') }}
                         </button>
@@ -403,12 +403,12 @@ const normalizePricingIndex = (index) => {
   return Number.isInteger(parsed) && parsed >= 0 ? parsed : -1;
 };
 
-const editPricing = (itemIndex) => {
+const editPricing = (itemId) => {
   openActionIndex.value = null;
-  const index = normalizePricingIndex(itemIndex);
+  const index = pricingSettings.value.items.findIndex((item, key) => getPricingItemId(item, key) === String(itemId));
   if (index < 0) return;
   editingIndex.value = index;
-  editingPricingId.value = index;
+  editingPricingId.value = getPricingItemId(pricingSettings.value.items[index], index);
   editingPricing.value = JSON.parse(JSON.stringify(pricingSettings.value.items[index]));
   showForm.value = true;
 };
@@ -426,7 +426,7 @@ const savePricing = async () => {
   try {
     const next = normalizePricingOption(editingPricing.value, editingIndex.value === null ? pricingSettings.value.items.length : editingIndex.value);
     const result = editingIndex.value !== null
-      ? await api.updateRequiredOptionPricingItem(configID.value, editingIndex.value, next)
+      ? await api.updateRequiredOptionPricingItem(configID.value, editingPricingId.value, next)
       : await api.addRequiredOptionPricingItem(configID.value, next);
     if (result?.success) {
       toastMessage(result.message);
@@ -440,9 +440,9 @@ const savePricing = async () => {
   }
 };
 
-const duplicatePricing = async (itemIndex) => {
+const duplicatePricing = async (itemId) => {
   openActionIndex.value = null;
-  const index = normalizePricingIndex(itemIndex);
+  const index = pricingSettings.value.items.findIndex((item, key) => getPricingItemId(item, key) === String(itemId));
   if (index < 0) return;
   const copy = JSON.parse(JSON.stringify(pricingSettings.value.items[index]));
   delete copy.id;
@@ -461,13 +461,13 @@ const duplicatePricing = async (itemIndex) => {
   }
 };
 
-const deletePricing = async (itemIndex) => {
+const deletePricing = async (itemId) => {
   openActionIndex.value = null;
-  const index = normalizePricingIndex(itemIndex);
+  const index = pricingSettings.value.items.findIndex((item, key) => getPricingItemId(item, key) === String(itemId));
   if (index < 0) return;
   isLoading.value = true;
   try {
-    const result = await api.deleteRequiredOptionPricingItem(configID.value, index);
+    const result = await api.deleteRequiredOptionPricingItem(configID.value, itemId);
     if (result?.success) {
       toastMessage(result.message);
       await fetchPricing();

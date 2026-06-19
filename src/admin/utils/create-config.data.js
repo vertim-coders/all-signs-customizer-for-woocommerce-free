@@ -181,21 +181,7 @@ export const RequiredOptionsColors = {
 
 export const RequiredOptionsShapes = {
   items: [
-    {
-      id: "shape-rectangle",
-      label: "Rectangle",
-      shapeId: "shape-rectangle",
-      surface: 0,
-      isDefault: true,
-      shapeSize: {
-        large: 0,
-        small: 0,
-        medium: 0,
-      },
-      additionalPrice: 0,
-      excludeMaterials: [],
-      enablePricingBySurface: false,
-    },
+    
     {
       id: "shape-square",
       label: "Square",
@@ -212,9 +198,9 @@ export const RequiredOptionsShapes = {
       enablePricingBySurface: false,
     },
     {
-      id: "shape-rounded-rectangle",
-      label: "Rounded rectangle",
-      shapeId: "shape-rounded-rectangle",
+      id: "shape-rounded-sides",
+      label: "Rounded Sides",
+      shapeId: "shape-rounded-sides",
       surface: 0,
       isDefault: false,
       shapeSize: {
@@ -326,7 +312,7 @@ export const RequiredOptionsBorders = {
       isDefault: true,
       excludeSizes: [],
       excludeShapes: [],
-      manageBorderId: "border-normal",
+      borderId: "border-normal",
       additionalPrice: 0,
     },
     {
@@ -335,35 +321,26 @@ export const RequiredOptionsBorders = {
       isDefault: false,
       excludeSizes: [],
       excludeShapes: [],
-      manageBorderId: "border-rounded-corners",
+      borderId: "border-rounded-corners",
       additionalPrice: 6,
     },
     {
       id: "border-premium",
-      label: "Premium edge",
+      label: "Old World",
       isDefault: false,
       excludeSizes: [],
       excludeShapes: [],
-      manageBorderId: "border-old-world",
+      borderId: "border-old-world",
       additionalPrice: 10,
     },
     {
       id: "border-double-line",
-      label: "Double line border",
+      label: "None",
       isDefault: false,
       excludeSizes: [],
       excludeShapes: [],
-      manageBorderId: "border-none",
+      borderId: "border-none",
       additionalPrice: 8,
-    },
-    {
-      id: "border-bevel",
-      label: "Bevel edge",
-      isDefault: false,
-      excludeSizes: [],
-      excludeShapes: [],
-      manageBorderId: "border-none",
-      additionalPrice: 12,
     },
   ],
   label: "Borders",
@@ -1150,7 +1127,7 @@ const standardBorder = {
   url: "/aso_default_files/demos/border-preview.svg",
   label: "Standard border",
   description: "",
-  manageBorderId: "border-normal",
+  borderId: "border-normal",
   additionalPrice: 0,
 };
 
@@ -1159,7 +1136,7 @@ const roundedBorder = {
   url: "/aso_default_files/demos/border-preview.svg",
   label: "Rounded corners",
   description: "",
-  manageBorderId: "border-rounded-corners",
+  borderId: "border-rounded-corners",
   additionalPrice: 6,
 };
 

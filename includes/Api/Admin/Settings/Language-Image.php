@@ -89,6 +89,7 @@ class ASCWO_Api_Language_Images_Settings extends WP_REST_Controller {
 			$meta['data']['settings']['languageImages'] = array();
 		}
 		$meta['data']['settings']['languageImages'][ $section ] = $section_options;
+		unset( $meta['settings'] );
 
 		return update_post_meta( (int) $config_id, 'ascwo-configs-meta', $meta );
 	}

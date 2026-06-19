@@ -51,7 +51,7 @@
                     type="button"
                     :disabled="isSaving"
                     :class="['ascwo-toggle', item.isDefault ? 'is-active' : '']"
-                    @click="selectDefault(index)"
+                    @click="selectDefault(item.id || index)"
                   >
                     <i></i>
                   </button>
@@ -61,14 +61,14 @@
               <td>{{ formatPrice(item.additionalPrice) }}</td>
               <td>
                 <div class="ascwo-row-actions">
-                  <button type="button" class="ascwo-outline-button" @click="openEditLighting(index, item)">
+                  <button type="button" class="ascwo-outline-button" @click="openEditLighting(item.id || index, item)">
                     <Edit2Icon />
                     {{ __("Edit", "all-signs-customizer-for-woocommerce-pro") }}
                   </button>
-                  <button type="button" class="ascwo-link-danger" :disabled="isSaving" @click="deleteLighting(index)">
-                    <Loader2Icon v-if="activeAction === `delete-${index}`" class="ascwo-button-loader" />
+                  <button type="button" class="ascwo-link-danger" :disabled="isSaving" @click="deleteLighting(item.id || index)">
+                    <Loader2Icon v-if="activeAction === `delete-${item.id || index}`" class="ascwo-button-loader" />
                     <Trash2Icon v-else />
-                    {{ activeAction === `delete-${index}` ? __("Deleting...", "all-signs-customizer-for-woocommerce-pro") : __("Delete", "all-signs-customizer-for-woocommerce-pro") }}
+                    {{ activeAction === `delete-${item.id || index}` ? __("Deleting...", "all-signs-customizer-for-woocommerce-pro") : __("Delete", "all-signs-customizer-for-woocommerce-pro") }}
                   </button>
                 </div>
               </td>
@@ -196,11 +196,11 @@ const openNewLighting = () => {
   lighting.value = defaultLighting();
 };
 
-const openEditLighting = (index, item) => {
+const openEditLighting = (id, item) => {
   isEditorOpen.value = true;
   isEdit.value = true;
-  lightingId.value = index;
-  lighting.value = normalizeItem(JSON.parse(JSON.stringify(item)), index);
+  lightingId.value = id;
+  lighting.value = normalizeItem(JSON.parse(JSON.stringify(item)), 0);
 };
 
 const closeEditor = () => {
@@ -215,7 +215,7 @@ const saveLighting = async () => {
   isSaving.value = true;
   activeAction.value = "save";
   try {
-    const payload = normalizeItem(lighting.value, lightingId.value || 0);
+    const payload = normalizeItem(lighting.value, 0);
     const res = isEdit.value
       ? await api.updateRequiredOptionLightingItem(configID.value, lightingId.value, payload)
       : await api.addRequiredOptionLightingItem(configID.value, payload);
@@ -232,12 +232,12 @@ const saveLighting = async () => {
   }
 };
 
-const selectDefault = async (index) => {
+const selectDefault = async (itemId) => {
   if (isSaving.value) return;
   isSaving.value = true;
-  activeAction.value = `default-${index}`;
+  activeAction.value = `default-${itemId}`;
   try {
-    const res = await api.setRequiredOptionDefault(configID.value, "lightings", index);
+    const res = await api.setRequiredOptionDefault(configID.value, "lightings", itemId);
     if (res?.success) {
       await fetchLightings();
     } else {
@@ -249,12 +249,12 @@ const selectDefault = async (index) => {
   }
 };
 
-const deleteLighting = async (index) => {
+const deleteLighting = async (itemId) => {
   if (isSaving.value) return;
   isSaving.value = true;
-  activeAction.value = `delete-${index}`;
+  activeAction.value = `delete-${itemId}`;
   try {
-    const res = await api.deleteRequiredOptionLightingItem(configID.value, index);
+    const res = await api.deleteRequiredOptionLightingItem(configID.value, itemId);
     if (res?.success) {
       toastMessage(res.message);
       await fetchLightings();

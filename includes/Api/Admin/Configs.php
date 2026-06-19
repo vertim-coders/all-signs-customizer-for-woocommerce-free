@@ -99,6 +99,21 @@ class ASCWO_Api_Configs extends WP_REST_Controller
                 $items[$index]['icon'] = $normalized_icon;
                 $changed = true;
             }
+
+            $prefix = null;
+            if ($option_name === 'ascwo_all_shapes') {
+                $prefix = 'shape';
+            } elseif ($option_name === 'ascwo_all_borders') {
+                $prefix = 'border';
+            }
+
+            if ($prefix !== null && (!isset($items[$index]['id']) || $items[$index]['id'] === '')) {
+                $label = isset($item['label']) ? (string) $item['label'] : '';
+                $name = isset($item['name']) ? (string) $item['name'] : '';
+                $value = isset($item['value']) ? (string) $item['value'] : '';
+                $items[$index]['id'] = $prefix . '-' . sanitize_title($label ?: $name ?: $value ?: ('item-' . ($index + 1)));
+                $changed = true;
+            }
         }
 
         if ($changed) {
@@ -405,8 +420,6 @@ class ASCWO_Api_Configs extends WP_REST_Controller
             $post_id = wp_insert_post($data);
             if ($post_id != 0 && !is_wp_error($post_id)) {
                 $meta = array(
-                    'schemaVersion' => 1,
-                    'schemaSource' => 'raw',
                     "icon" => isset($params["icon"]) ? $params["icon"] : '',
                     "popImg" => isset($params["popImg"]) ? $params["popImg"] : '',
                     "materialType" => $material_type,
@@ -454,17 +467,12 @@ class ASCWO_Api_Configs extends WP_REST_Controller
                     'id' => (int) $id,
                     'name' => get_the_title($id),
                     'description' => get_post_field('post_content', $id),
-                    'schemaVersion' => isset($meta_value['schemaVersion']) ? $meta_value['schemaVersion'] : 1,
-                    'schemaSource' => isset($meta_value['schemaSource']) ? $meta_value['schemaSource'] : 'raw',
-                    'icon' => isset($meta_value['icon']) ? $meta_value['icon'] : '',
-                    'popImg' => isset($meta_value['popImg']) ? $meta_value['popImg'] : '',
-                    'materialType' => isset($meta_value['materialType']) ? $meta_value['materialType'] : (isset($data['materialType']) ? $data['materialType'] : 'simple'),
-                    'productType' => isset($meta_value['productType']) ? $meta_value['productType'] : (isset($data['productType']) ? $data['productType'] : ''),
-                    'productFamily' => isset($meta_value['productFamily']) ? $meta_value['productFamily'] : (isset($data['productFamily']) ? $data['productFamily'] : ''),
-                    'pricingMode' => isset($meta_value['pricingMode']) ? $meta_value['pricingMode'] : (isset($data['pricingMode']) ? $data['pricingMode'] : ''),
-                    'settings' => isset($meta_value['settings']) && is_array($meta_value['settings']) ? $meta_value['settings'] : (isset($data['settings']) && is_array($data['settings']) ? $data['settings'] : array()),
-                    'requiredOptions' => isset($meta_value['requiredOptions']) && is_array($meta_value['requiredOptions']) ? $meta_value['requiredOptions'] : (isset($data['requiredOptions']) && is_array($data['requiredOptions']) ? $data['requiredOptions'] : array()),
-                    'additionalOptions' => isset($meta_value['additionalOptions']) && is_array($meta_value['additionalOptions']) ? $meta_value['additionalOptions'] : (isset($data['additionalOptions']) && is_array($data['additionalOptions']) ? $data['additionalOptions'] : array()),
+                    'icon' => isset($data['icon']) ? $data['icon'] : (isset($meta_value['icon']) ? $meta_value['icon'] : ''),
+                    'popImg' => isset($data['popImg']) ? $data['popImg'] : (isset($meta_value['popImg']) ? $meta_value['popImg'] : ''),
+                    'materialType' => isset($data['materialType']) ? $data['materialType'] : (isset($meta_value['materialType']) ? $meta_value['materialType'] : 'simple'),
+                    'productType' => isset($data['productType']) ? $data['productType'] : (isset($meta_value['productType']) ? $meta_value['productType'] : ''),
+                    'productFamily' => isset($data['productFamily']) ? $data['productFamily'] : (isset($meta_value['productFamily']) ? $meta_value['productFamily'] : ''),
+                    'pricingMode' => isset($data['pricingMode']) ? $data['pricingMode'] : (isset($meta_value['pricingMode']) ? $meta_value['pricingMode'] : ''),
                     'data' => $data,
                 );
 
@@ -485,8 +493,8 @@ class ASCWO_Api_Configs extends WP_REST_Controller
         $configId = (int) $request->get_param('config_id');
         $config = get_post_meta($configId, "ascwo-configs-meta", true);
         $config = is_array($config) ? $config : array();
-        $config['settings'] = isset($config['settings']) && is_array($config['settings']) ? $config['settings'] : array();
-        $material_type = isset($config['materialType']) ? $this->sanitize_material_type($config['materialType']) : 'simple';
+        $frontend_data = isset($config['data']) && is_array($config['data']) ? $config['data'] : array();
+        $material_type = isset($frontend_data['materialType']) ? $this->sanitize_material_type($frontend_data['materialType']) : (isset($config['materialType']) ? $this->sanitize_material_type($config['materialType']) : 'simple');
         $pageSettings = get_option("ascwo_config_page", [])["others"];
         $all_cliparts_groups = get_option("ascwo-manages-cliparts", []);
         $all_fonts = get_option("ascwo-manages-fonts", []);
@@ -494,17 +502,16 @@ class ASCWO_Api_Configs extends WP_REST_Controller
         $all_fixingMethods = $this->get_managed_fixing_methods();
         $all_borders = get_option("ascwo_all_borders", []);
         $outputOptions = get_option("ascwo_output_options", []);
-        $frontend_data = isset($config['data']) && is_array($config['data']) ? $config['data'] : array();
         $configData = array(
             'name' => get_post_field('post_title', $configId),
             'description' => get_post_field('post_content', $configId),
-            'icon' => isset($config['icon']) ? $config['icon'] : '',
-            'popImg' => isset($config['popImg']) ? $config['popImg'] : '',
+            'icon' => isset($frontend_data['icon']) ? $frontend_data['icon'] : (isset($config['icon']) ? $config['icon'] : ''),
+            'popImg' => isset($frontend_data['popImg']) ? $frontend_data['popImg'] : (isset($config['popImg']) ? $config['popImg'] : ''),
             'materialType' => $material_type,
             'data' => $frontend_data,
         );
-        $visibleFonts = isset($config['requiredOptions']['fonts']['items']) && is_array($config['requiredOptions']['fonts']['items'])
-            ? $config['requiredOptions']['fonts']['items']
+        $visibleFonts = isset($frontend_data['requiredOptions']['fonts']['items']) && is_array($frontend_data['requiredOptions']['fonts']['items'])
+            ? $frontend_data['requiredOptions']['fonts']['items']
             : (is_array($all_fonts) ? $all_fonts : array());
         $enable_clipart = isset($frontend_data['settings']['customizerSign']['images']['enableClipart'])
             ? $frontend_data['settings']['customizerSign']['images']['enableClipart']
@@ -571,30 +578,37 @@ class ASCWO_Api_Configs extends WP_REST_Controller
         if (!is_wp_error($updatePosts)) {
             $existing_data = isset($meta['data']) && is_array($meta['data']) ? $meta['data'] : array();
             if (!empty($data_payload)) {
-                $existing_data = $data_payload;
+                $existing_data = array_merge($existing_data, $data_payload);
             }
-            $settings = isset($params["settings"]) && is_array($params["settings"]) ? $params["settings"] : (isset($existing_data["settings"]) && is_array($existing_data["settings"]) ? $existing_data["settings"] : array());
-            $required_options = isset($params["requiredOptions"]) && is_array($params["requiredOptions"]) ? $params["requiredOptions"] : (isset($existing_data["requiredOptions"]) && is_array($existing_data["requiredOptions"]) ? $existing_data["requiredOptions"] : array());
-            $additional_options = isset($params["additionalOptions"]) && is_array($params["additionalOptions"]) ? $params["additionalOptions"] : (isset($existing_data["additionalOptions"]) && is_array($existing_data["additionalOptions"]) ? $existing_data["additionalOptions"] : array());
-            $material_type = isset($params['materialType'])
+
+            $existing_data['settings'] = isset($params["settings"]) && is_array($params["settings"])
+                ? $params["settings"]
+                : (isset($existing_data["settings"]) && is_array($existing_data["settings"]) ? $existing_data["settings"] : array());
+            $existing_data['requiredOptions'] = isset($params["requiredOptions"]) && is_array($params["requiredOptions"])
+                ? $params["requiredOptions"]
+                : (isset($existing_data["requiredOptions"]) && is_array($existing_data["requiredOptions"]) ? $existing_data["requiredOptions"] : array());
+            $existing_data['additionalOptions'] = isset($params["additionalOptions"]) && is_array($params["additionalOptions"])
+                ? $params["additionalOptions"]
+                : (isset($existing_data["additionalOptions"]) && is_array($existing_data["additionalOptions"]) ? $existing_data["additionalOptions"] : array());
+            $existing_data['materialType'] = isset($params['materialType'])
                 ? $this->sanitize_material_type($params['materialType'])
-                : (isset($meta['materialType']) ? $this->sanitize_material_type($meta['materialType']) : 'simple');
-            $product_family = isset($params['productFamily'])
+                : (isset($existing_data['materialType']) ? $this->sanitize_material_type($existing_data['materialType']) : 'simple');
+            $existing_data['productFamily'] = isset($params['productFamily'])
                 ? sanitize_text_field(wp_unslash($params['productFamily']))
-                : (isset($meta['productFamily']) ? sanitize_text_field((string) $meta['productFamily']) : '');
+                : (isset($existing_data['productFamily']) ? sanitize_text_field((string) $existing_data['productFamily']) : '');
+            $existing_data['productType'] = isset($params["productType"]) ? $params["productType"] : (isset($existing_data["productType"]) ? $existing_data["productType"] : null);
+            $existing_data['pricingMode'] = isset($params["pricingMode"]) ? $params["pricingMode"] : (isset($existing_data["pricingMode"]) ? $existing_data["pricingMode"] : null);
+            $existing_data['icon'] = isset($params["icon"]) ? $params["icon"] : (isset($existing_data["icon"]) ? $existing_data["icon"] : '');
+            $existing_data['popImg'] = isset($params["popImg"]) ? $params["popImg"] : (isset($existing_data["popImg"]) ? $existing_data["popImg"] : '');
+
             $data = array(
-                'schemaVersion' => isset($meta['schemaVersion']) ? $meta['schemaVersion'] : 1,
-                'schemaSource' => 'raw',
-                "icon" => isset($params["icon"]) ? $params["icon"] : (is_array($existing_meta) && isset($existing_meta["icon"]) ? $existing_meta["icon"] : ''),
-                "popImg" => isset($params["popImg"]) ? $params["popImg"] : (is_array($existing_meta) && isset($existing_meta["popImg"]) ? $existing_meta["popImg"] : ''),
-                "materialType" => $material_type,
-                "productFamily" => $product_family,
-                "data" => $existing_data,
-                "settings" => $settings,
-                "productType" => isset($params["productType"]) ? $params["productType"] : (isset($meta["productType"]) ? $meta["productType"] : null),
-                "pricingMode" => isset($params["pricingMode"]) ? $params["pricingMode"] : (isset($meta["pricingMode"]) ? $meta["pricingMode"] : null),
-                "requiredOptions" => $required_options,
-                "additionalOptions" => $additional_options,
+                'icon' => $existing_data['icon'],
+                'popImg' => $existing_data['popImg'],
+                'materialType' => $existing_data['materialType'],
+                'productFamily' => $existing_data['productFamily'],
+                'productType' => $existing_data['productType'],
+                'pricingMode' => $existing_data['pricingMode'],
+                'data' => $existing_data,
             );
             update_post_meta((int) $post_id, 'ascwo-configs-meta', $data);
             if (isset($params['product_ids']) && is_array($params['product_ids'])) {
@@ -706,22 +720,22 @@ class ASCWO_Api_Configs extends WP_REST_Controller
                 $id = get_the_ID();
                 $meta = get_post_meta($id, 'ascwo-configs-meta', true);
                 $meta = is_array($meta) ? $meta : array();
-                if (isset($meta['data']) && is_array($meta['data'])) {
-                    foreach (array('settings', 'requiredOptions', 'additionalOptions', 'productType', 'pricingMode', 'materialType') as $section_key) {
-                        if (!isset($meta[$section_key]) || $meta[$section_key] === array() || $meta[$section_key] === '') {
-                            if (isset($meta['data'][$section_key])) {
-                                $meta[$section_key] = $meta['data'][$section_key];
-                            }
-                        }
-                    }
-                }
+                $data = isset($meta['data']) && is_array($meta['data']) ? $meta['data'] : array();
                 $post_data = array_merge(
                     array(
                         'id' => (int) $id,
                         'name' => get_the_title($id),
                         'description' => get_post_field('post_content', $id),
                     ),
-                    $meta
+                    array(
+                        'icon' => isset($data['icon']) ? $data['icon'] : (isset($meta['icon']) ? $meta['icon'] : ''),
+                        'popImg' => isset($data['popImg']) ? $data['popImg'] : (isset($meta['popImg']) ? $meta['popImg'] : ''),
+                        'materialType' => isset($data['materialType']) ? $data['materialType'] : (isset($meta['materialType']) ? $meta['materialType'] : 'simple'),
+                        'productType' => isset($data['productType']) ? $data['productType'] : (isset($meta['productType']) ? $meta['productType'] : ''),
+                        'productFamily' => isset($data['productFamily']) ? $data['productFamily'] : (isset($meta['productFamily']) ? $meta['productFamily'] : ''),
+                        'pricingMode' => isset($data['pricingMode']) ? $data['pricingMode'] : (isset($meta['pricingMode']) ? $meta['pricingMode'] : ''),
+                        'data' => $data,
+                    )
                 );
                 array_push($posts_data["data"], $post_data);
                 //$posts_data["data"][] = $post_data;
