@@ -1770,7 +1770,7 @@ const canSaveFixingEditor = computed(() => {
 });
 const canSaveBorderEditor = computed(() => {
   if (subMode.value === 'existing') return draftIds.value.length > 0;
-  if (subMode.value === 'create') return Boolean(String(customDraft.value.id || '').trim());
+  if (subMode.value === 'create') return Boolean(String(customDraft.value.borderId || '').trim());
   return Boolean(String(customDraft.value.label || '').trim() && String(customDraft.value.url || '').trim());
 });
 
@@ -1857,21 +1857,29 @@ const fetchComponent = async () => {
   }
 };
 
-const persistComponent = async (payload, successMessage) => {
+const persistComponent = async (payload, successMessage, notify = true) => {
   isLoading.value = true;
   try {
     const result = await api.updateRequiredOptionComponent(configId.value, componentId.value, payload);
     if (result?.success === false) {
-      toastMessage(result.message || __('Unable to save changes.', 'all-signs-customizer-for-woocommerce-pro'), 'error');
+      if (notify) {
+        toastMessage(result.message || __('Unable to save changes.', 'all-signs-customizer-for-woocommerce-pro'), 'error');
+      }
       return false;
     }
-    const section = result?.data?.components?.items?.[Number(componentId.value)];
+    const section = result?.data?.components?.items?.find?.(
+      (item, index) => String(item?.id || `component-${index + 1}`) === String(componentId.value)
+    );
     componentForm.value = normalizeComponent(section || payload);
     syncDesignFormFromRoute(false);
-    toastMessage(result?.message || successMessage || __('Saved.', 'all-signs-customizer-for-woocommerce-pro'));
+    if (notify) {
+      toastMessage(result?.message || successMessage || __('Saved.', 'all-signs-customizer-for-woocommerce-pro'));
+    }
     return true;
   } catch (error) {
-    toastMessage(__('Unable to save changes.', 'all-signs-customizer-for-woocommerce-pro'), 'error');
+    if (notify) {
+      toastMessage(__('Unable to save changes.', 'all-signs-customizer-for-woocommerce-pro'), 'error');
+    }
     return false;
   } finally {
     isLoading.value = false;
@@ -2048,7 +2056,7 @@ const addDesign = async () => {
   }
 };
 
-const saveDesign = async () => {
+const saveDesign = async (notify = true) => {
   const index = activeDesignIndex.value;
   const nextDesign = normalizeDesign({
     ...designForm.value,
@@ -2060,10 +2068,17 @@ const saveDesign = async () => {
     },
   }, index);
   const nextOptions = designs.value.map((item, itemIndex) => itemIndex === index ? nextDesign : { ...item });
-  await persistComponent({
+  return persistComponent({
     ...componentForm.value,
     options: nextOptions,
-  }, __('Design saved.', 'all-signs-customizer-for-woocommerce-pro'));
+  }, __('Design saved.', 'all-signs-customizer-for-woocommerce-pro'), notify);
+};
+
+const persistDesignSilently = async () => {
+  const saved = await saveDesign(false);
+  if (!saved) {
+    throw new Error('Unable to persist design');
+  }
 };
 
 const saveDesignModule = async (label) => {
@@ -2076,9 +2091,11 @@ const saveDesignModule = async (label) => {
         isDefault: Boolean(item.isDefault),
       }));
     }
-    await saveDesign();
-    if (label) {
+    const saved = await saveDesign(false);
+    if (saved && label) {
       toastMessage(`${label} saved`);
+    } else if (!saved) {
+      toastMessage(__('Unable to save design changes.', 'all-signs-customizer-for-woocommerce-pro'), 'error');
     }
   } finally {
     savingModule.value = '';
@@ -2230,7 +2247,7 @@ const createAndAddSize = async () => {
     }
     await refreshGlobalSizes();
     addNestedItems('sizes', [createdSize.id], () => ({ id: String(createdSize.id), isDefault: false }));
-    await saveDesign();
+    await persistDesignSilently();
     toastMessage(response.message || __('Size successfully added.', 'all-signs-customizer-for-woocommerce-pro'));
   } catch (error) {
     toastMessage(__('Unable to create size.', 'all-signs-customizer-for-woocommerce-pro'), 'error');
@@ -2250,7 +2267,7 @@ const addBackgroundColors = async () => {
   isBackgroundSaving.value = true;
   try {
     addNestedItems('backgrounds', draftIds.value, (id) => ({ id: String(id), isDefault: false }));
-    await saveDesign();
+    await persistDesignSilently();
     toastMessage(__('Background colors added.', 'all-signs-customizer-for-woocommerce-pro'));
   } catch (error) {
     toastMessage(__('Unable to add background colors.', 'all-signs-customizer-for-woocommerce-pro'), 'error');
@@ -2295,7 +2312,7 @@ const createAndAddBackgroundColor = async () => {
     }
     await refreshGlobalRequiredOptions();
     addNestedItems('backgrounds', [createdColor.id], () => ({ id: String(createdColor.id), isDefault: false }));
-    await saveDesign();
+    await persistDesignSilently();
     toastMessage(response.message || __('Color successfully added.', 'all-signs-customizer-for-woocommerce-pro'));
   } catch (error) {
     toastMessage(__('Unable to create color.', 'all-signs-customizer-for-woocommerce-pro'), 'error');
@@ -2362,7 +2379,7 @@ const saveExistingFixingMethods = async () => {
       .map(fixingDesignItemFromSource);
     designForm.value.fixingMethods.items = withOneDefault([...selectedItems, ...customItems]);
     closeEditor();
-    await saveDesign();
+    await persistDesignSilently();
     toastMessage(__('Fixing methods added.', 'all-signs-customizer-for-woocommerce-pro'));
   } catch (error) {
     toastMessage(__('Unable to add fixing methods.', 'all-signs-customizer-for-woocommerce-pro'), 'error');
@@ -2396,7 +2413,7 @@ const createAndAddFixingMethod = async () => {
     }
     await refreshGlobalRequiredOptions();
     addNestedItems('fixingMethods', [created.id], () => fixingDesignItemFromSource(created));
-    await saveDesign();
+    await persistDesignSilently();
     toastMessage(response.message || __('Fixing method successfully added.', 'all-signs-customizer-for-woocommerce-pro'));
   } catch (error) {
     toastMessage(__('Unable to create fixing method.', 'all-signs-customizer-for-woocommerce-pro'), 'error');
@@ -2421,7 +2438,7 @@ const saveCustomFixingMethod = async () => {
     const current = Array.isArray(designForm.value.fixingMethods.items) ? designForm.value.fixingMethods.items : [];
     designForm.value.fixingMethods.items = withOneDefault([...current.filter((entry) => String(entry.id) !== item.id), item]);
     closeEditor();
-    await saveDesign();
+    await persistDesignSilently();
     toastMessage(__('Custom fixing saved.', 'all-signs-customizer-for-woocommerce-pro'));
   } catch (error) {
     toastMessage(__('Unable to save custom fixing.', 'all-signs-customizer-for-woocommerce-pro'), 'error');
@@ -2467,7 +2484,7 @@ const saveShapeEditor = async () => {
       const source = shapeOptions.value.find((item) => item.id === String(draftIds.value[0]));
       if (!source) return;
       designForm.value.shapes.items = [shapeDesignItemFromSource(source)];
-      await saveDesign();
+      await persistDesignSilently();
       closeEditor();
       toastMessage(__('Shape saved.', 'all-signs-customizer-for-woocommerce-pro'));
       return;
@@ -2488,7 +2505,7 @@ const saveShapeEditor = async () => {
       }
       await refreshGlobalRequiredOptions();
       designForm.value.shapes.items = [shapeDesignItemFromSource(createdShape)];
-      await saveDesign();
+      await persistDesignSilently();
       closeEditor();
       toastMessage(response.message || __('Shape successfully added.', 'all-signs-customizer-for-woocommerce-pro'));
       return;
@@ -2502,7 +2519,7 @@ const saveShapeEditor = async () => {
       custom: true,
       isDefault: true,
     }];
-    await saveDesign();
+    await persistDesignSilently();
     closeEditor();
     toastMessage(__('Shape saved.', 'all-signs-customizer-for-woocommerce-pro'));
   } catch (error) {
@@ -2623,7 +2640,7 @@ const saveBorderEditor = async () => {
       const current = Array.isArray(designForm.value.borders.items) ? designForm.value.borders.items : [];
       designForm.value.borders.items = withOneDefault([...current.filter((entry) => String(entry.id) !== String(createdBorder.id)), borderDesignItemFromSource(createdBorder)]);
       closeEditor();
-      await saveDesign();
+      await persistDesignSilently();
       toastMessage(response.message || __('Border successfully added.', 'all-signs-customizer-for-woocommerce-pro'));
       return;
     }
@@ -2640,7 +2657,7 @@ const saveBorderEditor = async () => {
     const current = Array.isArray(designForm.value.borders.items) ? designForm.value.borders.items : [];
     designForm.value.borders.items = withOneDefault([...current.filter((entry) => String(entry.id) !== item.id), item]);
     closeEditor();
-    await saveDesign();
+    await persistDesignSilently();
     toastMessage(__('Custom border saved.', 'all-signs-customizer-for-woocommerce-pro'));
   } catch (error) {
     toastMessage(__('Unable to save border.', 'all-signs-customizer-for-woocommerce-pro'), 'error');

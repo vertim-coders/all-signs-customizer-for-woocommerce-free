@@ -1,5 +1,7 @@
 <template>
   <section class="ascwo-image-settings">
+    <div v-if="isFetching" class="ascwo-editor-setup-loading" aria-live="polite"></div>
+    <template v-else>
     <header class="ascwo-image-header">
       <div>
         <h1>Image Setup</h1>
@@ -223,6 +225,7 @@
         {{ isLoading ? 'Saving...' : 'Save Image' }}
       </button>
     </div>
+    </template>
   </section>
 </template>
 
@@ -242,6 +245,7 @@ const props = defineProps({
 const route = useRoute();
 const configId = ref(route.params.configId);
 const isLoading = ref(false);
+const isFetching = ref(true);
 const selectedExtension = ref('');
 
 const defaultImageSettings = () => ({
@@ -346,6 +350,7 @@ watch(() => props.data, (data) => {
 });
 
 onMounted(async () => {
+  isFetching.value = true;
   try {
     const result = await api.getCustomizerSignsSettings(configId.value);
     if (result && !result.message) {
@@ -353,6 +358,8 @@ onMounted(async () => {
     }
   } catch (_error) {
     // keep the existing local state if the fetch fails
+  } finally {
+    isFetching.value = false;
   }
 });
 

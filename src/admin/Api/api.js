@@ -1010,6 +1010,10 @@ const api = {
   getCustomizerSignsSettings: async (config) => {
     const customizerSigns = await axios.get(
       ascwo_api_url + "/configs/" + config + "/settings/customizer-signs",
+      {
+        params: { _ascwo: Date.now() },
+        headers: { "Cache-Control": "no-cache" },
+      },
     );
     return customizerSigns.data;
   },

@@ -51,7 +51,7 @@ class ASCWO_Api_Required_Options_Components extends ASCWO_Api_Required_Options_B
 
         register_rest_route(
             $this->namespace,
-            $config_route . '/components/items/(?P<component_id>\d+)',
+            $config_route . '/components/items/(?P<component_id>[^/]+)',
             array(
                 array(
                     'methods' => WP_REST_Server::READABLE,
@@ -63,7 +63,7 @@ class ASCWO_Api_Required_Options_Components extends ASCWO_Api_Required_Options_B
                             'required' => true,
                         ),
                         'component_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -78,7 +78,7 @@ class ASCWO_Api_Required_Options_Components extends ASCWO_Api_Required_Options_B
                             'required' => true,
                         ),
                         'component_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -93,7 +93,7 @@ class ASCWO_Api_Required_Options_Components extends ASCWO_Api_Required_Options_B
                             'required' => true,
                         ),
                         'component_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -103,7 +103,7 @@ class ASCWO_Api_Required_Options_Components extends ASCWO_Api_Required_Options_B
 
         register_rest_route(
             $this->namespace,
-            $config_route . '/components/items/(?P<component_id>\d+)/options',
+            $config_route . '/components/items/(?P<component_id>[^/]+)/options',
             array(
                 array(
                     'methods' => WP_REST_Server::READABLE,
@@ -115,7 +115,7 @@ class ASCWO_Api_Required_Options_Components extends ASCWO_Api_Required_Options_B
                             'required' => true,
                         ),
                         'component_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -130,7 +130,7 @@ class ASCWO_Api_Required_Options_Components extends ASCWO_Api_Required_Options_B
                             'required' => true,
                         ),
                         'component_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -140,7 +140,7 @@ class ASCWO_Api_Required_Options_Components extends ASCWO_Api_Required_Options_B
 
         register_rest_route(
             $this->namespace,
-            $config_route . '/components/items/(?P<component_id>\d+)/options/(?P<option_id>\d+)',
+            $config_route . '/components/items/(?P<component_id>[^/]+)/options/(?P<option_id>[^/]+)',
             array(
                 array(
                     'methods' => WP_REST_Server::READABLE,
@@ -152,11 +152,11 @@ class ASCWO_Api_Required_Options_Components extends ASCWO_Api_Required_Options_B
                             'required' => true,
                         ),
                         'component_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                         'option_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -171,11 +171,11 @@ class ASCWO_Api_Required_Options_Components extends ASCWO_Api_Required_Options_B
                             'required' => true,
                         ),
                         'component_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                         'option_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),
@@ -190,11 +190,11 @@ class ASCWO_Api_Required_Options_Components extends ASCWO_Api_Required_Options_B
                             'required' => true,
                         ),
                         'component_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                         'option_id' => array(
-                            'type' => 'integer',
+                            'type' => 'string',
                             'required' => true,
                         ),
                     ),

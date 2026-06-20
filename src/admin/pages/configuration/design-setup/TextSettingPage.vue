@@ -1,5 +1,7 @@
 <template>
   <div class="ascwo-text-settings">
+    <div v-if="isFetching" class="ascwo-editor-setup-loading" aria-live="polite"></div>
+    <template v-else>
     <section class="ascwo-card">
       <div class="ascwo-card-body ascwo-header-card">
         <div>
@@ -234,6 +236,7 @@
         {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce-pro") : __("Save Text", "all-signs-customizer-for-woocommerce-pro") }}
       </button>
     </div>
+    </template>
   </div>
 </template>
 
@@ -285,6 +288,7 @@ const props = defineProps({
 const route = useRoute();
 const configId = ref(route.params.configId);
 const isLoading = ref(false);
+const isFetching = ref(true);
 
 const openPanels = ref({
   access: true,
@@ -381,11 +385,14 @@ const textOptionControls = [
 ];
 
 const loadTextSettings = async () => {
+  isFetching.value = true;
   try {
     const result = await api.getCustomizerSignsSettings(configId.value);
     text.value = mergeTextData(result?.text || props.data || {});
   } catch (_error) {
     text.value = mergeTextData(props.data || {});
+  } finally {
+    isFetching.value = false;
   }
 };
 

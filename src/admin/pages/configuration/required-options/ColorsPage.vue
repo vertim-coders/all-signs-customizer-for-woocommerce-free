@@ -49,7 +49,7 @@
                 <td>
                   <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
                     <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</span>
-                    <button type="button" @click="!isLoading && selectDefault(col.id || key)" :class="['ascwo-toggle', col.isDefault ? 'is-active' : '']"><span></span></button>
+                    <button type="button" :disabled="isLoading" @click="selectDefault(col.id || key)" :class="['ascwo-toggle', col.isDefault ? 'is-active' : '', defaultActionId === String(col.id || key) ? 'is-loading' : '']"><span></span></button>
                     <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</span>
                   </div>
                 </td>
@@ -242,6 +242,7 @@ const configID = ref(route.params.configId);
 const isFetching = ref(true);
 const isNewColor = ref(false);
 const isLoading = ref(false);
+const defaultActionId = ref("");
 const isEdit = ref(false);
 const openModal = ref(false);
 const colorId = ref(null);
@@ -454,16 +455,20 @@ const selectMaterialColor = (id, col, isDeleting = false) => {
 };
 
 const selectDefault = async (key) => {
+  if (isLoading.value) return;
   isLoading.value = true;
+  defaultActionId.value = String(key);
   try {
     const res = await api.setRequiredOptionDefault(configID.value, "colors", key);
     if (res?.success) {
+      toastMessage(res.message || __("Default color updated", "all-signs-customizer-for-woocommerce-pro"));
       await fetchMaterialColors();
     } else {
       toastMessage(res?.message || __("Unable to update default color", "all-signs-customizer-for-woocommerce-pro"), "warning");
     }
   } finally {
     isLoading.value = false;
+    defaultActionId.value = "";
   }
 };
 

@@ -58,8 +58,9 @@
                     <span class="ascwo-text-[12px] ascwo-text-[#616161]">{{ __('No', 'all-signs-customizer-for-woocommerce-pro') }}</span>
                     <button
                       type="button"
-                      @click="!isLoading && selectDefault(material.id || index)"
-                      :class="['ascwo-toggle', material?.isDefault ? 'is-active' : '']"
+                      :disabled="isLoading"
+                      @click="selectDefault(material.id || index)"
+                      :class="['ascwo-toggle', material?.isDefault ? 'is-active' : '', defaultActionId === String(material.id || index) ? 'is-loading' : '']"
                     >
                       <span></span>
                     </button>
@@ -185,6 +186,7 @@ const configID = ref(route.params.configId);
 
 const isFetching = ref(true);
 const isLoading = ref(false);
+const defaultActionId = ref("");
 const isNewComponent = ref(false);
 const isEdit = ref(false);
 const openModal = ref(false);
@@ -393,6 +395,7 @@ const selectDefault = async (itemId) => {
   const current = materials.value[index];
   if (!current || current.isDefault || isLoading.value) return;
   isLoading.value = true;
+  defaultActionId.value = String(itemId);
   try {
     const result = await api.setDefaultMaterial(configID.value, current.id || itemId);
     if (result?.success || result?.success === "same") {
@@ -403,6 +406,7 @@ const selectDefault = async (itemId) => {
     toastMessage(result?.message || __("Unable to update default material", "all-signs-customizer-for-woocommerce-pro"), "warning");
   } finally {
     isLoading.value = false;
+    defaultActionId.value = "";
   }
 };
 

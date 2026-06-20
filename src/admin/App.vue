@@ -394,6 +394,52 @@ tailwind.config ={
   animation: ascwo-ui-spin 0.8s linear infinite;
 }
 
+#ascwo-backend-app .ascwo-toggle.is-loading,
+#ascwo-backend-app .ascwo-size-default-toggle.is-loading {
+  cursor: wait;
+}
+
+#ascwo-backend-app .ascwo-toggle.is-loading > span,
+#ascwo-backend-app .ascwo-toggle.is-loading > i,
+#ascwo-backend-app .ascwo-size-default-toggle.is-loading > span {
+  opacity: 0;
+}
+
+#ascwo-backend-app .ascwo-toggle.is-loading::after,
+#ascwo-backend-app .ascwo-size-default-toggle.is-loading::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: ascwo-ui-spin 0.8s linear infinite;
+}
+
+#ascwo-backend-app .ascwo-editor-setup-loading {
+  display: flex;
+  min-height: 180px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--ascwo-ui-border);
+  border-radius: var(--ascwo-ui-radius-card);
+  background: var(--ascwo-ui-surface);
+}
+
+#ascwo-backend-app .ascwo-editor-setup-loading::after {
+  content: "";
+  width: 24px;
+  height: 24px;
+  border: 3px solid #d9dee8;
+  border-top-color: var(--ascwo-ui-primary);
+  border-radius: 50%;
+  animation: ascwo-ui-spin 0.8s linear infinite;
+}
+
 @keyframes ascwo-ui-spin {
   to {
     transform: rotate(360deg);

@@ -1,5 +1,7 @@
 <template>
   <section class="ascwo-sign-part">
+    <div v-if="isFetching" class="ascwo-editor-setup-loading" aria-live="polite"></div>
+    <template v-else>
     <header class="ascwo-sign-part-header">
       <h1>Sign Part</h1>
       <p>Configure double-sided sign behavior from Editor Setup while keeping the classic save location unchanged.</p>
@@ -80,6 +82,7 @@
         </button>
       </div>
     </div>
+    </template>
   </section>
 </template>
 
@@ -97,6 +100,7 @@ const props = defineProps({
 const route = useRoute();
 const configId = ref(route.params.configId);
 const isLoading = ref(false);
+const isFetching = ref(true);
 
 const defaultSignPart = () => ({
   doublePart: {
@@ -138,6 +142,7 @@ watch(() => props.data, (data) => {
 });
 
 onMounted(async () => {
+  isFetching.value = true;
   try {
     const result = await api.getCustomizerSignsSettings(configId.value);
     if (result && !result.message) {
@@ -145,6 +150,8 @@ onMounted(async () => {
     }
   } catch (_error) {
     // keep local defaults when the fetch fails
+  } finally {
+    isFetching.value = false;
   }
 });
 

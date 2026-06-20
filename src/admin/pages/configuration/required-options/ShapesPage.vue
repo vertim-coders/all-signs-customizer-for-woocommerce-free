@@ -66,7 +66,7 @@
                 <td>
                   <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
                     <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</span>
-                    <button type="button" @click="!isLoading && selectDefault(sh.shapeId)" :class="['ascwo-toggle', sh.isDefault ? 'is-active' : '']"><span></span></button>
+                    <button type="button" :disabled="isLoading" @click="selectDefault(sh.id)" :class="['ascwo-toggle', sh.isDefault ? 'is-active' : '', defaultActionId === sh.id ? 'is-loading' : '']"><span></span></button>
                     <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</span>
                   </div>
                 </td>
@@ -165,6 +165,7 @@ const configID = ref(route.params.configId);
 const isFetching = ref(true);
 const isNewShape = ref(false);
 const isLoading = ref(false);
+const defaultActionId = ref("");
 const isEdit = ref(false);
 const openModal = ref(false);
 const shapeId = ref("");
@@ -311,16 +312,20 @@ const selectMaterialShape = (id, sh, isDeleting = false) => {
 };
 
 const selectDefault = async (key) => {
+  if (!key || isLoading.value) return;
   isLoading.value = true;
+  defaultActionId.value = String(key);
   try {
     const res = await api.setRequiredOptionDefault(configID.value, "shapes", key);
     if (res?.success) {
+      toastMessage(res.message || __("Default shape updated", "all-signs-customizer-for-woocommerce-pro"));
       await fetchMaterialShapes();
     } else {
       toastMessage(res?.message || __("Unable to update default shape", "all-signs-customizer-for-woocommerce-pro"), "warning");
     }
   } finally {
     isLoading.value = false;
+    defaultActionId.value = "";
   }
 };
 

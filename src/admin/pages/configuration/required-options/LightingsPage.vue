@@ -50,7 +50,7 @@
                   <button
                     type="button"
                     :disabled="isSaving"
-                    :class="['ascwo-toggle', item.isDefault ? 'is-active' : '']"
+                    :class="['ascwo-toggle', item.isDefault ? 'is-active' : '', activeAction === `default-${item.id || index}` ? 'is-loading' : '']"
                     @click="selectDefault(item.id || index)"
                   >
                     <i></i>
@@ -239,6 +239,7 @@ const selectDefault = async (itemId) => {
   try {
     const res = await api.setRequiredOptionDefault(configID.value, "lightings", itemId);
     if (res?.success) {
+      toastMessage(res.message || __("Default lighting updated", "all-signs-customizer-for-woocommerce-pro"));
       await fetchLightings();
     } else {
       toastMessage(res?.message || __("Unable to update default lighting", "all-signs-customizer-for-woocommerce-pro"), "warning");

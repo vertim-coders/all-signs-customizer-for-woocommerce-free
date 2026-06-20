@@ -46,7 +46,7 @@
               </tr>
               <tr
                 v-for="(fx, key) in fixingMethods"
-                :key="`${fx.fixingMethodId}-${key}`"
+                :key="fx.id || `${fx.fixingMethodId}-${key}`"
                 draggable="true"
                 @dragstart="onDragStart(key)"
                 @dragover.prevent
@@ -66,17 +66,17 @@
                 <td>
                   <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
                     <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</span>
-                    <button type="button" @click="!isLoading && selectDefault(fx.fixingMethodId)" :class="['ascwo-toggle', fx.isDefault ? 'is-active' : '']"><span></span></button>
+                    <button type="button" :disabled="isLoading" @click="selectDefault(fx.id)" :class="['ascwo-toggle', fx.isDefault ? 'is-active' : '', defaultActionId === fx.id ? 'is-loading' : '']"><span></span></button>
                     <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</span>
                   </div>
                 </td>
                 <td>
                   <div class="ascwo-flex ascwo-items-center ascwo-gap-3">
-                    <button type="button" @click="selectMaterialFixingMethod(key, fx)" class="ascwo-outline-button">
+                    <button type="button" @click="selectMaterialFixingMethod(fx.id, fx)" class="ascwo-outline-button">
                       <Edit2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
                       {{ __("Edit", "all-signs-customizer-for-woocommerce-pro") }}
                     </button>
-                    <button type="button" @click="selectMaterialFixingMethod(key, fx, true)" class="ascwo-link-danger">
+                    <button type="button" @click="selectMaterialFixingMethod(fx.id, fx, true)" class="ascwo-link-danger">
                       <Trash2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
                       {{ __("Delete", "all-signs-customizer-for-woocommerce-pro") }}
                     </button>
@@ -236,6 +236,7 @@ const fixingMethodShapes = ref([]);
 const isFetching = ref(true);
 const isNewFixing = ref(false);
 const isLoading = ref(false);
+const defaultActionId = ref("");
 const isEdit = ref(false);
 const openModal = ref(false);
 const fixingMethodId = ref(null);
@@ -351,6 +352,7 @@ const fetchMaterialFixingMethods = async () => {
         id: managedMethodKey(method),
       }));
       fixingMethods.value = (fixingMethodsData.items || []).map((fx) => ({
+        id: String(fx.id || ""),
         isDefault: Boolean(fx.isDefault),
         fixingMethodId: resolveManagedMethodId(fx.fixingMethodId, manageFixingMethods.value),
         excludeSizes: normalizeArray(fx.excludeSizes),
@@ -453,16 +455,20 @@ const selectMaterialFixingMethod = (id, fx, isDeleting = false) => {
 };
 
 const selectDefault = async (key) => {
+  if (!key || isLoading.value) return;
   isLoading.value = true;
+  defaultActionId.value = String(key);
   try {
     const res = await api.setRequiredOptionDefault(configID.value, "fixing-methods", key);
     if (res?.success) {
+      toastMessage(res.message || __("Default fixing method updated", "all-signs-customizer-for-woocommerce-pro"));
       await fetchMaterialFixingMethods();
     } else {
       toastMessage(res?.message || __("Unable to update default fixing method", "all-signs-customizer-for-woocommerce-pro"), "warning");
     }
   } finally {
     isLoading.value = false;
+    defaultActionId.value = "";
   }
 };
 

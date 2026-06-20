@@ -82,8 +82,10 @@
                     <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
                       <span class="ascwo-text-[12px] ascwo-text-[#616161]">{{ __('No', 'all-signs-customizer-for-woocommerce-pro') }}</span>
                       <button
-                      @click="setDefaultFont(font.id)"
-                        :class="['ascwo-toggle', font.isDefault ? 'is-active' : '']"
+                        type="button"
+                        :disabled="isLoading"
+                        @click="setDefaultFont(font.id)"
+                        :class="['ascwo-toggle', font.isDefault ? 'is-active' : '', defaultActionId === String(font.id) ? 'is-loading' : '']"
                         :aria-label="__('Set default font', 'all-signs-customizer-for-woocommerce-pro')"
                       >
                         <span></span>
@@ -256,6 +258,7 @@ const configID = ref(route.params.configId);
 
 const isFetching = ref(true);
 const isLoading = ref(false);
+const defaultActionId = ref("");
 const isSavingFontForm = ref(false);
 const showForm = ref(false);
 const formMode = ref("add");
@@ -671,10 +674,20 @@ const removeFont = async (itemId) => {
 };
 
 const setDefaultFont = async (itemId) => {
-  const result = await api.setRequiredOptionFontDefault(configID.value, itemId);
-  if (result?.success) {
-    toastMessage(result.message || __("Default font successfully updated", "all-signs-customizer-for-woocommerce-pro"));
-    await fetchSelectedFonts();
+  if (!itemId || isLoading.value) return;
+  isLoading.value = true;
+  defaultActionId.value = String(itemId);
+  try {
+    const result = await api.setRequiredOptionFontDefault(configID.value, itemId);
+    if (result?.success) {
+      toastMessage(result.message || __("Default font successfully updated", "all-signs-customizer-for-woocommerce-pro"));
+      await fetchSelectedFonts();
+    } else {
+      toastMessage(result?.message || __("Unable to update default font", "all-signs-customizer-for-woocommerce-pro"), "warning");
+    }
+  } finally {
+    isLoading.value = false;
+    defaultActionId.value = "";
   }
 };
 

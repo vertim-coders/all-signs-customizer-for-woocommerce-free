@@ -53,15 +53,18 @@
                 <td class="ascwo-py-2.5 ascwo-px-3 ascwo-text-[13px] ascwo-font-[900] ascwo-text-[#303030]">{{ sz.label }}</td>
                 <td class="ascwo-py-2.5 ascwo-px-3 ascwo-text-[13px] ascwo-text-[#303030]">{{ sz.width }} x {{ sz.height }}</td>
                 <td class="ascwo-py-2.5 ascwo-px-3">
-                    <div
-                    @click="!isLoading && selectDefault(sz.id)"
+                  <button
+                    type="button"
+                    :disabled="isLoading"
+                    @click="selectDefault(sz.id)"
                     :class="[
-                      'ascwo-w-9 ascwo-h-5 ascwo-rounded-full ascwo-relative ascwo-cursor-pointer ascwo-transition-colors',
-                      sz.isDefault ? 'ascwo-bg-[#007a72]' : 'ascwo-bg-[#d9dee8]'
+                      'ascwo-size-default-toggle',
+                      defaultActionId === String(sz.id) ? 'is-loading' : '',
+                      sz.isDefault ? 'is-active' : ''
                     ]"
                   >
-                    <div :class="['ascwo-absolute ascwo-top-0.5 ascwo-w-4 ascwo-h-4 ascwo-rounded-full ascwo-bg-white ascwo-shadow ascwo-transition-all', sz.isDefault ? 'ascwo-right-0.5' : 'ascwo-left-0.5']"></div>
-                  </div>
+                    <span></span>
+                  </button>
                 </td>
                 <td class="ascwo-py-2.5 ascwo-px-3">
                   <div class="ascwo-flex ascwo-items-center ascwo-gap-3">
@@ -316,6 +319,7 @@ const configID = ref(route.params.configId);
 const isFetching = ref(true);
 const isNewSize = ref(false);
 const isLoading = ref(false);
+const defaultActionId = ref("");
 const isEdit = ref(false);
 const openModal = ref(false);
 const sizeId = ref(null);
@@ -566,7 +570,9 @@ const selectSize = (id, sz, isDeleting = false) => {
 };
 
 const selectDefault = async (key) => {
+  if (!key || isLoading.value) return;
   isLoading.value = true;
+  defaultActionId.value = String(key);
   try {
     const res = await api.setRequiredOptionSizeDefault(configID.value, key);
     if (res?.success) {
@@ -577,6 +583,7 @@ const selectDefault = async (key) => {
     }
   } finally {
     isLoading.value = false;
+    defaultActionId.value = "";
   }
 };
 
@@ -686,7 +693,7 @@ onMounted(fetchSizes);
   font-weight: 800;
 }
 
-.ascwo-sizes-card tbody button {
+.ascwo-sizes-card tbody button:not(.ascwo-size-default-toggle) {
   min-height: 28px;
   padding: 5px 10px;
   border-radius: 6px;
@@ -812,5 +819,44 @@ onMounted(fetchSizes);
 
 .ascwo-size-editor-actions {
   border-top: 1px solid #dfe3e8 !important;
+}
+
+.ascwo-size-default-toggle {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  width: 38px;
+  min-width: 38px;
+  height: 22px;
+  min-height: 22px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: #d9dee8;
+  vertical-align: middle;
+  cursor: pointer;
+  appearance: none;
+  transition: background-color 120ms ease;
+}
+
+.ascwo-size-default-toggle > span {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  transition: transform 120ms ease;
+}
+
+.ascwo-size-default-toggle.is-active {
+  background: #007a72;
+}
+
+.ascwo-size-default-toggle.is-active > span {
+  transform: translateX(16px);
 }
 </style>

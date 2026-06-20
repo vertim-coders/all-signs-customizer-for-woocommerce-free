@@ -311,10 +311,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
 
         clean_post_cache($config_id);
 
-        $current_meta = $this->get_meta($config_id);
-        $current_required_options = isset($current_meta['requiredOptions']) && is_array($current_meta['requiredOptions'])
-            ? $current_meta['requiredOptions']
-            : array();
+        $current_required_options = $this->get_required_options($config_id);
 
         return wp_json_encode($current_required_options) === wp_json_encode($required_options);
     }

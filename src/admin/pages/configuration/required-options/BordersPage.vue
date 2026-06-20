@@ -55,7 +55,7 @@
                 <td>
                   <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
                     <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</span>
-                    <button type="button" @click="!isLoading && selectDefault(bd.borderId)" :class="['ascwo-toggle', bd.isDefault ? 'is-active' : '']"><span></span></button>
+                    <button type="button" :disabled="isLoading" @click="selectDefault(bd.id)" :class="['ascwo-toggle', bd.isDefault ? 'is-active' : '', defaultActionId === bd.id ? 'is-loading' : '']"><span></span></button>
                     <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</span>
                   </div>
                 </td>
@@ -276,6 +276,7 @@ const createBorder = (id = "", borderId = "") => ({
 const isFetching = ref(true);
 const isNewBorder = ref(false);
 const isLoading = ref(false);
+const defaultActionId = ref("");
 const isEdit = ref(false);
 const openModal = ref(false);
 const borderId = ref("");
@@ -439,16 +440,20 @@ const selectMaterialBorder = (id, bd, isDeleting = false) => {
 };
 
 const selectDefault = async (key) => {
+  if (!key || isLoading.value) return;
   isLoading.value = true;
+  defaultActionId.value = String(key);
   try {
     const res = await api.setRequiredOptionDefault(configID.value, "borders", key);
     if (res?.success) {
+      toastMessage(res.message || __("Default border updated", "all-signs-customizer-for-woocommerce-pro"));
       await fetchMaterialBorders();
     } else {
       toastMessage(res?.message || __("Unable to update default border", "all-signs-customizer-for-woocommerce-pro"), "warning");
     }
   } finally {
     isLoading.value = false;
+    defaultActionId.value = "";
   }
 };
 
