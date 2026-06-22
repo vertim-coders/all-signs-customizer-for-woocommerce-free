@@ -181,7 +181,6 @@ export const RequiredOptionsColors = {
 
 export const RequiredOptionsShapes = {
   items: [
-    
     {
       id: "shape-square",
       label: "Square",
@@ -1262,10 +1261,8 @@ export const RequiredOptionsComponentsAdvanced = {
   label: "Components",
   settings: {
     label: "Components",
-    tabIcon: "",
     behavior: "show-options-directly",
     description: "Choose your design",
-    emptyStateMessage: "No designs available.",
     showTabWhenSingleItem: true,
   },
   description: "",
