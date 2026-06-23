@@ -1214,7 +1214,6 @@ export const RequiredOptionsComponentsAdvanced = {
         }),
       ],
       isDefault: true,
-      isVisible: true,
       description: "Ready combination for office door and desk signs.",
     },
     {
@@ -1254,7 +1253,6 @@ export const RequiredOptionsComponentsAdvanced = {
         }),
       ],
       isDefault: false,
-      isVisible: true,
       description: "Preset combinations for directional and wayfinding signs.",
     },
   ],

@@ -482,10 +482,8 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
                     'settings' => array(
                         'label' => 'Components',
                         'description' => 'Choose your design',
-                        'tabIcon' => '',
                         'behavior' => 'show-options-directly',
                         'showTabWhenSingleItem' => true,
-                        'emptyStateMessage' => 'No designs available.',
                     ),
                     'items' => array(),
                 );
@@ -906,7 +904,6 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             'icon' => isset($component['icon']) ? $component['icon'] : '',
             'options' => isset($component['options']) && is_array($component['options']) ? array_values($component['options']) : array(),
             'isDefault' => isset($component['isDefault']) ? (bool) $component['isDefault'] : $index === 0,
-            'isVisible' => isset($component['isVisible']) ? (bool) $component['isVisible'] : true,
         );
     }
 
@@ -927,16 +924,12 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         return array(
             'label' => $label,
             'description' => $description,
-            'tabIcon' => isset($settings['tabIcon']) ? (string) $settings['tabIcon'] : (string) ($default_settings['tabIcon'] ?? ''),
             'behavior' => isset($settings['behavior']) && $settings['behavior'] === 'choose-before-customization'
                 ? 'choose-before-customization'
                 : 'show-options-directly',
             'showTabWhenSingleItem' => isset($settings['showTabWhenSingleItem'])
                 ? (bool) $settings['showTabWhenSingleItem']
                 : !isset($default_settings['showTabWhenSingleItem']) || (bool) $default_settings['showTabWhenSingleItem'],
-            'emptyStateMessage' => isset($settings['emptyStateMessage']) && $settings['emptyStateMessage'] !== ''
-                ? (string) $settings['emptyStateMessage']
-                : (string) ($default_settings['emptyStateMessage'] ?? 'No designs available.'),
         );
     }
 
@@ -946,9 +939,15 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         $stored = $this->section_value($required_options, 'components', $default);
         $stored = is_array($stored) ? $stored : $default;
 
-        $items = isset($stored['items']) && is_array($stored['items'])
+        $stored_items = isset($stored['items']) && is_array($stored['items'])
             ? array_values($stored['items'])
             : array();
+        $items = array();
+        foreach ($stored_items as $index => $component) {
+            if (is_array($component)) {
+                $items[] = $this->normalize_component($component, $index);
+            }
+        }
         $settings = $this->normalize_components_settings(
             isset($stored['settings']) && is_array($stored['settings']) ? $stored['settings'] : array(),
             $stored

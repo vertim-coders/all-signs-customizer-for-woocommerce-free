@@ -758,117 +758,41 @@
                   <div>
                     <h4>{{ __('Text zones available for this design', 'all-signs-customizer-for-woocommerce-pro') }}</h4>
                     <p>{{ __('Configure the text zones for this design. Advanced placement and positioning are handled in the mini configurator.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
-                    <button type="button" class="ascwo-primary-button" @click.stop.prevent="openTextZone()">{{ __('Add text zone', 'all-signs-customizer-for-woocommerce-pro') }}</button>
                   </div>
+                  <button type="button" class="ascwo-primary-button" @click.stop.prevent="openTextZone()">{{ __('Add text zone', 'all-signs-customizer-for-woocommerce-pro') }}</button>
                 </div>
 
                 <div v-if="editorMode === 'text'" class="ascwo-config-card ascwo-zone-editor ascwo-text-zone-editor">
                   <h4>{{ editingZoneId ? __('Edit text zone', 'all-signs-customizer-for-woocommerce-pro') : __('Add text zone', 'all-signs-customizer-for-woocommerce-pro') }}</h4>
-                  <div class="ascwo-text-zone-grid">
-                    <div class="ascwo-text-zone-content">
-                      <h5>{{ __('Content', 'all-signs-customizer-for-woocommerce-pro') }}</h5>
-                      <p>{{ __('Define the customer-facing label and default text.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
-                      <div class="ascwo-two-col">
-                        <label>
-                          <span class="ascwo-form-label">{{ __('Zone label (Internal)', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-                          <input v-model.trim="textZoneDraft.internalLabel" class="ascwo-form-input" />
-                        </label>
-                        <label>
-                          <span class="ascwo-form-label">{{ __('Default value (Optional)', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-                          <input v-model="textZoneDraft.value" class="ascwo-form-input" />
-                        </label>
-                      </div>
-                      <label class="ascwo-text-field-label">
+                  <div class="ascwo-text-zone-content">
+                    <h5>{{ __('Content', 'all-signs-customizer-for-woocommerce-pro') }}</h5>
+                    <p>{{ __('Define the customer-facing label and default text.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                    <div class="ascwo-two-col">
+                      <label>
                         <span class="ascwo-form-label">{{ __('Field label', 'all-signs-customizer-for-woocommerce-pro') }}</span>
                         <input v-model.trim="textZoneDraft.label" class="ascwo-form-input" />
                       </label>
-
-                      <h5>{{ __('Appearance', 'all-signs-customizer-for-woocommerce-pro') }}</h5>
-                      <p>{{ __('Set the default typography shown in the editor.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
-                      <div class="ascwo-text-appearance-grid">
-                        <label>
-                          <span class="ascwo-form-label">{{ __('Default font', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-                          <select v-model="textZoneDraft.defaultFont" class="ascwo-form-input">
-                            <option value="">{{ __('Select...', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-                            <option v-for="font in fontOptions" :key="font.id" :value="font.label">{{ font.label }}</option>
-                            <option v-if="fontOptions.length === 0" value="Arial">Arial</option>
-                          </select>
-                        </label>
-                        <div class="ascwo-text-style-checks">
-                          <label class="ascwo-inline-check"><input v-model="textZoneDraft.bold" type="checkbox" /> {{ __('Bold', 'all-signs-customizer-for-woocommerce-pro') }}</label>
-                          <label class="ascwo-inline-check"><input v-model="textZoneDraft.italic" type="checkbox" /> {{ __('Italic', 'all-signs-customizer-for-woocommerce-pro') }}</label>
-                        </div>
-                        <label>
-                          <span class="ascwo-form-label">{{ __('Default font size', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-                          <div class="ascwo-unit-input">
-                            <input v-model.number="textZoneDraft.fontSize" type="number" class="ascwo-form-input" />
-                            <span>px</span>
-                          </div>
-                        </label>
-                        <label>
-                          <span class="ascwo-form-label">{{ __('Alignment', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-                          <select v-model="textZoneDraft.textAlign" class="ascwo-form-input">
-                            <option value="center">{{ __('Center', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-                            <option value="left">{{ __('Left', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-                            <option value="right">{{ __('Right', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-                          </select>
-                        </label>
-                      </div>
-
-                      <label class="ascwo-text-color-field">
-                        <span class="ascwo-form-label">{{ __('Default color', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-                        <div class="ascwo-color-input-row">
-                          <input v-model="textZoneDraft.color" type="color" />
-                          <input v-model.trim="textZoneDraft.color" class="ascwo-form-input" />
-                        </div>
-                      </label>
-
-                      <h5>{{ __('Validation', 'all-signs-customizer-for-woocommerce-pro') }} <em>{{ __('(Optional)', 'all-signs-customizer-for-woocommerce-pro') }}</em></h5>
-                      <p>{{ __('Control whether text is required and its allowed length.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
-                      <div class="ascwo-text-validation-grid">
-                        <label>
-                          <span class="ascwo-form-label">{{ __('Required', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-                          <select :value="textZoneDraft.required ? 'yes' : 'no'" class="ascwo-form-input" @change="textZoneDraft.required = $event.target.value === 'yes'">
-                            <option value="no">{{ __('No', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-                            <option value="yes">{{ __('Yes', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-                          </select>
-                        </label>
-                        <label>
-                          <span class="ascwo-form-label">{{ __('Minimum characters', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-                          <input v-model.number="textZoneDraft.minCharacters" type="number" class="ascwo-form-input" />
-                        </label>
-                        <label>
-                          <span class="ascwo-form-label">{{ __('Maximum characters', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-                          <input v-model.number="textZoneDraft.maxCharacters" type="number" class="ascwo-form-input" />
-                        </label>
-                      </div>
-                    </div>
-
-                    <div class="ascwo-permissions-card">
-                      <h5>{{ __('Customer permissions', 'all-signs-customizer-for-woocommerce-pro') }}</h5>
-                      <p>{{ __('Choose what customers can do with this text.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
-                      <label v-for="permission in textPermissionRows" :key="permission.key" class="ascwo-permission-row">
-                        <span>{{ permission.label }}</span>
-                        <button
-                          type="button"
-                          :class="['ascwo-toggle', textZoneDraft.permissions?.[permission.key] ? 'is-active' : '']"
-                          @click.stop.prevent="toggleTextPermission(permission.key)"
-                        >
-                          <span></span>
-                        </button>
+                      <label>
+                        <span class="ascwo-form-label">{{ __('Default value (Optional)', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                        <input v-model="textZoneDraft.value" class="ascwo-form-input" />
                       </label>
                     </div>
                   </div>
 
                   <div class="ascwo-form-actions">
                     <button type="button" class="ascwo-secondary-button" @click.stop.prevent="closeEditor">{{ __('Cancel', 'all-signs-customizer-for-woocommerce-pro') }}</button>
-                    <button type="button" class="ascwo-secondary-button" @click.stop.prevent="notifyMiniConfigurator">{{ __('Configure placement', 'all-signs-customizer-for-woocommerce-pro') }}</button>
                     <button type="button" class="ascwo-primary-button" :disabled="!canSaveTextZone" @click.stop.prevent="saveTextZone">{{ __('Save text zone', 'all-signs-customizer-for-woocommerce-pro') }}</button>
                   </div>
                 </div>
 
                 <div v-if="editorMode !== 'text'" class="ascwo-table-card ascwo-text-table-card">
                   <table class="ascwo-designs-table">
+                    <colgroup>
+                      <col class="ascwo-zone-reorder-col" />
+                      <col class="ascwo-text-default-col" />
+                      <col class="ascwo-text-label-col" />
+                      <col class="ascwo-zone-actions-col" />
+                    </colgroup>
                     <thead>
                       <tr>
                         <th></th>
@@ -889,7 +813,6 @@
                         <td>
                           <div class="ascwo-row-actions">
                             <button type="button" class="ascwo-secondary-button ascwo-small-button" @click.stop.prevent="openTextZone(row.id)">{{ __('Edit', 'all-signs-customizer-for-woocommerce-pro') }}</button>
-                            <button type="button" class="ascwo-secondary-button ascwo-small-button" @click.stop.prevent="notifyMiniConfigurator">{{ __('Configure placement', 'all-signs-customizer-for-woocommerce-pro') }}</button>
                             <button type="button" class="ascwo-danger-button ascwo-small-button" @click.stop.prevent="removeTextZone(row.id)">{{ __('Remove', 'all-signs-customizer-for-woocommerce-pro') }}</button>
                           </div>
                         </td>
@@ -919,6 +842,13 @@
                     <button type="button" class="ascwo-primary-button" @click.stop.prevent="openImageZone()">{{ __('Add image zone', 'all-signs-customizer-for-woocommerce-pro') }}</button>
                   </div>
                   <table class="ascwo-designs-table">
+                    <colgroup>
+                      <col class="ascwo-zone-reorder-col" />
+                      <col class="ascwo-image-zone-col" />
+                      <col class="ascwo-image-label-col" />
+                      <col class="ascwo-image-preview-col" />
+                      <col class="ascwo-image-actions-col" />
+                    </colgroup>
                     <thead>
                       <tr>
                         <th></th>
@@ -946,7 +876,6 @@
                         <td>
                           <div class="ascwo-row-actions ascwo-image-actions">
                             <button type="button" class="ascwo-secondary-button ascwo-small-button" @click.stop.prevent="openImageZone(row.id)">{{ __('Edit', 'all-signs-customizer-for-woocommerce-pro') }}</button>
-                            <button type="button" class="ascwo-secondary-button ascwo-small-button" @click.stop.prevent="notifyMiniConfigurator">{{ __('Configure placement', 'all-signs-customizer-for-woocommerce-pro') }}</button>
                             <button type="button" class="ascwo-danger-button ascwo-small-button" @click.stop.prevent="removeImageZone(row.id)">{{ __('Remove', 'all-signs-customizer-for-woocommerce-pro') }}</button>
                           </div>
                         </td>
@@ -958,84 +887,39 @@
 
                 <div v-if="editorMode === 'image'" class="ascwo-config-card ascwo-zone-editor ascwo-image-zone-editor">
                   <h4>{{ editingZoneId ? __('Edit image zone', 'all-signs-customizer-for-woocommerce-pro') : __('Add image zone', 'all-signs-customizer-for-woocommerce-pro') }}</h4>
-                  <div class="ascwo-image-zone-grid">
-                    <div class="ascwo-image-zone-content">
-                      <h5>{{ __('Content', 'all-signs-customizer-for-woocommerce-pro') }}</h5>
-                      <p>{{ __('Name the image zone and choose its default image.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
-                      <div class="ascwo-two-col">
-                        <label>
-                          <span class="ascwo-form-label">{{ __('Zone label (Internal)', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-                          <input v-model.trim="imageZoneDraft.internalLabel" class="ascwo-form-input" />
-                        </label>
-                        <label>
-                          <span class="ascwo-form-label">{{ __('Default image (Optional)', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-                          <div class="ascwo-media-input ascwo-image-upload-field">
-                            <button type="button" class="ascwo-primary-button ascwo-media-button" @click.stop.prevent="selectImageZoneFile">
-                              {{ imageZoneDraft.image ? __('Change image', 'all-signs-customizer-for-woocommerce-pro') : __('Upload image', 'all-signs-customizer-for-woocommerce-pro') }}
-                            </button>
-                            <button v-if="imageZoneDraft.image" type="button" class="ascwo-media-remove" @click.stop.prevent="imageZoneDraft.image = ''">x</button>
-                            <span class="ascwo-upload-preview">
-                              <img v-if="imageZoneDraft.image" :src="imageZoneDraft.image" alt="" />
-                            </span>
-                          </div>
-                        </label>
-                      </div>
-
-                      <h5>{{ __('Allowed files', 'all-signs-customizer-for-woocommerce-pro') }}</h5>
-                      <p>{{ __('Choose what types of files customers can upload.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
-                      <div class="ascwo-check-grid ascwo-image-file-grid">
-                        <label class="ascwo-inline-check"><input v-model="imageZoneDraft.allowedFiles.svg" type="checkbox" /> SVG</label>
-                        <label class="ascwo-inline-check"><input v-model="imageZoneDraft.allowedFiles.png" type="checkbox" /> PNG</label>
-                        <label class="ascwo-inline-check"><input v-model="imageZoneDraft.allowedFiles.jpeg" type="checkbox" /> JPG / JPEG</label>
-                        <label class="ascwo-inline-check"><input v-model="imageZoneDraft.allowedFiles.webp" type="checkbox" /> WebP</label>
-                      </div>
-
-                      <h5>{{ __('Validation', 'all-signs-customizer-for-woocommerce-pro') }} <em>{{ __('(Optional)', 'all-signs-customizer-for-woocommerce-pro') }}</em></h5>
-                      <p>{{ __('Define the minimum image dimensions and upload limit.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
-                      <div class="ascwo-image-validation-grid">
-                        <label>
-                          <span class="ascwo-form-label">{{ __('Required', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-                          <select :value="imageZoneDraft.required ? 'yes' : 'no'" class="ascwo-form-input" @change="imageZoneDraft.required = $event.target.value === 'yes'">
-                            <option value="no">{{ __('No', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-                            <option value="yes">{{ __('Yes', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-                          </select>
-                        </label>
-                        <label>
-                          <span class="ascwo-form-label">{{ __('Min. width (px)', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-                          <input v-model.number="imageZoneDraft.minWidth" type="number" class="ascwo-form-input" />
-                        </label>
-                        <label>
-                          <span class="ascwo-form-label">{{ __('Min. height (px)', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-                          <input v-model.number="imageZoneDraft.minHeight" type="number" class="ascwo-form-input" />
-                        </label>
-                        <label>
-                          <span class="ascwo-form-label">{{ __('Max. file size', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-                          <div class="ascwo-unit-input">
-                            <input v-model.number="imageZoneDraft.maxFileSizeMb" type="number" class="ascwo-form-input" />
-                            <span>MB</span>
-                          </div>
-                        </label>
-                      </div>
+                  <div class="ascwo-image-zone-content">
+                    <h5>{{ __('Content', 'all-signs-customizer-for-woocommerce-pro') }}</h5>
+                    <p>{{ __('Name the image zone and choose its default image.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                    <div class="ascwo-two-col">
+                      <label>
+                        <span class="ascwo-form-label">{{ __('Field label', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                        <input v-model.trim="imageZoneDraft.label" class="ascwo-form-input" />
+                      </label>
+                      <label>
+                        <span class="ascwo-form-label">{{ __('Default image (Optional)', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                        <div class="ascwo-media-input ascwo-image-upload-field">
+                          <button type="button" class="ascwo-primary-button ascwo-media-button" @click.stop.prevent="selectImageZoneFile">
+                            {{ imageZoneDraft.image ? __('Change image', 'all-signs-customizer-for-woocommerce-pro') : __('Upload image', 'all-signs-customizer-for-woocommerce-pro') }}
+                          </button>
+                          <button v-if="imageZoneDraft.image" type="button" class="ascwo-media-remove" @click.stop.prevent="imageZoneDraft.image = ''">x</button>
+                          <span class="ascwo-upload-preview">
+                            <img v-if="imageZoneDraft.image" :src="imageZoneDraft.image" alt="" />
+                          </span>
+                        </div>
+                      </label>
                     </div>
 
-                    <div class="ascwo-permissions-card">
-                      <h5>{{ __('Customer permissions', 'all-signs-customizer-for-woocommerce-pro') }}</h5>
-                      <p>{{ __('Choose what customers can do with this image.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
-                      <label v-for="permission in imagePermissionRows" :key="permission.key" class="ascwo-permission-row">
-                        <span>{{ permission.label }}</span>
-                        <button
-                          type="button"
-                          :class="['ascwo-toggle', imageZoneDraft.permissions?.[permission.key] ? 'is-active' : '']"
-                          @click.stop.prevent="toggleImagePermission(permission.key)"
-                        >
-                          <span></span>
-                        </button>
-                      </label>
+                    <h5>{{ __('Allowed files', 'all-signs-customizer-for-woocommerce-pro') }}</h5>
+                    <p>{{ __('Choose what types of files customers can upload.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                    <div class="ascwo-check-grid ascwo-image-file-grid">
+                      <label class="ascwo-inline-check"><input v-model="imageZoneDraft.allowedFiles.svg" type="checkbox" /> SVG</label>
+                      <label class="ascwo-inline-check"><input v-model="imageZoneDraft.allowedFiles.png" type="checkbox" /> PNG</label>
+                      <label class="ascwo-inline-check"><input v-model="imageZoneDraft.allowedFiles.jpeg" type="checkbox" /> JPG / JPEG</label>
+                      <label class="ascwo-inline-check"><input v-model="imageZoneDraft.allowedFiles.webp" type="checkbox" /> WebP</label>
                     </div>
                   </div>
                   <div class="ascwo-form-actions">
                     <button type="button" class="ascwo-secondary-button" @click.stop.prevent="closeEditor">{{ __('Cancel', 'all-signs-customizer-for-woocommerce-pro') }}</button>
-                    <button type="button" class="ascwo-secondary-button" :disabled="!editingZoneId" @click.stop.prevent="notifyMiniConfigurator">{{ __('Configure placement', 'all-signs-customizer-for-woocommerce-pro') }}</button>
                     <button type="button" class="ascwo-primary-button" :disabled="!canSaveImageZone" @click.stop.prevent="saveImageZone">{{ __('Save image zone', 'all-signs-customizer-for-woocommerce-pro') }}</button>
                   </div>
                 </div>
@@ -1320,7 +1204,6 @@ const emptyComponent = () => ({
   description: '',
   icon: '',
   isDefault: false,
-  isVisible: true,
   options: [],
 });
 
@@ -1660,11 +1543,11 @@ const ensureTextZones = () => {
 };
 const textRows = computed(() => (Array.isArray(designForm.value?.textZones) ? designForm.value.textZones : []).map((zone, index) => {
   const id = ensureZoneId(zone, 'text', index);
-  const label = String(zone.internalLabel || zone.label || `Text zone ${index + 1}`);
+  const label = String(zone.label || zone.internalLabel || `Text zone ${index + 1}`);
   return {
     id,
     defaultLabel: label,
-    label: String(zone.label || zone.internalLabel || label),
+    label,
     description: `ID: ${id}`,
     preview: '',
     item: zone,
@@ -1672,7 +1555,7 @@ const textRows = computed(() => (Array.isArray(designForm.value?.textZones) ? de
 }));
 const imageRows = computed(() => (designForm.value.imageZones || []).map((zone, index) => {
   const id = ensureZoneId(zone, 'image', index);
-  const label = String(zone.internalLabel || zone.label || `Image zone ${index + 1}`);
+  const label = String(zone.label || zone.internalLabel || `Image zone ${index + 1}`);
   return {
     id,
     defaultLabel: label,
@@ -1815,7 +1698,6 @@ const normalizeComponent = (item = {}) => {
     description: String(item.description || ''),
     icon: String(item.icon || ''),
     isDefault: Boolean(item.isDefault),
-    isVisible: item.isVisible !== false,
     options: Array.isArray(item.options) ? item.options.map((option, index) => normalizeDesign(option, index)) : [],
   };
 };
@@ -2829,25 +2711,7 @@ const emptyTextZone = () => ({
   y: 0,
 });
 
-const textPermissionRows = computed(() => [
-  { key: 'editText', label: __('Edit text', 'all-signs-customizer-for-woocommerce-pro') },
-  { key: 'changeFont', label: __('Change font', 'all-signs-customizer-for-woocommerce-pro') },
-  { key: 'changeColor', label: __('Change color', 'all-signs-customizer-for-woocommerce-pro') },
-  { key: 'resizeText', label: __('Resize text', 'all-signs-customizer-for-woocommerce-pro') },
-  { key: 'moveText', label: __('Move text', 'all-signs-customizer-for-woocommerce-pro') },
-  { key: 'rotateText', label: __('Rotate text', 'all-signs-customizer-for-woocommerce-pro') },
-  { key: 'flipHorizontally', label: __('Flip horizontally', 'all-signs-customizer-for-woocommerce-pro') },
-  { key: 'flipVertically', label: __('Flip vertically', 'all-signs-customizer-for-woocommerce-pro') },
-]);
-const canSaveTextZone = computed(() => String(textZoneDraft.value?.internalLabel || '').trim().length > 0);
-
-const toggleTextPermission = (key) => {
-  textZoneDraft.value.permissions = {
-    ...emptyTextZone().permissions,
-    ...(textZoneDraft.value.permissions || {}),
-    [key]: !textZoneDraft.value.permissions?.[key],
-  };
-};
+const canSaveTextZone = computed(() => String(textZoneDraft.value?.label || '').trim().length > 0);
 
 const openTextZone = (id = '') => {
   const zones = ensureTextZones();
@@ -2865,18 +2729,15 @@ const openTextZone = (id = '') => {
 };
 
 const saveTextZone = () => {
-  const internalLabel = String(textZoneDraft.value.internalLabel || '').trim();
-  if (!internalLabel) return;
+  const label = String(textZoneDraft.value.label || '').trim();
+  if (!label) return;
   const zones = ensureTextZones();
-  const next = {
+  const next = normalizeTextZone({
     ...textZoneDraft.value,
-    internalLabel,
-    label: String(textZoneDraft.value.label || internalLabel).trim(),
+    internalLabel: label,
+    label,
     value: String(textZoneDraft.value.value || ''),
-    defaultFont: String(textZoneDraft.value.defaultFont || fontOptions.value[0]?.label || 'Arial'),
-    fontSize: Number(textZoneDraft.value.fontSize || 10),
-    color: String(textZoneDraft.value.color || '#000000'),
-  };
+  }, zones.length);
   designForm.value.textZones = editingZoneId.value
     ? zones.map((zone) => String(zone.id) === String(editingZoneId.value) ? next : zone)
     : [...zones, next];
@@ -2890,8 +2751,8 @@ const removeTextZone = (id) => {
 
 const emptyImageZone = () => ({
   id: `image-${Date.now()}`,
-  label: 'Logo',
-  internalLabel: 'Logo',
+  label: '',
+  internalLabel: '',
   image: '',
   allowedFiles: { svg: true, png: true, jpeg: true, webp: false },
   required: false,
@@ -2915,23 +2776,7 @@ const emptyImageZone = () => ({
   y: 0,
 });
 
-const imagePermissionRows = computed(() => [
-  { key: 'replaceImage', label: __('Replace image', 'all-signs-customizer-for-woocommerce-pro') },
-  { key: 'resizeImage', label: __('Resize (Scale)', 'all-signs-customizer-for-woocommerce-pro') },
-  { key: 'moveImage', label: __('Move image', 'all-signs-customizer-for-woocommerce-pro') },
-  { key: 'rotateImage', label: __('Rotate image', 'all-signs-customizer-for-woocommerce-pro') },
-  { key: 'flipHorizontally', label: __('Flip horizontally', 'all-signs-customizer-for-woocommerce-pro') },
-  { key: 'flipVertically', label: __('Flip vertically', 'all-signs-customizer-for-woocommerce-pro') },
-]);
-const canSaveImageZone = computed(() => String(imageZoneDraft.value?.internalLabel || '').trim().length > 0);
-
-const toggleImagePermission = (key) => {
-  imageZoneDraft.value.permissions = {
-    ...emptyImageZone().permissions,
-    ...(imageZoneDraft.value.permissions || {}),
-    [key]: !imageZoneDraft.value.permissions?.[key],
-  };
-};
+const canSaveImageZone = computed(() => String(imageZoneDraft.value?.label || '').trim().length > 0);
 
 const openImageZone = (id = '') => {
   const zones = ensureImageZones();
@@ -2953,13 +2798,13 @@ const openImageZone = (id = '') => {
 };
 
 const saveImageZone = () => {
-  const internalLabel = String(imageZoneDraft.value.internalLabel || '').trim();
-  if (!internalLabel) return;
+  const label = String(imageZoneDraft.value.label || '').trim();
+  if (!label) return;
   const zones = ensureImageZones();
   const next = normalizeImageZone({
     ...imageZoneDraft.value,
-    internalLabel,
-    label: String(imageZoneDraft.value.label || internalLabel).trim(),
+    internalLabel: label,
+    label,
   }, zones.length);
   designForm.value.imageZones = editingZoneId.value
     ? zones.map((zone) => String(zone.id) === String(editingZoneId.value) ? next : zone)
@@ -3028,10 +2873,6 @@ const deleteDesign = async (index) => {
     configuredDesignIndex.value -= 1;
   }
   await persistComponent({ ...componentForm.value, options: nextOptions }, __('Design deleted.', 'all-signs-customizer-for-woocommerce-pro'));
-};
-
-const notifyMiniConfigurator = () => {
-  toastMessage(__('Mini configurator will be connected in the next advanced-mode step.', 'all-signs-customizer-for-woocommerce-pro'), 'warning');
 };
 
 const openMediaFrame = (title, buttonText, callback) => {
@@ -4181,33 +4022,29 @@ onMounted(fetchComponent);
   table-layout: fixed;
 }
 
-.ascwo-text-table-card .ascwo-designs-table th:first-child,
-.ascwo-text-table-card .ascwo-designs-table td:first-child {
-  width: 44px !important;
+.ascwo-zone-reorder-col {
+  width: 7%;
 }
 
-.ascwo-text-table-card .ascwo-designs-table th:nth-child(2),
-.ascwo-text-table-card .ascwo-designs-table td:nth-child(2) {
-  width: 42% !important;
+.ascwo-text-default-col {
+  width: 57%;
 }
 
-.ascwo-text-table-card .ascwo-designs-table th:nth-child(3),
-.ascwo-text-table-card .ascwo-designs-table td:nth-child(3) {
-  width: 125px !important;
+.ascwo-text-label-col {
+  width: 14%;
 }
 
-.ascwo-text-table-card .ascwo-designs-table th:last-child,
-.ascwo-text-table-card .ascwo-designs-table td:last-child {
-  width: 310px !important;
+.ascwo-zone-actions-col {
+  width: 22%;
 }
 
 .ascwo-text-module-header {
-  min-height: 126px;
   align-items: flex-start;
 }
 
 .ascwo-text-module-header .ascwo-primary-button {
-  margin-top: 8px;
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 
 .ascwo-text-table-card {
@@ -4220,25 +4057,30 @@ onMounted(fetchComponent);
 }
 
 .ascwo-text-table-card .ascwo-designs-table td {
-  height: 96px;
+  min-height: 96px;
 }
 
 .ascwo-text-table-card .ascwo-designs-table td:nth-child(2) p {
-  max-width: 250px;
-  overflow-wrap: anywhere;
+  max-width: none;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .ascwo-text-table-card .ascwo-row-actions {
   display: grid;
-  grid-template-columns: max-content max-content;
-  gap: 8px 10px;
+  grid-template-columns: max-content;
+  gap: 8px;
   justify-content: start;
 }
 
 .ascwo-text-table-card .ascwo-row-actions .ascwo-danger-button {
   grid-column: 1;
   justify-self: start;
-  padding-left: 0;
+  min-height: 34px;
+  padding: 6px 12px;
+  border: 1px solid #c9cccf;
+  border-radius: 7px;
+  background: #fff;
 }
 
 .ascwo-text-zone-editor {
@@ -4375,29 +4217,20 @@ onMounted(fetchComponent);
   table-layout: fixed;
 }
 
-.ascwo-image-table-card .ascwo-designs-table th:first-child,
-.ascwo-image-table-card .ascwo-designs-table td:first-child {
-  width: 44px;
+.ascwo-image-zone-col {
+  width: 43%;
 }
 
-.ascwo-image-table-card .ascwo-designs-table th:nth-child(2),
-.ascwo-image-table-card .ascwo-designs-table td:nth-child(2) {
-  width: 36%;
+.ascwo-image-label-col {
+  width: 16%;
 }
 
-.ascwo-image-table-card .ascwo-designs-table th:nth-child(3),
-.ascwo-image-table-card .ascwo-designs-table td:nth-child(3) {
-  width: 120px;
+.ascwo-image-preview-col {
+  width: 15%;
 }
 
-.ascwo-image-table-card .ascwo-designs-table th:nth-child(4),
-.ascwo-image-table-card .ascwo-designs-table td:nth-child(4) {
-  width: 110px;
-}
-
-.ascwo-image-table-card .ascwo-designs-table th:last-child,
-.ascwo-image-table-card .ascwo-designs-table td:last-child {
-  width: 260px;
+.ascwo-image-actions-col {
+  width: 19%;
 }
 
 .ascwo-image-table-card .ascwo-designs-table th,
@@ -4406,24 +4239,30 @@ onMounted(fetchComponent);
 }
 
 .ascwo-image-table-card .ascwo-designs-table td {
-  height: 86px;
+  min-height: 96px;
 }
 
 .ascwo-image-table-card .ascwo-designs-table td:nth-child(2) p {
-  max-width: 280px;
-  overflow-wrap: anywhere;
+  max-width: none;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .ascwo-image-actions {
   display: grid;
-  grid-template-columns: max-content max-content;
-  gap: 8px 10px;
+  grid-template-columns: max-content;
+  gap: 8px;
   justify-content: start;
 }
 
 .ascwo-image-actions .ascwo-danger-button {
   grid-column: 1;
   justify-self: start;
+  min-height: 34px;
+  padding: 6px 12px;
+  border: 1px solid #c9cccf;
+  border-radius: 7px;
+  background: #fff;
 }
 
 .ascwo-image-thumb {
@@ -4445,12 +4284,9 @@ onMounted(fetchComponent);
   gap: 18px;
 }
 
-.ascwo-image-zone-content,
-.ascwo-image-zone-editor .ascwo-permissions-card {
-  border: 1px solid #dfe3e8;
-  border-radius: 8px;
-  padding: 16px;
-  background: #fff;
+.ascwo-image-zone-content {
+  width: 100%;
+  max-width: calc(66.666% - 6px);
 }
 
 .ascwo-image-zone-content h5:not(:first-child) {
@@ -5379,33 +5215,20 @@ onMounted(fetchComponent);
   table-layout: fixed;
 }
 
-.ascwo-design-editor-body :deep(.ascwo-text-table-card .ascwo-designs-table th:first-child),
-.ascwo-design-editor-body :deep(.ascwo-text-table-card .ascwo-designs-table td:first-child) {
-  width: 44px !important;
-}
-
-.ascwo-design-editor-body :deep(.ascwo-text-table-card .ascwo-designs-table th:nth-child(2)),
-.ascwo-design-editor-body :deep(.ascwo-text-table-card .ascwo-designs-table td:nth-child(2)) {
-  width: 42% !important;
-}
-
-.ascwo-design-editor-body :deep(.ascwo-text-table-card .ascwo-designs-table th:nth-child(3)),
-.ascwo-design-editor-body :deep(.ascwo-text-table-card .ascwo-designs-table td:nth-child(3)) {
-  width: 125px !important;
-}
-
-.ascwo-design-editor-body :deep(.ascwo-text-table-card .ascwo-designs-table th:last-child),
-.ascwo-design-editor-body :deep(.ascwo-text-table-card .ascwo-designs-table td:last-child) {
-  width: 310px !important;
+.ascwo-design-editor-body :deep(.ascwo-text-table-card .ascwo-designs-table th),
+.ascwo-design-editor-body :deep(.ascwo-text-table-card .ascwo-designs-table td),
+.ascwo-design-editor-body :deep(.ascwo-image-table-card .ascwo-designs-table th),
+.ascwo-design-editor-body :deep(.ascwo-image-table-card .ascwo-designs-table td) {
+  width: auto !important;
 }
 
 .ascwo-design-editor-body :deep(.ascwo-text-module-header) {
-  min-height: 126px;
   align-items: flex-start;
 }
 
 .ascwo-design-editor-body :deep(.ascwo-text-module-header .ascwo-primary-button) {
-  margin-top: 8px;
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 
 .ascwo-design-editor-body :deep(.ascwo-text-table-card) {
@@ -5418,25 +5241,57 @@ onMounted(fetchComponent);
 }
 
 .ascwo-design-editor-body :deep(.ascwo-text-table-card .ascwo-designs-table td) {
-  height: 96px;
+  min-height: 96px;
 }
 
 .ascwo-design-editor-body :deep(.ascwo-text-table-card .ascwo-designs-table td:nth-child(2) p) {
-  max-width: 250px;
-  overflow-wrap: anywhere;
+  max-width: none;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .ascwo-design-editor-body :deep(.ascwo-text-table-card .ascwo-row-actions) {
   display: grid;
-  grid-template-columns: max-content max-content;
-  gap: 8px 10px;
+  grid-template-columns: max-content;
+  gap: 8px;
   justify-content: start;
 }
 
 .ascwo-design-editor-body :deep(.ascwo-text-table-card .ascwo-row-actions .ascwo-danger-button) {
   grid-column: 1;
   justify-self: start;
-  padding-left: 0;
+  min-height: 34px;
+  padding: 6px 12px;
+  border: 1px solid #c9cccf;
+  border-radius: 7px;
+  background: #fff;
+}
+
+.ascwo-design-editor-body :deep(.ascwo-image-table-card .ascwo-designs-table td) {
+  min-height: 96px;
+}
+
+.ascwo-design-editor-body :deep(.ascwo-image-table-card .ascwo-designs-table td:nth-child(2) p) {
+  max-width: none;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+.ascwo-design-editor-body :deep(.ascwo-image-actions) {
+  display: grid;
+  grid-template-columns: max-content;
+  gap: 8px;
+  justify-content: start;
+}
+
+.ascwo-design-editor-body :deep(.ascwo-image-actions .ascwo-danger-button) {
+  grid-column: 1;
+  justify-self: start;
+  min-height: 34px;
+  padding: 6px 12px;
+  border: 1px solid #c9cccf;
+  border-radius: 7px;
+  background: #fff;
 }
 
 .ascwo-design-editor-body :deep(.ascwo-text-zone-editor) {
@@ -5553,6 +5408,10 @@ onMounted(fetchComponent);
   .ascwo-design-detail-header,
   .ascwo-section-header {
     flex-direction: column;
+  }
+
+  .ascwo-image-zone-content {
+    max-width: none;
   }
 
   .ascwo-design-tabs {

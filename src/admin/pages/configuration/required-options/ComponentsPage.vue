@@ -9,7 +9,7 @@
       </div>
       <button type="button" @click="openNewCollection" class="ascwo-primary-button" :disabled="isLoading">
         <span class="ascwo-button-icon">+</span>
-        {{ __('Add design collection', 'all-signs-customizer-for-woocommerce-pro') }}
+        {{ __('Add new collection', 'all-signs-customizer-for-woocommerce-pro') }}
       </button>
     </section>
 
@@ -58,12 +58,6 @@
             <span></span>
           </button>
         </label>
-        <label class="ascwo-toggle-row">
-          <span>{{ __('Visible', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-          <button type="button" @click="editingCollection.isVisible = !editingCollection.isVisible" :class="['ascwo-toggle', editingCollection.isVisible ? 'is-active' : '']">
-            <span></span>
-          </button>
-        </label>
       </div>
 
       <div class="ascwo-designs-actions">
@@ -82,16 +76,15 @@
               <th>{{ __('Design Collection', 'all-signs-customizer-for-woocommerce-pro') }}</th>
               <th>{{ __('Designs (Models)', 'all-signs-customizer-for-woocommerce-pro') }}</th>
               <th>{{ __('Default Collection', 'all-signs-customizer-for-woocommerce-pro') }}</th>
-              <th>{{ __('Visible', 'all-signs-customizer-for-woocommerce-pro') }}</th>
               <th>{{ __('Actions', 'all-signs-customizer-for-woocommerce-pro') }}</th>
             </tr>
           </thead>
           <tbody>
             <tr v-if="isFetching">
-              <td colspan="6" class="ascwo-empty-cell">{{ __('Loading collections...', 'all-signs-customizer-for-woocommerce-pro') }}</td>
+              <td colspan="5" class="ascwo-empty-cell">{{ __('Loading collections...', 'all-signs-customizer-for-woocommerce-pro') }}</td>
             </tr>
             <tr v-else-if="collections.length === 0">
-              <td colspan="6" class="ascwo-empty-cell">{{ __('No design collections yet.', 'all-signs-customizer-for-woocommerce-pro') }}</td>
+              <td colspan="5" class="ascwo-empty-cell">{{ __('No design collections yet.', 'all-signs-customizer-for-woocommerce-pro') }}</td>
             </tr>
             <tr
               v-for="(collection, index) in collections"
@@ -138,15 +131,6 @@
                 </div>
               </td>
               <td>
-                <div class="ascwo-toggle-cell">
-                  <span>{{ __('No', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-                  <button type="button" @click.stop="toggleVisibility(collection.id || index)" :class="['ascwo-toggle', collection.isVisible !== false ? 'is-active' : '']">
-                    <span></span>
-                  </button>
-                  <span>{{ __('Yes', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-                </div>
-              </td>
-              <td>
                 <div class="ascwo-row-actions">
                   <button type="button" @click.stop="goToCollection(collection.id || index)" class="ascwo-secondary-button ascwo-small-button">
                     {{ __('Edit', 'all-signs-customizer-for-woocommerce-pro') }}
@@ -170,47 +154,44 @@
         </div>
       </div>
 
-      <div class="ascwo-designs-form-grid">
-        <label class="ascwo-block">
-          <span class="ascwo-form-label ascwo-label-with-count">
-            <span>{{ __('Label (Tab label)', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-            <span>{{ sectionForm.label.length }} / 30</span>
-          </span>
-          <input v-model.trim="sectionForm.label" class="ascwo-form-input" maxlength="30" />
-          <span class="ascwo-help-text">{{ __('Name shown as the tab label on the configurator.', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-        </label>
-        <label class="ascwo-block">
-          <span class="ascwo-form-label ascwo-label-with-count">
-            <span>{{ __('Description (Optional)', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-            <span>{{ sectionForm.description.length }} / 100</span>
-          </span>
-          <textarea v-model.trim="sectionForm.description" class="ascwo-form-textarea" maxlength="100"></textarea>
-          <span class="ascwo-help-text">{{ __('Short description shown under the tab label or as helper text.', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-        </label>
-        <label class="ascwo-block">
-          <span class="ascwo-form-label">{{ __('Tab icon (Optional)', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-          <div class="ascwo-media-input">
-            <button type="button" @click="selectTabIcon" class="ascwo-primary-button ascwo-media-button">
-              {{ __('Upload icon', 'all-signs-customizer-for-woocommerce-pro') }}
-            </button>
-            <input :value="sectionForm.settings.tabIcon" readonly class="ascwo-form-input ascwo-media-field" />
-          </div>
-          <span class="ascwo-help-text">{{ __('Recommended: 512x512px (1:1)', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-        </label>
-        <label class="ascwo-block">
-          <span class="ascwo-form-label">{{ __('Display collection if only one design', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-          <select v-model="showTabWhenSingleItemValue" class="ascwo-form-input">
-            <option value="yes">{{ __('Yes', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-            <option value="no">{{ __('No', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-          </select>
-        </label>
-        <label class="ascwo-block ascwo-grid-span-2">
-          <span class="ascwo-form-label ascwo-label-with-count">
-            <span>{{ __('Empty state message (Optional)', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-            <span>{{ sectionForm.settings.emptyStateMessage.length }} / 100</span>
-          </span>
-          <input v-model.trim="sectionForm.settings.emptyStateMessage" class="ascwo-form-input" maxlength="100" />
-        </label>
+      <div class="ascwo-design-settings-form">
+        <div class="ascwo-design-settings-grid">
+          <label class="ascwo-block">
+            <span class="ascwo-form-label ascwo-label-with-count">
+              <span>{{ __('Label (Tab label)', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span>{{ sectionForm.label.length }} / 30</span>
+            </span>
+            <input v-model.trim="sectionForm.label" class="ascwo-form-input" maxlength="30" />
+            <span class="ascwo-help-text">{{ __('Name shown as the tab label on the configurator.', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+          </label>
+          <label class="ascwo-block">
+            <span class="ascwo-form-label ascwo-label-with-count">
+              <span>{{ __('Description (Optional)', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span>{{ sectionForm.description.length }} / 100</span>
+            </span>
+            <textarea v-model.trim="sectionForm.description" class="ascwo-form-textarea" maxlength="100"></textarea>
+            <span class="ascwo-help-text">{{ __('Short description shown under the tab label or as helper text.', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+          </label>
+        </div>
+        <div class="ascwo-design-settings-divider"></div>
+        <div class="ascwo-design-settings-grid">
+          <label class="ascwo-block">
+            <span class="ascwo-form-label">{{ __('Design behaviour', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+            <span class="ascwo-help-text">{{ __('Choose whether customers see the customization options directly or must select a design first.', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+            <select v-model="sectionForm.settings.behavior" class="ascwo-form-input">
+              <option value="show-options-directly">{{ __('Show customization options directly', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+              <option value="choose-before-customization">{{ __('Choose a design before customization', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+            </select>
+          </label>
+          <label class="ascwo-block">
+            <span class="ascwo-form-label">{{ __('Show Design tab when only one design', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+            <span class="ascwo-help-text">{{ __('Keep the Designs tab visible even when there is only one design in the collection.', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+            <select v-model="showTabWhenSingleItemValue" class="ascwo-form-input">
+              <option value="yes">{{ __('Yes', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+              <option value="no">{{ __('No', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+            </select>
+          </label>
+        </div>
       </div>
 
       <div class="ascwo-designs-actions">
@@ -222,7 +203,7 @@
       <div class="ascwo-info-box">
         <span class="ascwo-info-icon" aria-hidden="true">i</span>
         <strong>{{ __('These settings control the Designs tab shown to customers.', 'all-signs-customizer-for-woocommerce-pro') }}</strong>
-        <span>{{ __('The label, description, icon, visibility rule and empty state message are applied directly in the customer configurator.', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+        <span>{{ __('The label, description and behavior are applied directly in the customer configurator.', 'all-signs-customizer-for-woocommerce-pro') }}</span>
       </div>
     </section>
   </div>
@@ -253,10 +234,8 @@ const emptySection = () => ({
   settings: {
     label: 'Components',
     description: 'Choose your design',
-    tabIcon: '',
     behavior: 'show-options-directly',
     showTabWhenSingleItem: true,
-    emptyStateMessage: 'No designs available.',
   },
   items: [],
 });
@@ -269,7 +248,6 @@ const emptyCollection = () => ({
   description: '',
   icon: '',
   isDefault: false,
-  isVisible: true,
   options: [],
 });
 
@@ -293,8 +271,6 @@ const fallbackCollectionLabel = (index) => `Collection ${index + 1}`;
 const normalizeCollection = (item = {}, index = 0) => {
   const label = String(item.label || item.title || item.name || fallbackCollectionLabel(index));
   return {
-    ...emptyCollection(),
-    ...item,
     id: String(item.id || `component-${index + 1}`),
     label,
     title: String(item.title || label),
@@ -302,7 +278,6 @@ const normalizeCollection = (item = {}, index = 0) => {
     description: String(item.description || ''),
     icon: String(item.icon || ''),
     isDefault: Boolean(item.isDefault),
-    isVisible: item.isVisible !== false,
     options: Array.isArray(item.options) ? item.options : [],
   };
 };
@@ -316,13 +291,12 @@ const normalizeSection = (raw = {}) => {
     label,
     description,
     settings: {
-      ...base.settings,
-      ...(raw.settings || {}),
       label,
       description,
+      behavior: raw.settings?.behavior === 'choose-before-customization'
+        ? 'choose-before-customization'
+        : 'show-options-directly',
       showTabWhenSingleItem: raw.settings?.showTabWhenSingleItem === false ? false : true,
-      emptyStateMessage: String(raw.settings?.emptyStateMessage || base.settings.emptyStateMessage),
-      tabIcon: String(raw.settings?.tabIcon || ''),
     },
     items: Array.isArray(raw.items) ? raw.items.map((item, index) => normalizeCollection(item, index)) : [],
   };
@@ -433,19 +407,6 @@ const setDefaultCollection = async (itemId) => {
   }, __('Default collection updated.', 'all-signs-customizer-for-woocommerce-pro'));
 };
 
-const toggleVisibility = async (itemId) => {
-  const index = collections.value.findIndex((item, itemIndex) => String(item.id || `component-${itemIndex + 1}`) === String(itemId));
-  if (index < 0) return;
-  const nextItems = collections.value.map((item, itemIndex) => itemIndex === index
-    ? { ...item, isVisible: item.isVisible === false }
-    : { ...item });
-
-  await persistSection({
-    ...sectionState.value,
-    items: nextItems,
-  }, __('Collection visibility updated.', 'all-signs-customizer-for-woocommerce-pro'));
-};
-
 const moveCollection = async (index, direction) => {
   const targetIndex = index + direction;
   if (targetIndex < 0 || targetIndex >= collections.value.length) return;
@@ -525,9 +486,12 @@ const saveSectionSettings = async () => {
     label: sectionForm.value.label,
     description: sectionForm.value.description,
     settings: {
-      ...sectionForm.value.settings,
       label: sectionForm.value.label,
       description: sectionForm.value.description,
+      behavior: sectionForm.value.settings.behavior === 'choose-before-customization'
+        ? 'choose-before-customization'
+        : 'show-options-directly',
+      showTabWhenSingleItem: sectionForm.value.settings.showTabWhenSingleItem !== false,
     },
   }, __('Design settings saved.', 'all-signs-customizer-for-woocommerce-pro'));
 };
@@ -557,14 +521,6 @@ const selectCollectionImage = () => {
     __('Select collection image', 'all-signs-customizer-for-woocommerce-pro'),
     __('Use image', 'all-signs-customizer-for-woocommerce-pro'),
     (url) => { editingCollection.value.icon = url; }
-  );
-};
-
-const selectTabIcon = () => {
-  openMediaFrame(
-    __('Select tab icon', 'all-signs-customizer-for-woocommerce-pro'),
-    __('Use icon', 'all-signs-customizer-for-woocommerce-pro'),
-    (url) => { sectionForm.value.settings.tabIcon = url; }
   );
 };
 
@@ -631,6 +587,32 @@ onMounted(fetchComponents);
   border: 1px solid #dfe3e8;
   border-radius: 8px;
   padding: 16px;
+}
+
+.ascwo-design-settings-form {
+  display: grid;
+  gap: 20px;
+  border: 1px solid #dfe3e8;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.ascwo-design-settings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 24px;
+  align-items: start;
+}
+
+.ascwo-design-settings-divider {
+  height: 1px;
+  background: #e4e7ec;
+}
+
+.ascwo-design-settings-form .ascwo-help-text {
+  display: block;
+  min-height: 32px;
+  margin-bottom: 8px;
 }
 
 .ascwo-grid-span-2 {
@@ -981,6 +963,14 @@ onMounted(fetchComponents);
 
   .ascwo-designs-form-grid {
     grid-template-columns: 1fr;
+  }
+
+  .ascwo-design-settings-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ascwo-design-settings-form .ascwo-help-text {
+    min-height: 0;
   }
 
   .ascwo-grid-span-2 {
