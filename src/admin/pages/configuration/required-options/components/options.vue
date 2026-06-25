@@ -795,6 +795,23 @@
                         <input v-model="textZoneDraft.value" class="ascwo-form-input" />
                       </label>
                     </div>
+
+                    <h5>{{ __('Validation', 'all-signs-customizer-for-woocommerce-pro') }}</h5>
+                    <p>{{ __('Set input constraints for this text zone.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                    <div class="ascwo-text-validation-grid">
+                      <label class="ascwo-inline-check ascwo-required-check">
+                        <input v-model="textZoneDraft.required" type="checkbox" />
+                        {{ __('Required', 'all-signs-customizer-for-woocommerce-pro') }}
+                      </label>
+                      <label>
+                        <span class="ascwo-form-label">{{ __('Min characters', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                        <input v-model.number="textZoneDraft.minCharacters" type="number" min="0" class="ascwo-form-input" />
+                      </label>
+                      <label>
+                        <span class="ascwo-form-label">{{ __('Max characters', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                        <input v-model.number="textZoneDraft.maxCharacters" type="number" min="0" class="ascwo-form-input" />
+                      </label>
+                    </div>
                   </div>
 
                   <div class="ascwo-form-actions">
@@ -934,6 +951,39 @@
                       <label class="ascwo-inline-check"><input v-model="imageZoneDraft.allowedFiles.png" type="checkbox" /> PNG</label>
                       <label class="ascwo-inline-check"><input v-model="imageZoneDraft.allowedFiles.jpeg" type="checkbox" /> JPG / JPEG</label>
                       <label class="ascwo-inline-check"><input v-model="imageZoneDraft.allowedFiles.webp" type="checkbox" /> WebP</label>
+                    </div>
+
+                    <h5>{{ __('Image settings', 'all-signs-customizer-for-woocommerce-pro') }}</h5>
+                    <p>{{ __('Define how the uploaded image should behave.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                    <div class="ascwo-image-settings-grid">
+                      <label>
+                        <span class="ascwo-form-label">{{ __('Min width', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                        <input v-model.number="imageZoneDraft.minWidth" type="number" min="0" class="ascwo-form-input" />
+                      </label>
+                      <label>
+                        <span class="ascwo-form-label">{{ __('Min height', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                        <input v-model.number="imageZoneDraft.minHeight" type="number" min="0" class="ascwo-form-input" />
+                      </label>
+                      <label>
+                        <span class="ascwo-form-label">{{ __('Max file size (MB)', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                        <input v-model.number="imageZoneDraft.maxFileSizeMb" type="number" min="0" class="ascwo-form-input" />
+                      </label>
+                      <label>
+                        <span class="ascwo-form-label">{{ __('Fit mode', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                        <select v-model="imageZoneDraft.fitMode" class="ascwo-form-input">
+                          <option value="contain">{{ __('Contain', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                          <option value="cover">{{ __('Cover', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                          <option value="stretch">{{ __('Stretch', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                        </select>
+                      </label>
+                      <label class="ascwo-inline-check">
+                        <input v-model="imageZoneDraft.required" type="checkbox" />
+                        {{ __('Required', 'all-signs-customizer-for-woocommerce-pro') }}
+                      </label>
+                      <label class="ascwo-inline-check">
+                        <input v-model="imageZoneDraft.lockAspectRatio" type="checkbox" />
+                        {{ __('Lock aspect ratio', 'all-signs-customizer-for-woocommerce-pro') }}
+                      </label>
                     </div>
                   </div>
                   <div class="ascwo-form-actions">
@@ -1604,6 +1654,8 @@ const normalizeImageZone = (zone = {}, index = 0) => {
     minWidth: Number(zone.minWidth || 100),
     minHeight: Number(zone.minHeight || 100),
     maxFileSizeMb: Number(zone.maxFileSizeMb || 2),
+    fitMode: ['contain', 'cover', 'stretch'].includes(String(zone.fitMode || '')) ? String(zone.fitMode) : 'contain',
+    lockAspectRatio: typeof zone.lockAspectRatio === 'boolean' ? zone.lockAspectRatio : true,
     permissions: {
       replaceImage: true,
       resizeImage: true,
@@ -3122,7 +3174,7 @@ onMounted(fetchComponent);
   color: #303030;
   font-size: 16px;
   line-height: 24px;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .ascwo-page-header p,
@@ -3163,7 +3215,7 @@ onMounted(fetchComponent);
   color: #303030;
   font-size: 14px;
   line-height: 20px;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .ascwo-section-header {
@@ -3291,7 +3343,7 @@ onMounted(fetchComponent);
   color: #303030;
   font-size: 13px;
   line-height: 18px;
-  font-weight: 800;
+  font-weight: 600;
 }
 
 .ascwo-component-badges,
@@ -3367,7 +3419,7 @@ onMounted(fetchComponent);
   border-radius: 7px;
   font-size: 12px;
   line-height: 16px;
-  font-weight: 800;
+  font-weight: 700;
   white-space: nowrap;
   cursor: pointer;
 }
@@ -3462,7 +3514,7 @@ onMounted(fetchComponent);
   color: #1e3a5f;
   font-size: 12px;
   line-height: 16px;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .ascwo-info-box > span:not(.ascwo-info-icon) {
@@ -3482,7 +3534,7 @@ onMounted(fetchComponent);
   color: #0094d8;
   font-size: 11px;
   line-height: 1;
-  font-weight: 800;
+  font-weight: 700;
   font-style: normal;
 }
 
@@ -3535,13 +3587,13 @@ onMounted(fetchComponent);
 .ascwo-design-tab {
   width: 100%;
   display: grid;
-  grid-template-columns: 20px minmax(0, 1fr);
-  gap: 10px;
-  align-items: start;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
   border: 0;
   border-left: 2px solid transparent;
   background: transparent;
-  padding: 11px 12px;
+  padding: 10px 8px 10px 12px;
   text-align: left;
   cursor: pointer;
 }
@@ -3558,12 +3610,21 @@ onMounted(fetchComponent);
   text-align: center;
 }
 
+.ascwo-design-tab.is-active .ascwo-tab-icon {
+  color: #111827;
+}
+
 .ascwo-design-tab strong {
   display: block;
-  color: #303030;
+  color: #667085;
   font-size: 13px;
   line-height: 17px;
-  font-weight: 800;
+  font-weight: 500;
+}
+
+.ascwo-design-tab.is-active strong {
+  color: #111827;
+  font-weight: 600;
 }
 
 .ascwo-design-tab small {
@@ -3603,7 +3664,7 @@ onMounted(fetchComponent);
   color: #111827;
   font-size: 14px;
   line-height: 20px;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .ascwo-preview-stage {
@@ -4087,15 +4148,19 @@ onMounted(fetchComponent);
 .ascwo-text-table-card .ascwo-row-actions {
   display: grid;
   grid-template-columns: max-content;
-  gap: 8px;
+  gap: 4px;
   justify-content: start;
+}
+
+.ascwo-text-table-card .ascwo-row-actions .ascwo-small-button {
+  min-height: 31px;
+  padding: 5px 12px;
+  margin: 0;
 }
 
 .ascwo-text-table-card .ascwo-row-actions .ascwo-danger-button {
   grid-column: 1;
   justify-self: start;
-  min-height: 34px;
-  padding: 6px 12px;
   border: 1px solid #c9cccf;
   border-radius: 7px;
   background: #fff;
@@ -4196,8 +4261,14 @@ onMounted(fetchComponent);
 
 .ascwo-text-validation-grid {
   display: grid;
-  grid-template-columns: minmax(0, 120px) minmax(0, 1fr) minmax(0, 1fr);
-  gap: 12px;
+  grid-template-columns: minmax(0, 220px) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 14px;
+  align-items: end;
+}
+
+.ascwo-required-check {
+  min-height: 42px;
+  align-items: center;
 }
 
 .ascwo-image-table-card {
@@ -4269,15 +4340,19 @@ onMounted(fetchComponent);
 .ascwo-image-actions {
   display: grid;
   grid-template-columns: max-content;
-  gap: 8px;
+  gap: 4px;
   justify-content: start;
+}
+
+.ascwo-image-actions .ascwo-small-button {
+  min-height: 31px;
+  padding: 5px 12px;
+  margin: 0;
 }
 
 .ascwo-image-actions .ascwo-danger-button {
   grid-column: 1;
   justify-self: start;
-  min-height: 34px;
-  padding: 6px 12px;
   border: 1px solid #c9cccf;
   border-radius: 7px;
   background: #fff;
@@ -4304,11 +4379,18 @@ onMounted(fetchComponent);
 
 .ascwo-image-zone-content {
   width: 100%;
-  max-width: calc(66.666% - 6px);
+  max-width: none;
+  box-sizing: border-box;
+  display: grid;
+  gap: 16px;
+  padding: 16px 18px;
+  border: 1px solid #e4e7ec;
+  border-radius: 8px;
+  background: #fff;
 }
 
 .ascwo-image-zone-content h5:not(:first-child) {
-  margin-top: 18px;
+  margin-top: 0;
 }
 
 .ascwo-image-upload-field {
@@ -4359,15 +4441,23 @@ onMounted(fetchComponent);
 }
 
 .ascwo-image-file-grid {
-  margin-top: 8px;
+  margin-top: 0;
   grid-template-columns: repeat(4, max-content);
-  column-gap: 28px;
+  column-gap: 74px;
+  row-gap: 14px;
 }
 
 .ascwo-image-validation-grid {
   display: grid;
   grid-template-columns: minmax(0, 122px) minmax(0, 124px) minmax(0, 124px) minmax(0, 124px);
   gap: 12px;
+  align-items: end;
+}
+
+.ascwo-image-settings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 14px;
   align-items: end;
 }
 
@@ -5271,15 +5361,19 @@ onMounted(fetchComponent);
 .ascwo-design-editor-body :deep(.ascwo-text-table-card .ascwo-row-actions) {
   display: grid;
   grid-template-columns: max-content;
-  gap: 8px;
+  gap: 4px;
   justify-content: start;
+}
+
+.ascwo-design-editor-body :deep(.ascwo-text-table-card .ascwo-row-actions .ascwo-small-button) {
+  min-height: 31px;
+  padding: 5px 12px;
+  margin: 0;
 }
 
 .ascwo-design-editor-body :deep(.ascwo-text-table-card .ascwo-row-actions .ascwo-danger-button) {
   grid-column: 1;
   justify-self: start;
-  min-height: 34px;
-  padding: 6px 12px;
   border: 1px solid #c9cccf;
   border-radius: 7px;
   background: #fff;
@@ -5298,15 +5392,19 @@ onMounted(fetchComponent);
 .ascwo-design-editor-body :deep(.ascwo-image-actions) {
   display: grid;
   grid-template-columns: max-content;
-  gap: 8px;
+  gap: 4px;
   justify-content: start;
+}
+
+.ascwo-design-editor-body :deep(.ascwo-image-actions .ascwo-small-button) {
+  min-height: 31px;
+  padding: 5px 12px;
+  margin: 0;
 }
 
 .ascwo-design-editor-body :deep(.ascwo-image-actions .ascwo-danger-button) {
   grid-column: 1;
   justify-self: start;
-  min-height: 34px;
-  padding: 6px 12px;
   border: 1px solid #c9cccf;
   border-radius: 7px;
   background: #fff;
@@ -5408,8 +5506,35 @@ onMounted(fetchComponent);
 
 .ascwo-design-editor-body :deep(.ascwo-text-validation-grid) {
   display: grid;
-  grid-template-columns: minmax(0, 120px) minmax(0, 1fr) minmax(0, 1fr);
-  gap: 12px;
+  grid-template-columns: minmax(0, 220px) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 14px;
+  align-items: end;
+}
+
+.ascwo-design-editor-body :deep(.ascwo-image-zone-content) {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+  display: grid;
+  gap: 16px;
+  padding: 16px 18px;
+  border: 1px solid #e4e7ec;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.ascwo-design-editor-body :deep(.ascwo-image-file-grid) {
+  margin-top: 0;
+  grid-template-columns: repeat(4, max-content);
+  column-gap: 74px;
+  row-gap: 14px;
+}
+
+.ascwo-design-editor-body :deep(.ascwo-image-settings-grid) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 14px;
+  align-items: end;
 }
 
 @media (max-width: 1100px) {
@@ -5418,6 +5543,8 @@ onMounted(fetchComponent);
   .ascwo-design-editor-shell,
   .ascwo-zone-grid,
   .ascwo-two-col,
+  .ascwo-text-validation-grid,
+  .ascwo-image-settings-grid,
   .ascwo-three-col,
   .ascwo-four-col {
     grid-template-columns: 1fr;
