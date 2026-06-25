@@ -402,10 +402,11 @@
             @click="handleMainAction"
             :disabled="!canNext || isLoading"
             :class="[
-              'ascwo-transition-all ascwo-border-0',
+              'ascwo-transition-all',
+              wizard.step === 4 ? 'ascwo-wizard-final-action' : '',
               canNext && !isLoading
                 ? 'ascwo-primary-button ascwo-ui-button-primary'
-                : 'ascwo-bg-[#e1e3e5] ascwo-text-[#b5b5b5] ascwo-cursor-not-allowed'
+                : 'ascwo-ui-button-disabled'
             ]"
           >
             {{ wizard.step === 4 ? (isEdit ? __('Update', 'all-signs-customizer-for-woocommerce-pro') : __('Create', 'all-signs-customizer-for-woocommerce-pro')) : __('Next', 'all-signs-customizer-for-woocommerce-pro') }}
@@ -487,15 +488,15 @@
       <!-- Review Configuration Modal -->
       <div v-if="showReviewModal" class="ascwo-review-overlay ascwo-fixed ascwo-inset-0 ascwo-z-[100000] ascwo-flex ascwo-items-center ascwo-justify-center">
         <div class="ascwo-absolute ascwo-inset-0 ascwo-bg-black/40" @click="!isLoading && (showReviewModal = false)"></div>
-        <div class="ascwo-review-modal ascwo-relative ascwo-bg-white ascwo-rounded-[20px] ascwo-shadow-2xl ascwo-overflow-hidden" style="width: 980px; max-width: calc(100vw - 48px);">
-          <div class="ascwo-review-header ascwo-flex ascwo-items-center ascwo-justify-between ascwo-h-[66px] ascwo-px-5 ascwo-border-b ascwo-border-solid ascwo-border-[#e1e3e5]">
+        <div class="ascwo-review-modal ascwo-relative ascwo-bg-white ascwo-shadow-2xl ascwo-overflow-hidden" style="width: min(980px, calc(100vw - 48px));">
+          <div class="ascwo-review-header ascwo-flex ascwo-items-center ascwo-justify-between ascwo-border-b ascwo-border-solid ascwo-border-[#e1e3e5]">
             <h3 class="ascwo-text-[18px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#111827] ascwo-truncate">{{ __('Review configuration before creation', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
             <button @click="showReviewModal = false" :disabled="isLoading" class="ascwo-p-2 ascwo-rounded-full hover:ascwo-bg-gray-100 ascwo-border-0 ascwo-bg-transparent ascwo-cursor-pointer disabled:ascwo-opacity-50 disabled:ascwo-cursor-not-allowed">
               <XIcon class="ascwo-w-5 ascwo-h-5 ascwo-text-[#8c9196]" />
             </button>
           </div>
           <div class="ascwo-review-body ascwo-p-5 ascwo-grid md:ascwo-grid-cols-[1.4fr_1fr] ascwo-gap-4">
-             <div class="ascwo-review-panel ascwo-bg-[#f7f9fc] ascwo-border ascwo-border-solid ascwo-border-[#dbe3ea] ascwo-rounded-2xl">
+             <div class="ascwo-review-panel ascwo-review-panel-summary ascwo-bg-[#f7f9fc] ascwo-border ascwo-border-solid ascwo-border-[#dbe3ea] ascwo-rounded-2xl">
                 <h4 class="ascwo-review-panel-title">{{ __('Configuration summary', 'all-signs-customizer-for-woocommerce-pro') }}</h4>
                 <div class="ascwo-review-summary-list">
                    <p><span class="ascwo-text-[#667085]">{{ __('Product family:', 'all-signs-customizer-for-woocommerce-pro') }}</span> <span class="ascwo-font-[900] ascwo-text-[#101828]">{{ selectedFamilyTitle }}</span></p>
@@ -504,18 +505,22 @@
                    <p><span class="ascwo-text-[#667085]">{{ __('Configuration name:', 'all-signs-customizer-for-woocommerce-pro') }}</span> <span class="ascwo-font-[900] ascwo-text-[#101828]">{{ newConfig.name }}</span></p>
                 </div>
              </div>
-             <div class="ascwo-review-panel ascwo-bg-[#f7f9fc] ascwo-border ascwo-border-solid ascwo-border-[#dbe3ea] ascwo-rounded-2xl">
+             <div class="ascwo-review-panel ascwo-review-panel-starter ascwo-bg-[#f7f9fc] ascwo-border ascwo-border-solid ascwo-border-[#dbe3ea] ascwo-rounded-2xl">
                 <h4 class="ascwo-review-panel-title">{{ __('Starter template', 'all-signs-customizer-for-woocommerce-pro') }}</h4>
-                <p class="ascwo-review-description">{{ __('Choose whether to create from a clean setup or to seed the configuration with demo data.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                <p class="ascwo-review-description">{{ __('Decide if you want to start from a ready template or create the configuration from a blank setup.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
                 <div class="ascwo-review-choice-row">
                    <button @click="wizard.includeDemo = false" :class="['ascwo-review-choice-button', !wizard.includeDemo ? 'is-selected' : '']">{{ __('Start blank', 'all-signs-customizer-for-woocommerce-pro') }}</button>
-                   <button @click="wizard.includeDemo = true" :class="['ascwo-review-choice-button', wizard.includeDemo ? 'is-selected' : '']">{{ __('Include demo data', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                   <button @click="wizard.includeDemo = true" :class="['ascwo-review-choice-button', wizard.includeDemo ? 'is-selected' : '']">{{ __('Include starter template', 'all-signs-customizer-for-woocommerce-pro') }}</button>
                 </div>
-                <p v-if="wizard.includeDemo" class="ascwo-review-selected-help">{{ __('Demo data will be used as the starting structure for this configuration.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
-                <p v-else class="ascwo-review-blank-help">{{ __('No demo data will be imported. The configuration will start blank.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                <div v-if="wizard.includeDemo" class="ascwo-review-selected-template">
+                  <p class="ascwo-review-selected-label">{{ __('Selected template', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                  <p class="ascwo-review-selected-name">{{ __('Generated starter data', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                  <p class="ascwo-review-selected-help">{{ __('Automatically selected from your product family, material and setup model.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                </div>
+                <p v-else class="ascwo-review-blank-help">{{ __('No starter template will be imported. The configuration will be created from your selected setup only.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
              </div>
           </div>
-          <div class="ascwo-review-footer ascwo-h-[76px] ascwo-px-5 ascwo-bg-white ascwo-border-t ascwo-border-solid ascwo-border-[#e1e3e5] ascwo-flex ascwo-justify-end ascwo-items-center ascwo-gap-3">
+          <div class="ascwo-review-footer ascwo-bg-white ascwo-border-t ascwo-border-solid ascwo-border-[#e1e3e5] ascwo-flex ascwo-justify-end ascwo-items-center ascwo-gap-3">
              <button @click="showReviewModal = false" :disabled="isLoading" class="ascwo-review-secondary-button">{{ __('Back', 'all-signs-customizer-for-woocommerce-pro') }}</button>
              <button @click="finalCreate" :disabled="isLoading" class="ascwo-review-primary-button ascwo-inline-flex ascwo-items-center ascwo-gap-2">
                <Loader2Icon v-if="isLoading" class="ascwo-w-4 ascwo-h-4 ascwo-animate-spin" />
@@ -824,7 +829,7 @@ const buildConfigData = (fontSource = []) => {
     : '';
   const resolvedFontsSection = buildFontsSection(fontSource);
 
-  const cloneSections = (sections = {}, emptyItems = false, stripIds = true) => Object.fromEntries(
+  const cloneSections = (sections = {}, emptyItems = false) => Object.fromEntries(
     Object.entries(sections).map(([key, section]) => {
       const cleanSection = cloneDeep(section);
 
@@ -1440,34 +1445,48 @@ onMounted(async () => {
 }
 
 .ascwo-review-modal {
-  border-radius: 20px !important;
+  width: min(980px, calc(100vw - 48px)) !important;
+  max-height: calc(100vh - 32px) !important;
+  border-radius: 18px !important;
   box-shadow: 0 24px 54px rgba(15, 23, 42, 0.22) !important;
 }
 
 .ascwo-review-header {
+  min-height: 64px !important;
+  padding: 0 20px !important;
   border-width: 0 0 1px 0 !important;
 }
 
 .ascwo-review-header h3 {
   font-size: 18px !important;
   line-height: 24px !important;
-  font-weight: 650 !important;
+  font-weight: 700 !important;
+  color: #202223 !important;
 }
 
 .ascwo-review-footer {
+  min-height: 76px !important;
+  padding: 0 20px !important;
   border-width: 1px 0 0 0 !important;
 }
 
 .ascwo-review-body {
+  padding: 20px !important;
   gap: 16px !important;
 }
 
 .ascwo-review-panel {
-  min-height: 230px;
   padding: 18px !important;
   border-radius: 16px !important;
   display: flex !important;
   flex-direction: column !important;
+}
+
+.ascwo-review-panel-summary {
+  gap: 10px !important;
+}
+
+.ascwo-review-panel-starter {
   gap: 14px !important;
 }
 
@@ -1580,8 +1599,8 @@ onMounted(async () => {
 }
 
 .ascwo-review-primary-button {
-  border: 0;
-  background: #006e52;
+  border: 1px solid #005f55;
+  background: #007a72;
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
@@ -1589,7 +1608,8 @@ onMounted(async () => {
 .ascwo-review-primary-button:hover,
 .ascwo-review-primary-button:focus,
 .ascwo-review-primary-button:active {
-  background: #005c45;
+  border-color: #004c44;
+  background: #00695f;
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
@@ -1878,6 +1898,72 @@ onMounted(async () => {
 .ascwo-create-wizard select:focus {
   border-color: var(--ascwo-ui-focus) !important;
   box-shadow: 0 0 0 2px var(--ascwo-ui-focus) !important;
+}
+
+
+/* Shopify wizard navigation buttons */
+.ascwo-create-wizard .ascwo-ui-button-secondary,
+.ascwo-create-wizard .ascwo-ui-button-primary,
+.ascwo-create-wizard .ascwo-ui-button-disabled,
+.ascwo-create-wizard .ascwo-primary-button.ascwo-ui-button-primary {
+  min-height: 42px !important;
+  padding: 10px 18px !important;
+  border-radius: 12px !important;
+  font-size: 14px !important;
+  line-height: 20px !important;
+  font-weight: 700 !important;
+  box-shadow: none !important;
+}
+
+.ascwo-create-wizard .ascwo-ui-button-secondary {
+  min-width: 76px !important;
+  border: 1px solid #c9cccf !important;
+  background: #ffffff !important;
+  color: #111827 !important;
+}
+
+.ascwo-create-wizard .ascwo-ui-button-secondary:hover,
+.ascwo-create-wizard .ascwo-ui-button-secondary:focus,
+.ascwo-create-wizard .ascwo-ui-button-secondary:active {
+  background: #f6f6f7 !important;
+  color: #111827 !important;
+}
+
+.ascwo-create-wizard .ascwo-ui-button-disabled,
+.ascwo-create-wizard .ascwo-ui-button-disabled:hover,
+.ascwo-create-wizard .ascwo-ui-button-disabled:focus,
+.ascwo-create-wizard .ascwo-ui-button-disabled:active {
+  min-width: 120px !important;
+  border: none !important;
+  background: linear-gradient(135deg, rgba(1, 100, 100, 0.95), rgba(2, 128, 128, 0.86)) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  cursor: not-allowed !important;
+  opacity: 0.55 !important;
+}
+
+.ascwo-create-wizard .ascwo-ui-button-primary,
+.ascwo-create-wizard .ascwo-primary-button.ascwo-ui-button-primary {
+  min-width: 120px !important;
+  border: none !important;
+  background: linear-gradient(135deg, rgba(1, 100, 100, 0.95), rgba(2, 128, 128, 0.86)) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.ascwo-create-wizard .ascwo-wizard-final-action {
+  min-width: 140px !important;
+}
+
+.ascwo-create-wizard .ascwo-ui-button-primary:hover,
+.ascwo-create-wizard .ascwo-ui-button-primary:focus,
+.ascwo-create-wizard .ascwo-ui-button-primary:active,
+.ascwo-create-wizard .ascwo-primary-button.ascwo-ui-button-primary:hover,
+.ascwo-create-wizard .ascwo-primary-button.ascwo-ui-button-primary:focus,
+.ascwo-create-wizard .ascwo-primary-button.ascwo-ui-button-primary:active {
+  background: linear-gradient(135deg, rgba(1, 100, 100, 0.95), rgba(2, 128, 128, 0.86)) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
 body #ascwo-backend-app button.ascwo-primary-button,

@@ -248,7 +248,11 @@ const copiedKey = ref(null)
 const router = useRouter();
 
 const goToMaterial = (config) => {
-    router.push({ name: 'sizes', params: { configId: config.id } });
+  if (!config?.id) return;
+  router.push({
+    name: isAdvancedConfig(config) ? 'required-components' : 'sizes',
+    params: { configId: config.id },
+  });
 };
 
 const parseMaybeJson = (value) => {
@@ -271,6 +275,12 @@ const resolveFamilySlug = (value) => {
 };
 
 const getConfigData = (config) => parseMaybeJson(config?.data) || {};
+
+const isAdvancedConfig = (config) => {
+  const data = getConfigData(config);
+  const materialType = normalizeValue(config?.materialType || data?.materialType);
+  return materialType === 'advance' || materialType === 'advanced';
+};
 
 const getProductFamilySlug = (config) => {
   const data = getConfigData(config);

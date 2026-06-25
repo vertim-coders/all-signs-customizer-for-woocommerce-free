@@ -547,29 +547,41 @@
 }
 }
 .ascwo-review-modal {
-  border-radius: 20px !important;
+  width: min(980px, calc(100vw - 48px)) !important;
+  max-height: calc(100vh - 32px) !important;
+  border-radius: 18px !important;
   box-shadow: 0 24px 54px rgba(15, 23, 42, 0.22) !important;
 }
 .ascwo-review-header {
+  min-height: 64px !important;
+  padding: 0 20px !important;
   border-width: 0 0 1px 0 !important;
 }
 .ascwo-review-header h3 {
   font-size: 18px !important;
   line-height: 24px !important;
-  font-weight: 650 !important;
+  font-weight: 700 !important;
+  color: #202223 !important;
 }
 .ascwo-review-footer {
+  min-height: 76px !important;
+  padding: 0 20px !important;
   border-width: 1px 0 0 0 !important;
 }
 .ascwo-review-body {
+  padding: 20px !important;
   gap: 16px !important;
 }
 .ascwo-review-panel {
-  min-height: 230px;
   padding: 18px !important;
   border-radius: 16px !important;
   display: flex !important;
   flex-direction: column !important;
+}
+.ascwo-review-panel-summary {
+  gap: 10px !important;
+}
+.ascwo-review-panel-starter {
   gap: 14px !important;
 }
 .ascwo-review-panel p,
@@ -667,15 +679,16 @@
   color: #111827;
 }
 .ascwo-review-primary-button {
-  border: 0;
-  background: #006e52;
+  border: 1px solid #005f55;
+  background: #007a72;
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
 .ascwo-review-primary-button:hover,
 .ascwo-review-primary-button:focus,
 .ascwo-review-primary-button:active {
-  background: #005c45;
+  border-color: #004c44;
+  background: #00695f;
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
@@ -916,6 +929,66 @@
 .ascwo-create-wizard select:focus {
   border-color: var(--ascwo-ui-focus) !important;
   box-shadow: 0 0 0 2px var(--ascwo-ui-focus) !important;
+}
+
+
+/* Shopify wizard navigation buttons */
+.ascwo-create-wizard .ascwo-ui-button-secondary,
+.ascwo-create-wizard .ascwo-ui-button-primary,
+.ascwo-create-wizard .ascwo-ui-button-disabled,
+.ascwo-create-wizard .ascwo-primary-button.ascwo-ui-button-primary {
+  min-height: 42px !important;
+  padding: 10px 18px !important;
+  border-radius: 12px !important;
+  font-size: 14px !important;
+  line-height: 20px !important;
+  font-weight: 700 !important;
+  box-shadow: none !important;
+}
+.ascwo-create-wizard .ascwo-ui-button-secondary {
+  min-width: 76px !important;
+  border: 1px solid #c9cccf !important;
+  background: #ffffff !important;
+  color: #111827 !important;
+}
+.ascwo-create-wizard .ascwo-ui-button-secondary:hover,
+.ascwo-create-wizard .ascwo-ui-button-secondary:focus,
+.ascwo-create-wizard .ascwo-ui-button-secondary:active {
+  background: #f6f6f7 !important;
+  color: #111827 !important;
+}
+.ascwo-create-wizard .ascwo-ui-button-disabled,
+.ascwo-create-wizard .ascwo-ui-button-disabled:hover,
+.ascwo-create-wizard .ascwo-ui-button-disabled:focus,
+.ascwo-create-wizard .ascwo-ui-button-disabled:active {
+  min-width: 120px !important;
+  border: none !important;
+  background: linear-gradient(135deg, rgba(1, 100, 100, 0.95), rgba(2, 128, 128, 0.86)) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  cursor: not-allowed !important;
+  opacity: 0.55 !important;
+}
+.ascwo-create-wizard .ascwo-ui-button-primary,
+.ascwo-create-wizard .ascwo-primary-button.ascwo-ui-button-primary {
+  min-width: 120px !important;
+  border: none !important;
+  background: linear-gradient(135deg, rgba(1, 100, 100, 0.95), rgba(2, 128, 128, 0.86)) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+.ascwo-create-wizard .ascwo-wizard-final-action {
+  min-width: 140px !important;
+}
+.ascwo-create-wizard .ascwo-ui-button-primary:hover,
+.ascwo-create-wizard .ascwo-ui-button-primary:focus,
+.ascwo-create-wizard .ascwo-ui-button-primary:active,
+.ascwo-create-wizard .ascwo-primary-button.ascwo-ui-button-primary:hover,
+.ascwo-create-wizard .ascwo-primary-button.ascwo-ui-button-primary:focus,
+.ascwo-create-wizard .ascwo-primary-button.ascwo-ui-button-primary:active {
+  background: linear-gradient(135deg, rgba(1, 100, 100, 0.95), rgba(2, 128, 128, 0.86)) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 body #ascwo-backend-app button.ascwo-primary-button,
 body #ascwo-backend-app button.ascwo-primary-button:hover,
@@ -4059,10 +4132,6 @@ to {
   line-height: 16px;
   font-weight: 600;
 }
-.ascwo-form-label em[data-v-3bc77cb7] {
-  font-style: normal;
-  font-weight: 500;
-}
 .ascwo-label-with-count[data-v-3bc77cb7] {
   display: flex;
   justify-content: space-between;
@@ -4071,6 +4140,10 @@ to {
 .ascwo-label-with-count span[data-v-3bc77cb7]:last-child {
   color: #616161;
   font-weight: 600;
+}
+.ascwo-form-label em[data-v-3bc77cb7] {
+  font-style: normal;
+  font-weight: 500;
 }
 .ascwo-form-input[data-v-3bc77cb7],
 .ascwo-form-textarea[data-v-3bc77cb7] {
@@ -4650,22 +4723,21 @@ to {
 .ascwo-background-table-card .ascwo-designs-table[data-v-3bc77cb7] {
   table-layout: fixed;
 }
-.ascwo-background-table-card .ascwo-designs-table th[data-v-3bc77cb7]:first-child,
-.ascwo-background-table-card .ascwo-designs-table td[data-v-3bc77cb7]:first-child {
-  width: 280px;
+.ascwo-background-color-col[data-v-3bc77cb7] {
+  width: 34%;
 }
-.ascwo-background-table-card .ascwo-designs-table th[data-v-3bc77cb7]:nth-child(2),
-.ascwo-background-table-card .ascwo-designs-table td[data-v-3bc77cb7]:nth-child(2) {
-  width: 220px;
-  padding-left: 38px;
+.ascwo-background-default-col[data-v-3bc77cb7] {
+  width: 26%;
+}
+.ascwo-background-remove-col[data-v-3bc77cb7] {
+  width: 40%;
 }
 .ascwo-background-table-card .ascwo-designs-table td[data-v-3bc77cb7]:first-child {
   white-space: nowrap;
 }
-.ascwo-background-table-card .ascwo-designs-table th[data-v-3bc77cb7]:last-child,
-.ascwo-background-table-card .ascwo-designs-table td[data-v-3bc77cb7]:last-child {
-  width: auto;
-  padding-left: 24px;
+.ascwo-background-table-card .ascwo-designs-table th[data-v-3bc77cb7],
+.ascwo-background-table-card .ascwo-designs-table td[data-v-3bc77cb7] {
+  padding-right: 28px;
 }
 .ascwo-background-editor-card[data-v-3bc77cb7] {
   display: grid;

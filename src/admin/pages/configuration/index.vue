@@ -290,12 +290,22 @@ const getProductBadgeTone = (config) => {
   if (materialType === 'advance' || materialType === 'advanced') return 'success';
   return 'attention';
 };
+
+const isAdvancedConfig = (config) => {
+  const data = getConfigData(config);
+  const materialType = normalizeValue(config?.materialType || data?.materialType);
+  return materialType === 'advance' || materialType === 'advanced';
+};
+
 const goToMaterial = async (c) => {
   if (!c?.id || managingConfigId.value) return;
   showActionMenu.value = false;
   managingConfigId.value = c.id;
   try {
-    await router.push({ name: 'sizes', params: { configId: c.id } });
+    await router.push({
+      name: isAdvancedConfig(c) ? 'required-components' : 'sizes',
+      params: { configId: c.id },
+    });
   } finally {
     managingConfigId.value = null;
   }

@@ -244,6 +244,15 @@ const hasAdvancedMaterials = computed(() => {
   return type === 'advance' || type === 'advanced' || type === 'layers';
 });
 
+const redirectAdvancedDefaultRoute = () => {
+  if (!hasAdvancedMaterials.value || !configId.value) return;
+  const isLegacyDefaultRoute = route.name === 'sizes'
+    || route.path === `/configuration/${configId.value}`
+    || route.path === `/configuration/${configId.value}/required-options`;
+  if (!isLegacyDefaultRoute) return;
+  router.replace({ name: 'required-components', params: { configId: configId.value } });
+};
+
 // Load config data
 const loadConfig = async () => {
   if (!configId.value) return;
@@ -253,6 +262,7 @@ const loadConfig = async () => {
     const data = await api.getConfig(configId.value);
     configData.value = data;
     await loadConfigName();
+    redirectAdvancedDefaultRoute();
   } catch (error) {
     console.error('Failed to load config:', error);
   }
@@ -494,6 +504,7 @@ watch(configId, () => {
 });
 
 watch(() => route.path, syncDesignsSidebarState);
+watch(() => route.name, redirectAdvancedDefaultRoute);
 </script>
 
 <style scoped>

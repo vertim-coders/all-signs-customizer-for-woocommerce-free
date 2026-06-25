@@ -561,10 +561,28 @@
                     <button type="button" class="ascwo-primary-button" :disabled="!designForm.backgrounds.enabled" @click="openPicker('background')">{{ __('Add color', 'all-signs-customizer-for-woocommerce-pro') }}</button>
                   </div>
                   <div class="ascwo-table-card ascwo-background-table-card">
-                    <table class="ascwo-designs-table"><thead><tr><th>{{ __('Color', 'all-signs-customizer-for-woocommerce-pro') }}</th><th>{{ __('Actions', 'all-signs-customizer-for-woocommerce-pro') }}</th><th></th></tr></thead><tbody>
-                      <tr v-for="item in designForm.backgrounds.items" :key="item.id"><td><span class="ascwo-color-dot" :style="{ background: colorHex(item.id) }"></span>{{ colorLabel(item.id) }}</td><td><button type="button" :class="['ascwo-toggle', item.isDefault ? 'is-active' : '']" @click="setDefaultNested('backgrounds', item.id)"><span></span></button></td><td><button type="button" class="ascwo-danger-button" @click="removeNestedItem('backgrounds', item.id)">{{ __('Remove', 'all-signs-customizer-for-woocommerce-pro') }}</button></td></tr>
-                      <tr v-if="designForm.backgrounds.items.length === 0"><td colspan="3" class="ascwo-empty-cell">{{ __('No background colors are available for this design.', 'all-signs-customizer-for-woocommerce-pro') }}</td></tr>
-                    </tbody></table>
+                    <table class="ascwo-designs-table">
+                      <colgroup>
+                        <col class="ascwo-background-color-col" />
+                        <col class="ascwo-background-default-col" />
+                        <col class="ascwo-background-remove-col" />
+                      </colgroup>
+                      <thead>
+                        <tr>
+                          <th>{{ __('Color', 'all-signs-customizer-for-woocommerce-pro') }}</th>
+                          <th>{{ __('Actions', 'all-signs-customizer-for-woocommerce-pro') }}</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="item in designForm.backgrounds.items" :key="item.id">
+                          <td><span class="ascwo-color-dot" :style="{ background: colorHex(item.id) }"></span>{{ colorLabel(item.id) }}</td>
+                          <td><button type="button" :class="['ascwo-toggle', item.isDefault ? 'is-active' : '']" @click="setDefaultNested('backgrounds', item.id)"><span></span></button></td>
+                          <td><button type="button" class="ascwo-danger-button" @click="removeNestedItem('backgrounds', item.id)">{{ __('Remove', 'all-signs-customizer-for-woocommerce-pro') }}</button></td>
+                        </tr>
+                        <tr v-if="designForm.backgrounds.items.length === 0"><td colspan="3" class="ascwo-empty-cell">{{ __('No background colors are available for this design.', 'all-signs-customizer-for-woocommerce-pro') }}</td></tr>
+                      </tbody>
+                    </table>
                   </div>
                 </template>
                 <div v-else class="ascwo-background-editor-card">
@@ -3165,11 +3183,6 @@ onMounted(fetchComponent);
   font-weight: 600;
 }
 
-.ascwo-form-label em {
-  font-style: normal;
-  font-weight: 500;
-}
-
 .ascwo-label-with-count {
   display: flex;
   justify-content: space-between;
@@ -3179,6 +3192,11 @@ onMounted(fetchComponent);
 .ascwo-label-with-count span:last-child {
   color: #616161;
   font-weight: 600;
+}
+
+.ascwo-form-label em {
+  font-style: normal;
+  font-weight: 500;
 }
 
 .ascwo-form-input,
@@ -3851,25 +3869,25 @@ onMounted(fetchComponent);
   table-layout: fixed;
 }
 
-.ascwo-background-table-card .ascwo-designs-table th:first-child,
-.ascwo-background-table-card .ascwo-designs-table td:first-child {
-  width: 280px;
+.ascwo-background-color-col {
+  width: 34%;
 }
 
-.ascwo-background-table-card .ascwo-designs-table th:nth-child(2),
-.ascwo-background-table-card .ascwo-designs-table td:nth-child(2) {
-  width: 220px;
-  padding-left: 38px;
+.ascwo-background-default-col {
+  width: 26%;
+}
+
+.ascwo-background-remove-col {
+  width: 40%;
 }
 
 .ascwo-background-table-card .ascwo-designs-table td:first-child {
   white-space: nowrap;
 }
 
-.ascwo-background-table-card .ascwo-designs-table th:last-child,
-.ascwo-background-table-card .ascwo-designs-table td:last-child {
-  width: auto;
-  padding-left: 24px;
+.ascwo-background-table-card .ascwo-designs-table th,
+.ascwo-background-table-card .ascwo-designs-table td {
+  padding-right: 28px;
 }
 
 .ascwo-background-editor-card {
