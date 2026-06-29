@@ -580,6 +580,15 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
     unset($settings['templatePage']);
 
     if (isset($settings['buttons']) && is_array($settings['buttons'])) {
+      if (
+        ! isset($settings['buttons']['productDesignButton'])
+        || '' === trim((string) $settings['buttons']['productDesignButton'])
+        || 'Customize The Product' === $settings['buttons']['productDesignButton']
+        || 'Make It Yours' === $settings['buttons']['productDesignButton']
+      ) {
+        $settings['buttons']['productDesignButton'] = 'Start Designing';
+      }
+
       unset(
         $settings['buttons']['productTemplateButton'],
         $settings['buttons']['templateAddToCartButton'],

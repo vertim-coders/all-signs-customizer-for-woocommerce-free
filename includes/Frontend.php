@@ -143,7 +143,7 @@ class ASCWO_Frontend
         $visible_cards = 0;
         $page_settings = get_option('ascwo_config_page');
         $button_labels = isset($page_settings['buttons']) && is_array($page_settings['buttons']) ? $page_settings['buttons'] : [];
-        $customize_label = isset($button_labels['productDesignButton']) && $button_labels['productDesignButton'] !== '' ? $button_labels['productDesignButton'] : __('Customize', 'all-signs-customizer-for-woocommerce-pro');
+        $customize_label = isset($button_labels['productDesignButton']) && $button_labels['productDesignButton'] !== '' ? $button_labels['productDesignButton'] : __('Start Designing', 'all-signs-customizer-for-woocommerce-pro');
 
         ob_start();
 

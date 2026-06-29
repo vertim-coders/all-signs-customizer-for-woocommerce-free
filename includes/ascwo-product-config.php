@@ -274,7 +274,10 @@ class ASCWO_Product_Config
 
 				$default_design_btn_url = $this->get_design_page_url();
 				$have_pages_settings = get_option("ascwo_config_page");
-				$content .= '<a  href="' . $default_design_btn_url . '" class="button ascwo-design-product">' . $have_pages_settings["buttons"]["productDesignButton"] . '</a>';
+				$design_button_label = isset($have_pages_settings["buttons"]["productDesignButton"]) && '' !== trim((string) $have_pages_settings["buttons"]["productDesignButton"])
+					? $have_pages_settings["buttons"]["productDesignButton"]
+					: __("Start Designing", "all-signs-customizer-for-woocommerce-pro");
+				$content .= '<a  href="' . esc_url($default_design_btn_url) . '" class="button ascwo-design-product">' . esc_html($design_button_label) . '</a>';
 
 				if (!isset($item_id)) {
 					$item_id = '';
