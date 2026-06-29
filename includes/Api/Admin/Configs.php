@@ -158,7 +158,8 @@ class ASCWO_Api_Configs extends WP_REST_Controller
                 continue;
             }
             if (!isset($method['id']) || $method['id'] === '') {
-                $method['id'] = !empty($method['type']) ? sanitize_title((string) $method['type']) : sanitize_title((string) ($method['name'] ?? 'fixing-method'));
+                $slug = !empty($method['type']) ? sanitize_title((string) $method['type']) : sanitize_title((string) ($method['name'] ?? 'fixing-method'));
+                $method['id'] = strpos($slug, 'fixing-') === 0 ? $slug : 'fixing-' . $slug;
             }
             $normalized[] = $method;
         }

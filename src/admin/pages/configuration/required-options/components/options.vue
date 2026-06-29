@@ -1689,7 +1689,11 @@ const selectedSizeRows = computed(() => {
   return rows;
 });
 const selectedFixingRows = computed(() => (designForm.value.fixingMethods.items || []).map((item) => {
-  const source = fixingOptions.value.find((fixing) => fixing.id === String(item.id));
+  const source = fixingOptions.value.find((fixing) => {
+    const itemId = String(item.id || '');
+    const managedId = String(item.fixingMethodId || '');
+    return String(fixing.id || '') === itemId || (managedId && String(fixing.fixingMethodId || '') === managedId);
+  });
   const sizeId = item.sizeId || selectedSizeRows.value.find((size) => size.isDefault)?.id || selectedSizeRows.value[0]?.id || '';
   return {
     ...item,
@@ -2307,12 +2311,20 @@ const syncManagedFixingDraft = () => {
   customDraft.value = {
     ...customDraft.value,
     label: String(selected.label || customDraft.value.label || ''),
+    fixingMethodId: String(selected.fixingMethodId || selected.value || customDraft.value.fixingMethodId || ''),
   };
 };
 
+const fixingOptionIdFromSource = (source = {}) => {
+  const managedId = String(source?.fixingMethodId || source?.managedId || source?.value || '');
+  const localId = String(source?.id || '');
+  if (localId && localId !== managedId) return localId;
+  return managedId ? `fixing-option-${managedId}` : `fixing-option-${Date.now()}`;
+};
+
 const fixingDesignItemFromSource = (source) => ({
-  id: String(source?.id || ''),
-  fixingMethodId: String(source?.fixingMethodId || source?.id || ''),
+  id: fixingOptionIdFromSource(source),
+  fixingMethodId: String(source?.fixingMethodId || source?.managedId || source?.value || ''),
   custom: false,
   isDefault: false,
   label: String(source?.label || ''),
@@ -2349,7 +2361,7 @@ const createAndAddFixingMethod = async () => {
     const payload = {
       label,
       name: label,
-      fixingMethodId: String(selected?.fixingMethodId || customDraft.value.fixingMethodId || ''),
+      fixingMethodId: String(selected?.fixingMethodId || selected?.value || customDraft.value.fixingMethodId || ''),
       previewImg: String(selected?.image || selected?.icon || ''),
       icon: String(selected?.icon || selected?.image || ''),
       additionalPrice: Number(customDraft.value.additionalPrice || 0),

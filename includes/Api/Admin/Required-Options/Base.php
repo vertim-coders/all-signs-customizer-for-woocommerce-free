@@ -1610,9 +1610,9 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             }
 
             if (!isset($method['id']) || $method['id'] === '') {
-                $method['id'] = !empty($method['type'])
-                    ? sanitize_title((string) $method['type'])
-                    : sanitize_title((string) ($method['name'] ?? 'fixing-method'));
+                $method['id'] = $this->normalize_fixing_method_manage_id(!empty($method['type'])
+                    ? (string) $method['type']
+                    : (string) ($method['name'] ?? 'fixing-method'));
             }
 
             $normalized[] = $method;
@@ -1630,6 +1630,12 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         $value = trim($value, '-');
 
         return $value !== '' ? $value : $fallback;
+    }
+
+    protected function normalize_fixing_method_manage_id($value): string
+    {
+        $slug = $this->slugify($value, 'fixing-method');
+        return strpos($slug, 'fixing-') === 0 ? $slug : 'fixing-' . $slug;
     }
 
     protected function generate_size_id(array $size, string $productType = ''): string
@@ -1670,8 +1676,11 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
     {
         $methodId = isset($fixingMethod['fixingMethodId']) ? $fixingMethod['fixingMethodId'] : '';
         $name = isset($fixingMethod['name']) ? (string) $fixingMethod['name'] : '';
+        if (is_string($methodId) && strpos($methodId, 'fixing-') === 0) {
+            return $this->slugify($methodId, 'fixing-method');
+        }
 
-        return 'fixing-method-' . $this->slugify($methodId ?: $name ?: 'method', 'method');
+        return $this->normalize_fixing_method_manage_id($methodId ?: $name ?: 'method');
     }
 
     protected function generate_shape_id(array $shape): string
