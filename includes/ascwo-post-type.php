@@ -191,27 +191,6 @@ class ASCWO_Post_Type
 					$content .= do_shortcode("[ascwo-configurator productid='" . $wp_query->query_vars['ascwo-product-id'] . "']");
 				}
 			}
-		} elseif (get_the_ID() == $page_settings["templatePage"] && is_page($page_settings["templatePage"])) {
-			if (!isset($wp_query->query_vars['ascwo-product-id'])) {
-				ob_start();
-				?>
-				<div class="ascwo-config-page-error">
-					<div class="ascwo-config-page-error-title">
-						<?php echo esc_html__("All Sign Customizer for WooCommerce Warning", "all-signs-customizer-for-woocommerce-pro") ?>
-					</div>
-					<div>
-						<p>
-							<?php echo esc_html__("You are trying to access the template page without a product to customize. 
-						This page should only be accessible by using one of the template buttons. 
-						If you don't like this procedure, don't define this page as a template page and use the short code for template.", "all-signs-customizer-for-woocommerce-pro"); ?>
-						</p>
-					</div>
-				</div>
-				<?php
-				$content .= ob_get_clean();
-			} else {
-				$content .= do_shortcode("[ascwo-templates productid='" . $wp_query->query_vars['ascwo-product-id'] . "']");
-			}
 		}
 		return $content;
 	}
@@ -379,27 +358,6 @@ class ASCWO_Post_Type
 	public function ascwo_add_template_page_rewrite_rules()
 	{
 		global $wp_rewrite;
-		$page_settings = get_option("ascwo_config_page");
-		if (!empty($page_settings) && $page_settings != false) {
-			$ascwo_page_id = $page_settings["templatePage"];
-			$ascwo_page = get_post($ascwo_page_id);
-			if (is_object($ascwo_page)) {
-				$slug = trim(get_page_uri($ascwo_page->ID), '/');
-				$match_slug = '(?:index\.php/)?' . preg_quote($slug, '#');
-
-				add_rewrite_rule(
-					$match_slug . '/ascwo-templates/([^/]+)/([^/]+)/?$',
-					'index.php?pagename=' . $slug . '&ascwo-product-id=$matches[1]&ascwo-tplid=$matches[2]',
-					'top'
-				);
-
-				add_rewrite_rule(
-					$match_slug . '/ascwo-templates/([^/]+)/?$',
-					'index.php?pagename=' . $slug . '&ascwo-product-id=$matches[1]',
-					'top'
-				);
-			}
-		}
 		$wp_rewrite->flush_rules(false);
 	}
 

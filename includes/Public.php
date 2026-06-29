@@ -81,23 +81,6 @@ class ASCWO_Public
                 'legacy' => 'productDesignCss',
                 'selectors' => ['.ascwo-design-product', '.ascwo-product-card__btn--customize'],
             ],
-            'productTemplate' => [
-                'legacy' => 'productTemplateCss',
-                'selectors' => ['.ascwo-template-product', '.ascwo-product-card__btn--template'],
-            ],
-            'templateAddToCart' => [
-                'legacy' => '',
-                'selectors' => ['.ascwo-templates-add_to_cart_button'],
-            ],
-            'templateDesign' => [
-                'legacy' => '',
-                'selectors' => ['.ascwo-templates-customize_button'],
-            ],
-            'templatesFilter' => [
-                'legacy' => '',
-                'selectors' => ['.ascwo-templates-category-btn'],
-                'active_selectors' => ['.ascwo-templates-category-btn--active'],
-            ],
             'recapsButton' => [
                 'legacy' => '',
                 'selectors' => ['.ascwo-cart-product-preview'],

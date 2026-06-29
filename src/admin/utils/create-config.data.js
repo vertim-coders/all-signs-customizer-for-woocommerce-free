@@ -194,7 +194,6 @@ export const RequiredOptionsShapes = {
       },
       additionalPrice: 0,
       excludeMaterials: [],
-      enablePricingBySurface: false,
     },
     {
       id: "shape-rounded-sides",
@@ -209,7 +208,6 @@ export const RequiredOptionsShapes = {
       },
       additionalPrice: 8,
       excludeMaterials: [],
-      enablePricingBySurface: false,
     },
     {
       id: "shape-oval",
@@ -224,7 +222,6 @@ export const RequiredOptionsShapes = {
       },
       additionalPrice: 12,
       excludeMaterials: [],
-      enablePricingBySurface: false,
     },
   ],
   label: "Shapes",
@@ -1105,12 +1102,12 @@ const createComponentOption = ({
   },
 });
 
-const rectangleShape = {
-  id: "shape-rectangle",
+const roundedSidesShape = {
+  id: "shape-rounded-sides",
   url: "/aso_default_files/demos/shape-preview.svg",
-  label: "Rectangle",
-  shapeId: "shape-rectangle",
-  additionalPrice: 0,
+  label: "Rounded Sides",
+  shapeId: "shape-rounded-sides",
+  additionalPrice: 8,
 };
 
 const squareShape = {
@@ -1139,39 +1136,39 @@ const roundedBorder = {
   additionalPrice: 6,
 };
 
-const fixingWallScrews = (sizeId, isDefault = true) => ({
-  id: "fixing-wall-screws",
+const fixingTableStand = (sizeId, isDefault = true) => ({
+  id: "fixing-table-stand",
   url: "/aso_default_files/demos/fixing-preview.svg",
-  label: "Wall screws",
+  label: "Table Stand",
   custom: false,
   sizeId,
   isDefault,
   description: "",
-  fixingMethodId: "fixing-screw",
+  fixingMethodId: "fixing-table-stand",
   additionalPrice: 0,
 });
 
-const fixingHangingKit = (sizeId, isDefault = false) => ({
-  id: "fixing-hanging-kit",
+const fixingCeiling = (sizeId, isDefault = false) => ({
+  id: "fixing-ceiling",
   url: "/aso_default_files/demos/fixing-preview.svg",
-  label: "Hanging kit",
+  label: "Ceiling",
   custom: false,
   sizeId,
   isDefault,
   description: "",
-  fixingMethodId: "fixing-hanging",
+  fixingMethodId: "fixing-ceiling",
   additionalPrice: 0,
 });
 
-const fixingStandoffKit = (sizeId, isDefault = false) => ({
-  id: "fixing-standoff-kit",
+const fixingPoleAttachment = (sizeId, isDefault = false) => ({
+  id: "fixing-pole-attachment",
   url: "/aso_default_files/demos/fixing-preview.svg",
-  label: "Standoff kit",
+  label: "Pole Attachment",
   custom: false,
   sizeId,
   isDefault,
   description: "",
-  fixingMethodId: "fixing-stand-off",
+  fixingMethodId: "fixing-pole-attachment",
   additionalPrice: 10,
 });
 
@@ -1189,11 +1186,11 @@ export const RequiredOptionsComponentsAdvanced = {
           suffix: "office-plaque-standard",
           label: "Office plaque Standard",
           sizeId: "size-panel-small",
-          shape: rectangleShape,
+          shape: roundedSidesShape,
           border: standardBorder,
           fixingMethods: [
-            fixingWallScrews("size-panel-small", true),
-            fixingHangingKit("size-panel-small", false),
+            fixingTableStand("size-panel-small", true),
+            fixingCeiling("size-panel-small", false),
           ],
           backgroundColorId: "color-panel-white",
           isDefault: true,
@@ -1206,8 +1203,8 @@ export const RequiredOptionsComponentsAdvanced = {
           shape: squareShape,
           border: roundedBorder,
           fixingMethods: [
-            fixingHangingKit("size-panel-medium", true),
-            fixingStandoffKit("size-panel-medium", false),
+            fixingCeiling("size-panel-medium", true),
+            fixingPoleAttachment("size-panel-medium", false),
           ],
           backgroundColorId: "color-panel-black",
           additionalPrice: 8,
@@ -1228,11 +1225,11 @@ export const RequiredOptionsComponentsAdvanced = {
           suffix: "directional-sign-wall-mount",
           label: "Directional sign Wall mount",
           sizeId: "size-panel-medium",
-          shape: rectangleShape,
+          shape: roundedSidesShape,
           border: standardBorder,
           fixingMethods: [
-            fixingWallScrews("size-panel-medium", true),
-            fixingHangingKit("size-panel-medium", false),
+            fixingTableStand("size-panel-medium", true),
+            fixingCeiling("size-panel-medium", false),
           ],
           backgroundColorId: "color-panel-white",
           isDefault: true,
@@ -1245,8 +1242,8 @@ export const RequiredOptionsComponentsAdvanced = {
           shape: squareShape,
           border: roundedBorder,
           fixingMethods: [
-            fixingStandoffKit("size-panel-large", true),
-            fixingHangingKit("size-panel-large", false),
+            fixingPoleAttachment("size-panel-large", true),
+            fixingCeiling("size-panel-large", false),
           ],
           backgroundColorId: "color-panel-blue",
           additionalPrice: 8,

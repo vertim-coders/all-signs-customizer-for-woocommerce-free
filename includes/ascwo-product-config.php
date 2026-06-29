@@ -294,56 +294,7 @@ class ASCWO_Product_Config
 
 	public function get_templates_buttons($with_upload = false)
 	{
-		ob_start();
-		$content = '';
-		$product = $this->product;
-
-		if ($this->variation_id) {
-			$item_id = $this->variation_id;
-		} else {
-			$item_id = $this->root_product_id;
-		}
-
-		if ($product->is_type('variable')) {
-			$variations = $product->get_available_variations();
-			foreach ($variations as $variation) {
-				if (!$variation['is_purchasable'] || !$variation['is_in_stock']) {
-					continue;
-				}
-				$ascwo_product = new ASCWO_Product_Config($variation['variation_id']);
-				if ($ascwo_product->is_ascwo_customizable()) {
-					echo wp_kses_post($ascwo_product->get_templates_buttons($with_upload));
-				}
-			}
-
-		} else {
-
-			?>
-			<div class="ascwo-buttons-wrap-<?php echo esc_attr($product->get_type()); ?>"
-				data-id="<?php echo esc_attr($this->variation_id); ?>">
-
-				<?php
-
-
-				$default_template_btn_url = $this->get_templates_page_url();
-				$have_pages_settings = get_option("ascwo_config_page");
-
-				$content .= '<a  href="' . $default_template_btn_url . '" class="button ascwo-template-product">' . $have_pages_settings["buttons"]["productTemplateButton"] . '</a>';
-
-				if (!isset($item_id)) {
-					$item_id = '';
-				}
-				if (!isset($default_template_btn_url)) {
-					$default_template_btn_url = '';
-				}
-				echo wp_kses_post(apply_filters('ascwo_show_templates_buttons_in_modal', wp_kses_post($content), $item_id, $default_template_btn_url, $product->get_type()));
-				?>
-			</div>
-			<?php
-		}
-
-		$output = ob_get_clean();
-		return $output;
+		return '';
 	}
 
 	/**
@@ -445,17 +396,7 @@ class ASCWO_Product_Config
 		}
 
 
-		$page_settings = get_option("ascwo_config_page");
-		if (!empty($page_settings) && $page_settings != false) {
-			$configPage = $page_settings["templatePage"];
-			if ($configPage != 0) {
-				$ascwo_page_id = $configPage;
-			} else {
-				$ascwo_page_id = false;
-			}
-		} else {
-			$ascwo_page_id = false;
-		}
+		$ascwo_page_id = false;
 
 
 

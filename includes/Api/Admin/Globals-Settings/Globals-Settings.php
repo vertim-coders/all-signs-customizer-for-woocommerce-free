@@ -535,11 +535,13 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
     if (!is_array($data)) {
       $data = array();
     }
+    $data = $this->sanitize_config_page_settings($data);
     if (isset($data['configuratorPage'])) {
 
       $config_page = get_option("ascwo_config_page", []);
+      $clean_config_page = is_array($config_page) ? $this->sanitize_config_page_settings($config_page) : [];
 
-      if ($config_page !== $data) {
+      if ($config_page !== $data || $clean_config_page !== $data) {
         update_option("ascwo_config_page", $data);
         return rest_ensure_response(["success" => true, "message" => __("Data updated successfully", "all-signs-customizer-for-woocommerce-pro")]);
       } else {
@@ -563,8 +565,39 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
     if (false === $option || empty($option)) {
       return rest_ensure_response(["message" => __("Config page not found", "all-signs-customizer-for-woocommerce-pro")]);
     } else {
-      return rest_ensure_response($option);
+      return rest_ensure_response(is_array($option) ? $this->sanitize_config_page_settings($option) : $option);
     }
+  }
+
+  /**
+   * Remove template-page settings that are no longer exposed by the plugin.
+   *
+   * @param array $settings Stored configuration page settings.
+   * @return array
+   */
+  private function sanitize_config_page_settings(array $settings): array
+  {
+    unset($settings['templatePage']);
+
+    if (isset($settings['buttons']) && is_array($settings['buttons'])) {
+      unset(
+        $settings['buttons']['productTemplateButton'],
+        $settings['buttons']['templateAddToCartButton'],
+        $settings['buttons']['templateDesignButton'],
+        $settings['buttons']['allTemplatesText']
+      );
+    }
+
+    if (isset($settings['buttonStyles']) && is_array($settings['buttonStyles'])) {
+      unset(
+        $settings['buttonStyles']['productTemplate'],
+        $settings['buttonStyles']['templateAddToCart'],
+        $settings['buttonStyles']['templateDesign'],
+        $settings['buttonStyles']['templatesFilter']
+      );
+    }
+
+    return $settings;
   }
 
   /**

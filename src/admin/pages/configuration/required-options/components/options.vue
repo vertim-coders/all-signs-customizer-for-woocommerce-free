@@ -691,12 +691,12 @@
                   <template v-if="subMode === 'existing'">
                     <p class="ascwo-muted">{{ __('Select one or more existing fixing methods. The default method for this design is defined in the table below.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
                     <div class="ascwo-option-list ascwo-fixing-option-list">
-                      <label v-for="item in fixingOptions" :key="item.id" class="ascwo-check-row ascwo-preview-check-row">
+                      <label v-for="item in availableFixingOptions" :key="item.id" class="ascwo-check-row ascwo-preview-check-row">
                         <input type="checkbox" :checked="draftIds.includes(item.id)" @change="toggleDraftId(item.id, $event.target.checked)" />
                         <span class="ascwo-mini-preview" v-html="fixingPreview(item)"></span>
                         <span><strong>{{ item.label }}</strong></span>
                       </label>
-                      <div v-if="fixingOptions.length === 0" class="ascwo-empty-cell">{{ __('No fixing methods are available.', 'all-signs-customizer-for-woocommerce-pro') }}</div>
+                      <div v-if="availableFixingOptions.length === 0" class="ascwo-empty-cell">{{ __('No fixing methods are available.', 'all-signs-customizer-for-woocommerce-pro') }}</div>
                     </div>
                     <p v-if="draftIds.length" class="ascwo-muted ascwo-mt-2">{{ draftIds.length }} {{ draftIds.length > 1 ? __('fixing methods selected', 'all-signs-customizer-for-woocommerce-pro') : __('fixing method selected', 'all-signs-customizer-for-woocommerce-pro') }}</p>
                     <div class="ascwo-form-actions">
@@ -755,7 +755,7 @@
                         <td><strong>{{ item.label }}</strong><p>{{ item.description }}</p></td>
                         <td><span class="ascwo-mini-preview" v-html="fixingPreview(item.source || item.item)"></span></td>
                         <td><button type="button" :class="['ascwo-toggle', item.isDefault ? 'is-active' : '']" @click="setDefaultNested('fixingMethods', item.id)"><span></span></button></td>
-                        <td><div class="ascwo-row-actions"><button type="button" class="ascwo-secondary-button" @click="editFixing(item.id)">{{ __('Edit', 'all-signs-customizer-for-woocommerce-pro') }}</button><button type="button" class="ascwo-danger-button" @click="removeNestedItem('fixingMethods', item.id)">{{ __('Remove', 'all-signs-customizer-for-woocommerce-pro') }}</button></div></td>
+                        <td><div class="ascwo-row-actions"><button type="button" class="ascwo-danger-button" @click="removeNestedItem('fixingMethods', item.id)">{{ __('Remove', 'all-signs-customizer-for-woocommerce-pro') }}</button></div></td>
                       </tr>
                       <tr v-if="selectedFixingRows.length === 0"><td colspan="5" class="ascwo-empty-cell">{{ __('No fixing methods are available for this design yet.', 'all-signs-customizer-for-woocommerce-pro') }}</td></tr>
                     </tbody>
@@ -1133,12 +1133,12 @@
                   <template v-if="subMode === 'existing'">
                     <p>{{ __('Select one or more existing borders. The default border for this design is defined in the table below.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
                     <div class="ascwo-option-list ascwo-border-option-list">
-                      <label v-for="item in borderOptions" :key="item.id" class="ascwo-check-row ascwo-preview-check-row">
+                      <label v-for="item in availableBorderOptions" :key="item.id" class="ascwo-check-row ascwo-preview-check-row">
                         <input type="checkbox" :checked="draftIds.includes(item.id)" @change="toggleDraftId(item.id, $event.target.checked)" />
                         <span class="ascwo-mini-preview" v-html="borderPreview(item)"></span>
                         <span><strong>{{ item.label }}</strong><small>{{ item.description || item.borderKey || '' }}</small></span>
                       </label>
-                      <p v-if="borderOptions.length === 0" class="ascwo-muted">{{ __('No existing borders are available.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                      <p v-if="availableBorderOptions.length === 0" class="ascwo-muted">{{ __('No existing borders are available.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
                     </div>
                     <p v-if="draftIds.length" class="ascwo-muted ascwo-mt-2">{{ draftIds.length }} {{ draftIds.length > 1 ? __('borders selected', 'all-signs-customizer-for-woocommerce-pro') : __('border selected', 'all-signs-customizer-for-woocommerce-pro') }}</p>
                   </template>
@@ -1190,7 +1190,7 @@
                         <td>{{ item.label }}</td>
                         <td><span class="ascwo-mini-preview" v-html="borderPreview(item)"></span></td>
                         <td><button type="button" :class="['ascwo-toggle', item.isDefault ? 'is-active' : '']" @click="setDefaultNested('borders', item.id)"><span></span></button></td>
-                        <td><div class="ascwo-row-actions"><button type="button" class="ascwo-secondary-button" @click="editBorder(item.id)">{{ __('Edit', 'all-signs-customizer-for-woocommerce-pro') }}</button><button type="button" class="ascwo-danger-button" @click="removeNestedItem('borders', item.id)">{{ __('Remove', 'all-signs-customizer-for-woocommerce-pro') }}</button></div></td>
+                        <td><div class="ascwo-row-actions"><button type="button" class="ascwo-danger-button" @click="removeNestedItem('borders', item.id)">{{ __('Remove', 'all-signs-customizer-for-woocommerce-pro') }}</button></div></td>
                       </tr>
                       <tr v-if="borderRows.length === 0"><td colspan="5" class="ascwo-empty-cell">{{ __('No borders are available for this design yet.', 'all-signs-customizer-for-woocommerce-pro') }}</td></tr>
                     </tbody>
@@ -1533,6 +1533,15 @@ const borderOptions = computed(() => makeOptionRows(sectionItems('borders'), 'bo
     ...item,
     previewHtml: globalPreview(item.managedItem, borderFallbackPreview(item)),
   })));
+const selectedBorderKeys = computed(() => new Set((designForm.value.borders.items || []).flatMap((item) => [
+  String(item.id || ''),
+  String(item.borderId || ''),
+]).filter(Boolean)));
+const availableBorderOptions = computed(() => borderOptions.value.filter((item) => {
+  const optionId = String(item.id || '');
+  const managedId = String(item.borderId || '');
+  return !selectedBorderKeys.value.has(optionId) && (!managedId || !selectedBorderKeys.value.has(managedId));
+}));
 const managedBorderChoices = computed(() => {
   const requiredBorderIds = new Set(borderOptions.value.map((item) => String(item.borderId || '')));
   const rows = managedChoices(managedBorderLibrary.value, 'border').map((item) => ({ ...item, borderId: item.id }));
@@ -1704,6 +1713,15 @@ const selectedFixingRows = computed(() => (designForm.value.fixingMethods.items 
     source,
     item,
   };
+}));
+const selectedFixingKeys = computed(() => new Set((designForm.value.fixingMethods.items || []).flatMap((item) => [
+  String(item.id || ''),
+  String(item.fixingMethodId || ''),
+]).filter(Boolean)));
+const availableFixingOptions = computed(() => fixingOptions.value.filter((item) => {
+  const optionId = String(item.id || '');
+  const managedId = String(item.fixingMethodId || '');
+  return !selectedFixingKeys.value.has(optionId) && (!managedId || !selectedFixingKeys.value.has(managedId));
 }));
 const selectedManagedShape = computed(() => managedShapeChoices.value.find((item) => String(item.value) === String(customDraft.value.shapeId || '')) || null);
 const managedFixingChoices = computed(() => {
@@ -2112,9 +2130,7 @@ const openPicker = (mode) => {
     backgroundDraft.value = emptyBackgroundDraft();
   }
   if (mode === 'fixing') {
-    draftIds.value = Array.isArray(designForm.value?.fixingMethods?.items)
-      ? designForm.value.fixingMethods.items.filter((item) => !item?.custom).map((item) => String(item.id))
-      : [];
+    draftIds.value = [];
     customDraft.value = {
       label: '',
       url: '',
@@ -2133,9 +2149,7 @@ const openPicker = (mode) => {
     };
   }
   if (mode === 'border') {
-    draftIds.value = Array.isArray(designForm.value?.borders?.items)
-      ? designForm.value.borders.items.filter((item) => !item?.custom).map((item) => String(item.id))
-      : [];
+    draftIds.value = [];
     customDraft.value = {
       label: '',
       url: '',
@@ -2279,13 +2293,7 @@ const createAndAddBackgroundColor = async () => {
 
 const setFixingSubMode = (mode) => {
   subMode.value = mode;
-  if (mode === 'existing') {
-    draftIds.value = Array.isArray(designForm.value?.fixingMethods?.items)
-      ? designForm.value.fixingMethods.items.filter((item) => !item?.custom).map((item) => String(item.id))
-      : [];
-  } else {
-    draftIds.value = [];
-  }
+  draftIds.value = [];
   customDraft.value = {
     label: '',
     url: '',
@@ -2336,12 +2344,12 @@ const saveExistingFixingMethods = async () => {
   if (!draftIds.value.length || isFixingSaving.value) return;
   isFixingSaving.value = true;
   try {
-    const customItems = (designForm.value.fixingMethods.items || []).filter((item) => item.custom);
+    const currentItems = Array.isArray(designForm.value.fixingMethods.items) ? designForm.value.fixingMethods.items : [];
     const selectedItems = draftIds.value
-      .map((id) => fixingOptions.value.find((item) => item.id === String(id)))
+      .map((id) => availableFixingOptions.value.find((item) => item.id === String(id)))
       .filter(Boolean)
       .map(fixingDesignItemFromSource);
-    designForm.value.fixingMethods.items = withOneDefault([...selectedItems, ...customItems]);
+    designForm.value.fixingMethods.items = withOneDefault([...currentItems, ...selectedItems]);
     closeEditor();
     await persistDesignSilently();
     toastMessage(__('Fixing methods added.', 'all-signs-customizer-for-woocommerce-pro'));
@@ -2559,9 +2567,7 @@ const syncManagedBorderDraft = () => {
 
 const setBorderSubMode = (mode) => {
   subMode.value = mode;
-  draftIds.value = mode === 'existing'
-    ? (Array.isArray(designForm.value?.borders?.items) ? designForm.value.borders.items.filter((item) => !item?.custom).map((item) => String(item.id)) : [])
-    : [];
+  draftIds.value = [];
   customDraft.value = {
     label: '',
     url: '',
@@ -2579,7 +2585,7 @@ const saveBorderEditor = async () => {
   try {
     if (subMode.value === 'existing') {
       addNestedItems('borders', draftIds.value, (id) => {
-        const source = borderOptions.value.find((item) => item.id === String(id));
+        const source = availableBorderOptions.value.find((item) => item.id === String(id));
         return borderDesignItemFromSource(source || { id });
       });
       return;
@@ -2738,31 +2744,6 @@ const editShape = (id) => {
   subMode.value = item?.custom ? 'custom' : 'existing';
   draftIds.value = item?.custom ? [] : [String(id)];
   customDraft.value = { ...item };
-};
-
-const editBorder = (id) => {
-  const item = designForm.value.borders.items.find((entry) => String(entry.id) === String(id));
-  openPicker('border');
-  subMode.value = item?.custom ? 'custom' : 'existing';
-  draftIds.value = item?.custom ? [] : [String(id)];
-  customDraft.value = { ...item };
-};
-
-const editFixing = (id) => {
-  const item = designForm.value.fixingMethods.items.find((entry) => String(entry.id) === String(id));
-  openPicker('fixing');
-  subMode.value = item?.custom ? 'custom' : 'existing';
-  draftIds.value = item?.custom ? [] : [String(id)];
-  customDraft.value = {
-    label: '',
-    url: '',
-    additionalPrice: 0,
-    fixingMethodId: '',
-    sizeId: selectedSizeRows.value.find((size) => size.isDefault)?.id || selectedSizeRows.value[0]?.id || sizeOptions.value[0]?.id || '',
-    excludeSizes: [],
-    excludeShapes: [],
-    ...item,
-  };
 };
 
 const emptyTextZone = () => ({

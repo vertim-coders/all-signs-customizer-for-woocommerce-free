@@ -38,27 +38,6 @@
                         </button>
                     </div>
                 </div>
-                <div class="ascwo-bg-[#F8F9FB] ascwo-px-8 ascwo-py-2 ascwo-border-solid ascwo-border-[1px] ascwo-border-t-0 ascwo-border-[#DDDDDD]">
-                    <div class="ascwo-flex ascwo-flex-col ascwo-space-y-3">
-                        <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __('Template page', 'all-signs-customizer-for-woocommerce-pro') }}</label>
-                        <select class="ascwo-w-full" v-model="configPages.templatePage">
-                            <option v-for="(page,key) in pages" :value="page.id" :key="key">{{ page.title }}</option>
-                        </select>
-                    </div>
-                    <div class="ascwo-flex ascwo-justify-end ascwo-space-x-2 ascwo-w-4/4 ascwo-bg-[#F8F9FB] ascwo-text-[12px] ascwo-px-4 ascwo-py-4 ascwo-pb-2">
-                    
-                        <button :disabled="isLoading" @click="handleAddNewPage('template')" class="ascwo-flex ascwo-w-fit ascwo-h-fit ascwo-rounded ascwo-bg-[#016464] ascwo-px-4 ascwo-space-x-2 ascwo-p-1.5 ascwo-border-none ascwo-text-white ascwo-opacity-90 hover:ascwo-opacity-100 ascwo-cursor-pointer">
-                            <svg class="ascwo-w-5 ascwo-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g id="plus-lg">
-                                <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
-                                </g>
-                            </svg>
-                            <div class="ascwo-text-[14px]">
-                                {{ __('Add new page', 'all-signs-customizer-for-woocommerce-pro') }}
-                            </div>
-                        </button>
-                    </div>
-                </div>
             </div>
             <div v-if="state == 'buttons'" class="ascwo-px-10">
                 <div class="ascwo-space-y-3">
@@ -254,13 +233,8 @@ var pages = ref([]);
 const state = ref('pages');
 var configPages = ref({
     configuratorPage:0,
-    templatePage:0,
     buttons:{
         productDesignButton:'Customize The Product',
-        productTemplateButton:'Design From Example',
-        templateAddToCartButton:'Add To Cart',
-        templateDesignButton: 'Customize',
-        allTemplatesText:"All",
         recapsButtonOnCart:'Sign Recaps'        
     },
     buttonStyles:{},
@@ -284,6 +258,7 @@ const fetchData = async () => {
     if(!confPages.message){
         configPages.value = {...configPages.value,...confPages};
     }
+    cleanupTemplateSettings();
     ensureButtonStyleDefaults();
     pages.value = pgs;
     isFetching.value = false;
@@ -291,6 +266,7 @@ const fetchData = async () => {
 
 const saveConfigPage = async () => {
     isLoading.value = true;
+    cleanupTemplateSettings();
     ensureButtonStyleDefaults();
     const op = await api.saveGlobalSettingsConfigPage(configPages.value);
     if(op.success){
@@ -298,6 +274,7 @@ const saveConfigPage = async () => {
         if(!confPages.message){
             configPages.value = {...configPages.value,...confPages};
         }
+        cleanupTemplateSettings();
         isLoading.value = false;
         if(op.success == true){
             toastMessage(op.message);
@@ -326,28 +303,6 @@ const buttonItems = [
         note: __('Shown on product and product list pages.', 'all-signs-customizer-for-woocommerce-pro')
     },
     {
-        key: 'productTemplate',
-        textKey: 'productTemplateButton',
-        label: __('Design from example button on product', 'all-signs-customizer-for-woocommerce-pro'),
-        note: __('Shown when templates are available for the product.', 'all-signs-customizer-for-woocommerce-pro')
-    },
-    {
-        key: 'templateAddToCart',
-        textKey: 'templateAddToCartButton',
-        label: __('Add to cart button on templates page', 'all-signs-customizer-for-woocommerce-pro')
-    },
-    {
-        key: 'templateDesign',
-        textKey: 'templateDesignButton',
-        label: __('Design button on templates page', 'all-signs-customizer-for-woocommerce-pro')
-    },
-    {
-        key: 'templatesFilter',
-        textKey: 'allTemplatesText',
-        label: __('Templates filter tabs (All + categories)', 'all-signs-customizer-for-woocommerce-pro'),
-        note: __('Style applies to all category tabs on the templates page.', 'all-signs-customizer-for-woocommerce-pro')
-    },
-    {
         key: 'recapsButton',
         textKey: 'recapsButtonOnCart',
         label: __('Recaps button in cart', 'all-signs-customizer-for-woocommerce-pro')
@@ -358,22 +313,6 @@ const buttonMeta = {
     productDesign: {
         label: __('Customize button settings', 'all-signs-customizer-for-woocommerce-pro'),
         textKey: 'productDesignButton'
-    },
-    productTemplate: {
-        label: __('Design from example button settings', 'all-signs-customizer-for-woocommerce-pro'),
-        textKey: 'productTemplateButton'
-    },
-    templateAddToCart: {
-        label: __('Add to cart button settings', 'all-signs-customizer-for-woocommerce-pro'),
-        textKey: 'templateAddToCartButton'
-    },
-    templateDesign: {
-        label: __('Template design button settings', 'all-signs-customizer-for-woocommerce-pro'),
-        textKey: 'templateDesignButton'
-    },
-    templatesFilter: {
-        label: __('Templates filter tabs settings', 'all-signs-customizer-for-woocommerce-pro'),
-        textKey: 'allTemplatesText'
     },
     recapsButton: {
         label: __('Recaps button settings', 'all-signs-customizer-for-woocommerce-pro'),
@@ -401,94 +340,6 @@ const ensureButtonStyleDefaults = () => {
                 background:'#0b5fcc',
                 color:'#ffffff',
                 borderColor:'#0b5fcc'
-            },
-            customCss:'',
-            useCustomCss:false
-        },
-        productTemplate: {
-            fields:{
-                background:'#f4c542',
-                color:'#ffffff',
-                borderColor:'#f4c542',
-                borderWidth:'0px',
-                borderStyle:'solid',
-                borderRadius:'8px',
-                paddingY:'10px',
-                paddingX:'12px',
-                fontSize:'14px',
-                fontWeight:'600',
-                textTransform:'none'
-            },
-            hover:{
-                background:'#fcac29',
-                color:'#ffffff',
-                borderColor:'#fcac29'
-            },
-            customCss:'',
-            useCustomCss:false
-        },
-        templateAddToCart: {
-            fields:{
-                background:'#0374e3',
-                color:'#ffffff',
-                borderColor:'#0374e3',
-                borderWidth:'0px',
-                borderStyle:'solid',
-                borderRadius:'5px',
-                paddingY:'10px',
-                paddingX:'12px',
-                fontSize:'14px',
-                fontWeight:'600',
-                textTransform:'none'
-            },
-            hover:{
-                background:'#0b5fcc',
-                color:'#ffffff',
-                borderColor:'#0b5fcc'
-            },
-            customCss:'',
-            useCustomCss:false
-        },
-        templateDesign: {
-            fields:{
-                background:'#febd52',
-                color:'#ffffff',
-                borderColor:'#febd52',
-                borderWidth:'0px',
-                borderStyle:'solid',
-                borderRadius:'6px',
-                paddingY:'10px',
-                paddingX:'12px',
-                fontSize:'14px',
-                fontWeight:'600',
-                textTransform:'none'
-            },
-            hover:{
-                background:'#fcac29',
-                color:'#ffffff',
-                borderColor:'#fcac29'
-            },
-            customCss:'',
-            useCustomCss:false
-        },
-        templatesFilter: {
-            fields:{
-                background:'transparent',
-                color:'#6b7280',
-                borderColor:'transparent',
-                borderWidth:'0px',
-                borderStyle:'solid',
-                borderRadius:'999px',
-                paddingY:'8px',
-                paddingX:'12px',
-                fontSize:'12px',
-                fontWeight:'600',
-                textTransform:'none'
-            },
-            hover:{
-                background:'#f3f4f6',
-                color:'#111827',
-                borderColor:'transparent'
             },
             customCss:'',
             useCustomCss:false
@@ -534,6 +385,24 @@ const ensureButtonStyleDefaults = () => {
             }
         };
     });
+};
+
+const cleanupTemplateSettings = () => {
+    delete configPages.value.templatePage;
+
+    if (configPages.value.buttons) {
+        delete configPages.value.buttons.productTemplateButton;
+        delete configPages.value.buttons.templateAddToCartButton;
+        delete configPages.value.buttons.templateDesignButton;
+        delete configPages.value.buttons.allTemplatesText;
+    }
+
+    if (configPages.value.buttonStyles) {
+        delete configPages.value.buttonStyles.productTemplate;
+        delete configPages.value.buttonStyles.templateAddToCart;
+        delete configPages.value.buttonStyles.templateDesign;
+        delete configPages.value.buttonStyles.templatesFilter;
+    }
 };
 
 const activeButtonLabel = computed(() => buttonMeta[activeButtonKey.value]?.label || '');
@@ -611,12 +480,7 @@ const addNewPage = async () => {
         const op = await api.addPageInGlobalSettings(page.value);
         if(op.id){
             const pgs = await api.getGlobalSettingsPages();
-            if(pageFor.value == 'design'){
-                configPages.value.configuratorPage = op.id;
-            }else{
-                configPages.value.templatePage = op.id
-            }
-            pageFor.value = 'design'
+            configPages.value.configuratorPage = op.id;
             pages.value = pgs;
             isLoading.value = false;
             modal();
@@ -639,9 +503,7 @@ const setBack = () => {
 function modal(){
     openModal.value = !openModal.value
 }
-const pageFor = ref('design');
-const handleAddNewPage = (state) => {
-    pageFor.value = state;
+const handleAddNewPage = () => {
     modal();
 }
 </script>
