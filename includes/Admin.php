@@ -187,6 +187,7 @@ class ASCWO_Admin
         $configurator_data = array(
             "fixing_methods_url" => ASCWO_ASSETS . '/images/fixing-methodes',
             "borders_url" => ASCWO_ASSETS . '/images/borders',
+            "filters_url" => ASCWO_ASSETS . '/images/filters',
         );
         wp_localize_script("ascwo-admin", "ascwo_data", $script_data);
         wp_localize_script("ascwo-admin", "ascwo_configurator_data", $configurator_data);

@@ -623,8 +623,10 @@ import { __, sprintf } from "@wordpress/i18n";
 
 const props = defineProps({
   isEdit: { type: Boolean, default: false },
+  configId: { type: [String, Number], default: "" },
   configToEdit: { type: Object, default: () => ({}) },
 });
+const isEdit = computed(() => props.isEdit);
 
 const emit = defineEmits(['onFinish', 'onCancel']);
 const router = useRouter();
@@ -660,6 +662,7 @@ const wizard = ref({
 const newConfig = ref({ name: "", description: "", icon: "" });
 const selectedWooProductIds = ref([]);
 const wooProductsOptions = ref([]);
+const editConfig = ref(null);
 
 const productFamilies = [
   {
@@ -1079,6 +1082,31 @@ const finalCreate = async () => {
   if (isLoading.value) return;
   isLoading.value = true;
   try {
+     if (props.isEdit) {
+       const existing = editConfig.value || {};
+       const response = await api.updateConfig({
+          id: props.configId,
+          name: newConfig.value.name,
+          description: newConfig.value.description,
+          productFamily: existing.productFamily || selectedFamilyTitle.value,
+          materialType: existing.materialType || wizard.value.materialType,
+          productType: existing.productType || canonicalConfigProductType.value,
+          pricingMode: existing.pricingMode || 'frame-fit',
+          icon: newConfig.value.icon,
+          popImg: existing.popImg || '',
+          product_ids: selectedWooProductIds.value,
+       });
+
+       if (response.success) {
+          toastMessage(response.message, 'success');
+          router.push('/configuration');
+          emit('onFinish');
+       } else {
+          toastMessage(response.message || __('Update failed', 'all-signs-customizer-for-woocommerce-pro'), 'error');
+       }
+       return;
+     }
+
      const fontsForDemo = wizard.value.includeDemo ? await ensureFontsForDemo() : [];
      const data = buildConfigData(fontsForDemo);
      const response = await api.addConfig({
@@ -1111,16 +1139,45 @@ const finalCreate = async () => {
   finally { isLoading.value = false; }
 };
 
+const loadEditConfig = async () => {
+  if (!props.isEdit || !props.configId) return;
+
+  const config = await api.getConfig(props.configId);
+  editConfig.value = config || {};
+  const data = config?.data || {};
+  const productType = String(config?.productType || data?.productType || '').trim();
+  const materialType = String(config?.materialType || data?.materialType || 'simple').trim();
+
+  newConfig.value = {
+    name: config?.name || "",
+    description: config?.description || "",
+    icon: config?.icon || data?.icon || "",
+  };
+  wizard.value.step = 4;
+  wizard.value.materialType = materialType || 'simple';
+  wizard.value.productType = productType === 'banner'
+    ? 'banner'
+    : (productType === 'sticker' ? 'sticker' : 'signboard');
+};
+
 onMounted(async () => {
-  if (props.isEdit) wizard.value.step = 4;
-  const res = await api.getUnassignedProducts({ per_page: 100 });
+  await loadEditConfig();
+  const productParams = { per_page: 100 };
+  if (props.isEdit && props.configId) productParams.config_id = props.configId;
+  const res = await api.getUnassignedProducts(productParams);
   wooProductsOptions.value = (Array.isArray(res) ? res : []).map(p => ({
     value: p.id,
     label: cleanProductTitle(p.title),
     image: p.image,
     sku: p.sku || '',
-    barcode: p.barcode || ''
+    barcode: p.barcode || '',
+    assignedConfigId: p.assigned_config_id || 0,
   }));
+  if (props.isEdit && props.configId) {
+    selectedWooProductIds.value = wooProductsOptions.value
+      .filter((product) => String(product.assignedConfigId || '') === String(props.configId))
+      .map((product) => product.value);
+  }
 });
 </script>
 

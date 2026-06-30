@@ -340,10 +340,9 @@ const delConfig = async () => {
 };
 
 const openEditModalFor = (c) => {
-  // For visual alignment I'm skipping the full modal logic but keeping the button
+  if (!c?.id) return;
   showActionMenu.value = false;
-  toastMessage(__('Opening editor...', 'all-signs-customizer-for-woocommerce-pro'));
-  goToMaterial(c);
+  router.push({ name: 'edit-configuration', params: { configId: c.id } });
 };
 
 onMounted(() => fetchConfigs(Number(route.query.page) || 1));

@@ -83,7 +83,10 @@ const router = createRouter({
       path: "/configuration/:configId/edit",
       name: "edit-configuration",
       component: CreateConfiguration,
-      props: true,
+      props: (route) => ({
+        isEdit: true,
+        configId: route.params.configId,
+      }),
     },
     // Configurator Layout - nested routes with sidebar navigation
     {

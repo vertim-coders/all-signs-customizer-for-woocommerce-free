@@ -402,6 +402,7 @@ class ASCWO_Frontend
                             'currency_pos' => get_option('woocommerce_currency_pos'),
                             'fixing_methods_url' => ASCWO_ASSETS . '/images/fixing-methodes',
                             'borders_url' => ASCWO_ASSETS . '/images/borders',
+                            "filters_url" => ASCWO_ASSETS . '/images/filters',
                             'templates' => array(
                                 'designFromTemplate' => isset($template) && !is_string($template),
                                 'template' => isset($template) && !is_string($template) ? $template : array(),
@@ -429,7 +430,8 @@ class ASCWO_Frontend
                             </div>
                         </div>
                         -->
-                        <div id="ascwo-frontend-app" class="ascwo-frontend-app ascwo-configurator-container" data-ascwo-page="configurator"></div>
+                        <div id="ascwo-frontend-app" class="ascwo-frontend-app ascwo-configurator-container" data-ascwo-page="configurator">
+                        </div>
                         <?php
                     }
                 }

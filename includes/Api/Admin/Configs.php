@@ -334,7 +334,7 @@ class ASCWO_Api_Configs extends WP_REST_Controller
                 array(
                     'methods' => \WP_REST_Server::READABLE,
                     'callback' => array($this, 'get_preview_config_data'),
-                    'permission_callback' => array($this, 'get_config_permissions_check'),
+                    'permission_callback' => '__return_true',
                     'args' => array(
                         'config_id' => array(
                             'type' => 'integer',
@@ -550,6 +550,7 @@ class ASCWO_Api_Configs extends WP_REST_Controller
             'currencySymbol' => html_entity_decode(get_woocommerce_currency_symbol()),
             'currency_pos' => get_option('woocommerce_currency_pos'),
             'fixing_methods_url' => ASCWO_ASSETS . '/images/fixing-methodes',
+            "filters_url" => ASCWO_ASSETS . '/images/filters',
             'borders_url' => ASCWO_ASSETS . '/images/borders',
             'frontend_nonce' => wp_create_nonce('ascwo_add_to_cart_after_custom'),
         );
