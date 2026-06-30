@@ -4703,8 +4703,16 @@ to {
 }
 .ascwo-background-section-heading[data-v-3bc77cb7] {
   display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
   justify-items: start;
+  column-gap: 18px;
   gap: 6px;
+}
+.ascwo-background-section-heading .ascwo-primary-button[data-v-3bc77cb7] {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  justify-self: end;
 }
 .ascwo-background-section-heading h4[data-v-3bc77cb7],
 .ascwo-background-editor-card h4[data-v-3bc77cb7],

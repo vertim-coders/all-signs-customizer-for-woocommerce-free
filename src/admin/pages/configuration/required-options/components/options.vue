@@ -551,13 +551,13 @@
             <template v-else-if="activeModule === 'background'">
               <section class="ascwo-module-card">
                 <div class="ascwo-toggle-card ascwo-background-toggle-card">
-                  <div><h4>{{ __('Background colors', 'all-signs-customizer-for-woocommerce-pro') }}</h4><p>{{ __('Enable or disable the background color set for this design.', 'all-signs-customizer-for-woocommerce-pro') }}</p></div>
+                  <div><h4>{{ __('Predefined colors', 'all-signs-customizer-for-woocommerce-pro') }}</h4><p>{{ __('Enable or disable the background color set for this design.', 'all-signs-customizer-for-woocommerce-pro') }}</p></div>
                   <button type="button" :class="['ascwo-toggle', designForm.backgrounds.enabled ? 'is-active' : '']" @click="toggleSectionEnabled('backgrounds')"><span></span></button>
                 </div>
                 <template v-if="editorMode !== 'background'">
                   <div class="ascwo-background-section-heading">
                     <h4>{{ __('Background colors linked to this design', 'all-signs-customizer-for-woocommerce-pro') }}</h4>
-                    <p>{{ __('Select the colors available for this design. The default color is defined only for this design in the table below.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                    <p>{{ __('Select the colors available for this design.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
                     <button type="button" class="ascwo-primary-button" :disabled="!designForm.backgrounds.enabled" @click="openPicker('background')">{{ __('Add color', 'all-signs-customizer-for-woocommerce-pro') }}</button>
                   </div>
                   <div class="ascwo-table-card ascwo-background-table-card">
@@ -658,13 +658,13 @@
                   </template>
                 </div>
                 <div class="ascwo-toggle-card ascwo-custom-color-card">
-                  <div><h4>{{ __('Custom color', 'all-signs-customizer-for-woocommerce-pro') }}</h4><p>{{ __('Allow customers to choose a custom color for this design.', 'all-signs-customizer-for-woocommerce-pro') }}</p><label v-if="designForm.backgrounds.enableCustomColor" class="ascwo-custom-color-label"><span class="ascwo-form-label">{{ __('Custom color label', 'all-signs-customizer-for-woocommerce-pro') }}</span><input v-model.trim="designForm.backgrounds.customColorLabel" class="ascwo-form-input" /></label></div>
+                  <div><h4>{{ __('Unlimited colors', 'all-signs-customizer-for-woocommerce-pro') }}</h4><p>{{ __('Allow customers to choose a custom color for this design.', 'all-signs-customizer-for-woocommerce-pro') }}</p><label v-if="designForm.backgrounds.enableCustomColor" class="ascwo-custom-color-label"><span class="ascwo-form-label">{{ __('Custom color label', 'all-signs-customizer-for-woocommerce-pro') }}</span><input v-model.trim="designForm.backgrounds.customColorLabel" class="ascwo-form-input" /></label></div>
                   <button type="button" :class="['ascwo-toggle', designForm.backgrounds.enableCustomColor ? 'is-active' : '']" @click="designForm.backgrounds.enableCustomColor = !designForm.backgrounds.enableCustomColor"><span></span></button>
                 </div>
                 <div class="ascwo-save-row">
                   <button type="button" class="ascwo-primary-button" :disabled="savingModule === 'Background'" @click="saveDesignModule('Background')">
                     <span v-if="savingModule === 'Background'" class="ascwo-button-loader"></span>
-                    <span v-else>{{ __('Save Background', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                    <span v-else>{{ __('Save Color', 'all-signs-customizer-for-woocommerce-pro') }}</span>
                   </button>
                 </div>
               </section>
@@ -1256,7 +1256,7 @@ const modules = [
   { key: 'overview', label: 'Design details', description: 'Define the basic information for this design.', icon: '▣' },
   { key: 'size', label: 'Size', description: 'Define available sizes', icon: '↔' },
   { key: 'shape', label: 'Shape', description: 'Define available shapes', icon: '◇' },
-  { key: 'background', label: 'Background', description: 'Set background options', icon: '◩' },
+  { key: 'background', label: 'Color', description: 'Set background color options', icon: '◩' },
   { key: 'fixing', label: 'Fixing', description: 'Define fixing methods', icon: '⌘' },
   { key: 'text', label: 'Text', description: 'Configure text zones', icon: 'A' },
   { key: 'image', label: 'Image', description: 'Configure image zones', icon: '▤' },
@@ -2067,7 +2067,8 @@ const saveDesignModule = async (label) => {
     }
     const saved = await saveDesign(false);
     if (saved && label) {
-      toastMessage(`${label} saved`);
+      const displayLabel = label === 'Background' ? 'Color' : label;
+      toastMessage(`${displayLabel} saved`);
     } else if (!saved) {
       toastMessage(__('Unable to save design changes.', 'all-signs-customizer-for-woocommerce-pro'), 'error');
     }
@@ -3891,8 +3892,17 @@ onMounted(fetchComponent);
 
 .ascwo-background-section-heading {
   display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
   justify-items: start;
+  column-gap: 18px;
   gap: 6px;
+}
+
+.ascwo-background-section-heading .ascwo-primary-button {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  justify-self: end;
 }
 
 .ascwo-background-section-heading h4,
