@@ -24,6 +24,38 @@ class ASCWO_Admin
     }
 
     /**
+     * Register the inline data carrier used by the configurator preview module.
+     *
+     * @return void
+     */
+    private function enqueue_frontend_data_script()
+    {
+        if (!wp_script_is('ascwo-frontend-data', 'registered')) {
+            wp_register_script('ascwo-frontend-data', false, array(), ASCWO_VERSION, true);
+        }
+
+        wp_enqueue_script('ascwo-frontend-data');
+    }
+
+    /**
+     * Add global data before the configurator preview module executes.
+     *
+     * @param string $object_name JavaScript global object name.
+     * @param array  $data        Data to expose.
+     *
+     * @return void
+     */
+    private function add_frontend_inline_data($object_name, array $data)
+    {
+        $this->enqueue_frontend_data_script();
+        wp_add_inline_script(
+            'ascwo-frontend-data',
+            'window.' . $object_name . ' = ' . wp_json_encode($data) . ';',
+            'before'
+        );
+    }
+
+    /**
      * Register the plugin admin menu and submenus.
      *
      * @return void
@@ -76,7 +108,13 @@ class ASCWO_Admin
         wp_enqueue_script('ascwo-admin', ASCWO_ASSETS . '/js/admin.js', ['jquery', 'ascwo-vendor', 'ascwo-runtime', 'wp-i18n', 'editor'], $this->asset_version('/assets/js/admin.js'), true);
         wp_set_script_translations('ascwo-admin', 'all-signs-customizer-for-woocommerce-pro');
         wp_enqueue_script('ascwo-fabric', ASCWO_ASSETS . '/utilities/fabric.min.js', [], $this->asset_version('/assets/utilities/fabric.min.js'), true);
-        wp_enqueue_script('ascwo-frontend', ASCWO_ASSETS . '/js/frontend.js', ['jquery', 'ascwo-vendor', 'ascwo-runtime', 'ascwo-fabric'], $this->asset_version('/assets/js/frontend.js'), true);
+        $this->enqueue_frontend_data_script();
+        if (function_exists('wp_enqueue_script_module')) {
+            wp_enqueue_script_module('ascwo-frontend', ASCWO_ASSETS . '/js/frontend.js', array(), $this->asset_version('/assets/js/frontend.js'), array('in_footer' => true));
+        } else {
+            wp_enqueue_script('ascwo-frontend', ASCWO_ASSETS . '/js/frontend.js', ['jquery', 'ascwo-vendor', 'ascwo-runtime', 'ascwo-fabric'], $this->asset_version('/assets/js/frontend.js'), true);
+            wp_script_add_data('ascwo-frontend', 'type', 'module');
+        }
 
         wp_enqueue_style('ascwo-toast', ASCWO_ASSETS . '/utilities/toast.min.css', false, $this->asset_version('/assets/utilities/toast.min.css'));
         wp_enqueue_script('ascwo-toast', ASCWO_ASSETS . '/utilities/toast.min.js', [], $this->asset_version('/assets/utilities/toast.min.js'), true);
@@ -145,14 +183,15 @@ class ASCWO_Admin
             'currencySymbol' => class_exists('WooCommerce') ? html_entity_decode(get_woocommerce_currency_symbol()) : '',
             'currency_pos' => class_exists('WooCommerce') ? get_option('woocommerce_currency_pos') : ''
         ];
+
         $configurator_data = array(
             "fixing_methods_url" => ASCWO_ASSETS . '/images/fixing-methodes',
             "borders_url" => ASCWO_ASSETS . '/images/borders',
         );
         wp_localize_script("ascwo-admin", "ascwo_data", $script_data);
-        wp_localize_script("ascwo-frontend", "ascwo_data", $script_data);
         wp_localize_script("ascwo-admin", "ascwo_configurator_data", $configurator_data);
-        wp_localize_script("ascwo-frontend", "ascwo_configurator_data", $configurator_data);
+        $this->add_frontend_inline_data('ascwo_data', $script_data);
+        $this->add_frontend_inline_data('ascwo_configurator_data', $configurator_data);
     }
 
     /**

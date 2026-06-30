@@ -24,6 +24,38 @@ class ASCWO_Frontend
         add_shortcode('ascwo-products', [$this, 'render_ascwo_products']);
     }
 
+    /**
+     * Register the inline data carrier used by the configurator module.
+     *
+     * @return void
+     */
+    private function enqueue_frontend_data_script()
+    {
+        if (!wp_script_is('ascwo-frontend-data', 'registered')) {
+            wp_register_script('ascwo-frontend-data', false, array(), ASCWO_VERSION, true);
+        }
+
+        wp_enqueue_script('ascwo-frontend-data');
+    }
+
+    /**
+     * Add global data before the configurator module executes.
+     *
+     * @param string $object_name JavaScript global object name.
+     * @param array  $data        Data to expose.
+     *
+     * @return void
+     */
+    private function add_frontend_inline_data($object_name, array $data)
+    {
+        $this->enqueue_frontend_data_script();
+        wp_add_inline_script(
+            'ascwo-frontend-data',
+            'window.' . $object_name . ' = ' . wp_json_encode($data) . ';',
+            'before'
+        );
+    }
+
     private function normalize_global_asset_url($url)
     {
         $url = is_string($url) ? trim($url) : '';
@@ -365,6 +397,7 @@ class ASCWO_Frontend
                             'decimalSep' => wc_get_price_decimal_separator(),
                             'decimals' => wc_get_price_decimals(),
                             'nbDecimals' => wc_get_price_decimals(),
+                            'site_url' => get_site_url(),
                             'currencySymbol' => html_entity_decode(get_woocommerce_currency_symbol()),
                             'currency_pos' => get_option('woocommerce_currency_pos'),
                             'fixing_methods_url' => ASCWO_ASSETS . '/images/fixing-methodes',
@@ -376,8 +409,8 @@ class ASCWO_Frontend
                             'frontend_nonce' => wp_create_nonce('ascwo_add_to_cart_after_custom')
                         );
 
-                        wp_localize_script('ascwo-frontend', 'ascwo_configurator_data', $ASO);
-                        wp_localize_script('ascwo-frontend', 'ascwo_data', array(
+                        $this->add_frontend_inline_data('ascwo_configurator_data', $ASO);
+                        $this->add_frontend_inline_data('ascwo_data', array(
                             'rest_url' => get_rest_url() . 'ascwo/v1',
                             'ajax_url' => esc_url_raw(admin_url('admin-ajax.php')),
                             'caches' => function_exists('ascwo_get_license_cache_timestamp') ? \ascwo_get_license_cache_timestamp() : 0,
@@ -386,7 +419,17 @@ class ASCWO_Frontend
                             'author' => ASCWO_ID,
                         ));
                         ?>
-                        <div class="ascwo-frontend-app ascwo-configurator-container" data-ascwo-page="configurator"></div>
+                        <!--
+                        <div id="ascwo-configurator-loader" class="aso-bg-loader" aria-hidden="true">
+                            <div class="aso-configurator-loader">
+                                <div class="aso-configurator-skeleton">
+                                    <div class="aso-configurator-skeleton__header"></div>
+                                    <div class="aso-configurator-skeleton__grid"></div>
+                                </div>
+                            </div>
+                        </div>
+                        -->
+                        <div id="ascwo-frontend-app" class="ascwo-frontend-app ascwo-configurator-container" data-ascwo-page="configurator"></div>
                         <?php
                     }
                 }
@@ -424,7 +467,16 @@ class ASCWO_Frontend
         wp_enqueue_style('ascwo-style', ASCWO_ASSETS . '/css/style.css', false, ASCWO_VERSION);
         wp_enqueue_script('ascwo-runtime', ASCWO_ASSETS . '/js/runtime.js', [], ASCWO_VERSION, true);
         wp_enqueue_script('ascwo-vendor', ASCWO_ASSETS . '/js/vendors.js', [], ASCWO_VERSION, true);
+        wp_enqueue_script('ascwo-fabric', ASCWO_ASSETS . '/utilities/fabric.min.js', [], ASCWO_VERSION, true);
+        $this->enqueue_frontend_data_script();
+
+        if (function_exists('wp_enqueue_script_module')) {
+            wp_enqueue_script_module('ascwo-frontend', ASCWO_ASSETS . '/js/frontend.js', array(), ASCWO_VERSION, array('in_footer' => true));
+            return;
+        }
+
         wp_enqueue_script('ascwo-frontend', ASCWO_ASSETS . '/js/frontend.js', ['jquery', 'ascwo-vendor', 'ascwo-runtime', 'wp-i18n'], ASCWO_VERSION, true);
+        wp_script_add_data('ascwo-frontend', 'type', 'module');
     }
 
     /**

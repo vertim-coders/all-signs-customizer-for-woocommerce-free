@@ -59,10 +59,7 @@ import { __ } from "@wordpress/i18n";
 const ASCWO_VERSION = ref(ascwo_data.version);
 const currentConfigId = computed(() => router.currentRoute.value.params.configId);
 const goToPreview = ()=>{
-    router.push(`/configuration/${currentConfigId.value}/preview`)
-    .then(() => {
-      window.location.reload()
-    })
+    window.location.assign(`${window.location.pathname}?page=ascwo#/configuration/${currentConfigId.value}/preview`)
 }
 const goToSettings = ()=>{
     router.push(`/configuration/${currentConfigId.value}/settings/general`)

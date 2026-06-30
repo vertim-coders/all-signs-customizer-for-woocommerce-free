@@ -87,17 +87,6 @@
 <script setup>
 import router from '@/admin/router';
 import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
-import { nextTick, onMounted } from "vue";
-import { useRoute } from "vue-router";
-
-const route = useRoute();
-
-onMounted(async () => {
-    await nextTick();
-    if (typeof window.ascwoMountFrontendApp === "function") {
-        window.ascwoMountFrontendApp();
-    }
-});
 
 const goBackAndReload = () =>{
     router.reloadPrevious = true;

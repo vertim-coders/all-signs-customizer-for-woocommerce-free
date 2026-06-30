@@ -489,7 +489,7 @@ const goToPreview = () => {
   const id = configId.value;
   if (!id) return;
   const returnTo = encodeURIComponent(route.path + route.search);
-  router.push(`/configuration/${id}/preview?returnTo=${returnTo}`);
+  window.location.assign(`${window.location.pathname}?page=ascwo#/configuration/${id}/preview?returnTo=${returnTo}`);
 };
 
 // Load config on mount

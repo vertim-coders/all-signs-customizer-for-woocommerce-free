@@ -313,7 +313,7 @@ const goToMaterial = async (c) => {
 const goToPreview = (c) => {
   if (!c?.id) return;
   showActionMenu.value = false;
-  router.push({ name: 'preview-back', params: { configId: c.id } });
+  window.location.assign(`${window.location.pathname}?page=ascwo#/configuration/${c.id}/preview`);
 };
 const setPage = (p) => {
   if (p < 1 || p > totalPages.value) return;
