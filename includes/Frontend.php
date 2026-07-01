@@ -368,8 +368,8 @@ class ASCWO_Frontend
                             'borders' => $all_borders,
                             'pageSettings' => $pageSettings,
                             'allShapes' => $all_shapes,
-                            'allFixingMethod' => $all_fixingMethods,
-                            'allBorder' => $all_borders,
+                            'allFixingMethods' => $all_fixingMethods,
+                            'allBorders' => $all_borders,
                             'outputOptions' => $outputOptions,
                         ];
 

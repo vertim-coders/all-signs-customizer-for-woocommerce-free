@@ -46,6 +46,7 @@ import RequestQuotes from "@/admin/pages/request-quotes/index.vue";
 
 //import other pages
 import Preview from "@/admin/pages/preview/index.vue";
+import OptionConfigurator from "@/admin/pages/option-configurator/index.vue";
 import NotFound from "@/admin/pages/NotFound/index.vue";
 import Home from "@/admin/pages/Home.vue";
 
@@ -230,6 +231,11 @@ const router = createRouter({
       path: "/configuration/:configId/preview",
       name: "preview-back",
       component: Preview,
+    },
+    {
+      path: "/configuration/:configId/option-configurator/:componentId/:optionId",
+      name: "option-configurator",
+      component: OptionConfigurator,
     },
     {
       path: "/manage-fonts",

@@ -116,14 +116,6 @@ Yes. A Pro version of All Sign Customizer for WooCommerce is available for store
 3. Metal design interface
 
 == Changelog ==
-= 1.2 =
-* 01/03/2026
-- Backend interface improvements
-
-= 1.1 =
-* 07/01/2024
-- Updated plugin product link
-
 = 1.0 =
-* 12/07/2024
+* 01/07/2026
 - First stable release

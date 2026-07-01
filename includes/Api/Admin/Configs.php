@@ -533,8 +533,8 @@ class ASCWO_Api_Configs extends WP_REST_Controller
             "borders" => $all_borders,
             "pageSettings" => $pageSettings,
             "allShapes" => $all_shapes,
-            "allFixingMethod" => $all_fixingMethods,
-            "allBorder" => $all_borders,
+            "allFixingMethods" => $all_fixingMethods,
+            "allBorders" => $all_borders,
             "outputOptions" => $outputOptions,
         ];
 

@@ -53,13 +53,14 @@
 </template>
 <script setup>
 import router from '@/admin/router';
+import { openAdminRouteWithReload } from '@/admin/utils/reload-route';
 import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { __ } from "@wordpress/i18n";
 const ASCWO_VERSION = ref(ascwo_data.version);
 const currentConfigId = computed(() => router.currentRoute.value.params.configId);
 const goToPreview = ()=>{
-    window.location.assign(`${window.location.pathname}?page=ascwo#/configuration/${currentConfigId.value}/preview`)
+    openAdminRouteWithReload(`/configuration/${currentConfigId.value}/preview`)
 }
 const goToSettings = ()=>{
     router.push(`/configuration/${currentConfigId.value}/settings/general`)

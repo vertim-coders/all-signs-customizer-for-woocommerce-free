@@ -186,6 +186,7 @@ import { ref, computed, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { __ } from '@wordpress/i18n';
 import api from '@/admin/Api/api';
+import { openAdminRouteWithReload } from '@/admin/utils/reload-route';
 
 const route = useRoute();
 const router = useRouter();
@@ -489,7 +490,7 @@ const goToPreview = () => {
   const id = configId.value;
   if (!id) return;
   const returnTo = encodeURIComponent(route.path + route.search);
-  window.location.assign(`${window.location.pathname}?page=ascwo#/configuration/${id}/preview?returnTo=${returnTo}`);
+  openAdminRouteWithReload(`/configuration/${id}/preview?returnTo=${returnTo}`);
 };
 
 // Load config on mount

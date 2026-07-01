@@ -160,6 +160,7 @@ import { computed, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter, RouterLink } from "vue-router";
 import api from "@/admin/Api/api";
 import toastMessage from "@/admin/utils/functions";
+import { openAdminRouteWithReload } from "@/admin/utils/reload-route";
 import {
   PlusIcon,
   Trash2Icon,
@@ -313,7 +314,7 @@ const goToMaterial = async (c) => {
 const goToPreview = (c) => {
   if (!c?.id) return;
   showActionMenu.value = false;
-  window.location.assign(`${window.location.pathname}?page=ascwo#/configuration/${c.id}/preview`);
+  openAdminRouteWithReload(`/configuration/${c.id}/preview`);
 };
 const setPage = (p) => {
   if (p < 1 || p > totalPages.value) return;

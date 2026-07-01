@@ -129,7 +129,7 @@
                 </td>
                 <td>
                   <div class="ascwo-row-actions" @click.stop>
-                    <button type="button" @click="openMiniConfigurator(index)" class="ascwo-secondary-button ascwo-small-button">
+                    <button type="button" @click="goToOptionConfigurator(design.id || index)" class="ascwo-secondary-button ascwo-small-button">
                       <span class="ascwo-button-glyph">⚙</span>
                       {{ __('Configure', 'all-signs-customizer-for-woocommerce-pro') }}
                     </button>
@@ -145,7 +145,7 @@
 
         <div class="ascwo-info-box">
           <span class="ascwo-info-icon" aria-hidden="true">i</span>
-          <strong>{{ __('After adding components to a design, click Configure to open the mini configurator.', 'all-signs-customizer-for-woocommerce-pro') }}</strong>
+          <strong>{{ __('After adding components to a design, click Configure to open the option configurator.', 'all-signs-customizer-for-woocommerce-pro') }}</strong>
           <span>{{ __('This will help you position and adjust elements, and also serves as the live preview.', 'all-signs-customizer-for-woocommerce-pro') }}</span>
         </div>
       </section>
@@ -261,7 +261,7 @@
               <span class="ascwo-button-glyph">⚙</span>
               {{ __('Configure design', 'all-signs-customizer-for-woocommerce-pro') }}
             </button>
-            <p>{{ __('Open mini configurator', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+            <p>{{ __('Open option configurator', 'all-signs-customizer-for-woocommerce-pro') }}</p>
           </div>
         </div>
       </section>
@@ -1219,6 +1219,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { __ } from '@wordpress/i18n';
 import api from '@/admin/Api/api';
 import toastMessage from '@/admin/utils/functions';
+import { openAdminRouteWithReload } from '@/admin/utils/reload-route';
 
 const route = useRoute();
 const router = useRouter();
@@ -1875,6 +1876,12 @@ const goToDesign = (itemId) => {
   });
 };
 
+const goToOptionConfigurator = (itemId) => {
+  if (itemId === undefined || itemId === null || itemId === '') return;
+
+  openAdminRouteWithReload(`/configuration/${configId.value}/option-configurator/${componentId.value}/${String(itemId)}`);
+};
+
 const openMiniConfigurator = (index) => {
   if (index < 0 || index >= designs.value.length) return;
   configuredDesignIndex.value = index;
@@ -1886,8 +1893,7 @@ const closeMiniConfigurator = () => {
 
 const configureCurrentDesign = () => {
   const index = activeDesignIndex.value;
-  openMiniConfigurator(index);
-  router.push({ name: 'required-component-options', params: { configId: configId.value, componentId: componentId.value } });
+  goToOptionConfigurator(designs.value[index]?.id || index);
 };
 
 const getShapeRadius = (shapeLabel) => {
