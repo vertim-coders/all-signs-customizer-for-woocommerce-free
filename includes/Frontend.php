@@ -414,7 +414,9 @@ class ASCWO_Frontend
                         $this->add_frontend_inline_data('ascwo_data', array(
                             'rest_url' => get_rest_url() . 'ascwo/v1',
                             'ajax_url' => esc_url_raw(admin_url('admin-ajax.php')),
-                            'caches' => function_exists('ascwo_get_license_cache_timestamp') ? \ascwo_get_license_cache_timestamp() : 0,
+                            "caches" => function_exists('ascwo_get_license_cache_timestamp') ? \ascwo_get_license_cache_timestamp() : 0,
+                            "license_status" => function_exists('ascwo_get_license_status') ? \ascwo_get_license_status() : array(),
+                            "site_timezone" => function_exists('wp_timezone_string') ? wp_timezone_string() : get_option('timezone_string', 'UTC'),
                             'page' => 'configurator',
                             'site_url' => esc_url_raw(get_site_url()),
                             'author' => ASCWO_ID,
