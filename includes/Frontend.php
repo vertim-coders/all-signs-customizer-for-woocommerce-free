@@ -340,6 +340,10 @@ class ASCWO_Frontend
                             'description' => get_post_field('post_content', $configId),
                             'icon' => isset($config['icon']) ? $config['icon'] : '',
                             'popImg' => isset($config['popImg']) ? $config['popImg'] : '',
+                            'materialType' => isset($config['materialType']) ? $config['materialType'] : '',
+                            'productFamily' => isset($config['productFamily']) ? $config['productFamily'] : '',
+                            'productType' => isset($config['productType']) ? $config['productType'] : '',
+                            'pricingMode' => isset($config['pricingMode']) ? $config['pricingMode'] : '',
                             'data' => isset($frontend_data) ? $frontend_data : array(),
                         );
                         $visibleFonts = isset($config['requiredOptions']['fonts']['items']) && is_array($config['requiredOptions']['fonts']['items'])

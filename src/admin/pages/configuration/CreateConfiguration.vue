@@ -3,15 +3,15 @@
     <!-- Header Section -->
     <div class="ascwo-text-center ascwo-mb-5">
       <h1 class="ascwo-text-[28px] ascwo-leading-9 ascwo-text-[#303030] ascwo-mb-1" style="font-weight: 750 !important;">
-        {{ __('Create Product Configuration', 'all-signs-customizer-for-woocommerce-pro') }}
+        {{ isEdit ? __('Edit Product Configuration', 'all-signs-customizer-for-woocommerce-pro') : __('Create Product Configuration', 'all-signs-customizer-for-woocommerce-pro') }}
       </h1>
       <p class="ascwo-text-[14px] ascwo-text-[#616161]">
-        {{ __('Follow the steps to define the product, how customers will configure it, and how your setup should start.', 'all-signs-customizer-for-woocommerce-pro') }}
+        {{ isEdit ? __('Update the configuration information and product associations.', 'all-signs-customizer-for-woocommerce-pro') : __('Follow the steps to define the product, how customers will configure it, and how your setup should start.', 'all-signs-customizer-for-woocommerce-pro') }}
       </p>
     </div>
 
     <!-- Stepper (Centered Pill) -->
-    <div class="ascwo-create-stepper-wrap ascwo-flex ascwo-justify-center ascwo-mb-5">
+    <div v-if="!isEdit" class="ascwo-create-stepper-wrap ascwo-flex ascwo-justify-center ascwo-mb-5">
       <div class="ascwo-create-stepper ascwo-inline-flex ascwo-items-center ascwo-bg-white ascwo-rounded-full ascwo-px-5 ascwo-py-2 ascwo-shadow-sm ascwo-border ascwo-border-solid ascwo-border-[#e1e3e5] ascwo-gap-2">
         <div v-for="n in 4" :key="n" class="ascwo-flex ascwo-items-center">
           <div
@@ -40,7 +40,7 @@
     <div class="ascwo-create-shell ascwo-ui-page-card ascwo-max-w-[1180px] ascwo-mx-auto ascwo-overflow-hidden">
 
       <!-- STEP 1: Product family -->
-      <div v-if="wizard.step === 1" class="ascwo-p-7">
+      <div v-if="!isEdit && wizard.step === 1" class="ascwo-p-7">
         <div class="ascwo-mb-6">
           <h2 class="ascwo-text-[18px] ascwo-leading-6 ascwo-font-bold ascwo-text-[#303030] ascwo-mb-2">
             {{ __('What type of product do you want to sell?', 'all-signs-customizer-for-woocommerce-pro') }}
@@ -103,7 +103,7 @@
       </div>
 
       <!-- STEP 2: Material Selection -->
-      <div v-else-if="wizard.step === 2" class="ascwo-p-10">
+      <div v-else-if="!isEdit && wizard.step === 2" class="ascwo-p-10">
         <div class="ascwo-mb-8">
           <div class="ascwo-mb-2">
              <h2 class="ascwo-text-[22px] ascwo-font-bold ascwo-text-[#1a1a1a] ascwo-m-0 ascwo-flex ascwo-items-center ascwo-gap-2">
@@ -163,7 +163,7 @@
       </div>
 
       <!-- STEP 3: Setup Model -->
-      <div v-else-if="wizard.step === 3" class="ascwo-p-10">
+      <div v-else-if="!isEdit && wizard.step === 3" class="ascwo-p-10">
         <div class="ascwo-mb-8">
           <div class="ascwo-flex ascwo-items-center ascwo-gap-2 ascwo-mb-2">
              <h2 class="ascwo-text-[22px] ascwo-font-bold ascwo-text-[#1a1a1a] ascwo-m-0">
@@ -272,7 +272,7 @@
       <!-- STEP 4: Finalize -->
       <div v-if="wizard.step === 4" class="ascwo-step4 ascwo-p-5 md:ascwo-p-6">
         <div class="ascwo-step4-intro">
-          <h2 class="ascwo-text-[20px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#111827]">{{ __('Finalize your configuration', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
+          <h2 class="ascwo-text-[20px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#111827]">{{ isEdit ? __('Edit configuration information', 'all-signs-customizer-for-woocommerce-pro') : __('Finalize your configuration', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
           <p class="ascwo-text-[12px] ascwo-leading-5 ascwo-text-[#111827]">{{ __('Add the basic information for this configuration and link the products that should use it.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
         </div>
 
@@ -380,7 +380,7 @@
       <!-- Card Footer -->
       <div class="ascwo-bg-[#fbfcfc] ascwo-border-t ascwo-border-solid ascwo-border-[#e1e3e5] ascwo-px-10 ascwo-py-5 ascwo-flex ascwo-items-center ascwo-justify-between">
         <p class="ascwo-text-[13px] ascwo-text-[#616161] ascwo-m-0">
-          {{ getStepTip(wizard.step) }}
+          {{ isEdit ? __('Only the configuration information can be edited here.', 'all-signs-customizer-for-woocommerce-pro') : getStepTip(wizard.step) }}
         </p>
         <div class="ascwo-flex ascwo-gap-3">
           <button
@@ -390,7 +390,7 @@
             {{ __('Back', 'all-signs-customizer-for-woocommerce-pro') }}
           </button>
           <button
-            v-if="wizard.step === 1"
+            v-if="!isEdit && wizard.step === 1"
             @click="handleMainAction"
             :disabled="!canNext"
             class="ascwo-primary-button ascwo-ui-button-primary disabled:ascwo-opacity-50 disabled:ascwo-cursor-not-allowed"
@@ -715,6 +715,28 @@ const canonicalConfigProductType = computed(() => (
     : wizard.value.productType
 ));
 const selectedMaterialsNames = computed(() => wizard.value.selectedMaterials.map(mid => availableMaterials.value.find(m => m.id === mid)?.title).filter(Boolean).join(', '));
+const normalizeEditorProductType = (productType) => {
+  const value = String(productType || '').trim();
+  if (value === 'banner' || value === 'banners') return 'banner';
+  if (value === 'sticker' || value === 'stickers') return 'sticker';
+  return 'signboard';
+};
+const extractSelectedMaterialIds = (config) => {
+  const data = config?.data || {};
+  const directIds = config?.selectedMaterialIds || data?.selectedMaterialIds || data?.settings?.selectedMaterialIds;
+  if (Array.isArray(directIds) && directIds.length) {
+    return directIds;
+  }
+
+  const items = data?.additionalOptions?.materials?.items || config?.additionalOptions?.materials?.items || [];
+  if (!Array.isArray(items)) {
+    return [];
+  }
+
+  return items
+    .map((item) => item?.materialKey || item?.sourceMaterialId || item?.id)
+    .filter(Boolean);
+};
 const previewImages = computed(() => {
   if (!previewItem.value) return [];
   return Array.from(new Set([
@@ -1046,6 +1068,7 @@ const closePreview = () => { showGalleryPreview.value = false; previewItem.value
 const closeExternalPluginModal = () => { showExternalPluginModal.value = false; };
 
 const canNext = computed(() => {
+  if (isEdit.value) return !!newConfig.value.name;
   if (wizard.value.step === 1) return !!wizard.value.productType;
   if (wizard.value.step === 2) return wizard.value.selectedMaterials.length > 0;
   if (wizard.value.step === 3) return !!wizard.value.materialType;
@@ -1053,15 +1076,27 @@ const canNext = computed(() => {
 });
 
 const goNext = () => {
+  if (isEdit.value) return;
   if (canNext.value && wizard.value.step < 4) wizard.value.step++;
 };
 
 const goBack = () => {
+  if (isEdit.value) {
+    router.push('/configuration');
+    return;
+  }
+
   if (wizard.value.step > 1) wizard.value.step--;
   else emit('onCancel');
 };
 
 const handleMainAction = () => {
+  if (isEdit.value) {
+    wizard.value.attemptedCreate = true;
+    if (newConfig.value.name) finalCreate();
+    return;
+  }
+
   if (wizard.value.step < 4) goNext();
   else {
     wizard.value.attemptedCreate = true;
@@ -1145,19 +1180,21 @@ const loadEditConfig = async () => {
   const config = await api.getConfig(props.configId);
   editConfig.value = config || {};
   const data = config?.data || {};
-  const productType = String(config?.productType || data?.productType || '').trim();
+  const productType = String(config?.productType || data?.productType || data?.settings?.productType || '').trim();
   const materialType = String(config?.materialType || data?.materialType || 'simple').trim();
+  const selectedMaterials = extractSelectedMaterialIds(config);
 
   newConfig.value = {
-    name: config?.name || "",
-    description: config?.description || "",
-    icon: config?.icon || data?.icon || "",
+    name: config?.name || data?.name || "",
+    description: config?.description || data?.description || "",
+    icon: config?.icon || data?.icon || data?.popImg || "",
   };
   wizard.value.step = 4;
   wizard.value.materialType = materialType || 'simple';
-  wizard.value.productType = productType === 'banner'
-    ? 'banner'
-    : (productType === 'sticker' ? 'sticker' : 'signboard');
+  wizard.value.productType = normalizeEditorProductType(productType);
+  wizard.value.selectedMaterials = selectedMaterials.length
+    ? selectedMaterials
+    : filteredMaterials.value.slice(0, 1).map((material) => material.id);
 };
 
 onMounted(async () => {
