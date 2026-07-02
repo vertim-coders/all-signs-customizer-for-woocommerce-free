@@ -20,13 +20,31 @@ var entryPoint = {
 var exportPath = path.resolve(__dirname, "./assets/js");
 
 const cleanGeneratedAssets = () => {
-  for (const relPath of ["./assets/js", "./assets/css"]) {
+  const targets = [
+    {
+      relPath: "./assets/js",
+      patterns: [
+        /^(admin|runtime|style|vendors)(\.min)?\.js$/,
+        /^.+\.hot-update\.js(on)?$/,
+      ],
+    },
+    {
+      relPath: "./assets/css",
+      patterns: [/^(admin|style)(\.min)?\.css$/],
+    },
+  ];
+
+  for (const { relPath, patterns } of targets) {
     const target = path.resolve(__dirname, relPath);
     if (!fs.existsSync(target)) {
       continue;
     }
 
     for (const entry of fs.readdirSync(target)) {
+      if (!patterns.some((pattern) => pattern.test(entry))) {
+        continue;
+      }
+
       const fullPath = path.join(target, entry);
       fs.rmSync(fullPath, { recursive: true, force: true });
     }
@@ -90,7 +108,7 @@ module.exports = {
     path: exportPath,
     filename: appName,
     chunkFilename: "[name].js",
-    clean: true,
+    clean: false,
   },
   externals: {
     jquery: "jQuery",
