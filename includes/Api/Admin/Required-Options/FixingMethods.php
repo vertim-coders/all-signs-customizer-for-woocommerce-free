@@ -192,6 +192,7 @@ class ASCWO_Api_Required_Options_FixingMethods extends ASCWO_Api_Required_Option
 
         $payload = $request->get_json_params();
         $payload = is_array($payload) ? $payload : array();
+        $payload = $this->normalize_required_fixing_method_item($payload);
 
         // Generate stable item id
         if (!isset($payload['id']) || empty($payload['id'])) {
@@ -200,6 +201,9 @@ class ASCWO_Api_Required_Options_FixingMethods extends ASCWO_Api_Required_Option
 
         $required_options = $this->get_required_options($config_id);
         $items = $this->section_item_list($required_options, 'fixing-methods');
+        if ($this->find_section_item_index_by_id($items, (string) $payload['id'], array('id')) !== null) {
+            $payload['id'] = $this->ensure_unique_item_id($items, (string) $payload['id']);
+        }
         $payload['isDefault'] = isset($payload['isDefault']) ? (bool) $payload['isDefault'] : empty($items);
         $items[] = $payload;
         $items = $this->ensure_single_default_item($items);
@@ -221,6 +225,7 @@ class ASCWO_Api_Required_Options_FixingMethods extends ASCWO_Api_Required_Option
 
         $payload = $request->get_json_params();
         $payload = is_array($payload) ? $payload : array();
+        $payload = $this->normalize_required_fixing_method_item($payload);
 
         $required_options = $this->get_required_options($config_id);
         $items = $this->section_item_list($required_options, 'fixing-methods');

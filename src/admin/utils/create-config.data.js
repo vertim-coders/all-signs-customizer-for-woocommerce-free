@@ -1137,9 +1137,10 @@ const roundedBorder = {
 };
 
 const fixingTableStand = (sizeId, isDefault = true) => ({
-  id: "fixing-table-stand",
+  id: "fixing-option-fixing-table-stand",
   url: "/aso_default_files/demos/fixing-preview.svg",
   label: "Table Stand",
+  name: "Table Stand",
   custom: false,
   sizeId,
   isDefault,
@@ -1149,9 +1150,10 @@ const fixingTableStand = (sizeId, isDefault = true) => ({
 });
 
 const fixingCeiling = (sizeId, isDefault = false) => ({
-  id: "fixing-ceiling",
+  id: "fixing-option-fixing-ceiling",
   url: "/aso_default_files/demos/fixing-preview.svg",
   label: "Ceiling",
+  name: "Ceiling",
   custom: false,
   sizeId,
   isDefault,
@@ -1161,9 +1163,10 @@ const fixingCeiling = (sizeId, isDefault = false) => ({
 });
 
 const fixingPoleAttachment = (sizeId, isDefault = false) => ({
-  id: "fixing-pole-attachment",
+  id: "fixing-option-fixing-pole-attachment",
   url: "/aso_default_files/demos/fixing-preview.svg",
   label: "Pole Attachment",
+  name: "Pole Attachment",
   custom: false,
   sizeId,
   isDefault,
@@ -1212,45 +1215,6 @@ export const RequiredOptionsComponentsAdvanced = {
       ],
       isDefault: true,
       description: "Ready combination for office door and desk signs.",
-    },
-    {
-      id: "component-panel-directional",
-      icon: "",
-      label: "Directional sign",
-      name: "Directional sign",
-      title: "Directional sign",
-      options: [
-        createComponentOption({
-          componentId: "component-panel-directional",
-          suffix: "directional-sign-wall-mount",
-          label: "Directional sign Wall mount",
-          sizeId: "size-panel-medium",
-          shape: roundedSidesShape,
-          border: standardBorder,
-          fixingMethods: [
-            fixingTableStand("size-panel-medium", true),
-            fixingCeiling("size-panel-medium", false),
-          ],
-          backgroundColorId: "color-panel-white",
-          isDefault: true,
-        }),
-        createComponentOption({
-          componentId: "component-panel-directional",
-          suffix: "directional-sign-standoff",
-          label: "Directional sign Standoff",
-          sizeId: "size-panel-large",
-          shape: squareShape,
-          border: roundedBorder,
-          fixingMethods: [
-            fixingPoleAttachment("size-panel-large", true),
-            fixingCeiling("size-panel-large", false),
-          ],
-          backgroundColorId: "color-panel-blue",
-          additionalPrice: 8,
-        }),
-      ],
-      isDefault: false,
-      description: "Preset combinations for directional and wayfinding signs.",
     },
   ],
   label: "Components",

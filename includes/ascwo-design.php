@@ -23,11 +23,75 @@ class ASCWO_Design
 		add_action('woocommerce_checkout_create_order_line_item', [$this, 'capture_product_metadata_to_order'], 10, 4);
 		add_action('wp_ajax_ascwo_generate_order_zip_file', [$this, 'ascwo_generate_order_zip_file_ajax']);
 		add_action('wp_ajax_nopriv_ascwo_generate_order_zip_file', [$this, 'ascwo_generate_order_zip_file_ajax']);
+		add_action('template_redirect', [$this, 'handle_download_request']);
 
 		// Emails.
 		//add_action( 'woocommerce_order_item_meta_start', [$this, 'mail_template'],10, 3);
 		add_filter('woocommerce_email_attachments', [$this, 'custom_email_attachments'], 10, 4);
 		add_action('woocommerce_order_item_meta_end', [$this, 'mail_template'], 11, 4);
+	}
+
+	/**
+	 * Build a signed URL that forces browser download for generated files.
+	 *
+	 * @param string $file_url Generated file URL.
+	 * @return string
+	 */
+	public function get_forced_download_url($file_url)
+	{
+		$file_url = (string) $file_url;
+		$base_url = trailingslashit(ASCWO_IMAGE_URL);
+
+		if (0 !== strpos($file_url, $base_url)) {
+			return $file_url;
+		}
+
+		$relative_path = ltrim(substr($file_url, strlen($base_url)), '/');
+
+		return add_query_arg(
+			array(
+				'ascwo_download' => $relative_path,
+				'token' => wp_hash($relative_path . '|ascwo_download'),
+			),
+			home_url('/')
+		);
+	}
+
+	/**
+	 * Serve generated files as attachments instead of inline browser previews.
+	 */
+	public function handle_download_request()
+	{
+		if (empty($_GET['ascwo_download']) || empty($_GET['token'])) {
+			return;
+		}
+
+		$relative_path = rawurldecode(sanitize_text_field(wp_unslash($_GET['ascwo_download'])));
+		$relative_path = ltrim(str_replace('\\', '/', $relative_path), '/');
+		$token = sanitize_text_field(wp_unslash($_GET['token']));
+
+		if (preg_match('#(^|/)\.\.(/|$)#', $relative_path)) {
+			wp_die(esc_html__('Invalid download path.', 'all-signs-customizer-for-woocommerce-pro'), 403);
+		}
+
+		if (!hash_equals(wp_hash($relative_path . '|ascwo_download'), $token)) {
+			wp_die(esc_html__('Invalid download token.', 'all-signs-customizer-for-woocommerce-pro'), 403);
+		}
+
+		$base_path = realpath(ASCWO_IMAGE_PATH);
+		$file_path = ASCWO_IMAGE_PATH . DIRECTORY_SEPARATOR . $relative_path;
+		$real_file_path = realpath($file_path);
+
+		if (!$base_path || !$real_file_path || 0 !== strpos($real_file_path, trailingslashit($base_path)) || !is_file($real_file_path)) {
+			wp_die(esc_html__('File not found.', 'all-signs-customizer-for-woocommerce-pro'), 404);
+		}
+
+		nocache_headers();
+		header('Content-Type: application/octet-stream');
+		header('Content-Disposition: attachment; filename="' . sanitize_file_name(basename($real_file_path)) . '"');
+		header('Content-Length: ' . filesize($real_file_path));
+		readfile($real_file_path);
+		exit;
 	}
 
 	/**
@@ -77,10 +141,190 @@ class ASCWO_Design
 
 	}
 
+	private function add_recap_summary_row(&$rows, $label, $value)
+	{
+		$label = trim((string) $label);
+		$value = trim((string) $value);
+
+		if ('' === $label || '' === $value) {
+			return;
+		}
+
+		$rows[] = array(
+			'label' => $label,
+			'value' => $value,
+		);
+	}
+
+	private function recap_value_to_text($value)
+	{
+		if (is_scalar($value)) {
+			return (string) $value;
+		}
+
+		if (!is_array($value)) {
+			return '';
+		}
+
+		if (isset($value['name']) && is_scalar($value['name'])) {
+			return (string) $value['name'];
+		}
+
+		if (isset($value['type']) && is_scalar($value['type'])) {
+			return (string) $value['type'];
+		}
+
+		if (isset($value['textContent']) && is_scalar($value['textContent'])) {
+			return (string) $value['textContent'];
+		}
+
+		if (isset($value['value']) && is_scalar($value['value'])) {
+			return (string) $value['value'];
+		}
+
+		$parts = array();
+		foreach ($value as $key => $item) {
+			$item_text = $this->recap_value_to_text($item);
+			if ('' === $item_text) {
+				continue;
+			}
+
+			$parts[] = is_string($key) ? $key . ': ' . $item_text : $item_text;
+		}
+
+		return implode(', ', $parts);
+	}
+
+	private function get_recap_summary_rows($recaps)
+	{
+		$rows = array();
+
+		if (isset($recaps['sign']['size'])) {
+			$size = $recaps['sign']['size'];
+			$size_value = $size['value'] ?? array();
+			$width = $size_value['width']['value'] ?? '';
+			$height = $size_value['height']['value'] ?? '';
+			$size_text = trim($width . ' x ' . $height, ' x');
+			$this->add_recap_summary_row($rows, $size['label'] ?? __('Size', 'all-signs-customizer-for-woocommerce-pro'), $size_text);
+
+			$thickness = $size_value['thickness']['value'] ?? '';
+			if ('' !== $thickness && 'none' !== $thickness) {
+				$this->add_recap_summary_row($rows, $size_value['thickness']['label'] ?? __('Thickness', 'all-signs-customizer-for-woocommerce-pro'), $thickness);
+			}
+		}
+
+		foreach (array('material', 'shape', 'fixingMethod', 'border', 'color') as $key) {
+			if (!isset($recaps['sign'][$key])) {
+				continue;
+			}
+
+			$item = $recaps['sign'][$key];
+			$this->add_recap_summary_row(
+				$rows,
+				$item['label'] ?? ucfirst($key),
+				$this->recap_value_to_text($item['value'] ?? '')
+			);
+		}
+
+		if (!empty($recaps['texts']['value'])) {
+			$this->add_recap_summary_row(
+				$rows,
+				$recaps['texts']['label'] ?? __('Texts', 'all-signs-customizer-for-woocommerce-pro'),
+				$this->recap_value_to_text($recaps['texts']['value'])
+			);
+		}
+
+		if (!empty($recaps['additionalComponents']) && is_array($recaps['additionalComponents'])) {
+			foreach ($recaps['additionalComponents'] as $value) {
+				$this->add_recap_summary_row($rows, $value['option'] ?? '', $this->recap_value_to_text($value['value'] ?? ''));
+			}
+		}
+
+		if (!empty($recaps['additionalOptions']) && is_array($recaps['additionalOptions'])) {
+			foreach ($recaps['additionalOptions'] as $value) {
+				$this->add_recap_summary_row($rows, $value['label'] ?? '', $this->recap_value_to_text($value['value'] ?? ''));
+			}
+		}
+
+		return $rows;
+	}
+
+	private function display_recap_summary_list($recaps)
+	{
+		$rows = $this->get_recap_summary_rows($recaps);
+		ob_start();
+		?>
+		<div class="ascwo-recap-summary-list" style="display:flex; flex-direction:column; gap:3px; margin-top:8px; font-size:12px; line-height:1.35;">
+			<?php foreach ($rows as $row) { ?>
+				<div class="ascwo-recap-summary-row" style="display:flex; gap:6px; align-items:baseline;">
+					<span style="font-weight:600;"><?php echo esc_html($row['label']); ?>:</span>
+					<span><?php echo esc_html($row['value']); ?></span>
+				</div>
+			<?php } ?>
+		</div>
+		<?php
+		return ob_get_clean();
+	}
+
+	private function should_display_checkout_recaps($cart_item)
+	{
+		$product = $cart_item['data'] ?? null;
+
+		if (!$product || !method_exists($product, 'get_id')) {
+			return true;
+		}
+
+		$product_id = $product->get_id();
+		$product_meta_data = get_post_meta($product_id, 'product-ascwo-metas', true);
+		$config_id = $product_meta_data[$product_id]['config-id'] ?? 0;
+
+		if (empty($config_id) || !get_post($config_id)) {
+			return true;
+		}
+
+		$config = get_post_meta($config_id, "ascwo-configs-meta", true);
+
+		return !empty($config["data"]["settings"]["generals"]["product"]["displayRecapsOnCheckout"]);
+	}
+
+	private function is_woocommerce_blocks_context()
+	{
+		if (defined('REST_REQUEST') && REST_REQUEST) {
+			$request_uri = isset($_SERVER['REQUEST_URI']) ? sanitize_text_field(wp_unslash($_SERVER['REQUEST_URI'])) : '';
+			if (false !== strpos($request_uri, '/wc/store/')) {
+				return true;
+			}
+		}
+
+		if (!function_exists('has_block')) {
+			return false;
+		}
+
+		global $post;
+
+		if (!($post instanceof WP_Post)) {
+			return false;
+		}
+
+		return has_block('woocommerce/cart', $post) || has_block('woocommerce/checkout', $post);
+	}
+
+	private function append_recap_rows_to_item_data($item_data, $recaps)
+	{
+		foreach ($this->get_recap_summary_rows($recaps) as $row) {
+			$item_data[] = array(
+				'key' => $row['label'],
+				'value' => $row['value'],
+				'display' => $row['value'],
+			);
+		}
+
+		return $item_data;
+	}
+
 	public function display_previewBtn_editBtn_in_cart($cart_item)
 	{
 		$product = $cart_item['data'];
-		$have_pages_settings = get_option("ascwo_config_page");
 		// Construisez les URL pour les aperçus et les éditions (ajustez selon vos besoins)
 		//$preview_url = get_permalink($product->get_id());
 
@@ -89,24 +333,7 @@ class ASCWO_Design
 		//$npd_product = new ascwo_Product_Config( $product->get_id() );
 		$product_name = '';
 		if (isset($cart_item['ascwo_meta_data']["recaps"])) {
-			$modal_id = uniqid('ascwo-recaps');
 			ob_start();
-			?>
-
-			<div class="omodal fade o-modal wpc_part" id="<?php echo esc_attr($modal_id); ?>" tabindex="-1" role="dialog"
-				aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="omodal-dialog">
-					<div class="omodal-content">
-						<div class="omodal-header">
-							<button type="button" class="close" data-dismiss="omodal" aria-hidden="true">&times;</button>
-						</div>
-						<div class="omodal-body">
-							<?php echo wp_kses_post($this->display_custom_recaps($cart_item['ascwo_meta_data']["recaps"], false)); ?>
-						</div>
-					</div>
-				</div>
-			</div>
-			<?php
 			$preview_modal_id = uniqid('as-preview');
 			?>
 			<div class="omodal fade o-modal wpc_part" id="<?php echo esc_attr($preview_modal_id); ?>" tabindex="-1" role="dialog"
@@ -135,9 +362,8 @@ class ASCWO_Design
 					</div>
 				</div>
 			</div>
+			<?php echo wp_kses_post($this->display_recap_summary_list($cart_item['ascwo_meta_data']["recaps"])); ?>
 			<div class="ascwo-product-links">
-				<span class="ascwo-cart-product-preview o-modal-trigger button" data-toggle="o-modal"
-					data-target="#<?php echo esc_attr($modal_id); ?>"><?php echo esc_html($have_pages_settings["buttons"]["recapsButtonOnCart"]) ?></span>
 				<span class="ascwo-cart-product-preview o-modal-trigger button" data-toggle="o-modal"
 					data-target="#<?php echo esc_attr($preview_modal_id); ?>">
 					<img src="<?php echo esc_url(ASCWO_ASSETS . '/icons/ic_preview_eye.svg'); ?>"
@@ -154,23 +380,16 @@ class ASCWO_Design
 
 	public function display_recaps_config_on_checkout_page($item_data, $cart_item)
 	{
-		if (is_checkout()) {
-			$product = $cart_item['data'];
+		if (empty($cart_item['ascwo_meta_data']["recaps"])) {
+			return $item_data;
+		}
 
-			if ($product) {
+		if ($this->is_woocommerce_blocks_context()) {
+			return $this->append_recap_rows_to_item_data($item_data, $cart_item['ascwo_meta_data']["recaps"]);
+		}
 
-				$product_id = $product->get_id();
-				$product_meta_data = get_post_meta($product_id, 'product-ascwo-metas', true);
-				if (isset($product_meta_data[$product_id]['config-id']) && get_post($product_meta_data[$product_id]['config-id'])) {
-					if (!empty($product_meta_data[$product_id]['config-id'])) {
-						$configId = $product_meta_data[$product_id]['config-id'];
-						$config = get_post_meta($configId, "ascwo-configs-meta", true);
-						if ($config["data"]["settings"]["generals"]["product"]["displayRecapsOnCheckout"]) {
-							echo wp_kses_post($this->display_custom_recaps($cart_item['ascwo_meta_data']["recaps"], false));
-						}
-					}
-				}
-			}
+		if (function_exists('is_checkout') && is_checkout() && $this->should_display_checkout_recaps($cart_item)) {
+			return $this->append_recap_rows_to_item_data($item_data, $cart_item['ascwo_meta_data']["recaps"]);
 		}
 
 		return $item_data;
@@ -362,7 +581,7 @@ class ASCWO_Design
 										<img src="<?php echo esc_url($image) ?>" style="width: auto; height: 50px;" />
 									</div>
 									<div style="margin:10px 0">
-										<a class="button alt ascwo_admin_download_image" href="<?php echo esc_url($image) ?>"
+										<a class="button alt ascwo_admin_download_image" href="<?php echo esc_url($this->get_forced_download_url($image)) ?>"
 											download><?php echo esc_html__('Download File', "all-signs-customizer-for-woocommerce-pro") ?></a>
 									</div>
 								</div>
@@ -375,7 +594,7 @@ class ASCWO_Design
 											<img src="<?php echo esc_url($image) ?>" style="width: auto; height: 50px;" />
 										</div>
 										<div style="margin:10px 0">
-											<a class="button alt ascwo_admin_download_image" href="<?php echo esc_url($image) ?>"
+											<a class="button alt ascwo_admin_download_image" href="<?php echo esc_url($this->get_forced_download_url($image)) ?>"
 												download><?php echo esc_html__('Download File', "all-signs-customizer-for-woocommerce-pro") ?></a>
 										</div>
 									</div>
@@ -457,7 +676,7 @@ class ASCWO_Design
 			echo wp_kses_post($this->display_custom_recaps($order_data["recaps"], true));
 			if (isset($order_data["zip"])) { ?>
 				<div style="margin:10px 0">
-					<a class="button alt ascwo_admin_download_image" href="<?php echo esc_url($order_data["zip"]) ?>"
+					<a class="button alt ascwo_admin_download_image" href="<?php echo esc_url($this->get_forced_download_url($order_data["zip"])) ?>"
 						download><?php echo esc_html__('Download Order Zip file', "all-signs-customizer-for-woocommerce-pro") ?></a>
 				</div> <?php
 			} else {
@@ -498,9 +717,12 @@ class ASCWO_Design
 
 	public function ascwo_generate_order_zip_file_ajax()
 	{
-		if (wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ascwo_generate_order_zip_file')) {
+		$nonce = isset($_POST['nonce']) ? sanitize_text_field(wp_unslash($_POST['nonce'])) : '';
+
+		if (wp_verify_nonce($nonce, 'ascwo_generate_order_zip_file')) {
 			if (isset($_POST['item_id'])) {
-				$order_data = wc_get_order_item_meta($_POST['item_id'], 'ascwo_meta_data');
+				$item_id = absint($_POST['item_id']);
+				$order_data = wc_get_order_item_meta($item_id, 'ascwo_meta_data');
 				if (isset($order_data) && !empty($order_data)) {
 
 					$uploads = [];
@@ -519,12 +741,22 @@ class ASCWO_Design
 						}
 					}
 
-					$order_id = wc_get_order_id_by_order_item_id($_POST['item_id']);
-					$ascwo_zip_file = $this->ascwo_zip_file($order_id, $_POST['item_id'], $order_data['recaps']["output"], $order_data['recaps']['designImages'], $uploads, $order_data["recaps"]["sign"]["size"]["value"]);
+					$order_id = wc_get_order_id_by_order_item_id($item_id);
+					$ascwo_zip_file = $this->ascwo_zip_file($order_id, $item_id, $order_data['recaps']["output"], $order_data['recaps']['designImages'], $uploads, $order_data["recaps"]["sign"]["size"]["value"]);
+
+					if (is_wp_error($ascwo_zip_file)) {
+						wp_send_json(array(
+							'success' => false,
+							"message" => $ascwo_zip_file->get_error_message(),
+						));
+					}
+
 					$order_data['zip'] = $ascwo_zip_file;
-					wc_update_order_item_meta($_POST['item_id'], "ascwo_meta_data", $order_data);
+					wc_update_order_item_meta($item_id, "ascwo_meta_data", $order_data);
 					wp_send_json(array(
 						'success' => true,
+						'zip' => $ascwo_zip_file,
+						'download_url' => $this->get_forced_download_url($ascwo_zip_file),
 					));
 				}
 				wp_send_json(array(
@@ -577,6 +809,10 @@ class ASCWO_Design
 
 	private function ascwo_zip_file($order_id, $item_id, $output_settings, $previews, $uploads, $sizes)
 	{
+		if (!class_exists('ZipArchive')) {
+			return new WP_Error('ascwo_missing_ziparchive', __('ZipArchive is not available on this server.', 'all-signs-customizer-for-woocommerce-pro'));
+		}
+
 		$outputOptions = get_option("ascwo_output_options", []);
 		$upload_dirs = ASCWO_IMAGE_PATH;
 		wp_mkdir_p($upload_dirs);
@@ -595,7 +831,8 @@ class ASCWO_Design
 		}
 		if (!file_exists($upload_dirs . $zip_file)) {
 			$zip = new ZipArchive();
-			if ($zip->open($upload_dirs . $zip_file, ZipArchive::CREATE) === TRUE) {
+			$open_result = $zip->open($upload_dirs . $zip_file, ZipArchive::CREATE);
+			if ($open_result === TRUE) {
 				foreach ($uploads as $index => $upload) {
 					$file = ASCWO_IMAGE_PATH . DIRECTORY_SEPARATOR . $upload["name"];
 					if (file_exists($file)) {
@@ -617,7 +854,13 @@ class ASCWO_Design
 					}
 				}
 				$zip->close();
+			} else {
+				return new WP_Error('ascwo_zip_open_failed', __('Unable to create the order ZIP file.', 'all-signs-customizer-for-woocommerce-pro'));
 			}
+		}
+
+		if (!file_exists($upload_dirs . $zip_file)) {
+			return new WP_Error('ascwo_zip_not_created', __('The order ZIP file was not created.', 'all-signs-customizer-for-woocommerce-pro'));
 		}
 
 

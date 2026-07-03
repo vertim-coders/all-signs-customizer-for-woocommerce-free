@@ -782,10 +782,14 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         $required_options = $this->get_required_options($config_id);
         $sizes = $this->get_section_items($required_options, 'sizes');
         $shapes = $this->get_section_items($required_options, 'shapes');
+        $manage_fixing_methods = $this->get_manage_fixing_methods();
+        $items = is_array($value) && isset($value['items']) && is_array($value['items']) ? array_values($value['items']) : array();
 
         return array(
-            'items' => is_array($value) && isset($value['items']) && is_array($value['items']) ? array_values($value['items']) : array(),
-            'manageFixingMethods' => $this->get_manage_fixing_methods(),
+            'items' => array_values(array_map(function ($item) use ($manage_fixing_methods) {
+                return is_array($item) ? $this->normalize_required_fixing_method_item($item, $manage_fixing_methods) : array();
+            }, $items)),
+            'manageFixingMethods' => $manage_fixing_methods,
             'sizes' => isset($sizes['items']) && is_array($sizes['items']) ? $sizes['items'] : array(),
             'shapes' => isset($shapes['items']) && is_array($shapes['items']) ? array_values($shapes['items']) : array(),
         );
@@ -1606,6 +1610,81 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         }
 
         return $normalized;
+    }
+
+    protected function find_manage_fixing_method(array $fixing_method, array $manage_fixing_methods): ?array
+    {
+        $keys = array_filter(array_map(function ($value) {
+            return $this->slugify($value, '');
+        }, array(
+            $fixing_method['fixingMethodId'] ?? '',
+            $fixing_method['id'] ?? '',
+            $fixing_method['type'] ?? '',
+            $fixing_method['label'] ?? '',
+            $fixing_method['name'] ?? '',
+        )));
+
+        foreach ($manage_fixing_methods as $method) {
+            if (!is_array($method)) {
+                continue;
+            }
+
+            $managed_keys = array_filter(array_map(function ($value) {
+                return $this->slugify($value, '');
+            }, array(
+                $method['id'] ?? '',
+                $method['value'] ?? '',
+                $method['type'] ?? '',
+                $method['label'] ?? '',
+                $method['name'] ?? '',
+            )));
+
+            if (array_intersect($keys, $managed_keys)) {
+                return $method;
+            }
+        }
+
+        return null;
+    }
+
+    protected function normalize_required_fixing_method_item(array $fixing_method, array $manage_fixing_methods = array()): array
+    {
+        $manage_fixing_methods = !empty($manage_fixing_methods) ? $manage_fixing_methods : $this->get_manage_fixing_methods();
+        $managed = $this->find_manage_fixing_method($fixing_method, $manage_fixing_methods);
+
+        if (!is_array($managed)) {
+            return $fixing_method;
+        }
+
+        $label = (string) ($managed['name'] ?? $managed['label'] ?? $fixing_method['label'] ?? '');
+        $preview = (string) ($managed['icon'] ?? $managed['previewImg'] ?? $managed['url'] ?? $managed['image'] ?? '');
+
+        $fixing_method['fixingMethodId'] = (string) ($managed['id'] ?? $fixing_method['fixingMethodId'] ?? '');
+        $fixing_method['label'] = !empty($fixing_method['label']) ? (string) $fixing_method['label'] : $label;
+        $fixing_method['name'] = !empty($fixing_method['name']) ? (string) $fixing_method['name'] : $label;
+        $fixing_method['description'] = !empty($fixing_method['description']) ? (string) $fixing_method['description'] : (string) ($managed['description'] ?? '');
+        $fixing_method['type'] = !empty($fixing_method['type']) ? (string) $fixing_method['type'] : (string) ($managed['type'] ?? $managed['value'] ?? '');
+
+        if ($preview !== '') {
+            $fixing_method['icon'] = (string) ($fixing_method['icon'] ?? $preview);
+            $fixing_method['previewImg'] = (string) ($fixing_method['previewImg'] ?? $preview);
+        }
+
+        return $fixing_method;
+    }
+
+    protected function ensure_unique_item_id(array $items, string $base_id): string
+    {
+        $base_id = $this->slugify($base_id, 'item');
+        $candidate = $base_id;
+        $index = 2;
+
+        while ($this->find_section_item_index_by_id($items, $candidate, array('id')) !== null) {
+            $candidate = $base_id . '-' . $index;
+            $index++;
+        }
+
+        return $candidate;
     }
 
     protected function slugify($value, $fallback = 'item'): string

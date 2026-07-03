@@ -755,7 +755,7 @@
                         <td><strong>{{ item.label }}</strong><p>{{ item.description }}</p></td>
                         <td><span class="ascwo-mini-preview" v-html="fixingPreview(item.source || item.item)"></span></td>
                         <td><button type="button" :class="['ascwo-toggle', item.isDefault ? 'is-active' : '']" @click="setDefaultNested('fixingMethods', item.id)"><span></span></button></td>
-                        <td><div class="ascwo-row-actions"><button type="button" class="ascwo-danger-button" @click="removeNestedItem('fixingMethods', item.id)">{{ __('Remove', 'all-signs-customizer-for-woocommerce-pro') }}</button></div></td>
+                        <td><div class="ascwo-row-actions"><button type="button" class="ascwo-danger-button" @click="removeNestedItem('fixingMethods', item.id)">{{ __('Remove from option', 'all-signs-customizer-for-woocommerce-pro') }}</button></div></td>
                       </tr>
                       <tr v-if="selectedFixingRows.length === 0"><td colspan="5" class="ascwo-empty-cell">{{ __('No fixing methods are available for this design yet.', 'all-signs-customizer-for-woocommerce-pro') }}</td></tr>
                     </tbody>
@@ -1752,6 +1752,40 @@ const canSaveBorderEditor = computed(() => {
 
 const fallbackDesignLabel = (index) => `Design ${Number(index || 0) + 1}`;
 
+const normalizeNestedItemsSection = (section) => {
+  if (section && Array.isArray(section.items)) {
+    return section;
+  }
+
+  if (Array.isArray(section)) {
+    return { items: section };
+  }
+
+  return { items: [] };
+};
+
+const normalizeNestedFixingMethodsSection = (section) => {
+  const normalized = normalizeNestedItemsSection(section);
+  return {
+    ...normalized,
+    items: normalized.items.map((item, index) => {
+      const fixingMethodId = String(item?.fixingMethodId || '');
+      const itemId = String(item?.id || '');
+      const localId = itemId && itemId !== fixingMethodId
+        ? itemId
+        : fixingMethodId
+          ? `fixing-option-${fixingMethodId}`
+          : `fixing-option-${index + 1}`;
+
+      return {
+        ...item,
+        id: localId,
+        fixingMethodId,
+      };
+    }),
+  };
+};
+
 const normalizeDesign = (item = {}, index = 0) => ({
   ...emptyDesign(),
   ...item,
@@ -1764,10 +1798,10 @@ const normalizeDesign = (item = {}, index = 0) => ({
   previewImg: String(item.previewImg || item.image || item.icon || ''),
   additionalPrice: Number(item.additionalPrice ?? item.overrides?.additionalPrice ?? 0),
   isDefault: Boolean(item.isDefault),
-  sizes: item.sizes && Array.isArray(item.sizes.items) ? item.sizes : { items: [] },
-  shapes: item.shapes && Array.isArray(item.shapes.items) ? item.shapes : { items: [] },
-  fixingMethods: item.fixingMethods && Array.isArray(item.fixingMethods.items) ? item.fixingMethods : { items: [] },
-  borders: item.borders && Array.isArray(item.borders.items) ? item.borders : { items: [] },
+  sizes: normalizeNestedItemsSection(item.sizes),
+  shapes: normalizeNestedItemsSection(item.shapes),
+  fixingMethods: normalizeNestedFixingMethodsSection(item.fixingMethods),
+  borders: normalizeNestedItemsSection(item.borders),
   backgrounds: item.backgrounds || emptyDesign().backgrounds,
   lightings: item.lightings || emptyDesign().lightings,
   textZones: Array.isArray(item.textZones) ? item.textZones.map((zone, zoneIndex) => normalizeTextZone(zone, zoneIndex)) : [],
@@ -2193,8 +2227,8 @@ const withOneDefault = (items) => {
 const addNestedItems = (section, ids, mapper) => {
   const current = Array.isArray(designForm.value?.[section]?.items) ? designForm.value[section].items : [];
   const next = ids
-    .filter((id) => !current.some((item) => String(item.id) === String(id)))
-    .map(mapper);
+    .map(mapper)
+    .filter((item) => item && !current.some((currentItem) => String(currentItem.id) === String(item.id)));
   designForm.value[section].items = withOneDefault([...current, ...next]);
   closeEditor();
 };
@@ -2338,7 +2372,7 @@ const syncManagedFixingDraft = () => {
 const fixingOptionIdFromSource = (source = {}) => {
   const managedId = String(source?.fixingMethodId || source?.managedId || source?.value || '');
   const localId = String(source?.id || '');
-  if (localId && localId !== managedId) return localId;
+  if (localId && localId !== managedId) return `fixing-option-${localId}`;
   return managedId ? `fixing-option-${managedId}` : `fixing-option-${Date.now()}`;
 };
 

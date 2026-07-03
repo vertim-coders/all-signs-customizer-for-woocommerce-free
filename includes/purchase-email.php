@@ -145,6 +145,36 @@
                 </div>
             <?php } ?>
         <?php } ?>
+        <?php if (!empty($recaps["designImages"]) || !empty($order_data["zip"])) { ?>
+            <div class="ascwo-custom-options-info"
+                style="display:flex; flex-direction:column; align-items:flex-start; border-top:solid rgb(175, 173, 173) 2px; padding:10px 0 10px 5px; gap:8px;">
+                <label
+                    style="font-size:medium; font-weight:600; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+                    <?php echo esc_html__('Files', 'all-signs-customizer-for-woocommerce-pro'); ?>:
+                </label>
+                <?php if (!empty($order_data["zip"])) { ?>
+                    <a href="<?php echo esc_url($this->get_forced_download_url($order_data["zip"])); ?>" download>
+                        <?php echo esc_html__('Download order ZIP file', 'all-signs-customizer-for-woocommerce-pro'); ?>
+                    </a>
+                <?php } ?>
+                <?php if (!empty($recaps["designImages"]) && !isset($recaps["designImages"]["face1"])) { ?>
+                    <?php foreach ($recaps["designImages"] as $key => $image) { ?>
+                        <a href="<?php echo esc_url($this->get_forced_download_url($image)); ?>" download>
+                            <?php echo esc_html__('Download preview file', 'all-signs-customizer-for-woocommerce-pro'); ?>
+                        </a>
+                    <?php } ?>
+                <?php } elseif (!empty($recaps["designImages"])) { ?>
+                    <?php foreach ($recaps["designImages"] as $face_key => $face) { ?>
+                        <?php foreach ($face as $key => $image) { ?>
+                            <a href="<?php echo esc_url($this->get_forced_download_url($image)); ?>" download>
+                                <?php echo esc_html($recaps["faces"][$face_key] ?? $face_key); ?>
+                                <?php echo esc_html__('preview file', 'all-signs-customizer-for-woocommerce-pro'); ?>
+                            </a>
+                        <?php } ?>
+                    <?php } ?>
+                <?php } ?>
+            </div>
+        <?php } ?>
     </div>
 </body>
 

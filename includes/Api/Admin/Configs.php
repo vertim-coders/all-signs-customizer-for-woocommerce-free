@@ -259,6 +259,11 @@ class ASCWO_Api_Configs extends WP_REST_Controller
                         $frontend_data['requiredOptions']['components']['items'][$component_index]['options'][$option_index]['previewImg'] = (string) ($option['previewImg'] ?? $option_preview);
                         $frontend_data['requiredOptions']['components']['items'][$component_index]['options'][$option_index]['icon'] = (string) ($option['icon'] ?? $option_preview);
                     }
+
+                    if (isset($option['fixingMethods']) && is_array($option['fixingMethods']) && !isset($option['fixingMethods']['items'])) {
+                        $option['fixingMethods'] = array('items' => array_values($option['fixingMethods']));
+                        $frontend_data['requiredOptions']['components']['items'][$component_index]['options'][$option_index]['fixingMethods'] = $option['fixingMethods'];
+                    }
                 }
 
                 if (isset($option['fixingMethods']['items']) && is_array($option['fixingMethods']['items'])) {
@@ -270,6 +275,9 @@ class ASCWO_Api_Configs extends WP_REST_Controller
                         if (is_array($managed)) {
                             $managed_preview = (string) ($managed['icon'] ?? $managed['previewImg'] ?? $managed['url'] ?? $managed['image'] ?? '');
                             $item['fixingMethodId'] = (string) ($managed['id'] ?? $item['fixingMethodId'] ?? $item['id'] ?? '');
+                            $item['label'] = !empty($item['label']) ? (string) $item['label'] : (string) ($managed['name'] ?? $managed['label'] ?? '');
+                            $item['name'] = !empty($item['name']) ? (string) $item['name'] : (string) ($managed['name'] ?? $managed['label'] ?? '');
+                            $item['description'] = !empty($item['description']) ? (string) $item['description'] : (string) ($managed['description'] ?? '');
                             $item['type'] = (string) ($managed['type'] ?? $item['type'] ?? $managed['value'] ?? '');
                             $item['icon'] = $managed_preview !== '' ? $managed_preview : (string) ($item['icon'] ?? $item['previewImg'] ?? $item['url'] ?? '');
                             $item['previewImg'] = $item['icon'];

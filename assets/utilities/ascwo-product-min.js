@@ -3,10 +3,12 @@
   $(function () {
     $(document).on("click", ".ascwo_admin_generate_zip_file", function (e) {
       e.preventDefault();
-      $(this).prop("disabled", true);
-      $(this).find("img").show();
-      var item_id = $(this).data("item-id");
-      var nonce = $(this).data("nonce");
+      var $button = $(this);
+      $button.siblings(".ascwo_admin_zip_message").remove();
+      $button.prop("disabled", true);
+      $button.find("img").show();
+      var item_id = $button.data("item-id");
+      var nonce = $button.data("nonce");
       $.post(
         ajaxurl,
         {
@@ -16,13 +18,49 @@
         },
         function (data) {
           if (data.success) {
-            window.location.reload();
+            var downloadUrl =
+              data.download_url ||
+              data.zip ||
+              (data.data && (data.data.download_url || data.data.zip));
+
+            if (downloadUrl) {
+              var link = document.createElement("a");
+              link.href = downloadUrl;
+              link.setAttribute("download", "");
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+            } else {
+              $button.after(
+                '<span class="ascwo_admin_zip_message" style="margin-left:8px;color:#b45309;">ZIP generated, but no download URL returned.</span>',
+              );
+            }
+
+            window.setTimeout(function () {
+              window.location.reload();
+            }, 500);
           } else {
-            $(this).find("img").hide();
-            console.error(data.error);
+            $button.prop("disabled", false);
+            $button.find("img").hide();
+            $("<span>", {
+              class: "ascwo_admin_zip_message",
+              text: data.message || data.error || "Unable to generate ZIP file.",
+            })
+              .css({ "margin-left": "8px", color: "#b91c1c" })
+              .insertAfter($button);
+            console.error(data.message || data.error);
           }
         },
-      );
+      ).fail(function () {
+        $button.prop("disabled", false);
+        $button.find("img").hide();
+        $("<span>", {
+          class: "ascwo_admin_zip_message",
+          text: "Unable to generate ZIP file.",
+        })
+          .css({ "margin-left": "8px", color: "#b91c1c" })
+          .insertAfter($button);
+      });
     });
 
     $(".single_variation_wrap").on(

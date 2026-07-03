@@ -61,7 +61,7 @@
                     <WrenchIcon v-else class="ascwo-w-6 ascwo-h-6 ascwo-text-[#616161]" />
                   </div>
                 </td>
-                <td class="ascwo-row-strong">{{ getManagedMethod(fx)?.name || __("Unknown method", "all-signs-customizer-for-woocommerce-pro") }}</td>
+                <td class="ascwo-row-strong">{{ fx.label || fx.name || getManagedMethod(fx)?.name || __("Unknown method", "all-signs-customizer-for-woocommerce-pro") }}</td>
                 <td>{{ Number(fx.additionalPrice || 0) }}</td>
                 <td>
                   <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
@@ -272,6 +272,23 @@ const getManagedMethod = (fx) => {
   return manageFixingMethods.value.find((method) => managedMethodKey(method) === resolvedId) || null;
 };
 
+const buildFixingMethodPayload = (source = fixingMethod.value) => {
+  const managed = getManagedMethod(source);
+  const label = String(source.label || source.name || managed?.name || managed?.label || "").trim();
+  const preview = String(source.previewImg || source.icon || managed?.icon || managed?.previewImg || managed?.url || managed?.image || "");
+
+  return {
+    ...source,
+    fixingMethodId: resolveManagedMethodId(source.fixingMethodId),
+    label,
+    name: label,
+    description: String(source.description || managed?.description || ""),
+    type: String(source.type || managed?.type || managed?.value || ""),
+    icon: preview,
+    previewImg: preview,
+  };
+};
+
 const selectedManagedMethod = computed(() => manageFixingMethods.value.find((method) => managedMethodKey(method) === resolveManagedMethodId(fixingMethod.value.fixingMethodId)) || null);
 
 const availableManagedMethods = computed(() => manageFixingMethods.value
@@ -353,6 +370,12 @@ const fetchMaterialFixingMethods = async () => {
       }));
       fixingMethods.value = (fixingMethodsData.items || []).map((fx) => ({
         id: String(fx.id || ""),
+        label: String(fx.label || fx.name || ""),
+        name: String(fx.name || fx.label || ""),
+        description: String(fx.description || ""),
+        type: String(fx.type || ""),
+        icon: String(fx.icon || fx.previewImg || ""),
+        previewImg: String(fx.previewImg || fx.icon || ""),
         isDefault: Boolean(fx.isDefault),
         fixingMethodId: resolveManagedMethodId(fx.fixingMethodId, manageFixingMethods.value),
         excludeSizes: normalizeArray(fx.excludeSizes),
@@ -369,7 +392,7 @@ const updateFixingMethods = async () => {
   if (isLoading.value) return;
   isLoading.value = true;
   try {
-    const res = await api.updateRequiredOptionFixingMethods(configID.value, fixingMethods.value);
+    const res = await api.updateRequiredOptionFixingMethods(configID.value, fixingMethods.value.map(buildFixingMethodPayload));
     if (res?.success) {
       toastMessage(res.message);
       isNewFixing.value = false;
@@ -386,7 +409,7 @@ const updateFixingMethods = async () => {
 const addFixingMethods = async () => {
   isLoading.value = true;
   try {
-    const payload = { ...fixingMethod.value, isDefault: !fixingMethods.value.length };
+    const payload = buildFixingMethodPayload({ ...fixingMethod.value, isDefault: !fixingMethods.value.length });
     const res = await api.addRequiredOptionFixingMethodItem(configID.value, payload);
     if (res?.success) {
       toastMessage(res.message);
@@ -405,7 +428,7 @@ const updateMaterialFixingMethods = async () => {
   if (fixingMethodId.value === null) return;
   isLoading.value = true;
   try {
-    const res = await api.updateRequiredOptionFixingMethodItem(configID.value, fixingMethodId.value, { ...fixingMethod.value });
+    const res = await api.updateRequiredOptionFixingMethodItem(configID.value, fixingMethodId.value, buildFixingMethodPayload({ ...fixingMethod.value }));
     if (res?.success) {
       toastMessage(res.message);
       isNewFixing.value = false;
@@ -443,6 +466,12 @@ const selectMaterialFixingMethod = (id, fx, isDeleting = false) => {
   fixingMethod.value = JSON.parse(JSON.stringify({
     isDefault: Boolean(fx.isDefault),
     fixingMethodId: resolveManagedMethodId(fx.fixingMethodId),
+    label: String(fx.label || fx.name || getManagedMethod(fx)?.name || getManagedMethod(fx)?.label || ""),
+    name: String(fx.name || fx.label || getManagedMethod(fx)?.name || getManagedMethod(fx)?.label || ""),
+    description: String(fx.description || getManagedMethod(fx)?.description || ""),
+    type: String(fx.type || getManagedMethod(fx)?.type || ""),
+    icon: String(fx.icon || fx.previewImg || getManagedMethod(fx)?.icon || ""),
+    previewImg: String(fx.previewImg || fx.icon || getManagedMethod(fx)?.icon || ""),
     excludeSizes: normalizeArray(fx.excludeSizes),
     excludeShapes: normalizeArray(fx.excludeShapes),
     additionalPrice: Number(fx.additionalPrice || 0),
