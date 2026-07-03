@@ -1759,8 +1759,9 @@ const normalizeDesign = (item = {}, index = 0) => ({
   label: String(item.label || item.name || fallbackDesignLabel(index)),
   name: String(item.name || item.label || fallbackDesignLabel(index)),
   description: String(item.description || ''),
-  icon: String(item.icon || ''),
-  image: String(item.image || ''),
+  icon: String(item.icon || item.image || item.previewImg || ''),
+  image: String(item.image || item.previewImg || item.icon || ''),
+  previewImg: String(item.previewImg || item.image || item.icon || ''),
   additionalPrice: Number(item.additionalPrice ?? item.overrides?.additionalPrice ?? 0),
   isDefault: Boolean(item.isDefault),
   sizes: item.sizes && Array.isArray(item.sizes.items) ? item.sizes : { items: [] },
@@ -1781,6 +1782,7 @@ const setActiveModule = (key) => {
 
 const normalizeComponent = (item = {}) => {
   const label = String(item.label || item.title || item.name || '');
+  const preview = String(item.image || item.previewImg || item.icon || '');
   return {
     ...emptyComponent(),
     ...item,
@@ -1789,7 +1791,9 @@ const normalizeComponent = (item = {}) => {
     title: String(item.title || label),
     name: String(item.name || label),
     description: String(item.description || ''),
-    icon: String(item.icon || ''),
+    icon: String(item.icon || preview),
+    image: String(item.image || preview),
+    previewImg: String(item.previewImg || preview),
     isDefault: Boolean(item.isDefault),
     options: Array.isArray(item.options) ? item.options.map((option, index) => normalizeDesign(option, index)) : [],
   };
@@ -2115,6 +2119,7 @@ const openPicker = (mode) => {
   customDraft.value = {
     label: '',
     url: '',
+    borderId: '',
     additionalPrice: 0,
     hexCode: '#ffcf5a',
   };
@@ -2337,15 +2342,23 @@ const fixingOptionIdFromSource = (source = {}) => {
   return managedId ? `fixing-option-${managedId}` : `fixing-option-${Date.now()}`;
 };
 
-const fixingDesignItemFromSource = (source) => ({
-  id: fixingOptionIdFromSource(source),
-  fixingMethodId: String(source?.fixingMethodId || source?.managedId || source?.value || ''),
-  custom: false,
-  isDefault: false,
-  label: String(source?.label || ''),
-  excludeSizes: Array.isArray(source?.excludeSizes) ? source.excludeSizes : [],
-  excludeShapes: Array.isArray(source?.excludeShapes) ? source.excludeShapes : [],
-});
+const fixingDesignItemFromSource = (source = {}) => {
+  const managed = source?.managedItem || managedFixingFor(source) || null;
+  const fixingMethodId = String(source?.fixingMethodId || source?.managedId || source?.value || managed?.id || '');
+  return {
+    id: fixingOptionIdFromSource({ ...source, fixingMethodId }),
+    fixingMethodId,
+    type: String(source?.type || managed?.type || managed?.value || ''),
+    custom: false,
+    isDefault: false,
+    label: String(source?.label || source?.name || managed?.label || managed?.name || ''),
+    icon: String(source?.icon || source?.image || source?.previewImg || managed?.icon || managed?.url || ''),
+    previewImg: String(source?.previewImg || source?.image || source?.icon || managed?.icon || managed?.url || ''),
+    fixing: managed || source?.fixing || null,
+    excludeSizes: Array.isArray(source?.excludeSizes) ? source.excludeSizes : [],
+    excludeShapes: Array.isArray(source?.excludeShapes) ? source.excludeShapes : [],
+  };
+};
 
 const saveExistingFixingMethods = async () => {
   if (!draftIds.value.length || isFixingSaving.value) return;
@@ -2377,8 +2390,10 @@ const createAndAddFixingMethod = async () => {
       label,
       name: label,
       fixingMethodId: String(selected?.fixingMethodId || selected?.value || customDraft.value.fixingMethodId || ''),
+      type: String(selected?.type || ''),
       previewImg: String(selected?.image || selected?.icon || ''),
       icon: String(selected?.icon || selected?.image || ''),
+      fixing: selected?.managedItem || selected || null,
       additionalPrice: Number(customDraft.value.additionalPrice || 0),
       excludeSizes: Array.isArray(customDraft.value.excludeSizes) ? customDraft.value.excludeSizes : [],
       excludeShapes: Array.isArray(customDraft.value.excludeShapes) ? customDraft.value.excludeShapes : [],
@@ -2551,16 +2566,24 @@ const saveLightingEditor = async () => {
   }
 };
 
-const borderDesignItemFromSource = (source = {}) => ({
-  id: String(source.id || ''),
-  borderId: String(source.borderId || source.managedId || ''),
-  custom: false,
-  isDefault: false,
-  label: String(source.label || source.name || ''),
-  additionalPrice: Number(source.additionalPrice || 0),
-  excludeSizes: Array.isArray(source.excludeSizes) ? source.excludeSizes : [],
-  excludeShapes: Array.isArray(source.excludeShapes) ? source.excludeShapes : [],
-});
+const borderDesignItemFromSource = (source = {}) => {
+  const managed = source?.managedItem || managedBorderFor(source) || null;
+  const borderId = String(source.borderId || source.managedId || source.value || managed?.id || source.id || '');
+  return {
+    id: String(source.id || (borderId ? `border-option-${borderId}` : '')),
+    borderId,
+    value: String(source.value || managed?.value || managed?.id || borderId),
+    custom: false,
+    isDefault: false,
+    label: String(source.label || source.name || managed?.label || managed?.name || ''),
+    icon: String(source.icon || source.image || source.previewImg || managed?.icon || managed?.url || ''),
+    previewImg: String(source.previewImg || source.image || source.icon || managed?.icon || managed?.url || ''),
+    border: managed || source.border || null,
+    additionalPrice: Number(source.additionalPrice || 0),
+    excludeSizes: Array.isArray(source.excludeSizes) ? source.excludeSizes : [],
+    excludeShapes: Array.isArray(source.excludeShapes) ? source.excludeShapes : [],
+  };
+};
 
 const syncManagedBorderDraft = () => {
   const selected = selectedManagedBorder.value;
@@ -2595,6 +2618,8 @@ const saveBorderEditor = async () => {
         const source = availableBorderOptions.value.find((item) => item.id === String(id));
         return borderDesignItemFromSource(source || { id });
       });
+      await persistDesignSilently();
+      toastMessage(__('Borders added.', 'all-signs-customizer-for-woocommerce-pro'));
       return;
     }
 
@@ -2603,6 +2628,10 @@ const saveBorderEditor = async () => {
       const response = await api.addRequiredOptionBorderItem(configId.value, {
         borderId: String(selected?.value || customDraft.value.borderId || ''),
         label: String(selected?.label || customDraft.value.label || '').trim(),
+        value: String(selected?.value || selected?.id || customDraft.value.borderId || ''),
+        icon: String(selected?.icon || selected?.image || ''),
+        previewImg: String(selected?.image || selected?.icon || ''),
+        border: selected?.managedItem || selected || null,
         additionalPrice: Number(customDraft.value.additionalPrice || 0),
         excludeSizes: Array.isArray(customDraft.value.excludeSizes) ? customDraft.value.excludeSizes : [],
         excludeShapes: Array.isArray(customDraft.value.excludeShapes) ? customDraft.value.excludeShapes : [],

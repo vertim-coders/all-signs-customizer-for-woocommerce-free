@@ -89,14 +89,32 @@ class ASCWO_Frontend
 
         $changed = false;
         foreach ($items as $index => $item) {
-            if (!is_array($item) || !isset($item['icon'])) {
+            if (!is_array($item)) {
                 continue;
             }
-            $normalized_icon = $this->normalize_global_asset_url($item['icon']);
-            if ($normalized_icon !== $item['icon']) {
-                $items[$index]['icon'] = $normalized_icon;
+
+            if ($option_name === 'ascwo_all_fixingMethods' && empty($item['id'])) {
+                $slug = !empty($item['type']) ? sanitize_title((string) $item['type']) : sanitize_title((string) ($item['name'] ?? 'fixing-method'));
+                $items[$index]['id'] = strpos($slug, 'fixing-') === 0 ? $slug : 'fixing-' . $slug;
                 $changed = true;
             }
+
+            if (isset($item['icon'])) {
+                $normalized_icon = $this->normalize_global_asset_url($item['icon']);
+                if ($normalized_icon !== $item['icon']) {
+                    $items[$index]['icon'] = $normalized_icon;
+                    $changed = true;
+                }
+            }
+
+            if (isset($item['url'])) {
+                $normalized_url = $this->normalize_global_asset_url($item['url']);
+                if ($normalized_url !== $item['url']) {
+                    $items[$index]['url'] = $normalized_url;
+                    $changed = true;
+                }
+            }
+
         }
 
         if ($changed) {
@@ -104,6 +122,126 @@ class ASCWO_Frontend
         }
 
         return $items;
+    }
+
+    private function normalize_lookup_key($value)
+    {
+        return sanitize_title((string) $value);
+    }
+
+    private function build_managed_lookup(array $items)
+    {
+        $lookup = array();
+        foreach ($items as $index => $item) {
+            if (!is_array($item)) {
+                continue;
+            }
+            $keys = array(
+                $item['id'] ?? '',
+                $item['value'] ?? '',
+                $item['type'] ?? '',
+                $item['name'] ?? '',
+                $item['label'] ?? '',
+                (string) $index,
+            );
+            foreach ($keys as $key) {
+                $key = $this->normalize_lookup_key($key);
+                if ($key !== '') {
+                    $lookup[$key] = $item;
+                }
+            }
+        }
+        return $lookup;
+    }
+
+    private function find_managed_item(array $lookup, array $item, array $keys)
+    {
+        foreach ($keys as $key) {
+            if (!isset($item[$key])) {
+                continue;
+            }
+            $lookup_key = $this->normalize_lookup_key($item[$key]);
+            if ($lookup_key !== '' && isset($lookup[$lookup_key])) {
+                return $lookup[$lookup_key];
+            }
+        }
+        return null;
+    }
+
+    private function enrich_component_option_items(array $frontend_data, array $all_fixing_methods, array $all_borders)
+    {
+        if (!isset($frontend_data['requiredOptions']['components']['items']) || !is_array($frontend_data['requiredOptions']['components']['items'])) {
+            return $frontend_data;
+        }
+
+        $fixing_lookup = $this->build_managed_lookup($all_fixing_methods);
+        $border_lookup = $this->build_managed_lookup($all_borders);
+
+        foreach ($frontend_data['requiredOptions']['components']['items'] as $component_index => $component) {
+            if (is_array($component)) {
+                $component_preview = (string) ($component['image'] ?? $component['previewImg'] ?? $component['icon'] ?? '');
+                if ($component_preview !== '') {
+                    $frontend_data['requiredOptions']['components']['items'][$component_index]['image'] = (string) ($component['image'] ?? $component_preview);
+                    $frontend_data['requiredOptions']['components']['items'][$component_index]['previewImg'] = (string) ($component['previewImg'] ?? $component_preview);
+                    $frontend_data['requiredOptions']['components']['items'][$component_index]['icon'] = (string) ($component['icon'] ?? $component_preview);
+                }
+            }
+
+            if (!isset($component['options']) || !is_array($component['options'])) {
+                continue;
+            }
+
+            foreach ($component['options'] as $option_index => $option) {
+                if (is_array($option)) {
+                    $option_preview = (string) ($option['image'] ?? $option['previewImg'] ?? $option['icon'] ?? '');
+                    if ($option_preview !== '') {
+                        $frontend_data['requiredOptions']['components']['items'][$component_index]['options'][$option_index]['image'] = (string) ($option['image'] ?? $option_preview);
+                        $frontend_data['requiredOptions']['components']['items'][$component_index]['options'][$option_index]['previewImg'] = (string) ($option['previewImg'] ?? $option_preview);
+                        $frontend_data['requiredOptions']['components']['items'][$component_index]['options'][$option_index]['icon'] = (string) ($option['icon'] ?? $option_preview);
+                    }
+                }
+
+                if (isset($option['fixingMethods']['items']) && is_array($option['fixingMethods']['items'])) {
+                    foreach ($option['fixingMethods']['items'] as $item_index => $item) {
+                        if (!is_array($item)) {
+                            continue;
+                        }
+                        $managed = $this->find_managed_item($fixing_lookup, $item, array('fixingMethodId', 'id', 'value', 'type', 'label', 'name'));
+                        if (is_array($managed)) {
+                            $managed_preview = (string) ($managed['icon'] ?? $managed['previewImg'] ?? $managed['url'] ?? $managed['image'] ?? '');
+                            $item['fixingMethodId'] = (string) ($managed['id'] ?? $item['fixingMethodId'] ?? $item['id'] ?? '');
+                            $item['type'] = (string) ($managed['type'] ?? $item['type'] ?? $managed['value'] ?? '');
+                            $item['icon'] = $managed_preview !== '' ? $managed_preview : (string) ($item['icon'] ?? $item['previewImg'] ?? $item['url'] ?? '');
+                            $item['previewImg'] = $item['icon'];
+                            $item['url'] = $item['icon'];
+                            $item['fixing'] = $managed;
+                        }
+                        $frontend_data['requiredOptions']['components']['items'][$component_index]['options'][$option_index]['fixingMethods']['items'][$item_index] = $item;
+                    }
+                }
+
+                if (isset($option['borders']['items']) && is_array($option['borders']['items'])) {
+                    foreach ($option['borders']['items'] as $item_index => $item) {
+                        if (!is_array($item)) {
+                            continue;
+                        }
+                        $managed = $this->find_managed_item($border_lookup, $item, array('borderId', 'id', 'value', 'type', 'label', 'name'));
+                        if (is_array($managed)) {
+                            $managed_preview = (string) ($managed['icon'] ?? $managed['previewImg'] ?? $managed['url'] ?? $managed['image'] ?? '');
+                            $item['borderId'] = (string) ($managed['id'] ?? $item['borderId'] ?? $item['id'] ?? '');
+                            $item['value'] = (string) ($managed['value'] ?? $item['value'] ?? $managed['id'] ?? '');
+                            $item['icon'] = $managed_preview !== '' ? $managed_preview : (string) ($item['icon'] ?? $item['previewImg'] ?? $item['url'] ?? '');
+                            $item['previewImg'] = $item['icon'];
+                            $item['url'] = $item['icon'];
+                            $item['border'] = $managed;
+                        }
+                        $frontend_data['requiredOptions']['components']['items'][$component_index]['options'][$option_index]['borders']['items'][$item_index] = $item;
+                    }
+                }
+            }
+        }
+
+        return $frontend_data;
     }
 
     /**
@@ -309,6 +447,7 @@ class ASCWO_Frontend
                     if (is_array($config) && !empty($config)) {
                         $config_meta = $config;
                         $frontend_data = isset($config['data']) && is_array($config['data']) ? $config['data'] : array();
+                        $frontend_data = $this->enrich_component_option_items($frontend_data, $all_fixingMethods, $all_borders);
                         $this->enqueue_frontend_app_assets();
                         ?>
                         <div id="ascwo-configurator-loader" class="ascwo-configurator-skeleton">

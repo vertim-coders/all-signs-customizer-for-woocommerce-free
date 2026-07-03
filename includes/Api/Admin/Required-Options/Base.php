@@ -988,6 +988,28 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         return $option;
     }
 
+    protected function component_options_response(int $config_id, array $required_options, $component): array
+    {
+        return array(
+            'componentOptions' => array(
+                'manageShapes' => $this->get_normalized_global_icon_items('ascwo_all_shapes'),
+                'manageFixingMethods' => $this->get_normalized_global_icon_items('ascwo_all_fixingMethods'),
+                'manageBorders' => $this->get_normalized_global_icon_items('ascwo_all_borders'),
+                'requiredOptions' => array(
+                    'sizes' => isset($required_options['sizes']) && is_array($required_options['sizes']) ? $required_options['sizes'] : array('items' => array()),
+                    'colors' => isset($required_options['colors']) && is_array($required_options['colors']) ? $required_options['colors'] : array('items' => array()),
+                    'shapes' => isset($required_options['shapes']) && is_array($required_options['shapes']) ? $required_options['shapes'] : array('items' => array()),
+                    'fixingMethods' => isset($required_options['fixingMethods']) && is_array($required_options['fixingMethods']) ? $required_options['fixingMethods'] : array('items' => array()),
+                    'borders' => isset($required_options['borders']) && is_array($required_options['borders']) ? $required_options['borders'] : array('items' => array()),
+                    'lightings' => isset($required_options['lightings']) && is_array($required_options['lightings']) ? $required_options['lightings'] : array('items' => array()),
+                    'fonts' => isset($required_options['fonts']) && is_array($required_options['fonts']) ? $required_options['fonts'] : array('items' => array()),
+                    'pricings' => isset($required_options['pricings']) && is_array($required_options['pricings']) ? $required_options['pricings'] : array('items' => array()),
+                ),
+                'component' => $component,
+            ),
+        );
+    }
+
     protected static function deep_value($array, array $path, $default = null)
     {
         $current = $array;
@@ -1352,25 +1374,8 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
 
         return rest_ensure_response(array(
             'success' => true,
-            'data' => array(
-                'componentOptions' => array(
-                    'manageShapes' => $this->get_normalized_global_icon_items('ascwo_all_shapes'),
-                    'manageFixingMethods' => $this->get_normalized_global_icon_items('ascwo_all_fixingMethods'),
-                    'manageBorders' => $this->get_normalized_global_icon_items('ascwo_all_borders'),
-                    'requiredOptions' => array(
-                        'sizes' => isset($required_options['sizes']) && is_array($required_options['sizes']) ? $required_options['sizes'] : array('items' => array()),
-                        'colors' => isset($required_options['colors']) && is_array($required_options['colors']) ? $required_options['colors'] : array('items' => array()),
-                        'shapes' => isset($required_options['shapes']) && is_array($required_options['shapes']) ? $required_options['shapes'] : array('items' => array()),
-                        'fixingMethods' => isset($required_options['fixingMethods']) && is_array($required_options['fixingMethods']) ? $required_options['fixingMethods'] : array('items' => array()),
-                        'borders' => isset($required_options['borders']) && is_array($required_options['borders']) ? $required_options['borders'] : array('items' => array()),
-                        'lightings' => isset($required_options['lightings']) && is_array($required_options['lightings']) ? $required_options['lightings'] : array('items' => array()),
-                        'fonts' => isset($required_options['fonts']) && is_array($required_options['fonts']) ? $required_options['fonts'] : array('items' => array()),
-                        'pricings' => isset($required_options['pricings']) && is_array($required_options['pricings']) ? $required_options['pricings'] : array('items' => array()),
-                    ),
-                    'component' => $component,
-                ),
-            ),
-            'message' => $component ? '' : __('No materials component found', 'all-signs-customizer-for-woocommerce-pro'),
+            'data' => $this->component_options_response($config_id, $required_options, $component),
+            'message' => $component ? '' : __('No component found', 'all-signs-customizer-for-woocommerce-pro'),
         ));
     }
 
@@ -1474,13 +1479,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             ? array(
                 'success' => true,
                 'message' => __('Component option successfully added', 'all-signs-customizer-for-woocommerce-pro'),
-                'data' => array(
-                    'componentOptions' => array(
-                        'component' => $components[$component_index],
-                        'manageShapes' => $this->get_normalized_global_icon_items('ascwo_all_shapes'),
-                        'manageFixingMethods' => $this->get_normalized_global_icon_items('ascwo_all_fixingMethods'),
-                    ),
-                ),
+                'data' => $this->component_options_response($config_id, $required_options, $components[$component_index]),
             )
             : array('success' => false, 'message' => __('Component option has not been added', 'all-signs-customizer-for-woocommerce-pro')));
     }
@@ -1545,13 +1544,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             ? array(
                 'success' => true,
                 'message' => __('Component option successfully edited', 'all-signs-customizer-for-woocommerce-pro'),
-                'data' => array(
-                    'componentOptions' => array(
-                        'component' => $components[$component_index],
-                        'manageShapes' => $this->get_normalized_global_icon_items('ascwo_all_shapes'),
-                        'manageFixingMethods' => $this->get_normalized_global_icon_items('ascwo_all_fixingMethods'),
-                    ),
-                ),
+                'data' => $this->component_options_response($config_id, $required_options, $components[$component_index]),
             )
             : array('success' => false, 'message' => __('Component option has not been edited', 'all-signs-customizer-for-woocommerce-pro')));
     }
@@ -1583,13 +1576,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             ? array(
                 'success' => true,
                 'message' => __('Material Component option successfully deleted', 'all-signs-customizer-for-woocommerce-pro'),
-                'data' => array(
-                    'componentOptions' => array(
-                        'component' => $components[$component_index],
-                        'manageShapes' => $this->get_normalized_global_icon_items('ascwo_all_shapes'),
-                        'manageFixingMethods' => $this->get_normalized_global_icon_items('ascwo_all_fixingMethods'),
-                    ),
-                ),
+                'data' => $this->component_options_response($config_id, $required_options, $components[$component_index]),
             )
             : array('success' => false, 'message' => __('Material Component option has not been deleted', 'all-signs-customizer-for-woocommerce-pro')));
     }

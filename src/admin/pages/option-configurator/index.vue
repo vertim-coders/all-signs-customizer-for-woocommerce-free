@@ -53,10 +53,20 @@
 </template>
 
 <script setup>
+import { onBeforeUnmount, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { __ } from "@wordpress/i18n";
+import toastMessage from "@/admin/utils/functions";
 
 const route = useRoute();
+
+const onConfiguratorSaved = (event) => {
+  toastMessage(event?.detail?.message || __("Design configuration saved", "all-signs-customizer-for-woocommerce-pro"));
+};
+
+const onConfiguratorSaveError = (event) => {
+  toastMessage(event?.detail?.message || __("Unable to save design configuration", "all-signs-customizer-for-woocommerce-pro"), "error");
+};
 
 const goBack = () => {
   const configId = route.params.configId;
@@ -64,6 +74,16 @@ const goBack = () => {
 
   window.location.assign(`${window.location.pathname}?page=ascwo#/configuration/${configId}/required-options/components/${componentId}/options`);
 };
+
+onMounted(() => {
+  window.addEventListener("ascwo:option-configurator-saved", onConfiguratorSaved);
+  window.addEventListener("ascwo:option-configurator-save-error", onConfiguratorSaveError);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("ascwo:option-configurator-saved", onConfiguratorSaved);
+  window.removeEventListener("ascwo:option-configurator-save-error", onConfiguratorSaveError);
+});
 </script>
 
 <style>
