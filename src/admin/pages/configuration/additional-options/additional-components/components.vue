@@ -6,11 +6,20 @@
           <h1>Additional Components</h1>
           <p>Manage the reusable additional components offered in this configuration.</p>
         </div>
-        <button type="button" class="ascwo-additional-primary" :disabled="isLoading" @click="newAdditionalOptions">
+        <button type="button" class="ascwo-additional-primary" :disabled="isLoading || additionalOptions.length >= MAX_ADDITIONAL_COMPONENTS" @click="newAdditionalOptions">
           <PlusIcon :size="15" />
           Add additional component
         </button>
       </header>
+
+      <div v-if="additionalOptions.length >= MAX_ADDITIONAL_COMPONENTS" class="ascwo-additional-pro-note">
+        <strong>Free limit reached.</strong>
+        <span>
+          You can create up to 2 additional components in the free version. Upgrade to Pro at
+          <a :href="proUpgradeUrl" target="_blank" rel="noopener noreferrer">{{ proUpgradeUrl }}</a>
+          to unlock more.
+        </span>
+      </div>
 
       <div class="ascwo-additional-card">
         <table class="ascwo-additional-table">
@@ -134,7 +143,7 @@
 
 <script setup>
 import api from '@/admin/Api/api';
-import { defineComponent, h, onMounted, ref } from 'vue';
+import { computed, defineComponent, h, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import router from '@/admin/router';
 import toastMessage from '@/admin/utils/functions';
@@ -151,6 +160,8 @@ const additionalOptionId = ref(null);
 const isEdit = ref(false);
 const openModal = ref(false);
 const noAdditionalOptionsFound = ref('');
+const MAX_ADDITIONAL_COMPONENTS = 2;
+const proUpgradeUrl = 'https://signsdesigner.us/all-signs-customizer-for-woocommerce/';
 const additionalOption = ref({
   title: '',
   description: '',
@@ -164,6 +175,8 @@ onMounted(async () => {
   await fetchAdditionalOptions();
   isFetching.value = false;
 });
+
+const canAddAdditionalOptions = computed(() => additionalOptions.value.length < MAX_ADDITIONAL_COMPONENTS);
 
 const optionCount = (item) => Array.isArray(item?.options) ? item.options.length : 0;
 const openComponentEditor = (id) => {
@@ -279,6 +292,13 @@ const closeModal = () => {
 };
 
 const newAdditionalOptions = () => {
+  if (!canAddAdditionalOptions.value) {
+    toastMessage(
+      `The free version supports only 2 additional components. Upgrade to Pro: ${proUpgradeUrl}`,
+      'warning'
+    );
+    return;
+  }
   resetAdditionalOption();
   isEdit.value = false;
   additionalOptionId.value = null;
@@ -359,6 +379,21 @@ const UploadField = defineComponent({
   justify-content: space-between;
   gap: 18px;
   padding: 24px 28px;
+}
+
+.ascwo-additional-pro-note {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border: 1px solid #f1c24b;
+  border-radius: 8px;
+  background: #fff9e6;
+  color: #664d03;
+}
+
+.ascwo-additional-pro-note a {
+  color: inherit;
+  text-decoration: underline;
 }
 
 .ascwo-additional-header-simple {

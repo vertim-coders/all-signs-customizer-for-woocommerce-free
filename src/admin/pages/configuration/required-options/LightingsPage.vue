@@ -3,17 +3,17 @@
     <template v-if="!isEditorOpen">
       <section class="ascwo-lighting-card ascwo-lighting-header">
         <div>
-          <h2>{{ __("Lighting", "all-signs-customizer-for-woocommerce-pro") }}</h2>
-          <p>{{ __("Manage the global glow colors library used by simple and advanced material options.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+          <h2>{{ __("Lighting", "all-signs-customizer-for-woocommerce") }}</h2>
+          <p>{{ __("Manage the global glow colors library used by simple and advanced material options.", "all-signs-customizer-for-woocommerce") }}</p>
         </div>
         <button type="button" class="ascwo-primary-button" @click="openNewLighting">
           <PlusIcon />
-          {{ __("Add new lighting", "all-signs-customizer-for-woocommerce-pro") }}
+          {{ __("Add new lighting", "all-signs-customizer-for-woocommerce") }}
         </button>
       </section>
 
       <section class="ascwo-lighting-card ascwo-lighting-list-card">
-        <h3>{{ __("Lighting List", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+        <h3>{{ __("Lighting List", "all-signs-customizer-for-woocommerce") }}</h3>
 
         <div v-if="isFetching" class="ascwo-lighting-empty">
           <Loader2Icon class="ascwo-loader" />
@@ -21,18 +21,18 @@
 
         <div v-else-if="lightings.items.length === 0" class="ascwo-lighting-empty">
           <SearchIcon class="ascwo-empty-icon" />
-          <strong>{{ __("No lightings found", "all-signs-customizer-for-woocommerce-pro") }}</strong>
-          <span>{{ __("Try changing the filters or search term", "all-signs-customizer-for-woocommerce-pro") }}</span>
+          <strong>{{ __("No lightings found", "all-signs-customizer-for-woocommerce") }}</strong>
+          <span>{{ __("Try changing the filters or search term", "all-signs-customizer-for-woocommerce") }}</span>
         </div>
 
         <table v-else class="ascwo-lighting-table">
           <thead>
             <tr>
-              <th>{{ __("Label", "all-signs-customizer-for-woocommerce-pro") }}</th>
-              <th>{{ __("Color", "all-signs-customizer-for-woocommerce-pro") }}</th>
-              <th>{{ __("Default", "all-signs-customizer-for-woocommerce-pro") }}</th>
-              <th>{{ __("Additional price", "all-signs-customizer-for-woocommerce-pro") }}</th>
-              <th>{{ __("Actions", "all-signs-customizer-for-woocommerce-pro") }}</th>
+              <th>{{ __("Label", "all-signs-customizer-for-woocommerce") }}</th>
+              <th>{{ __("Color", "all-signs-customizer-for-woocommerce") }}</th>
+              <th>{{ __("Default", "all-signs-customizer-for-woocommerce") }}</th>
+              <th>{{ __("Additional price", "all-signs-customizer-for-woocommerce") }}</th>
+              <th>{{ __("Actions", "all-signs-customizer-for-woocommerce") }}</th>
             </tr>
           </thead>
           <tbody>
@@ -46,7 +46,7 @@
               </td>
               <td>
                 <div class="ascwo-default-control">
-                  <span>{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                  <span>{{ __("No", "all-signs-customizer-for-woocommerce") }}</span>
                   <button
                     type="button"
                     :disabled="isSaving"
@@ -55,7 +55,7 @@
                   >
                     <i></i>
                   </button>
-                  <span>{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                  <span>{{ __("Yes", "all-signs-customizer-for-woocommerce") }}</span>
                 </div>
               </td>
               <td>{{ formatPrice(item.additionalPrice) }}</td>
@@ -63,12 +63,12 @@
                 <div class="ascwo-row-actions">
                   <button type="button" class="ascwo-outline-button" @click="openEditLighting(item.id || index, item)">
                     <Edit2Icon />
-                    {{ __("Edit", "all-signs-customizer-for-woocommerce-pro") }}
+                    {{ __("Edit", "all-signs-customizer-for-woocommerce") }}
                   </button>
                   <button type="button" class="ascwo-link-danger" :disabled="isSaving" @click="deleteLighting(item.id || index)">
                     <Loader2Icon v-if="activeAction === `delete-${item.id || index}`" class="ascwo-button-loader" />
                     <Trash2Icon v-else />
-                    {{ activeAction === `delete-${item.id || index}` ? __("Deleting...", "all-signs-customizer-for-woocommerce-pro") : __("Delete", "all-signs-customizer-for-woocommerce-pro") }}
+                    {{ activeAction === `delete-${item.id || index}` ? __("Deleting...", "all-signs-customizer-for-woocommerce") : __("Delete", "all-signs-customizer-for-woocommerce") }}
                   </button>
                 </div>
               </td>
@@ -80,22 +80,22 @@
 
     <template v-else>
       <section class="ascwo-lighting-card ascwo-lighting-editor">
-        <h3>{{ isEdit ? __("Edit lighting", "all-signs-customizer-for-woocommerce-pro") : __("Add lighting", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+        <h3>{{ isEdit ? __("Edit lighting", "all-signs-customizer-for-woocommerce") : __("Add lighting", "all-signs-customizer-for-woocommerce") }}</h3>
 
         <div class="ascwo-editor-grid">
           <label>
-            <span>{{ __("Label", "all-signs-customizer-for-woocommerce-pro") }}</span>
+            <span>{{ __("Label", "all-signs-customizer-for-woocommerce") }}</span>
             <input v-model.trim="lighting.label" type="text" autocomplete="off" />
           </label>
 
           <label>
-            <span>{{ __("Additional price", "all-signs-customizer-for-woocommerce-pro") }}</span>
+            <span>{{ __("Additional price", "all-signs-customizer-for-woocommerce") }}</span>
             <input v-model.number="lighting.additionalPrice" type="number" min="0" step="0.01" />
           </label>
         </div>
 
         <label class="ascwo-color-field">
-          <span>{{ __("Color", "all-signs-customizer-for-woocommerce-pro") }}</span>
+          <span>{{ __("Color", "all-signs-customizer-for-woocommerce") }}</span>
           <div class="ascwo-color-input-row">
             <input v-model="lighting.hexCode" type="color" />
             <input v-model.trim="lighting.hexCode" type="text" autocomplete="off" />
@@ -104,11 +104,11 @@
 
         <div class="ascwo-editor-actions">
           <button type="button" class="ascwo-secondary-button" :disabled="isSaving" @click="closeEditor">
-            {{ __("Cancel", "all-signs-customizer-for-woocommerce-pro") }}
+            {{ __("Cancel", "all-signs-customizer-for-woocommerce") }}
           </button>
           <button type="button" class="ascwo-primary-button" :disabled="isSaving || !lighting.label" @click="saveLighting">
             <Loader2Icon v-if="isSaving" class="ascwo-button-loader" />
-            {{ isSaving ? __("Saving...", "all-signs-customizer-for-woocommerce-pro") : __("Save lighting", "all-signs-customizer-for-woocommerce-pro") }}
+            {{ isSaving ? __("Saving...", "all-signs-customizer-for-woocommerce") : __("Save lighting", "all-signs-customizer-for-woocommerce") }}
           </button>
         </div>
       </section>
@@ -224,7 +224,7 @@ const saveLighting = async () => {
       closeEditor();
       await fetchLightings();
     } else {
-      toastMessage(res?.message || __("Unable to save lighting", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(res?.message || __("Unable to save lighting", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isSaving.value = false;
@@ -239,10 +239,10 @@ const selectDefault = async (itemId) => {
   try {
     const res = await api.setRequiredOptionDefault(configID.value, "lightings", itemId);
     if (res?.success) {
-      toastMessage(res.message || __("Default lighting updated", "all-signs-customizer-for-woocommerce-pro"));
+      toastMessage(res.message || __("Default lighting updated", "all-signs-customizer-for-woocommerce"));
       await fetchLightings();
     } else {
-      toastMessage(res?.message || __("Unable to update default lighting", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(res?.message || __("Unable to update default lighting", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isSaving.value = false;
@@ -260,7 +260,7 @@ const deleteLighting = async (itemId) => {
       toastMessage(res.message);
       await fetchLightings();
     } else {
-      toastMessage(res?.message || __("Unable to delete lighting", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(res?.message || __("Unable to delete lighting", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isSaving.value = false;

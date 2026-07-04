@@ -4,16 +4,16 @@
       <section class="ascwo-card">
         <div class="ascwo-card-inner ascwo-flex ascwo-items-center ascwo-justify-between ascwo-gap-4">
           <div>
-            <h2 class="ascwo-title">{{ __("Borders", "all-signs-customizer-for-woocommerce-pro") }}</h2>
-            <p class="ascwo-subtitle">{{ __("Manage the borders available in this config and exclude incompatible shapes.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+            <h2 class="ascwo-title">{{ __("Borders", "all-signs-customizer-for-woocommerce") }}</h2>
+            <p class="ascwo-subtitle">{{ __("Manage the borders available in this config and exclude incompatible shapes.", "all-signs-customizer-for-woocommerce") }}</p>
           </div>
           <div class="ascwo-flex ascwo-items-center ascwo-gap-2">
             <button type="button" @click="newBorder" class="ascwo-primary-button">
               <PlusIcon class="ascwo-w-4 ascwo-h-4" />
-              {{ __("Add border", "all-signs-customizer-for-woocommerce-pro") }}
+              {{ __("Add border", "all-signs-customizer-for-woocommerce") }}
             </button>
             <button type="button" @click="goToManageBorders" class="ascwo-secondary-button">
-              {{ __("Manage borders", "all-signs-customizer-for-woocommerce-pro") }}
+              {{ __("Manage borders", "all-signs-customizer-for-woocommerce") }}
             </button>
           </div>
         </div>
@@ -21,15 +21,15 @@
 
       <section class="ascwo-card">
         <div class="ascwo-card-inner">
-          <h3 class="ascwo-section-title">{{ __("Borders List", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+          <h3 class="ascwo-section-title">{{ __("Borders List", "all-signs-customizer-for-woocommerce") }}</h3>
           <table class="ascwo-borders-table ascwo-w-full ascwo-border-collapse">
             <thead class="ascwo-bg-[#f3f3f3]">
               <tr>
-                <th>{{ __("Preview", "all-signs-customizer-for-woocommerce-pro") }}</th>
-                <th>{{ __("Label", "all-signs-customizer-for-woocommerce-pro") }}</th>
-                <th>{{ __("Price", "all-signs-customizer-for-woocommerce-pro") }}</th>
-                <th>{{ __("Default", "all-signs-customizer-for-woocommerce-pro") }}</th>
-                <th>{{ __("Actions", "all-signs-customizer-for-woocommerce-pro") }}</th>
+                <th>{{ __("Preview", "all-signs-customizer-for-woocommerce") }}</th>
+                <th>{{ __("Label", "all-signs-customizer-for-woocommerce") }}</th>
+                <th>{{ __("Price", "all-signs-customizer-for-woocommerce") }}</th>
+                <th>{{ __("Default", "all-signs-customizer-for-woocommerce") }}</th>
+                <th>{{ __("Actions", "all-signs-customizer-for-woocommerce") }}</th>
               </tr>
             </thead>
             <tbody>
@@ -40,7 +40,7 @@
               </tr>
               <tr v-else-if="borders.items.length === 0">
                 <td colspan="5" class="ascwo-text-center ascwo-py-8 ascwo-text-[13px] ascwo-text-[#616161]">
-                  {{ __("No borders configured.", "all-signs-customizer-for-woocommerce-pro") }}
+                  {{ __("No borders configured.", "all-signs-customizer-for-woocommerce") }}
                 </td>
               </tr>
               <tr v-for="(bd, key) in borders.items" :key="`${bd.id}-${key}`">
@@ -50,24 +50,24 @@
                     <SquareIcon v-else class="ascwo-w-7 ascwo-h-7 ascwo-text-[#111827]" />
                   </div>
                 </td>
-                <td class="ascwo-row-strong">{{ getManagedBorder(bd)?.name || __("Unknown border", "all-signs-customizer-for-woocommerce-pro") }}</td>
+                <td class="ascwo-row-strong">{{ getManagedBorder(bd)?.name || __("Unknown border", "all-signs-customizer-for-woocommerce") }}</td>
                 <td>{{ Number(bd.additionalPrice || 0) }}</td>
                 <td>
                   <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
-                    <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                    <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce") }}</span>
                     <button type="button" :disabled="isLoading" @click="selectDefault(bd.id)" :class="['ascwo-toggle', bd.isDefault ? 'is-active' : '', defaultActionId === bd.id ? 'is-loading' : '']"><span></span></button>
-                    <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                    <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce") }}</span>
                   </div>
                 </td>
                 <td>
                   <div class="ascwo-flex ascwo-items-center ascwo-gap-3">
                     <button type="button" @click="selectMaterialBorder(bd.id, bd)" class="ascwo-outline-button">
                       <Edit2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
-                      {{ __("Edit", "all-signs-customizer-for-woocommerce-pro") }}
+                      {{ __("Edit", "all-signs-customizer-for-woocommerce") }}
                     </button>
                     <button type="button" @click="selectMaterialBorder(bd.id, bd, true)" class="ascwo-link-danger">
                       <Trash2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
-                      {{ __("Delete", "all-signs-customizer-for-woocommerce-pro") }}
+                      {{ __("Delete", "all-signs-customizer-for-woocommerce") }}
                     </button>
                   </div>
                 </td>
@@ -79,16 +79,16 @@
 
       <section class="ascwo-card">
         <div class="ascwo-card-inner ascwo-form-body">
-          <h3 class="ascwo-section-title">{{ __("Border Settings", "all-signs-customizer-for-woocommerce-pro") }}</h3>
-          <p class="ascwo-subtitle ascwo-mb-4">{{ __("Control border width support and the border color palette shown in the configurator.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+          <h3 class="ascwo-section-title">{{ __("Border Settings", "all-signs-customizer-for-woocommerce") }}</h3>
+          <p class="ascwo-subtitle ascwo-mb-4">{{ __("Control border width support and the border color palette shown in the configurator.", "all-signs-customizer-for-woocommerce") }}</p>
 
           <div class="ascwo-flex ascwo-items-center ascwo-gap-8 ascwo-mb-4">
             <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
-              <span class="ascwo-form-label ascwo-m-0">{{ __("Enable border width", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <span class="ascwo-form-label ascwo-m-0">{{ __("Enable border width", "all-signs-customizer-for-woocommerce") }}</span>
               <button type="button" @click="enableBorderWidth" :class="['ascwo-toggle', borders.settings.enableBorderWidth ? 'is-active' : '']"><span></span></button>
             </div>
             <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
-              <span class="ascwo-form-label ascwo-m-0">{{ __("Enable border color", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <span class="ascwo-form-label ascwo-m-0">{{ __("Enable border color", "all-signs-customizer-for-woocommerce") }}</span>
               <button type="button" @click="enableBorderColor" :class="['ascwo-toggle', borders.settings.enableBorderColor ? 'is-active' : '']"><span></span></button>
             </div>
           </div>
@@ -96,13 +96,13 @@
           <div v-if="borders.settings.enableBorderColor" class="ascwo-settings-block">
             <div class="ascwo-grid ascwo-grid-cols-1 lg:ascwo-grid-cols-2 ascwo-gap-4">
               <label>
-                <span class="ascwo-form-label">{{ __("Border colors label", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                <span class="ascwo-form-label">{{ __("Border colors label", "all-signs-customizer-for-woocommerce") }}</span>
                 <input type="text" v-model="borders.settings.borderColorsLabel" class="ascwo-form-input" />
               </label>
               <label>
-                <span class="ascwo-form-label">{{ __("Custom color preview image", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                <span class="ascwo-form-label">{{ __("Custom color preview image", "all-signs-customizer-for-woocommerce") }}</span>
                 <div class="ascwo-file-input">
-                  <button type="button" @click.prevent="selectCustomBorderColorPrevImage" class="ascwo-file-button">{{ __("Upload image", "all-signs-customizer-for-woocommerce-pro") }}</button>
+                  <button type="button" @click.prevent="selectCustomBorderColorPrevImage" class="ascwo-file-button">{{ __("Upload image", "all-signs-customizer-for-woocommerce") }}</button>
                   <input v-model="borders.settings.customColorsPrevImg" autocomplete="off" />
                   <div class="ascwo-upload-preview">
                     <img v-if="borders.settings.customColorsPrevImg" :src="borders.settings.customColorsPrevImg" alt="" />
@@ -111,7 +111,7 @@
               </label>
             </div>
 
-            <h4 class="ascwo-section-title ascwo-mt-5">{{ __("Border Colors", "all-signs-customizer-for-woocommerce-pro") }}</h4>
+            <h4 class="ascwo-section-title ascwo-mt-5">{{ __("Border Colors", "all-signs-customizer-for-woocommerce") }}</h4>
             <div class="ascwo-colors-grid">
               <div
                 v-for="(color, key) in borders.settings.colors"
@@ -132,18 +132,18 @@
                   draggable="true"
                   @dragstart="startBorderColorDrag($event, key)"
                   @dragend="endBorderColorDrag"
-                  :aria-label="__('Reorder color', 'all-signs-customizer-for-woocommerce-pro')"
+                  :aria-label="__('Reorder color', 'all-signs-customizer-for-woocommerce')"
                 >
                   <GripVerticalIcon class="ascwo-drag-icon" />
                 </button>
                 <span class="ascwo-color-index">{{ key + 1 }}</span>
-                <input type="color" v-model="color.codeHex" class="ascwo-color-swatch" :title="__('Choose color', 'all-signs-customizer-for-woocommerce-pro')" />
+                <input type="color" v-model="color.codeHex" class="ascwo-color-swatch" :title="__('Choose color', 'all-signs-customizer-for-woocommerce')" />
                 <div class="ascwo-color-fields">
-                  <input type="text" v-model="color.name" class="ascwo-form-input ascwo-color-input" :placeholder="__('Name', 'all-signs-customizer-for-woocommerce-pro')" />
+                  <input type="text" v-model="color.name" class="ascwo-form-input ascwo-color-input" :placeholder="__('Name', 'all-signs-customizer-for-woocommerce')" />
                   <input type="text" v-model="color.codeHex" class="ascwo-form-input ascwo-color-input" />
                 </div>
                 <label class="ascwo-color-price">
-                  <span>{{ __("Additional price", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                  <span>{{ __("Additional price", "all-signs-customizer-for-woocommerce") }}</span>
                   <input type="number" v-model="color.additionalPrice" class="ascwo-form-input ascwo-color-input" />
                 </label>
                 <button type="button" @click="removeBordersColor(key)" class="ascwo-icon-danger">
@@ -151,12 +151,12 @@
                 </button>
               </div>
             </div>
-            <button type="button" @click="addNewColor" class="ascwo-secondary-button ascwo-mt-3">{{ __("Add color", "all-signs-customizer-for-woocommerce-pro") }}</button>
+            <button type="button" @click="addNewColor" class="ascwo-secondary-button ascwo-mt-3">{{ __("Add color", "all-signs-customizer-for-woocommerce") }}</button>
           </div>
         </div>
         <div class="ascwo-form-footer">
           <button type="button" @click="updateBorders" :disabled="isLoading" class="ascwo-primary-button">
-            {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce-pro") : __("Save settings", "all-signs-customizer-for-woocommerce-pro") }}
+            {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce") : __("Save settings", "all-signs-customizer-for-woocommerce") }}
           </button>
         </div>
       </section>
@@ -164,10 +164,10 @@
 
     <section v-else class="ascwo-card">
       <div class="ascwo-card-inner ascwo-form-body">
-        <h3 class="ascwo-section-title">{{ isEdit ? __("Edit border", "all-signs-customizer-for-woocommerce-pro") : __("Add border", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+        <h3 class="ascwo-section-title">{{ isEdit ? __("Edit border", "all-signs-customizer-for-woocommerce") : __("Add border", "all-signs-customizer-for-woocommerce") }}</h3>
 
         <label class="ascwo-field-block">
-          <span class="ascwo-form-label">{{ __("Border", "all-signs-customizer-for-woocommerce-pro") }}</span>
+          <span class="ascwo-form-label">{{ __("Border", "all-signs-customizer-for-woocommerce") }}</span>
           <select v-model="border.borderId" class="ascwo-form-input">
             <option v-for="option in availableManagedBorders" :key="option.value" :value="option.value">
               {{ option.name }}
@@ -181,18 +181,18 @@
             <SquareIcon v-else class="ascwo-w-9 ascwo-h-9 ascwo-text-[#111827]" />
           </div>
           <div>
-            <div class="ascwo-row-strong">{{ selectedManagedBorder?.name || __("None", "all-signs-customizer-for-woocommerce-pro") }}</div>
-            <p class="ascwo-help-text ascwo-m-0">{{ selectedManagedBorder?.value || __("Preview of the border selected for this config.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+            <div class="ascwo-row-strong">{{ selectedManagedBorder?.name || __("None", "all-signs-customizer-for-woocommerce") }}</div>
+            <p class="ascwo-help-text ascwo-m-0">{{ selectedManagedBorder?.value || __("Preview of the border selected for this config.", "all-signs-customizer-for-woocommerce") }}</p>
           </div>
         </div>
 
         <label class="ascwo-field-block">
-          <span class="ascwo-form-label">{{ __("Additional price", "all-signs-customizer-for-woocommerce-pro") }}</span>
+          <span class="ascwo-form-label">{{ __("Additional price", "all-signs-customizer-for-woocommerce") }}</span>
           <input type="number" v-model="border.additionalPrice" class="ascwo-form-input" />
         </label>
 
         <label class="ascwo-field-block">
-          <span class="ascwo-form-label">{{ __("Exclude sizes", "all-signs-customizer-for-woocommerce-pro") }}</span>
+          <span class="ascwo-form-label">{{ __("Exclude sizes", "all-signs-customizer-for-woocommerce") }}</span>
           <Multiselect
             v-model="border.excludeSizes"
             mode="tags"
@@ -202,12 +202,12 @@
             trackBy="name"
             placeholder=""
           />
-          <span class="ascwo-help-text">{{ __("Hide this border for selected sizes.", "all-signs-customizer-for-woocommerce-pro") }}</span>
-          <span class="ascwo-help-text">{{ exclusionSummary(border.excludeSizes, __("No sizes excluded.", "all-signs-customizer-for-woocommerce-pro")) }}</span>
+          <span class="ascwo-help-text">{{ __("Hide this border for selected sizes.", "all-signs-customizer-for-woocommerce") }}</span>
+          <span class="ascwo-help-text">{{ exclusionSummary(border.excludeSizes, __("No sizes excluded.", "all-signs-customizer-for-woocommerce")) }}</span>
         </label>
 
         <label class="ascwo-field-block">
-          <span class="ascwo-form-label">{{ __("Exclude shapes", "all-signs-customizer-for-woocommerce-pro") }}</span>
+          <span class="ascwo-form-label">{{ __("Exclude shapes", "all-signs-customizer-for-woocommerce") }}</span>
           <Multiselect
             v-model="border.excludeShapes"
             mode="tags"
@@ -217,14 +217,14 @@
             trackBy="name"
             placeholder=""
           />
-          <span class="ascwo-help-text">{{ __("Hide this border for shapes that do not support it.", "all-signs-customizer-for-woocommerce-pro") }}</span>
-          <span class="ascwo-help-text">{{ exclusionSummary(border.excludeShapes, __("No shapes excluded.", "all-signs-customizer-for-woocommerce-pro")) }}</span>
+          <span class="ascwo-help-text">{{ __("Hide this border for shapes that do not support it.", "all-signs-customizer-for-woocommerce") }}</span>
+          <span class="ascwo-help-text">{{ exclusionSummary(border.excludeShapes, __("No shapes excluded.", "all-signs-customizer-for-woocommerce")) }}</span>
         </label>
       </div>
       <div class="ascwo-form-footer">
-        <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Back to borders", "all-signs-customizer-for-woocommerce-pro") }}</button>
+        <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Back to borders", "all-signs-customizer-for-woocommerce") }}</button>
         <button type="button" @click="isEdit ? updateMaterialBorders() : addBorders()" :disabled="isLoading || !border.borderId" class="ascwo-primary-button">
-          {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce-pro") : __("Save border", "all-signs-customizer-for-woocommerce-pro") }}
+          {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce") : __("Save border", "all-signs-customizer-for-woocommerce") }}
         </button>
       </div>
     </section>
@@ -232,11 +232,11 @@
     <div v-if="openModal" class="ascwo-fixed ascwo-inset-0 ascwo-z-[20000] ascwo-flex ascwo-items-center ascwo-justify-center">
       <div class="ascwo-absolute ascwo-inset-0 ascwo-bg-black/45" @click="closeModal"></div>
       <div class="ascwo-delete-modal">
-        <h3 class="ascwo-text-[16px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-2">{{ __("Delete border?", "all-signs-customizer-for-woocommerce-pro") }}</h3>
-        <p class="ascwo-text-[13px] ascwo-text-[#616161] ascwo-mt-0 ascwo-mb-5">{{ __("Are you sure you want to delete this border?", "all-signs-customizer-for-woocommerce-pro") }}</p>
+        <h3 class="ascwo-text-[16px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-2">{{ __("Delete border?", "all-signs-customizer-for-woocommerce") }}</h3>
+        <p class="ascwo-text-[13px] ascwo-text-[#616161] ascwo-mt-0 ascwo-mb-5">{{ __("Are you sure you want to delete this border?", "all-signs-customizer-for-woocommerce") }}</p>
         <div class="ascwo-flex ascwo-justify-end ascwo-gap-2">
-          <button type="button" @click="closeModal" class="ascwo-secondary-button">{{ __("Cancel", "all-signs-customizer-for-woocommerce-pro") }}</button>
-          <button type="button" @click="deleteBorders" :disabled="isLoading" class="ascwo-danger-button">{{ __("Delete", "all-signs-customizer-for-woocommerce-pro") }}</button>
+          <button type="button" @click="closeModal" class="ascwo-secondary-button">{{ __("Cancel", "all-signs-customizer-for-woocommerce") }}</button>
+          <button type="button" @click="deleteBorders" :disabled="isLoading" class="ascwo-danger-button">{{ __("Delete", "all-signs-customizer-for-woocommerce") }}</button>
         </div>
       </div>
     </div>
@@ -365,7 +365,7 @@ const updateBorders = async () => {
       isEdit.value = false;
       await fetchMaterialBorders();
     } else {
-      toastMessage(res?.message || __("Unable to save borders", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(res?.message || __("Unable to save borders", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -384,7 +384,7 @@ const addBorders = async () => {
       isEdit.value = false;
       await fetchMaterialBorders();
     } else {
-      toastMessage(res?.message || __("Unable to add border", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(res?.message || __("Unable to add border", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -402,7 +402,7 @@ const updateMaterialBorders = async () => {
       isEdit.value = false;
       await fetchMaterialBorders();
     } else {
-      toastMessage(res?.message || __("Unable to update border", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(res?.message || __("Unable to update border", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -421,7 +421,7 @@ const deleteBorders = async () => {
       isEdit.value = false;
       await fetchMaterialBorders();
     } else {
-      toastMessage(res?.message || __("Unable to delete border", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(res?.message || __("Unable to delete border", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -446,10 +446,10 @@ const selectDefault = async (key) => {
   try {
     const res = await api.setRequiredOptionDefault(configID.value, "borders", key);
     if (res?.success) {
-      toastMessage(res.message || __("Default border updated", "all-signs-customizer-for-woocommerce-pro"));
+      toastMessage(res.message || __("Default border updated", "all-signs-customizer-for-woocommerce"));
       await fetchMaterialBorders();
     } else {
-      toastMessage(res?.message || __("Unable to update default border", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(res?.message || __("Unable to update default border", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -460,7 +460,7 @@ const selectDefault = async (key) => {
 const newBorder = () => {
   const firstAvailable = availableManagedBorders.value[0]?.value;
   if (firstAvailable === undefined) {
-    toastMessage(__("No more borders available", "all-signs-customizer-for-woocommerce-pro"), "warning");
+    toastMessage(__("No more borders available", "all-signs-customizer-for-woocommerce"), "warning");
     return;
   }
   borderId.value = "";
@@ -512,14 +512,14 @@ const enableBorderColor = () => borders.value.settings.enableBorderColor = !bord
 
 const exclusionSummary = (items, fallback) => {
   const count = normalizeArray(items).length;
-  return count ? `${count} ${__("excluded.", "all-signs-customizer-for-woocommerce-pro")}` : fallback;
+  return count ? `${count} ${__("excluded.", "all-signs-customizer-for-woocommerce")}` : fallback;
 };
 
 const selectCustomBorderColorPrevImage = () => {
   if (!window.wp?.media) return;
   const uploader = window.wp.media({
-    title: __("Select custom color preview", "all-signs-customizer-for-woocommerce-pro"),
-    button: { text: __("Select image", "all-signs-customizer-for-woocommerce-pro") },
+    title: __("Select custom color preview", "all-signs-customizer-for-woocommerce"),
+    button: { text: __("Select image", "all-signs-customizer-for-woocommerce") },
     multiple: false,
   });
   uploader.on("select", () => {

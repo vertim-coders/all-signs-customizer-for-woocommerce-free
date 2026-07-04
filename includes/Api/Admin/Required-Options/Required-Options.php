@@ -75,7 +75,7 @@ class ASCWO_Api_Required_Options extends ASCWO_Api_Required_Options_Base
         if (empty($config_ids)) {
             return rest_ensure_response(array(
                 'success' => false,
-                'message' => __('No configurations found', 'all-signs-customizer-for-woocommerce-pro'),
+                'message' => __('No configurations found', 'all-signs-customizer-for-woocommerce'),
             ));
         }
 
@@ -196,7 +196,7 @@ class ASCWO_Api_Required_Options extends ASCWO_Api_Required_Options_Base
         return rest_ensure_response(array(
             'success' => true,
             'message' => sprintf(
-                __('Migration completed: %d configuration(s) updated out of %d', 'all-signs-customizer-for-woocommerce-pro'),
+                __('Migration completed: %d configuration(s) updated out of %d', 'all-signs-customizer-for-woocommerce'),
                 $updated_count,
                 count($config_ids)
             ),

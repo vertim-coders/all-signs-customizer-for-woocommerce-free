@@ -3,11 +3,11 @@
     <section class="ascwo-card">
       <div class="ascwo-card-inner ascwo-flex ascwo-items-center ascwo-justify-between ascwo-gap-4">
         <h1 class="ascwo-text-[14px] ascwo-leading-5 ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">
-          {{ __("Manage Fonts", "all-signs-customizer-for-woocommerce-pro") }}
+          {{ __("Manage Fonts", "all-signs-customizer-for-woocommerce") }}
         </h1>
         <button type="button" @click="backToFonts" class="ascwo-secondary-button">
           <ArrowLeftIcon class="ascwo-w-4 ascwo-h-4" />
-          {{ __("Back to fonts", "all-signs-customizer-for-woocommerce-pro") }}
+          {{ __("Back to fonts", "all-signs-customizer-for-woocommerce") }}
         </button>
       </div>
     </section>
@@ -16,15 +16,15 @@
       <div class="ascwo-card-inner ascwo-flex ascwo-items-center ascwo-justify-between ascwo-gap-4 ascwo-min-h-[78px]">
         <div>
           <h2 class="ascwo-text-[20px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">
-            {{ __("Fonts", "all-signs-customizer-for-woocommerce-pro") }}
+            {{ __("Fonts", "all-signs-customizer-for-woocommerce") }}
           </h2>
           <p class="ascwo-text-[13px] ascwo-leading-5 ascwo-text-[#616161] ascwo-m-0">
-            {{ __("Manage the fonts available to configurations.", "all-signs-customizer-for-woocommerce-pro") }}
+            {{ __("Manage the fonts available to configurations.", "all-signs-customizer-for-woocommerce") }}
           </p>
         </div>
         <button type="button" @click="goToCreateFont" class="ascwo-primary-button">
           <PlusIcon class="ascwo-w-4 ascwo-h-4" />
-          {{ __("Add new font", "all-signs-customizer-for-woocommerce-pro") }}
+          {{ __("Add new font", "all-signs-customizer-for-woocommerce") }}
         </button>
       </div>
     </section>
@@ -38,10 +38,10 @@
         <div v-else-if="fontRows.length === 0" class="ascwo-py-14 ascwo-text-center">
           <SearchIcon class="ascwo-w-16 ascwo-h-16 ascwo-text-[#8c9196] ascwo-mx-auto ascwo-mb-3" />
           <h3 class="ascwo-text-[18px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">
-            {{ __("No Fonts found", "all-signs-customizer-for-woocommerce-pro") }}
+            {{ __("No Fonts found", "all-signs-customizer-for-woocommerce") }}
           </h3>
           <p class="ascwo-text-[13px] ascwo-leading-5 ascwo-text-[#616161] ascwo-mt-2 ascwo-mb-0">
-            {{ __("Try changing the filters or search term", "all-signs-customizer-for-woocommerce-pro") }}
+            {{ __("Try changing the filters or search term", "all-signs-customizer-for-woocommerce") }}
           </p>
         </div>
 
@@ -49,10 +49,10 @@
           <thead class="ascwo-bg-[#f3f3f3]">
             <tr>
               <th class="ascwo-py-2.5 ascwo-px-3 ascwo-text-left ascwo-text-[12px] ascwo-font-bold ascwo-text-[#616161]">
-                {{ __("Label", "all-signs-customizer-for-woocommerce-pro") }}
+                {{ __("Label", "all-signs-customizer-for-woocommerce") }}
               </th>
               <th class="ascwo-py-2.5 ascwo-px-3 ascwo-text-left ascwo-text-[12px] ascwo-font-bold ascwo-text-[#616161]">
-                {{ __("Actions", "all-signs-customizer-for-woocommerce-pro") }}
+                {{ __("Actions", "all-signs-customizer-for-woocommerce") }}
               </th>
             </tr>
           </thead>
@@ -68,10 +68,10 @@
               <td class="ascwo-py-3 ascwo-px-3">
                 <div class="ascwo-flex ascwo-items-center ascwo-gap-2">
                   <button type="button" @click="goToEditFont(font)" class="ascwo-outline-button">
-                    {{ __("Edit", "all-signs-customizer-for-woocommerce-pro") }}
+                    {{ __("Edit", "all-signs-customizer-for-woocommerce") }}
                   </button>
                   <button type="button" @click="selectDeleteFont(font)" class="ascwo-danger-button">
-                    {{ __("Delete", "all-signs-customizer-for-woocommerce-pro") }}
+                    {{ __("Delete", "all-signs-customizer-for-woocommerce") }}
                   </button>
                 </div>
               </td>
@@ -86,7 +86,7 @@
       <div class="ascwo-modal">
         <div class="ascwo-modal-header">
           <h3 class="ascwo-text-[14px] ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">
-            {{ isEdit ? __("Edit font", "all-signs-customizer-for-woocommerce-pro") : __("Add new font", "all-signs-customizer-for-woocommerce-pro") }}
+            {{ isEdit ? __("Edit font", "all-signs-customizer-for-woocommerce") : __("Add new font", "all-signs-customizer-for-woocommerce") }}
           </h3>
           <button type="button" @click="closeFontModal" class="ascwo-close-button">
             <XIcon class="ascwo-w-5 ascwo-h-5" />
@@ -94,26 +94,26 @@
         </div>
         <div class="ascwo-p-5 ascwo-space-y-3">
           <label class="ascwo-block">
-            <span class="ascwo-form-label">{{ __("Label", "all-signs-customizer-for-woocommerce-pro") }}</span>
+            <span class="ascwo-form-label">{{ __("Label", "all-signs-customizer-for-woocommerce") }}</span>
             <input v-model="fontForm.label" class="ascwo-form-input" autocomplete="off" />
           </label>
           <label class="ascwo-block">
-            <span class="ascwo-form-label">{{ __("Upload font file", "all-signs-customizer-for-woocommerce-pro") }}</span>
+            <span class="ascwo-form-label">{{ __("Upload font file", "all-signs-customizer-for-woocommerce") }}</span>
             <div class="ascwo-file-input">
               <button type="button" @click.prevent="selectFontFile" class="ascwo-file-button">
-                {{ __("Upload font file", "all-signs-customizer-for-woocommerce-pro") }}
+                {{ __("Upload font file", "all-signs-customizer-for-woocommerce") }}
               </button>
               <input v-model="fontForm.url" autocomplete="off" />
             </div>
-            <span class="ascwo-help-text">{{ __(".ttf or .otf font file.", "all-signs-customizer-for-woocommerce-pro") }}</span>
+            <span class="ascwo-help-text">{{ __(".ttf or .otf font file.", "all-signs-customizer-for-woocommerce") }}</span>
           </label>
         </div>
         <div class="ascwo-modal-footer">
           <button type="button" @click="closeFontModal" class="ascwo-secondary-action">
-            {{ __("Cancel", "all-signs-customizer-for-woocommerce-pro") }}
+            {{ __("Cancel", "all-signs-customizer-for-woocommerce") }}
           </button>
           <button type="button" @click="saveFont" :disabled="isLoading || !fontForm.label.trim()" class="ascwo-primary-button">
-            {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce-pro") : __("Save font", "all-signs-customizer-for-woocommerce-pro") }}
+            {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce") : __("Save font", "all-signs-customizer-for-woocommerce") }}
           </button>
         </div>
       </div>
@@ -123,17 +123,17 @@
       <div class="ascwo-absolute ascwo-inset-0 ascwo-bg-black/45" @click="closeDeleteModal"></div>
       <div class="ascwo-delete-modal">
         <h3 class="ascwo-text-[16px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-2">
-          {{ __("Delete font?", "all-signs-customizer-for-woocommerce-pro") }}
+          {{ __("Delete font?", "all-signs-customizer-for-woocommerce") }}
         </h3>
         <p class="ascwo-text-[13px] ascwo-leading-5 ascwo-text-[#616161] ascwo-mt-0 ascwo-mb-5">
-          {{ sprintf(__('Are you sure you want to delete "%s"?', "all-signs-customizer-for-woocommerce-pro"), deleteFont.label) }}
+          {{ sprintf(__('Are you sure you want to delete "%s"?', "all-signs-customizer-for-woocommerce"), deleteFont.label) }}
         </p>
         <div class="ascwo-flex ascwo-justify-end ascwo-gap-2">
           <button type="button" @click="closeDeleteModal" class="ascwo-secondary-action">
-            {{ __("Cancel", "all-signs-customizer-for-woocommerce-pro") }}
+            {{ __("Cancel", "all-signs-customizer-for-woocommerce") }}
           </button>
           <button type="button" @click="deleteSelectedFont" :disabled="isLoading" class="ascwo-danger-action">
-            {{ isLoading ? __("Deleting...", "all-signs-customizer-for-woocommerce-pro") : __("Delete", "all-signs-customizer-for-woocommerce-pro") }}
+            {{ isLoading ? __("Deleting...", "all-signs-customizer-for-woocommerce") : __("Delete", "all-signs-customizer-for-woocommerce") }}
           </button>
         </div>
       </div>
@@ -263,7 +263,7 @@ const saveFont = async () => {
       return String(font.url || font.label).trim().toLowerCase() === String(payload.url || payload.label).trim().toLowerCase();
     });
     if (duplicate) {
-      toastMessage(__("This font already exists", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(__("This font already exists", "all-signs-customizer-for-woocommerce"), "warning");
       return;
     }
 
@@ -275,7 +275,7 @@ const saveFont = async () => {
       closeFontModal();
       await fetchFonts();
     } else {
-      toastMessage(result?.message || __("Unable to save this font", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(result?.message || __("Unable to save this font", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -300,7 +300,7 @@ const deleteSelectedFont = async () => {
       closeDeleteModal();
       await fetchFonts();
     } else {
-      toastMessage(result?.message || __("Unable to delete this font", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(result?.message || __("Unable to delete this font", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -310,8 +310,8 @@ const deleteSelectedFont = async () => {
 const selectFontFile = () => {
   if (!window.wp?.media) return;
   const uploader = window.wp.media({
-    title: __("Select Font File", "all-signs-customizer-for-woocommerce-pro"),
-    button: { text: __("Select font", "all-signs-customizer-for-woocommerce-pro") },
+    title: __("Select Font File", "all-signs-customizer-for-woocommerce"),
+    button: { text: __("Select font", "all-signs-customizer-for-woocommerce") },
     multiple: false,
   });
 

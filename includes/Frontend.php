@@ -321,7 +321,7 @@ class ASCWO_Frontend
         $visible_cards = 0;
         $page_settings = get_option('ascwo_config_page');
         $button_labels = isset($page_settings['buttons']) && is_array($page_settings['buttons']) ? $page_settings['buttons'] : [];
-        $customize_label = isset($button_labels['productDesignButton']) && $button_labels['productDesignButton'] !== '' ? $button_labels['productDesignButton'] : __('Start Designing', 'all-signs-customizer-for-woocommerce-pro');
+        $customize_label = isset($button_labels['productDesignButton']) && $button_labels['productDesignButton'] !== '' ? $button_labels['productDesignButton'] : __('Start Designing', 'all-signs-customizer-for-woocommerce');
 
         ob_start();
 
@@ -402,7 +402,7 @@ class ASCWO_Frontend
         if ($visible_cards === 0) {
             ?>
             <div class="ascwo-products-empty">
-                <?php echo esc_html__('No configurable products found.', 'all-signs-customizer-for-woocommerce-pro'); ?>
+                <?php echo esc_html__('No configurable products found.', 'all-signs-customizer-for-woocommerce'); ?>
             </div>
             <?php
         }
@@ -565,8 +565,6 @@ class ASCWO_Frontend
                         $this->add_frontend_inline_data('ascwo_data', array(
                             'rest_url' => get_rest_url() . 'ascwo/v1',
                             'ajax_url' => esc_url_raw(admin_url('admin-ajax.php')),
-                            "caches" => function_exists('ascwo_get_license_cache_timestamp') ? \ascwo_get_license_cache_timestamp() : 0,
-                            "license_status" => function_exists('ascwo_get_license_status') ? \ascwo_get_license_status() : array(),
                             "site_timezone" => function_exists('wp_timezone_string') ? wp_timezone_string() : get_option('timezone_string', 'UTC'),
                             'page' => 'configurator',
                             'site_url' => esc_url_raw(get_site_url()),

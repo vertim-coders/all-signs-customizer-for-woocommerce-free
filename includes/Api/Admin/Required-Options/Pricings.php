@@ -208,7 +208,7 @@ class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Bas
     {
         $config_id = absint($request->get_param('config_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce')));
         }
 
         $required_options = $this->get_required_options($config_id);
@@ -224,7 +224,7 @@ class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Bas
     {
         $config_id = absint($request->get_param('config_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce')));
         }
 
         $payload = $request->get_json_params();
@@ -245,8 +245,8 @@ class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Bas
         $saved = $this->save_required_options($config_id, $required_options);
 
         return rest_ensure_response($saved === true
-            ? array('success' => true, 'message' => __('Pricing successfully saved', 'all-signs-customizer-for-woocommerce-pro'), 'data' => array('pricings' => $pricing))
-            : array('success' => false, 'message' => __('Pricing has not been saved', 'all-signs-customizer-for-woocommerce-pro')));
+            ? array('success' => true, 'message' => __('Pricing successfully saved', 'all-signs-customizer-for-woocommerce'), 'data' => array('pricings' => $pricing))
+            : array('success' => false, 'message' => __('Pricing has not been saved', 'all-signs-customizer-for-woocommerce')));
     }
 
     public function get_pricing_item($request)
@@ -254,7 +254,7 @@ class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Bas
         $config_id = absint($request->get_param('config_id'));
         $item_id = sanitize_text_field((string) $request->get_param('item_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce')));
         }
 
         $required_options = $this->get_required_options($config_id);
@@ -264,14 +264,14 @@ class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Bas
             return rest_ensure_response(array('success' => true, 'data' => array('pricing' => $items[$found_index])));
         }
 
-        return rest_ensure_response(array('success' => false, 'message' => __('Pricing not found', 'all-signs-customizer-for-woocommerce-pro')));
+        return rest_ensure_response(array('success' => false, 'message' => __('Pricing not found', 'all-signs-customizer-for-woocommerce')));
     }
 
     public function add_pricing_item($request)
     {
         $config_id = absint($request->get_param('config_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce')));
         }
 
         $payload = $request->get_json_params();
@@ -283,8 +283,8 @@ class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Bas
         $saved = $this->save_pricing_items($config_id, $items);
 
         return rest_ensure_response($saved === true
-            ? array('success' => true, 'message' => __('Pricing successfully added', 'all-signs-customizer-for-woocommerce-pro'), 'data' => array('pricing' => end($items)))
-            : array('success' => false, 'message' => __('Pricing has not been added', 'all-signs-customizer-for-woocommerce-pro')));
+            ? array('success' => true, 'message' => __('Pricing successfully added', 'all-signs-customizer-for-woocommerce'), 'data' => array('pricing' => end($items)))
+            : array('success' => false, 'message' => __('Pricing has not been added', 'all-signs-customizer-for-woocommerce')));
     }
 
     public function update_pricing_item($request)
@@ -292,7 +292,7 @@ class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Bas
         $config_id = absint($request->get_param('config_id'));
         $item_id = sanitize_text_field((string) $request->get_param('item_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce')));
         }
 
         $payload = $request->get_json_params();
@@ -303,15 +303,15 @@ class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Bas
         $updated_index = $this->find_pricing_item_index($items, $item_id);
 
         if ($updated_index === null) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Pricing not found', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Pricing not found', 'all-signs-customizer-for-woocommerce')));
         }
 
         $payload['id'] = isset($items[$updated_index]['id']) ? $items[$updated_index]['id'] : 'pricing-' . ($updated_index + 1);
         $items[$updated_index] = $this->normalize_pricing_item($payload, $updated_index);
         $saved = $this->save_pricing_items($config_id, $items);
         return rest_ensure_response($saved === true
-            ? array('success' => true, 'message' => __('Pricing successfully edited', 'all-signs-customizer-for-woocommerce-pro'), 'data' => array('pricing' => $items[$updated_index]))
-            : array('success' => false, 'message' => __('Pricing has not been edited', 'all-signs-customizer-for-woocommerce-pro')));
+            ? array('success' => true, 'message' => __('Pricing successfully edited', 'all-signs-customizer-for-woocommerce'), 'data' => array('pricing' => $items[$updated_index]))
+            : array('success' => false, 'message' => __('Pricing has not been edited', 'all-signs-customizer-for-woocommerce')));
     }
 
     public function delete_pricing_item($request)
@@ -319,20 +319,20 @@ class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Bas
         $config_id = absint($request->get_param('config_id'));
         $item_id = sanitize_text_field((string) $request->get_param('item_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce')));
         }
 
         $required_options = $this->get_required_options($config_id);
         $items = $this->get_pricing_items($required_options);
         $found_index = $this->find_pricing_item_index($items, $item_id);
         if ($found_index === null) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Pricing not found', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Pricing not found', 'all-signs-customizer-for-woocommerce')));
         }
 
         array_splice($items, $found_index, 1);
         $saved = $this->save_pricing_items($config_id, $items);
         return rest_ensure_response($saved === true
-            ? array('success' => true, 'message' => __('Pricing successfully deleted', 'all-signs-customizer-for-woocommerce-pro'), 'data' => array('items' => array_values($items)))
-            : array('success' => false, 'message' => __('Pricing has not been deleted', 'all-signs-customizer-for-woocommerce-pro')));
+            ? array('success' => true, 'message' => __('Pricing successfully deleted', 'all-signs-customizer-for-woocommerce'), 'data' => array('items' => array_values($items)))
+            : array('success' => false, 'message' => __('Pricing has not been deleted', 'all-signs-customizer-for-woocommerce')));
     }
 }

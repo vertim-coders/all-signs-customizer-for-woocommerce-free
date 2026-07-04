@@ -71,11 +71,11 @@ class ASCWO_Design
 		$token = sanitize_text_field(wp_unslash($_GET['token']));
 
 		if (preg_match('#(^|/)\.\.(/|$)#', $relative_path)) {
-			wp_die(esc_html__('Invalid download path.', 'all-signs-customizer-for-woocommerce-pro'), 403);
+			wp_die(esc_html__('Invalid download path.', 'all-signs-customizer-for-woocommerce'), 403);
 		}
 
 		if (!hash_equals(wp_hash($relative_path . '|ascwo_download'), $token)) {
-			wp_die(esc_html__('Invalid download token.', 'all-signs-customizer-for-woocommerce-pro'), 403);
+			wp_die(esc_html__('Invalid download token.', 'all-signs-customizer-for-woocommerce'), 403);
 		}
 
 		$base_path = realpath(ASCWO_IMAGE_PATH);
@@ -83,7 +83,7 @@ class ASCWO_Design
 		$real_file_path = realpath($file_path);
 
 		if (!$base_path || !$real_file_path || 0 !== strpos($real_file_path, trailingslashit($base_path)) || !is_file($real_file_path)) {
-			wp_die(esc_html__('File not found.', 'all-signs-customizer-for-woocommerce-pro'), 404);
+			wp_die(esc_html__('File not found.', 'all-signs-customizer-for-woocommerce'), 404);
 		}
 
 		nocache_headers();
@@ -205,11 +205,11 @@ class ASCWO_Design
 			$width = $size_value['width']['value'] ?? '';
 			$height = $size_value['height']['value'] ?? '';
 			$size_text = trim($width . ' x ' . $height, ' x');
-			$this->add_recap_summary_row($rows, $size['label'] ?? __('Size', 'all-signs-customizer-for-woocommerce-pro'), $size_text);
+			$this->add_recap_summary_row($rows, $size['label'] ?? __('Size', 'all-signs-customizer-for-woocommerce'), $size_text);
 
 			$thickness = $size_value['thickness']['value'] ?? '';
 			if ('' !== $thickness && 'none' !== $thickness) {
-				$this->add_recap_summary_row($rows, $size_value['thickness']['label'] ?? __('Thickness', 'all-signs-customizer-for-woocommerce-pro'), $thickness);
+				$this->add_recap_summary_row($rows, $size_value['thickness']['label'] ?? __('Thickness', 'all-signs-customizer-for-woocommerce'), $thickness);
 			}
 		}
 
@@ -229,7 +229,7 @@ class ASCWO_Design
 		if (!empty($recaps['texts']['value'])) {
 			$this->add_recap_summary_row(
 				$rows,
-				$recaps['texts']['label'] ?? __('Texts', 'all-signs-customizer-for-woocommerce-pro'),
+				$recaps['texts']['label'] ?? __('Texts', 'all-signs-customizer-for-woocommerce'),
 				$this->recap_value_to_text($recaps['texts']['value'])
 			);
 		}
@@ -254,7 +254,8 @@ class ASCWO_Design
 		$rows = $this->get_recap_summary_rows($recaps);
 		ob_start();
 		?>
-		<div class="ascwo-recap-summary-list" style="display:flex; flex-direction:column; gap:3px; margin-top:8px; font-size:12px; line-height:1.35;">
+		<div class="ascwo-recap-summary-list"
+			style="display:flex; flex-direction:column; gap:3px; margin-top:8px; font-size:12px; line-height:1.35;">
 			<?php foreach ($rows as $row) { ?>
 				<div class="ascwo-recap-summary-row" style="display:flex; gap:6px; align-items:baseline;">
 					<span style="font-weight:600;"><?php echo esc_html($row['label']); ?>:</span>
@@ -367,8 +368,8 @@ class ASCWO_Design
 				<span class="ascwo-cart-product-preview o-modal-trigger button" data-toggle="o-modal"
 					data-target="#<?php echo esc_attr($preview_modal_id); ?>">
 					<img src="<?php echo esc_url(ASCWO_ASSETS . '/icons/ic_preview_eye.svg'); ?>"
-						alt="<?php echo esc_attr__('Preview', 'all-signs-customizer-for-woocommerce-pro'); ?>"
-						title="<?php echo esc_attr__('Preview', 'all-signs-customizer-for-woocommerce-pro'); ?>"
+						alt="<?php echo esc_attr__('Preview', 'all-signs-customizer-for-woocommerce'); ?>"
+						title="<?php echo esc_attr__('Preview', 'all-signs-customizer-for-woocommerce'); ?>"
 						style="width:20px;height:20px;display:block;" />
 				</span>
 			</div>
@@ -523,7 +524,7 @@ class ASCWO_Design
 								<?php foreach ($face as $image) { ?>
 									<div class="ascwo-custom-options-info-infos" style="display: block !important;">
 										<div>
-											<p><?php echo esc_html__("file", "all-signs-customizer-for-woocommerce-pro") . " : " . esc_html($image["infos"]["name"]) ?>
+											<p><?php echo esc_html__("file", "all-signs-customizer-for-woocommerce") . " : " . esc_html($image["infos"]["name"]) ?>
 											</p>
 										</div>
 										<?php if ($admin) {
@@ -540,7 +541,7 @@ class ASCWO_Design
 							<?php foreach ($recaps["images"]["value"] as $key => $image) { ?>
 								<div class="ascwo-custom-options-info-infos" style="display: block !important;">
 									<div>
-										<p><?php echo esc_html__("file", "all-signs-customizer-for-woocommerce-pro") . " : " . esc_html($image["infos"]["name"]) ?>
+										<p><?php echo esc_html__("file", "all-signs-customizer-for-woocommerce") . " : " . esc_html($image["infos"]["name"]) ?>
 										</p>
 									</div>
 									<?php if ($admin) {
@@ -572,7 +573,7 @@ class ASCWO_Design
 			<?php } ?>
 			<?php if ($admin) { ?>
 				<div class="ascwo-custom-options-info">
-					<label for=""><?php echo esc_html__("Previews", "all-signs-customizer-for-woocommerce-pro") ?>: </label>
+					<label for=""><?php echo esc_html__("Previews", "all-signs-customizer-for-woocommerce") ?>: </label>
 					<div>
 						<?php if (!isset($recaps["designImages"]["face1"])) { ?>
 							<?php foreach ($recaps["designImages"] as $key => $image) { ?>
@@ -581,8 +582,9 @@ class ASCWO_Design
 										<img src="<?php echo esc_url($image) ?>" style="width: auto; height: 50px;" />
 									</div>
 									<div style="margin:10px 0">
-										<a class="button alt ascwo_admin_download_image" href="<?php echo esc_url($this->get_forced_download_url($image)) ?>"
-											download><?php echo esc_html__('Download File', "all-signs-customizer-for-woocommerce-pro") ?></a>
+										<a class="button alt ascwo_admin_download_image"
+											href="<?php echo esc_url($this->get_forced_download_url($image)) ?>"
+											download><?php echo esc_html__('Download File', "all-signs-customizer-for-woocommerce") ?></a>
 									</div>
 								</div>
 							<?php } ?>
@@ -594,8 +596,9 @@ class ASCWO_Design
 											<img src="<?php echo esc_url($image) ?>" style="width: auto; height: 50px;" />
 										</div>
 										<div style="margin:10px 0">
-											<a class="button alt ascwo_admin_download_image" href="<?php echo esc_url($this->get_forced_download_url($image)) ?>"
-												download><?php echo esc_html__('Download File', "all-signs-customizer-for-woocommerce-pro") ?></a>
+											<a class="button alt ascwo_admin_download_image"
+												href="<?php echo esc_url($this->get_forced_download_url($image)) ?>"
+												download><?php echo esc_html__('Download File', "all-signs-customizer-for-woocommerce") ?></a>
 										</div>
 									</div>
 								<?php }
@@ -676,8 +679,9 @@ class ASCWO_Design
 			echo wp_kses_post($this->display_custom_recaps($order_data["recaps"], true));
 			if (isset($order_data["zip"])) { ?>
 				<div style="margin:10px 0">
-					<a class="button alt ascwo_admin_download_image" href="<?php echo esc_url($this->get_forced_download_url($order_data["zip"])) ?>"
-						download><?php echo esc_html__('Download Order Zip file', "all-signs-customizer-for-woocommerce-pro") ?></a>
+					<a class="button alt ascwo_admin_download_image"
+						href="<?php echo esc_url($this->get_forced_download_url($order_data["zip"])) ?>"
+						download><?php echo esc_html__('Download Order Zip file', "all-signs-customizer-for-woocommerce") ?></a>
 				</div> <?php
 			} else {
 				?>
@@ -686,7 +690,7 @@ class ASCWO_Design
 						data-nonce="<?php echo wp_create_nonce('ascwo_generate_order_zip_file') ?>">
 						<img src="<?php echo esc_url(ASCWO_ASSETS . '/images/im_loading.gif') ?>"
 							style="width:10px !important; display:none;" />
-						<span><?php echo esc_html__('Generate Order Item Zip file', "all-signs-customizer-for-woocommerce-pro") ?></span>
+						<span><?php echo esc_html__('Generate Order Item Zip file', "all-signs-customizer-for-woocommerce") ?></span>
 					</button>
 				</div>
 				<?php
@@ -702,7 +706,7 @@ class ASCWO_Design
 																																	if(isset($email_data["sendDesignByEmail"]) && $email_data["sendDesignByEmail"] && isset($email_data["receiverEmail"]) && !empty($email_data["receiverEmail"])){
 																																		?>
 																																		<div>
-																																			<button class="button ascwo-send-email" data-product-id="<?php echo esc_attr($product_id)?>" data-order='<?php echo wp_json_encode(["recaps"=>$order_data,"order_id"=>$order_id])?>'><?php echo __("Send Manufacturer mail","all-signs-customizer-for-woocommerce-pro")?></button>
+																																			<button class="button ascwo-send-email" data-product-id="<?php echo esc_attr($product_id)?>" data-order='<?php echo wp_json_encode(["recaps"=>$order_data,"order_id"=>$order_id])?>'><?php echo __("Send Manufacturer mail","all-signs-customizer-for-woocommerce")?></button>
 																																		</div>
 																																<?php }
 																																}
@@ -810,7 +814,7 @@ class ASCWO_Design
 	private function ascwo_zip_file($order_id, $item_id, $output_settings, $previews, $uploads, $sizes)
 	{
 		if (!class_exists('ZipArchive')) {
-			return new WP_Error('ascwo_missing_ziparchive', __('ZipArchive is not available on this server.', 'all-signs-customizer-for-woocommerce-pro'));
+			return new WP_Error('ascwo_missing_ziparchive', __('ZipArchive is not available on this server.', 'all-signs-customizer-for-woocommerce'));
 		}
 
 		$outputOptions = get_option("ascwo_output_options", []);
@@ -855,12 +859,12 @@ class ASCWO_Design
 				}
 				$zip->close();
 			} else {
-				return new WP_Error('ascwo_zip_open_failed', __('Unable to create the order ZIP file.', 'all-signs-customizer-for-woocommerce-pro'));
+				return new WP_Error('ascwo_zip_open_failed', __('Unable to create the order ZIP file.', 'all-signs-customizer-for-woocommerce'));
 			}
 		}
 
 		if (!file_exists($upload_dirs . $zip_file)) {
-			return new WP_Error('ascwo_zip_not_created', __('The order ZIP file was not created.', 'all-signs-customizer-for-woocommerce-pro'));
+			return new WP_Error('ascwo_zip_not_created', __('The order ZIP file was not created.', 'all-signs-customizer-for-woocommerce'));
 		}
 
 

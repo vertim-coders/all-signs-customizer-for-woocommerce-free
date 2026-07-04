@@ -257,7 +257,7 @@ class ASCWO_Api_Customs_Additionals_Components extends ASCWO_Api_Customs_Additio
         $config_id = absint($request->get_param('config_id'));
         $material_id = $request->get_param('material_id');
         if (!$config_id) {
-            return rest_ensure_response(array('message' => __('Custom ID invalid', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('message' => __('Custom ID invalid', 'all-signs-customizer-for-woocommerce')));
         }
 
         $components = $this->get_components_items($config_id);
@@ -267,7 +267,7 @@ class ASCWO_Api_Customs_Additionals_Components extends ASCWO_Api_Customs_Additio
             return rest_ensure_response(array_values($components));
         }
 
-        return rest_ensure_response(array('message' => __('No additional components found', 'all-signs-customizer-for-woocommerce-pro')));
+        return rest_ensure_response(array('message' => __('No additional components found', 'all-signs-customizer-for-woocommerce')));
     }
 
     public function get_component($request)
@@ -281,7 +281,7 @@ class ASCWO_Api_Customs_Additionals_Components extends ASCWO_Api_Customs_Additio
             return rest_ensure_response($this->component_response($components[$index]));
         }
 
-        return rest_ensure_response(array('message' => __('No component found', 'all-signs-customizer-for-woocommerce-pro')));
+        return rest_ensure_response(array('message' => __('No component found', 'all-signs-customizer-for-woocommerce')));
     }
 
     public function add_component($request)
@@ -304,10 +304,10 @@ class ASCWO_Api_Customs_Additionals_Components extends ASCWO_Api_Customs_Additio
 
         $saved = $this->save_components_items($config_id, $components);
         if ($saved === true) {
-            return rest_ensure_response(array('success' => true, 'message' => __('Component successfully added', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => true, 'message' => __('Component successfully added', 'all-signs-customizer-for-woocommerce')));
         }
 
-        return rest_ensure_response(array('success' => false, 'message' => __('Component has not been added', 'all-signs-customizer-for-woocommerce-pro')));
+        return rest_ensure_response(array('success' => false, 'message' => __('Component has not been added', 'all-signs-customizer-for-woocommerce')));
     }
 
     public function update_components($request)
@@ -334,10 +334,10 @@ class ASCWO_Api_Customs_Additionals_Components extends ASCWO_Api_Customs_Additio
 
         $saved = $this->save_components_items($config_id, array_values($components));
         if ($saved === true) {
-            return rest_ensure_response(array('success' => true, 'message' => __('Components successfully updated', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => true, 'message' => __('Components successfully updated', 'all-signs-customizer-for-woocommerce')));
         }
 
-        return rest_ensure_response(array('success' => false, 'message' => __('Components have not been updated', 'all-signs-customizer-for-woocommerce-pro')));
+        return rest_ensure_response(array('success' => false, 'message' => __('Components have not been updated', 'all-signs-customizer-for-woocommerce')));
     }
 
     public function update_component($request)
@@ -353,7 +353,7 @@ class ASCWO_Api_Customs_Additionals_Components extends ASCWO_Api_Customs_Additio
         $components = $this->get_components_items($config_id);
         $index = $this->find_item_index($components, $component_id);
         if ($index === null) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Component not found', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Component not found', 'all-signs-customizer-for-woocommerce')));
         }
 
         $payload['id'] = isset($payload['id']) && $payload['id'] !== '' ? (string) $payload['id'] : (isset($components[$index]['id']) ? $components[$index]['id'] : $component_id);
@@ -366,10 +366,10 @@ class ASCWO_Api_Customs_Additionals_Components extends ASCWO_Api_Customs_Additio
 
         $saved = $this->save_components_items($config_id, $components);
         if ($saved === true) {
-            return rest_ensure_response(array('success' => true, 'message' => __('Component successfully updated', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => true, 'message' => __('Component successfully updated', 'all-signs-customizer-for-woocommerce')));
         }
 
-        return rest_ensure_response(array('success' => false, 'message' => __('Component has not been updated', 'all-signs-customizer-for-woocommerce-pro')));
+        return rest_ensure_response(array('success' => false, 'message' => __('Component has not been updated', 'all-signs-customizer-for-woocommerce')));
     }
 
     public function delete_component($request)
@@ -380,16 +380,16 @@ class ASCWO_Api_Customs_Additionals_Components extends ASCWO_Api_Customs_Additio
         $index = $this->find_item_index($components, $component_id);
 
         if ($index === null) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Component not found', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Component not found', 'all-signs-customizer-for-woocommerce')));
         }
 
         array_splice($components, $index, 1);
         $saved = $this->save_components_items($config_id, $components);
         if ($saved === true) {
-            return rest_ensure_response(array('success' => true, 'message' => __('Component successfully deleted', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => true, 'message' => __('Component successfully deleted', 'all-signs-customizer-for-woocommerce')));
         }
 
-        return rest_ensure_response(array('success' => false, 'message' => __('Component has not been deleted', 'all-signs-customizer-for-woocommerce-pro')));
+        return rest_ensure_response(array('success' => false, 'message' => __('Component has not been deleted', 'all-signs-customizer-for-woocommerce')));
     }
 
     public function get_component_options($request)
@@ -403,7 +403,7 @@ class ASCWO_Api_Customs_Additionals_Components extends ASCWO_Api_Customs_Additio
             return rest_ensure_response($this->component_response($components[$index]));
         }
 
-        return rest_ensure_response(array('message' => __('No component found', 'all-signs-customizer-for-woocommerce-pro')));
+        return rest_ensure_response(array('message' => __('No component found', 'all-signs-customizer-for-woocommerce')));
     }
 
     public function add_option($request)
@@ -418,7 +418,7 @@ class ASCWO_Api_Customs_Additionals_Components extends ASCWO_Api_Customs_Additio
         $components = $this->get_components_items($config_id);
         $index = $this->find_item_index($components, $component_id);
         if ($index === null) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Component not found', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Component not found', 'all-signs-customizer-for-woocommerce')));
         }
 
         $options = isset($components[$index]['options']) && is_array($components[$index]['options']) ? array_values($components[$index]['options']) : array();
@@ -428,10 +428,10 @@ class ASCWO_Api_Customs_Additionals_Components extends ASCWO_Api_Customs_Additio
 
         $saved = $this->save_components_items($config_id, $components);
         if ($saved === true) {
-            return rest_ensure_response(array('success' => true, 'message' => __('Option successfully added', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => true, 'message' => __('Option successfully added', 'all-signs-customizer-for-woocommerce')));
         }
 
-        return rest_ensure_response(array('success' => false, 'message' => __('Option has not been added', 'all-signs-customizer-for-woocommerce-pro')));
+        return rest_ensure_response(array('success' => false, 'message' => __('Option has not been added', 'all-signs-customizer-for-woocommerce')));
     }
 
     public function get_option($request)
@@ -443,7 +443,7 @@ class ASCWO_Api_Customs_Additionals_Components extends ASCWO_Api_Customs_Additio
         $component_index = $this->find_item_index($components, $component_id);
 
         if ($component_index === null || !isset($components[$component_index]['options']) || !is_array($components[$component_index]['options'])) {
-            return rest_ensure_response(array('message' => __('No component found', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('message' => __('No component found', 'all-signs-customizer-for-woocommerce')));
         }
 
         $options = array_values($components[$component_index]['options']);
@@ -452,7 +452,7 @@ class ASCWO_Api_Customs_Additionals_Components extends ASCWO_Api_Customs_Additio
             return rest_ensure_response(array('data' => $options[$option_index]));
         }
 
-        return rest_ensure_response(array('message' => __('No option found', 'all-signs-customizer-for-woocommerce-pro')));
+        return rest_ensure_response(array('message' => __('No option found', 'all-signs-customizer-for-woocommerce')));
     }
 
     public function update_option($request)
@@ -468,13 +468,13 @@ class ASCWO_Api_Customs_Additionals_Components extends ASCWO_Api_Customs_Additio
         $components = $this->get_components_items($config_id);
         $component_index = $this->find_item_index($components, $component_id);
         if ($component_index === null) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Component not found', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Component not found', 'all-signs-customizer-for-woocommerce')));
         }
 
         $options = isset($components[$component_index]['options']) && is_array($components[$component_index]['options']) ? array_values($components[$component_index]['options']) : array();
         $option_index = $this->find_item_index($options, $option_id);
         if ($option_index === null) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Option not found', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Option not found', 'all-signs-customizer-for-woocommerce')));
         }
 
         $payload['id'] = isset($payload['id']) && $payload['id'] !== '' ? (string) $payload['id'] : (isset($options[$option_index]['id']) ? $options[$option_index]['id'] : $option_id);
@@ -483,10 +483,10 @@ class ASCWO_Api_Customs_Additionals_Components extends ASCWO_Api_Customs_Additio
 
         $saved = $this->save_components_items($config_id, $components);
         if ($saved === true) {
-            return rest_ensure_response(array('success' => true, 'message' => __('Option successfully updated', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => true, 'message' => __('Option successfully updated', 'all-signs-customizer-for-woocommerce')));
         }
 
-        return rest_ensure_response(array('success' => false, 'message' => __('Option has not been updated', 'all-signs-customizer-for-woocommerce-pro')));
+        return rest_ensure_response(array('success' => false, 'message' => __('Option has not been updated', 'all-signs-customizer-for-woocommerce')));
     }
 
     public function delete_option($request)
@@ -498,13 +498,13 @@ class ASCWO_Api_Customs_Additionals_Components extends ASCWO_Api_Customs_Additio
         $components = $this->get_components_items($config_id);
         $component_index = $this->find_item_index($components, $component_id);
         if ($component_index === null) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Component not found', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Component not found', 'all-signs-customizer-for-woocommerce')));
         }
 
         $options = isset($components[$component_index]['options']) && is_array($components[$component_index]['options']) ? array_values($components[$component_index]['options']) : array();
         $option_index = $this->find_item_index($options, $option_id);
         if ($option_index === null) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Option not found', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Option not found', 'all-signs-customizer-for-woocommerce')));
         }
 
         array_splice($options, $option_index, 1);
@@ -512,9 +512,9 @@ class ASCWO_Api_Customs_Additionals_Components extends ASCWO_Api_Customs_Additio
 
         $saved = $this->save_components_items($config_id, $components);
         if ($saved === true) {
-            return rest_ensure_response(array('success' => true, 'message' => __('Option successfully deleted', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => true, 'message' => __('Option successfully deleted', 'all-signs-customizer-for-woocommerce')));
         }
 
-        return rest_ensure_response(array('success' => false, 'message' => __('Option has not been deleted', 'all-signs-customizer-for-woocommerce-pro')));
+        return rest_ensure_response(array('success' => false, 'message' => __('Option has not been deleted', 'all-signs-customizer-for-woocommerce')));
     }
 }

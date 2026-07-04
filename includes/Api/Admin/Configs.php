@@ -149,7 +149,7 @@ class ASCWO_Api_Configs extends WP_REST_Controller
     private function sanitize_material_type($value): string
     {
         $value = sanitize_text_field((string) $value);
-        $allowed = array('simple', 'advance', 'layers');
+        $allowed = array('simple');
         if (in_array($value, $allowed, true)) {
             return $value;
         }
@@ -584,12 +584,12 @@ class ASCWO_Api_Configs extends WP_REST_Controller
                     if (!empty($conflicts)) {
                         return rest_ensure_response([
                             "success" => false,
-                            "message" => __("Some products are already assigned to another configuration.", "all-signs-customizer-for-woocommerce-pro"),
+                            "message" => __("Some products are already assigned to another configuration.", "all-signs-customizer-for-woocommerce"),
                             "conflicts" => $conflicts,
                         ]);
                     }
                 }
-                return rest_ensure_response(["success" => true, "message" => __("Configuration created with success", "all-signs-customizer-for-woocommerce-pro"), "post_id" => $post_id]);
+                return rest_ensure_response(["success" => true, "message" => __("Configuration created with success", "all-signs-customizer-for-woocommerce"), "post_id" => $post_id]);
             } else {
                 return rest_ensure_response(["success" => false, "message" => "Registration failed"]);
             }
@@ -624,11 +624,11 @@ class ASCWO_Api_Configs extends WP_REST_Controller
 
                 return rest_ensure_response($response);
             } else {
-                return rest_ensure_response(["message" => __("Not ASO Config Post", "all-signs-customizer-for-woocommerce-pro")]);
+                return rest_ensure_response(["message" => __("Not ASO Config Post", "all-signs-customizer-for-woocommerce")]);
             }
 
         } else {
-            return rest_ensure_response(["message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
+            return rest_ensure_response(["message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce")]);
         }
 
 
@@ -775,14 +775,14 @@ class ASCWO_Api_Configs extends WP_REST_Controller
                 if (!empty($conflicts)) {
                     return rest_ensure_response(array(
                         'success' => false,
-                        "message" => __("Some products are already assigned to another configuration.", "all-signs-customizer-for-woocommerce-pro"),
+                        "message" => __("Some products are already assigned to another configuration.", "all-signs-customizer-for-woocommerce"),
                         "conflicts" => $conflicts,
                     ));
                 }
             }
-            return rest_ensure_response(array('success' => true, "message" => __("The configuration has been updated with success", "all-signs-customizer-for-woocommerce-pro")));
+            return rest_ensure_response(array('success' => true, "message" => __("The configuration has been updated with success", "all-signs-customizer-for-woocommerce")));
         } else {
-            return rest_ensure_response(array('success' => false, "message" => __("Configuration update failed", "all-signs-customizer-for-woocommerce-pro")));
+            return rest_ensure_response(array('success' => false, "message" => __("Configuration update failed", "all-signs-customizer-for-woocommerce")));
         }
 
     }
@@ -807,12 +807,12 @@ class ASCWO_Api_Configs extends WP_REST_Controller
 
             $deletePost = wp_delete_post($id, true);
             if ($deletePost != null && $deletePost != false) {
-                return rest_ensure_response(["success" => true, "message" => __("The configuration was well removed", "all-signs-customizer-for-woocommerce-pro")]);
+                return rest_ensure_response(["success" => true, "message" => __("The configuration was well removed", "all-signs-customizer-for-woocommerce")]);
             } else {
-                return rest_ensure_response(["success" => false, "message" => __("Deleting the configuration failed", "all-signs-customizer-for-woocommerce-pro")]);
+                return rest_ensure_response(["success" => false, "message" => __("Deleting the configuration failed", "all-signs-customizer-for-woocommerce")]);
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __("Deleting the configuration failed", "all-signs-customizer-for-woocommerce-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __("Deleting the configuration failed", "all-signs-customizer-for-woocommerce")]);
         }
     }
 

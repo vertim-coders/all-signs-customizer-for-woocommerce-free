@@ -119,8 +119,8 @@ class ASCWO_Api_Required_Options_Materials extends ASCWO_Api_Required_Options_Ba
             $request,
             'materials',
             'material',
-            __('Material not found', 'all-signs-customizer-for-woocommerce-pro'),
-            __('Default material successfully updated', 'all-signs-customizer-for-woocommerce-pro')
+            __('Material not found', 'all-signs-customizer-for-woocommerce'),
+            __('Default material successfully updated', 'all-signs-customizer-for-woocommerce')
         );
     }
 }

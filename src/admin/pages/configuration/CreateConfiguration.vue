@@ -3,10 +3,10 @@
     <!-- Header Section -->
     <div class="ascwo-text-center ascwo-mb-5">
       <h1 class="ascwo-text-[28px] ascwo-leading-9 ascwo-text-[#303030] ascwo-mb-1" style="font-weight: 750 !important;">
-        {{ isEdit ? __('Edit Product Configuration', 'all-signs-customizer-for-woocommerce-pro') : __('Create Product Configuration', 'all-signs-customizer-for-woocommerce-pro') }}
+        {{ isEdit ? __('Edit Product Configuration', 'all-signs-customizer-for-woocommerce') : __('Create Product Configuration', 'all-signs-customizer-for-woocommerce') }}
       </h1>
       <p class="ascwo-text-[14px] ascwo-text-[#616161]">
-        {{ isEdit ? __('Update the configuration information and product associations.', 'all-signs-customizer-for-woocommerce-pro') : __('Follow the steps to define the product, how customers will configure it, and how your setup should start.', 'all-signs-customizer-for-woocommerce-pro') }}
+        {{ isEdit ? __('Update the configuration information and product associations.', 'all-signs-customizer-for-woocommerce') : __('Follow the steps to define the product, how customers will configure it, and how your setup should start.', 'all-signs-customizer-for-woocommerce') }}
       </p>
     </div>
 
@@ -29,7 +29,7 @@
               {{ n }}
             </span>
             <span v-if="wizard.step === n">{{ getStepTitle(n) }}</span>
-            <span v-else>{{ __('Step', 'all-signs-customizer-for-woocommerce-pro') }} {{ n }}</span>
+            <span v-else>{{ __('Step', 'all-signs-customizer-for-woocommerce') }} {{ n }}</span>
           </div>
           <ChevronRightIcon v-if="n < 4" class="ascwo-create-step-arrow ascwo-w-3 ascwo-h-3 ascwo-mx-2 ascwo-text-[#d1d1d1]" />
         </div>
@@ -43,10 +43,10 @@
       <div v-if="!isEdit && wizard.step === 1" class="ascwo-p-7">
         <div class="ascwo-mb-6">
           <h2 class="ascwo-text-[18px] ascwo-leading-6 ascwo-font-bold ascwo-text-[#303030] ascwo-mb-2">
-            {{ __('What type of product do you want to sell?', 'all-signs-customizer-for-woocommerce-pro') }}
+            {{ __('What type of product do you want to sell?', 'all-signs-customizer-for-woocommerce') }}
           </h2>
           <p class="ascwo-text-[14px] ascwo-text-[#616161]">
-            {{ __('Choose the product family first. We will then show the matching materials and configuration setup.', 'all-signs-customizer-for-woocommerce-pro') }}
+            {{ __('Choose the product family first. We will then show the matching materials and configuration setup.', 'all-signs-customizer-for-woocommerce') }}
           </p>
         </div>
 
@@ -76,13 +76,13 @@
                 <h3 class="ascwo-text-[15px] ascwo-font-bold ascwo-text-[#1a1a1a] ascwo-m-0">{{ family.title }}</h3>
                 <div class="ascwo-flex ascwo-gap-2">
                   <span v-if="family.comingSoon" class="ascwo-bg-[#fff7d1] ascwo-text-[#856404] ascwo-text-[10px] ascwo-font-bold ascwo-px-2 ascwo-py-0.5 ascwo-rounded-full">
-                    {{ __('Coming soon', 'all-signs-customizer-for-woocommerce-pro') }}
+                    {{ __('Coming soon', 'all-signs-customizer-for-woocommerce') }}
                   </span>
                   <span v-else-if="family.externalPlugin" class="ascwo-create-external-pill ascwo-text-[10px] ascwo-font-bold ascwo-px-2 ascwo-py-0.5 ascwo-rounded-full">
-                    {{ __('Separate plugin', 'all-signs-customizer-for-woocommerce-pro') }}
+                    {{ __('Separate plugin', 'all-signs-customizer-for-woocommerce') }}
                   </span>
                   <span v-else-if="wizard.productType === family.id" class="ascwo-ui-pill">
-                    {{ __('selected', 'all-signs-customizer-for-woocommerce-pro') }}
+                    {{ __('selected', 'all-signs-customizer-for-woocommerce') }}
                   </span>
                 </div>
               </div>
@@ -91,7 +91,7 @@
               </p>
               <div class="ascwo-flex ascwo-items-center ascwo-justify-between">
                 <span class="ascwo-text-[12px] ascwo-font-medium ascwo-text-[#b5b5b5]">
-                  {{ family.comingSoon ? __('Coming soon', 'all-signs-customizer-for-woocommerce-pro') : (family.externalPlugin ? __('View plugin options', 'all-signs-customizer-for-woocommerce-pro') : __('Click to select', 'all-signs-customizer-for-woocommerce-pro')) }}
+                  {{ family.comingSoon ? __('Coming soon', 'all-signs-customizer-for-woocommerce') : (family.externalPlugin ? __('View plugin options', 'all-signs-customizer-for-woocommerce') : __('Click to select', 'all-signs-customizer-for-woocommerce')) }}
                 </span>
                 <button @click.stop="family.externalPlugin ? selectFamily(family) : openPreview(family)" class="ascwo-w-7 ascwo-h-7 ascwo-rounded-full ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#e1e3e5] ascwo-flex ascwo-items-center ascwo-justify-center ascwo-text-[#b5b5b5] hover:ascwo-text-[#1a1a1a] ascwo-cursor-pointer">
                   <EyeIcon class="ascwo-w-4 ascwo-h-4" />
@@ -107,13 +107,13 @@
         <div class="ascwo-mb-8">
           <div class="ascwo-mb-2">
              <h2 class="ascwo-text-[22px] ascwo-font-bold ascwo-text-[#1a1a1a] ascwo-m-0 ascwo-flex ascwo-items-center ascwo-gap-2">
-                {{ __('Choose the material for', 'all-signs-customizer-for-woocommerce-pro') }}
+                {{ __('Choose the material for', 'all-signs-customizer-for-woocommerce') }}
                 <span class="ascwo-px-3 ascwo-py-1 ascwo-bg-[#f1f1f1] ascwo-rounded-lg ascwo-text-[14px] ascwo-font-medium ascwo-text-[#616161]">{{ selectedFamilyTitle }}</span>
-                <span class="ascwo-px-3 ascwo-py-1 ascwo-bg-[#d2f4ea] ascwo-text-[#006e52] ascwo-rounded-lg ascwo-text-[14px] ascwo-font-bold">{{ wizard.selectedMaterials.length }} {{ __('selected', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                <span class="ascwo-px-3 ascwo-py-1 ascwo-bg-[#d2f4ea] ascwo-text-[#006e52] ascwo-rounded-lg ascwo-text-[14px] ascwo-font-bold">{{ wizard.selectedMaterials.length }} {{ __('selected', 'all-signs-customizer-for-woocommerce') }}</span>
              </h2>
           </div>
           <p class="ascwo-text-[14px] ascwo-text-[#616161]">
-            {{ __('Select one or more materials your merchants will sell. You can choose multiple materials here, then define how the configurator behaves in the next step.', 'all-signs-customizer-for-woocommerce-pro') }}
+            {{ __('Select one or more materials your merchants will sell. You can choose multiple materials here, then define how the configurator behaves in the next step.', 'all-signs-customizer-for-woocommerce') }}
           </p>
         </div>
 
@@ -142,16 +142,16 @@
                 <div class="ascwo-flex ascwo-gap-2">
                    <span v-if="material.tag" class="ascwo-ui-pill ascwo-create-info-pill">{{ material.tag }}</span>
                    <span v-if="wizard.selectedMaterials.includes(material.id)" class="ascwo-ui-pill">
-                      {{ __('selected', 'all-signs-customizer-for-woocommerce-pro') }}
+                      {{ __('selected', 'all-signs-customizer-for-woocommerce') }}
                    </span>
                 </div>
               </div>
               <p class="ascwo-text-[13px] ascwo-text-[#616161] ascwo-leading-relaxed ascwo-mb-3">
-                {{ material.desc || sprintf(__('Include %s in this %s setup.', 'all-signs-customizer-for-woocommerce-pro'), material.title.toLowerCase(), selectedFamilyTitle.toLowerCase()) }}
+                {{ material.desc || sprintf(__('Include %s in this %s setup.', 'all-signs-customizer-for-woocommerce'), material.title.toLowerCase(), selectedFamilyTitle.toLowerCase()) }}
               </p>
               <div class="ascwo-flex ascwo-items-center ascwo-justify-between">
                 <span class="ascwo-text-[12px] ascwo-font-medium ascwo-text-[#b5b5b5]">
-                  {{ __('Click to toggle', 'all-signs-customizer-for-woocommerce-pro') }}
+                  {{ __('Click to toggle', 'all-signs-customizer-for-woocommerce') }}
                 </span>
                 <button @click.stop="openPreview(material)" class="ascwo-w-7 ascwo-h-7 ascwo-rounded-full ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#e1e3e5] ascwo-flex ascwo-items-center ascwo-justify-center ascwo-text-[#b5b5b5] hover:ascwo-text-[#1a1a1a] ascwo-cursor-pointer">
                   <EyeIcon class="ascwo-w-4 ascwo-h-4" />
@@ -167,7 +167,7 @@
         <div class="ascwo-mb-8">
           <div class="ascwo-flex ascwo-items-center ascwo-gap-2 ascwo-mb-2">
              <h2 class="ascwo-text-[22px] ascwo-font-bold ascwo-text-[#1a1a1a] ascwo-m-0">
-                {{ __('Choose a configuration model', 'all-signs-customizer-for-woocommerce-pro') }}
+                {{ __('Choose a configuration model', 'all-signs-customizer-for-woocommerce') }}
              </h2>
              <span class="ascwo-px-3 ascwo-py-1 ascwo-bg-[#f1f1f1] ascwo-rounded-lg ascwo-text-[14px] ascwo-font-medium ascwo-text-[#616161]">{{ selectedFamilyTitle }}</span>
              <span class="ascwo-px-3 ascwo-py-1 ascwo-bg-[#d2f4ea] ascwo-text-[#006e52] ascwo-rounded-lg ascwo-text-[12px] ascwo-font-bold">
@@ -175,12 +175,12 @@
              </span>
           </div>
           <p class="ascwo-text-[14px] ascwo-text-[#616161] ascwo-mb-10">
-            {{ __('Choose how customers will build this product. Starter data will be decided in the final review.', 'all-signs-customizer-for-woocommerce-pro') }}
+            {{ __('Choose how customers will build this product. Starter data will be decided in the final review.', 'all-signs-customizer-for-woocommerce') }}
           </p>
 
-          <h3 class="ascwo-text-[16px] ascwo-font-bold ascwo-text-[#1a1a1a] ascwo-mb-2">{{ __('Choose how customers will build this product', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
+          <h3 class="ascwo-text-[16px] ascwo-font-bold ascwo-text-[#1a1a1a] ascwo-mb-2">{{ __('Choose how customers will build this product', 'all-signs-customizer-for-woocommerce') }}</h3>
           <p class="ascwo-text-[13px] ascwo-text-[#616161] ascwo-mb-8">
-             {{ __('Both setup models are available. Pick the customer journey first, then decide in the final review whether to inject starter data or keep the configuration blank.', 'all-signs-customizer-for-woocommerce-pro') }}
+             {{ __('The free version only supports the simple setup model. Preset mode is locked to Pro.', 'all-signs-customizer-for-woocommerce') }}
           </p>
         </div>
 
@@ -199,39 +199,40 @@
                </div>
                <div class="ascwo-flex-1">
                   <div class="ascwo-flex ascwo-items-center ascwo-justify-between ascwo-mb-1">
-                     <h4 class="ascwo-text-[16px] ascwo-font-bold ascwo-text-[#1a1a1a] ascwo-m-0">{{ __('Build by Options', 'all-signs-customizer-for-woocommerce-pro') }}</h4>
+                     <h4 class="ascwo-text-[16px] ascwo-font-bold ascwo-text-[#1a1a1a] ascwo-m-0">{{ __('Build by Options', 'all-signs-customizer-for-woocommerce') }}</h4>
                      <div class="ascwo-flex ascwo-gap-2">
-                        <span class="ascwo-bg-[#e1f0ff] ascwo-text-[#005bd3] ascwo-text-[11px] ascwo-font-bold ascwo-px-3 ascwo-py-0.5 ascwo-rounded-full">{{ __('Flexible', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                        <span class="ascwo-bg-[#e1f0ff] ascwo-text-[#005bd3] ascwo-text-[11px] ascwo-font-bold ascwo-px-3 ascwo-py-0.5 ascwo-rounded-full">{{ __('Flexible', 'all-signs-customizer-for-woocommerce') }}</span>
                         <span v-if="wizard.materialType === 'simple'" class="ascwo-bg-[#f1f1f1] ascwo-text-[#616161] ascwo-text-[11px] ascwo-font-medium ascwo-px-3 ascwo-py-0.5 ascwo-rounded-full ascwo-border ascwo-border-solid ascwo-border-[#e1e3e5]">selected</span>
                      </div>
                   </div>
                   <p class="ascwo-text-[13px] ascwo-text-[#616161] ascwo-leading-relaxed">
-                     {{ __('Customers choose product options directly like size, shape, material and extras.', 'all-signs-customizer-for-woocommerce-pro') }}
+                     {{ __('Customers choose product options directly like size, shape, material and extras.', 'all-signs-customizer-for-woocommerce') }}
                   </p>
                </div>
             </div>
             <ul class="ascwo-list-none ascwo-p-0 ascwo-m-0 ascwo-space-y-2">
                <li class="ascwo-flex ascwo-items-center ascwo-gap-3 ascwo-text-[13px] ascwo-text-[#1a1a1a]">
                   <div class="ascwo-w-2 ascwo-h-2 ascwo-rounded-full ascwo-bg-[#88bebb]"></div>
-                  {{ __('Customers choose size, shape, color and extras directly.', 'all-signs-customizer-for-woocommerce-pro') }}
+                  {{ __('Customers choose size, shape, color and extras directly.', 'all-signs-customizer-for-woocommerce') }}
                </li>
                <li class="ascwo-flex ascwo-items-center ascwo-gap-3 ascwo-text-[13px] ascwo-text-[#1a1a1a]">
                   <div class="ascwo-w-2 ascwo-h-2 ascwo-rounded-full ascwo-bg-[#88bebb]"></div>
-                  {{ __('Best for flexible catalogs with straightforward options.', 'all-signs-customizer-for-woocommerce-pro') }}
+                  {{ __('Best for flexible catalogs with straightforward options.', 'all-signs-customizer-for-woocommerce') }}
                </li>
                <li class="ascwo-flex ascwo-items-center ascwo-gap-3 ascwo-text-[13px] ascwo-text-[#1a1a1a]">
                   <div class="ascwo-w-2 ascwo-h-2 ascwo-rounded-full ascwo-bg-[#88bebb]"></div>
-                  {{ __('Good when each order is built from choices made one by one.', 'all-signs-customizer-for-woocommerce-pro') }}
+                  {{ __('Good when each order is built from choices made one by one.', 'all-signs-customizer-for-woocommerce') }}
                </li>
             </ul>
           </div>
 
           <!-- Build from Presets -->
           <div
-            @click="wizard.materialType = 'advance'"
+            @click="showPresetUpgradeNotice"
+            aria-disabled="true"
             :class="[
-              'ascwo-create-model-card ascwo-relative ascwo-transition-all ascwo-cursor-pointer',
-              wizard.materialType === 'advance' ? 'ascwo-border-[#006e52] ascwo-bg-[#f8faf9]' : 'ascwo-border-[#e1e3e5] ascwo-bg-white'
+              'ascwo-create-model-card ascwo-relative ascwo-transition-all ascwo-cursor-not-allowed ascwo-opacity-80',
+              'ascwo-border-[#e1e3e5] ascwo-bg-white'
             ]"
           >
             <div class="ascwo-flex ascwo-gap-4 ascwo-mb-4">
@@ -240,29 +241,29 @@
                </div>
                <div class="ascwo-flex-1">
                   <div class="ascwo-flex ascwo-items-center ascwo-justify-between ascwo-mb-1">
-                     <h4 class="ascwo-text-[16px] ascwo-font-bold ascwo-text-[#1a1a1a] ascwo-m-0">{{ __('Build from Presets', 'all-signs-customizer-for-woocommerce-pro') }}</h4>
+                     <h4 class="ascwo-text-[16px] ascwo-font-bold ascwo-text-[#1a1a1a] ascwo-m-0">{{ __('Build from Presets', 'all-signs-customizer-for-woocommerce') }}</h4>
                      <div class="ascwo-flex ascwo-gap-2">
-                        <span class="ascwo-bg-[#e1f0ff] ascwo-text-[#005bd3] ascwo-text-[11px] ascwo-font-bold ascwo-px-3 ascwo-py-0.5 ascwo-rounded-full">{{ __('Structured', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-                        <span v-if="wizard.materialType === 'advance'" class="ascwo-bg-[#f1f1f1] ascwo-text-[#616161] ascwo-text-[11px] ascwo-font-medium ascwo-px-3 ascwo-py-0.5 ascwo-rounded-full ascwo-border ascwo-border-solid ascwo-border-[#e1e3e5]">selected</span>
+                        <span class="ascwo-bg-[#e1f0ff] ascwo-text-[#005bd3] ascwo-text-[11px] ascwo-font-bold ascwo-px-3 ascwo-py-0.5 ascwo-rounded-full">{{ __('Structured', 'all-signs-customizer-for-woocommerce') }}</span>
+                        <span class="ascwo-bg-[#fff7d1] ascwo-text-[#856404] ascwo-text-[11px] ascwo-font-bold ascwo-px-3 ascwo-py-0.5 ascwo-rounded-full">{{ __('Pro only', 'all-signs-customizer-for-woocommerce') }}</span>
                      </div>
                   </div>
                   <p class="ascwo-text-[13px] ascwo-text-[#616161] ascwo-leading-relaxed">
-                     {{ __('Customers personalize predefined product components and ready-made structures.', 'all-signs-customizer-for-woocommerce-pro') }}
+                     {{ __('Customers personalize predefined product components and ready-made structures.', 'all-signs-customizer-for-woocommerce') }}
                   </p>
                </div>
             </div>
             <ul class="ascwo-list-none ascwo-p-0 ascwo-m-0 ascwo-space-y-2">
                <li class="ascwo-flex ascwo-items-center ascwo-gap-3 ascwo-text-[13px] ascwo-text-[#1a1a1a]">
                   <div class="ascwo-w-2 ascwo-h-2 ascwo-rounded-full ascwo-bg-[#88bebb]"></div>
-                  {{ __('Customers start from predefined components or presets.', 'all-signs-customizer-for-woocommerce-pro') }}
+                  {{ __('Preset mode is locked in free and available only in Pro.', 'all-signs-customizer-for-woocommerce') }}
                </li>
                <li class="ascwo-flex ascwo-items-center ascwo-gap-3 ascwo-text-[13px] ascwo-text-[#1a1a1a]">
                   <div class="ascwo-w-2 ascwo-h-2 ascwo-rounded-full ascwo-bg-[#88bebb]"></div>
-                  {{ __('Best for guided products with prepared combinations.', 'all-signs-customizer-for-woocommerce-pro') }}
+                  {{ sprintf(__('Upgrade to Pro at %s to unlock this setup model.', 'all-signs-customizer-for-woocommerce'), proUpgradeUrl) }}
                </li>
                <li class="ascwo-flex ascwo-items-center ascwo-gap-3 ascwo-text-[13px] ascwo-text-[#1a1a1a]">
                   <div class="ascwo-w-2 ascwo-h-2 ascwo-rounded-full ascwo-bg-[#88bebb]"></div>
-                  {{ __('Good when you want more control over the final structure.', 'all-signs-customizer-for-woocommerce-pro') }}
+                  {{ __('The free configuration stays on simple mode only.', 'all-signs-customizer-for-woocommerce') }}
                </li>
             </ul>
           </div>
@@ -272,8 +273,8 @@
       <!-- STEP 4: Finalize -->
       <div v-if="wizard.step === 4" class="ascwo-step4 ascwo-p-5 md:ascwo-p-6">
         <div class="ascwo-step4-intro">
-          <h2 class="ascwo-text-[20px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#111827]">{{ isEdit ? __('Edit configuration information', 'all-signs-customizer-for-woocommerce-pro') : __('Finalize your configuration', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
-          <p class="ascwo-text-[12px] ascwo-leading-5 ascwo-text-[#111827]">{{ __('Add the basic information for this configuration and link the products that should use it.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+          <h2 class="ascwo-text-[20px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#111827]">{{ isEdit ? __('Edit configuration information', 'all-signs-customizer-for-woocommerce') : __('Finalize your configuration', 'all-signs-customizer-for-woocommerce') }}</h2>
+          <p class="ascwo-text-[12px] ascwo-leading-5 ascwo-text-[#111827]">{{ __('Add the basic information for this configuration and link the products that should use it.', 'all-signs-customizer-for-woocommerce') }}</p>
         </div>
 
         <div class="ascwo-step4-layout ascwo-grid lg:ascwo-grid-cols-[7fr_3fr] ascwo-gap-4">
@@ -281,7 +282,7 @@
             <div class="ascwo-flex ascwo-flex-col ascwo-gap-3">
               <!-- Name Input -->
               <div class="ascwo-step4-card ascwo-bg-white ascwo-rounded-2xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-p-4">
-                <label class="ascwo-block ascwo-text-[12px] ascwo-font-medium ascwo-text-[#111827] ascwo-mb-2">{{ __('Name configuration', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                <label class="ascwo-block ascwo-text-[12px] ascwo-font-medium ascwo-text-[#111827] ascwo-mb-2">{{ __('Name configuration', 'all-signs-customizer-for-woocommerce') }}</label>
                 <input
                   v-model.trim="newConfig.name"
                   type="text"
@@ -289,13 +290,13 @@
                   :class="{'ascwo-bg-[#fff4f4] ascwo-border-[#d72c0d]': !newConfig.name && wizard.attemptedCreate}"
                 />
                 <p v-if="!newConfig.name && wizard.attemptedCreate" class="ascwo-text-[#bf0711] ascwo-text-[12px] ascwo-mt-1 ascwo-flex ascwo-items-center ascwo-gap-1">
-                   <InfoIcon class="ascwo-w-3 ascwo-h-3" /> {{ __('configuration name required', 'all-signs-customizer-for-woocommerce-pro') }}
+                   <InfoIcon class="ascwo-w-3 ascwo-h-3" /> {{ __('configuration name required', 'all-signs-customizer-for-woocommerce') }}
                 </p>
               </div>
 
               <!-- Description -->
               <div class="ascwo-step4-card ascwo-bg-white ascwo-rounded-2xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-p-4">
-                <label class="ascwo-block ascwo-text-[12px] ascwo-font-medium ascwo-text-[#111827] ascwo-mb-2">{{ __('Description', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                <label class="ascwo-block ascwo-text-[12px] ascwo-font-medium ascwo-text-[#111827] ascwo-mb-2">{{ __('Description', 'all-signs-customizer-for-woocommerce') }}</label>
                 <textarea
                   v-model="newConfig.description"
                   rows="2"
@@ -305,9 +306,9 @@
 
               <!-- Upload Image -->
               <div class="ascwo-step4-card ascwo-p-4 ascwo-bg-white ascwo-rounded-2xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8]">
-                 <label class="ascwo-block ascwo-text-[12px] ascwo-font-medium ascwo-text-[#111827] ascwo-mb-2">{{ __('Upload image', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                 <label class="ascwo-block ascwo-text-[12px] ascwo-font-medium ascwo-text-[#111827] ascwo-mb-2">{{ __('Upload image', 'all-signs-customizer-for-woocommerce') }}</label>
                  <div class="ascwo-flex ascwo-items-center ascwo-gap-3 ascwo-h-9 ascwo-px-1 ascwo-bg-white ascwo-rounded-lg ascwo-border ascwo-border-solid ascwo-border-[#8c9196] ascwo-overflow-hidden">
-                    <button @click="selectConfigIcon" class="ascwo-px-3 ascwo-py-1.5 ascwo-bg-[#006c67] ascwo-text-white ascwo-rounded-md ascwo-text-[12px] ascwo-leading-4 ascwo-font-[900] ascwo-cursor-pointer hover:ascwo-bg-[#005c58] ascwo-border-none">{{ __('Upload image', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                    <button @click="selectConfigIcon" class="ascwo-px-3 ascwo-py-1.5 ascwo-bg-[#006c67] ascwo-text-white ascwo-rounded-md ascwo-text-[12px] ascwo-leading-4 ascwo-font-[900] ascwo-cursor-pointer hover:ascwo-bg-[#005c58] ascwo-border-none">{{ __('Upload image', 'all-signs-customizer-for-woocommerce') }}</button>
                     <div v-if="newConfig.icon" class="ascwo-ml-auto ascwo-w-8 ascwo-h-8 ascwo-rounded-md ascwo-overflow-hidden ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8]">
                        <img :src="newConfig.icon" class="ascwo-w-full ascwo-h-full ascwo-object-cover" />
                     </div>
@@ -317,15 +318,15 @@
 
               <!-- Products Association -->
               <div class="ascwo-step4-card ascwo-p-4 ascwo-bg-white ascwo-rounded-2xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8]">
-                 <label class="ascwo-block ascwo-text-[12px] ascwo-font-medium ascwo-text-[#111827] ascwo-mb-2">{{ __('Products associated with configuration', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                 <label class="ascwo-block ascwo-text-[12px] ascwo-font-medium ascwo-text-[#111827] ascwo-mb-2">{{ __('Products associated with configuration', 'all-signs-customizer-for-woocommerce') }}</label>
                  <div class="ascwo-flex ascwo-items-center ascwo-gap-3 ascwo-h-9 ascwo-px-3 ascwo-bg-white ascwo-rounded-lg ascwo-border ascwo-border-solid ascwo-border-[#8c9196]">
-                    <button @click="showProductModal = true" class="ascwo-px-4 ascwo-py-1.5 ascwo-bg-[#006c67] ascwo-text-white ascwo-rounded-md ascwo-text-[12px] ascwo-leading-4 ascwo-font-[900] ascwo-cursor-pointer hover:ascwo-bg-[#005c58] ascwo-border-none">{{ __('select', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                    <button @click="showProductModal = true" class="ascwo-px-4 ascwo-py-1.5 ascwo-bg-[#006c67] ascwo-text-white ascwo-rounded-md ascwo-text-[12px] ascwo-leading-4 ascwo-font-[900] ascwo-cursor-pointer hover:ascwo-bg-[#005c58] ascwo-border-none">{{ __('select', 'all-signs-customizer-for-woocommerce') }}</button>
                     <div class="ascwo-flex-1 ascwo-text-[16px] ascwo-leading-6 ascwo-text-[#111827]">
-                       {{ selectedWooProductIds.length }} {{ __('product(s) selected', 'all-signs-customizer-for-woocommerce-pro') }}
+                       {{ selectedWooProductIds.length }} {{ __('product(s) selected', 'all-signs-customizer-for-woocommerce') }}
                     </div>
                  </div>
                  <div v-if="selectedWooProducts.length" class="ascwo-mt-3">
-                    <p class="ascwo-text-[13px] ascwo-leading-5 ascwo-text-[#374151] ascwo-mb-2">{{ __('Products associated with configuration:', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                    <p class="ascwo-text-[13px] ascwo-leading-5 ascwo-text-[#374151] ascwo-mb-2">{{ __('Products associated with configuration:', 'all-signs-customizer-for-woocommerce') }}</p>
                     <div class="ascwo-flex ascwo-flex-wrap ascwo-gap-2">
                        <span
                          v-for="product in selectedWooProducts"
@@ -337,7 +338,7 @@
                            type="button"
                            @click="removeSelectedProduct(product.value)"
                            class="ascwo-inline-flex ascwo-items-center ascwo-justify-center ascwo-w-4 ascwo-h-4 ascwo-rounded-full ascwo-bg-transparent ascwo-border-none ascwo-p-0 ascwo-text-[#6b7280] hover:ascwo-text-[#111827] ascwo-cursor-pointer"
-                           :aria-label="sprintf(__('Remove %s', 'all-signs-customizer-for-woocommerce-pro'), product.label)"
+                           :aria-label="sprintf(__('Remove %s', 'all-signs-customizer-for-woocommerce'), product.label)"
                          >
                            <XIcon class="ascwo-w-3 ascwo-h-3" />
                          </button>
@@ -350,26 +351,26 @@
 
           <!-- Summary Card -->
           <div class="ascwo-step4-card ascwo-step4-summary ascwo-bg-white ascwo-rounded-2xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-p-5 ascwo-h-fit">
-            <h3 class="ascwo-text-[13px] ascwo-font-[900] ascwo-text-[#111827] ascwo-mb-5 ascwo-mt-0">{{ __('Summary', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
+            <h3 class="ascwo-text-[13px] ascwo-font-[900] ascwo-text-[#111827] ascwo-mb-5 ascwo-mt-0">{{ __('Summary', 'all-signs-customizer-for-woocommerce') }}</h3>
             <div class="ascwo-space-y-3">
               <div>
-                 <span class="ascwo-text-[12px] ascwo-text-[#6b7280]">{{ __('Product family:', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                 <span class="ascwo-text-[12px] ascwo-text-[#6b7280]">{{ __('Product family:', 'all-signs-customizer-for-woocommerce') }}</span>
                  <span class="ascwo-ml-1 ascwo-text-[12px] ascwo-font-[900] ascwo-text-[#111827]">{{ selectedFamilyTitle }}</span>
               </div>
               <div>
-                 <span class="ascwo-text-[12px] ascwo-text-[#6b7280]">{{ __('Material:', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                 <span class="ascwo-text-[12px] ascwo-text-[#6b7280]">{{ __('Material:', 'all-signs-customizer-for-woocommerce') }}</span>
                  <span class="ascwo-ml-1 ascwo-text-[12px] ascwo-font-[900] ascwo-text-[#111827]">{{ selectedMaterialsNames }}</span>
               </div>
               <div>
-                 <span class="ascwo-text-[12px] ascwo-text-[#6b7280]">{{ __('Configuration model:', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                 <span class="ascwo-text-[12px] ascwo-text-[#6b7280]">{{ __('Configuration model:', 'all-signs-customizer-for-woocommerce') }}</span>
                  <span class="ascwo-ml-1 ascwo-text-[12px] ascwo-font-[900] ascwo-text-[#111827]">{{ wizard.materialType === 'simple' ? (selectedFamilyTitle === 'Letter signs' ? 'Direct Options' : 'Flexible') : 'Preset Components' }}</span>
               </div>
               <div>
-                 <span class="ascwo-text-[12px] ascwo-text-[#6b7280]">{{ __('Name:', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                 <span class="ascwo-text-[12px] ascwo-text-[#6b7280]">{{ __('Name:', 'all-signs-customizer-for-woocommerce') }}</span>
                  <span class="ascwo-ml-1 ascwo-text-[12px] ascwo-font-[900] ascwo-text-[#111827]">{{ newConfig.name }}</span>
               </div>
               <div>
-                 <span class="ascwo-text-[12px] ascwo-text-[#6b7280]">{{ __('Description:', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                 <span class="ascwo-text-[12px] ascwo-text-[#6b7280]">{{ __('Description:', 'all-signs-customizer-for-woocommerce') }}</span>
                  <span class="ascwo-ml-1 ascwo-text-[12px] ascwo-font-[900] ascwo-text-[#111827]">{{ newConfig.description }}</span>
               </div>
             </div>
@@ -380,14 +381,14 @@
       <!-- Card Footer -->
       <div class="ascwo-bg-[#fbfcfc] ascwo-border-t ascwo-border-solid ascwo-border-[#e1e3e5] ascwo-px-10 ascwo-py-5 ascwo-flex ascwo-items-center ascwo-justify-between">
         <p class="ascwo-text-[13px] ascwo-text-[#616161] ascwo-m-0">
-          {{ isEdit ? __('Only the configuration information can be edited here.', 'all-signs-customizer-for-woocommerce-pro') : getStepTip(wizard.step) }}
+          {{ isEdit ? __('Only the configuration information can be edited here.', 'all-signs-customizer-for-woocommerce') : getStepTip(wizard.step) }}
         </p>
         <div class="ascwo-flex ascwo-gap-3">
           <button
             @click="goBack"
             class="ascwo-ui-button-secondary"
           >
-            {{ __('Back', 'all-signs-customizer-for-woocommerce-pro') }}
+            {{ __('Back', 'all-signs-customizer-for-woocommerce') }}
           </button>
           <button
             v-if="!isEdit && wizard.step === 1"
@@ -395,7 +396,7 @@
             :disabled="!canNext"
             class="ascwo-primary-button ascwo-ui-button-primary disabled:ascwo-opacity-50 disabled:ascwo-cursor-not-allowed"
           >
-            {{ __('Create', 'all-signs-customizer-for-woocommerce-pro') }}
+            {{ __('Create', 'all-signs-customizer-for-woocommerce') }}
           </button>
           <button
             v-else
@@ -409,7 +410,7 @@
                 : 'ascwo-ui-button-disabled'
             ]"
           >
-            {{ wizard.step === 4 ? (isEdit ? __('Update', 'all-signs-customizer-for-woocommerce-pro') : __('Create', 'all-signs-customizer-for-woocommerce-pro')) : __('Next', 'all-signs-customizer-for-woocommerce-pro') }}
+            {{ wizard.step === 4 ? (isEdit ? __('Update', 'all-signs-customizer-for-woocommerce') : __('Create', 'all-signs-customizer-for-woocommerce')) : __('Next', 'all-signs-customizer-for-woocommerce') }}
           </button>
         </div>
       </div>
@@ -420,7 +421,7 @@
       <div class="ascwo-absolute ascwo-inset-0 ascwo-bg-black/40" @click="showProductModal = false"></div>
       <div class="ascwo-relative ascwo-bg-white ascwo-rounded-[20px] ascwo-shadow-2xl ascwo-overflow-hidden" style="width: min(776px, calc(100vw - 48px)); max-width: calc(100vw - 48px);">
         <div class="ascwo-flex ascwo-items-center ascwo-justify-between ascwo-h-[66px] ascwo-px-5 ascwo-border-b ascwo-border-solid ascwo-border-[#e1e3e5]">
-          <h3 class="ascwo-text-[18px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#111827]">{{ __('Select products', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
+          <h3 class="ascwo-text-[18px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#111827]">{{ __('Select products', 'all-signs-customizer-for-woocommerce') }}</h3>
           <button @click="showProductModal = false" class="ascwo-p-2 ascwo-rounded-full hover:ascwo-bg-[#f6f6f7] ascwo-border-0 ascwo-bg-transparent ascwo-cursor-pointer">
             <XIcon class="ascwo-w-5 ascwo-h-5 ascwo-text-[#8c9196]" />
           </button>
@@ -429,7 +430,7 @@
            <div class="ascwo-flex ascwo-gap-2 ascwo-px-4 ascwo-mb-2">
               <div class="ascwo-flex-1 ascwo-relative">
                  <SearchIcon class="ascwo-pointer-events-none ascwo-absolute ascwo-top-1/2 -ascwo-translate-y-1/2 ascwo-w-5 ascwo-h-5 ascwo-text-[#5c5f62]" style="left: 14px;" />
-                 <input type="text" v-model="productSearchQuery" :placeholder="__('Search products', 'all-signs-customizer-for-woocommerce-pro')" class="ascwo-box-border ascwo-w-full ascwo-h-[38px] ascwo-pr-4 ascwo-rounded-lg ascwo-border ascwo-border-solid ascwo-border-[#8c9196] ascwo-outline-none focus:ascwo-border-[#005bd3] focus:ascwo-ring-2 focus:ascwo-ring-[#005bd3] ascwo-text-[16px] ascwo-leading-[38px] ascwo-bg-white" style="padding-left: 42px;">
+                 <input type="text" v-model="productSearchQuery" :placeholder="__('Search products', 'all-signs-customizer-for-woocommerce')" class="ascwo-box-border ascwo-w-full ascwo-h-[38px] ascwo-pr-4 ascwo-rounded-lg ascwo-border ascwo-border-solid ascwo-border-[#8c9196] ascwo-outline-none focus:ascwo-border-[#005bd3] focus:ascwo-ring-2 focus:ascwo-ring-[#005bd3] ascwo-text-[16px] ascwo-leading-[38px] ascwo-bg-white" style="padding-left: 42px;">
               </div>
               <div class="ascwo-relative ascwo-w-[240px]">
                  <button
@@ -437,7 +438,7 @@
                    @click="showSearchByMenu = !showSearchByMenu"
                    class="ascwo-box-border ascwo-w-full ascwo-h-[38px] ascwo-px-4 ascwo-pr-10 ascwo-rounded-lg ascwo-border ascwo-border-solid ascwo-border-[#8c9196] ascwo-bg-white ascwo-text-[16px] ascwo-text-[#303030] ascwo-text-left ascwo-cursor-pointer focus:ascwo-border-[#005bd3] focus:ascwo-ring-2 focus:ascwo-ring-[#005bd3]"
                  >
-                   {{ __('Search by', 'all-signs-customizer-for-woocommerce-pro') }} {{ searchByLabel }}
+                   {{ __('Search by', 'all-signs-customizer-for-woocommerce') }} {{ searchByLabel }}
                  </button>
                  <ChevronDownIcon class="ascwo-absolute ascwo-right-3 ascwo-top-1/2 -ascwo-translate-y-1/2 ascwo-w-4 ascwo-h-4 ascwo-text-[#616161] ascwo-pointer-events-none" />
                  <div v-if="showSearchByMenu" class="ascwo-absolute ascwo-left-0 ascwo-right-0 ascwo-top-full ascwo-z-20 ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#8c9196] ascwo-shadow-lg">
@@ -457,7 +458,7 @@
               </div>
            </div>
            <div class="ascwo-relative ascwo-px-4 ascwo-mb-3">
-              <button @click="showFilterMenu = !showFilterMenu" class="ascwo-px-3 ascwo-py-1 ascwo-rounded-full ascwo-text-[16px] ascwo-leading-6 ascwo-text-[#303030] ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] hover:ascwo-bg-[#f6f6f7] ascwo-cursor-pointer">{{ __('Add filter +', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+              <button @click="showFilterMenu = !showFilterMenu" class="ascwo-px-3 ascwo-py-1 ascwo-rounded-full ascwo-text-[16px] ascwo-leading-6 ascwo-text-[#303030] ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] hover:ascwo-bg-[#f6f6f7] ascwo-cursor-pointer">{{ __('Add filter +', 'all-signs-customizer-for-woocommerce') }}</button>
               <div v-if="showFilterMenu" class="ascwo-absolute ascwo-top-full ascwo-left-4 ascwo-z-[10] ascwo-mt-1 ascwo-w-[116px] ascwo-bg-white ascwo-rounded-xl ascwo-shadow-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-py-2">
                  <button v-for="f in ['Categories', 'Collection', 'Types', 'Tags', 'Vendors']" :key="f" class="ascwo-w-full ascwo-px-4 ascwo-py-2 ascwo-text-left ascwo-text-[16px] ascwo-leading-6 ascwo-text-[#303030] ascwo-bg-transparent ascwo-border-none hover:ascwo-bg-[#f6f6f7] ascwo-cursor-pointer">{{ f }}</button>
               </div>
@@ -475,10 +476,10 @@
            </div>
         </div>
         <div class="ascwo-h-[76px] ascwo-px-5 ascwo-bg-white ascwo-border-t ascwo-border-solid ascwo-border-[#e1e3e5] ascwo-flex ascwo-items-center ascwo-justify-between">
-           <span class="ascwo-text-[16px] ascwo-leading-6 ascwo-text-[#303030]">{{ selectedWooProductIds.length }} {{ __('products selected', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+           <span class="ascwo-text-[16px] ascwo-leading-6 ascwo-text-[#303030]">{{ selectedWooProductIds.length }} {{ __('products selected', 'all-signs-customizer-for-woocommerce') }}</span>
            <div class="ascwo-flex ascwo-gap-3">
-              <button @click="showProductModal = false" class="ascwo-ui-button-secondary">{{ __('Cancel', 'all-signs-customizer-for-woocommerce-pro') }}</button>
-              <button @click="showProductModal = false" :disabled="selectedWooProductIds.length === 0" class="ascwo-primary-button ascwo-ui-button-primary disabled:ascwo-bg-[#d8d8d8] disabled:ascwo-cursor-not-allowed">{{ __('Select', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+              <button @click="showProductModal = false" class="ascwo-ui-button-secondary">{{ __('Cancel', 'all-signs-customizer-for-woocommerce') }}</button>
+              <button @click="showProductModal = false" :disabled="selectedWooProductIds.length === 0" class="ascwo-primary-button ascwo-ui-button-primary disabled:ascwo-bg-[#d8d8d8] disabled:ascwo-cursor-not-allowed">{{ __('Select', 'all-signs-customizer-for-woocommerce') }}</button>
            </div>
         </div>
       </div>
@@ -490,41 +491,41 @@
         <div class="ascwo-absolute ascwo-inset-0 ascwo-bg-black/40" @click="!isLoading && (showReviewModal = false)"></div>
         <div class="ascwo-review-modal ascwo-relative ascwo-bg-white ascwo-shadow-2xl ascwo-overflow-hidden" style="width: min(980px, calc(100vw - 48px));">
           <div class="ascwo-review-header ascwo-flex ascwo-items-center ascwo-justify-between ascwo-border-b ascwo-border-solid ascwo-border-[#e1e3e5]">
-            <h3 class="ascwo-text-[18px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#111827] ascwo-truncate">{{ __('Review configuration before creation', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
+            <h3 class="ascwo-text-[18px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#111827] ascwo-truncate">{{ __('Review configuration before creation', 'all-signs-customizer-for-woocommerce') }}</h3>
             <button @click="showReviewModal = false" :disabled="isLoading" class="ascwo-p-2 ascwo-rounded-full hover:ascwo-bg-gray-100 ascwo-border-0 ascwo-bg-transparent ascwo-cursor-pointer disabled:ascwo-opacity-50 disabled:ascwo-cursor-not-allowed">
               <XIcon class="ascwo-w-5 ascwo-h-5 ascwo-text-[#8c9196]" />
             </button>
           </div>
           <div class="ascwo-review-body ascwo-p-5 ascwo-grid md:ascwo-grid-cols-[1.4fr_1fr] ascwo-gap-4">
              <div class="ascwo-review-panel ascwo-review-panel-summary ascwo-bg-[#f7f9fc] ascwo-border ascwo-border-solid ascwo-border-[#dbe3ea] ascwo-rounded-2xl">
-                <h4 class="ascwo-review-panel-title">{{ __('Configuration summary', 'all-signs-customizer-for-woocommerce-pro') }}</h4>
+                <h4 class="ascwo-review-panel-title">{{ __('Configuration summary', 'all-signs-customizer-for-woocommerce') }}</h4>
                 <div class="ascwo-review-summary-list">
-                   <p><span class="ascwo-text-[#667085]">{{ __('Product family:', 'all-signs-customizer-for-woocommerce-pro') }}</span> <span class="ascwo-font-[900] ascwo-text-[#101828]">{{ selectedFamilyTitle }}</span></p>
-                   <p><span class="ascwo-text-[#667085]">{{ __('Material:', 'all-signs-customizer-for-woocommerce-pro') }}</span> <span class="ascwo-font-[900] ascwo-text-[#101828]">{{ selectedMaterialsNames }}</span></p>
-                   <p><span class="ascwo-text-[#667085]">{{ __('Setup model:', 'all-signs-customizer-for-woocommerce-pro') }}</span> <span class="ascwo-font-[900] ascwo-text-[#101828]">{{ wizard.materialType === 'simple' ? 'Direct Options' : 'Preset Components' }}</span></p>
-                   <p><span class="ascwo-text-[#667085]">{{ __('Configuration name:', 'all-signs-customizer-for-woocommerce-pro') }}</span> <span class="ascwo-font-[900] ascwo-text-[#101828]">{{ newConfig.name }}</span></p>
+                   <p><span class="ascwo-text-[#667085]">{{ __('Product family:', 'all-signs-customizer-for-woocommerce') }}</span> <span class="ascwo-font-[900] ascwo-text-[#101828]">{{ selectedFamilyTitle }}</span></p>
+                   <p><span class="ascwo-text-[#667085]">{{ __('Material:', 'all-signs-customizer-for-woocommerce') }}</span> <span class="ascwo-font-[900] ascwo-text-[#101828]">{{ selectedMaterialsNames }}</span></p>
+                   <p><span class="ascwo-text-[#667085]">{{ __('Setup model:', 'all-signs-customizer-for-woocommerce') }}</span> <span class="ascwo-font-[900] ascwo-text-[#101828]">{{ wizard.materialType === 'simple' ? 'Direct Options' : 'Preset Components' }}</span></p>
+                   <p><span class="ascwo-text-[#667085]">{{ __('Configuration name:', 'all-signs-customizer-for-woocommerce') }}</span> <span class="ascwo-font-[900] ascwo-text-[#101828]">{{ newConfig.name }}</span></p>
                 </div>
              </div>
              <div class="ascwo-review-panel ascwo-review-panel-starter ascwo-bg-[#f7f9fc] ascwo-border ascwo-border-solid ascwo-border-[#dbe3ea] ascwo-rounded-2xl">
-                <h4 class="ascwo-review-panel-title">{{ __('Starter template', 'all-signs-customizer-for-woocommerce-pro') }}</h4>
-                <p class="ascwo-review-description">{{ __('Decide if you want to start from a ready template or create the configuration from a blank setup.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                <h4 class="ascwo-review-panel-title">{{ __('Starter template', 'all-signs-customizer-for-woocommerce') }}</h4>
+                <p class="ascwo-review-description">{{ __('Decide if you want to start from a ready template or create the configuration from a blank setup.', 'all-signs-customizer-for-woocommerce') }}</p>
                 <div class="ascwo-review-choice-row">
-                   <button @click="wizard.includeDemo = false" :class="['ascwo-review-choice-button', !wizard.includeDemo ? 'is-selected' : '']">{{ __('Start blank', 'all-signs-customizer-for-woocommerce-pro') }}</button>
-                   <button @click="wizard.includeDemo = true" :class="['ascwo-review-choice-button', wizard.includeDemo ? 'is-selected' : '']">{{ __('Include starter template', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                   <button @click="wizard.includeDemo = false" :class="['ascwo-review-choice-button', !wizard.includeDemo ? 'is-selected' : '']">{{ __('Start blank', 'all-signs-customizer-for-woocommerce') }}</button>
+                   <button @click="wizard.includeDemo = true" :class="['ascwo-review-choice-button', wizard.includeDemo ? 'is-selected' : '']">{{ __('Include starter template', 'all-signs-customizer-for-woocommerce') }}</button>
                 </div>
                 <div v-if="wizard.includeDemo" class="ascwo-review-selected-template">
-                  <p class="ascwo-review-selected-label">{{ __('Selected template', 'all-signs-customizer-for-woocommerce-pro') }}</p>
-                  <p class="ascwo-review-selected-name">{{ __('Generated starter data', 'all-signs-customizer-for-woocommerce-pro') }}</p>
-                  <p class="ascwo-review-selected-help">{{ __('Automatically selected from your product family, material and setup model.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                  <p class="ascwo-review-selected-label">{{ __('Selected template', 'all-signs-customizer-for-woocommerce') }}</p>
+                  <p class="ascwo-review-selected-name">{{ __('Generated starter data', 'all-signs-customizer-for-woocommerce') }}</p>
+                  <p class="ascwo-review-selected-help">{{ __('Automatically selected from your product family, material and setup model.', 'all-signs-customizer-for-woocommerce') }}</p>
                 </div>
-                <p v-else class="ascwo-review-blank-help">{{ __('No starter template will be imported. The configuration will be created from your selected setup only.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                <p v-else class="ascwo-review-blank-help">{{ __('No starter template will be imported. The configuration will be created from your selected setup only.', 'all-signs-customizer-for-woocommerce') }}</p>
              </div>
           </div>
           <div class="ascwo-review-footer ascwo-bg-white ascwo-border-t ascwo-border-solid ascwo-border-[#e1e3e5] ascwo-flex ascwo-justify-end ascwo-items-center ascwo-gap-3">
-             <button @click="showReviewModal = false" :disabled="isLoading" class="ascwo-review-secondary-button">{{ __('Back', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+             <button @click="showReviewModal = false" :disabled="isLoading" class="ascwo-review-secondary-button">{{ __('Back', 'all-signs-customizer-for-woocommerce') }}</button>
              <button @click="finalCreate" :disabled="isLoading" class="ascwo-review-primary-button ascwo-inline-flex ascwo-items-center ascwo-gap-2">
                <Loader2Icon v-if="isLoading" class="ascwo-w-4 ascwo-h-4 ascwo-animate-spin" />
-               <span>{{ isLoading ? __('Creating', 'all-signs-customizer-for-woocommerce-pro') : __('Create configuration', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+               <span>{{ isLoading ? __('Creating', 'all-signs-customizer-for-woocommerce') : __('Create configuration', 'all-signs-customizer-for-woocommerce') }}</span>
              </button>
              <span v-if="isLoading" class="ascwo-creating-dots" aria-hidden="true">
                <span></span><span></span><span></span>
@@ -539,26 +540,26 @@
         <div class="ascwo-absolute ascwo-inset-0 ascwo-bg-black/40" @click="closeExternalPluginModal"></div>
         <div class="ascwo-external-plugin-modal ascwo-relative ascwo-bg-white ascwo-rounded-[20px] ascwo-shadow-2xl ascwo-overflow-hidden" style="width: min(620px, calc(100vw - 48px));">
           <div class="ascwo-h-[66px] ascwo-flex ascwo-items-center ascwo-justify-between ascwo-px-5 ascwo-border-b ascwo-border-solid ascwo-border-[#dfe3e8]">
-            <h3 class="ascwo-text-[18px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#111827] ascwo-m-0">{{ __('Letter signs require a dedicated plugin', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
+            <h3 class="ascwo-text-[18px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#111827] ascwo-m-0">{{ __('Letter signs require a dedicated plugin', 'all-signs-customizer-for-woocommerce') }}</h3>
             <button @click="closeExternalPluginModal" class="ascwo-external-icon-button ascwo-p-2 ascwo-rounded-full ascwo-border-0 ascwo-bg-transparent ascwo-cursor-pointer">
               <XIcon class="ascwo-w-5 ascwo-h-5 ascwo-text-[#8c9196]" />
             </button>
           </div>
           <div class="ascwo-p-5">
             <p class="ascwo-text-[14px] ascwo-leading-6 ascwo-text-[#303030] ascwo-m-0 ascwo-mb-4">
-              {{ __('Letter signs are handled by Neon & Channel Product Customizer, a dedicated plugin for neon and channel-letter products.', 'all-signs-customizer-for-woocommerce-pro') }}
+              {{ __('Letter signs are handled by Neon & Channel Product Customizer, a dedicated plugin for neon and channel-letter products.', 'all-signs-customizer-for-woocommerce') }}
             </p>
             <p class="ascwo-text-[13px] ascwo-leading-5 ascwo-text-[#616161] ascwo-m-0">
-              {{ __('Use one of the links below to install the free version or view the full product page.', 'all-signs-customizer-for-woocommerce-pro') }}
+              {{ __('Use one of the links below to install the free version or view the full product page.', 'all-signs-customizer-for-woocommerce') }}
             </p>
           </div>
           <div class="ascwo-h-[76px] ascwo-px-5 ascwo-bg-white ascwo-border-t ascwo-border-solid ascwo-border-[#e1e3e5] ascwo-flex ascwo-justify-end ascwo-items-center ascwo-gap-3">
-            <button @click="closeExternalPluginModal" class="ascwo-plugin-modal-button ascwo-plugin-modal-button-secondary">{{ __('Close', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+            <button @click="closeExternalPluginModal" class="ascwo-plugin-modal-button ascwo-plugin-modal-button-secondary">{{ __('Close', 'all-signs-customizer-for-woocommerce') }}</button>
             <a href="https://fr.wordpress.org/plugins/neon-channel-product-customizer-free/" target="_blank" rel="noopener noreferrer" class="ascwo-plugin-modal-button ascwo-plugin-modal-button-secondary ascwo-inline-flex ascwo-items-center ascwo-no-underline">
-              {{ __('Free plugin', 'all-signs-customizer-for-woocommerce-pro') }}
+              {{ __('Free plugin', 'all-signs-customizer-for-woocommerce') }}
             </a>
             <a href="https://signsdesigner.us/neon-channel-product-customizer-product/" target="_blank" rel="noopener noreferrer" class="ascwo-plugin-modal-button ascwo-plugin-modal-button-primary ascwo-inline-flex ascwo-items-center ascwo-no-underline">
-              {{ __('Product page', 'all-signs-customizer-for-woocommerce-pro') }}
+              {{ __('Product page', 'all-signs-customizer-for-woocommerce') }}
             </a>
           </div>
         </div>
@@ -572,7 +573,7 @@
           style="width: 980px; max-width: calc(100vw - 64px); max-height: calc(100vh - 224px);"
         >
           <div class="ascwo-gallery-header ascwo-h-[66px] ascwo-flex ascwo-items-center ascwo-justify-between ascwo-px-5 ascwo-bg-white ascwo-border-b ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-flex-shrink-0">
-            <h3 class="ascwo-text-[18px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#111827] ascwo-m-0">{{ previewItem?.title }} {{ __('previews', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
+            <h3 class="ascwo-text-[18px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#111827] ascwo-m-0">{{ previewItem?.title }} {{ __('previews', 'all-signs-customizer-for-woocommerce') }}</h3>
             <button @click="closePreview" class="ascwo-p-2 ascwo-rounded-full hover:ascwo-bg-[#f6f6f7] ascwo-border-0 ascwo-bg-transparent ascwo-cursor-pointer">
               <XIcon class="ascwo-w-5 ascwo-h-5 ascwo-text-[#8c9196]" />
             </button>
@@ -600,7 +601,6 @@ import {
   configurationDemoData,
   RequiredOptionsBorders,
   RequiredOptionsColors,
-  RequiredOptionsComponentsAdvanced,
   RequiredOptionsFixingMethods,
   RequiredOptionsFonts,
   RequiredOptionsLightings,
@@ -639,6 +639,16 @@ const setupModelImage = (type) => adminImageUrl(
     ? '/images/create-config/setup-models/build-from-preset.webp'
     : '/images/create-config/setup-models/build-from-option.webp'
 );
+const proUpgradeUrl = 'https://signsdesigner.us/all-signs-customizer-for-woocommerce/';
+const showPresetUpgradeNotice = () => {
+  toastMessage(
+    sprintf(
+      __('Preset mode is available only in Pro. Go to %s to unlock it.', 'all-signs-customizer-for-woocommerce'),
+      proUpgradeUrl
+    ),
+    'warning'
+  );
+};
 const showGalleryPreview = ref(false);
 const showProductModal = ref(false);
 const showReviewModal = ref(false);
@@ -652,7 +662,7 @@ const searchBy = ref("all");
 
 const wizard = ref({
   step: 1,
-  productType: 'signboard',
+  productType: '',
   selectedMaterials: [],
   materialType: 'simple',
   includeDemo: false,
@@ -667,16 +677,16 @@ const editConfig = ref(null);
 const productFamilies = [
   {
     id: 'signboard',
-    title: __('Signs & Panels', 'all-signs-customizer-for-woocommerce-pro'),
-    desc: __('Rigid signage products like office signs, plaques, engraved panels and general display boards.', 'all-signs-customizer-for-woocommerce-pro'),
+    title: __('Signs & Panels', 'all-signs-customizer-for-woocommerce'),
+    desc: __('Rigid signage products like office signs, plaques, engraved panels and general display boards.', 'all-signs-customizer-for-woocommerce'),
     image: '/images/create-config/families/signs-panels.webp',
     previews: ['/images/create-config/families/signs-panels.webp']
   },
-  { id: 'banner', title: __('Banners', 'all-signs-customizer-for-woocommerce-pro'), desc: __('Flexible printed products for events, retail and promotional display.', 'all-signs-customizer-for-woocommerce-pro'), image: '/images/create-config/families/banners.webp', previews: ['/images/create-config/families/banners.webp'] },
-  { id: 'sticker', title: __('Stickers', 'all-signs-customizer-for-woocommerce-pro'), desc: __('Adhesive products for windows, packaging, walls and floors.', 'all-signs-customizer-for-woocommerce-pro'), image: '/images/create-config/families/stickers.webp', previews: ['/images/create-config/families/stickers.webp'] },
-  { id: 'letter-signs', title: __('Letter signs', 'all-signs-customizer-for-woocommerce-pro'), desc: __('Text-based illuminated or fabricated signs built around custom letter forms.', 'all-signs-customizer-for-woocommerce-pro'), image: '/images/create-config/families/letter-signs.webp', previews: ['/images/create-config/families/letter-signs.webp'], externalPlugin: true },
-  { id: 'ai-signs', title: __('AI Signs', 'all-signs-customizer-for-woocommerce-pro'), desc: __('AI-assisted logo sign configurations for neon and channel style branded signage.', 'all-signs-customizer-for-woocommerce-pro'), image: '/images/create-config/families/ai-signs.webp', comingSoon: true, previews: ['/images/create-config/families/ai-signs.webp'] },
-  { id: 'lightbox', title: __('Lightbox', 'all-signs-customizer-for-woocommerce-pro'), desc: __('Illuminated lightbox sign configurations. This category is coming soon.', 'all-signs-customizer-for-woocommerce-pro'), image: '/images/create-config/families/lightbox.webp', comingSoon: true, previews: ['/images/create-config/families/lightbox.webp'] }
+  { id: 'banner', title: __('Banners', 'all-signs-customizer-for-woocommerce'), desc: __('Flexible printed products for events, retail and promotional display.', 'all-signs-customizer-for-woocommerce'), image: '/images/create-config/families/banners.webp', previews: ['/images/create-config/families/banners.webp'] },
+  { id: 'sticker', title: __('Stickers', 'all-signs-customizer-for-woocommerce'), desc: __('Adhesive products for windows, packaging, walls and floors.', 'all-signs-customizer-for-woocommerce'), image: '/images/create-config/families/stickers.webp', previews: ['/images/create-config/families/stickers.webp'] },
+  { id: 'letter-signs', title: __('Letter signs', 'all-signs-customizer-for-woocommerce'), desc: __('Text-based illuminated or fabricated signs built around custom letter forms.', 'all-signs-customizer-for-woocommerce'), image: '/images/create-config/families/letter-signs.webp', previews: ['/images/create-config/families/letter-signs.webp'], externalPlugin: true },
+  { id: 'ai-signs', title: __('AI Signs', 'all-signs-customizer-for-woocommerce'), desc: __('AI-assisted logo sign configurations for neon and channel style branded signage.', 'all-signs-customizer-for-woocommerce'), image: '/images/create-config/families/ai-signs.webp', comingSoon: true, previews: ['/images/create-config/families/ai-signs.webp'] },
+  { id: 'lightbox', title: __('Lightbox', 'all-signs-customizer-for-woocommerce'), desc: __('Illuminated lightbox sign configurations. This category is coming soon.', 'all-signs-customizer-for-woocommerce'), image: '/images/create-config/families/lightbox.webp', comingSoon: true, previews: ['/images/create-config/families/lightbox.webp'] }
 ];
 
 const allMaterials = [
@@ -709,11 +719,7 @@ const selectedFamilySlug = computed(() => {
   if (wizard.value.productType === 'sticker') return 'stickers';
   return 'signs-panels';
 });
-const canonicalConfigProductType = computed(() => (
-  wizard.value.materialType === 'advance'
-    ? selectedFamilySlug.value
-    : wizard.value.productType
-));
+const canonicalConfigProductType = computed(() => selectedFamilySlug.value);
 const selectedMaterialsNames = computed(() => wizard.value.selectedMaterials.map(mid => availableMaterials.value.find(m => m.id === mid)?.title).filter(Boolean).join(', '));
 const normalizeEditorProductType = (productType) => {
   const value = String(productType || '').trim();
@@ -749,13 +755,13 @@ const selectedWooProducts = computed(() => {
   return wooProductsOptions.value.filter(product => selected.has(String(product.value)));
 });
 const searchByOptions = computed(() => [
-  { value: 'all', label: __('All', 'all-signs-customizer-for-woocommerce-pro') },
-  { value: 'title', label: __('Product title', 'all-signs-customizer-for-woocommerce-pro') },
-  { value: 'id', label: __('Product ID', 'all-signs-customizer-for-woocommerce-pro') },
-  { value: 'barcode', label: __('Barcode', 'all-signs-customizer-for-woocommerce-pro') },
-  { value: 'sku', label: __('SKU', 'all-signs-customizer-for-woocommerce-pro') },
+  { value: 'all', label: __('All', 'all-signs-customizer-for-woocommerce') },
+  { value: 'title', label: __('Product title', 'all-signs-customizer-for-woocommerce') },
+  { value: 'id', label: __('Product ID', 'all-signs-customizer-for-woocommerce') },
+  { value: 'barcode', label: __('Barcode', 'all-signs-customizer-for-woocommerce') },
+  { value: 'sku', label: __('SKU', 'all-signs-customizer-for-woocommerce') },
 ]);
-const searchByLabel = computed(() => searchByOptions.value.find(option => option.value === searchBy.value)?.label || __('All', 'all-signs-customizer-for-woocommerce-pro'));
+const searchByLabel = computed(() => searchByOptions.value.find(option => option.value === searchBy.value)?.label || __('All', 'all-signs-customizer-for-woocommerce'));
 
 const selectSearchBy = (value) => {
   searchBy.value = value;
@@ -835,9 +841,8 @@ const ensureFontsForDemo = async () => {
   return demoFonts;
 };
 
-const buildConfigData = (fontSource = []) => {
+const buildConfigData = (sourceFonts = []) => {
   const demo = configurationDemoData?.[0]?.data || {};
-  const isAdvanceMode = wizard.value.materialType === 'advance';
   const selectedMaterials = wizard.value.selectedMaterials.length
     ? wizard.value.selectedMaterials
     : filteredMaterials.value.slice(0, 1).map((material) => material.id);
@@ -852,7 +857,7 @@ const buildConfigData = (fontSource = []) => {
   const selectedPricingId = wizard.value.includeDemo
     ? String(pricingByFamily[wizard.value.productType] || demoPricingId || '')
     : '';
-  const resolvedFontsSection = buildFontsSection(fontSource);
+  const resolvedFontsSection = buildFontsSection(sourceFonts);
 
   const cloneSections = (sections = {}, emptyItems = false) => Object.fromEntries(
     Object.entries(sections).map(([key, section]) => {
@@ -870,17 +875,14 @@ const buildConfigData = (fontSource = []) => {
 
   const buildMaterialItem = (materialId, index, withType = true) => {
     const material = availableMaterials.value.find(item => item.id === materialId);
-    const canonicalMaterialId = isAdvanceMode && !String(materialId).startsWith('material-')
-      ? `material-${materialId}`
-      : materialId;
 
     const item = {
-      id: canonicalMaterialId,
+      id: materialId,
       materialKey: materialId,
       sourceMaterialId: materialId,
       sourceIndex: index,
-      name: material?.title || selectedFamilyTitle.value || __('Material', 'all-signs-customizer-for-woocommerce-pro'),
-      label: material?.title || selectedFamilyTitle.value || __('Material', 'all-signs-customizer-for-woocommerce-pro'),
+      name: material?.title || selectedFamilyTitle.value || __('Material', 'all-signs-customizer-for-woocommerce'),
+      label: material?.title || selectedFamilyTitle.value || __('Material', 'all-signs-customizer-for-woocommerce'),
       description: '',
       icon: material?.image ? mediaSrc(material.image) : '',
       image: material?.image ? mediaSrc(material.image) : '',
@@ -895,7 +897,7 @@ const buildConfigData = (fontSource = []) => {
     };
 
     if (withType) {
-      item.type = wizard.value.materialType;
+      item.type = 'simple';
     }
 
     return item;
@@ -904,7 +906,7 @@ const buildConfigData = (fontSource = []) => {
   const selectedAdditionalMaterials = selectedMaterials.map((materialId, index) => buildMaterialItem(materialId, index, false));
 
   const applySelectedMaterialsSection = (sections = {}, emptyItems = false) => {
-    const clonedSections = cloneSections(sections, emptyItems, !isAdvanceMode);
+    const clonedSections = cloneSections(sections, emptyItems);
 
     clonedSections.materials = {
       ...(clonedSections.materials || {}),
@@ -915,6 +917,9 @@ const buildConfigData = (fontSource = []) => {
 
     return clonedSections;
   };
+
+  const sourceRequiredOptions = demo.requiredOptions || {};
+  const sourceAdditionalOptions = demo.additionalOptions || {};
 
   const baseSettings = {
     ...(demo.settings || {}),
@@ -933,30 +938,6 @@ const buildConfigData = (fontSource = []) => {
     },
   };
 
-  const advancedRequiredOptions = {
-    fonts: resolvedFontsSection,
-    sizes: RequiredOptionsSizes,
-    colors: RequiredOptionsColors,
-    shapes: RequiredOptionsShapes,
-    borders: RequiredOptionsBorders,
-    pricings: RequiredOptionsPricings,
-    lightings: RequiredOptionsLightings,
-    components: RequiredOptionsComponentsAdvanced,
-    fixingMethods: RequiredOptionsFixingMethods,
-  };
-
-  const advancedAdditionalOptions = {
-    inputs: demo.additionalOptions?.inputs || {},
-    materials: {
-      items: [],
-      label: 'Materials',
-      description: '',
-    },
-  };
-
-  const sourceRequiredOptions = isAdvanceMode ? advancedRequiredOptions : (demo.requiredOptions || {});
-  const sourceAdditionalOptions = isAdvanceMode ? advancedAdditionalOptions : (demo.additionalOptions || {});
-
   if (wizard.value.includeDemo) {
     const demoPayload = cloneDeep(demo);
     const demoRequiredOptions = cloneDeep(demoPayload.requiredOptions || {});
@@ -964,26 +945,11 @@ const buildConfigData = (fontSource = []) => {
       demoRequiredOptions.fonts = resolvedFontsSection;
     }
 
-    if (isAdvanceMode) {
-      return {
-        settings: baseSettings,
-        pricingMode: 'frame-fit',
-        productType: canonicalConfigProductType.value,
-        materialType: 'advance',
-        requiredOptions: cloneSections(sourceRequiredOptions, false, false),
-        additionalOptions: applySelectedMaterialsSection(sourceAdditionalOptions, false),
-        configuratorMeta: {
-          version: 1,
-          mode: 'classic-advanced',
-        },
-      };
-    }
-
     return {
       ...demoPayload,
       pricingMode: 'frame-fit',
       productType: canonicalConfigProductType.value,
-      materialType: wizard.value.materialType,
+      materialType: 'simple',
       settings: baseSettings,
       requiredOptions: cloneSections(demoRequiredOptions, false),
       additionalOptions: applySelectedMaterialsSection(demoPayload.additionalOptions || {}, false),
@@ -993,18 +959,10 @@ const buildConfigData = (fontSource = []) => {
   return {
     pricingMode: 'frame-fit',
     productType: canonicalConfigProductType.value,
-    materialType: wizard.value.materialType,
+    materialType: 'simple',
     settings: baseSettings,
-    requiredOptions: cloneSections(sourceRequiredOptions, true, !isAdvanceMode),
+    requiredOptions: cloneSections(sourceRequiredOptions, true),
     additionalOptions: applySelectedMaterialsSection(sourceAdditionalOptions || {}, true),
-    ...(isAdvanceMode
-      ? {
-          configuratorMeta: {
-            version: 1,
-            mode: 'classic-advanced',
-          },
-        }
-      : {}),
   };
 };
 
@@ -1034,12 +992,12 @@ const filteredWooProducts = computed(() => {
   });
 });
 
-const getStepTitle = (s) => [__('Product family', 'all-signs-customizer-for-woocommerce-pro'), __('Material', 'all-signs-customizer-for-woocommerce-pro'), __('Setup model', 'all-signs-customizer-for-woocommerce-pro'), __('Product info', 'all-signs-customizer-for-woocommerce-pro')][s - 1];
+const getStepTitle = (s) => [__('Product family', 'all-signs-customizer-for-woocommerce'), __('Material', 'all-signs-customizer-for-woocommerce'), __('Setup model', 'all-signs-customizer-for-woocommerce'), __('Product info', 'all-signs-customizer-for-woocommerce')][s - 1];
 const getStepTip = (s) => [
-  __('Start with the product family. We will narrow the experience in the next step.', 'all-signs-customizer-for-woocommerce-pro'),
-  __('Choose the right material first, then define how the configurator should be structured.', 'all-signs-customizer-for-woocommerce-pro'),
-  __('Pick the setup model now. The configuration is created from the selected setup only.', 'all-signs-customizer-for-woocommerce-pro'),
-  __('Finish the configuration details, then create it and continue in the full editor.', 'all-signs-customizer-for-woocommerce-pro')
+  __('Start with the product family. We will narrow the experience in the next step.', 'all-signs-customizer-for-woocommerce'),
+  __('Choose the right material first, then define how the configurator should be structured.', 'all-signs-customizer-for-woocommerce'),
+  __('Pick the setup model now. The configuration is created from the selected setup only.', 'all-signs-customizer-for-woocommerce'),
+  __('Finish the configuration details, then create it and continue in the full editor.', 'all-signs-customizer-for-woocommerce')
 ][s - 1];
 
 const selectFamily = (family) => {
@@ -1106,7 +1064,7 @@ const handleMainAction = () => {
 
 const selectConfigIcon = (e) => {
   e.preventDefault();
-  wp.media({ title: __("Select Config Image", "all-signs-customizer-for-woocommerce-pro"), button: { text: __("Select image", "all-signs-customizer-for-woocommerce-pro") }, multiple: false })
+  wp.media({ title: __("Select Config Image", "all-signs-customizer-for-woocommerce"), button: { text: __("Select image", "all-signs-customizer-for-woocommerce") }, multiple: false })
     .on('select', () => {
       const attachment = wp.media.frame.state().get('selection').first().toJSON();
       newConfig.value.icon = attachment.url;
@@ -1124,7 +1082,7 @@ const finalCreate = async () => {
           name: newConfig.value.name,
           description: newConfig.value.description,
           productFamily: existing.productFamily || selectedFamilyTitle.value,
-          materialType: existing.materialType || wizard.value.materialType,
+          materialType: 'simple',
           productType: existing.productType || canonicalConfigProductType.value,
           pricingMode: existing.pricingMode || 'frame-fit',
           icon: newConfig.value.icon,
@@ -1137,7 +1095,7 @@ const finalCreate = async () => {
           router.push('/configuration');
           emit('onFinish');
        } else {
-          toastMessage(response.message || __('Update failed', 'all-signs-customizer-for-woocommerce-pro'), 'error');
+          toastMessage(response.message || __('Update failed', 'all-signs-customizer-for-woocommerce'), 'error');
        }
        return;
      }
@@ -1148,7 +1106,7 @@ const finalCreate = async () => {
         name: newConfig.value.name,
         description: newConfig.value.description,
         productFamily: selectedFamilyTitle.value,
-        materialType: wizard.value.materialType,
+        materialType: 'simple',
         productType: canonicalConfigProductType.value,
         pricingMode: 'frame-fit',
         icon: newConfig.value.icon,
@@ -1160,7 +1118,7 @@ const finalCreate = async () => {
         toastMessage(response.message, 'success');
         if (response.post_id) {
           router.push({
-            name: wizard.value.materialType === 'advance' ? 'required-components' : 'sizes',
+            name: 'sizes',
             params: {
               configId: String(response.post_id),
             },
@@ -1168,9 +1126,9 @@ const finalCreate = async () => {
         }
         emit('onFinish');
      } else {
-        toastMessage(response.message || __('Registration failed', 'all-signs-customizer-for-woocommerce-pro'), 'error');
+        toastMessage(response.message || __('Registration failed', 'all-signs-customizer-for-woocommerce'), 'error');
      }
-  } catch (e) { toastMessage(e?.response?.data?.message || __('Error', 'all-signs-customizer-for-woocommerce-pro'), 'error'); }
+  } catch (e) { toastMessage(e?.response?.data?.message || __('Error', 'all-signs-customizer-for-woocommerce'), 'error'); }
   finally { isLoading.value = false; }
 };
 
@@ -1181,7 +1139,6 @@ const loadEditConfig = async () => {
   editConfig.value = config || {};
   const data = config?.data || {};
   const productType = String(config?.productType || data?.productType || data?.settings?.productType || '').trim();
-  const materialType = String(config?.materialType || data?.materialType || 'simple').trim();
   const selectedMaterials = extractSelectedMaterialIds(config);
 
   newConfig.value = {
@@ -1190,7 +1147,7 @@ const loadEditConfig = async () => {
     icon: config?.icon || data?.icon || data?.popImg || "",
   };
   wizard.value.step = 4;
-  wizard.value.materialType = materialType || 'simple';
+  wizard.value.materialType = 'simple';
   wizard.value.productType = normalizeEditorProductType(productType);
   wizard.value.selectedMaterials = selectedMaterials.length
     ? selectedMaterials

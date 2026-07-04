@@ -1,16 +1,16 @@
 <template>
   <main class="ascwo-request-quotes-page">
     <header class="ascwo-request-quotes-heading">
-      <h1>{{ __("Request quotes", "all-signs-customizer-for-woocommerce-pro") }}</h1>
-      <p>{{ totalCount }} {{ totalCount === 1 ? __("request stored", "all-signs-customizer-for-woocommerce-pro") : __("requests stored", "all-signs-customizer-for-woocommerce-pro") }}</p>
+      <h1>{{ __("Request quotes", "all-signs-customizer-for-woocommerce") }}</h1>
+      <p>{{ totalCount }} {{ totalCount === 1 ? __("request stored", "all-signs-customizer-for-woocommerce") : __("requests stored", "all-signs-customizer-for-woocommerce") }}</p>
     </header>
 
     <section class="ascwo-request-quotes-layout">
       <article class="ascwo-request-quotes-card ascwo-request-quotes-list-card">
         <header>
           <div>
-            <h2>{{ __("Stored request quotes", "all-signs-customizer-for-woocommerce-pro") }}</h2>
-            <p>{{ __("Read the customer request and download the uploaded files.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+            <h2>{{ __("Stored request quotes", "all-signs-customizer-for-woocommerce") }}</h2>
+            <p>{{ __("Read the customer request and download the uploaded files.", "all-signs-customizer-for-woocommerce") }}</p>
           </div>
           <button type="button" class="ascwo-request-quotes-refresh" :disabled="isLoading" @click="loadQuotes">
             <RefreshCwIcon :class="{ 'is-spinning': isLoading }" />
@@ -22,19 +22,19 @@
         </div>
 
         <div v-else-if="requestQuotes.length === 0" class="ascwo-request-quotes-empty">
-          {{ __("No request quote has been saved yet.", "all-signs-customizer-for-woocommerce-pro") }}
+          {{ __("No request quote has been saved yet.", "all-signs-customizer-for-woocommerce") }}
         </div>
 
         <div v-else class="ascwo-request-quotes-table-wrap">
           <table class="ascwo-request-quotes-table">
             <thead>
               <tr>
-                <th>{{ __("Created", "all-signs-customizer-for-woocommerce-pro") }}</th>
-                <th>{{ __("Customer", "all-signs-customizer-for-woocommerce-pro") }}</th>
-                <th>{{ __("Product", "all-signs-customizer-for-woocommerce-pro") }}</th>
-                <th>{{ __("Files", "all-signs-customizer-for-woocommerce-pro") }}</th>
-                <th>{{ __("Status", "all-signs-customizer-for-woocommerce-pro") }}</th>
-                <th>{{ __("Action", "all-signs-customizer-for-woocommerce-pro") }}</th>
+                <th>{{ __("Created", "all-signs-customizer-for-woocommerce") }}</th>
+                <th>{{ __("Customer", "all-signs-customizer-for-woocommerce") }}</th>
+                <th>{{ __("Product", "all-signs-customizer-for-woocommerce") }}</th>
+                <th>{{ __("Files", "all-signs-customizer-for-woocommerce") }}</th>
+                <th>{{ __("Status", "all-signs-customizer-for-woocommerce") }}</th>
+                <th>{{ __("Action", "all-signs-customizer-for-woocommerce") }}</th>
               </tr>
             </thead>
             <tbody>
@@ -50,7 +50,7 @@
                 </td>
                 <td>
                   <span>{{ quote.productType || "n/a" }}</span>
-                  <small>{{ quote.configId ? `Config ${quote.configId}` : __("No config id", "all-signs-customizer-for-woocommerce-pro") }}</small>
+                  <small>{{ quote.configId ? `Config ${quote.configId}` : __("No config id", "all-signs-customizer-for-woocommerce") }}</small>
                 </td>
                 <td>{{ quote.files?.length || 0 }}</td>
                 <td>
@@ -58,7 +58,7 @@
                 </td>
                 <td>
                   <button type="button" class="ascwo-request-quotes-view" @click="selectQuote(quote)">
-                    {{ __("View", "all-signs-customizer-for-woocommerce-pro") }}
+                    {{ __("View", "all-signs-customizer-for-woocommerce") }}
                   </button>
                 </td>
               </tr>
@@ -71,27 +71,27 @@
         <template v-if="selectedQuote">
           <header>
             <div>
-              <h2>{{ __("Quote details", "all-signs-customizer-for-woocommerce-pro") }}</h2>
+              <h2>{{ __("Quote details", "all-signs-customizer-for-woocommerce") }}</h2>
               <p>ID {{ selectedQuote.id }}</p>
             </div>
             <span class="ascwo-request-quotes-badge" :class="`is-${statusTone(selectedQuote.status)}`">{{ selectedQuote.status || "pending" }}</span>
           </header>
 
           <div class="ascwo-request-quotes-detail-group">
-            <h3>{{ __("Customer", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+            <h3>{{ __("Customer", "all-signs-customizer-for-woocommerce") }}</h3>
             <p>{{ customerName(selectedQuote) }}</p>
-            <p>{{ selectedQuote.customer?.email || __("No email provided", "all-signs-customizer-for-woocommerce-pro") }}</p>
-            <p>{{ selectedQuote.customer?.phone || __("No phone provided", "all-signs-customizer-for-woocommerce-pro") }}</p>
+            <p>{{ selectedQuote.customer?.email || __("No email provided", "all-signs-customizer-for-woocommerce") }}</p>
+            <p>{{ selectedQuote.customer?.phone || __("No phone provided", "all-signs-customizer-for-woocommerce") }}</p>
           </div>
 
           <div class="ascwo-request-quotes-detail-group">
-            <h3>{{ __("Message", "all-signs-customizer-for-woocommerce-pro") }}</h3>
-            <p>{{ selectedQuote.customer?.message || __("No message provided", "all-signs-customizer-for-woocommerce-pro") }}</p>
+            <h3>{{ __("Message", "all-signs-customizer-for-woocommerce") }}</h3>
+            <p>{{ selectedQuote.customer?.message || __("No message provided", "all-signs-customizer-for-woocommerce") }}</p>
           </div>
 
           <div class="ascwo-request-quotes-detail-group">
-            <h3>{{ __("Files", "all-signs-customizer-for-woocommerce-pro") }}</h3>
-            <p v-if="!selectedQuote.files || selectedQuote.files.length === 0">{{ __("No uploaded file.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+            <h3>{{ __("Files", "all-signs-customizer-for-woocommerce") }}</h3>
+            <p v-if="!selectedQuote.files || selectedQuote.files.length === 0">{{ __("No uploaded file.", "all-signs-customizer-for-woocommerce") }}</p>
             <a
               v-for="(file, index) in selectedQuote.files"
               v-else
@@ -107,15 +107,15 @@
           </div>
 
           <div class="ascwo-request-quotes-detail-group">
-            <h3>{{ __("Technical data", "all-signs-customizer-for-woocommerce-pro") }}</h3>
-            <p>{{ __("Created:", "all-signs-customizer-for-woocommerce-pro") }} {{ formatDate(selectedQuote.createdAt) }}</p>
-            <p>{{ __("Product type:", "all-signs-customizer-for-woocommerce-pro") }} {{ selectedQuote.productType || "-" }}</p>
-            <p>{{ __("Notified:", "all-signs-customizer-for-woocommerce-pro") }} {{ selectedQuote.notifiedAt ? formatDate(selectedQuote.notifiedAt) : __("No", "all-signs-customizer-for-woocommerce-pro") }}</p>
-            <p>{{ __("Source content type:", "all-signs-customizer-for-woocommerce-pro") }} {{ selectedQuote.source?.contentType || "-" }}</p>
+            <h3>{{ __("Technical data", "all-signs-customizer-for-woocommerce") }}</h3>
+            <p>{{ __("Created:", "all-signs-customizer-for-woocommerce") }} {{ formatDate(selectedQuote.createdAt) }}</p>
+            <p>{{ __("Product type:", "all-signs-customizer-for-woocommerce") }} {{ selectedQuote.productType || "-" }}</p>
+            <p>{{ __("Notified:", "all-signs-customizer-for-woocommerce") }} {{ selectedQuote.notifiedAt ? formatDate(selectedQuote.notifiedAt) : __("No", "all-signs-customizer-for-woocommerce") }}</p>
+            <p>{{ __("Source content type:", "all-signs-customizer-for-woocommerce") }} {{ selectedQuote.source?.contentType || "-" }}</p>
           </div>
 
           <div v-if="selectedQuote.previewImg" class="ascwo-request-quotes-detail-group">
-            <h3>{{ __("Preview", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+            <h3>{{ __("Preview", "all-signs-customizer-for-woocommerce") }}</h3>
             <img class="ascwo-request-quotes-preview" :src="selectedQuote.previewImg" alt="" />
           </div>
 
@@ -127,11 +127,11 @@
               @click="markAsNotified"
             >
               <Loader2Icon v-if="isSaving" class="is-spinning" />
-              <span>{{ selectedQuote.status === "notified" ? __("Already notified", "all-signs-customizer-for-woocommerce-pro") : __("Mark as notified", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <span>{{ selectedQuote.status === "notified" ? __("Already notified", "all-signs-customizer-for-woocommerce") : __("Mark as notified", "all-signs-customizer-for-woocommerce") }}</span>
             </button>
           </footer>
         </template>
-        <p v-else>{{ __("Select a quote to see details.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+        <p v-else>{{ __("Select a quote to see details.", "all-signs-customizer-for-woocommerce") }}</p>
       </aside>
     </section>
   </main>
@@ -178,7 +178,7 @@ const customerName = (quote) => {
   const firstName = quote?.customer?.firstName || "";
   const lastName = quote?.customer?.lastName || "";
   const name = `${firstName} ${lastName}`.trim();
-  return name || quote?.customer?.email || __("Anonymous customer", "all-signs-customizer-for-woocommerce-pro");
+  return name || quote?.customer?.email || __("Anonymous customer", "all-signs-customizer-for-woocommerce");
 };
 
 const formatDate = (value) => {

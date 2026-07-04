@@ -5,12 +5,12 @@
     <section class="ascwo-card">
       <div class="ascwo-card-body ascwo-header-card">
         <div>
-          <h1>{{ __("Text Setting", "all-signs-customizer-for-woocommerce-pro") }}</h1>
+          <h1>{{ __("Text Setting", "all-signs-customizer-for-woocommerce") }}</h1>
           <p>
             {{
               __(
                 "Bring text configuration closer to the core setup, while keeping the same classic save location.",
-                "all-signs-customizer-for-woocommerce-pro"
+                "all-signs-customizer-for-woocommerce"
               )
             }}
           </p>
@@ -22,11 +22,11 @@
       <div class="ascwo-card-body">
         <div class="ascwo-section-head">
           <div>
-            <h2>{{ __("Text Access", "all-signs-customizer-for-woocommerce-pro") }}</h2>
-            <p>{{ __("Decide whether this configuration should expose text customization.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+            <h2>{{ __("Text Access", "all-signs-customizer-for-woocommerce") }}</h2>
+            <p>{{ __("Decide whether this configuration should expose text customization.", "all-signs-customizer-for-woocommerce") }}</p>
           </div>
           <button class="ascwo-disclosure-button" type="button" @click="togglePanel('access')">
-            {{ openPanels.access ? __("Show less", "all-signs-customizer-for-woocommerce-pro") : __("Show more", "all-signs-customizer-for-woocommerce-pro") }}
+            {{ openPanels.access ? __("Show less", "all-signs-customizer-for-woocommerce") : __("Show more", "all-signs-customizer-for-woocommerce") }}
             <ChevronUpIcon v-if="openPanels.access" class="ascwo-icon" />
             <ChevronDownIcon v-else class="ascwo-icon" />
           </button>
@@ -41,11 +41,11 @@
       <div class="ascwo-card-body">
         <div class="ascwo-section-head">
           <div>
-            <h2>{{ __("QR Code", "all-signs-customizer-for-woocommerce-pro") }}</h2>
-            <p>{{ __("Control whether QR code customization is available in this configuration.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+            <h2>{{ __("QR Code", "all-signs-customizer-for-woocommerce") }}</h2>
+            <p>{{ __("Control whether QR code customization is available in this configuration.", "all-signs-customizer-for-woocommerce") }}</p>
           </div>
           <button class="ascwo-disclosure-button" type="button" @click="togglePanel('qr')">
-            {{ openPanels.qr ? __("Show less", "all-signs-customizer-for-woocommerce-pro") : __("Show more", "all-signs-customizer-for-woocommerce-pro") }}
+            {{ openPanels.qr ? __("Show less", "all-signs-customizer-for-woocommerce") : __("Show more", "all-signs-customizer-for-woocommerce") }}
             <ChevronUpIcon v-if="openPanels.qr" class="ascwo-icon" />
             <ChevronDownIcon v-else class="ascwo-icon" />
           </button>
@@ -61,11 +61,11 @@
         <div class="ascwo-card-body">
           <div class="ascwo-section-head">
             <div>
-              <h2>{{ __("Text Type", "all-signs-customizer-for-woocommerce-pro") }}</h2>
-              <p>{{ __("Choose the main text rendering mode used by the configurator.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+              <h2>{{ __("Text Type", "all-signs-customizer-for-woocommerce") }}</h2>
+              <p>{{ __("Choose the main text rendering mode used by the configurator.", "all-signs-customizer-for-woocommerce") }}</p>
             </div>
             <button class="ascwo-disclosure-button" type="button" @click="togglePanel('type')">
-              {{ openPanels.type ? __("Show less", "all-signs-customizer-for-woocommerce-pro") : __("Show more", "all-signs-customizer-for-woocommerce-pro") }}
+              {{ openPanels.type ? __("Show less", "all-signs-customizer-for-woocommerce") : __("Show more", "all-signs-customizer-for-woocommerce") }}
               <ChevronUpIcon v-if="openPanels.type" class="ascwo-icon" />
               <ChevronDownIcon v-else class="ascwo-icon" />
             </button>
@@ -96,36 +96,36 @@
         <div class="ascwo-card-body">
           <div class="ascwo-section-head">
             <div>
-              <h2>{{ __("Text Colors", "all-signs-customizer-for-woocommerce-pro") }}</h2>
-              <p>{{ __("Manage predefined text colors and the optional custom color flow.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+              <h2>{{ __("Text Colors", "all-signs-customizer-for-woocommerce") }}</h2>
+              <p>{{ __("Manage predefined text colors and the optional custom color flow.", "all-signs-customizer-for-woocommerce") }}</p>
             </div>
             <button class="ascwo-disclosure-button" type="button" @click="togglePanel('colors')">
-              {{ openPanels.colors ? __("Show less", "all-signs-customizer-for-woocommerce-pro") : __("Show more", "all-signs-customizer-for-woocommerce-pro") }}
+              {{ openPanels.colors ? __("Show less", "all-signs-customizer-for-woocommerce") : __("Show more", "all-signs-customizer-for-woocommerce") }}
               <ChevronUpIcon v-if="openPanels.colors" class="ascwo-icon" />
               <ChevronDownIcon v-else class="ascwo-icon" />
             </button>
           </div>
           <div v-if="openPanels.colors" class="ascwo-panel-content">
             <label class="ascwo-field ascwo-label-field">
-              <span>{{ __("Label", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <span>{{ __("Label", "all-signs-customizer-for-woocommerce") }}</span>
               <input v-model="text.colorsLabel" type="text" autocomplete="off" />
             </label>
 
             <div class="ascwo-color-grid">
               <article v-for="(color, index) in text.colors" :key="`text-color-${index}`" class="ascwo-color-card">
                 <div class="ascwo-color-card-head">
-                  <strong>{{ sprintf(__("Color %s", "all-signs-customizer-for-woocommerce-pro"), index + 1) }}</strong>
+                  <strong>{{ sprintf(__("Color %s", "all-signs-customizer-for-woocommerce"), index + 1) }}</strong>
                   <button type="button" class="ascwo-icon-danger" @click="removeColor(index)">
                     <Trash2Icon class="ascwo-icon" />
                   </button>
                 </div>
                 <div class="ascwo-color-row">
                   <label class="ascwo-field ascwo-color-name">
-                    <span class="ascwo-sr-only">{{ __("Color name", "all-signs-customizer-for-woocommerce-pro") }}</span>
-                    <input v-model="color.name" type="text" :placeholder="__('Name', 'all-signs-customizer-for-woocommerce-pro')" autocomplete="off" />
+                    <span class="ascwo-sr-only">{{ __("Color name", "all-signs-customizer-for-woocommerce") }}</span>
+                    <input v-model="color.name" type="text" :placeholder="__('Name', 'all-signs-customizer-for-woocommerce')" autocomplete="off" />
                   </label>
                   <label class="ascwo-field ascwo-color-code">
-                    <span>{{ __("Color", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                    <span>{{ __("Color", "all-signs-customizer-for-woocommerce") }}</span>
                     <span class="ascwo-color-inputs">
                       <input v-model="color.codeHex" type="color" @input="normalizeColor(index)" />
                       <input v-model="color.codeHex" type="text" autocomplete="off" @blur="normalizeColor(index)" />
@@ -136,19 +136,19 @@
             </div>
 
             <button type="button" class="ascwo-secondary-button ascwo-small-button" @click="addNewColor">
-              {{ __("Add text color", "all-signs-customizer-for-woocommerce-pro") }}
+              {{ __("Add text color", "all-signs-customizer-for-woocommerce") }}
             </button>
 
             <div class="ascwo-custom-color-row">
               <div class="ascwo-custom-toggle">
-                <strong>{{ __("Enable Custom color", "all-signs-customizer-for-woocommerce-pro") }}</strong>
+                <strong>{{ __("Enable Custom color", "all-signs-customizer-for-woocommerce") }}</strong>
                 <ToggleRow v-model="text.enableCustomColor" />
               </div>
               <label class="ascwo-field ascwo-upload-field">
-                <span>{{ __("Custom color preview image", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                <span>{{ __("Custom color preview image", "all-signs-customizer-for-woocommerce") }}</span>
                 <span class="ascwo-file-control">
                   <button type="button" class="ascwo-primary-button ascwo-file-button" @click.prevent="selectColorPrevImage">
-                    {{ __("upload image", "all-signs-customizer-for-woocommerce-pro") }}
+                    {{ __("upload image", "all-signs-customizer-for-woocommerce") }}
                   </button>
                   <span class="ascwo-file-preview">
                     <img v-if="text.colorsPrevImg" :src="text.colorsPrevImg" alt="" />
@@ -167,31 +167,31 @@
         <div class="ascwo-card-body">
           <div class="ascwo-section-head">
             <div>
-              <h2>{{ __("Font Size", "all-signs-customizer-for-woocommerce-pro") }}</h2>
-              <p>{{ __("Configure whether the customer can change size and define the allowed bounds.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+              <h2>{{ __("Font Size", "all-signs-customizer-for-woocommerce") }}</h2>
+              <p>{{ __("Configure whether the customer can change size and define the allowed bounds.", "all-signs-customizer-for-woocommerce") }}</p>
             </div>
             <button class="ascwo-disclosure-button" type="button" @click="togglePanel('fontSize')">
-              {{ openPanels.fontSize ? __("Show less", "all-signs-customizer-for-woocommerce-pro") : __("Show more", "all-signs-customizer-for-woocommerce-pro") }}
+              {{ openPanels.fontSize ? __("Show less", "all-signs-customizer-for-woocommerce") : __("Show more", "all-signs-customizer-for-woocommerce") }}
               <ChevronUpIcon v-if="openPanels.fontSize" class="ascwo-icon" />
               <ChevronDownIcon v-else class="ascwo-icon" />
             </button>
           </div>
           <div v-if="openPanels.fontSize" class="ascwo-panel-content">
             <div class="ascwo-block-toggle">
-              <strong>{{ __("Enable font size", "all-signs-customizer-for-woocommerce-pro") }}</strong>
+              <strong>{{ __("Enable font size", "all-signs-customizer-for-woocommerce") }}</strong>
               <ToggleRow v-model="text.enableFontSize.active" />
             </div>
             <div v-if="text.enableFontSize.active" class="ascwo-form-grid ascwo-three-cols">
               <label class="ascwo-field">
-                <span>{{ __("Minimum font size", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                <span>{{ __("Minimum font size", "all-signs-customizer-for-woocommerce") }}</span>
                 <input v-model="text.enableFontSize.minimumFontSize" type="number" />
               </label>
               <label class="ascwo-field">
-                <span>{{ __("Maximum font size", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                <span>{{ __("Maximum font size", "all-signs-customizer-for-woocommerce") }}</span>
                 <input v-model="text.enableFontSize.maximumFontSize" type="number" />
               </label>
               <label class="ascwo-field">
-                <span>{{ __("Default size", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                <span>{{ __("Default size", "all-signs-customizer-for-woocommerce") }}</span>
                 <input v-model="text.enableFontSize.defaultFontSize" type="number" />
               </label>
             </div>
@@ -203,11 +203,11 @@
         <div class="ascwo-card-body">
           <div class="ascwo-section-head">
             <div>
-              <h2>{{ __("Text Options", "all-signs-customizer-for-woocommerce-pro") }}</h2>
-              <p>{{ __("Enable or disable the formatting tools available to the customer.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+              <h2>{{ __("Text Options", "all-signs-customizer-for-woocommerce") }}</h2>
+              <p>{{ __("Enable or disable the formatting tools available to the customer.", "all-signs-customizer-for-woocommerce") }}</p>
             </div>
             <button class="ascwo-disclosure-button" type="button" @click="togglePanel('options')">
-              {{ openPanels.options ? __("Show less", "all-signs-customizer-for-woocommerce-pro") : __("Show more", "all-signs-customizer-for-woocommerce-pro") }}
+              {{ openPanels.options ? __("Show less", "all-signs-customizer-for-woocommerce") : __("Show more", "all-signs-customizer-for-woocommerce") }}
               <ChevronUpIcon v-if="openPanels.options" class="ascwo-icon" />
               <ChevronDownIcon v-else class="ascwo-icon" />
             </button>
@@ -233,7 +233,7 @@
     <div class="ascwo-save-row">
       <button type="button" class="ascwo-primary-button" :disabled="isLoading" @click="updateTextSettings">
         <img v-if="isLoading" src="@/../assets/icons/ic_loading_gray.svg" alt="" />
-        {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce-pro") : __("Save Text", "all-signs-customizer-for-woocommerce-pro") }}
+        {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce") : __("Save Text", "all-signs-customizer-for-woocommerce") }}
       </button>
     </div>
     </template>
@@ -437,9 +437,9 @@ const selectColorPrevImage = (event) => {
   event?.preventDefault?.();
   const uploader = wp
     .media({
-      title: __("Select Custom Text Color Preview Image", "all-signs-customizer-for-woocommerce-pro"),
+      title: __("Select Custom Text Color Preview Image", "all-signs-customizer-for-woocommerce"),
       button: {
-        text: __("Select Image", "all-signs-customizer-for-woocommerce-pro"),
+        text: __("Select Image", "all-signs-customizer-for-woocommerce"),
       },
       multiple: false,
     })
@@ -464,9 +464,9 @@ const updateTextSettings = async () => {
     const result = await api.updateCustomizerSignsText(configId.value, text.value);
     if (result?.success) {
       await props.fetchSettings?.();
-      toastMessage(result.message || __("Text settings saved", "all-signs-customizer-for-woocommerce-pro"));
+      toastMessage(result.message || __("Text settings saved", "all-signs-customizer-for-woocommerce"));
     } else {
-      toastMessage(result?.message || __("Unable to save text settings", "all-signs-customizer-for-woocommerce-pro"), "error");
+      toastMessage(result?.message || __("Unable to save text settings", "all-signs-customizer-for-woocommerce"), "error");
     }
   } finally {
     isLoading.value = false;

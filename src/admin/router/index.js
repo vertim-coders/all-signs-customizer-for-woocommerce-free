@@ -15,8 +15,6 @@ import PricingsPage from "@/admin/pages/configuration/required-options/PricingsP
 import FontsPage from "@/admin/pages/configuration/required-options/FontsPage.vue";
 import MaterialsPage from "@/admin/pages/configuration/required-options/MaterialsPage.vue";
 import LightingsPage from "@/admin/pages/configuration/required-options/LightingsPage.vue";
-import RequiredComponentsPage from "@/admin/pages/configuration/required-options/ComponentsPage.vue";
-import RequiredComponentOptionsPage from "@/admin/pages/configuration/required-options/components/options.vue";
 
 // import design setup pages
 import TextSettingPage from "@/admin/pages/configuration/design-setup/TextSettingPage.vue";
@@ -24,7 +22,6 @@ import ImageSettingPage from "@/admin/pages/configuration/design-setup/ImageSett
 import SignPartSettingPage from "@/admin/pages/configuration/design-setup/SignPartSettingPage.vue";
 
 // import additional options pages
-import AdditionalComponents from "@/admin/pages/configuration/additional-options/additional-components/index.vue";
 import AdditionalInputs from "@/admin/pages/configuration/additional-options/inputs/index.vue";
 
 // import settings pages
@@ -32,6 +29,7 @@ import settingsCustomizerOptions from "@/admin/pages/configuration/settings/cust
 import settingsGenerals from "@/admin/pages/configuration/settings/generals/index.vue";
 import settingsLanguagesImages from "@/admin/pages/configuration/settings/language-image/index.vue";
 import settingsThemesColors from "@/admin/pages/configuration/settings/themes-color/index.vue";
+import AdditionalComponents from "@/admin/pages/configuration/additional-options/additional-components/index.vue";
 
 // import manage fonts and cliparts pages
 import ManageFonts from "@/admin/pages/manage-fonts/index.vue";
@@ -46,7 +44,6 @@ import RequestQuotes from "@/admin/pages/request-quotes/index.vue";
 
 //import other pages
 import Preview from "@/admin/pages/preview/index.vue";
-import OptionConfigurator from "@/admin/pages/option-configurator/index.vue";
 import NotFound from "@/admin/pages/NotFound/index.vue";
 import Home from "@/admin/pages/Home.vue";
 
@@ -148,21 +145,6 @@ const router = createRouter({
           component: MaterialsPage,
         },
         {
-          path: "required-options/components",
-          name: "required-components",
-          component: RequiredComponentsPage,
-        },
-        {
-          path: "required-options/components/:componentId/options",
-          name: "required-component-options",
-          component: RequiredComponentOptionsPage,
-        },
-        {
-          path: "required-options/components/:componentId/options/:optionId",
-          name: "required-component-option-detail",
-          component: RequiredComponentOptionsPage,
-        },
-        {
           path: "design-setup",
           redirect: () => ({ name: "text-setting" }),
         },
@@ -186,6 +168,11 @@ const router = createRouter({
           redirect: () => ({ name: "additional-inputs" }),
         },
         {
+          path: "additional-options/inputs",
+          name: "additional-inputs",
+          component: AdditionalInputs,
+        },
+        {
           path: "additional-options/additional-components",
           name: "Additional-Components",
           component: AdditionalComponents,
@@ -194,11 +181,7 @@ const router = createRouter({
           path: "additional-options/additional-components/:additionalOptionID/options",
           name: "Additional-Components-Options",
           component: AdditionalComponents,
-        },
-        {
-          path: "additional-options/inputs",
-          name: "additional-inputs",
-          component: AdditionalInputs,
+          props: true,
         },
         {
           path: "settings",
@@ -231,11 +214,6 @@ const router = createRouter({
       path: "/configuration/:configId/preview",
       name: "preview-back",
       component: Preview,
-    },
-    {
-      path: "/configuration/:configId/option-configurator/:componentId/:optionId",
-      name: "option-configurator",
-      component: OptionConfigurator,
     },
     {
       path: "/manage-fonts",
@@ -318,11 +296,6 @@ const router = createRouter({
       component: GlobalSettings,
     },
     {
-      path: "/settings/license",
-      name: "global-settings-license",
-      component: GlobalSettings,
-    },
-    {
       path: "/settings/output",
       name: "global-settings-output",
       component: GlobalSettings,
@@ -348,36 +321,6 @@ const router = createRouter({
       component: NotFound,
     },
   ],
-});
-
-const getLicenseStatus = () => {
-  if (typeof window === "undefined" || !window.ascwo_data) {
-    return {};
-  }
-
-  return window.ascwo_data.license_status || {};
-};
-
-const isLicenseActive = () => {
-  const licenseStatus = getLicenseStatus();
-  const licenseExpiry = Number(licenseStatus.timestamp || window.ascwo_data?.caches || 0);
-  const serverNow = Number(licenseStatus.time || Math.floor(Date.now() / 1000));
-
-  return licenseExpiry > serverNow;
-};
-
-router.beforeEach((to) => {
-  // License-free installs are restricted to the public settings surface.
-  if (isLicenseActive()) {
-    return true;
-  }
-
-  const routeName = String(to.name || "");
-  if (routeName.startsWith("global-settings-")) {
-    return true;
-  }
-
-  return { name: "global-settings-license" };
 });
 
 export default router;

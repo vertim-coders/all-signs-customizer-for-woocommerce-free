@@ -135,7 +135,7 @@ class ASCWO_Api_Required_Options_Shapes extends ASCWO_Api_Required_Options_Base
     {
         $config_id = absint($request->get_param('config_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce')));
         }
 
         $required_options = $this->get_required_options($config_id);
@@ -160,8 +160,8 @@ class ASCWO_Api_Required_Options_Shapes extends ASCWO_Api_Required_Options_Base
             $request,
             'shapes',
             'shape',
-            __('Shape not found', 'all-signs-customizer-for-woocommerce-pro'),
-            __('Default shape successfully updated', 'all-signs-customizer-for-woocommerce-pro')
+            __('Shape not found', 'all-signs-customizer-for-woocommerce'),
+            __('Default shape successfully updated', 'all-signs-customizer-for-woocommerce')
         );
     }
 
@@ -170,14 +170,14 @@ class ASCWO_Api_Required_Options_Shapes extends ASCWO_Api_Required_Options_Base
         $config_id = absint($request->get_param('config_id'));
         $item_id = sanitize_text_field((string) $request->get_param('item_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce')));
         }
 
         $required_options = $this->get_required_options($config_id);
         $shapes = $this->section_item_list($required_options, 'shapes');
         $item_index = $this->find_section_item_index_by_id($shapes, $item_id);
         if ($item_index === null) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Shape not found', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Shape not found', 'all-signs-customizer-for-woocommerce')));
         }
 
         return rest_ensure_response(array('success' => true, 'data' => array('shape' => $this->sanitize_shape_item($shapes[$item_index]))));
@@ -187,7 +187,7 @@ class ASCWO_Api_Required_Options_Shapes extends ASCWO_Api_Required_Options_Base
     {
         $config_id = absint($request->get_param('config_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce')));
         }
 
         $payload = $request->get_json_params();
@@ -207,8 +207,8 @@ class ASCWO_Api_Required_Options_Shapes extends ASCWO_Api_Required_Options_Base
         $saved = $this->save_required_options($config_id, $required_options);
 
         return rest_ensure_response($saved === true
-            ? array('success' => true, 'message' => __('Shape successfully added', 'all-signs-customizer-for-woocommerce-pro'), 'data' => array('shape' => end($shapes)))
-            : array('success' => false, 'message' => __('Shape has not been added', 'all-signs-customizer-for-woocommerce-pro')));
+            ? array('success' => true, 'message' => __('Shape successfully added', 'all-signs-customizer-for-woocommerce'), 'data' => array('shape' => end($shapes)))
+            : array('success' => false, 'message' => __('Shape has not been added', 'all-signs-customizer-for-woocommerce')));
     }
 
     public function update_shape_item($request)
@@ -216,7 +216,7 @@ class ASCWO_Api_Required_Options_Shapes extends ASCWO_Api_Required_Options_Base
         $config_id = absint($request->get_param('config_id'));
         $item_id = sanitize_text_field((string) $request->get_param('item_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce')));
         }
 
         $payload = $request->get_json_params();
@@ -226,7 +226,7 @@ class ASCWO_Api_Required_Options_Shapes extends ASCWO_Api_Required_Options_Base
         $shapes = $this->section_item_list($required_options, 'shapes');
         $item_index = $this->find_section_item_index_by_id($shapes, $item_id);
         if ($item_index === null) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Shape not found', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Shape not found', 'all-signs-customizer-for-woocommerce')));
         }
 
         $shapes[$item_index] = $this->sanitize_shape_item(array_merge($shapes[$item_index], $payload));
@@ -235,8 +235,8 @@ class ASCWO_Api_Required_Options_Shapes extends ASCWO_Api_Required_Options_Base
         $saved = $this->save_required_options($config_id, $required_options);
 
         return rest_ensure_response($saved === true
-            ? array('success' => true, 'message' => __('Shape successfully edited', 'all-signs-customizer-for-woocommerce-pro'), 'data' => array('shape' => $shapes[$item_index]))
-            : array('success' => false, 'message' => __('Shape has not been edited', 'all-signs-customizer-for-woocommerce-pro')));
+            ? array('success' => true, 'message' => __('Shape successfully edited', 'all-signs-customizer-for-woocommerce'), 'data' => array('shape' => $shapes[$item_index]))
+            : array('success' => false, 'message' => __('Shape has not been edited', 'all-signs-customizer-for-woocommerce')));
     }
 
     public function delete_shape_item($request)
@@ -244,14 +244,14 @@ class ASCWO_Api_Required_Options_Shapes extends ASCWO_Api_Required_Options_Base
         $config_id = absint($request->get_param('config_id'));
         $item_id = sanitize_text_field((string) $request->get_param('item_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-customizer-for-woocommerce')));
         }
 
         $required_options = $this->get_required_options($config_id);
         $shapes = $this->section_item_list($required_options, 'shapes');
         $item_index = $this->find_section_item_index_by_id($shapes, $item_id);
         if ($item_index === null) {
-            return rest_ensure_response(array('success' => false, 'message' => __('Shape not found', 'all-signs-customizer-for-woocommerce-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Shape not found', 'all-signs-customizer-for-woocommerce')));
         }
 
         array_splice($shapes, $item_index, 1);
@@ -260,8 +260,8 @@ class ASCWO_Api_Required_Options_Shapes extends ASCWO_Api_Required_Options_Base
         $saved = $this->save_required_options($config_id, $required_options);
 
         return rest_ensure_response($saved === true
-            ? array('success' => true, 'message' => __('Shape successfully deleted', 'all-signs-customizer-for-woocommerce-pro'), 'data' => array('items' => array_values($shapes)))
-            : array('success' => false, 'message' => __('Shape has not been deleted', 'all-signs-customizer-for-woocommerce-pro')));
+            ? array('success' => true, 'message' => __('Shape successfully deleted', 'all-signs-customizer-for-woocommerce'), 'data' => array('items' => array_values($shapes)))
+            : array('success' => false, 'message' => __('Shape has not been deleted', 'all-signs-customizer-for-woocommerce')));
     }
 
     private function sanitize_shape_item(array $shape): array

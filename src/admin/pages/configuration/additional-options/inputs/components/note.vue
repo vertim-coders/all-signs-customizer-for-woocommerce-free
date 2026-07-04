@@ -2,25 +2,25 @@
 <template>
     <div class="ascwo-space-y-1">
         <div class="ascwo-bg-white ascwo-shadow-md ascwo-justify-center ascwo-items-center ascwo-px-4 ascwo-py-4">
-            <p class="ascwo-text-[14px] ascwo-font-bold">2- {{ __('Set the Label and Description', 'all-signs-customizer-for-woocommerce-pro') }}</p>
-            <p class="ascwo-text-[12px]">{{ __('This text will display above the input options.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+            <p class="ascwo-text-[14px] ascwo-font-bold">2- {{ __('Set the Label and Description', 'all-signs-customizer-for-woocommerce') }}</p>
+            <p class="ascwo-text-[12px]">{{ __('This text will display above the input options.', 'all-signs-customizer-for-woocommerce') }}</p>
             <div class="ascwo-flex ascwo-justify-between ascwo-space-x-12">
                 <div class="ascwo-w-2/5 ascwo-space-y-2">
-                    <label>{{ __('Label', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                    <label>{{ __('Label', 'all-signs-customizer-for-woocommerce') }}</label>
                     <input v-model="noteType.label" type="text" :class="`ascwo-w-full ${emptyLabel?'ascwo-field-required':''}`" value=""/>
                 </div>
                 <div class="ascwo-w-2/5 ascwo-space-y-2">
-                    <label>{{ __('Description', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                    <label>{{ __('Description', 'all-signs-customizer-for-woocommerce') }}</label>
                     <input v-model="noteType.description" type="text" class="ascwo-w-full" value=""/>
                 </div>
             </div>
         </div>
         <div class="ascwo-bg-white ascwo-shadow-md ascwo-justify-center ascwo-items-center ascwo-px-4 ascwo-py-4">
-            <p class="ascwo-text-[14px] ascwo-font-bold">3- {{ __('Note Input', 'all-signs-customizer-for-woocommerce-pro') }}</p>
-            <p class="ascwo-text-[12px]">{{ __('Character limit (optional)', 'all-signs-customizer-for-woocommerce-pro') }}</p>
-            <p class="ascwo-text-[12px]">{{ __('Displays as a textarea field for customers to type any additional requirements.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+            <p class="ascwo-text-[14px] ascwo-font-bold">3- {{ __('Note Input', 'all-signs-customizer-for-woocommerce') }}</p>
+            <p class="ascwo-text-[12px]">{{ __('Character limit (optional)', 'all-signs-customizer-for-woocommerce') }}</p>
+            <p class="ascwo-text-[12px]">{{ __('Displays as a textarea field for customers to type any additional requirements.', 'all-signs-customizer-for-woocommerce') }}</p>
             <input v-model="noteType.noteLimitChar" type="number" class="ascwo-w-3/4" value=""/>
-            <p class="ascwo-text-[12px]">{{ __('The maximum number of text characters for notes.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+            <p class="ascwo-text-[12px]">{{ __('The maximum number of text characters for notes.', 'all-signs-customizer-for-woocommerce') }}</p>
         </div>
     </div>
     <div class="ascwo-bg-[#F8F9FB] ascwo-flex ascwo-space-x-4 ascwo-px-4 ascwo-py-4 ascwo-justify-end ascwo-items-end ascwo-sticky ascwo-z-[999] ascwo-bottom-0">
@@ -30,7 +30,7 @@
                     <path d="M1 12L5 8V11L17.17 11C17.3756 10.414 17.7586 9.90661 18.2657 9.54821C18.7729 9.18981 19.379 8.9982 20 9C20.7956 9 21.5587 9.31607 22.1213 9.87868C22.6839 10.4413 23 11.2044 23 12C23 12.7956 22.6839 13.5587 22.1213 14.1213C21.5587 14.6839 20.7956 15 20 15C18.69 15 17.58 14.17 17.17 13L5 13V16L1 12Z" fill="currentColor"/>
                 </svg>
 
-                <div class="ascwo-leading-none">{{ __('Back', 'all-signs-customizer-for-woocommerce-pro') }}</div>
+                <div class="ascwo-leading-none">{{ __('Back', 'all-signs-customizer-for-woocommerce') }}</div>
             </button>
         </div>
         <div :class="`${isLoading ? 'ascwo-bg-[#006c67]' : 'ascwo-bg-[#007a73]'} ascwo-rounded-[7px] ascwo-border ascwo-border-solid ascwo-border-[#006c67]`">
@@ -42,7 +42,7 @@
                     </svg>
                 </div>
 
-                <span class="ascwo-leading-none">{{props.action? __('Update', 'all-signs-customizer-for-woocommerce-pro') : __('Save', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                <span class="ascwo-leading-none">{{props.action? __('Update', 'all-signs-customizer-for-woocommerce') : __('Save', 'all-signs-customizer-for-woocommerce') }}</span>
             </button>
         </div>
     </div>

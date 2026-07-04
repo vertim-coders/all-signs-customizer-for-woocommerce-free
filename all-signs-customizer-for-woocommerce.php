@@ -2,13 +2,13 @@
 /**
  * Plugin bootstrap file.
  *
- * @package All_Signs_Customizer_For_WooCommerce_Pro
+ * @package All_Signs_Customizer_For_WooCommerce_Free
  */
 
 use ASCWO\ASCWO_Post_Type;
 
 /*
-Plugin Name: All Sign Customizer for WooCommerce Pro
+Plugin Name: All Sign Customizer for WooCommerce
 Plugin URI: https://signsdesigner.us/
 Description: Add a sign configurator to WooCommerce products so customers can design and order custom signs directly from your store.
 Requires Plugins: woocommerce
@@ -17,7 +17,7 @@ Author: Vertim Coders
 Author URI: https://vertimcoders.com
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: all-signs-customizer-for-woocommerce-pro
+Text Domain: all-signs-customizer-for-woocommerce
 Domain Path: /languages/
 */
 
@@ -122,7 +122,7 @@ final class ASCWO_All_Signs_Options_Pro
                 if (isset($actions['activate'])) {
                     unset($actions['activate']);
                 }
-                $actions['go_docs'] = sprintf('<a href="%s" style="%s">%s</a>', 'https://docs.signsdesigner.us/docs/ascwo-wp-documentation/', 'color:#35b747;font-weight:bold', __('Go Docs!', 'all-signs-customizer-for-woocommerce-pro'));
+                $actions['go_docs'] = sprintf('<a href="%s" style="%s">%s</a>', 'https://docs.signsdesigner.us/docs/ascwo-wp-documentation/', 'color:#35b747;font-weight:bold', __('Go Docs!', 'all-signs-customizer-for-woocommerce'));
             }
         }
         return $actions;
@@ -152,7 +152,7 @@ final class ASCWO_All_Signs_Options_Pro
     {
         if (plugin_basename(__FILE__) === $plugin_file) {
             if (!is_plugin_active('woocommerce/woocommerce.php')) {
-                $plugin_meta[] = '<span style="color: red;"><strong>' . esc_html__("This plugin requires WooCommerce to run. Please install or activate WooCommerce.", "all-signs-customizer-for-woocommerce-pro") . '</strong></span>';
+                $plugin_meta[] = '<span style="color: red;"><strong>' . esc_html__("This plugin requires WooCommerce to run. Please install or activate WooCommerce.", "all-signs-customizer-for-woocommerce") . '</strong></span>';
             }
         }
         return $plugin_meta;
@@ -280,12 +280,46 @@ final class ASCWO_All_Signs_Options_Pro
             }
         }
     }
+
+    /**
+     * Keep only the free-version defaults, preserving stored overrides for those entries.
+     *
+     * @param array $items    Stored items.
+     * @param array $defaults Default items.
+     * @param int   $limit    Maximum number of entries.
+     *
+     * @return array
+     */
+    private function ascwo_limit_global_items(array $items, array $defaults, int $limit)
+    {
+        $defaults = array_values(array_slice($defaults, 0, $limit));
+        $items = array_values(array_filter($items, 'is_array'));
+        $lookup = array();
+
+        foreach ($items as $item) {
+            if (isset($item['id']) && $item['id'] !== '') {
+                $lookup[(string) $item['id']] = $item;
+            }
+        }
+
+        $limited = array();
+        foreach ($defaults as $default) {
+            $default_id = isset($default['id']) ? (string) $default['id'] : '';
+            if ($default_id !== '' && isset($lookup[$default_id])) {
+                $limited[] = array_replace($default, $lookup[$default_id]);
+            } else {
+                $limited[] = $default;
+            }
+        }
+
+        return $limited;
+    }
     /**
      * Seed border defaults used by the global settings screens.
      */
     private function ascwo_define_borders()
     {
-        $borders = [
+        $borders = array_slice([
             [
                 'id' => 'border-none',
                 'name' => 'None',
@@ -310,42 +344,16 @@ final class ASCWO_All_Signs_Options_Pro
                 "icon" => ASCWO_ASSETS . '/images/borders/ic_border_old_world.svg',
                 'value' => 'old-world'
             ]
-        ];
-        $have_borders = get_option("ascwo_all_borders");
-        if ($have_borders === false) {
-            update_option("ascwo_all_borders", $borders);
-        } else {
-            for ($i = 0; $i < count($have_borders); $i++) {
-                $search_strings = ['all-signs-options-starter/', 'all-signs-customizer-for-woocommerce-pro/'];
-
-                $found = false;
-                foreach ($search_strings as $string) {
-                    if (strpos($have_borders[$i]["icon"], $string) !== false) {
-                        $found = true;
-                        break;
-                    }
-                }
-
-                if ($found) {
-                    $have_borders[$i]["icon"] = str_replace($search_strings, 'all-signs-customizer-for-woocommerce-pro/', $have_borders[$i]["icon"]);
-                    update_option("ascwo_all_borders", $have_borders);
-                }
-            }
-            $differenceCles = array_diff_key($borders, $have_borders);
-            if (count($differenceCles) > 0) {
-                foreach ($differenceCles as $key => $value) {
-                    $have_borders[$key] = $value;
-                }
-                update_option("ascwo_all_borders", $have_borders);
-            }
-        }
+        ], 0, 2);
+        $limited_borders = $this->ascwo_limit_global_items($borders, $borders, 2);
+        update_option("ascwo_all_borders", $this->ascwo_limit_global_items((array) get_option("ascwo_all_borders", array()), $limited_borders, 2));
     }
     /**
      * Seed shape defaults used by the global settings screens.
      */
     private function ascwo_define_shapes()
     {
-        $shapes = [
+        $shapes = array_slice([
             [
                 'id' => 'shape-oval',
                 'name' => 'Oval',
@@ -424,35 +432,9 @@ final class ASCWO_All_Signs_Options_Pro
                 "icon" => ASCWO_ASSETS . '/images/shapes/ic_shape_cut_to_shape.svg',
                 'value' => 'cut-to-shape'
             ]
-        ];
-        $have_shapes = get_option("ascwo_all_shapes");
-        if ($have_shapes === false) {
-            update_option("ascwo_all_shapes", $shapes);
-        } else {
-            for ($i = 0; $i < count($have_shapes); $i++) {
-                $search_strings = ['all-signs-options-starter/', 'all-signs-customizer-for-woocommerce-pro/'];
-
-                $found = false;
-                foreach ($search_strings as $string) {
-                    if (strpos($have_shapes[$i]["icon"], $string) !== false) {
-                        $found = true;
-                        break;
-                    }
-                }
-
-                if ($found) {
-                    $have_shapes[$i]["icon"] = str_replace($search_strings, 'all-signs-customizer-for-woocommerce-pro/', $have_shapes[$i]["icon"]);
-                    update_option("ascwo_all_shapes", $have_shapes);
-                }
-            }
-            $differenceCles = array_diff_key($shapes, $have_shapes);
-            if (count($differenceCles) > 0) {
-                foreach ($differenceCles as $key => $value) {
-                    $have_shapes[$key] = $value;
-                }
-                update_option("ascwo_all_shapes", $have_shapes);
-            }
-        }
+        ], 0, 4);
+        $limited_shapes = $this->ascwo_limit_global_items($shapes, $shapes, 4);
+        update_option("ascwo_all_shapes", $this->ascwo_limit_global_items((array) get_option("ascwo_all_shapes", array()), $limited_shapes, 4));
     }
 
     private function ascwo_add_shapes_if_not_exist()
@@ -493,7 +475,7 @@ final class ASCWO_All_Signs_Options_Pro
      */
     private function ascwo_define_fixingMethods()
     {
-        $fixingMethods = [
+        $fixingMethods = array_slice([
             [
                 'id' => 'fixing-none',
                 'name' => 'None',
@@ -654,26 +636,9 @@ final class ASCWO_All_Signs_Options_Pro
                 "popImg" => "",
                 'type' => 'roll-up'
             ],
-        ];
-        $have_fixingMethods = get_option("ascwo_all_fixingMethods");
-        if ($have_fixingMethods === false) {
-            update_option("ascwo_all_fixingMethods", $fixingMethods);
-        } else {
-            for ($i = 0; $i < count($have_fixingMethods); $i++) {
-                $search_strings = ['all-signs-options-starter/assets/images/', 'all-signs-customizer-for-woocommerce-pro/assets/images/'];
-
-                $have_fixingMethods[$i]["icon"] = str_replace($search_strings, "all-signs-customizer-for-woocommerce-pro/assets/images/", $have_fixingMethods[$i]["icon"]);
-
-            }
-            update_option("ascwo_all_fixingMethods", $have_fixingMethods);
-            $differenceCles = array_diff_key($fixingMethods, $have_fixingMethods);
-            if (count($differenceCles) > 0) {
-                foreach ($differenceCles as $key => $value) {
-                    $have_fixingMethods[$key] = $value;
-                }
-                update_option("ascwo_all_fixingMethods", $have_fixingMethods);
-            }
-        }
+        ], 0, 5);
+        $limited_fixingMethods = $this->ascwo_limit_global_items($fixingMethods, $fixingMethods, 5);
+        update_option("ascwo_all_fixingMethods", $this->ascwo_limit_global_items((array) get_option("ascwo_all_fixingMethods", array()), $limited_fixingMethods, 5));
     }
 
     /**
@@ -704,7 +669,6 @@ final class ASCWO_All_Signs_Options_Pro
 
             update_option('ASCWO_version', ASCWO_VERSION);
 
-            $this->ascwo_add_shapes_if_not_exist();
         }
     }
 
@@ -740,7 +704,6 @@ final class ASCWO_All_Signs_Options_Pro
         }
 
         require_once ASCWO_INCLUDES . '/Api.php';
-        require_once ASCWO_INCLUDES . '/update/updater.php';
         require_once ASCWO_INCLUDES . '/ascwo-post-type.php';
         require_once ASCWO_INCLUDES . '/ascwo-design.php';
         require_once ASCWO_INCLUDES . '/ascwo-product-config.php';
@@ -757,10 +720,8 @@ final class ASCWO_All_Signs_Options_Pro
     {
 
         add_action('init', array($this, 'init_classes'));
-        add_action('init', array($this, 'check_license_status'));
 
         (new ASCWO_Post_Type())->init_hooks();
-        (new ASCWO_Updater())->init_hooks();
         (new ASCWO_Product_Config())->init_hooks();
         (new ASCWO_Design())->init_hooks();
 
@@ -800,101 +761,7 @@ final class ASCWO_All_Signs_Options_Pro
      */
     public function localization_setup()
     {
-        load_plugin_textdomain("all-signs-customizer-for-woocommerce-pro", false, dirname(plugin_basename(__FILE__)) . '/languages/');
-    }
-
-    public function check_license_status()
-    {
-        if (!is_admin() && !wp_doing_cron()) {
-            return;
-        }
-
-        $last_check = (int) get_option('ascwo_last_license_check_timestamp', 0);
-        $current_time = time();
-
-        if (($current_time - $last_check) < (24 * HOUR_IN_SECONDS)) {
-            return;
-        }
-
-        update_option('ascwo_last_license_check_timestamp', $current_time);
-
-        $product = get_option("ascwo_product_pro", false);
-        if (empty($product)) {
-            delete_option('ascwo_license_data');
-            wp_cache_delete('ascwo_license_data', 'options');
-            return;
-        }
-
-        $health_option = get_option('ascwo_license_data', false);
-        $should_check_remote = false;
-
-        if (is_array($health_option) && isset($health_option['timestamp'])) {
-            $timestamp = (int) $health_option['timestamp'];
-            $secondsUntil = max(0, $timestamp - $current_time);
-
-            if (($health_option['seconds_until'] ?? null) !== $secondsUntil) {
-                update_option('ascwo_license_data', array(
-                    'timestamp' => $timestamp,
-                    'date' => $health_option['date'] ?? '',
-                    'seconds_until' => $secondsUntil,
-                    'last_checked' => $health_option['last_checked'] ?? current_time('mysql')
-                ));
-                wp_cache_delete('ascwo_license_data', 'options');
-            }
-
-            if ($timestamp <= 0 || $secondsUntil <= 0) {
-                $should_check_remote = true;
-            }
-        } else {
-            $should_check_remote = true;
-        }
-
-        if (!$should_check_remote) {
-            return;
-        }
-
-        $site_url = get_site_url();
-        if (!apply_filters('ascwo_remote_license_checks_enabled', true)) {
-            return;
-        }
-
-        $url = 'https://signsdesigner.us/wp-json/vlc/license/?lcde=' . rawurlencode((string) $product) . '&siteurl=' . rawurlencode((string) $site_url) . "&vertim=" . ASCWO_ID;
-        $args = array(
-            'timeout' => 10,
-            'user-agent' => 'ASCWO/' . ASCWO_VERSION . '; ' . home_url('/'),
-        );
-        $response = wp_remote_get($url, $args);
-
-        if (is_wp_error($response)) {
-            return;
-        }
-
-        $remote = json_decode(wp_remote_retrieve_body($response), true);
-        if (is_array($remote) && isset($remote["key"])) {
-            $expiryTimestamp = (int) $remote["key"];
-            $timezone = function_exists('wp_timezone') ? wp_timezone() : new \DateTimeZone('UTC');
-            $date = new \DateTime("@$expiryTimestamp");
-            $date->setTimezone($timezone);
-
-            $secondsUntil = max(0, $expiryTimestamp - time());
-            update_option('ascwo_license_data', array(
-                'timestamp' => $expiryTimestamp,
-                'date' => $date->format('Y-m-d H:i:s'),
-                'seconds_until' => $secondsUntil,
-                'last_checked' => current_time('mysql'),
-                'timezone' => function_exists('wp_timezone_string') ? wp_timezone_string() : get_option('timezone_string', 'UTC')
-            ));
-            wp_cache_delete('ascwo_license_data', 'options');
-        } else {
-            update_option('ascwo_license_data', array(
-                'timestamp' => 0,
-                'date' => '',
-                'seconds_until' => 0,
-                'last_checked' => current_time('mysql'),
-                'timezone' => function_exists('wp_timezone_string') ? wp_timezone_string() : get_option('timezone_string', 'UTC')
-            ));
-            wp_cache_delete('ascwo_license_data', 'options');
-        }
+        load_plugin_textdomain("all-signs-customizer-for-woocommerce", false, dirname(plugin_basename(__FILE__)) . '/languages/');
     }
 
     /**
@@ -935,12 +802,12 @@ final class ASCWO_All_Signs_Options_Pro
                         <img src="<?php echo esc_url(ASCWO_ASSETS . '/images/im_ascwo-icon2.png') ?>" alt="" width="250" />
                     </span>
                     <div>
-                        <h2><?php esc_html_e("Customization Page not found", "all-signs-customizer-for-woocommerce-pro") ?></h2>
+                        <h2><?php esc_html_e("Customization Page not found", "all-signs-customizer-for-woocommerce") ?></h2>
                         <p>
                             <?php
                             echo wp_kses_post(
                                 sprintf(
-                                    __('To display the configurator on a page without a short code, please select the page on which it should be displayed. Click <a href="%s">here</a>', 'all-signs-customizer-for-woocommerce-pro'),
+                                    __('To display the configurator on a page without a short code, please select the page on which it should be displayed. Click <a href="%s">here</a>', 'all-signs-customizer-for-woocommerce'),
                                     esc_url(admin_url('admin.php?page=ascwo#/global-settings/configuration-page'))
                                 )
                             );
@@ -958,12 +825,12 @@ final class ASCWO_All_Signs_Options_Pro
                             <img src="<?php echo esc_url(ASCWO_ASSETS . '/images/im_ascwo-icon2.png') ?>" alt="" width="250" />
                         </span>
                         <div>
-                            <h2><?php esc_html_e("Customization Page not found", "all-signs-customizer-for-woocommerce-pro") ?></h2>
+                            <h2><?php esc_html_e("Customization Page not found", "all-signs-customizer-for-woocommerce") ?></h2>
                             <p>
                                 <?php
                                 echo wp_kses_post(
                                     sprintf(
-                                        __('Configuration page is not defined for ASO plugin. Click <a href="%s">here</a>', 'all-signs-customizer-for-woocommerce-pro'),
+                                        __('Configuration page is not defined for ASO plugin. Click <a href="%s">here</a>', 'all-signs-customizer-for-woocommerce'),
                                         esc_url(admin_url('admin.php?page=ascwo#/global-settings/configuration-page'))
                                     )
                                 );
@@ -990,11 +857,11 @@ final class ASCWO_All_Signs_Options_Pro
                         <img src="<?php echo esc_url(ASCWO_ASSETS . '/images/im_ascwo-icon2.png') ?>" alt="" width="250" />
                     </span>
                     <div>
-                        <h2><?php esc_html_e("Welcome to All Sign Customizer for WooCommerce. Let's get you started !!!", "all-signs-customizer-for-woocommerce-pro") ?>
+                        <h2><?php esc_html_e("Welcome to All Sign Customizer for WooCommerce. Let's get you started !!!", "all-signs-customizer-for-woocommerce") ?>
                         </h2>
-                        <p><?php esc_html_e('To avoid performance problems we recommend at least version 3.4 of Woocommerce.', "all-signs-customizer-for-woocommerce-pro"); ?>
+                        <p><?php esc_html_e('To avoid performance problems we recommend at least version 3.4 of Woocommerce.', "all-signs-customizer-for-woocommerce"); ?>
                         </p>
-                        <p><?php $this->install_plugin_button('woocommerce', 'woocommerce.php', 'WooCommerce', array(), __('WooCommerce activated', "all-signs-customizer-for-woocommerce-pro"), __('Activate WooCommerce', "all-signs-customizer-for-woocommerce-pro"), __('Install WooCommerce', "all-signs-customizer-for-woocommerce-pro")); ?>
+                        <p><?php $this->install_plugin_button('woocommerce', 'woocommerce.php', 'WooCommerce', array(), __('WooCommerce activated', "all-signs-customizer-for-woocommerce"), __('Activate WooCommerce', "all-signs-customizer-for-woocommerce"), __('Install WooCommerce', "all-signs-customizer-for-woocommerce")); ?>
                         </p>
                     </div>
                 </div>
@@ -1021,7 +888,7 @@ final class ASCWO_All_Signs_Options_Pro
             if (is_plugin_active($plugin_slug . '/' . $plugin_file)) {
                 // The plugin is already active.
                 $button = array(
-                    'message' => esc_attr__('Activated', "all-signs-customizer-for-woocommerce-pro"),
+                    'message' => esc_attr__('Activated', "all-signs-customizer-for-woocommerce"),
                     'url' => '#',
                     'classes' => array('storefront-button', 'disabled'),
                 );
@@ -1034,7 +901,7 @@ final class ASCWO_All_Signs_Options_Pro
 
                 // The plugin exists but isn't activated yet.
                 $button = array(
-                    'message' => esc_attr__('Activate', "all-signs-customizer-for-woocommerce-pro"),
+                    'message' => esc_attr__('Activate', "all-signs-customizer-for-woocommerce"),
                     'url' => $url,
                     'classes' => array('activate-now'),
                 );
@@ -1058,9 +925,9 @@ final class ASCWO_All_Signs_Options_Pro
                         data-name="<?php echo esc_attr($plugin_name); ?>" data-slug="<?php echo esc_attr($plugin_slug); ?>"
                         aria-label="<?php echo esc_attr($button['message']); ?>"><?php echo esc_html($button['message']); ?></a>
                 </span>
-                <?php echo /* translators: conjunction of two alternative options user can choose (in missing plugin admin notice). Example: "Activate WooCommerce or learn more" */ esc_html__('or', "all-signs-customizer-for-woocommerce-pro"); ?>
+                <?php echo /* translators: conjunction of two alternative options user can choose (in missing plugin admin notice). Example: "Activate WooCommerce or learn more" */ esc_html__('or', "all-signs-customizer-for-woocommerce"); ?>
                 <a href="https://docs.signsdesigner.us"
-                    target="_blank"><?php esc_html_e('learn more', "all-signs-customizer-for-woocommerce-pro"); ?></a>
+                    target="_blank"><?php esc_html_e('learn more', "all-signs-customizer-for-woocommerce"); ?></a>
                 <?php
             }
         }
@@ -1116,10 +983,10 @@ final class ASCWO_All_Signs_Options_Pro
                         <img src='<?php echo esc_url(ASCWO_ASSETS . '/images/im_ascwo-icon2.png') ?>' alt="" width="250" />
                     </span>
                     <div>
-                        <h2><?php esc_html_e('We recommend setting your permalinks to "/%postname%/" to improve natural SEO.w! 🤘', "all-signs-customizer-for-woocommerce-pro") ?>
+                        <h2><?php esc_html_e('We recommend setting your permalinks to "/%postname%/" to improve natural SEO.w! 🤘', "all-signs-customizer-for-woocommerce") ?>
                         </h2>
-                        <p><?php esc_html_e('To do this, go to', "all-signs-customizer-for-woocommerce-pro") ?> <a
-                                href="<?php echo esc_url(admin_url('options-permalink.php')); ?>"><?php esc_html_e('Settings > Permanent links', 'all-signs-customizer-for-woocommerce-pro'); ?></a>
+                        <p><?php esc_html_e('To do this, go to', "all-signs-customizer-for-woocommerce") ?> <a
+                                href="<?php echo esc_url(admin_url('options-permalink.php')); ?>"><?php esc_html_e('Settings > Permanent links', 'all-signs-customizer-for-woocommerce'); ?></a>
                         </p>
                     </div>
                 </div>
@@ -1135,24 +1002,7 @@ final class ASCWO_All_Signs_Options_Pro
      */
     public function get_not_available_notice()
     {
-
-        if (class_exists('WooCommerce')) {
-            $ascwo_settings = get_option("ascwo_product_pro");
-
-            if (empty($ascwo_settings)) {
-                ?>
-                <div class="notice notice-warning ascwo-product-warning">
-                    <p>
-                        <b>All Sign Customizer for WooCommerce Pro: </b>
-                        <?php echo esc_html__('No license key found in the settings. Please click', 'all-signs-customizer-for-woocommerce-pro'); ?>
-                        <a href="<?php echo esc_url(admin_url('admin.php?page=ascwo#/global-settings/license')); ?>"><?php echo esc_html__('here', 'all-signs-customizer-for-woocommerce-pro'); ?>
-                        </a>
-                        <?php echo esc_html__('to define one.', 'all-signs-customizer-for-woocommerce-pro'); ?>
-                    </p>
-                </div>
-                <?php
-            }
-        }
+        return;
     }
 } // All_Signs_Options
 

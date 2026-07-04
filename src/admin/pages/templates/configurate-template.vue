@@ -20,7 +20,7 @@
             fill="currentColor"
           />
         </svg>
-        {{ __("Back", "all-signs-customizer-for-woocommerce-pro") }}
+        {{ __("Back", "all-signs-customizer-for-woocommerce") }}
       </button>
     </div>
     <div class="ascwo-flex ascwo-w-[100%]" id="ascwo-configurator-loader">

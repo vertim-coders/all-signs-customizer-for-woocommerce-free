@@ -5,7 +5,7 @@
       <RouterLink
         to="/configuration/create"
         class="ascwo-primary-action ascwo-dashboard-primary-action">
-        {{ __('Create configuration', 'all-signs-customizer-for-woocommerce-pro') }}
+        {{ __('Create configuration', 'all-signs-customizer-for-woocommerce') }}
       </RouterLink>
     </div>
 
@@ -16,9 +16,9 @@
           <InfoIcon class="ascwo-w-4 ascwo-h-4 ascwo-text-white" />
         </div>
         <div class="ascwo-dashboard-banner-text ascwo-text-[13px]">
-          {{ __('Click', 'all-signs-customizer-for-woocommerce-pro') }}
-          <a href="#" @click.prevent="openInstallConfigModal">{{ __('here to install configuration screen', 'all-signs-customizer-for-woocommerce-pro') }}</a>
-          {{ __(' in your online store', 'all-signs-customizer-for-woocommerce-pro') }}
+          {{ __('Click', 'all-signs-customizer-for-woocommerce') }}
+          <a href="#" @click.prevent="openInstallConfigModal">{{ __('here to install configuration screen', 'all-signs-customizer-for-woocommerce') }}</a>
+          {{ __(' in your online store', 'all-signs-customizer-for-woocommerce') }}
         </div>
       </div>
       <div class="ascwo-dashboard-card ascwo-dashboard-banner ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#e1e3e5] ascwo-p-4 ascwo-flex ascwo-items-center ascwo-shadow-sm">
@@ -26,9 +26,9 @@
           <InfoIcon class="ascwo-w-4 ascwo-h-4 ascwo-text-white" />
         </div>
         <div class="ascwo-dashboard-banner-text ascwo-text-[13px]">
-          {{ __('Click', 'all-signs-customizer-for-woocommerce-pro') }}
-          <a href="#" @click.prevent="openInstallConfigModal">{{ __('here to install configuration screen', 'all-signs-customizer-for-woocommerce-pro') }}</a>
-          {{ __(' to your online store', 'all-signs-customizer-for-woocommerce-pro') }}
+          {{ __('Click', 'all-signs-customizer-for-woocommerce') }}
+          <a href="#" @click.prevent="openInstallConfigModal">{{ __('here to install configuration screen', 'all-signs-customizer-for-woocommerce') }}</a>
+          {{ __(' to your online store', 'all-signs-customizer-for-woocommerce') }}
         </div>
       </div>
     </div>
@@ -48,7 +48,7 @@
         <div class="ascwo-dashboard-main-menu ascwo-bg-[#dce6e6] ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#c9dada] ascwo-overflow-hidden ascwo-shadow-sm">
           <div class="ascwo-px-6 ascwo-py-4 ascwo-flex ascwo-items-center ascwo-gap-2">
             <LayoutGridIcon class="ascwo-w-5 ascwo-h-5 ascwo-text-[#4a4a4a]" />
-            <span class="ascwo-text-[15px] ascwo-font-bold ascwo-text-[#1a1a1a]">{{ __('Main Menu', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+            <span class="ascwo-text-[15px] ascwo-font-bold ascwo-text-[#1a1a1a]">{{ __('Main Menu', 'all-signs-customizer-for-woocommerce') }}</span>
           </div>
           <div class="ascwo-px-6 ascwo-pb-6 ascwo-space-y-3">
             <RouterLink v-for="item in mainMenu" :key="item.to" :to="item.to"
@@ -71,32 +71,32 @@
         <div class="ascwo-dashboard-card ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#e1e3e5] ascwo-shadow-sm">
           <div class="ascwo-px-6 ascwo-py-4 ascwo-border-b ascwo-border-solid ascwo-border-[#f1f1f1] ascwo-flex ascwo-items-center ascwo-gap-2">
             <ExternalLinkIcon class="ascwo-w-4 ascwo-h-4 ascwo-text-[#4a4a4a]" />
-            <div class="ascwo-text-[15px] ascwo-font-bold ascwo-text-[#1a1a1a]">{{ __('Learning center', 'all-signs-customizer-for-woocommerce-pro') }}</div>
+            <div class="ascwo-text-[15px] ascwo-font-bold ascwo-text-[#1a1a1a]">{{ __('Learning center', 'all-signs-customizer-for-woocommerce') }}</div>
           </div>
           <div class="ascwo-p-6 ascwo-grid md:ascwo-grid-cols-2 ascwo-gap-6">
             <div class="ascwo-dashboard-inner-card ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#e1e3e5] ascwo-p-5">
-              <div class="ascwo-text-[14px] ascwo-font-bold ascwo-text-[#1a1a1a]">{{ __('Browse demo', 'all-signs-customizer-for-woocommerce-pro') }}</div>
+              <div class="ascwo-text-[14px] ascwo-font-bold ascwo-text-[#1a1a1a]">{{ __('Browse demo', 'all-signs-customizer-for-woocommerce') }}</div>
               <p class="ascwo-text-[13px] ascwo-text-[#616161] ascwo-mt-2">
-                {{ __('Explore live examples of sign lastconfigs in action.', 'all-signs-customizer-for-woocommerce-pro') }}
+                {{ __('Explore live examples of sign lastconfigs in action.', 'all-signs-customizer-for-woocommerce') }}
               </p>
               <div class="ascwo-mt-4 ascwo-flex ascwo-items-center ascwo-gap-3">
                 <a href="https://demos.signsdesigner.us/aso-live-demo/" target="_blank" rel="noopener"
                   class="ascwo-inline-flex ascwo-items-center ascwo-px-3 ascwo-py-1.5 ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c1c4c7] ascwo-rounded-md ascwo-text-[13px] ascwo-font-bold ascwo-text-[#1a1a1a] ascwo-no-underline hover:ascwo-bg-[#f6f6f7]">
-                  {{ __('View demos', 'all-signs-customizer-for-woocommerce-pro') }}
+                  {{ __('View demos', 'all-signs-customizer-for-woocommerce') }}
                 </a>
-                <span class="ascwo-text-[12px] ascwo-text-[#616161]">{{ __('The password to access to demo is: aso', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                <span class="ascwo-text-[12px] ascwo-text-[#616161]">{{ __('The password to access to demo is: aso', 'all-signs-customizer-for-woocommerce') }}</span>
               </div>
             </div>
 
             <div class="ascwo-dashboard-inner-card ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#e1e3e5] ascwo-p-5">
-              <div class="ascwo-text-[14px] ascwo-font-bold ascwo-text-[#1a1a1a]">{{ __('Documentation', 'all-signs-customizer-for-woocommerce-pro') }}</div>
+              <div class="ascwo-text-[14px] ascwo-font-bold ascwo-text-[#1a1a1a]">{{ __('Documentation', 'all-signs-customizer-for-woocommerce') }}</div>
               <p class="ascwo-text-[13px] ascwo-text-[#616161] ascwo-mt-2">
-                {{ __('Explore the app documentation', 'all-signs-customizer-for-woocommerce-pro') }}
+                {{ __('Explore the app documentation', 'all-signs-customizer-for-woocommerce') }}
               </p>
               <div class="ascwo-mt-4">
                 <a href="https://docs.signsdesigner.us/docs/aso-wp-documentation/" target="_blank" rel="noopener"
                   class="ascwo-inline-flex ascwo-items-center ascwo-px-3 ascwo-py-1.5 ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c1c4c7] ascwo-rounded-md ascwo-text-[13px] ascwo-font-bold ascwo-text-[#1a1a1a] ascwo-no-underline hover:ascwo-bg-[#f6f6f7]">
-                  {{ __('View docs', 'all-signs-customizer-for-woocommerce-pro') }}
+                  {{ __('View docs', 'all-signs-customizer-for-woocommerce') }}
                 </a>
               </div>
             </div>
@@ -109,16 +109,16 @@
         <!-- Recent Configurations -->
         <div class="ascwo-dashboard-card ascwo-dashboard-side-card">
           <div class="ascwo-dashboard-side-title">
-            {{ __('Recent Configurations', 'all-signs-customizer-for-woocommerce-pro') }}
+            {{ __('Recent Configurations', 'all-signs-customizer-for-woocommerce') }}
           </div>
           <div class="ascwo-dashboard-side-content">
             <div class="ascwo-text-[13px] ascwo-text-[#616161]" v-if="recentConfigs.length === 0">
-              {{ __('No recent configurations yet.', 'all-signs-customizer-for-woocommerce-pro') }}
+              {{ __('No recent configurations yet.', 'all-signs-customizer-for-woocommerce') }}
             </div>
             <ul v-else class="ascwo-space-y-3 ascwo-m-0 ascwo-p-0 ascwo-list-none">
               <li v-for="rc in recentConfigs" :key="rc.id" class="ascwo-flex ascwo-justify-between ascwo-items-center ascwo-w-full">
                 <div @click="goToMaterial(rc)" class="ascwo-cursor-pointer ascwo-w-full">
-                  <div class="ascwo-text-[11px] ascwo-text-[#616161] ascwo-mb-1">{{ __('ID', 'all-signs-customizer-for-woocommerce-pro') }} {{ rc.id }}</div>
+                  <div class="ascwo-text-[11px] ascwo-text-[#616161] ascwo-mb-1">{{ __('ID', 'all-signs-customizer-for-woocommerce') }} {{ rc.id }}</div>
                   <div class="ascwo-flex ascwo-justify-between ascwo-items-center">
                     <div class="ascwo-text-[13px] ascwo-font-bold ascwo-text-[#1a1a1a] ascwo-truncate ascwo-max-w-[150px]">{{ rc.name }}</div>
                     <div class="ascwo-ui-info-badge">{{ getProductFamilyLabel(rc) }}</div>
@@ -132,20 +132,20 @@
         <!-- Share Feedback -->
         <div class="ascwo-dashboard-card ascwo-dashboard-side-card">
           <div class="ascwo-dashboard-side-title">
-            {{ __('Share your feedback', 'all-signs-customizer-for-woocommerce-pro') }}
+            {{ __('Share your feedback', 'all-signs-customizer-for-woocommerce') }}
           </div>
           <div class="ascwo-dashboard-side-content ascwo-space-y-4">
-            <div class="ascwo-text-[13px] ascwo-text-[#616161]">{{ __('How would you describe your experience using Sign Customiser?', 'all-signs-customizer-for-woocommerce-pro') }}</div>
+            <div class="ascwo-text-[13px] ascwo-text-[#616161]">{{ __('How would you describe your experience using Sign Customiser?', 'all-signs-customizer-for-woocommerce') }}</div>
             <div class="ascwo-flex ascwo-gap-2">
               <a href="https://signsdesigner.us/all-signs-customizer-product/#section-review" target="_blank" rel="noopener"
                 class="ascwo-flex-1 ascwo-inline-flex ascwo-items-center ascwo-justify-center ascwo-gap-2 ascwo-px-3 ascwo-py-1.5 ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c1c4c7] ascwo-rounded-md ascwo-text-[13px] ascwo-font-bold ascwo-text-[#1a1a1a] ascwo-no-underline hover:ascwo-bg-[#f6f6f7]">
                 <ThumbsUpIcon class="ascwo-w-4 ascwo-h-4" />
-                {{ __('Yes', 'all-signs-customizer-for-woocommerce-pro') }}
+                {{ __('Yes', 'all-signs-customizer-for-woocommerce') }}
               </a>
               <a href="https://signsdesigner.us/contact" target="_blank" rel="noopener"
                 class="ascwo-flex-1 ascwo-inline-flex ascwo-items-center ascwo-justify-center ascwo-gap-2 ascwo-px-3 ascwo-py-1.5 ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c1c4c7] ascwo-rounded-md ascwo-text-[13px] ascwo-font-bold ascwo-text-[#1a1a1a] ascwo-no-underline hover:ascwo-bg-[#f6f6f7]">
                 <ThumbsDownIcon class="ascwo-w-4 ascwo-h-4" />
-                {{ __('No', 'all-signs-customizer-for-woocommerce-pro') }}
+                {{ __('No', 'all-signs-customizer-for-woocommerce') }}
               </a>
             </div>
           </div>
@@ -154,7 +154,7 @@
         <!-- Useful Links -->
         <div class="ascwo-dashboard-card ascwo-dashboard-side-card">
           <div class="ascwo-dashboard-side-title">
-            {{ __('Useful Links', 'all-signs-customizer-for-woocommerce-pro') }}
+            {{ __('Useful Links', 'all-signs-customizer-for-woocommerce') }}
           </div>
           <div class="ascwo-dashboard-side-content">
             <div class="ascwo-flex ascwo-flex-wrap ascwo-gap-2">
@@ -183,31 +183,31 @@
     <div class="ascwo-absolute ascwo-inset-0 ascwo-bg-black ascwo-bg-opacity-40" @click="closeInstallModals"></div>
     <div class="ascwo-relative ascwo-w-[min(820px,95vw)] ascwo-max-h-[calc(100vh-5.75rem)] ascwo-bg-white ascwo-rounded-2xl ascwo-shadow-xl ascwo-overflow-hidden ascwo-flex ascwo-flex-col">
       <div class="ascwo-flex ascwo-items-center ascwo-justify-between ascwo-px-5 ascwo-py-3 ascwo-border-b ascwo-border-[#e5e7eb]">
-        <div class="ascwo-text-[14px] ascwo-font-semibold">{{ __('Install the configurator screen', 'all-signs-customizer-for-woocommerce-pro') }}</div>
+        <div class="ascwo-text-[14px] ascwo-font-semibold">{{ __('Install the configurator screen', 'all-signs-customizer-for-woocommerce') }}</div>
         <button class="ascwo-p-1 ascwo-rounded-md hover:ascwo-bg-[#f3f4f6] ascwo-border-0 ascwo-bg-transparent ascwo-cursor-pointer" @click="closeInstallModals">✕</button>
       </div>
       <div class="ascwo-flex-1 ascwo-min-h-0 ascwo-p-5 ascwo-space-y-4 ascwo-overflow-y-auto">
-        <div class="ascwo-text-[13px] ascwo-text-gray-700">{{ __('You can display the configurator in 2 ways, and list configurable products with a shortcode:', 'all-signs-customizer-for-woocommerce-pro') }}</div>
+        <div class="ascwo-text-[13px] ascwo-text-gray-700">{{ __('You can display the configurator in 2 ways, and list configurable products with a shortcode:', 'all-signs-customizer-for-woocommerce') }}</div>
           <div class="ascwo-rounded-xl ascwo-border ascwo-border-[#e5e7eb] ascwo-bg-[#fafafa] ascwo-p-4">
-            <div class="ascwo-text-[13px] ascwo-font-semibold ascwo-text-[#303030]">{{ __('Option 1 — Buttons on product pages', 'all-signs-customizer-for-woocommerce-pro') }}</div>
+            <div class="ascwo-text-[13px] ascwo-font-semibold ascwo-text-[#303030]">{{ __('Option 1 — Buttons on product pages', 'all-signs-customizer-for-woocommerce') }}</div>
             <div class="ascwo-mt-2 ascwo-text-[13px] ascwo-text-gray-700 ascwo-space-y-1">
-              <span>{{ __('1) If the product is not attached to a configuration yet, attach it first.', 'all-signs-customizer-for-woocommerce-pro') }}</span>
-              <span>{{ __('2) On the storefront, customers will see the customization buttons on that product page.', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span>{{ __('1) If the product is not attached to a configuration yet, attach it first.', 'all-signs-customizer-for-woocommerce') }}</span>
+              <span>{{ __('2) On the storefront, customers will see the customization buttons on that product page.', 'all-signs-customizer-for-woocommerce') }}</span>
             </div>
           </div>
           <div class="ascwo-rounded-xl ascwo-border ascwo-border-[#e5e7eb] ascwo-bg-[#fafafa] ascwo-p-4">
-            <div class="ascwo-text-[13px] ascwo-font-semibold ascwo-text-[#303030]">{{ __('Option 2 — Shortcode', 'all-signs-customizer-for-woocommerce-pro') }}</div>
-            <div class="ascwo-mt-2 ascwo-text-[13px] ascwo-text-gray-700">{{ __('Add the shortcode inside any WordPress page:', 'all-signs-customizer-for-woocommerce-pro') }}</div>
+            <div class="ascwo-text-[13px] ascwo-font-semibold ascwo-text-[#303030]">{{ __('Option 2 — Shortcode', 'all-signs-customizer-for-woocommerce') }}</div>
+            <div class="ascwo-mt-2 ascwo-text-[13px] ascwo-text-gray-700">{{ __('Add the shortcode inside any WordPress page:', 'all-signs-customizer-for-woocommerce') }}</div>
             <div class="ascwo-mt-2 ascwo-rounded-lg ascwo-bg-white ascwo-border ascwo-border-[#e5e7eb] ascwo-p-3 ascwo-flex ascwo-items-start ascwo-justify-between">
               <code class="ascwo-text-[12px]">[ascwo-configurator productid="123"]</code>
               <button class="ascwo-px-2 ascwo-py-1 ascwo-text-[12px] ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c1c4c7] ascwo-rounded ascwo-cursor-pointer" @click="copySnippet('[ascwo-configurator productid=&quot;123&quot;]', 'cfg-basic')">
-                {{ copiedKey === 'cfg-basic' ? __('Copied', 'all-signs-customizer-for-woocommerce-pro') : __('Copy', 'all-signs-customizer-for-woocommerce-pro') }}
+                {{ copiedKey === 'cfg-basic' ? __('Copied', 'all-signs-customizer-for-woocommerce') : __('Copy', 'all-signs-customizer-for-woocommerce') }}
               </button>
             </div>
           </div>
       </div>
       <div class="ascwo-flex ascwo-justify-end ascwo-px-5 ascwo-py-3 ascwo-border-t">
-        <button class="ascwo-px-4 ascwo-py-1.5 ascwo-text-white ascwo-bg-[#006e52] ascwo-rounded-md ascwo-border-0 ascwo-cursor-pointer" @click="closeInstallModals">{{ __('Got it', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+        <button class="ascwo-px-4 ascwo-py-1.5 ascwo-text-white ascwo-bg-[#006e52] ascwo-rounded-md ascwo-border-0 ascwo-cursor-pointer" @click="closeInstallModals">{{ __('Got it', 'all-signs-customizer-for-woocommerce') }}</button>
       </div>
     </div>
   </div>
@@ -236,9 +236,9 @@ import {
 
 /** KPI values */
 const kpis = ref([
-  { key: 'items', label: __('Products Created', 'all-signs-customizer-for-woocommerce-pro'), value: 0 },
-  { key: 'rate', label: __('Conversion Rate', 'all-signs-customizer-for-woocommerce-pro'), value: '0%' },
-  { key: 'orders', label: __('Orders', 'all-signs-customizer-for-woocommerce-pro'), value: 0 },
+  { key: 'items', label: __('Products Created', 'all-signs-customizer-for-woocommerce'), value: 0 },
+  { key: 'rate', label: __('Conversion Rate', 'all-signs-customizer-for-woocommerce'), value: '0%' },
+  { key: 'orders', label: __('Orders', 'all-signs-customizer-for-woocommerce'), value: 0 },
 ])
 
 const kpisLoading = ref(false)
@@ -308,10 +308,10 @@ const getProductFamilySlug = (config) => {
 
 const getProductFamilyLabel = (config) => {
   const slug = getProductFamilySlug(config);
-  if (slug === 'banners') return __('Banners', 'all-signs-customizer-for-woocommerce-pro');
-  if (slug === 'stickers') return __('Stickers', 'all-signs-customizer-for-woocommerce-pro');
-  if (slug === 'signs-panels') return __('Signs & Panels', 'all-signs-customizer-for-woocommerce-pro');
-  return __('Not set', 'all-signs-customizer-for-woocommerce-pro');
+  if (slug === 'banners') return __('Banners', 'all-signs-customizer-for-woocommerce');
+  if (slug === 'stickers') return __('Stickers', 'all-signs-customizer-for-woocommerce');
+  if (slug === 'signs-panels') return __('Signs & Panels', 'all-signs-customizer-for-woocommerce');
+  return __('Not set', 'all-signs-customizer-for-woocommerce');
 };
 
 const openInstallConfigModal = () => { showInstallConfigModal.value = true }
@@ -361,9 +361,9 @@ onMounted(async () => {
     kpisLoading.value = true
     const stats = await api.getHomeStats()
     kpis.value = [
-      { key: 'items', label: __('Products Created', 'all-signs-customizer-for-woocommerce-pro'), value: stats?.configured_items ?? 0 },
-      { key: 'rate', label: __('Conversion Rate', 'all-signs-customizer-for-woocommerce-pro'), value: `${stats?.configured_rate ?? 0}%` },
-      { key: 'orders', label: __('Orders', 'all-signs-customizer-for-woocommerce-pro'), value: stats?.configured_orders ?? 0 },
+      { key: 'items', label: __('Products Created', 'all-signs-customizer-for-woocommerce'), value: stats?.configured_items ?? 0 },
+      { key: 'rate', label: __('Conversion Rate', 'all-signs-customizer-for-woocommerce'), value: `${stats?.configured_rate ?? 0}%` },
+      { key: 'orders', label: __('Orders', 'all-signs-customizer-for-woocommerce'), value: stats?.configured_orders ?? 0 },
     ]
   } finally {
     kpisLoading.value = false
@@ -378,29 +378,29 @@ onMounted(async () => {
 const mainMenu = [
   {
     to: '/configuration',
-    title: __('Configurations', 'all-signs-customizer-for-woocommerce-pro'),
-    desc: __('Manage your sign configurations', 'all-signs-customizer-for-woocommerce-pro'),
+    title: __('Configurations', 'all-signs-customizer-for-woocommerce'),
+    desc: __('Manage your sign configurations', 'all-signs-customizer-for-woocommerce'),
     icon: LayoutGridIcon
   },
   {
     to: '/settings/output',
-    title: __('Global Settings', 'all-signs-customizer-for-woocommerce-pro'),
-    desc: __('Manage your sign global setting', 'all-signs-customizer-for-woocommerce-pro'),
+    title: __('Global Settings', 'all-signs-customizer-for-woocommerce'),
+    desc: __('Manage your sign global setting', 'all-signs-customizer-for-woocommerce'),
     icon: SettingsIcon
   },
   {
     to: '/manage-font',
-    title: __('Library', 'all-signs-customizer-for-woocommerce-pro'),
-    desc: __('Manage your sign library', 'all-signs-customizer-for-woocommerce-pro'),
+    title: __('Library', 'all-signs-customizer-for-woocommerce'),
+    desc: __('Manage your sign library', 'all-signs-customizer-for-woocommerce'),
     icon: LibraryIcon
   }
 ]
 
 const usefulLinks = [
-  { text: __('Request a feature', 'all-signs-customizer-for-woocommerce-pro'), url: 'https://signsdesigner.us/all-signs-customizer-product/#section-review', icon: PlusCircleIcon },
-  { text: __('Learning Center', 'all-signs-customizer-for-woocommerce-pro'), url: 'https://docs.signsdesigner.us/docs/aso-wp-documentation/', icon: HelpCircleIcon },
-  { text: __('Pricing', 'all-signs-customizer-for-woocommerce-pro'), url: 'https://signsdesigner.us/pricing-all-signs-customizer/', icon: CreditCardIcon },
-  { text: __('Get in touch', 'all-signs-customizer-for-woocommerce-pro'), url: '', icon: MessageCircleIcon, action: 'chat' },
+  { text: __('Request a feature', 'all-signs-customizer-for-woocommerce'), url: 'https://signsdesigner.us/all-signs-customizer-product/#section-review', icon: PlusCircleIcon },
+  { text: __('Learning Center', 'all-signs-customizer-for-woocommerce'), url: 'https://docs.signsdesigner.us/docs/aso-wp-documentation/', icon: HelpCircleIcon },
+  { text: __('Pricing', 'all-signs-customizer-for-woocommerce'), url: 'https://signsdesigner.us/pricing-all-signs-customizer/', icon: CreditCardIcon },
+  { text: __('Get in touch', 'all-signs-customizer-for-woocommerce'), url: '', icon: MessageCircleIcon, action: 'chat' },
 ]
 </script>
 

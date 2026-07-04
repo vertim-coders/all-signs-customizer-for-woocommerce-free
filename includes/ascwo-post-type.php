@@ -24,17 +24,17 @@ class ASCWO_Post_Type
 	{
 
 		$labels = array(
-			'name' => _x('ASO Configurations', "all-signs-customizer-for-woocommerce-pro"),
-			'singular_name' => _x('ASO Configurations', "all-signs-customizer-for-woocommerce-pro"),
-			'add_new' => _x('New ASO configuration', "all-signs-customizer-for-woocommerce-pro"),
-			'add_new_item' => _x('New ASO configuration', "all-signs-customizer-for-woocommerce-pro"),
-			'edit_item' => _x('Edit ASO configuration', "all-signs-customizer-for-woocommerce-pro"),
-			'new_item' => _x('New ASO configuration', "all-signs-customizer-for-woocommerce-pro"),
-			'view_item' => _x('View ASO configuration', "all-signs-customizer-for-woocommerce-pro"),
-			'not_found' => _x('No ASO configuration found', "all-signs-customizer-for-woocommerce-pro"),
-			'not_found_in_trash' => _x('No ASO configuration in the trash', "all-signs-customizer-for-woocommerce-pro"),
-			'menu_name' => _x('All Sign Customizer for WooCommerce', "all-signs-customizer-for-woocommerce-pro"),
-			'all_items' => _x('ASO Configurations', "all-signs-customizer-for-woocommerce-pro"),
+			'name' => _x('ASO Configurations', "all-signs-customizer-for-woocommerce"),
+			'singular_name' => _x('ASO Configurations', "all-signs-customizer-for-woocommerce"),
+			'add_new' => _x('New ASO configuration', "all-signs-customizer-for-woocommerce"),
+			'add_new_item' => _x('New ASO configuration', "all-signs-customizer-for-woocommerce"),
+			'edit_item' => _x('Edit ASO configuration', "all-signs-customizer-for-woocommerce"),
+			'new_item' => _x('New ASO configuration', "all-signs-customizer-for-woocommerce"),
+			'view_item' => _x('View ASO configuration', "all-signs-customizer-for-woocommerce"),
+			'not_found' => _x('No ASO configuration found', "all-signs-customizer-for-woocommerce"),
+			'not_found_in_trash' => _x('No ASO configuration in the trash', "all-signs-customizer-for-woocommerce"),
+			'menu_name' => _x('All Sign Customizer for WooCommerce', "all-signs-customizer-for-woocommerce"),
+			'all_items' => _x('ASO Configurations', "all-signs-customizer-for-woocommerce"),
 		);
 
 		$args = array(
@@ -60,12 +60,12 @@ class ASCWO_Post_Type
 	public function register_ascwo_request_quote_post_type()
 	{
 		$labels = array(
-			'name' => _x('ASO Request Quotes', "all-signs-customizer-for-woocommerce-pro"),
-			'singular_name' => _x('ASO Request Quote', "all-signs-customizer-for-woocommerce-pro"),
-			'add_new_item' => _x('New ASO request quote', "all-signs-customizer-for-woocommerce-pro"),
-			'edit_item' => _x('Edit ASO request quote', "all-signs-customizer-for-woocommerce-pro"),
-			'not_found' => _x('No ASO request quote found', "all-signs-customizer-for-woocommerce-pro"),
-			'menu_name' => _x('ASO Request Quotes', "all-signs-customizer-for-woocommerce-pro"),
+			'name' => _x('ASO Request Quotes', "all-signs-customizer-for-woocommerce"),
+			'singular_name' => _x('ASO Request Quote', "all-signs-customizer-for-woocommerce"),
+			'add_new_item' => _x('New ASO request quote', "all-signs-customizer-for-woocommerce"),
+			'edit_item' => _x('Edit ASO request quote', "all-signs-customizer-for-woocommerce"),
+			'not_found' => _x('No ASO request quote found', "all-signs-customizer-for-woocommerce"),
+			'menu_name' => _x('ASO Request Quotes', "all-signs-customizer-for-woocommerce"),
 		);
 
 		$args = array(
@@ -172,13 +172,13 @@ class ASCWO_Post_Type
 				?>
 				<div class="ascwo-config-page-error">
 					<div class="ascwo-config-page-error-title">
-						<?php echo esc_html__("All Sign Customizer for WooCommerce Warning", "all-signs-customizer-for-woocommerce-pro") ?>
+						<?php echo esc_html__("All Sign Customizer for WooCommerce Warning", "all-signs-customizer-for-woocommerce") ?>
 					</div>
 					<div>
 						<p>
 							<?php echo esc_html__("You are trying to access the personalization page without the personalized button of a product to be personalized. 
 						This page should only be accessible using one of the customization buttons. 
-						If you don't like this procedure, don't define this page as a personalization page and use the short code to display the configurator.", "all-signs-customizer-for-woocommerce-pro"); ?>
+						If you don't like this procedure, don't define this page as a personalization page and use the short code to display the configurator.", "all-signs-customizer-for-woocommerce"); ?>
 						</p>
 					</div>
 				</div>

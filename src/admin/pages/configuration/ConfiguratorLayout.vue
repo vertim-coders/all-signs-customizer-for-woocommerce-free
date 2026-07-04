@@ -8,8 +8,8 @@
         v-if="sidebarCollapsed"
         type="button"
         class="ascwo-sidebar-open-button"
-        :aria-label="__('Open configuration sidebar', 'all-signs-customizer-for-woocommerce-pro')"
-        :title="__('Open configuration sidebar', 'all-signs-customizer-for-woocommerce-pro')"
+        :aria-label="__('Open configuration sidebar', 'all-signs-customizer-for-woocommerce')"
+        :title="__('Open configuration sidebar', 'all-signs-customizer-for-woocommerce')"
         @click="toggleDesignsSidebar"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
@@ -26,7 +26,7 @@
               @click="goToConfigList"
               type="button"
               style="display: inline-flex; align-items: center; justify-content: center; cursor: pointer; width: 30px; height: 30px; border-radius: 8px; border: 1px solid #d1d5db; background: #fff; color: #111827; text-decoration: none;"
-              :title="__('Back to configurations', 'all-signs-customizer-for-woocommerce-pro')"
+              :title="__('Back to configurations', 'all-signs-customizer-for-woocommerce')"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M19 12H5M12 19l-7-7 7-7"/>
@@ -35,7 +35,7 @@
             <button
               @click="goToPreview"
               type="button"
-              :title="__('Preview configuration', 'all-signs-customizer-for-woocommerce-pro')"
+              :title="__('Preview configuration', 'all-signs-customizer-for-woocommerce')"
               style="display: inline-flex; align-items: center; justify-content: center; cursor: pointer; width: 30px; height: 30px; border-radius: 8px; border: 1px solid #d1d5db; background: #fff; color: #111827; text-decoration: none;"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -60,12 +60,12 @@
           <!-- Search field -->
           <div class="ascwo-configurator-search">
             <h3 class="ascwo-configurator-menu-title">
-              {{ __('Configurator Menu', 'all-signs-customizer-for-woocommerce-pro') }}
+              {{ __('Configurator Menu', 'all-signs-customizer-for-woocommerce') }}
             </h3>
             <input
               v-model="searchMenu"
               type="text"
-              :placeholder="__('Search configurator items...', 'all-signs-customizer-for-woocommerce-pro')"
+              :placeholder="__('Search configurator items...', 'all-signs-customizer-for-woocommerce')"
               class="ascwo-ui-input"
             />
           </div>
@@ -164,8 +164,8 @@
         v-if="isDesignsView && !sidebarCollapsed"
         type="button"
         class="ascwo-sidebar-collapse-button"
-        :aria-label="__('Collapse configuration sidebar', 'all-signs-customizer-for-woocommerce-pro')"
-        :title="__('Collapse configuration sidebar', 'all-signs-customizer-for-woocommerce-pro')"
+        :aria-label="__('Collapse configuration sidebar', 'all-signs-customizer-for-woocommerce')"
+        :title="__('Collapse configuration sidebar', 'all-signs-customizer-for-woocommerce')"
         @click="toggleDesignsSidebar"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
@@ -204,9 +204,7 @@ const configId = computed(() => route.params.configId);
 // Material type label helper
 const materialTypeLabel = computed(() => {
   const type = configData.value?.materialType;
-  if (type === 'advance' || type === 'advanced') return __('Preset Components', 'all-signs-customizer-for-woocommerce-pro');
-  if (type === 'layer' || type === 'layers') return __('Layered Setup', 'all-signs-customizer-for-woocommerce-pro');
-  return __('Direct Options', 'all-signs-customizer-for-woocommerce-pro');
+  return __('Direct Options', 'all-signs-customizer-for-woocommerce');
 });
 
 // Product type label helper
@@ -218,41 +216,26 @@ const productTypeLabel = computed(() => {
     type === 'signs-and-panels' ||
     type === 'signs & panels' ||
     type === 'signboard'
-  ) return __('Signs & Panels', 'all-signs-customizer-for-woocommerce-pro');
-  if (type === 'banners' || type === 'banner') return __('Banners', 'all-signs-customizer-for-woocommerce-pro');
-  if (type === 'stickers' || type === 'sticker') return __('Stickers', 'all-signs-customizer-for-woocommerce-pro');
-  if (type === 'lettering' || type === 'letter-signs') return __('Letter signs', 'all-signs-customizer-for-woocommerce-pro');
-  if (type === 'lightbox') return __('Lightbox', 'all-signs-customizer-for-woocommerce-pro');
-  if (type === 'neon') return __('Neon', 'all-signs-customizer-for-woocommerce-pro');
-  if (type === 'channel') return __('Channel', 'all-signs-customizer-for-woocommerce-pro');
+  ) return __('Signs & Panels', 'all-signs-customizer-for-woocommerce');
+  if (type === 'banners' || type === 'banner') return __('Banners', 'all-signs-customizer-for-woocommerce');
+  if (type === 'stickers' || type === 'sticker') return __('Stickers', 'all-signs-customizer-for-woocommerce');
+  if (type === 'lettering' || type === 'letter-signs') return __('Letter signs', 'all-signs-customizer-for-woocommerce');
+  if (type === 'lightbox') return __('Lightbox', 'all-signs-customizer-for-woocommerce');
+  if (type === 'neon') return __('Neon', 'all-signs-customizer-for-woocommerce');
+  if (type === 'channel') return __('Channel', 'all-signs-customizer-for-woocommerce');
   // Return the formatted original value if no match
   const raw = configData.value?.productType || '';
   return raw ? raw.charAt(0).toUpperCase() + raw.slice(1).replace(/-/g, ' ') : '';
 });
 
 const materialType = computed(() => configData.value?.materialType || '');
-const isDesignsView = computed(() => route.path.includes(`/configuration/${configId.value}/required-options/components`));
+const isDesignsView = computed(() => route.path.includes(`/configuration/${configId.value}/additional-options/additional-components`));
 const sidebarCollapsed = computed(() => isDesignsView.value && designsSidebarCollapsed.value);
 
 // Config name
 const configName = computed(() => {
-  return adminConfigName.value || __('Loading...', 'all-signs-customizer-for-woocommerce-pro');
+  return adminConfigName.value || __('Loading...', 'all-signs-customizer-for-woocommerce');
 });
-
-// Check if has advanced materials (NCPC-like)
-const hasAdvancedMaterials = computed(() => {
-  const type = configData.value?.materialType;
-  return type === 'advance' || type === 'advanced' || type === 'layers';
-});
-
-const redirectAdvancedDefaultRoute = () => {
-  if (!hasAdvancedMaterials.value || !configId.value) return;
-  const isLegacyDefaultRoute = route.name === 'sizes'
-    || route.path === `/configuration/${configId.value}`
-    || route.path === `/configuration/${configId.value}/required-options`;
-  if (!isLegacyDefaultRoute) return;
-  router.replace({ name: 'required-components', params: { configId: configId.value } });
-};
 
 // Load config data
 const loadConfig = async () => {
@@ -263,7 +246,6 @@ const loadConfig = async () => {
     const data = await api.getConfig(configId.value);
     configData.value = data;
     await loadConfigName();
-    redirectAdvancedDefaultRoute();
   } catch (error) {
     console.error('Failed to load config:', error);
   }
@@ -294,7 +276,6 @@ const icons = {
   text: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>',
   image: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>',
   signpart: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="12" y1="2" x2="12" y2="22"/></svg>',
-  components: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
   inputs: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>',
   cliparts: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8" cy="8" r="2"/><path d="M21 15l-5-5L5 21"/></svg>',
   general: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>',
@@ -310,57 +291,41 @@ const groups = computed(() => {
   const id = configId.value;
   const basePath = `/configuration/${id}`;
 
-  const coreItems = hasAdvancedMaterials.value
-    ? [
-        { label: __('Fonts', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/fonts`, icon: icons.fonts },
-        { label: __('Designs', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/components`, icon: icons.components },
-        { label: __('Pricings', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/pricings`, icon: icons.pricing },
-        { label: __('Materials', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/materials`, icon: icons.materials },
-      ]
-    : [
-        { label: __('Sizes', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/sizes`, icon: icons.sizes },
-        { label: __('Pricings', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/pricings`, icon: icons.pricing },
-        { label: __('Fonts', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/fonts`, icon: icons.fonts },
-        { label: __('Colors', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/colors`, icon: icons.colors },
-        { label: __('Lighting', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/lightings`, icon: icons.lighting },
-        { label: __('Fixing Methods', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/fixing-methods`, icon: icons.fixing },
-        { label: __('Shapes', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/shapes`, icon: icons.shapes },
-        { label: __('Materials', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/materials`, icon: icons.materials },
-        { label: __('Borders', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/required-options/borders`, icon: icons.borders },
-      ];
-
-  const editorItems = [
-    { label: __('Text Setting', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/design-setup/text`, icon: icons.text },
-    { label: __('Image Setup', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/design-setup/images`, icon: icons.image },
-    { label: __('Sign Part', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/design-setup/sign-part`, icon: icons.signpart },
+  const coreItems = [
+    { label: __('Sizes', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/required-options/sizes`, icon: icons.sizes },
+    { label: __('Pricings', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/required-options/pricings`, icon: icons.pricing },
+    { label: __('Fonts', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/required-options/fonts`, icon: icons.fonts },
+    { label: __('Colors', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/required-options/colors`, icon: icons.colors },
+    { label: __('Lighting', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/required-options/lightings`, icon: icons.lighting },
+    { label: __('Fixing Methods', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/required-options/fixing-methods`, icon: icons.fixing },
+    { label: __('Shapes', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/required-options/shapes`, icon: icons.shapes },
+    { label: __('Materials', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/required-options/materials`, icon: icons.materials },
+    { label: __('Borders', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/required-options/borders`, icon: icons.borders },
   ];
 
-  const additionalItems = [];
-  if (!hasAdvancedMaterials.value) {
-    additionalItems.push({
-      label: __('Components', 'all-signs-customizer-for-woocommerce-pro'),
-      path: `${basePath}/additional-options/additional-components`,
-      icon: icons.components,
-    });
-  }
-  additionalItems.push({
-    label: __('Inputs', 'all-signs-customizer-for-woocommerce-pro'),
-    path: `${basePath}/additional-options/inputs`,
-    icon: icons.inputs,
-  });
+  const editorItems = [
+    { label: __('Text Setting', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/design-setup/text`, icon: icons.text },
+    { label: __('Image Setup', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/design-setup/images`, icon: icons.image },
+    { label: __('Sign Part', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/design-setup/sign-part`, icon: icons.signpart },
+  ];
+
+  const additionalItems = [
+    { label: __('Inputs', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/additional-options/inputs`, icon: icons.inputs },
+    { label: __('Additional Components', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/additional-options/additional-components`, icon: icons.inputs },
+  ];
 
   const settingsItems = [
-    { label: __('General', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/settings/general`, icon: icons.general },
-    { label: __('Customizer Setup', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/settings/customizer-sign`, icon: icons.customizer },
-    { label: __('Language & Images', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/settings/language-text`, icon: icons.language },
-    { label: __('Theme & Color', 'all-signs-customizer-for-woocommerce-pro'), path: `${basePath}/settings/theme-color`, icon: icons.theme },
+    { label: __('General', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/settings/general`, icon: icons.general },
+    { label: __('Customizer Setup', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/settings/customizer-sign`, icon: icons.customizer },
+    { label: __('Language & Images', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/settings/language-text`, icon: icons.language },
+    { label: __('Theme & Color', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/settings/theme-color`, icon: icons.theme },
   ];
 
   return [
-    { title: __('Core Setup', 'all-signs-customizer-for-woocommerce-pro'), items: coreItems },
-    { title: __('Editor Setup', 'all-signs-customizer-for-woocommerce-pro'), items: editorItems },
-    { title: __('Additional Options', 'all-signs-customizer-for-woocommerce-pro'), items: additionalItems },
-    { title: __('Settings', 'all-signs-customizer-for-woocommerce-pro'), items: settingsItems },
+    { title: __('Core Setup', 'all-signs-customizer-for-woocommerce'), items: coreItems },
+    { title: __('Editor Setup', 'all-signs-customizer-for-woocommerce'), items: editorItems },
+    { title: __('Additional Options', 'all-signs-customizer-for-woocommerce'), items: additionalItems },
+    { title: __('Settings', 'all-signs-customizer-for-woocommerce'), items: settingsItems },
   ];
 });
 
@@ -382,11 +347,11 @@ const filteredGroups = computed(() => {
 
 // Separate Settings from main groups
 const filteredMainGroups = computed(() =>
-  filteredGroups.value.filter(g => g.title !== __('Settings', 'all-signs-customizer-for-woocommerce-pro'))
+  filteredGroups.value.filter(g => g.title !== __('Settings', 'all-signs-customizer-for-woocommerce'))
 );
 
 const filteredSettingsGroup = computed(() =>
-  filteredGroups.value.find(g => g.title === __('Settings', 'all-signs-customizer-for-woocommerce-pro')) || null
+  filteredGroups.value.find(g => g.title === __('Settings', 'all-signs-customizer-for-woocommerce')) || null
 );
 
 // Active item detection based on current route path
@@ -402,7 +367,7 @@ const activeGroupTitle = computed(() => {
       return route.path === item.path || route.path.startsWith(item.path + '/');
     })
   );
-  return activeGroup?.title || __('Core Setup', 'all-signs-customizer-for-woocommerce-pro');
+  return activeGroup?.title || __('Core Setup', 'all-signs-customizer-for-woocommerce');
 });
 
 // Auto-expand active group
@@ -505,7 +470,6 @@ watch(configId, () => {
 });
 
 watch(() => route.path, syncDesignsSidebarState);
-watch(() => route.name, redirectAdvancedDefaultRoute);
 </script>
 
 <style scoped>

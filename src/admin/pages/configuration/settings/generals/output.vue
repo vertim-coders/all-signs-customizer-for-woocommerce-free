@@ -2,24 +2,24 @@
     <div>
         <div class="ascwo-bg-[#F8F9FB] ascwo-px-8 ascwo-py-4 ascwo-translate-y-10">
             <div class="ascwo-flex ascwo-flex-col ascwo-space-y-3">
-                <label class="ascwo-text-[14px] ascwo-font-bold">{{ __("Output files format", "all-signs-customizer-for-woocommerce-pro") }}</label>
-                <span class="ascwo-pt-4 ascwo-text-[11px]">{{ __("What is your desired output files format ?", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                <label class="ascwo-text-[14px] ascwo-font-bold">{{ __("Output files format", "all-signs-customizer-for-woocommerce") }}</label>
+                <span class="ascwo-pt-4 ascwo-text-[11px]">{{ __("What is your desired output files format ?", "all-signs-customizer-for-woocommerce") }}</span>
                 <select v-model="Output.filesFormat">
-                    <option value="png">{{ __("PNG", "all-signs-customizer-for-woocommerce-pro") }}</option>
-                    <option value="jpeg">{{ __("JPEG", "all-signs-customizer-for-woocommerce-pro") }}</option>
-                    <option value="svg">{{ __("SVG", "all-signs-customizer-for-woocommerce-pro") }}</option>
-                    <option value="png+jpeg">{{ __("PNG + JPEG", "all-signs-customizer-for-woocommerce-pro") }}</option>
-                    <option value="png+svg">{{ __("PNG + SVG", "all-signs-customizer-for-woocommerce-pro") }}</option>
-                    <option value="jpeg+svg">{{ __("JPEG + SVG", "all-signs-customizer-for-woocommerce-pro") }}</option>
+                    <option value="png">{{ __("PNG", "all-signs-customizer-for-woocommerce") }}</option>
+                    <option value="jpeg">{{ __("JPEG", "all-signs-customizer-for-woocommerce") }}</option>
+                    <option value="svg">{{ __("SVG", "all-signs-customizer-for-woocommerce") }}</option>
+                    <option value="png+jpeg">{{ __("PNG + JPEG", "all-signs-customizer-for-woocommerce") }}</option>
+                    <option value="png+svg">{{ __("PNG + SVG", "all-signs-customizer-for-woocommerce") }}</option>
+                    <option value="jpeg+svg">{{ __("JPEG + SVG", "all-signs-customizer-for-woocommerce") }}</option>
                 </select>
             </div>
             <div class="ascwo-flex ascwo-flex-col ascwo-space-y-3 ascwo-pt-4">
-                <label class="ascwo-text-[14px] ascwo-font-bold">{{ __("Watermark", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                <label class="ascwo-text-[14px] ascwo-font-bold">{{ __("Watermark", "all-signs-customizer-for-woocommerce") }}</label>
                 <div class=" ascwo-flex ascwo-flex-col ascwo-space-y-2 ascwo-text-[12px]">
-                    <label for="" class="ascwo-font-normal">{{ __("Upload Image", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <label for="" class="ascwo-font-normal">{{ __("Upload Image", "all-signs-customizer-for-woocommerce") }}</label>
                     <div class="ascwo-flex ascwo-flex-col ascwo-space-y-2 ascwo-w-full ascwo-pt-2 ascwo-w-1/2">
                         <div class="ascwo-flex ascwo-space-x-2">
-                            <button @click="selectWaterMarkImage" class="ascwo-bg-[#016464] ascwo-border-none ascwo-w-fit ascwo-h-fit ascwo-p-4 ascwo-rounded ascwo-px-4 ascwo-text-white ascwo-opacity-90 hover:ascwo-opacity-100 ascwo-text-[10px] ascwo-cursor-pointer">{{ __("upload PopupImg", "all-signs-customizer-for-woocommerce-pro") }}</button>
+                            <button @click="selectWaterMarkImage" class="ascwo-bg-[#016464] ascwo-border-none ascwo-w-fit ascwo-h-fit ascwo-p-4 ascwo-rounded ascwo-px-4 ascwo-text-white ascwo-opacity-90 hover:ascwo-opacity-100 ascwo-text-[10px] ascwo-cursor-pointer">{{ __("upload PopupImg", "all-signs-customizer-for-woocommerce") }}</button>
                             <div :class="`ascwo-relative ascwo-w-[82px] ascwo-h-[49px] ascwo-rounded-md ascwo-overflow-hidden`">
                                 <img v-if="Output.waterMark != ''" :src="Output.waterMark" alt="" class="ascwo-absolute ascwo-w-full ascwo-h-full">
                                 <button v-if="Output.waterMark != ''" @click="()=>{Output.waterMark = ''}" :class="`ascwo-bg-[#016464] ascwo-absolute ascwo-bottom-0 ascwo-right-0 ascwo-text-white ascwo-p-1 ascwo-rounded-tl-lg ascwo-border-none`">
@@ -34,7 +34,7 @@
             </div>
             <div class="ascwo-flex ascwo-flex-col ascwo-space-y-3 ascwo-py-10">
                 <div class="ascwo-flex ascwo-space-x-2">
-                    <label class="ascwo-text-[16px] ascwo-font-semibold">{{ __("Zip output files", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <label class="ascwo-text-[16px] ascwo-font-semibold">{{ __("Zip output files", "all-signs-customizer-for-woocommerce") }}</label>
                     <div class="ascwo-flex ascwo-items-center">
                         <label for="toggleZip" class="ascwo-relative ascwo-inline-flex ascwo-items-center ascwo-cursor-pointer ascwo-border-[1px] ascwo-border-solid ascwo-border-black ascwo-rounded-full">
                             <input id="toggleZip" type="checkbox" name="toggleZip" class="ascwo-sr-only ascwo-peer" v-model="Output.zipOutputFiles.active">
@@ -43,14 +43,14 @@
                     </div>
                 </div>
                 <div v-if="Output.zipOutputFiles.active" class="ascwo-flex ascwo-flex-col ascwo-space-y-3">
-                    <span>{{ __("Zip output folder prefix", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                    <span>{{ __("Zip output folder prefix", "all-signs-customizer-for-woocommerce") }}</span>
                     <input type="text" v-model="Output.zipOutputFiles.zipOutFolderPrefix" class="ascwo-full"/>
                 </div>
                 
             </div>
             <div class="ascwo-space-y-3">
                 <div class="ascwo-flex ascwo-space-x-3">
-                    <label class="ascwo-text-[16px] ascwo-font-semibold">{{ __("Design composition", "all-signs-customizer-for-woocommerce-pro") }}</label>
+                    <label class="ascwo-text-[16px] ascwo-font-semibold">{{ __("Design composition", "all-signs-customizer-for-woocommerce") }}</label>
                     <div class="ascwo-flex ascwo-items-center ascwo-translate-y-0.5">
                         <label for="toggleDesign" class="ascwo-relative ascwo-inline-flex ascwo-items-center ascwo-cursor-pointer ascwo-border-[1px] ascwo-border-solid ascwo-border-black ascwo-rounded-full">
                             <input id="toggleDesign" type="checkbox" name="toggleDesign" class="ascwo-sr-only ascwo-peer" v-model="Output.designComposition">
@@ -60,7 +60,7 @@
                     
                 </div>
                 <div class="ascwo-text-[11px] ascwo-text-[#444444]">
-                    {{ __("This option allows you to display or not design composition in the order", "all-signs-customizer-for-woocommerce-pro") }}
+                    {{ __("This option allows you to display or not design composition in the order", "all-signs-customizer-for-woocommerce") }}
                 </div>
                 
             </div>
@@ -70,7 +70,7 @@
         <div class="ascwo-bg-[#016464] ascwo-rounded">
             <button :disabled="isLoading" @click="updateOutputSettings" class="ascwo-rounded ascwo-flex ascwo-bg-transparent ascwo-w-fit ascwo-space-x-2 ascwo-h-fit ascwo-text-white ascwo-px-12 ascwo-p-2.5 ascwo-border-none ascwo-opacity-90 hover:ascwo-opacity-100 hover:ascwo-border-none hover:ascwo-text-white hover:ascwo-bg-[#016464] ascwo-cursor-pointerascwo-flex ascwo-bg-transparent ascwo-w-fit ascwo-space-x-2 ascwo-h-fit ascwo-text-white ascwo-px-12 ascwo-p-2.5 ascwo-border-none ascwo-opacity-90 hover:ascwo-opacity-100 hover:ascwo-border-none hover:ascwo-text-white hover:ascwo-bg-[#016464] ascwo-cursor-pointer">
                 <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="ascwo-w-5 ascwo-w-5" v-if="isLoading" />
-                <div class="ascwo-font-semibold ascwo-text-[16px]">{{ __("Save", "all-signs-customizer-for-woocommerce-pro") }}</div>
+                <div class="ascwo-font-semibold ascwo-text-[16px]">{{ __("Save", "all-signs-customizer-for-woocommerce") }}</div>
             </button>
         </div>
     </div>
@@ -123,9 +123,9 @@ const selectWaterMarkImage = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: __("Select WaterMark Image","all-signs-customizer-for-woocommerce-pro"),
+            title: __("Select WaterMark Image","all-signs-customizer-for-woocommerce"),
             button: {
-                text: __("Select Image","all-signs-customizer-for-woocommerce-pro")
+                text: __("Select Image","all-signs-customizer-for-woocommerce")
             },
             multiple: false
         }

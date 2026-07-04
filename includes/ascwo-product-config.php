@@ -101,7 +101,7 @@ class ASCWO_Product_Config
 		?>
 		<div class="ascwo_config_data show_if_simple">
 			<?php
-			$this->display_ascwo_config_on_WC_product_config($id, $configs_ids, __('Attach this product to All Sign Customizer for WooCommerce configuration', "all-signs-customizer-for-woocommerce-pro"));
+			$this->display_ascwo_config_on_WC_product_config($id, $configs_ids, __('Attach this product to All Sign Customizer for WooCommerce configuration', "all-signs-customizer-for-woocommerce"));
 			?>
 		</div>
 		<?php
@@ -180,7 +180,7 @@ class ASCWO_Product_Config
 			<td>
 				<div class="ascwo_config_data show_if_simple">
 					<?php
-					$this->display_ascwo_config_on_WC_product_config($id, $configs_ids, __('Attach this product to All Sign Customizer for WooCommerce configuration', "all-signs-customizer-for-woocommerce-pro"));
+					$this->display_ascwo_config_on_WC_product_config($id, $configs_ids, __('Attach this product to All Sign Customizer for WooCommerce configuration', "all-signs-customizer-for-woocommerce"));
 					?>
 				</div>
 			</td>
@@ -208,7 +208,7 @@ class ASCWO_Product_Config
 	 */
 	function get_product_columns($defaults)
 	{
-		$defaults['is_ascwo_customizable'] = __("All Sign Customizer for WooCommerce", "all-signs-customizer-for-woocommerce-pro");
+		$defaults['is_ascwo_customizable'] = __("All Sign Customizer for WooCommerce", "all-signs-customizer-for-woocommerce");
 		return $defaults;
 	}
 	/**
@@ -223,12 +223,12 @@ class ASCWO_Product_Config
 			$ascwo_metas = get_post_meta($id, 'product-ascwo-metas', true);
 			if (isset($ascwo_metas[$id]['config-id']) && get_post($ascwo_metas[$id]['config-id'])) {
 				if (empty($ascwo_metas[$id]['config-id'])) {
-					esc_attr_e('No', "all-signs-customizer-for-woocommerce-pro");
+					esc_attr_e('No', "all-signs-customizer-for-woocommerce");
 				} else {
-					esc_attr_e("Yes", "all-signs-customizer-for-woocommerce-pro");
+					esc_attr_e("Yes", "all-signs-customizer-for-woocommerce");
 				}
 			} else {
-				esc_attr_e('No', "all-signs-customizer-for-woocommerce-pro");
+				esc_attr_e('No', "all-signs-customizer-for-woocommerce");
 			}
 		}
 	}
@@ -276,7 +276,7 @@ class ASCWO_Product_Config
 				$have_pages_settings = get_option("ascwo_config_page");
 				$design_button_label = isset($have_pages_settings["buttons"]["productDesignButton"]) && '' !== trim((string) $have_pages_settings["buttons"]["productDesignButton"])
 					? $have_pages_settings["buttons"]["productDesignButton"]
-					: __("Start Designing", "all-signs-customizer-for-woocommerce-pro");
+					: __("Start Designing", "all-signs-customizer-for-woocommerce");
 				$content .= '<a  href="' . esc_url($default_design_btn_url) . '" class="button ascwo-design-product">' . esc_html($design_button_label) . '</a>';
 
 				if (!isset($item_id)) {

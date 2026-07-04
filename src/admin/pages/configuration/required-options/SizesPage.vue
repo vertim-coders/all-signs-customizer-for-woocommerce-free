@@ -7,35 +7,35 @@
       <template v-else>
       <div class="ascwo-sizes-header ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-px-5 ascwo-py-4 ascwo-flex ascwo-items-center ascwo-justify-between">
         <div>
-          <h2 class="ascwo-text-[16px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ __('Sizes', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
-          <p class="ascwo-text-[12px] ascwo-leading-4 ascwo-text-[#6b7280] ascwo-m-0">{{ __('Create the available sizes and define how many text lines each one allows.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+          <h2 class="ascwo-text-[16px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ __('Sizes', 'all-signs-customizer-for-woocommerce') }}</h2>
+          <p class="ascwo-text-[12px] ascwo-leading-4 ascwo-text-[#6b7280] ascwo-m-0">{{ __('Create the available sizes and define how many text lines each one allows.', 'all-signs-customizer-for-woocommerce') }}</p>
         </div>
         <button
           @click="newSize"
           class="ascwo-inline-flex ascwo-items-center ascwo-gap-2 ascwo-px-3 ascwo-py-1.5 ascwo-bg-[#007a72] ascwo-text-white ascwo-text-[12px] ascwo-leading-4 ascwo-font-[900] ascwo-border-none ascwo-rounded-md ascwo-cursor-pointer hover:ascwo-bg-[#00645f]"
         >
           <PlusIcon class="ascwo-w-3.5 ascwo-h-3.5" />
-          {{ __('Add new size', 'all-signs-customizer-for-woocommerce-pro') }}
+          {{ __('Add new size', 'all-signs-customizer-for-woocommerce') }}
         </button>
       </div>
 
       <div class="ascwo-sizes-card ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-p-5">
-        <h3 class="ascwo-text-[14px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-3">{{ __('Sizes List', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
+        <h3 class="ascwo-text-[14px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-3">{{ __('Sizes List', 'all-signs-customizer-for-woocommerce') }}</h3>
         <div class="ascwo-overflow-x-auto">
           <table class="ascwo-w-full ascwo-border-collapse">
             <thead>
               <tr class="ascwo-bg-[#f3f3f3]">
                 <th class="ascwo-w-8 ascwo-py-2 ascwo-px-3"></th>
-                <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Label', 'all-signs-customizer-for-woocommerce-pro') }}</th>
-                <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Dimensions', 'all-signs-customizer-for-woocommerce-pro') }}</th>
-                <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Default', 'all-signs-customizer-for-woocommerce-pro') }}</th>
-                <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Actions', 'all-signs-customizer-for-woocommerce-pro') }}</th>
+                <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Label', 'all-signs-customizer-for-woocommerce') }}</th>
+                <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Dimensions', 'all-signs-customizer-for-woocommerce') }}</th>
+                <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Default', 'all-signs-customizer-for-woocommerce') }}</th>
+                <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Actions', 'all-signs-customizer-for-woocommerce') }}</th>
               </tr>
             </thead>
             <tbody>
               <tr v-if="sizes.items.length === 0">
                 <td colspan="5" class="ascwo-p-8 ascwo-text-center ascwo-text-[13px] ascwo-text-[#6b7280]">
-                  {{ __('No standard sizes found.', 'all-signs-customizer-for-woocommerce-pro') }}
+                  {{ __('No standard sizes found.', 'all-signs-customizer-for-woocommerce') }}
                 </td>
               </tr>
               <tr
@@ -70,11 +70,11 @@
                   <div class="ascwo-flex ascwo-items-center ascwo-gap-3">
                     <button @click="selectSize(sz.id, sz)" class="ascwo-inline-flex ascwo-items-center ascwo-gap-1 ascwo-px-2 ascwo-py-1 ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-rounded-md ascwo-text-[#303030] ascwo-text-[12px] ascwo-font-bold hover:ascwo-bg-[#f7f8fa] ascwo-cursor-pointer">
                       <Edit2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
-                      {{ __('Edit', 'all-signs-customizer-for-woocommerce-pro') }}
+                      {{ __('Edit', 'all-signs-customizer-for-woocommerce') }}
                     </button>
                     <button @click="selectSize(sz.id, sz, true)" class="ascwo-inline-flex ascwo-items-center ascwo-gap-1 ascwo-bg-transparent ascwo-border-none ascwo-text-[#8e1f0b] ascwo-text-[12px] ascwo-font-bold hover:ascwo-text-[#641707] ascwo-cursor-pointer">
                       <Trash2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
-                      {{ __('Delete', 'all-signs-customizer-for-woocommerce-pro') }}
+                      {{ __('Delete', 'all-signs-customizer-for-woocommerce') }}
                     </button>
                   </div>
                 </td>
@@ -85,16 +85,16 @@
       </div>
 
       <div class="ascwo-sizes-card ascwo-size-settings-card ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-p-5">
-        <h3 class="ascwo-text-[14px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-4">{{ __('Size Settings', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
-        <p class="ascwo-text-[12px] ascwo-leading-5 ascwo-text-[#6b7280] ascwo-mb-4">{{ __('Configure how the size option is presented in the customizer.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+        <h3 class="ascwo-text-[14px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-4">{{ __('Size Settings', 'all-signs-customizer-for-woocommerce') }}</h3>
+        <p class="ascwo-text-[12px] ascwo-leading-5 ascwo-text-[#6b7280] ascwo-mb-4">{{ __('Configure how the size option is presented in the customizer.', 'all-signs-customizer-for-woocommerce') }}</p>
 
         <div class="ascwo-space-y-3">
           <div>
-            <label class="ascwo-block ascwo-text-[12px] ascwo-text-[#303030] ascwo-mb-1">{{ __('Title', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+            <label class="ascwo-block ascwo-text-[12px] ascwo-text-[#303030] ascwo-mb-1">{{ __('Title', 'all-signs-customizer-for-woocommerce') }}</label>
             <input type="text" v-model="sizes.settings.title" class="ascwo-box-border ascwo-w-full ascwo-h-9 ascwo-px-3 ascwo-rounded-lg ascwo-border ascwo-border-solid ascwo-border-[#8c9196] ascwo-text-[13px] ascwo-outline-none focus:ascwo-border-[#008060]" />
           </div>
           <div>
-            <label class="ascwo-block ascwo-text-[12px] ascwo-text-[#303030] ascwo-mb-1">{{ __('Description', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+            <label class="ascwo-block ascwo-text-[12px] ascwo-text-[#303030] ascwo-mb-1">{{ __('Description', 'all-signs-customizer-for-woocommerce') }}</label>
             <input type="text" v-model="sizes.settings.description" class="ascwo-box-border ascwo-w-full ascwo-h-9 ascwo-px-3 ascwo-rounded-lg ascwo-border ascwo-border-solid ascwo-border-[#8c9196] ascwo-text-[13px] ascwo-outline-none focus:ascwo-border-[#008060]" />
           </div>
 
@@ -104,8 +104,8 @@
           <section class="ascwo-settings-section">
             <div class="ascwo-flex ascwo-items-start ascwo-justify-between ascwo-gap-4">
               <div>
-                <h4 class="ascwo-text-[13px] ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ __('Thickness', 'all-signs-customizer-for-woocommerce-pro') }}</h4>
-                <p class="ascwo-text-[12px] ascwo-leading-4 ascwo-text-[#6b7280] ascwo-m-0">{{ __('Enable thickness choices for this configuration.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                <h4 class="ascwo-text-[13px] ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ __('Thickness', 'all-signs-customizer-for-woocommerce') }}</h4>
+                <p class="ascwo-text-[12px] ascwo-leading-4 ascwo-text-[#6b7280] ascwo-m-0">{{ __('Enable thickness choices for this configuration.', 'all-signs-customizer-for-woocommerce') }}</p>
               </div>
               <div
                 @click="sizes.thickness.active = !sizes.thickness.active"
@@ -125,27 +125,27 @@
                 class="ascwo-thickness-card ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-bg-white ascwo-p-4"
               >
                 <div class="ascwo-flex ascwo-items-center ascwo-justify-between ascwo-mb-4">
-                  <h5 class="ascwo-text-[13px] ascwo-leading-5 ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ sprintf(__('Thickness %s', 'all-signs-customizer-for-woocommerce-pro'), key + 1) }}</h5>
+                  <h5 class="ascwo-text-[13px] ascwo-leading-5 ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ sprintf(__('Thickness %s', 'all-signs-customizer-for-woocommerce'), key + 1) }}</h5>
                   <button
                     @click="handleDeleteThickness(key)"
                     class="ascwo-px-3 ascwo-py-1.5 ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-rounded-md ascwo-text-[12px] ascwo-leading-4 ascwo-font-[900] ascwo-text-[#8e1f0b] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7]"
                   >
-                    {{ __('Remove', 'all-signs-customizer-for-woocommerce-pro') }}
+                    {{ __('Remove', 'all-signs-customizer-for-woocommerce') }}
                   </button>
                 </div>
                 <div class="ascwo-setting-grid ascwo-grid lg:ascwo-grid-cols-3 ascwo-gap-4">
                   <div>
-                    <label>{{ __('Label', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                    <label>{{ __('Label', 'all-signs-customizer-for-woocommerce') }}</label>
                     <input type="text" v-model="thick.label">
                   </div>
                   <div>
-                    <label>{{ __('Value', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                    <label>{{ __('Value', 'all-signs-customizer-for-woocommerce') }}</label>
                     <input type="number" v-model.number="thick.value" @input="syncThicknessValue(key)">
                   </div>
                 </div>
               </div>
               <button @click="handleAddNewThickness" class="ascwo-h-8 ascwo-px-3 ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-rounded-md ascwo-text-[12px] ascwo-leading-4 ascwo-font-[900] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7]">
-                {{ __('Add thickness', 'all-signs-customizer-for-woocommerce-pro') }}
+                {{ __('Add thickness', 'all-signs-customizer-for-woocommerce') }}
               </button>
             </div>
           </section>
@@ -153,8 +153,8 @@
           <section class="ascwo-settings-section ascwo-custom-size-section ascwo-border-t ascwo-border-solid ascwo-border-[#eceff2]">
             <div class="ascwo-flex ascwo-items-start ascwo-justify-between ascwo-gap-4">
               <div>
-                <h4 class="ascwo-text-[13px] ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ __('Custom Size', 'all-signs-customizer-for-woocommerce-pro') }}</h4>
-                <p class="ascwo-text-[12px] ascwo-leading-4 ascwo-text-[#6b7280] ascwo-m-0">{{ __('Enable custom width and height entry with allowed limits.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                <h4 class="ascwo-text-[13px] ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ __('Custom Size', 'all-signs-customizer-for-woocommerce') }}</h4>
+                <p class="ascwo-text-[12px] ascwo-leading-4 ascwo-text-[#6b7280] ascwo-m-0">{{ __('Enable custom width and height entry with allowed limits.', 'all-signs-customizer-for-woocommerce') }}</p>
               </div>
               <div
                 @click="changeCustomSizeActive"
@@ -170,8 +170,8 @@
             <div v-if="sizes.customSize.active" class="ascwo-mt-4 ascwo-space-y-4">
               <div class="ascwo-flex ascwo-items-start ascwo-justify-between ascwo-gap-4">
                 <div>
-                  <h4 class="ascwo-text-[13px] ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ __('Predefined Sizes Visibility', 'all-signs-customizer-for-woocommerce-pro') }}</h4>
-                  <p class="ascwo-text-[12px] ascwo-leading-4 ascwo-text-[#6b7280] ascwo-m-0">{{ __('Choose whether predefined sizes stay visible in the configurator when custom size is enabled.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                  <h4 class="ascwo-text-[13px] ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ __('Predefined Sizes Visibility', 'all-signs-customizer-for-woocommerce') }}</h4>
+                  <p class="ascwo-text-[12px] ascwo-leading-4 ascwo-text-[#6b7280] ascwo-m-0">{{ __('Choose whether predefined sizes stay visible in the configurator when custom size is enabled.', 'all-signs-customizer-for-woocommerce') }}</p>
                 </div>
                 <div
                   @click="sizes.customSize.showPredefinedSizes = !sizes.customSize.showPredefinedSizes"
@@ -186,27 +186,27 @@
 
               <div class="ascwo-setting-grid ascwo-grid lg:ascwo-grid-cols-3 ascwo-gap-4">
                 <div>
-                  <label>{{ __('Width label', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                  <label>{{ __('Width label', 'all-signs-customizer-for-woocommerce') }}</label>
                   <input type="text" v-model="sizes.customSize.width.label">
                 </div>
                 <div>
-                  <label>{{ __('Width min', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                  <label>{{ __('Width min', 'all-signs-customizer-for-woocommerce') }}</label>
                   <input type="number" v-model="sizes.customSize.width.min">
                 </div>
                 <div>
-                  <label>{{ __('Width max', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                  <label>{{ __('Width max', 'all-signs-customizer-for-woocommerce') }}</label>
                   <input type="number" v-model="sizes.customSize.width.max">
                 </div>
                 <div>
-                  <label>{{ __('Height label', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                  <label>{{ __('Height label', 'all-signs-customizer-for-woocommerce') }}</label>
                   <input type="text" v-model="sizes.customSize.height.label">
                 </div>
                 <div>
-                  <label>{{ __('Height min', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                  <label>{{ __('Height min', 'all-signs-customizer-for-woocommerce') }}</label>
                   <input type="number" v-model="sizes.customSize.height.min">
                 </div>
                 <div>
-                  <label>{{ __('Height max', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                  <label>{{ __('Height max', 'all-signs-customizer-for-woocommerce') }}</label>
                   <input type="number" v-model="sizes.customSize.height.max">
                 </div>
               </div>
@@ -224,48 +224,48 @@
           @click="back"
           class="ascwo-px-4 ascwo-py-2 ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c1c4c7] ascwo-rounded-lg ascwo-text-[14px] ascwo-leading-5 ascwo-font-[700] ascwo-text-[#303030] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7]"
         >
-          {{ __('Back to sizes', 'all-signs-customizer-for-woocommerce-pro') }}
+          {{ __('Back to sizes', 'all-signs-customizer-for-woocommerce') }}
         </button>
       </div>
 
       <div class="ascwo-space-y-5">
         <div>
-          <label class="ascwo-block ascwo-text-[16px] ascwo-leading-6 ascwo-font-normal ascwo-text-[#303030] ascwo-mb-2">{{ __('Label', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+          <label class="ascwo-block ascwo-text-[16px] ascwo-leading-6 ascwo-font-normal ascwo-text-[#303030] ascwo-mb-2">{{ __('Label', 'all-signs-customizer-for-woocommerce') }}</label>
           <input type="text" v-model.trim="size.label" class="ascwo-box-border ascwo-w-full ascwo-h-[50px] ascwo-px-4 ascwo-rounded-lg ascwo-border ascwo-border-solid ascwo-border-[#8c9196] ascwo-text-[16px] ascwo-text-[#303030] ascwo-outline-none focus:ascwo-border-[#008060]">
-          <p class="ascwo-text-[16px] ascwo-leading-6 ascwo-text-[#6b7280] ascwo-mt-2 ascwo-mb-0">{{ __('Internal and customer-facing name for this size.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+          <p class="ascwo-text-[16px] ascwo-leading-6 ascwo-text-[#6b7280] ascwo-mt-2 ascwo-mb-0">{{ __('Internal and customer-facing name for this size.', 'all-signs-customizer-for-woocommerce') }}</p>
         </div>
 
         <div class="ascwo-grid md:ascwo-grid-cols-2 ascwo-gap-5">
           <div>
-            <label class="ascwo-block ascwo-text-[16px] ascwo-leading-6 ascwo-font-normal ascwo-text-[#303030] ascwo-mb-2">{{ __('Width', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+            <label class="ascwo-block ascwo-text-[16px] ascwo-leading-6 ascwo-font-normal ascwo-text-[#303030] ascwo-mb-2">{{ __('Width', 'all-signs-customizer-for-woocommerce') }}</label>
             <input type="number" v-model="size.width" class="ascwo-box-border ascwo-w-full ascwo-h-[50px] ascwo-px-4 ascwo-rounded-lg ascwo-border ascwo-border-solid ascwo-border-[#8c9196] ascwo-text-[16px] ascwo-text-[#303030] ascwo-outline-none focus:ascwo-border-[#008060]">
           </div>
           <div>
-            <label class="ascwo-block ascwo-text-[16px] ascwo-leading-6 ascwo-font-normal ascwo-text-[#303030] ascwo-mb-2">{{ __('Height', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+            <label class="ascwo-block ascwo-text-[16px] ascwo-leading-6 ascwo-font-normal ascwo-text-[#303030] ascwo-mb-2">{{ __('Height', 'all-signs-customizer-for-woocommerce') }}</label>
             <input type="number" v-model="size.height" class="ascwo-box-border ascwo-w-full ascwo-h-[50px] ascwo-px-4 ascwo-rounded-lg ascwo-border ascwo-border-solid ascwo-border-[#8c9196] ascwo-text-[16px] ascwo-text-[#303030] ascwo-outline-none focus:ascwo-border-[#008060]">
           </div>
         </div>
 
         <div class="ascwo-grid md:ascwo-grid-cols-2 ascwo-gap-5">
           <div>
-            <label class="ascwo-block ascwo-text-[16px] ascwo-leading-6 ascwo-font-normal ascwo-text-[#303030] ascwo-mb-2">{{ __('Number of text lines', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+            <label class="ascwo-block ascwo-text-[16px] ascwo-leading-6 ascwo-font-normal ascwo-text-[#303030] ascwo-mb-2">{{ __('Number of text lines', 'all-signs-customizer-for-woocommerce') }}</label>
             <input type="number" v-model="size.textNumber" class="ascwo-box-border ascwo-w-full ascwo-h-[50px] ascwo-px-4 ascwo-rounded-lg ascwo-border ascwo-border-solid ascwo-border-[#8c9196] ascwo-text-[16px] ascwo-text-[#303030] ascwo-outline-none focus:ascwo-border-[#008060]">
           </div>
           <div>
-            <label class="ascwo-block ascwo-text-[16px] ascwo-leading-6 ascwo-font-normal ascwo-text-[#303030] ascwo-mb-2">{{ __('Max text chars', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+            <label class="ascwo-block ascwo-text-[16px] ascwo-leading-6 ascwo-font-normal ascwo-text-[#303030] ascwo-mb-2">{{ __('Max text chars', 'all-signs-customizer-for-woocommerce') }}</label>
             <input type="number" v-model="size.maxTextChar" class="ascwo-box-border ascwo-w-full ascwo-h-[50px] ascwo-px-4 ascwo-rounded-lg ascwo-border ascwo-border-solid ascwo-border-[#8c9196] ascwo-text-[16px] ascwo-text-[#303030] ascwo-outline-none focus:ascwo-border-[#008060]">
           </div>
         </div>
       </div>
 
       <div class="ascwo-size-editor-actions ascwo-mt-5 ascwo-pt-5 ascwo-border-t ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-flex ascwo-justify-end ascwo-gap-3">
-        <button @click="back" class="ascwo-px-5 ascwo-py-2 ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c1c4c7] ascwo-rounded-lg ascwo-text-[14px] ascwo-font-[700] ascwo-text-[#111827] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7]">{{ __('Cancel', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+        <button @click="back" class="ascwo-px-5 ascwo-py-2 ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c1c4c7] ascwo-rounded-lg ascwo-text-[14px] ascwo-font-[700] ascwo-text-[#111827] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7]">{{ __('Cancel', 'all-signs-customizer-for-woocommerce') }}</button>
         <button
           @click="isEdit ? updateSizeInSize() : addSize()"
           :disabled="!canSaveSize || isLoading"
           class="ascwo-primary-button ascwo-px-5 ascwo-py-2 ascwo-bg-[#007a72] ascwo-text-white ascwo-border-none ascwo-rounded-lg ascwo-text-[14px] ascwo-font-[900] ascwo-cursor-pointer hover:ascwo-bg-[#00645f] disabled:ascwo-bg-[#d8d8d8] disabled:ascwo-cursor-not-allowed"
         >
-          {{ isLoading ? __('Saving...', 'all-signs-customizer-for-woocommerce-pro') : (isEdit ? __('Update size', 'all-signs-customizer-for-woocommerce-pro') : __('Save size', 'all-signs-customizer-for-woocommerce-pro')) }}
+          {{ isLoading ? __('Saving...', 'all-signs-customizer-for-woocommerce') : (isEdit ? __('Update size', 'all-signs-customizer-for-woocommerce') : __('Save size', 'all-signs-customizer-for-woocommerce')) }}
         </button>
       </div>
     </div>
@@ -277,7 +277,7 @@
         :disabled="isLoading"
         class="ascwo-px-3 ascwo-py-1.5 ascwo-bg-[#007a72] ascwo-text-white ascwo-text-[12px] ascwo-font-[900] ascwo-border-none ascwo-rounded-md ascwo-cursor-pointer hover:ascwo-bg-[#00645f] disabled:ascwo-opacity-50"
       >
-        {{ isLoading ? __('Saving...', 'all-signs-customizer-for-woocommerce-pro') : __('Save settings', 'all-signs-customizer-for-woocommerce-pro') }}
+        {{ isLoading ? __('Saving...', 'all-signs-customizer-for-woocommerce') : __('Save settings', 'all-signs-customizer-for-woocommerce') }}
       </button>
     </div>
 
@@ -288,11 +288,11 @@
         <div class="ascwo-w-14 ascwo-h-14 ascwo-bg-[#fff1f0] ascwo-text-[#8e1f0b] ascwo-rounded-full ascwo-flex ascwo-items-center ascwo-justify-center ascwo-mx-auto ascwo-mb-4">
           <Trash2Icon class="ascwo-w-7 ascwo-h-7" />
         </div>
-        <h3 class="ascwo-text-[18px] ascwo-font-bold ascwo-text-[#1a1a1a] ascwo-mb-2">{{ __('Delete size?', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
-        <p class="ascwo-text-[14px] ascwo-text-[#616161] ascwo-mb-6">{{ sprintf(__('Are you sure you want to delete "%s"?', 'all-signs-customizer-for-woocommerce-pro'), size.label) }}</p>
+        <h3 class="ascwo-text-[18px] ascwo-font-bold ascwo-text-[#1a1a1a] ascwo-mb-2">{{ __('Delete size?', 'all-signs-customizer-for-woocommerce') }}</h3>
+        <p class="ascwo-text-[14px] ascwo-text-[#616161] ascwo-mb-6">{{ sprintf(__('Are you sure you want to delete "%s"?', 'all-signs-customizer-for-woocommerce'), size.label) }}</p>
         <div class="ascwo-flex ascwo-gap-3">
-          <button @click="closeModal" class="ascwo-flex-1 ascwo-py-2 ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c1c4c7] ascwo-rounded-xl ascwo-text-[13px] ascwo-font-bold ascwo-cursor-pointer">{{ __('Cancel', 'all-signs-customizer-for-woocommerce-pro') }}</button>
-          <button @click="deleteSize" class="ascwo-flex-1 ascwo-py-2 ascwo-bg-[#8e1f0b] ascwo-text-white ascwo-border-none ascwo-rounded-xl ascwo-text-[13px] ascwo-font-bold ascwo-cursor-pointer">{{ __('Delete', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+          <button @click="closeModal" class="ascwo-flex-1 ascwo-py-2 ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c1c4c7] ascwo-rounded-xl ascwo-text-[13px] ascwo-font-bold ascwo-cursor-pointer">{{ __('Cancel', 'all-signs-customizer-for-woocommerce') }}</button>
+          <button @click="deleteSize" class="ascwo-flex-1 ascwo-py-2 ascwo-bg-[#8e1f0b] ascwo-text-white ascwo-border-none ascwo-rounded-xl ascwo-text-[13px] ascwo-font-bold ascwo-cursor-pointer">{{ __('Delete', 'all-signs-customizer-for-woocommerce') }}</button>
         </div>
       </div>
     </div>
@@ -518,7 +518,7 @@ const addSize = async () => {
         openModal.value = false;
         await fetchSizes();
       } else {
-        toastMessage(res?.message || __("Unable to add size", "all-signs-customizer-for-woocommerce-pro"), "warning");
+        toastMessage(res?.message || __("Unable to add size", "all-signs-customizer-for-woocommerce"), "warning");
       }
     } finally {
       isLoading.value = false;
@@ -537,7 +537,7 @@ const updateSizeInSize = async () => {
         openModal.value = false;
         await fetchSizes();
       } else {
-        toastMessage(res?.message || __("Unable to update size", "all-signs-customizer-for-woocommerce-pro"), "warning");
+        toastMessage(res?.message || __("Unable to update size", "all-signs-customizer-for-woocommerce"), "warning");
       }
     } finally {
       isLoading.value = false;
@@ -555,7 +555,7 @@ const deleteSize = async () => {
       openModal.value = false;
       await fetchSizes();
     } else {
-      toastMessage(res?.message || __("Unable to delete size", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(res?.message || __("Unable to delete size", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -579,7 +579,7 @@ const selectDefault = async (key) => {
       toastMessage(res.message);
       await fetchSizes();
     } else {
-      toastMessage(res?.message || __("Unable to update default size", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(res?.message || __("Unable to update default size", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;

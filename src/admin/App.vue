@@ -29,62 +29,18 @@
             <!-- <Sidebar v-if="$route && $route.name && $route.name !== 'home'" /> -->
 
             <div class="ascwo-flex-1">
-                <!-- Keep the shell on the license screen when the product is inactive. -->
-                <router-view v-if="showRouterView" />
-                <GlobalSettings v-else />
+                <router-view />
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import {computed, onMounted, ref, watch} from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { onMounted } from 'vue';
 import '@/admin/utils/tailwindcss.min.js'
-import Sidebar from './pages/components/sidebar.vue'
-import Headerbar from './pages/components/headerbar.vue';
-import NotFound from "@/admin/pages/NotFound/index.vue";
-import GlobalSettings from "@/admin/pages/global-settings/index.vue";
-import api from './Api/api';
-import toastMessage from './utils/functions';
-import { t } from './utils/i18n';
-
-import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
-
-const $route = useRoute();
-const router = useRouter();
-const licenseStatus = ascwo_data.license_status || {};
-const licenseExpiry = Number(licenseStatus.timestamp || ascwo_data.caches || 0);
-const serverNow = Number(licenseStatus.time || Math.floor(Date.now() / 1000));
-const activateProduct = ref(licenseExpiry > serverNow);
-const allowedWithoutLicense = new Set(['global-settings-license']);
-const showRouterView = computed(() => {
-    if (activateProduct.value) {
-        return true;
-    }
-
-    // The inactive-license state is intentionally limited to the license screen.
-    return Boolean($route && allowedWithoutLicense.has($route.name));
-});
-const product = ref('');
-const productId = ascwo_data.author;
 onMounted(async() => {
 
 });
-watch(
-    () => [$route.name, activateProduct.value],
-    ([routeName]) => {
-        if (activateProduct.value) {
-            return;
-        }
-
-        // Deep links to protected routes bounce back to the license screen.
-        if (routeName !== 'global-settings-license') {
-            router.replace({ name: 'global-settings-license' });
-        }
-    },
-    { immediate: true }
-);
 tailwind.config ={
     prefix: 'ascwo-',
     corePlugins: {

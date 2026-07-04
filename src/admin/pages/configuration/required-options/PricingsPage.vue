@@ -3,9 +3,9 @@
     <template v-if="!showForm">
       <div class="ascwo-pricing-header ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-px-5 ascwo-py-4 ascwo-flex ascwo-items-center ascwo-justify-between">
         <div>
-          <h2 class="ascwo-text-[16px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ __('Pricing', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
+          <h2 class="ascwo-text-[16px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ __('Pricing', 'all-signs-customizer-for-woocommerce') }}</h2>
           <p class="ascwo-text-[12px] ascwo-leading-4 ascwo-text-[#6b7280] ascwo-m-0">
-            {{ __('Create pricing profiles for custom size rules only. Regular sizes keep their own pricing in the size records.', 'all-signs-customizer-for-woocommerce-pro') }}
+            {{ __('Create pricing profiles for custom size rules only. Regular sizes keep their own pricing in the size records.', 'all-signs-customizer-for-woocommerce') }}
           </p>
         </div>
         <button
@@ -13,19 +13,19 @@
           class="ascwo-inline-flex ascwo-items-center ascwo-gap-2 ascwo-px-3 ascwo-py-1.5 ascwo-bg-[#007a72] ascwo-text-white ascwo-text-[12px] ascwo-leading-4 ascwo-font-[900] ascwo-border-none ascwo-rounded-md ascwo-cursor-pointer hover:ascwo-bg-[#00645f]"
         >
           <PlusIcon class="ascwo-w-3.5 ascwo-h-3.5" />
-          {{ __('Add new pricing', 'all-signs-customizer-for-woocommerce-pro') }}
+          {{ __('Add new pricing', 'all-signs-customizer-for-woocommerce') }}
         </button>
       </div>
 
       <div class="ascwo-pricing-card ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-p-5">
-        <h3 class="ascwo-text-[14px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-3">{{ __('Pricing List', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
+        <h3 class="ascwo-text-[14px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-3">{{ __('Pricing List', 'all-signs-customizer-for-woocommerce') }}</h3>
         <div class="ascwo-pricing-table-wrap">
           <table class="ascwo-pricing-table ascwo-w-full ascwo-border-collapse">
             <thead>
               <tr class="ascwo-bg-[#f3f3f3]">
-                <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Label', 'all-signs-customizer-for-woocommerce-pro') }}</th>
-                <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Shipping', 'all-signs-customizer-for-woocommerce-pro') }}</th>
-                <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Actions', 'all-signs-customizer-for-woocommerce-pro') }}</th>
+                <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Label', 'all-signs-customizer-for-woocommerce') }}</th>
+                <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Shipping', 'all-signs-customizer-for-woocommerce') }}</th>
+                <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Actions', 'all-signs-customizer-for-woocommerce') }}</th>
               </tr>
             </thead>
             <tbody>
@@ -43,29 +43,29 @@
                 >
                   <td class="ascwo-py-2.5 ascwo-px-3">
                     <span class="ascwo-text-[13px] ascwo-font-[900] ascwo-text-[#303030]">
-                      {{ item.label || sprintf(__('Pricing %d', 'all-signs-customizer-for-woocommerce-pro'), key + 1) }}
+                      {{ item.label || sprintf(__('Pricing %d', 'all-signs-customizer-for-woocommerce'), key + 1) }}
                     </span>
                   </td>
                   <td class="ascwo-py-2.5 ascwo-px-3 ascwo-text-[13px] ascwo-text-[#303030]">
-                    {{ item.customPricing.shippingMethod === 'per-weight' ? __('Weight', 'all-signs-customizer-for-woocommerce-pro') : __('Size-based', 'all-signs-customizer-for-woocommerce-pro') }}
+                    {{ item.customPricing.shippingMethod === 'per-weight' ? __('Weight', 'all-signs-customizer-for-woocommerce') : __('Size-based', 'all-signs-customizer-for-woocommerce') }}
                   </td>
                   <td class="ascwo-py-2.5 ascwo-px-3">
                     <div class="ascwo-pricing-actions-menu" @click.stop>
-                      <button @click="toggleActions(key)" class="ascwo-ellipsis-button" :aria-label="__('Pricing actions', 'all-signs-customizer-for-woocommerce-pro')">
+                      <button @click="toggleActions(key)" class="ascwo-ellipsis-button" :aria-label="__('Pricing actions', 'all-signs-customizer-for-woocommerce')">
                         <MoreHorizontalIcon class="ascwo-w-4 ascwo-h-4" />
                       </button>
                       <div v-if="openActionIndex === key" class="ascwo-actions-popover">
                         <button @click="editPricing(getPricingItemId(item, key))">
                           <Edit2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
-                          {{ __('Edit', 'all-signs-customizer-for-woocommerce-pro') }}
+                          {{ __('Edit', 'all-signs-customizer-for-woocommerce') }}
                         </button>
                         <button @click="duplicatePricing(getPricingItemId(item, key))">
                           <CopyIcon class="ascwo-w-3.5 ascwo-h-3.5" />
-                          {{ __('Duplicate', 'all-signs-customizer-for-woocommerce-pro') }}
+                          {{ __('Duplicate', 'all-signs-customizer-for-woocommerce') }}
                         </button>
                         <button class="is-danger" @click="deletePricing(getPricingItemId(item, key))">
                           <Trash2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
-                          {{ __('Delete', 'all-signs-customizer-for-woocommerce-pro') }}
+                          {{ __('Delete', 'all-signs-customizer-for-woocommerce') }}
                         </button>
                       </div>
                     </div>
@@ -81,15 +81,15 @@
     <template v-else>
       <div class="ascwo-pricing-card ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-p-4">
         <div class="ascwo-flex ascwo-justify-end">
-          <button @click="closeForm" class="ascwo-secondary-button">{{ __('Back to pricings', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+          <button @click="closeForm" class="ascwo-secondary-button">{{ __('Back to pricings', 'all-signs-customizer-for-woocommerce') }}</button>
         </div>
       </div>
 
       <div class="ascwo-pricing-editor ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-p-5">
         <div>
-          <label>{{ __('Label', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+          <label>{{ __('Label', 'all-signs-customizer-for-woocommerce') }}</label>
           <input type="text" v-model.trim="editingPricing.label">
-          <p>{{ __('Internal name used to identify this pricing profile.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+          <p>{{ __('Internal name used to identify this pricing profile.', 'all-signs-customizer-for-woocommerce') }}</p>
         </div>
 
         <div class="ascwo-pricing-divider"></div>
@@ -97,19 +97,19 @@
         <section class="ascwo-pricing-section">
           <div class="ascwo-flex ascwo-items-start ascwo-justify-between ascwo-gap-4">
             <div>
-              <h3>{{ __('Custom size pricing', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
-              <p>{{ __('Define the pricing rules for custom size ranges.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+              <h3>{{ __('Custom size pricing', 'all-signs-customizer-for-woocommerce') }}</h3>
+              <p>{{ __('Define the pricing rules for custom size ranges.', 'all-signs-customizer-for-woocommerce') }}</p>
             </div>
           </div>
 
           <div class="ascwo-pricing-options-card">
             <div class="ascwo-pricing-toggle-row">
               <div>
-                <h4>{{ __('Per-unit pricing', 'all-signs-customizer-for-woocommerce-pro') }}</h4>
-                <p>{{ sprintf(__('Charge per %s instead of a flat price for the whole range.', 'all-signs-customizer-for-woocommerce-pro'), surfaceUnitLabel) }}</p>
+                <h4>{{ __('Per-unit pricing', 'all-signs-customizer-for-woocommerce') }}</h4>
+                <p>{{ sprintf(__('Charge per %s instead of a flat price for the whole range.', 'all-signs-customizer-for-woocommerce'), surfaceUnitLabel) }}</p>
               </div>
               <div class="ascwo-flex ascwo-items-center ascwo-gap-3">
-                <span class="ascwo-text-[12px] ascwo-text-[#616161]">{{ __('No', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                <span class="ascwo-text-[12px] ascwo-text-[#616161]">{{ __('No', 'all-signs-customizer-for-woocommerce') }}</span>
                 <div
                   @click="togglePerUnit"
                   :class="[
@@ -119,18 +119,18 @@
                 >
                   <div :class="['ascwo-absolute ascwo-top-0.5 ascwo-w-4 ascwo-h-4 ascwo-rounded-full ascwo-bg-white ascwo-shadow ascwo-transition-all', editingPricing.customPricing.rangePricingPerUnit ? 'ascwo-right-0.5' : 'ascwo-left-0.5']"></div>
                 </div>
-                <span class="ascwo-text-[12px] ascwo-text-[#616161]">{{ __('Yes', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                <span class="ascwo-text-[12px] ascwo-text-[#616161]">{{ __('Yes', 'all-signs-customizer-for-woocommerce') }}</span>
               </div>            </div>
 
             <div class="ascwo-pricing-divider"></div>
 
             <div class="ascwo-pricing-toggle-row">
               <div>
-                <h4>{{ __('Weight-based shipping', 'all-signs-customizer-for-woocommerce-pro') }}</h4>
-                <p>{{ __('Use volumetric weight instead of the size range value.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                <h4>{{ __('Weight-based shipping', 'all-signs-customizer-for-woocommerce') }}</h4>
+                <p>{{ __('Use volumetric weight instead of the size range value.', 'all-signs-customizer-for-woocommerce') }}</p>
               </div>
               <div class="ascwo-flex ascwo-items-center ascwo-gap-3">
-                <span class="ascwo-text-[12px] ascwo-text-[#616161]">{{ __('No', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                <span class="ascwo-text-[12px] ascwo-text-[#616161]">{{ __('No', 'all-signs-customizer-for-woocommerce') }}</span>
                 <div
                   @click="toggleWeightShipping"
                   :class="[
@@ -140,19 +140,19 @@
                 >
                   <div :class="['ascwo-absolute ascwo-top-0.5 ascwo-w-4 ascwo-h-4 ascwo-rounded-full ascwo-bg-white ascwo-shadow ascwo-transition-all', editingPricing.customPricing.shippingMethod === 'per-weight' ? 'ascwo-right-0.5' : 'ascwo-left-0.5']"></div>
                 </div>
-                <span class="ascwo-text-[12px] ascwo-text-[#616161]">{{ __('Yes', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                <span class="ascwo-text-[12px] ascwo-text-[#616161]">{{ __('Yes', 'all-signs-customizer-for-woocommerce') }}</span>
               </div>
             </div>
           </div>
 
           <p class="ascwo-pricing-help">
-            {{ sprintf(__('Each range applies from the previous size up to the current size. Surface is calculated automatically as size x size in %s.', 'all-signs-customizer-for-woocommerce-pro'), surfaceUnitLabel) }}
+            {{ sprintf(__('Each range applies from the previous size up to the current size. Surface is calculated automatically as size x size in %s.', 'all-signs-customizer-for-woocommerce'), surfaceUnitLabel) }}
           </p>
 
           <div v-if="editingPricing.customPricing.shippingMethod === 'per-weight'" class="ascwo-pricing-field">
-            <label>{{ __('Volumetric divisor', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+            <label>{{ __('Volumetric divisor', 'all-signs-customizer-for-woocommerce') }}</label>
             <input type="number" v-model.number="editingPricing.customPricing.divisorVolumetric">
-            <p>{{ __('Used to convert parcel dimensions into volumetric weight for shipping.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+            <p>{{ __('Used to convert parcel dimensions into volumetric weight for shipping.', 'all-signs-customizer-for-woocommerce') }}</p>
           </div>
 
           <div class="ascwo-space-y-3">
@@ -162,40 +162,40 @@
               class="ascwo-pricing-range-card"
             >
               <div class="ascwo-flex ascwo-items-center ascwo-justify-between ascwo-gap-4">
-                <h4>{{ sprintf(__('Range %d', 'all-signs-customizer-for-woocommerce-pro'), key + 1) }}</h4>
+                <h4>{{ sprintf(__('Range %d', 'all-signs-customizer-for-woocommerce'), key + 1) }}</h4>
                 <div class="ascwo-flex ascwo-items-center ascwo-gap-2">
                   <button @click="openRangeModal(key)" class="ascwo-action-button">
                     <Edit2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
-                    {{ __('Edit', 'all-signs-customizer-for-woocommerce-pro') }}
+                    {{ __('Edit', 'all-signs-customizer-for-woocommerce') }}
                   </button>
                   <button @click="removeRange(key)" class="ascwo-delete-button">
                     <Trash2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
-                    {{ __('Delete', 'all-signs-customizer-for-woocommerce-pro') }}
+                    {{ __('Delete', 'all-signs-customizer-for-woocommerce') }}
                   </button>
                 </div>
               </div>
               <p>
-                {{ sprintf(__('Applied from %s to %s %s.', 'all-signs-customizer-for-woocommerce-pro'), rangeStart(key), range.surface, surfaceUnitLabel) }}
+                {{ sprintf(__('Applied from %s to %s %s.', 'all-signs-customizer-for-woocommerce'), rangeStart(key), range.surface, surfaceUnitLabel) }}
               </p>
               <p>
-                {{ __('Base price:', 'all-signs-customizer-for-woocommerce-pro') }}
+                {{ __('Base price:', 'all-signs-customizer-for-woocommerce') }}
                 {{ editingPricing.customPricing.rangePricingPerUnit ? `${range.basePrice} ${currencySymbol}/${surfaceUnitLabel}` : `${range.basePrice} ${currencySymbol}` }}
-                · {{ __('Char price:', 'all-signs-customizer-for-woocommerce-pro') }} {{ range.charPrice }} {{ currencySymbol }}/char
+                · {{ __('Char price:', 'all-signs-customizer-for-woocommerce') }} {{ range.charPrice }} {{ currencySymbol }}/char
               </p>
               <p>
-                {{ __('Shipping:', 'all-signs-customizer-for-woocommerce-pro') }}
+                {{ __('Shipping:', 'all-signs-customizer-for-woocommerce') }}
                 {{ shippingLabel(range) }}
               </p>
             </div>
           </div>
 
-          <button @click="openRangeModal()" class="ascwo-secondary-button ascwo-add-range-button ascwo-mt-3">{{ __('Add range', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+          <button @click="openRangeModal()" class="ascwo-secondary-button ascwo-add-range-button ascwo-mt-3">{{ __('Add range', 'all-signs-customizer-for-woocommerce') }}</button>
         </section>
 
         <div class="ascwo-pricing-actions">
-          <button @click="closeForm" class="ascwo-secondary-button">{{ __('Cancel', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+          <button @click="closeForm" class="ascwo-secondary-button">{{ __('Cancel', 'all-signs-customizer-for-woocommerce') }}</button>
           <button @click="savePricing" :disabled="!canSavePricing || isLoading" class="ascwo-primary-button">
-            {{ isLoading ? __('Saving...', 'all-signs-customizer-for-woocommerce-pro') : __('Save pricing', 'all-signs-customizer-for-woocommerce-pro') }}
+            {{ isLoading ? __('Saving...', 'all-signs-customizer-for-woocommerce') : __('Save pricing', 'all-signs-customizer-for-woocommerce') }}
           </button>
         </div>
       </div>
@@ -206,34 +206,34 @@
         <div class="ascwo-range-modal-backdrop" @click="closeRangeModal"></div>
         <div class="ascwo-range-modal">
           <div class="ascwo-range-modal-header">
-            <h3>{{ editingRangeIndex === null ? __('Add range', 'all-signs-customizer-for-woocommerce-pro') : sprintf(__('Edit range %d', 'all-signs-customizer-for-woocommerce-pro'), editingRangeIndex + 1) }}</h3>
+            <h3>{{ editingRangeIndex === null ? __('Add range', 'all-signs-customizer-for-woocommerce') : sprintf(__('Edit range %d', 'all-signs-customizer-for-woocommerce'), editingRangeIndex + 1) }}</h3>
             <button @click="closeRangeModal" type="button"><XIcon class="ascwo-w-5 ascwo-h-5" /></button>
           </div>
           <div class="ascwo-range-modal-body">
             <div class="ascwo-pricing-field">
-              <label>{{ sprintf(__('Surface (%s)', 'all-signs-customizer-for-woocommerce-pro'), surfaceUnitLabel) }}</label>
+              <label>{{ sprintf(__('Surface (%s)', 'all-signs-customizer-for-woocommerce'), surfaceUnitLabel) }}</label>
               <input type="number" v-model.number="rangeDraft.surface">
               <p>{{ rangeHelpText }}</p>
             </div>
             <div class="ascwo-pricing-field">
-              <label>{{ editingPricing.customPricing.rangePricingPerUnit ? sprintf(__('Base price per %s', 'all-signs-customizer-for-woocommerce-pro'), surfaceUnitLabel) : __('Base price', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+              <label>{{ editingPricing.customPricing.rangePricingPerUnit ? sprintf(__('Base price per %s', 'all-signs-customizer-for-woocommerce'), surfaceUnitLabel) : __('Base price', 'all-signs-customizer-for-woocommerce') }}</label>
               <input type="number" v-model.number="rangeDraft.basePrice">
             </div>
             <div class="ascwo-pricing-field">
-              <label>{{ __('Char price', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+              <label>{{ __('Char price', 'all-signs-customizer-for-woocommerce') }}</label>
               <input type="number" v-model.number="rangeDraft.charPrice">
             </div>
             <template v-if="editingPricing.customPricing.shippingMethod === 'per-weight'">
               <div class="ascwo-pricing-field">
-                <label>{{ sprintf(__('Width modifier (%s)', 'all-signs-customizer-for-woocommerce-pro'), measurementUnit) }}</label>
+                <label>{{ sprintf(__('Width modifier (%s)', 'all-signs-customizer-for-woocommerce'), measurementUnit) }}</label>
                 <input type="number" v-model.number="rangeDraft.widthModifier">
               </div>
               <div class="ascwo-pricing-field">
-                <label>{{ sprintf(__('Height modifier (%s)', 'all-signs-customizer-for-woocommerce-pro'), measurementUnit) }}</label>
+                <label>{{ sprintf(__('Height modifier (%s)', 'all-signs-customizer-for-woocommerce'), measurementUnit) }}</label>
                 <input type="number" v-model.number="rangeDraft.heightModifier">
               </div>
               <div class="ascwo-pricing-field">
-                <label>{{ sprintf(__('Length (%s)', 'all-signs-customizer-for-woocommerce-pro'), measurementUnit) }}</label>
+                <label>{{ sprintf(__('Length (%s)', 'all-signs-customizer-for-woocommerce'), measurementUnit) }}</label>
                 <input type="number" v-model.number="rangeDraft.length">
               </div>
             </template>
@@ -243,8 +243,8 @@
             </div>
           </div>
           <div class="ascwo-range-modal-actions">
-            <button @click="closeRangeModal" class="ascwo-secondary-button">{{ __('Cancel', 'all-signs-customizer-for-woocommerce-pro') }}</button>
-            <button @click="saveRange" class="ascwo-primary-button">{{ editingRangeIndex === null ? __('Add range', 'all-signs-customizer-for-woocommerce-pro') : __('Save changes', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+            <button @click="closeRangeModal" class="ascwo-secondary-button">{{ __('Cancel', 'all-signs-customizer-for-woocommerce') }}</button>
+            <button @click="saveRange" class="ascwo-primary-button">{{ editingRangeIndex === null ? __('Add range', 'all-signs-customizer-for-woocommerce') : __('Save changes', 'all-signs-customizer-for-woocommerce') }}</button>
           </div>
         </div>
       </div>
@@ -303,7 +303,7 @@ const rangeHelpText = computed(() => {
     ? Number(editingPricing.value.customPricing.range.at(-1)?.surface || 0)
     : rangeStart(editingRangeIndex.value);
   return sprintf(
-    __('This range applies from %s to %s %s. Surface equivalent: %s to %s %s.', 'all-signs-customizer-for-woocommerce-pro'),
+    __('This range applies from %s to %s %s. Surface equivalent: %s to %s %s.', 'all-signs-customizer-for-woocommerce'),
     start,
         Number(rangeDraft.value.surface || 0),
         measurementUnit.value,
@@ -315,11 +315,11 @@ const rangeHelpText = computed(() => {
 
 const shippingInputLabel = computed(() => {
   if (editingPricing.value.customPricing.shippingMethod === "per-weight") {
-    return __("Shipping price per kg", "all-signs-customizer-for-woocommerce-pro");
+    return __("Shipping price per kg", "all-signs-customizer-for-woocommerce");
   }
   return editingPricing.value.customPricing.rangePricingPerUnit
-    ? sprintf(__("Shipping per %s", "all-signs-customizer-for-woocommerce-pro"), surfaceUnitLabel.value)
-    : __("Shipping price", "all-signs-customizer-for-woocommerce-pro");
+    ? sprintf(__("Shipping per %s", "all-signs-customizer-for-woocommerce"), surfaceUnitLabel.value)
+    : __("Shipping price", "all-signs-customizer-for-woocommerce");
 });
 
 function emptyRange(startSize = 0) {
@@ -433,7 +433,7 @@ const savePricing = async () => {
       await fetchPricing();
       closeForm();
     } else {
-      toastMessage(result?.message || __("Unable to save pricing", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(result?.message || __("Unable to save pricing", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -446,7 +446,7 @@ const duplicatePricing = async (itemId) => {
   if (index < 0) return;
   const copy = JSON.parse(JSON.stringify(pricingSettings.value.items[index]));
   delete copy.id;
-  copy.label = copy.label ? `${copy.label} (copy)` : sprintf(__('Pricing %d', 'all-signs-customizer-for-woocommerce-pro'), pricingSettings.value.items.length + 1);
+  copy.label = copy.label ? `${copy.label} (copy)` : sprintf(__('Pricing %d', 'all-signs-customizer-for-woocommerce'), pricingSettings.value.items.length + 1);
   isLoading.value = true;
   try {
     const result = await api.addRequiredOptionPricingItem(configID.value, copy);
@@ -454,7 +454,7 @@ const duplicatePricing = async (itemId) => {
       toastMessage(result.message);
       await fetchPricing();
     } else {
-      toastMessage(result?.message || __("Unable to duplicate pricing", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(result?.message || __("Unable to duplicate pricing", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -472,7 +472,7 @@ const deletePricing = async (itemId) => {
       toastMessage(result.message);
       await fetchPricing();
     } else {
-      toastMessage(result?.message || __("Unable to delete pricing", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(result?.message || __("Unable to delete pricing", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;

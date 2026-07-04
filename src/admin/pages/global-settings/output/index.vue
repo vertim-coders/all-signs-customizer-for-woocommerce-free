@@ -6,32 +6,32 @@
 
     <template v-else>
       <section class="ascwo-output-hero ascwo-ui-card">
-        <h2>{{ __("Output", "all-signs-customizer-for-woocommerce-pro") }}</h2>
-        <p>{{ __("Configure exported file naming and output notification emails.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+        <h2>{{ __("Output", "all-signs-customizer-for-woocommerce") }}</h2>
+        <p>{{ __("Configure exported file naming and output notification emails.", "all-signs-customizer-for-woocommerce") }}</p>
       </section>
 
       <form class="ascwo-output-form" @submit.prevent="updateGlobalOutput">
         <section class="ascwo-output-card ascwo-ui-card">
-          <h3>{{ __("File Naming", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+          <h3>{{ __("File Naming", "all-signs-customizer-for-woocommerce") }}</h3>
           <div class="ascwo-output-setting-row">
             <div>
               <div class="ascwo-output-toggle-line">
-                <strong>{{ __("Use order id as zip name", "all-signs-customizer-for-woocommerce-pro") }}</strong>
+                <strong>{{ __("Use order id as zip name", "all-signs-customizer-for-woocommerce") }}</strong>
                 <label class="ascwo-output-switch">
                   <input type="checkbox" v-model="output.zipName" />
                   <span></span>
                 </label>
               </div>
-              <p>{{ __("Use the order id as the zip filename for uploaded customization assets.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+              <p>{{ __("Use the order id as the zip filename for uploaded customization assets.", "all-signs-customizer-for-woocommerce") }}</p>
             </div>
           </div>
         </section>
 
         <section class="ascwo-output-card ascwo-ui-card">
-          <h3>{{ __("Notifications", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+          <h3>{{ __("Notifications", "all-signs-customizer-for-woocommerce") }}</h3>
           <div class="ascwo-output-notification-toggles">
             <div class="ascwo-output-toggle-line">
-              <strong>{{ __("Send email to customer", "all-signs-customizer-for-woocommerce-pro") }}</strong>
+              <strong>{{ __("Send email to customer", "all-signs-customizer-for-woocommerce") }}</strong>
               <label class="ascwo-output-switch">
                 <input type="checkbox" v-model="output.enableSendMailToCustom" />
                 <span></span>
@@ -39,7 +39,7 @@
             </div>
 
             <div class="ascwo-output-toggle-line">
-              <strong>{{ __("Send email to admin", "all-signs-customizer-for-woocommerce-pro") }}</strong>
+              <strong>{{ __("Send email to admin", "all-signs-customizer-for-woocommerce") }}</strong>
               <label class="ascwo-output-switch">
                 <input type="checkbox" v-model="output.enableSendMailToAdmin" />
                 <span></span>
@@ -48,21 +48,21 @@
           </div>
 
           <label class="ascwo-output-field">
-            <span>{{ __("Admin recipient emails", "all-signs-customizer-for-woocommerce-pro") }}</span>
+            <span>{{ __("Admin recipient emails", "all-signs-customizer-for-woocommerce") }}</span>
             <input
               v-model.trim="output.ouputReceiverMails"
               type="text"
               class="ascwo-ui-input"
               autocomplete="off"
             />
-            <small>{{ __("Separate multiple emails with commas.", "all-signs-customizer-for-woocommerce-pro") }}</small>
+            <small>{{ __("Separate multiple emails with commas.", "all-signs-customizer-for-woocommerce") }}</small>
           </label>
         </section>
 
         <div class="ascwo-output-actions">
           <button type="submit" class="ascwo-ui-button-primary" :disabled="isLoading">
             <Loader2Icon v-if="isLoading" class="ascwo-output-save-loader" />
-            {{ __("Save Output", "all-signs-customizer-for-woocommerce-pro") }}
+            {{ __("Save Output", "all-signs-customizer-for-woocommerce") }}
           </button>
         </div>
       </form>
@@ -124,7 +124,7 @@ const updateGlobalOutput = async () => {
       output.value = payload;
       toastMessage(result.message, result.success === "same" ? "warning" : undefined);
     } else {
-      toastMessage(result?.message || __("The output settings update failed", "all-signs-customizer-for-woocommerce-pro"), "error");
+      toastMessage(result?.message || __("The output settings update failed", "all-signs-customizer-for-woocommerce"), "error");
     }
   } finally {
     isLoading.value = false;

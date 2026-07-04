@@ -122,10 +122,15 @@
         </div>
       </article>
 
-      <button type="button" class="ascwo-component-secondary ascwo-component-add-option" @click="addOption">
+      <button type="button" class="ascwo-component-secondary ascwo-component-add-option" :disabled="isLoading || additionalOption.options.length >= MAX_OPTIONS_PER_COMPONENT" @click="addOption">
         <PlusIcon :size="14" />
         Add option
       </button>
+      <p v-if="additionalOption.options.length >= MAX_OPTIONS_PER_COMPONENT" class="ascwo-component-limit-note">
+        Free limit reached. Upgrade to Pro at
+        <a :href="proUpgradeUrl" target="_blank" rel="noopener noreferrer">{{ proUpgradeUrl }}</a>
+        to add more than 5 options.
+      </p>
     </div>
 
     <footer class="ascwo-component-footer">
@@ -154,6 +159,8 @@ const isFetching = ref(true);
 const isLoading = ref(false);
 const expandedOption = ref(0);
 const materialColors = ref([]);
+const MAX_OPTIONS_PER_COMPONENT = 5;
+const proUpgradeUrl = 'https://signsdesigner.us/all-signs-customizer-for-woocommerce/';
 const additionalOption = ref({
   title: '',
   description: '',
@@ -213,6 +220,13 @@ const optionSummary = (item) => {
 };
 
 const addOption = () => {
+  if (additionalOption.value.options.length >= MAX_OPTIONS_PER_COMPONENT) {
+    toastMessage(
+      `The free version supports only 5 options per additional component. Upgrade to Pro: ${proUpgradeUrl}`,
+      'warning'
+    );
+    return;
+  }
   additionalOption.value.options.push(normalizeOption({ title: `Option ${additionalOption.value.options.length + 1}` }));
   expandedOption.value = additionalOption.value.options.length - 1;
 };

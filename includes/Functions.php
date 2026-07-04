@@ -160,7 +160,7 @@ function ascwo_add_custom_design_to_cart_ajax()
                 $newly_added_cart_item_key = ascwo_add_designs_to_cart($main_variation_id, $recaps, $ascwo_previews, $quantity);
 
                 if ($newly_added_cart_item_key) {
-                    $message = __('Product successfully added to cart.', "all-signs-customizer-for-woocommerce-pro");
+                    $message = __('Product successfully added to cart.', "all-signs-customizer-for-woocommerce");
                     if ($redirectToCheckOut === "true" || $redirectToCheckOut === true) {
                         $url = wc_get_checkout_url();
                     } else {
@@ -175,7 +175,7 @@ function ascwo_add_custom_design_to_cart_ajax()
 
                     ));
                 } else {
-                    $message = __('A problem occured while adding the product to the cart. Please try again.', "all-signs-customizer-for-woocommerce-pro");
+                    $message = __('A problem occured while adding the product to the cart. Please try again.', "all-signs-customizer-for-woocommerce");
                     wp_send_json(array(
                         'success' => false,
                         'message' => $message,
@@ -185,7 +185,7 @@ function ascwo_add_custom_design_to_cart_ajax()
 
             }
         } else {
-            wp_send_json(array('message' => __("Missing product ID", "all-signs-customizer-for-woocommerce-pro")));
+            wp_send_json(array('message' => __("Missing product ID", "all-signs-customizer-for-woocommerce")));
         }
     } else {
         wp_send_json(array('message' => 'nonce invalid.'));
@@ -405,75 +405,4 @@ function ascwo_get_filename_without_extension($file_url)
     $file_name = pathinfo($file_path, PATHINFO_FILENAME);
 
     return $file_name;
-}
-
-/**
- * Get the current license status snapshot.
- *
- * The status is stored in the `ascwo_license_data` option and normalized into
- * a server-time based payload so admin screens can compare timestamps without
- * relying on the browser clock.
- *
- * @return array{
- *     timestamp:int,
- *     time:int,
- *     seconds_until:int,
- *     source:string,
- *     needs_fallback:bool,
- *     date:string,
- *     last_checked:string,
- *     timezone:string
- * }
- */
-function ascwo_get_license_status()
-{
-    $option_data = get_option('ascwo_license_data', false);
-    $timezone = function_exists('wp_timezone_string') ? wp_timezone_string() : get_option('timezone_string', 'UTC');
-    if (is_array($option_data)) {
-        $timestamp = isset($option_data['timestamp']) ? (int) $option_data['timestamp'] : 0;
-        $seconds_until = max(0, $timestamp - time());
-
-        return [
-            'timestamp' => $timestamp,
-            'time' => time(),
-            'seconds_until' => $seconds_until,
-            'source' => 'option',
-            'needs_fallback' => false,
-            'date' => isset($option_data['date']) ? (string) $option_data['date'] : '',
-            'last_checked' => isset($option_data['last_checked']) ? (string) $option_data['last_checked'] : '',
-            'timezone' => isset($option_data['timezone']) ? (string) $option_data['timezone'] : (string) $timezone,
-        ];
-    }
-
-    return [
-        'timestamp' => 0,
-        'time' => time(),
-        'seconds_until' => 0,
-        'source' => 'default',
-        'needs_fallback' => true,
-        'date' => '',
-        'last_checked' => '',
-        'timezone' => (string) $timezone,
-    ];
-}
-
-/**
- * Return the cached license expiry timestamp.
- *
- * Expired timestamps are flushed from the option cache so the admin always
- * works with a fresh activation state.
- *
- * @return int
- */
-function ascwo_get_license_cache_timestamp(): int
-{
-    $status = ascwo_get_license_status();
-    $timestamp = isset($status['timestamp']) ? (int) $status['timestamp'] : 0;
-    if ($timestamp > 0 && $timestamp <= time()) {
-        delete_option('ascwo_license_data');
-        wp_cache_delete('ascwo_license_data', 'options');
-        return 0;
-    }
-
-    return $timestamp;
 }

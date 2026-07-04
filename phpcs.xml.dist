@@ -2,7 +2,7 @@
 <ruleset name="All Sign Customizer for WooCommerce Pro">
 	<description>WordPress coding standards baseline for the plugin PHP code.</description>
 
-	<file>all-signs-customizer-for-woocommerce-pro.php</file>
+	<file>all-signs-customizer-for-woocommerce.php</file>
 	<file>includes</file>
 
 	<exclude-pattern>includes/tcpdf/*</exclude-pattern>

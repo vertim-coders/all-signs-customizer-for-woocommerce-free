@@ -4,16 +4,16 @@
       <section class="ascwo-card">
         <div class="ascwo-card-inner ascwo-flex ascwo-items-center ascwo-justify-between ascwo-gap-4">
           <div>
-            <h2 class="ascwo-title">{{ __("Fixing Methods", "all-signs-customizer-for-woocommerce-pro") }}</h2>
-            <p class="ascwo-subtitle">{{ __("Manage the fixing methods available in this config.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+            <h2 class="ascwo-title">{{ __("Fixing Methods", "all-signs-customizer-for-woocommerce") }}</h2>
+            <p class="ascwo-subtitle">{{ __("Manage the fixing methods available in this config.", "all-signs-customizer-for-woocommerce") }}</p>
           </div>
           <div class="ascwo-flex ascwo-items-center ascwo-gap-2">
             <button type="button" @click="newFixing" class="ascwo-primary-button">
               <PlusIcon class="ascwo-w-4 ascwo-h-4" />
-              {{ __("Add fixing method", "all-signs-customizer-for-woocommerce-pro") }}
+              {{ __("Add fixing method", "all-signs-customizer-for-woocommerce") }}
             </button>
             <button type="button" @click="goToManageFixingMethods" class="ascwo-secondary-button">
-              {{ __("Manage fixing methods", "all-signs-customizer-for-woocommerce-pro") }}
+              {{ __("Manage fixing methods", "all-signs-customizer-for-woocommerce") }}
             </button>
           </div>
         </div>
@@ -21,16 +21,16 @@
 
       <section class="ascwo-card">
         <div class="ascwo-card-inner">
-          <h3 class="ascwo-section-title">{{ __("Fixing Methods List", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+          <h3 class="ascwo-section-title">{{ __("Fixing Methods List", "all-signs-customizer-for-woocommerce") }}</h3>
           <table class="ascwo-fixing-table ascwo-w-full ascwo-border-collapse">
             <thead class="ascwo-bg-[#f3f3f3]">
               <tr>
                 <th class="ascwo-w-10"></th>
-                <th>{{ __("Preview", "all-signs-customizer-for-woocommerce-pro") }}</th>
-                <th>{{ __("Label", "all-signs-customizer-for-woocommerce-pro") }}</th>
-                <th>{{ __("Price", "all-signs-customizer-for-woocommerce-pro") }}</th>
-                <th>{{ __("Default", "all-signs-customizer-for-woocommerce-pro") }}</th>
-                <th>{{ __("Actions", "all-signs-customizer-for-woocommerce-pro") }}</th>
+                <th>{{ __("Preview", "all-signs-customizer-for-woocommerce") }}</th>
+                <th>{{ __("Label", "all-signs-customizer-for-woocommerce") }}</th>
+                <th>{{ __("Price", "all-signs-customizer-for-woocommerce") }}</th>
+                <th>{{ __("Default", "all-signs-customizer-for-woocommerce") }}</th>
+                <th>{{ __("Actions", "all-signs-customizer-for-woocommerce") }}</th>
               </tr>
             </thead>
             <tbody>
@@ -41,7 +41,7 @@
               </tr>
               <tr v-else-if="fixingMethods.length === 0">
                 <td colspan="6" class="ascwo-text-center ascwo-py-8 ascwo-text-[13px] ascwo-text-[#616161]">
-                  {{ __("No fixing methods configured.", "all-signs-customizer-for-woocommerce-pro") }}
+                  {{ __("No fixing methods configured.", "all-signs-customizer-for-woocommerce") }}
                 </td>
               </tr>
               <tr
@@ -61,24 +61,24 @@
                     <WrenchIcon v-else class="ascwo-w-6 ascwo-h-6 ascwo-text-[#616161]" />
                   </div>
                 </td>
-                <td class="ascwo-row-strong">{{ fx.label || fx.name || getManagedMethod(fx)?.name || __("Unknown method", "all-signs-customizer-for-woocommerce-pro") }}</td>
+                <td class="ascwo-row-strong">{{ fx.label || fx.name || getManagedMethod(fx)?.name || __("Unknown method", "all-signs-customizer-for-woocommerce") }}</td>
                 <td>{{ Number(fx.additionalPrice || 0) }}</td>
                 <td>
                   <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
-                    <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                    <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce") }}</span>
                     <button type="button" :disabled="isLoading" @click="selectDefault(fx.id)" :class="['ascwo-toggle', fx.isDefault ? 'is-active' : '', defaultActionId === fx.id ? 'is-loading' : '']"><span></span></button>
-                    <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                    <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce") }}</span>
                   </div>
                 </td>
                 <td>
                   <div class="ascwo-flex ascwo-items-center ascwo-gap-3">
                     <button type="button" @click="selectMaterialFixingMethod(fx.id, fx)" class="ascwo-outline-button">
                       <Edit2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
-                      {{ __("Edit", "all-signs-customizer-for-woocommerce-pro") }}
+                      {{ __("Edit", "all-signs-customizer-for-woocommerce") }}
                     </button>
                     <button type="button" @click="selectMaterialFixingMethod(fx.id, fx, true)" class="ascwo-link-danger">
                       <Trash2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
-                      {{ __("Delete", "all-signs-customizer-for-woocommerce-pro") }}
+                      {{ __("Delete", "all-signs-customizer-for-woocommerce") }}
                     </button>
                   </div>
                 </td>
@@ -91,34 +91,34 @@
 
     <section v-else class="ascwo-card">
       <div class="ascwo-card-inner ascwo-flex ascwo-justify-end">
-        <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Back to fixing methods", "all-signs-customizer-for-woocommerce-pro") }}</button>
+        <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Back to fixing methods", "all-signs-customizer-for-woocommerce") }}</button>
       </div>
       <div class="ascwo-card-inner ascwo-form-body">
-        <h3 class="ascwo-section-title">{{ isEdit ? __("Edit fixing method", "all-signs-customizer-for-woocommerce-pro") : __("Add fixing method", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+        <h3 class="ascwo-section-title">{{ isEdit ? __("Edit fixing method", "all-signs-customizer-for-woocommerce") : __("Add fixing method", "all-signs-customizer-for-woocommerce") }}</h3>
 
         <div class="ascwo-field-block">
-          <span class="ascwo-form-label">{{ __("Source", "all-signs-customizer-for-woocommerce-pro") }}</span>
+          <span class="ascwo-form-label">{{ __("Source", "all-signs-customizer-for-woocommerce") }}</span>
           <div class="ascwo-flex ascwo-items-center ascwo-gap-5">
             <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
-              <span class="ascwo-toggle-label">{{ __("Managed", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <span class="ascwo-toggle-label">{{ __("Managed", "all-signs-customizer-for-woocommerce") }}</span>
               <button type="button" class="ascwo-toggle is-active"><span></span></button>
             </div>
             <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
-              <span class="ascwo-toggle-label">{{ __("Custom", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <span class="ascwo-toggle-label">{{ __("Custom", "all-signs-customizer-for-woocommerce") }}</span>
               <button type="button" class="ascwo-toggle" disabled><span></span></button>
             </div>
           </div>
         </div>
 
         <label class="ascwo-field-block">
-          <span class="ascwo-form-label">{{ __("Fixing method", "all-signs-customizer-for-woocommerce-pro") }}</span>
+          <span class="ascwo-form-label">{{ __("Fixing method", "all-signs-customizer-for-woocommerce") }}</span>
           <select v-model="fixingMethod.fixingMethodId" class="ascwo-form-input">
-            <option :value="-1">{{ __("None", "all-signs-customizer-for-woocommerce-pro") }}</option>
+            <option :value="-1">{{ __("None", "all-signs-customizer-for-woocommerce") }}</option>
             <option v-for="option in availableManagedMethods" :key="option.value" :value="option.value">
               {{ option.name }}
             </option>
           </select>
-          <span class="ascwo-help-text">{{ __("Choose a fixing method from your managed fixing methods library. If the option is missing, add it in `Manage fixing methods` first.", "all-signs-customizer-for-woocommerce-pro") }}</span>
+          <span class="ascwo-help-text">{{ __("Choose a fixing method from your managed fixing methods library. If the option is missing, add it in `Manage fixing methods` first.", "all-signs-customizer-for-woocommerce") }}</span>
         </label>
 
         <div class="ascwo-selected-preview">
@@ -127,21 +127,21 @@
             <BanIcon v-else class="ascwo-w-9 ascwo-h-9 ascwo-text-[#111827]" />
           </div>
           <div>
-            <div class="ascwo-row-strong">{{ selectedManagedMethod?.name || __("None", "all-signs-customizer-for-woocommerce-pro") }}</div>
-            <p class="ascwo-help-text ascwo-m-0">{{ selectedManagedMethod?.description || __("Preview of the fixing method selected for this config.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+            <div class="ascwo-row-strong">{{ selectedManagedMethod?.name || __("None", "all-signs-customizer-for-woocommerce") }}</div>
+            <p class="ascwo-help-text ascwo-m-0">{{ selectedManagedMethod?.description || __("Preview of the fixing method selected for this config.", "all-signs-customizer-for-woocommerce") }}</p>
           </div>
         </div>
 
         <label class="ascwo-field-block">
-          <span class="ascwo-form-label">{{ __("Additional price", "all-signs-customizer-for-woocommerce-pro") }}</span>
+          <span class="ascwo-form-label">{{ __("Additional price", "all-signs-customizer-for-woocommerce") }}</span>
           <input type="number" v-model="fixingMethod.additionalPrice" class="ascwo-form-input" />
         </label>
 
         <div class="ascwo-field-block">
-          <span class="ascwo-form-label">{{ __("Exclude sizes", "all-signs-customizer-for-woocommerce-pro") }}</span>
+          <span class="ascwo-form-label">{{ __("Exclude sizes", "all-signs-customizer-for-woocommerce") }}</span>
           <div class="ascwo-combobox" @click.stop>
             <button type="button" class="ascwo-combobox-control" @click="toggleExclusionPicker('sizes')">
-              <span v-if="!normalizeArray(fixingMethod.excludeSizes).length" class="ascwo-combobox-placeholder">{{ __("Select excluded sizes", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <span v-if="!normalizeArray(fixingMethod.excludeSizes).length" class="ascwo-combobox-placeholder">{{ __("Select excluded sizes", "all-signs-customizer-for-woocommerce") }}</span>
               <span v-else class="ascwo-combobox-tags">
                 <span v-for="item in selectedExclusionLabels('excludeSizes', 'sizes')" :key="`size-tag-${item.value}`" class="ascwo-combobox-tag">
                   {{ item.label }}
@@ -151,7 +151,7 @@
               <ChevronDownIcon class="ascwo-combobox-icon" />
             </button>
             <div v-if="openExclusionPicker === 'sizes'" class="ascwo-combobox-popover">
-              <input v-model="exclusionSearch.sizes" type="search" class="ascwo-combobox-search" :placeholder="__('Search sizes', 'all-signs-customizer-for-woocommerce-pro')" />
+              <input v-model="exclusionSearch.sizes" type="search" class="ascwo-combobox-search" :placeholder="__('Search sizes', 'all-signs-customizer-for-woocommerce')" />
               <button
                 v-for="size in filteredExclusionOptions('sizes')"
                 :key="`size-option-${size.value}`"
@@ -163,15 +163,15 @@
               </button>
             </div>
           </div>
-          <span class="ascwo-help-text">{{ __("Hide this fixing method for selected sizes.", "all-signs-customizer-for-woocommerce-pro") }}</span>
-          <span class="ascwo-help-text">{{ exclusionSummaryLabels('excludeSizes', 'sizes', __("No sizes excluded.", "all-signs-customizer-for-woocommerce-pro"), __("Excluded sizes:", "all-signs-customizer-for-woocommerce-pro")) }}</span>
+          <span class="ascwo-help-text">{{ __("Hide this fixing method for selected sizes.", "all-signs-customizer-for-woocommerce") }}</span>
+          <span class="ascwo-help-text">{{ exclusionSummaryLabels('excludeSizes', 'sizes', __("No sizes excluded.", "all-signs-customizer-for-woocommerce"), __("Excluded sizes:", "all-signs-customizer-for-woocommerce")) }}</span>
         </div>
 
         <div class="ascwo-field-block">
-          <span class="ascwo-form-label">{{ __("Exclude shapes", "all-signs-customizer-for-woocommerce-pro") }}</span>
+          <span class="ascwo-form-label">{{ __("Exclude shapes", "all-signs-customizer-for-woocommerce") }}</span>
           <div class="ascwo-combobox" @click.stop>
             <button type="button" class="ascwo-combobox-control" @click="toggleExclusionPicker('shapes')">
-              <span v-if="!normalizeArray(fixingMethod.excludeShapes).length" class="ascwo-combobox-placeholder">{{ __("Select excluded shapes", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <span v-if="!normalizeArray(fixingMethod.excludeShapes).length" class="ascwo-combobox-placeholder">{{ __("Select excluded shapes", "all-signs-customizer-for-woocommerce") }}</span>
               <span v-else class="ascwo-combobox-tags">
                 <span v-for="item in selectedExclusionLabels('excludeShapes', 'shapes')" :key="`shape-tag-${item.value}`" class="ascwo-combobox-tag">
                   {{ item.label }}
@@ -181,7 +181,7 @@
               <ChevronDownIcon class="ascwo-combobox-icon" />
             </button>
             <div v-if="openExclusionPicker === 'shapes'" class="ascwo-combobox-popover">
-              <input v-model="exclusionSearch.shapes" type="search" class="ascwo-combobox-search" :placeholder="__('Search shapes', 'all-signs-customizer-for-woocommerce-pro')" />
+              <input v-model="exclusionSearch.shapes" type="search" class="ascwo-combobox-search" :placeholder="__('Search shapes', 'all-signs-customizer-for-woocommerce')" />
               <button
                 v-for="shape in filteredExclusionOptions('shapes')"
                 :key="`shape-option-${shape.value}`"
@@ -193,14 +193,14 @@
               </button>
             </div>
           </div>
-          <span class="ascwo-help-text">{{ __("Hide this fixing method for selected shapes.", "all-signs-customizer-for-woocommerce-pro") }}</span>
-          <span class="ascwo-help-text">{{ exclusionSummaryLabels('excludeShapes', 'shapes', __("No shapes excluded.", "all-signs-customizer-for-woocommerce-pro"), __("Excluded shapes:", "all-signs-customizer-for-woocommerce-pro")) }}</span>
+          <span class="ascwo-help-text">{{ __("Hide this fixing method for selected shapes.", "all-signs-customizer-for-woocommerce") }}</span>
+          <span class="ascwo-help-text">{{ exclusionSummaryLabels('excludeShapes', 'shapes', __("No shapes excluded.", "all-signs-customizer-for-woocommerce"), __("Excluded shapes:", "all-signs-customizer-for-woocommerce")) }}</span>
         </div>
       </div>
       <div class="ascwo-form-footer">
-        <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Back to fixing methods", "all-signs-customizer-for-woocommerce-pro") }}</button>
+        <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Back to fixing methods", "all-signs-customizer-for-woocommerce") }}</button>
         <button type="button" @click="isEdit ? updateMaterialFixingMethods() : addFixingMethods()" :disabled="isLoading || !fixingMethod.fixingMethodId || fixingMethod.fixingMethodId === -1" class="ascwo-primary-button">
-          {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce-pro") : __("Save fixing method", "all-signs-customizer-for-woocommerce-pro") }}
+          {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce") : __("Save fixing method", "all-signs-customizer-for-woocommerce") }}
         </button>
       </div>
     </section>
@@ -208,11 +208,11 @@
     <div v-if="openModal" class="ascwo-fixed ascwo-inset-0 ascwo-z-[20000] ascwo-flex ascwo-items-center ascwo-justify-center">
       <div class="ascwo-absolute ascwo-inset-0 ascwo-bg-black/45" @click="closeModal"></div>
       <div class="ascwo-delete-modal">
-        <h3 class="ascwo-text-[16px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-2">{{ __("Delete fixing method?", "all-signs-customizer-for-woocommerce-pro") }}</h3>
-        <p class="ascwo-text-[13px] ascwo-text-[#616161] ascwo-mt-0 ascwo-mb-5">{{ __("Are you sure you want to delete this fixing method?", "all-signs-customizer-for-woocommerce-pro") }}</p>
+        <h3 class="ascwo-text-[16px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-2">{{ __("Delete fixing method?", "all-signs-customizer-for-woocommerce") }}</h3>
+        <p class="ascwo-text-[13px] ascwo-text-[#616161] ascwo-mt-0 ascwo-mb-5">{{ __("Are you sure you want to delete this fixing method?", "all-signs-customizer-for-woocommerce") }}</p>
         <div class="ascwo-flex ascwo-justify-end ascwo-gap-2">
-          <button type="button" @click="closeModal" class="ascwo-secondary-button">{{ __("Cancel", "all-signs-customizer-for-woocommerce-pro") }}</button>
-          <button type="button" @click="deleteFixingMethods" :disabled="isLoading" class="ascwo-danger-button">{{ __("Delete", "all-signs-customizer-for-woocommerce-pro") }}</button>
+          <button type="button" @click="closeModal" class="ascwo-secondary-button">{{ __("Cancel", "all-signs-customizer-for-woocommerce") }}</button>
+          <button type="button" @click="deleteFixingMethods" :disabled="isLoading" class="ascwo-danger-button">{{ __("Delete", "all-signs-customizer-for-woocommerce") }}</button>
         </div>
       </div>
     </div>
@@ -399,7 +399,7 @@ const updateFixingMethods = async () => {
       isEdit.value = false;
       await fetchMaterialFixingMethods();
     } else {
-      toastMessage(res?.message || __("Unable to save fixing methods", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(res?.message || __("Unable to save fixing methods", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -417,7 +417,7 @@ const addFixingMethods = async () => {
       isEdit.value = false;
       await fetchMaterialFixingMethods();
     } else {
-      toastMessage(res?.message || __("Unable to add fixing method", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(res?.message || __("Unable to add fixing method", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -435,7 +435,7 @@ const updateMaterialFixingMethods = async () => {
       isEdit.value = false;
       await fetchMaterialFixingMethods();
     } else {
-      toastMessage(res?.message || __("Unable to update fixing method", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(res?.message || __("Unable to update fixing method", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -454,7 +454,7 @@ const deleteFixingMethods = async () => {
       isEdit.value = false;
       await fetchMaterialFixingMethods();
     } else {
-      toastMessage(res?.message || __("Unable to delete fixing method", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(res?.message || __("Unable to delete fixing method", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -490,10 +490,10 @@ const selectDefault = async (key) => {
   try {
     const res = await api.setRequiredOptionDefault(configID.value, "fixing-methods", key);
     if (res?.success) {
-      toastMessage(res.message || __("Default fixing method updated", "all-signs-customizer-for-woocommerce-pro"));
+      toastMessage(res.message || __("Default fixing method updated", "all-signs-customizer-for-woocommerce"));
       await fetchMaterialFixingMethods();
     } else {
-      toastMessage(res?.message || __("Unable to update default fixing method", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(res?.message || __("Unable to update default fixing method", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -504,7 +504,7 @@ const selectDefault = async (key) => {
 const newFixing = () => {
   const firstAvailable = availableManagedMethods.value[0];
   if (!firstAvailable) {
-    toastMessage(__("No more fixing methods available", "all-signs-customizer-for-woocommerce-pro"), "warning");
+    toastMessage(__("No more fixing methods available", "all-signs-customizer-for-woocommerce"), "warning");
     return;
   }
   fixingMethod.value = { isDefault: false, fixingMethodId: firstAvailable?.value || "", excludeSizes: [], excludeShapes: [], additionalPrice: 0 };

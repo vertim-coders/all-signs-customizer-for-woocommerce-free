@@ -4,16 +4,16 @@
       <section class="ascwo-card">
         <div class="ascwo-card-inner ascwo-flex ascwo-items-center ascwo-justify-between ascwo-gap-4">
           <div>
-            <h2 class="ascwo-title">{{ __("Shapes", "all-signs-customizer-for-woocommerce-pro") }}</h2>
-            <p class="ascwo-subtitle">{{ __("Manage the shapes available in this config.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+            <h2 class="ascwo-title">{{ __("Shapes", "all-signs-customizer-for-woocommerce") }}</h2>
+            <p class="ascwo-subtitle">{{ __("Manage the shapes available in this config.", "all-signs-customizer-for-woocommerce") }}</p>
           </div>
           <div class="ascwo-flex ascwo-items-center ascwo-gap-2">
             <button type="button" @click="newShape" class="ascwo-primary-button">
               <PlusIcon class="ascwo-w-4 ascwo-h-4" />
-              {{ __("Add shape", "all-signs-customizer-for-woocommerce-pro") }}
+              {{ __("Add shape", "all-signs-customizer-for-woocommerce") }}
             </button>
             <button type="button" @click="goToManageShapes" class="ascwo-secondary-button">
-              {{ __("Manage shapes", "all-signs-customizer-for-woocommerce-pro") }}
+              {{ __("Manage shapes", "all-signs-customizer-for-woocommerce") }}
             </button>
           </div>
         </div>
@@ -21,16 +21,16 @@
 
       <section class="ascwo-card">
         <div class="ascwo-card-inner">
-          <h3 class="ascwo-section-title">{{ __("Shapes List", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+          <h3 class="ascwo-section-title">{{ __("Shapes List", "all-signs-customizer-for-woocommerce") }}</h3>
           <table class="ascwo-shapes-table ascwo-w-full ascwo-border-collapse">
             <thead class="ascwo-bg-[#f3f3f3]">
               <tr>
                 <th class="ascwo-w-10"></th>
-                <th>{{ __("Preview", "all-signs-customizer-for-woocommerce-pro") }}</th>
-                <th>{{ __("Label", "all-signs-customizer-for-woocommerce-pro") }}</th>
-                <th>{{ __("Price", "all-signs-customizer-for-woocommerce-pro") }}</th>
-                <th>{{ __("Default", "all-signs-customizer-for-woocommerce-pro") }}</th>
-                <th>{{ __("Actions", "all-signs-customizer-for-woocommerce-pro") }}</th>
+                <th>{{ __("Preview", "all-signs-customizer-for-woocommerce") }}</th>
+                <th>{{ __("Label", "all-signs-customizer-for-woocommerce") }}</th>
+                <th>{{ __("Price", "all-signs-customizer-for-woocommerce") }}</th>
+                <th>{{ __("Default", "all-signs-customizer-for-woocommerce") }}</th>
+                <th>{{ __("Actions", "all-signs-customizer-for-woocommerce") }}</th>
               </tr>
             </thead>
             <tbody>
@@ -41,7 +41,7 @@
               </tr>
               <tr v-else-if="shapes.length === 0">
                 <td colspan="6" class="ascwo-text-center ascwo-py-8 ascwo-text-[13px] ascwo-text-[#616161]">
-                  {{ __("No shapes configured.", "all-signs-customizer-for-woocommerce-pro") }}
+                  {{ __("No shapes configured.", "all-signs-customizer-for-woocommerce") }}
                 </td>
               </tr>
               <tr
@@ -61,24 +61,24 @@
                     <ShapesIcon v-else class="ascwo-w-7 ascwo-h-7 ascwo-text-[#111827]" />
                   </div>
                 </td>
-                <td class="ascwo-row-strong">{{ getManagedShape(sh)?.name || __("Unknown shape", "all-signs-customizer-for-woocommerce-pro") }}</td>
+                <td class="ascwo-row-strong">{{ getManagedShape(sh)?.name || __("Unknown shape", "all-signs-customizer-for-woocommerce") }}</td>
                 <td>{{ Number(sh.additionalPrice || 0) }}</td>
                 <td>
                   <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
-                    <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                    <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce") }}</span>
                     <button type="button" :disabled="isLoading" @click="selectDefault(sh.id)" :class="['ascwo-toggle', sh.isDefault ? 'is-active' : '', defaultActionId === sh.id ? 'is-loading' : '']"><span></span></button>
-                    <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                    <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce") }}</span>
                   </div>
                 </td>
                 <td>
                   <div class="ascwo-flex ascwo-items-center ascwo-gap-3">
                     <button type="button" @click="selectMaterialShape(sh.shapeId, sh)" class="ascwo-outline-button">
                       <Edit2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
-                      {{ __("Edit", "all-signs-customizer-for-woocommerce-pro") }}
+                      {{ __("Edit", "all-signs-customizer-for-woocommerce") }}
                     </button>
                     <button type="button" @click="selectMaterialShape(sh.shapeId, sh, true)" class="ascwo-link-danger">
                       <Trash2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
-                      {{ __("Delete", "all-signs-customizer-for-woocommerce-pro") }}
+                      {{ __("Delete", "all-signs-customizer-for-woocommerce") }}
                     </button>
                   </div>
                 </td>
@@ -91,13 +91,13 @@
 
     <section v-else class="ascwo-card">
       <div class="ascwo-card-inner ascwo-flex ascwo-justify-end">
-        <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Back to shapes", "all-signs-customizer-for-woocommerce-pro") }}</button>
+        <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Back to shapes", "all-signs-customizer-for-woocommerce") }}</button>
       </div>
       <div class="ascwo-card-inner ascwo-form-body">
-        <h3 class="ascwo-section-title">{{ isEdit ? __("Edit shape", "all-signs-customizer-for-woocommerce-pro") : __("Add shape", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+        <h3 class="ascwo-section-title">{{ isEdit ? __("Edit shape", "all-signs-customizer-for-woocommerce") : __("Add shape", "all-signs-customizer-for-woocommerce") }}</h3>
 
         <label class="ascwo-field-block">
-          <span class="ascwo-form-label">{{ __("Shape", "all-signs-customizer-for-woocommerce-pro") }}</span>
+          <span class="ascwo-form-label">{{ __("Shape", "all-signs-customizer-for-woocommerce") }}</span>
           <select v-model="shape.shapeId" class="ascwo-form-input">
             <option v-for="option in availableManagedShapes" :key="option.value" :value="option.value">
               {{ option.name }}
@@ -111,13 +111,13 @@
             <ShapesIcon v-else class="ascwo-w-9 ascwo-h-9 ascwo-text-[#111827]" />
           </div>
           <div>
-            <div class="ascwo-row-strong">{{ selectedManagedShape?.name || __("None", "all-signs-customizer-for-woocommerce-pro") }}</div>
-            <p class="ascwo-help-text ascwo-m-0">{{ selectedManagedShape?.value || __("Preview of the shape selected for this config.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+            <div class="ascwo-row-strong">{{ selectedManagedShape?.name || __("None", "all-signs-customizer-for-woocommerce") }}</div>
+            <p class="ascwo-help-text ascwo-m-0">{{ selectedManagedShape?.value || __("Preview of the shape selected for this config.", "all-signs-customizer-for-woocommerce") }}</p>
           </div>
         </div>
 
         <label class="ascwo-field-block">
-          <span class="ascwo-form-label">{{ __("Additional price", "all-signs-customizer-for-woocommerce-pro") }}</span>
+          <span class="ascwo-form-label">{{ __("Additional price", "all-signs-customizer-for-woocommerce") }}</span>
           <input type="number" v-model="shape.additionalPrice" class="ascwo-form-input" />
         </label>
 
@@ -129,9 +129,9 @@
         </div>
       </div>
       <div class="ascwo-form-footer">
-        <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Back to shapes", "all-signs-customizer-for-woocommerce-pro") }}</button>
+        <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Back to shapes", "all-signs-customizer-for-woocommerce") }}</button>
         <button type="button" @click="isEdit ? updateMaterialShapes() : addShapes()" :disabled="isLoading || !shape.shapeId" class="ascwo-primary-button">
-          {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce-pro") : __("Save shape", "all-signs-customizer-for-woocommerce-pro") }}
+          {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce") : __("Save shape", "all-signs-customizer-for-woocommerce") }}
         </button>
       </div>
     </section>
@@ -139,11 +139,11 @@
     <div v-if="openModal" class="ascwo-fixed ascwo-inset-0 ascwo-z-[20000] ascwo-flex ascwo-items-center ascwo-justify-center">
       <div class="ascwo-absolute ascwo-inset-0 ascwo-bg-black/45" @click="closeModal"></div>
       <div class="ascwo-delete-modal">
-        <h3 class="ascwo-text-[16px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-2">{{ __("Delete shape?", "all-signs-customizer-for-woocommerce-pro") }}</h3>
-        <p class="ascwo-text-[13px] ascwo-text-[#616161] ascwo-mt-0 ascwo-mb-5">{{ __("Are you sure you want to delete this shape?", "all-signs-customizer-for-woocommerce-pro") }}</p>
+        <h3 class="ascwo-text-[16px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-2">{{ __("Delete shape?", "all-signs-customizer-for-woocommerce") }}</h3>
+        <p class="ascwo-text-[13px] ascwo-text-[#616161] ascwo-mt-0 ascwo-mb-5">{{ __("Are you sure you want to delete this shape?", "all-signs-customizer-for-woocommerce") }}</p>
         <div class="ascwo-flex ascwo-justify-end ascwo-gap-2">
-          <button type="button" @click="closeModal" class="ascwo-secondary-button">{{ __("Cancel", "all-signs-customizer-for-woocommerce-pro") }}</button>
-          <button type="button" @click="deleteShapes" :disabled="isLoading" class="ascwo-danger-button">{{ __("Delete", "all-signs-customizer-for-woocommerce-pro") }}</button>
+          <button type="button" @click="closeModal" class="ascwo-secondary-button">{{ __("Cancel", "all-signs-customizer-for-woocommerce") }}</button>
+          <button type="button" @click="deleteShapes" :disabled="isLoading" class="ascwo-danger-button">{{ __("Delete", "all-signs-customizer-for-woocommerce") }}</button>
         </div>
       </div>
     </div>
@@ -234,7 +234,7 @@ const updateShapes = async () => {
       isEdit.value = false;
       await fetchMaterialShapes();
     } else {
-      toastMessage(res?.message || __("Unable to save shapes", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(res?.message || __("Unable to save shapes", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -254,7 +254,7 @@ const addShapes = async () => {
       isEdit.value = false;
       await fetchMaterialShapes();
     } else {
-      toastMessage(res?.message || __("Unable to add shape", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(res?.message || __("Unable to add shape", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -274,7 +274,7 @@ const updateMaterialShapes = async () => {
       isEdit.value = false;
       await fetchMaterialShapes();
     } else {
-      toastMessage(res?.message || __("Unable to update shape", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(res?.message || __("Unable to update shape", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -293,7 +293,7 @@ const deleteShapes = async () => {
       isEdit.value = false;
       await fetchMaterialShapes();
     } else {
-      toastMessage(res?.message || __("Unable to delete shape", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(res?.message || __("Unable to delete shape", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -318,10 +318,10 @@ const selectDefault = async (key) => {
   try {
     const res = await api.setRequiredOptionDefault(configID.value, "shapes", key);
     if (res?.success) {
-      toastMessage(res.message || __("Default shape updated", "all-signs-customizer-for-woocommerce-pro"));
+      toastMessage(res.message || __("Default shape updated", "all-signs-customizer-for-woocommerce"));
       await fetchMaterialShapes();
     } else {
-      toastMessage(res?.message || __("Unable to update default shape", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(res?.message || __("Unable to update default shape", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -332,7 +332,7 @@ const selectDefault = async (key) => {
 const newShape = () => {
   const firstAvailable = availableManagedShapes.value[0]?.value;
   if (firstAvailable === undefined) {
-    toastMessage(__("No more shapes available", "all-signs-customizer-for-woocommerce-pro"), "warning");
+    toastMessage(__("No more shapes available", "all-signs-customizer-for-woocommerce"), "warning");
     return;
   }
   shapeId.value = "";

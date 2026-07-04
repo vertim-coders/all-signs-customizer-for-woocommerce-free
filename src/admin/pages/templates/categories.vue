@@ -5,18 +5,15 @@
         <div class="ascwo-template-category-title-row">
           <h1>
             {{
-              __(
-                "Template Categories",
-                "all-signs-customizer-for-woocommerce-pro",
-              )
+              __("Template Categories", "all-signs-customizer-for-woocommerce")
             }}
           </h1>
           <span class="ascwo-template-category-count-pill">
             {{ filteredCategories.length }}
             {{
               filteredCategories.length > 1
-                ? __("categories", "all-signs-customizer-for-woocommerce-pro")
-                : __("category", "all-signs-customizer-for-woocommerce-pro")
+                ? __("categories", "all-signs-customizer-for-woocommerce")
+                : __("category", "all-signs-customizer-for-woocommerce")
             }}
           </span>
         </div>
@@ -24,7 +21,7 @@
           {{
             __(
               "Organize templates with categories used across the templates module.",
-              "all-signs-customizer-for-woocommerce-pro",
+              "all-signs-customizer-for-woocommerce",
             )
           }}
         </p>
@@ -36,25 +33,20 @@
             v-model="search"
             type="search"
             :placeholder="
-              __(
-                'Search categories',
-                'all-signs-customizer-for-woocommerce-pro',
-              )
+              __('Search categories', 'all-signs-customizer-for-woocommerce')
             "
           />
         </label>
         <button type="button" @click="openCreateModal">
           <PlusIcon />
-          {{
-            __("Add new category", "all-signs-customizer-for-woocommerce-pro")
-          }}
+          {{ __("Add new category", "all-signs-customizer-for-woocommerce") }}
         </button>
       </div>
     </section>
 
     <section class="ascwo-template-category-list">
       <h2>
-        {{ __("Categories List", "all-signs-customizer-for-woocommerce-pro") }}
+        {{ __("Categories List", "all-signs-customizer-for-woocommerce") }}
       </h2>
 
       <div
@@ -64,24 +56,19 @@
         <img :src="asoLogo" alt="" />
         <h3>
           {{
-            __(
-              "No categories found",
-              "all-signs-customizer-for-woocommerce-pro",
-            )
+            __("No categories found", "all-signs-customizer-for-woocommerce")
           }}
         </h3>
         <p>
           {{
             __(
               "There is currently no category matching this search.",
-              "all-signs-customizer-for-woocommerce-pro",
+              "all-signs-customizer-for-woocommerce",
             )
           }}
         </p>
         <button type="button" @click="openCreateModal">
-          {{
-            __("Add new category", "all-signs-customizer-for-woocommerce-pro")
-          }}
+          {{ __("Add new category", "all-signs-customizer-for-woocommerce") }}
         </button>
       </div>
 
@@ -89,10 +76,10 @@
         <thead>
           <tr>
             <th>
-              {{ __("Name", "all-signs-customizer-for-woocommerce-pro") }}
+              {{ __("Name", "all-signs-customizer-for-woocommerce") }}
             </th>
             <th>
-              {{ __("Action", "all-signs-customizer-for-woocommerce-pro") }}
+              {{ __("Action", "all-signs-customizer-for-woocommerce") }}
             </th>
           </tr>
         </thead>
@@ -138,13 +125,10 @@
           <h2>
             {{
               isEdit
-                ? __(
-                    "Update category",
-                    "all-signs-customizer-for-woocommerce-pro",
-                  )
+                ? __("Update category", "all-signs-customizer-for-woocommerce")
                 : __(
                     "Create new category",
-                    "all-signs-customizer-for-woocommerce-pro",
+                    "all-signs-customizer-for-woocommerce",
                   )
             }}
           </h2>
@@ -153,7 +137,7 @@
         <div class="ascwo-template-category-modal-body">
           <label>
             <span>{{
-              __("Name", "all-signs-customizer-for-woocommerce-pro")
+              __("Name", "all-signs-customizer-for-woocommerce")
             }}</span>
             <input v-model="category" type="text" />
           </label>
@@ -164,7 +148,7 @@
             class="ascwo-template-category-secondary"
             @click="closeModal"
           >
-            {{ __("cancel", "all-signs-customizer-for-woocommerce-pro") }}
+            {{ __("cancel", "all-signs-customizer-for-woocommerce") }}
           </button>
           <button
             type="button"
@@ -174,10 +158,10 @@
           >
             {{
               isLoading
-                ? __("Saving...", "all-signs-customizer-for-woocommerce-pro")
+                ? __("Saving...", "all-signs-customizer-for-woocommerce")
                 : isEdit
-                ? __("Save", "all-signs-customizer-for-woocommerce-pro")
-                : __("Create", "all-signs-customizer-for-woocommerce-pro")
+                ? __("Save", "all-signs-customizer-for-woocommerce")
+                : __("Create", "all-signs-customizer-for-woocommerce")
             }}
           </button>
         </footer>
@@ -189,9 +173,7 @@
       <div class="ascwo-template-category-modal">
         <header>
           <h2>
-            {{
-              __("Delete category?", "all-signs-customizer-for-woocommerce-pro")
-            }}
+            {{ __("Delete category?", "all-signs-customizer-for-woocommerce") }}
           </h2>
           <button type="button" @click="closeModal"><XIcon /></button>
         </header>
@@ -200,7 +182,7 @@
             {{
               __(
                 "This action cannot be undone and may affect templates in this category.",
-                "all-signs-customizer-for-woocommerce-pro",
+                "all-signs-customizer-for-woocommerce",
               )
             }}
           </p>
@@ -211,7 +193,7 @@
             class="ascwo-template-category-secondary"
             @click="closeModal"
           >
-            {{ __("Cancel", "all-signs-customizer-for-woocommerce-pro") }}
+            {{ __("Cancel", "all-signs-customizer-for-woocommerce") }}
           </button>
           <button
             type="button"
@@ -221,8 +203,8 @@
           >
             {{
               isLoading
-                ? __("Deleting...", "all-signs-customizer-for-woocommerce-pro")
-                : __("Delete", "all-signs-customizer-for-woocommerce-pro")
+                ? __("Deleting...", "all-signs-customizer-for-woocommerce")
+                : __("Delete", "all-signs-customizer-for-woocommerce")
             }}
           </button>
         </footer>
@@ -276,10 +258,7 @@ onMounted(async () => {
     categories.value = normalizeCategories(res);
   } catch (error) {
     toastMessage(
-      __(
-        "Unable to load categories.",
-        "all-signs-customizer-for-woocommerce-pro",
-      ),
+      __("Unable to load categories.", "all-signs-customizer-for-woocommerce"),
       "error",
     );
   }
@@ -307,10 +286,7 @@ const createCategory = async () => {
     toastMessage(res.message, "error");
   } catch (error) {
     toastMessage(
-      __(
-        "Unable to create category.",
-        "all-signs-customizer-for-woocommerce-pro",
-      ),
+      __("Unable to create category.", "all-signs-customizer-for-woocommerce"),
       "error",
     );
   } finally {
@@ -336,10 +312,7 @@ const updateCategory = async () => {
     closeModal();
   } catch (error) {
     toastMessage(
-      __(
-        "Unable to update category.",
-        "all-signs-customizer-for-woocommerce-pro",
-      ),
+      __("Unable to update category.", "all-signs-customizer-for-woocommerce"),
       "error",
     );
   } finally {
@@ -362,10 +335,7 @@ const deleteCategory = async () => {
   } catch (error) {
     closeModal();
     toastMessage(
-      __(
-        "Unable to delete category.",
-        "all-signs-customizer-for-woocommerce-pro",
-      ),
+      __("Unable to delete category.", "all-signs-customizer-for-woocommerce"),
       "error",
     );
   } finally {

@@ -7,18 +7,18 @@
     <div v-else class="ascwo-customizer-layout">
       <div class="ascwo-customizer-main">
         <header class="ascwo-customizer-card ascwo-customizer-hero">
-          <h1>{{ __('Customizer Setup', 'all-signs-customizer-for-woocommerce-pro') }}</h1>
-          <p>{{ __('Configure the classic customizer behavior in one page, without switching between second-level settings tabs.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+          <h1>{{ __('Customizer Setup', 'all-signs-customizer-for-woocommerce') }}</h1>
+          <p>{{ __('Configure the classic customizer behavior in one page, without switching between second-level settings tabs.', 'all-signs-customizer-for-woocommerce') }}</p>
         </header>
 
         <section id="ascwo-customizer-config-options" class="ascwo-customizer-card ascwo-customizer-section">
           <div class="ascwo-section-head">
             <div>
-              <h2>{{ __('Config Options', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
-              <p>{{ __('Show, hide and order configuration blocks displayed in the customizer.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+              <h2>{{ __('Config Options', 'all-signs-customizer-for-woocommerce') }}</h2>
+              <p>{{ __('Show, hide and order configuration blocks displayed in the customizer.', 'all-signs-customizer-for-woocommerce') }}</p>
             </div>
             <button type="button" class="ascwo-collapse-button" @click="toggleSection('configOptions')">
-              {{ openSections.configOptions ? __('Show less', 'all-signs-customizer-for-woocommerce-pro') : __('Show more', 'all-signs-customizer-for-woocommerce-pro') }}
+              {{ openSections.configOptions ? __('Show less', 'all-signs-customizer-for-woocommerce') : __('Show more', 'all-signs-customizer-for-woocommerce') }}
               <ChevronUpIcon v-if="openSections.configOptions" />
               <ChevronDownIcon v-else />
             </button>
@@ -26,7 +26,7 @@
 
           <div v-if="openSections.configOptions">
             <p class="ascwo-section-note">
-              {{ __('The list order below is the display order used in the customizer. Move items up or down by dragging the rows, then save.', 'all-signs-customizer-for-woocommerce-pro') }}
+              {{ __('The list order below is the display order used in the customizer. Move items up or down by dragging the rows, then save.', 'all-signs-customizer-for-woocommerce') }}
             </p>
 
             <div class="ascwo-config-options-list">
@@ -41,19 +41,19 @@
                 @dragend="onDragEnd"
               >
                 <div class="ascwo-config-option-left">
-                  <button type="button" class="ascwo-drag-handle" :aria-label="__('Drag to reorder', 'all-signs-customizer-for-woocommerce-pro')">
+                  <button type="button" class="ascwo-drag-handle" :aria-label="__('Drag to reorder', 'all-signs-customizer-for-woocommerce')">
                     <GripVerticalIcon />
                   </button>
                   <component :is="optionIcon(option.type)" class="ascwo-option-icon" />
                   <div>
                     <h3>{{ optionLabel(option.type) }}</h3>
-                    <p>{{ option.active ? __('Visible in the customizer', 'all-signs-customizer-for-woocommerce-pro') : __('Hidden from the customizer', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                    <p>{{ option.active ? __('Visible in the customizer', 'all-signs-customizer-for-woocommerce') : __('Hidden from the customizer', 'all-signs-customizer-for-woocommerce') }}</p>
                   </div>
                 </div>
                 <button type="button" class="ascwo-visibility-button" @click="toggleConfigOption(index)">
                   <EyeIcon v-if="option.active" />
                   <EyeOffIcon v-else />
-                  {{ option.active ? __('Hide option', 'all-signs-customizer-for-woocommerce-pro') : __('Show option', 'all-signs-customizer-for-woocommerce-pro') }}
+                  {{ option.active ? __('Hide option', 'all-signs-customizer-for-woocommerce') : __('Show option', 'all-signs-customizer-for-woocommerce') }}
                 </button>
               </article>
             </div>
@@ -61,7 +61,7 @@
             <div class="ascwo-save-row">
               <button type="button" class="ascwo-ui-button-primary ascwo-customizer-save" :disabled="savingSection === 'configOptions'" @click="saveConfigOptions">
                 <Loader2Icon v-if="savingSection === 'configOptions'" class="ascwo-spin" />
-                {{ __('Save Config Options', 'all-signs-customizer-for-woocommerce-pro') }}
+                {{ __('Save Config Options', 'all-signs-customizer-for-woocommerce') }}
               </button>
             </div>
           </div>
@@ -70,11 +70,11 @@
         <section id="ascwo-customizer-options" class="ascwo-customizer-card ascwo-customizer-section">
           <div class="ascwo-section-head">
             <div>
-              <h2>{{ __('Customizer Options', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
-              <p>{{ __('Measurement, layout and flow options for the classic customizer.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+              <h2>{{ __('Customizer Options', 'all-signs-customizer-for-woocommerce') }}</h2>
+              <p>{{ __('Measurement, layout and flow options for the classic customizer.', 'all-signs-customizer-for-woocommerce') }}</p>
             </div>
             <button type="button" class="ascwo-collapse-button" @click="toggleSection('customizerOptions')">
-              {{ openSections.customizerOptions ? __('Show less', 'all-signs-customizer-for-woocommerce-pro') : __('Show more', 'all-signs-customizer-for-woocommerce-pro') }}
+              {{ openSections.customizerOptions ? __('Show less', 'all-signs-customizer-for-woocommerce') : __('Show more', 'all-signs-customizer-for-woocommerce') }}
               <ChevronUpIcon v-if="openSections.customizerOptions" />
               <ChevronDownIcon v-else />
             </button>
@@ -82,77 +82,77 @@
 
           <div v-if="openSections.customizerOptions" class="ascwo-options-grid">
             <label class="ascwo-field">
-              <span>{{ __('Measurement Unit', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span>{{ __('Measurement Unit', 'all-signs-customizer-for-woocommerce') }}</span>
               <select v-model="customizerOptions.measurementUnit" class="ascwo-ui-input">
-                <option value="cm">{{ __('Centimeters', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-                <option value="in">{{ __('inches', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-                <option value="mm">{{ __('Milimetres', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-                <option value="m">{{ __('Mètre', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-                <option value="ft">{{ __('Feet', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                <option value="cm">{{ __('Centimeters', 'all-signs-customizer-for-woocommerce') }}</option>
+                <option value="in">{{ __('inches', 'all-signs-customizer-for-woocommerce') }}</option>
+                <option value="mm">{{ __('Milimetres', 'all-signs-customizer-for-woocommerce') }}</option>
+                <option value="m">{{ __('Mètre', 'all-signs-customizer-for-woocommerce') }}</option>
+                <option value="ft">{{ __('Feet', 'all-signs-customizer-for-woocommerce') }}</option>
               </select>
             </label>
 
             <label class="ascwo-field">
-              <span>{{ __('Show/hide Measurements', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span>{{ __('Show/hide Measurements', 'all-signs-customizer-for-woocommerce') }}</span>
               <select v-model="customizerOptions.showHideMeasurements" class="ascwo-ui-input">
-                <option value="both">{{ __('show both width and height', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-                <option value="none">{{ __('Do not show measurements', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-                <option value="height">{{ __('show only height', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-                <option value="width">{{ __('show only width', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                <option value="both">{{ __('show both width and height', 'all-signs-customizer-for-woocommerce') }}</option>
+                <option value="none">{{ __('Do not show measurements', 'all-signs-customizer-for-woocommerce') }}</option>
+                <option value="height">{{ __('show only height', 'all-signs-customizer-for-woocommerce') }}</option>
+                <option value="width">{{ __('show only width', 'all-signs-customizer-for-woocommerce') }}</option>
               </select>
             </label>
 
             <label class="ascwo-field">
-              <span>{{ __('Decimal Format of Measurements', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span>{{ __('Decimal Format of Measurements', 'all-signs-customizer-for-woocommerce') }}</span>
               <select v-model="customizerOptions.decimalFormatMeasurements" class="ascwo-ui-input">
-                <option value="with-decimal">{{ __('with decimal', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-                <option value="no-decimal">{{ __('No decimal', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                <option value="with-decimal">{{ __('with decimal', 'all-signs-customizer-for-woocommerce') }}</option>
+                <option value="no-decimal">{{ __('No decimal', 'all-signs-customizer-for-woocommerce') }}</option>
               </select>
             </label>
 
             <label class="ascwo-field">
-              <span>{{ __('Desktop Column Order', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span>{{ __('Desktop Column Order', 'all-signs-customizer-for-woocommerce') }}</span>
               <select v-model="customizerOptions.desktopColumnOrder" class="ascwo-ui-input">
-                <option value="right">{{ __('Right', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-                <option value="left">{{ __('Left', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                <option value="right">{{ __('Right', 'all-signs-customizer-for-woocommerce') }}</option>
+                <option value="left">{{ __('Left', 'all-signs-customizer-for-woocommerce') }}</option>
               </select>
             </label>
 
             <label class="ascwo-field">
-              <span>{{ __('Finish button position', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span>{{ __('Finish button position', 'all-signs-customizer-for-woocommerce') }}</span>
               <select v-model="customizerOptions.finishButtonPosition" class="ascwo-ui-input">
-                <option value="top">{{ __('Top', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-                <option value="bottom">{{ __('Bottom', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                <option value="top">{{ __('Top', 'all-signs-customizer-for-woocommerce') }}</option>
+                <option value="bottom">{{ __('Bottom', 'all-signs-customizer-for-woocommerce') }}</option>
               </select>
             </label>
 
             <label class="ascwo-field">
-              <span>{{ __('Allow next button', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span>{{ __('Allow next button', 'all-signs-customizer-for-woocommerce') }}</span>
               <select :value="customizerOptions.allowNextButton ? 'yes' : 'no'" class="ascwo-ui-input" @change="customizerOptions.allowNextButton = $event.target.value === 'yes'">
-                <option value="yes">{{ __('Yes', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-                <option value="no">{{ __('No', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                <option value="yes">{{ __('Yes', 'all-signs-customizer-for-woocommerce') }}</option>
+                <option value="no">{{ __('No', 'all-signs-customizer-for-woocommerce') }}</option>
               </select>
             </label>
 
             <div class="ascwo-inline-toggle">
-              <span>{{ __('Show thickness pricing labels in configurator', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span>{{ __('Show thickness pricing labels in configurator', 'all-signs-customizer-for-woocommerce') }}</span>
               <label class="ascwo-switch"><input type="checkbox" v-model="customizerOptions.showThicknessPricing"><span></span></label>
             </div>
 
             <div class="ascwo-inline-toggle">
-              <span>{{ __('Expand thickness by default in configurator', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span>{{ __('Expand thickness by default in configurator', 'all-signs-customizer-for-woocommerce') }}</span>
               <label class="ascwo-switch"><input type="checkbox" v-model="customizerOptions.expandThicknessByDefault"><span></span></label>
             </div>
 
             <div class="ascwo-inline-toggle">
-              <span>{{ __('Expand predefined sizes by default in configurator', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span>{{ __('Expand predefined sizes by default in configurator', 'all-signs-customizer-for-woocommerce') }}</span>
               <label class="ascwo-switch"><input type="checkbox" v-model="customizerOptions.expandPredefinedSizesByDefault"><span></span></label>
             </div>
 
             <div class="ascwo-save-row ascwo-options-save">
               <button type="button" class="ascwo-ui-button-primary ascwo-customizer-save" :disabled="savingSection === 'customizerOptions'" @click="saveCustomizerOptions">
                 <Loader2Icon v-if="savingSection === 'customizerOptions'" class="ascwo-spin" />
-                {{ __('Save Customizer Options', 'all-signs-customizer-for-woocommerce-pro') }}
+                {{ __('Save Customizer Options', 'all-signs-customizer-for-woocommerce') }}
               </button>
             </div>
           </div>
@@ -161,7 +161,7 @@
 
       <div class="ascwo-section-menu-wrap">
         <aside class="ascwo-section-menu ascwo-customizer-card">
-          <h2>{{ __('Section Menu', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
+          <h2>{{ __('Section Menu', 'all-signs-customizer-for-woocommerce') }}</h2>
           <div class="ascwo-section-menu-links">
             <a v-for="item in sectionMenu" :key="item.id" :href="`#${item.id}`" @click.prevent="scrollToSection(item.id)">
               {{ item.label }}
@@ -258,8 +258,8 @@ const iconMap = {
   qrcodes: QrCodeIcon,
   images: ImageIcon,
   'additional-options': PenToolIcon,
-  templates: BoxIcon,
   'additional-components': ComponentIcon,
+  templates: BoxIcon,
 };
 
 const optionIcon = (type) => iconMap[type] || CircleIcon;
@@ -346,7 +346,7 @@ const handleSaveResponse = async (result) => {
     toastMessage(result.message);
     return;
   }
-  toastMessage(result?.message || __('Unable to save settings', 'all-signs-customizer-for-woocommerce-pro'), 'error');
+  toastMessage(result?.message || __('Unable to save settings', 'all-signs-customizer-for-woocommerce'), 'error');
 };
 
 const saveConfigOptions = async () => {
@@ -354,7 +354,7 @@ const saveConfigOptions = async () => {
   try {
     await handleSaveResponse(await api.updateCustomizerSignsConfigOptions(configId.value, configOptions.value));
   } catch (error) {
-    toastMessage(error?.response?.data?.message || __('Unable to save config options', 'all-signs-customizer-for-woocommerce-pro'), 'error');
+    toastMessage(error?.response?.data?.message || __('Unable to save config options', 'all-signs-customizer-for-woocommerce'), 'error');
   } finally {
     savingSection.value = '';
   }
@@ -365,7 +365,7 @@ const saveCustomizerOptions = async () => {
   try {
     await handleSaveResponse(await api.updateCustomizerSignsCustomizer(configId.value, customizerOptions.value));
   } catch (error) {
-    toastMessage(error?.response?.data?.message || __('Unable to save customizer options', 'all-signs-customizer-for-woocommerce-pro'), 'error');
+    toastMessage(error?.response?.data?.message || __('Unable to save customizer options', 'all-signs-customizer-for-woocommerce'), 'error');
   } finally {
     savingSection.value = '';
   }

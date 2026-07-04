@@ -4,28 +4,28 @@
       <div class="ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-shadow-sm ascwo-p-4">
         <div class="ascwo-flex ascwo-items-center ascwo-justify-between ascwo-gap-4">
           <div>
-            <h2 class="ascwo-text-[16px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ __('Materials', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
-            <p class="ascwo-text-[12px] ascwo-leading-4 ascwo-text-[#616161] ascwo-m-0">{{ __('Manage the materials available in this config, assign the pricing used by each one and exclude components when needed.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+            <h2 class="ascwo-text-[16px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ __('Materials', 'all-signs-customizer-for-woocommerce') }}</h2>
+            <p class="ascwo-text-[12px] ascwo-leading-4 ascwo-text-[#616161] ascwo-m-0">{{ __('Manage the materials available in this config, assign the pricing used by each one and exclude components when needed.', 'all-signs-customizer-for-woocommerce') }}</p>
           </div>
           <button type="button" @click="addComponent" class="ascwo-inline-flex ascwo-items-center ascwo-gap-2 ascwo-px-3 ascwo-py-1.5 ascwo-bg-[#007a72] ascwo-text-white ascwo-text-[12px] ascwo-leading-4 ascwo-font-[900] ascwo-border-none ascwo-rounded-md ascwo-cursor-pointer hover:ascwo-bg-[#00645f]">
             <PlusIcon class="ascwo-w-4 ascwo-h-4" />
-            {{ __('Add new material', 'all-signs-customizer-for-woocommerce-pro') }}
+            {{ __('Add new material', 'all-signs-customizer-for-woocommerce') }}
           </button>
         </div>
       </div>
 
       <div class="ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-shadow-sm ascwo-p-4">
-        <h3 class="ascwo-text-[14px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-3">{{ __('Materials List', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
+        <h3 class="ascwo-text-[14px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-3">{{ __('Materials List', 'all-signs-customizer-for-woocommerce') }}</h3>
         <div class="ascwo-materials-table-wrap">
           <table class="ascwo-materials-table ascwo-w-full ascwo-border-collapse">
             <thead class="ascwo-bg-[#f0f0f1]">
               <tr>
-                <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Preview', 'all-signs-customizer-for-woocommerce-pro') }}</th>
-                <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Label', 'all-signs-customizer-for-woocommerce-pro') }}</th>
-                <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Price', 'all-signs-customizer-for-woocommerce-pro') }}</th>
-                <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Pricing', 'all-signs-customizer-for-woocommerce-pro') }}</th>
-                <th class="ascwo-py-2 ascwo-px-3 ascwo-text-center ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Default', 'all-signs-customizer-for-woocommerce-pro') }}</th>
-                <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Actions', 'all-signs-customizer-for-woocommerce-pro') }}</th>
+                <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Preview', 'all-signs-customizer-for-woocommerce') }}</th>
+                <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Label', 'all-signs-customizer-for-woocommerce') }}</th>
+                <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Price', 'all-signs-customizer-for-woocommerce') }}</th>
+                <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Pricing', 'all-signs-customizer-for-woocommerce') }}</th>
+                <th class="ascwo-py-2 ascwo-px-3 ascwo-text-center ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Default', 'all-signs-customizer-for-woocommerce') }}</th>
+                <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Actions', 'all-signs-customizer-for-woocommerce') }}</th>
               </tr>
             </thead>
             <tbody>
@@ -36,7 +36,7 @@
               </tr>
               <tr v-else-if="materials.length === 0">
                 <td colspan="6" class="ascwo-py-8 ascwo-text-center ascwo-text-[13px] ascwo-text-[#616161]">
-                  {{ __('No materials found', 'all-signs-customizer-for-woocommerce-pro') }}
+                  {{ __('No materials found', 'all-signs-customizer-for-woocommerce') }}
                 </td>
               </tr>
               <tr
@@ -55,7 +55,7 @@
                 <td class="ascwo-py-2.5 ascwo-px-3 ascwo-text-[13px] ascwo-text-[#303030]">{{ getPricingLabel(material) }}</td>
                 <td class="ascwo-materials-default-cell ascwo-py-2.5 ascwo-px-3">
                   <div class="ascwo-materials-default-control ascwo-inline-flex ascwo-items-center ascwo-gap-2">
-                    <span class="ascwo-text-[12px] ascwo-text-[#616161]">{{ __('No', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                    <span class="ascwo-text-[12px] ascwo-text-[#616161]">{{ __('No', 'all-signs-customizer-for-woocommerce') }}</span>
                     <button
                       type="button"
                       :disabled="isLoading"
@@ -64,18 +64,18 @@
                     >
                       <span></span>
                     </button>
-                    <span class="ascwo-text-[12px] ascwo-text-[#616161]">{{ __('Yes', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                    <span class="ascwo-text-[12px] ascwo-text-[#616161]">{{ __('Yes', 'all-signs-customizer-for-woocommerce') }}</span>
                   </div>
                 </td>
                 <td class="ascwo-py-2.5 ascwo-px-3">
                   <div class="ascwo-flex ascwo-items-center ascwo-gap-2">
                     <button type="button" @click="editMaterial(material.id || index)" class="ascwo-outline-button">
                       <Edit2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
-                      {{ __('Edit', 'all-signs-customizer-for-woocommerce-pro') }}
+                      {{ __('Edit', 'all-signs-customizer-for-woocommerce') }}
                     </button>
                     <button type="button" @click="selectDeleteMaterial(material.id || index)" class="ascwo-link-danger">
                       <Trash2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
-                      {{ __('Delete', 'all-signs-customizer-for-woocommerce-pro') }}
+                      {{ __('Delete', 'all-signs-customizer-for-woocommerce') }}
                     </button>
                   </div>
                 </td>
@@ -89,49 +89,49 @@
     <template v-else>
       <div class="ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-shadow-sm ascwo-p-4">
         <div class="ascwo-flex ascwo-justify-end">
-          <button type="button" @click="back" class="ascwo-secondary-button">{{ __('Back to materials', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+          <button type="button" @click="back" class="ascwo-secondary-button">{{ __('Back to materials', 'all-signs-customizer-for-woocommerce') }}</button>
         </div>
       </div>
 
       <div class="ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-shadow-sm ascwo-p-4">
-        <h2 class="ascwo-text-[16px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-4">{{ isEdit ? __('Edit material', 'all-signs-customizer-for-woocommerce-pro') : __('Add material', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
+        <h2 class="ascwo-text-[16px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-4">{{ isEdit ? __('Edit material', 'all-signs-customizer-for-woocommerce') : __('Add material', 'all-signs-customizer-for-woocommerce') }}</h2>
 
         <div class="ascwo-grid ascwo-grid-cols-1 lg:ascwo-grid-cols-2 ascwo-gap-4">
           <label class="ascwo-block">
-            <span class="ascwo-form-label">{{ __('Label', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+            <span class="ascwo-form-label">{{ __('Label', 'all-signs-customizer-for-woocommerce') }}</span>
             <input v-model.trim="newMaterial.label" class="ascwo-form-input" autocomplete="off" />
           </label>
           <label class="ascwo-block">
-            <span class="ascwo-form-label">{{ __('Additional price', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+            <span class="ascwo-form-label">{{ __('Additional price', 'all-signs-customizer-for-woocommerce') }}</span>
             <input v-model.number="newMaterial.additionalPrice" type="number" min="0" step="0.01" class="ascwo-form-input" />
           </label>
         </div>
 
         <label class="ascwo-block ascwo-mt-3">
-          <span class="ascwo-form-label">{{ __('Description', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+          <span class="ascwo-form-label">{{ __('Description', 'all-signs-customizer-for-woocommerce') }}</span>
           <input v-model.trim="newMaterial.description" class="ascwo-form-input" autocomplete="off" />
         </label>
 
         <div class="ascwo-grid ascwo-grid-cols-1 lg:ascwo-grid-cols-2 ascwo-gap-4 ascwo-mt-3">
           <label class="ascwo-block">
-            <span class="ascwo-form-label">{{ __('Preview image', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+            <span class="ascwo-form-label">{{ __('Preview image', 'all-signs-customizer-for-woocommerce') }}</span>
             <div class="ascwo-file-input">
-              <button type="button" @click.prevent="selectPreviewImage" class="ascwo-file-button">{{ __('Preview image', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+              <button type="button" @click.prevent="selectPreviewImage" class="ascwo-file-button">{{ __('Preview image', 'all-signs-customizer-for-woocommerce') }}</button>
               <input :value="displayFileName(newMaterial.previewImg || newMaterial.image)" readonly autocomplete="off" />
             </div>
-            <p class="ascwo-form-help">{{ __('Used in the list and option previews.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+            <p class="ascwo-form-help">{{ __('Used in the list and option previews.', 'all-signs-customizer-for-woocommerce') }}</p>
             <div v-if="newMaterial.previewImg" class="ascwo-preview-thumb">
               <img :src="newMaterial.previewImg" :alt="newMaterial.label || 'preview'" />
             </div>
           </label>
 
           <label class="ascwo-block">
-            <span class="ascwo-form-label">{{ __('Popup image', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+            <span class="ascwo-form-label">{{ __('Popup image', 'all-signs-customizer-for-woocommerce') }}</span>
             <div class="ascwo-file-input">
-              <button type="button" @click.prevent="selectPopupImage" class="ascwo-file-button">{{ __('Popup image', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+              <button type="button" @click.prevent="selectPopupImage" class="ascwo-file-button">{{ __('Popup image', 'all-signs-customizer-for-woocommerce') }}</button>
               <input :value="displayFileName(newMaterial.popupImage || newMaterial.popupImg)" readonly autocomplete="off" />
             </div>
-            <p class="ascwo-form-help">{{ __('Optional larger image for product details.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+            <p class="ascwo-form-help">{{ __('Optional larger image for product details.', 'all-signs-customizer-for-woocommerce') }}</p>
             <div v-if="newMaterial.popupImage || newMaterial.popupImg" class="ascwo-preview-thumb">
               <img :src="newMaterial.popupImage || newMaterial.popupImg" :alt="`${newMaterial.label || 'material'} popup`" />
             </div>
@@ -139,20 +139,20 @@
         </div>
 
         <label class="ascwo-block ascwo-mt-3">
-          <span class="ascwo-form-label">{{ __('Pricing used by this material', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+          <span class="ascwo-form-label">{{ __('Pricing used by this material', 'all-signs-customizer-for-woocommerce') }}</span>
           <select v-model="newMaterial.pricingId" class="ascwo-form-input">
-            <option value="">{{ __('Select pricing', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+            <option value="">{{ __('Select pricing', 'all-signs-customizer-for-woocommerce') }}</option>
             <option v-for="pricing in pricingOptions" :key="pricing.id" :value="pricing.id">
               {{ pricing.label }}
             </option>
           </select>
-          <p class="ascwo-form-help">{{ __('This pricing profile is applied when this material is selected.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+          <p class="ascwo-form-help">{{ __('This pricing profile is applied when this material is selected.', 'all-signs-customizer-for-woocommerce') }}</p>
         </label>
 
         <div class="ascwo-material-form-footer">
-          <button type="button" @click="back" class="ascwo-secondary-button">{{ __('Cancel', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+          <button type="button" @click="back" class="ascwo-secondary-button">{{ __('Cancel', 'all-signs-customizer-for-woocommerce') }}</button>
           <button type="button" @click="isEdit ? updateMaterial() : addMaterial()" :disabled="isLoading || !newMaterial.label.trim()" class="ascwo-primary-button">
-            {{ isLoading ? __('Saving...', 'all-signs-customizer-for-woocommerce-pro') : (isEdit ? __('Update material', 'all-signs-customizer-for-woocommerce-pro') : __('Save material', 'all-signs-customizer-for-woocommerce-pro')) }}
+            {{ isLoading ? __('Saving...', 'all-signs-customizer-for-woocommerce') : (isEdit ? __('Update material', 'all-signs-customizer-for-woocommerce') : __('Save material', 'all-signs-customizer-for-woocommerce')) }}
           </button>
         </div>
       </div>
@@ -161,11 +161,11 @@
     <div v-if="openModal" class="ascwo-fixed ascwo-inset-0 ascwo-z-[20000] ascwo-flex ascwo-items-center ascwo-justify-center">
       <div class="ascwo-absolute ascwo-inset-0 ascwo-bg-black/45" @click="closeModal"></div>
       <div class="ascwo-delete-modal">
-        <h3 class="ascwo-text-[16px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-2">{{ __('Delete material?', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
-        <p class="ascwo-text-[13px] ascwo-text-[#616161] ascwo-mt-0 ascwo-mb-5">{{ sprintf(__('Are you sure you want to delete "%s"?', 'all-signs-customizer-for-woocommerce-pro'), selectedMaterial?.label || selectedMaterial?.name || '') }}</p>
+        <h3 class="ascwo-text-[16px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-2">{{ __('Delete material?', 'all-signs-customizer-for-woocommerce') }}</h3>
+        <p class="ascwo-text-[13px] ascwo-text-[#616161] ascwo-mt-0 ascwo-mb-5">{{ sprintf(__('Are you sure you want to delete "%s"?', 'all-signs-customizer-for-woocommerce'), selectedMaterial?.label || selectedMaterial?.name || '') }}</p>
         <div class="ascwo-flex ascwo-justify-end ascwo-gap-2">
-          <button type="button" @click="closeModal" class="ascwo-secondary-button">{{ __('Cancel', 'all-signs-customizer-for-woocommerce-pro') }}</button>
-          <button type="button" @click="deleteMaterial" :disabled="isLoading" class="ascwo-danger-button">{{ __('Delete', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+          <button type="button" @click="closeModal" class="ascwo-secondary-button">{{ __('Cancel', 'all-signs-customizer-for-woocommerce') }}</button>
+          <button type="button" @click="deleteMaterial" :disabled="isLoading" class="ascwo-danger-button">{{ __('Delete', 'all-signs-customizer-for-woocommerce') }}</button>
         </div>
       </div>
     </div>
@@ -238,8 +238,8 @@ const getMaterialPreview = (material) => resolveMaterialImageUrl(material?.previ
 const getMaterialLabel = (material) => material?.label || material?.name || material?.title || "";
 const getPricingLabel = (material) => {
   const pricingId = String(material?.pricingId || "");
-  if (!pricingId) return __("No pricing selected", "all-signs-customizer-for-woocommerce-pro");
-  return pricingOptions.value.find((pricing) => String(pricing.id) === pricingId)?.label || __("No pricing selected", "all-signs-customizer-for-woocommerce-pro");
+  if (!pricingId) return __("No pricing selected", "all-signs-customizer-for-woocommerce");
+  return pricingOptions.value.find((pricing) => String(pricing.id) === pricingId)?.label || __("No pricing selected", "all-signs-customizer-for-woocommerce");
 };
 const displayFileName = (value = "") => {
   const file = String(value || "").split("?")[0].split("#")[0];
@@ -309,11 +309,11 @@ const addMaterial = async () => {
     });
     if (result?.success) {
       await fetchMaterials();
-      toastMessage(result.message || __("Material added", "all-signs-customizer-for-woocommerce-pro"));
+      toastMessage(result.message || __("Material added", "all-signs-customizer-for-woocommerce"));
       back();
       return;
     }
-    toastMessage(result?.message || __("Unable to add material", "all-signs-customizer-for-woocommerce-pro"), "warning");
+    toastMessage(result?.message || __("Unable to add material", "all-signs-customizer-for-woocommerce"), "warning");
   } finally {
     isLoading.value = false;
   }
@@ -332,11 +332,11 @@ const updateMaterial = async () => {
     });
     if (result?.success || result?.success === "same") {
       await fetchMaterials();
-      toastMessage(result.message || __("Material updated", "all-signs-customizer-for-woocommerce-pro"));
+      toastMessage(result.message || __("Material updated", "all-signs-customizer-for-woocommerce"));
       back();
       return;
     }
-    toastMessage(result?.message || __("Unable to update material", "all-signs-customizer-for-woocommerce-pro"), "warning");
+    toastMessage(result?.message || __("Unable to update material", "all-signs-customizer-for-woocommerce"), "warning");
   } finally {
     isLoading.value = false;
   }
@@ -381,10 +381,10 @@ const deleteMaterial = async () => {
     if (result?.success) {
       openModal.value = false;
       await fetchMaterials();
-      toastMessage(result.message || __("Material deleted", "all-signs-customizer-for-woocommerce-pro"));
+      toastMessage(result.message || __("Material deleted", "all-signs-customizer-for-woocommerce"));
       return;
     }
-    toastMessage(result?.message || __("Unable to delete material", "all-signs-customizer-for-woocommerce-pro"), "warning");
+    toastMessage(result?.message || __("Unable to delete material", "all-signs-customizer-for-woocommerce"), "warning");
   } finally {
     isLoading.value = false;
   }
@@ -400,10 +400,10 @@ const selectDefault = async (itemId) => {
     const result = await api.setDefaultMaterial(configID.value, current.id || itemId);
     if (result?.success || result?.success === "same") {
       await fetchMaterials();
-      toastMessage(result.message || __("Default material updated", "all-signs-customizer-for-woocommerce-pro"));
+      toastMessage(result.message || __("Default material updated", "all-signs-customizer-for-woocommerce"));
       return;
     }
-    toastMessage(result?.message || __("Unable to update default material", "all-signs-customizer-for-woocommerce-pro"), "warning");
+    toastMessage(result?.message || __("Unable to update default material", "all-signs-customizer-for-woocommerce"), "warning");
   } finally {
     isLoading.value = false;
     defaultActionId.value = "";
@@ -444,8 +444,8 @@ const closeModal = () => {
 const selectPreviewImage = () => {
   if (!window.wp?.media) return;
   const uploader = window.wp.media({
-    title: __("Select preview image", "all-signs-customizer-for-woocommerce-pro"),
-    button: { text: __("Use image", "all-signs-customizer-for-woocommerce-pro") },
+    title: __("Select preview image", "all-signs-customizer-for-woocommerce"),
+    button: { text: __("Use image", "all-signs-customizer-for-woocommerce") },
     multiple: false,
   });
   uploader.on("select", () => {
@@ -461,8 +461,8 @@ const selectPreviewImage = () => {
 const selectPopupImage = () => {
   if (!window.wp?.media) return;
   const uploader = window.wp.media({
-    title: __("Select popup image", "all-signs-customizer-for-woocommerce-pro"),
-    button: { text: __("Use image", "all-signs-customizer-for-woocommerce-pro") },
+    title: __("Select popup image", "all-signs-customizer-for-woocommerce"),
+    button: { text: __("Use image", "all-signs-customizer-for-woocommerce") },
     multiple: false,
   });
   uploader.on("select", () => {

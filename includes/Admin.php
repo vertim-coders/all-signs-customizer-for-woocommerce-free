@@ -66,13 +66,13 @@ class ASCWO_Admin
             $capability = 'manage_options';
             $slug = 'ascwo';
 
-            $hook = add_menu_page(__('All Sign Customizer for WooCommerce', 'all-signs-customizer-for-woocommerce-pro'), __('All Sign Customizer for WooCommerce', 'all-signs-customizer-for-woocommerce-pro'), $capability, $slug, [$this, 'plugin_page'], ASCWO_ASSETS . '/images/im_icon_ascwo.png');
-            add_submenu_page($slug, __('Home', 'all-signs-customizer-for-woocommerce-pro'), __('Home', 'all-signs-customizer-for-woocommerce-pro'), $capability, 'admin.php?page=' . $slug . '#/');
-            add_submenu_page($slug, __('Configurations', 'all-signs-customizer-for-woocommerce-pro'), __('Configurations', 'all-signs-customizer-for-woocommerce-pro'), $capability, 'admin.php?page=' . $slug . '#/configuration');
-            add_submenu_page($slug, __('Request quotes', 'all-signs-customizer-for-woocommerce-pro'), __('Request quotes', 'all-signs-customizer-for-woocommerce-pro'), $capability, 'admin.php?page=' . $slug . '#/request-quotes');
-            add_submenu_page($slug, __('Global Settings', 'all-signs-customizer-for-woocommerce-pro'), __('Global Settings', 'all-signs-customizer-for-woocommerce-pro'), $capability, 'admin.php?page=' . $slug . '#/settings/output');
-            add_submenu_page($slug, __('Manage Fonts', 'all-signs-customizer-for-woocommerce-pro'), __('Manage Fonts', 'all-signs-customizer-for-woocommerce-pro'), $capability, 'admin.php?page=' . $slug . '#/manage-font');
-            add_submenu_page($slug, __('Manage Cliparts', 'all-signs-customizer-for-woocommerce-pro'), __('Manage Cliparts', 'all-signs-customizer-for-woocommerce-pro'), $capability, 'admin.php?page=' . $slug . '#/manage-cliparts');
+            $hook = add_menu_page(__('All Sign Customizer for WooCommerce', 'all-signs-customizer-for-woocommerce'), __('All Sign Customizer for WooCommerce', 'all-signs-customizer-for-woocommerce'), $capability, $slug, [$this, 'plugin_page'], ASCWO_ASSETS . '/images/im_icon_ascwo.png');
+            add_submenu_page($slug, __('Home', 'all-signs-customizer-for-woocommerce'), __('Home', 'all-signs-customizer-for-woocommerce'), $capability, 'admin.php?page=' . $slug . '#/');
+            add_submenu_page($slug, __('Configurations', 'all-signs-customizer-for-woocommerce'), __('Configurations', 'all-signs-customizer-for-woocommerce'), $capability, 'admin.php?page=' . $slug . '#/configuration');
+            add_submenu_page($slug, __('Request quotes', 'all-signs-customizer-for-woocommerce'), __('Request quotes', 'all-signs-customizer-for-woocommerce'), $capability, 'admin.php?page=' . $slug . '#/request-quotes');
+            add_submenu_page($slug, __('Global Settings', 'all-signs-customizer-for-woocommerce'), __('Global Settings', 'all-signs-customizer-for-woocommerce'), $capability, 'admin.php?page=' . $slug . '#/settings/output');
+            add_submenu_page($slug, __('Manage Fonts', 'all-signs-customizer-for-woocommerce'), __('Manage Fonts', 'all-signs-customizer-for-woocommerce'), $capability, 'admin.php?page=' . $slug . '#/manage-font');
+            add_submenu_page($slug, __('Manage Cliparts', 'all-signs-customizer-for-woocommerce'), __('Manage Cliparts', 'all-signs-customizer-for-woocommerce'), $capability, 'admin.php?page=' . $slug . '#/manage-cliparts');
 
             add_action('load-' . $hook, [$this, 'init_hooks']);
         }
@@ -106,7 +106,7 @@ class ASCWO_Admin
         wp_enqueue_style('ascwo-frontend', ASCWO_ASSETS . '/css/frontend.css', false, $this->asset_version('/assets/css/frontend.css'));
 
         wp_enqueue_script('ascwo-admin', ASCWO_ASSETS . '/js/admin.js', ['jquery', 'ascwo-vendor', 'ascwo-runtime', 'wp-i18n', 'editor'], $this->asset_version('/assets/js/admin.js'), true);
-        wp_set_script_translations('ascwo-admin', 'all-signs-customizer-for-woocommerce-pro');
+        wp_set_script_translations('ascwo-admin', 'all-signs-customizer-for-woocommerce');
         wp_enqueue_script('ascwo-fabric', ASCWO_ASSETS . '/utilities/fabric.min.js', [], $this->asset_version('/assets/utilities/fabric.min.js'), true);
         $this->enqueue_frontend_data_script();
         if (function_exists('wp_enqueue_script_module')) {
@@ -173,8 +173,6 @@ class ASCWO_Admin
             "rest_nonce" => wp_create_nonce('wp_rest'),
             "ajax_url" => esc_url_raw(admin_url('admin-ajax.php')),
             "site_url" => esc_url_raw(get_site_url()),
-            "caches" => function_exists('ascwo_get_license_cache_timestamp') ? \ascwo_get_license_cache_timestamp() : 0,
-            "license_status" => function_exists('ascwo_get_license_status') ? \ascwo_get_license_status() : array(),
             "site_timezone" => function_exists('wp_timezone_string') ? wp_timezone_string() : get_option('timezone_string', 'UTC'),
             "author" => ASCWO_ID,
             "assets_url" => ASCWO_ASSETS,

@@ -6,15 +6,15 @@
   <div v-else class="ascwo-theme-page">
     <div class="ascwo-theme-main">
       <section class="ascwo-theme-hero">
-        <h1>{{ __("Theme & Color", "all-signs-customizer-for-woocommerce-pro") }}</h1>
-        <p>{{ __("Theme settings for classic configurations. Only classic fields are exposed here; no extra dark mode layer is added.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+        <h1>{{ __("Theme & Color", "all-signs-customizer-for-woocommerce") }}</h1>
+        <p>{{ __("Theme settings for classic configurations. Only classic fields are exposed here; no extra dark mode layer is added.", "all-signs-customizer-for-woocommerce") }}</p>
       </section>
 
       <section id="theme-appearance" class="ascwo-theme-card">
         <div class="ascwo-theme-card-header">
           <div>
-            <h2>{{ __("Appearance", "all-signs-customizer-for-woocommerce-pro") }}</h2>
-            <p>{{ __("Choose the classic skin and edit the classic color groups.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+            <h2>{{ __("Appearance", "all-signs-customizer-for-woocommerce") }}</h2>
+            <p>{{ __("Choose the classic skin and edit the classic color groups.", "all-signs-customizer-for-woocommerce") }}</p>
           </div>
         </div>
 
@@ -31,7 +31,7 @@
             <span class="ascwo-theme-skin-footer">
               <strong>{{ skin.title }}</strong>
               <span class="ascwo-theme-skin-select">
-                {{ __("Select", "all-signs-customizer-for-woocommerce-pro") }}
+                {{ __("Select", "all-signs-customizer-for-woocommerce") }}
                 <span class="ascwo-theme-check" :class="{ 'is-checked': themes.skin === skin.value }">
                   <CheckIcon v-if="themes.skin === skin.value" />
                 </span>
@@ -58,7 +58,7 @@
             :aria-expanded="expanded[group.key]"
             @click="toggleGroup(group.key)"
           >
-            {{ expanded[group.key] ? __("Show less", "all-signs-customizer-for-woocommerce-pro") : __("Show more", "all-signs-customizer-for-woocommerce-pro") }}
+            {{ expanded[group.key] ? __("Show less", "all-signs-customizer-for-woocommerce") : __("Show more", "all-signs-customizer-for-woocommerce") }}
             <ChevronUpIcon v-if="expanded[group.key]" />
             <ChevronDownIcon v-else />
           </button>
@@ -86,12 +86,12 @@
       <section id="theme-custom-css" class="ascwo-theme-card">
         <div class="ascwo-theme-card-header">
           <div>
-            <h2>{{ __("Custom CSS", "all-signs-customizer-for-woocommerce-pro") }}</h2>
-            <p>{{ __("Optional CSS overrides stored in the classic themeColors.customCss field.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+            <h2>{{ __("Custom CSS", "all-signs-customizer-for-woocommerce") }}</h2>
+            <p>{{ __("Optional CSS overrides stored in the classic themeColors.customCss field.", "all-signs-customizer-for-woocommerce") }}</p>
           </div>
         </div>
         <label class="ascwo-theme-textarea-field">
-          <span>{{ __("Custom CSS", "all-signs-customizer-for-woocommerce-pro") }}</span>
+          <span>{{ __("Custom CSS", "all-signs-customizer-for-woocommerce") }}</span>
           <textarea v-model="themes.customCSS" rows="8"></textarea>
         </label>
       </section>
@@ -99,17 +99,17 @@
       <div class="ascwo-theme-actions">
         <button type="button" class="ascwo-theme-secondary-button" :disabled="isSavingCss" @click="saveCustomCss">
           <Loader2Icon v-if="isSavingCss" class="ascwo-theme-spin" />
-          {{ __("Save Custom CSS", "all-signs-customizer-for-woocommerce-pro") }}
+          {{ __("Save Custom CSS", "all-signs-customizer-for-woocommerce") }}
         </button>
         <button type="button" class="ascwo-theme-primary-button" :disabled="isSavingTheme" @click="saveTheme">
           <Loader2Icon v-if="isSavingTheme" class="ascwo-theme-spin" />
-          {{ __("Save Theme", "all-signs-customizer-for-woocommerce-pro") }}
+          {{ __("Save Theme", "all-signs-customizer-for-woocommerce") }}
         </button>
       </div>
     </div>
 
     <aside class="ascwo-theme-section-menu">
-      <h2>{{ __("Section Menu", "all-signs-customizer-for-woocommerce-pro") }}</h2>
+      <h2>{{ __("Section Menu", "all-signs-customizer-for-woocommerce") }}</h2>
       <button
         v-for="item in sectionMenu"
         :key="item.id"
@@ -284,174 +284,174 @@ const DEFAULT_THEME_SETTINGS = {
 };
 
 const themeSkins = [
-  { title: __('Default Skin', 'all-signs-customizer-for-woocommerce-pro'), value: 'default', image: adminImageUrl('skin-default.png') },
-  { title: __('Couffo Skin', 'all-signs-customizer-for-woocommerce-pro'), value: 'couffo', image: adminImageUrl('skin-couffo.png') },
+  { title: __('Default Skin', 'all-signs-customizer-for-woocommerce'), value: 'default', image: adminImageUrl('skin-default.png') },
+  { title: __('Couffo Skin', 'all-signs-customizer-for-woocommerce'), value: 'couffo', image: adminImageUrl('skin-couffo.png') },
 ];
 
 const colorGroups = [
   {
     key: 'canvas',
-    title: __('Canvas, Header and Side Bars', 'all-signs-customizer-for-woocommerce-pro'),
+    title: __('Canvas, Header and Side Bars', 'all-signs-customizer-for-woocommerce'),
     fields: [
-      { label: __('Canvas background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.canvas.backgroundColor' },
-      { label: __('Canvas border color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.canvas.borderColor' },
-      { label: __('Bars Background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.backgroundColor' },
-      { label: __('Bars title color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.titleColor' },
+      { label: __('Canvas background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.canvas.backgroundColor' },
+      { label: __('Canvas border color', 'all-signs-customizer-for-woocommerce'), path: 'colors.canvas.borderColor' },
+      { label: __('Bars Background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.backgroundColor' },
+      { label: __('Bars title color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.titleColor' },
     ],
   },
   {
     key: 'price',
-    title: __('Price Section', 'all-signs-customizer-for-woocommerce-pro'),
+    title: __('Price Section', 'all-signs-customizer-for-woocommerce'),
     fields: [
-      { label: __('Background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.price.backgroundColor' },
-      { label: __('Text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.price.textColor' },
-      { label: __('Text before price', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.price.textBeforeColor' },
-      { label: __('Text after price', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.price.textAfterColor' },
+      { label: __('Background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.price.backgroundColor' },
+      { label: __('Text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.price.textColor' },
+      { label: __('Text before price', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.price.textBeforeColor' },
+      { label: __('Text after price', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.price.textAfterColor' },
     ],
   },
   {
     key: 'reset',
-    title: __('Reset button', 'all-signs-customizer-for-woocommerce-pro'),
+    title: __('Reset button', 'all-signs-customizer-for-woocommerce'),
     fields: [
-      { label: __('Background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.reset.backgroundColor' },
-      { label: __('Hover background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.reset.hoverBackgroundColor' },
-      { label: __('Text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.reset.textColor' },
-      { label: __('Hover text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.reset.hoverTextColor' },
-      { label: __('Border color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.reset.borderColor' },
-      { label: __('Hover border color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.reset.hoverBorderColor' },
-      { label: __('Modal background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.reset.modalBackgroundColor' },
-      { label: __('Container modal color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.reset.modalContainerBackground' },
-      { label: __('Modal text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.reset.modalTextColor' },
-      { label: __('Yes background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.reset.modalYesButtonBackgroundColor' },
-      { label: __('Yes text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.reset.modalYesButtonTextColor' },
-      { label: __('No background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.reset.modalNoButtonBackgroundColor' },
-      { label: __('No text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.reset.modalNoButtonTextColor' },
+      { label: __('Background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.reset.backgroundColor' },
+      { label: __('Hover background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.reset.hoverBackgroundColor' },
+      { label: __('Text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.reset.textColor' },
+      { label: __('Hover text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.reset.hoverTextColor' },
+      { label: __('Border color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.reset.borderColor' },
+      { label: __('Hover border color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.reset.hoverBorderColor' },
+      { label: __('Modal background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.reset.modalBackgroundColor' },
+      { label: __('Container modal color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.reset.modalContainerBackground' },
+      { label: __('Modal text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.reset.modalTextColor' },
+      { label: __('Yes background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.reset.modalYesButtonBackgroundColor' },
+      { label: __('Yes text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.reset.modalYesButtonTextColor' },
+      { label: __('No background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.reset.modalNoButtonBackgroundColor' },
+      { label: __('No text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.reset.modalNoButtonTextColor' },
     ],
   },
   {
     key: 'undoRedo',
-    title: __('Undo and redo buttons', 'all-signs-customizer-for-woocommerce-pro'),
+    title: __('Undo and redo buttons', 'all-signs-customizer-for-woocommerce'),
     fields: [
-      { label: __('Background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.undoRedo.backgroundColor' },
-      { label: __('Hover background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.undoRedo.hoverBackgroundColor' },
-      { label: __('Text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.undoRedo.textColor' },
-      { label: __('Hover text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.undoRedo.hoverTextColor' },
-      { label: __('Border color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.undoRedo.borderColor' },
-      { label: __('Hover border color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.undoRedo.hoverBorderColor' },
-      { label: __('Disabled background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.undoRedo.disabledBackgroundColor' },
-      { label: __('Disabled text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.undoRedo.disabledTextColor' },
+      { label: __('Background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.undoRedo.backgroundColor' },
+      { label: __('Hover background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.undoRedo.hoverBackgroundColor' },
+      { label: __('Text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.undoRedo.textColor' },
+      { label: __('Hover text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.undoRedo.hoverTextColor' },
+      { label: __('Border color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.undoRedo.borderColor' },
+      { label: __('Hover border color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.undoRedo.hoverBorderColor' },
+      { label: __('Disabled background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.undoRedo.disabledBackgroundColor' },
+      { label: __('Disabled text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.undoRedo.disabledTextColor' },
     ],
   },
   {
     key: 'preview',
-    title: __('Preview buttons', 'all-signs-customizer-for-woocommerce-pro'),
+    title: __('Preview buttons', 'all-signs-customizer-for-woocommerce'),
     fields: [
-      { label: __('Background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.preview.backgroundColor' },
-      { label: __('Hover background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.preview.hoverBackgroundColor' },
-      { label: __('Text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.preview.textColor' },
-      { label: __('Hover text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.preview.hoverTextColor' },
-      { label: __('Border color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.preview.borderColor' },
-      { label: __('Hover border color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.preview.hoverBorderColor' },
+      { label: __('Background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.preview.backgroundColor' },
+      { label: __('Hover background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.preview.hoverBackgroundColor' },
+      { label: __('Text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.preview.textColor' },
+      { label: __('Hover text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.preview.hoverTextColor' },
+      { label: __('Border color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.preview.borderColor' },
+      { label: __('Hover border color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.preview.hoverBorderColor' },
     ],
   },
   {
     key: 'help',
-    title: __('Help buttons', 'all-signs-customizer-for-woocommerce-pro'),
+    title: __('Help buttons', 'all-signs-customizer-for-woocommerce'),
     fields: [
-      { label: __('Background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.help.backgroundColor' },
-      { label: __('Hover background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.help.hoverBackgroundColor' },
-      { label: __('Text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.help.textColor' },
-      { label: __('Hover text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.help.hoverTextColor' },
-      { label: __('Border color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.help.borderColor' },
-      { label: __('Hover border color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.bars.help.hoverBorderColor' },
+      { label: __('Background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.help.backgroundColor' },
+      { label: __('Hover background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.help.hoverBackgroundColor' },
+      { label: __('Text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.help.textColor' },
+      { label: __('Hover text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.help.hoverTextColor' },
+      { label: __('Border color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.help.borderColor' },
+      { label: __('Hover border color', 'all-signs-customizer-for-woocommerce'), path: 'colors.bars.help.hoverBorderColor' },
     ],
   },
   {
     key: 'optionsSideBar',
-    title: __('Options Sidebar', 'all-signs-customizer-for-woocommerce-pro'),
+    title: __('Options Sidebar', 'all-signs-customizer-for-woocommerce'),
     fields: [
-      { label: __('Background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.optionsSideBar.backgroundColor' },
-      { label: __('Scroll button background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.optionsSideBar.scrollButtonsBackgroundColor' },
-      { label: __('Scroll hover button background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.optionsSideBar.scrollButtonsHoverBackgroundColor' },
-      { label: __('Scroll button text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.optionsSideBar.scrollButtonsTextColor' },
-      { label: __('Scroll button text hover color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.optionsSideBar.scrollButtonsHoverTextColor' },
-      { label: __('Options button background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.optionsSideBar.options.buttons.backgroundColor' },
-      { label: __('Options button hover background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.optionsSideBar.options.buttons.hoverBackgroundColor' },
-      { label: __('Options button text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.optionsSideBar.options.buttons.textColor' },
-      { label: __('Options button hover text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.optionsSideBar.options.buttons.hoverTextColor' },
+      { label: __('Background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.optionsSideBar.backgroundColor' },
+      { label: __('Scroll button background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.optionsSideBar.scrollButtonsBackgroundColor' },
+      { label: __('Scroll hover button background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.optionsSideBar.scrollButtonsHoverBackgroundColor' },
+      { label: __('Scroll button text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.optionsSideBar.scrollButtonsTextColor' },
+      { label: __('Scroll button text hover color', 'all-signs-customizer-for-woocommerce'), path: 'colors.optionsSideBar.scrollButtonsHoverTextColor' },
+      { label: __('Options button background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.optionsSideBar.options.buttons.backgroundColor' },
+      { label: __('Options button hover background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.optionsSideBar.options.buttons.hoverBackgroundColor' },
+      { label: __('Options button text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.optionsSideBar.options.buttons.textColor' },
+      { label: __('Options button hover text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.optionsSideBar.options.buttons.hoverTextColor' },
     ],
   },
   {
     key: 'optionsModals',
-    title: __('Options modals', 'all-signs-customizer-for-woocommerce-pro'),
+    title: __('Options modals', 'all-signs-customizer-for-woocommerce'),
     fields: [
-      { label: __('Modal background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.optionsSideBar.options.modals.backgroundColor' },
-      { label: __('Modal text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.optionsSideBar.options.modals.textColor' },
-      { label: __('Modal header background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.optionsSideBar.options.modals.headerBackgroundColor' },
-      { label: __('Modal header text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.optionsSideBar.options.modals.headerTextColor' },
-      { label: __('Modal button background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.optionsSideBar.options.modals.buttons.backgroundColor' },
-      { label: __('Modal button hover background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.optionsSideBar.options.modals.buttons.hoverBackgroundColor' },
-      { label: __('Modal button text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.optionsSideBar.options.modals.buttons.textColor' },
-      { label: __('Modal button hover text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.optionsSideBar.options.modals.buttons.hoverTextColor' },
+      { label: __('Modal background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.optionsSideBar.options.modals.backgroundColor' },
+      { label: __('Modal text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.optionsSideBar.options.modals.textColor' },
+      { label: __('Modal header background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.optionsSideBar.options.modals.headerBackgroundColor' },
+      { label: __('Modal header text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.optionsSideBar.options.modals.headerTextColor' },
+      { label: __('Modal button background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.optionsSideBar.options.modals.buttons.backgroundColor' },
+      { label: __('Modal button hover background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.optionsSideBar.options.modals.buttons.hoverBackgroundColor' },
+      { label: __('Modal button text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.optionsSideBar.options.modals.buttons.textColor' },
+      { label: __('Modal button hover text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.optionsSideBar.options.modals.buttons.hoverTextColor' },
     ],
   },
   {
     key: 'optionsInModals',
-    title: __('Options in modals', 'all-signs-customizer-for-woocommerce-pro'),
+    title: __('Options in modals', 'all-signs-customizer-for-woocommerce'),
     fields: [
-      { label: __('Modal option text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.optionsSideBar.options.modals.option.textColor' },
-      { label: __('Modal option hover text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.optionsSideBar.options.modals.option.hoverTextColor' },
-      { label: __('Modal option hover background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.optionsSideBar.options.modals.option.hoverBackgroundColor' },
-      { label: __('Modal option active text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.optionsSideBar.options.modals.option.activeTextColor' },
+      { label: __('Modal option text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.optionsSideBar.options.modals.option.textColor' },
+      { label: __('Modal option hover text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.optionsSideBar.options.modals.option.hoverTextColor' },
+      { label: __('Modal option hover background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.optionsSideBar.options.modals.option.hoverBackgroundColor' },
+      { label: __('Modal option active text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.optionsSideBar.options.modals.option.activeTextColor' },
     ],
   },
   {
     key: 'objectsOptions',
-    title: __('Objects options', 'all-signs-customizer-for-woocommerce-pro'),
+    title: __('Objects options', 'all-signs-customizer-for-woocommerce'),
     fields: [
-      { label: __('Background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.objectsOptions.backgroundColor' },
-      { label: __('Edit button color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.objectsOptions.edit.buttonColor' },
-      { label: __('Hover Edit button color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.objectsOptions.edit.hoverButtonColor' },
-      { label: __('Edit button text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.objectsOptions.edit.textColor' },
-      { label: __('Hover Edit button text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.objectsOptions.edit.hoverTextColor' },
-      { label: __('Clone button color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.objectsOptions.clone.buttonColor' },
-      { label: __('Hover Clone button color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.objectsOptions.clone.hoverButtonColor' },
-      { label: __('Clone button text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.objectsOptions.clone.textColor' },
-      { label: __('Hover Clone button text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.objectsOptions.clone.hoverTextColor' },
-      { label: __('Delete button color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.objectsOptions.delete.buttonColor' },
-      { label: __('Hover Delete button color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.objectsOptions.delete.hoverButtonColor' },
-      { label: __('Delete button text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.objectsOptions.delete.textColor' },
-      { label: __('Hover Delete button text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.objectsOptions.delete.hoverTextColor' },
-      { label: __('Center button color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.objectsOptions.center.buttonColor' },
-      { label: __('Hover Center button color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.objectsOptions.center.hoverButtonColor' },
-      { label: __('Center button text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.objectsOptions.center.textColor' },
-      { label: __('Hover Center button text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.objectsOptions.center.hoverTextColor' },
+      { label: __('Background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.objectsOptions.backgroundColor' },
+      { label: __('Edit button color', 'all-signs-customizer-for-woocommerce'), path: 'colors.objectsOptions.edit.buttonColor' },
+      { label: __('Hover Edit button color', 'all-signs-customizer-for-woocommerce'), path: 'colors.objectsOptions.edit.hoverButtonColor' },
+      { label: __('Edit button text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.objectsOptions.edit.textColor' },
+      { label: __('Hover Edit button text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.objectsOptions.edit.hoverTextColor' },
+      { label: __('Clone button color', 'all-signs-customizer-for-woocommerce'), path: 'colors.objectsOptions.clone.buttonColor' },
+      { label: __('Hover Clone button color', 'all-signs-customizer-for-woocommerce'), path: 'colors.objectsOptions.clone.hoverButtonColor' },
+      { label: __('Clone button text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.objectsOptions.clone.textColor' },
+      { label: __('Hover Clone button text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.objectsOptions.clone.hoverTextColor' },
+      { label: __('Delete button color', 'all-signs-customizer-for-woocommerce'), path: 'colors.objectsOptions.delete.buttonColor' },
+      { label: __('Hover Delete button color', 'all-signs-customizer-for-woocommerce'), path: 'colors.objectsOptions.delete.hoverButtonColor' },
+      { label: __('Delete button text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.objectsOptions.delete.textColor' },
+      { label: __('Hover Delete button text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.objectsOptions.delete.hoverTextColor' },
+      { label: __('Center button color', 'all-signs-customizer-for-woocommerce'), path: 'colors.objectsOptions.center.buttonColor' },
+      { label: __('Hover Center button color', 'all-signs-customizer-for-woocommerce'), path: 'colors.objectsOptions.center.hoverButtonColor' },
+      { label: __('Center button text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.objectsOptions.center.textColor' },
+      { label: __('Hover Center button text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.objectsOptions.center.hoverTextColor' },
     ],
   },
   {
     key: 'recaps',
-    title: __('Recaps section', 'all-signs-customizer-for-woocommerce-pro'),
+    title: __('Recaps section', 'all-signs-customizer-for-woocommerce'),
     fields: [
-      { label: __('Background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.recaps.backgroundColor' },
-      { label: __('Header background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.recaps.headerBackgroundColor' },
-      { label: __('Header text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.recaps.headerTextColor' },
-      { label: __('Recaps option hover background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.recaps.optionHoverBackgroundColor' },
-      { label: __('Recaps option hover text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.recaps.optionHoverTextColor' },
-      { label: __('Recaps option text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.recaps.optionTextColor' },
-      { label: __('Recaps option border color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.recaps.optionBorderColor' },
-      { label: __('Recaps option border hover color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.recaps.optionHoverBorderColor' },
-      { label: __('Button Finish background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.recaps.buttonFinishBackgroundColor' },
-      { label: __('Button Finish hover background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.recaps.buttonFinishHoverBackgroundColor' },
-      { label: __('Button Finish text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.recaps.buttonFinishTextColor' },
-      { label: __('Button Finish text hover color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.recaps.buttonFinishHoverTextColor' },
-      { label: __('Button AddToCart background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.recaps.buttonAddToCartBackgroundColor' },
-      { label: __('Button AddToCart hover background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.recaps.buttonAddToCartHoverBackgroundColor' },
-      { label: __('Button AddToCart text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.recaps.buttonAddToCartTextColor' },
-      { label: __('Button AddToCart text hover color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.recaps.buttonAddToCartHoverTextColor' },
-      { label: __('Button Edit background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.recaps.buttonEditBackgroundColor' },
-      { label: __('Button Edit hover background color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.recaps.buttonEditHoverBackgroundColor' },
-      { label: __('Button Edit text color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.recaps.buttonEditTextColor' },
-      { label: __('Button Edit text hover color', 'all-signs-customizer-for-woocommerce-pro'), path: 'colors.recaps.buttonEditHoverTextColor' },
+      { label: __('Background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.recaps.backgroundColor' },
+      { label: __('Header background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.recaps.headerBackgroundColor' },
+      { label: __('Header text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.recaps.headerTextColor' },
+      { label: __('Recaps option hover background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.recaps.optionHoverBackgroundColor' },
+      { label: __('Recaps option hover text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.recaps.optionHoverTextColor' },
+      { label: __('Recaps option text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.recaps.optionTextColor' },
+      { label: __('Recaps option border color', 'all-signs-customizer-for-woocommerce'), path: 'colors.recaps.optionBorderColor' },
+      { label: __('Recaps option border hover color', 'all-signs-customizer-for-woocommerce'), path: 'colors.recaps.optionHoverBorderColor' },
+      { label: __('Button Finish background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.recaps.buttonFinishBackgroundColor' },
+      { label: __('Button Finish hover background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.recaps.buttonFinishHoverBackgroundColor' },
+      { label: __('Button Finish text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.recaps.buttonFinishTextColor' },
+      { label: __('Button Finish text hover color', 'all-signs-customizer-for-woocommerce'), path: 'colors.recaps.buttonFinishHoverTextColor' },
+      { label: __('Button AddToCart background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.recaps.buttonAddToCartBackgroundColor' },
+      { label: __('Button AddToCart hover background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.recaps.buttonAddToCartHoverBackgroundColor' },
+      { label: __('Button AddToCart text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.recaps.buttonAddToCartTextColor' },
+      { label: __('Button AddToCart text hover color', 'all-signs-customizer-for-woocommerce'), path: 'colors.recaps.buttonAddToCartHoverTextColor' },
+      { label: __('Button Edit background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.recaps.buttonEditBackgroundColor' },
+      { label: __('Button Edit hover background color', 'all-signs-customizer-for-woocommerce'), path: 'colors.recaps.buttonEditHoverBackgroundColor' },
+      { label: __('Button Edit text color', 'all-signs-customizer-for-woocommerce'), path: 'colors.recaps.buttonEditTextColor' },
+      { label: __('Button Edit text hover color', 'all-signs-customizer-for-woocommerce'), path: 'colors.recaps.buttonEditHoverTextColor' },
     ],
   },
 ];
@@ -472,13 +472,13 @@ const expanded = ref({
 });
 
 const sectionMenu = computed(() => [
-  { id: 'theme-appearance', label: __('Appearance', 'all-signs-customizer-for-woocommerce-pro') },
+  { id: 'theme-appearance', label: __('Appearance', 'all-signs-customizer-for-woocommerce') },
   ...colorGroups.map((group) => ({
     id: sectionId(group.key),
     label: group.title,
     groupKey: group.key,
   })),
-  { id: 'theme-custom-css', label: __('Custom CSS', 'all-signs-customizer-for-woocommerce-pro') },
+  { id: 'theme-custom-css', label: __('Custom CSS', 'all-signs-customizer-for-woocommerce') },
 ]);
 
 const isSavingTheme = computed(() => savingSection.value === 'theme');
@@ -583,9 +583,9 @@ async function saveSettings(section) {
       toastMessage(result.message, 'warning');
       return;
     }
-    toastMessage(result.message || __('Unable to save theme settings.', 'all-signs-customizer-for-woocommerce-pro'), 'error');
+    toastMessage(result.message || __('Unable to save theme settings.', 'all-signs-customizer-for-woocommerce'), 'error');
   } catch (error) {
-    toastMessage(__('Unable to save theme settings.', 'all-signs-customizer-for-woocommerce-pro'), 'error');
+    toastMessage(__('Unable to save theme settings.', 'all-signs-customizer-for-woocommerce'), 'error');
   } finally {
     savingSection.value = '';
   }

@@ -3,9 +3,9 @@
             
         <div>
             <div class="ascwo-bg-[#F8F9FB] ascwo-px-8 ascwo-py-8 ascwo-space-y-6 ascwo-translate-y-8">
-                <h3 class="ascwo-text-[16px] ascwo-semibold">{{ __('Custom design link', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
+                <h3 class="ascwo-text-[16px] ascwo-semibold">{{ __('Custom design link', 'all-signs-customizer-for-woocommerce') }}</h3>
                 <div class="ascwo-flex ascwo-space-x-3">
-                    <div class="ascwo-text-[11px]">{{ __('Enable custom design link', 'all-signs-customizer-for-woocommerce-pro') }}</div>
+                    <div class="ascwo-text-[11px]">{{ __('Enable custom design link', 'all-signs-customizer-for-woocommerce') }}</div>
                     <div class="ascwo-flex ascwo-items-center ascwo-translate-y-0.5">
                         <label for="toggleEnableCustom" class="ascwo-relative ascwo-inline-flex ascwo-items-center ascwo-cursor-pointer ascwo-border-[1px] ascwo-border-solid ascwo-border-black ascwo-rounded-full">
                             <input id="toggleEnableCustom" type="checkbox" name="toggleEnableCustom" class="ascwo-sr-only ascwo-peer" v-model="uploadDesign.activate">
@@ -14,22 +14,22 @@
                     </div>
                 </div>
                 <div class="ascwo-text-[11px] ascwo-text-[#444444]">
-                    {{ __('Enable this to display a link to direct customers to another page on your site, this will display as one of the first options on desktop and mobile.', 'all-signs-customizer-for-woocommerce-pro') }}
+                    {{ __('Enable this to display a link to direct customers to another page on your site, this will display as one of the first options on desktop and mobile.', 'all-signs-customizer-for-woocommerce') }}
                 </div>
                 <div class="ascwo-flex ascwo-flex-col ascwo-w-3/5 ascwo-space-y-2" v-if="uploadDesign.activate">
-                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __('Custom Design Link', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __('Custom Design Link', 'all-signs-customizer-for-woocommerce') }}</label>
                     <input type="text" v-model="uploadDesign.link" class="ascwo-w-full"/>
-                    <span class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __('URL to redirect customers on your store that will allow for more complex graphic design quote submissions.', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                    <span class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __('URL to redirect customers on your store that will allow for more complex graphic design quote submissions.', 'all-signs-customizer-for-woocommerce') }}</span>
                 </div>
                 <div class="ascwo-flex ascwo-flex-col ascwo-w-3/5 ascwo-space-y-2" v-if="uploadDesign.activate">
-                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __('Phrase for link to submit custom design page', 'all-signs-customizer-for-woocommerce-pro') }}</label>
+                    <label class="ascwo-text-[12px] ascwo-text-[#444444]">{{ __('Phrase for link to submit custom design page', 'all-signs-customizer-for-woocommerce') }}</label>
                     <input type="text" v-model="uploadDesign.phraseSubmitCustom" class="ascwo-w-full"/>
 
                 </div>
                 
             </div>
             <div class="ascwo-bg-[#F8F9FB] ascwo-px-8 ascwo-pb-8 ascwo-space-y-6 ascwo-translate-y-8">
-                <h3 class="ascwo-text-[16px] ascwo-semibold ascwo-m-0">{{ __('The message to be displayed when the help button is clicked', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
+                <h3 class="ascwo-text-[16px] ascwo-semibold ascwo-m-0">{{ __('The message to be displayed when the help button is clicked', 'all-signs-customizer-for-woocommerce') }}</h3>
                 <div class="ascwo-relative ascwo-w-full ascwo-max-h-fit">
                     <div class="ascwo-px-4">
                         <div class="ascwo-px-[10px] ascwo-pt-[5px]">
@@ -43,7 +43,7 @@
             <div class="ascwo-bg-[#016464] ascwo-rounded">
                 <button :disabled="isLoading" @click="updateUploadDesignSettings" class="ascwo-rounded ascwo-flex ascwo-bg-transparent ascwo-w-fit ascwo-space-x-2 ascwo-h-fit ascwo-text-white ascwo-px-12 ascwo-p-2.5 ascwo-border-none ascwo-opacity-90 hover:ascwo-opacity-100 hover:ascwo-border-none hover:ascwo-text-white hover:ascwo-bg-[#016464] ascwo-cursor-pointerascwo-flex ascwo-bg-transparent ascwo-w-fit ascwo-space-x-2 ascwo-h-fit ascwo-text-white ascwo-px-12 ascwo-p-2.5 ascwo-border-none ascwo-opacity-90 hover:ascwo-opacity-100 hover:ascwo-border-none hover:ascwo-text-white hover:ascwo-bg-[#016464] ascwo-cursor-pointer">
                     <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="ascwo-w-5 ascwo-w-5" v-if="isLoading" />
-                    <div class="ascwo-font-semibold ascwo-text-[16px]">{{ __('Save', 'all-signs-customizer-for-woocommerce-pro') }}</div>
+                    <div class="ascwo-font-semibold ascwo-text-[16px]">{{ __('Save', 'all-signs-customizer-for-woocommerce') }}</div>
                 </button>
             </div>
         </div>

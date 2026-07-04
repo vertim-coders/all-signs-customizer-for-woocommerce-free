@@ -3,14 +3,14 @@
     <!-- Top Header Bar -->
     <div class="ascwo-config-list-header ascwo-bg-white ascwo-rounded-xl ascwo-shadow-sm ascwo-border ascwo-border-solid ascwo-border-[#e1e3e5] ascwo-px-6 ascwo-py-4 ascwo-flex ascwo-justify-between ascwo-items-center ascwo-mb-6">
       <h1 class="ascwo-text-[18px] ascwo-font-bold ascwo-text-[#1a1a1a] ascwo-m-0">
-        {{ __("Configurations List", "all-signs-customizer-for-woocommerce-pro") }}
+        {{ __("Configurations List", "all-signs-customizer-for-woocommerce") }}
       </h1>
       <RouterLink
         to="/configuration/create"
         class="ascwo-primary-action ascwo-inline-flex ascwo-items-center ascwo-gap-2 ascwo-text-white ascwo-no-underline"
       >
         <PlusIcon class="ascwo-w-4 ascwo-h-4" />
-        {{ __("Add new configuration", "all-signs-customizer-for-woocommerce-pro") }}
+        {{ __("Add new configuration", "all-signs-customizer-for-woocommerce") }}
       </RouterLink>
     </div>
 
@@ -19,7 +19,7 @@
       <!-- Loading State -->
       <div v-if="isFetching" class="ascwo-p-20 ascwo-flex ascwo-flex-col ascwo-items-center ascwo-justify-center ascwo-gap-4">
         <Loader2Icon class="ascwo-w-10 ascwo-h-10 ascwo-text-[#006e52] ascwo-animate-spin" />
-        <span class="ascwo-text-[14px] ascwo-text-[#616161]">{{ __('Loading configurations...', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+        <span class="ascwo-text-[14px] ascwo-text-[#616161]">{{ __('Loading configurations...', 'all-signs-customizer-for-woocommerce') }}</span>
       </div>
 
       <!-- Empty State -->
@@ -27,8 +27,8 @@
         <div class="ascwo-w-16 ascwo-h-16 ascwo-bg-[#f1f1f1] ascwo-rounded-full ascwo-flex ascwo-items-center ascwo-justify-center ascwo-mx-auto ascwo-mb-4">
           <SearchIcon class="ascwo-w-8 ascwo-h-8 ascwo-text-[#616161]" />
         </div>
-        <h3 class="ascwo-text-[18px] ascwo-font-bold ascwo-text-[#1a1a1a]">{{ __("No Configurations found", "all-signs-customizer-for-woocommerce-pro") }}</h3>
-        <p class="ascwo-text-[14px] ascwo-text-[#616161] ascwo-mt-1">{{ __("Start by creating your first product configuration.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+        <h3 class="ascwo-text-[18px] ascwo-font-bold ascwo-text-[#1a1a1a]">{{ __("No Configurations found", "all-signs-customizer-for-woocommerce") }}</h3>
+        <p class="ascwo-text-[14px] ascwo-text-[#616161] ascwo-mt-1">{{ __("Start by creating your first product configuration.", "all-signs-customizer-for-woocommerce") }}</p>
       </div>
 
       <!-- Table Content -->
@@ -36,12 +36,12 @@
         <table class="ascwo-config-list-table ascwo-w-full ascwo-border-collapse">
           <thead>
             <tr>
-              <th class="ascwo-p-5 ascwo-text-left ascwo-text-[13px] ascwo-font-bold ascwo-text-[#616161]">{{ __("Name configuration", "all-signs-customizer-for-woocommerce-pro") }}</th>
-              <th class="ascwo-p-5 ascwo-text-left ascwo-text-[13px] ascwo-font-bold ascwo-text-[#616161]">{{ __("Description", "all-signs-customizer-for-woocommerce-pro") }}</th>
-              <th class="ascwo-p-5 ascwo-text-center ascwo-text-[13px] ascwo-font-bold ascwo-text-[#616161]">{{ __("Icon", "all-signs-customizer-for-woocommerce-pro") }}</th>
-              <th class="ascwo-p-5 ascwo-text-center ascwo-text-[13px] ascwo-font-bold ascwo-text-[#616161]">{{ __("Product Type", "all-signs-customizer-for-woocommerce-pro") }}</th>
-              <th class="ascwo-p-5 ascwo-text-center ascwo-text-[13px] ascwo-font-bold ascwo-text-[#616161]">{{ __("Pricing mode", "all-signs-customizer-for-woocommerce-pro") }}</th>
-              <th class="ascwo-p-5 ascwo-text-right ascwo-text-[13px] ascwo-font-bold ascwo-text-[#616161]">{{ __("Action", "all-signs-customizer-for-woocommerce-pro") }}</th>
+              <th class="ascwo-p-5 ascwo-text-left ascwo-text-[13px] ascwo-font-bold ascwo-text-[#616161]">{{ __("Name configuration", "all-signs-customizer-for-woocommerce") }}</th>
+              <th class="ascwo-p-5 ascwo-text-left ascwo-text-[13px] ascwo-font-bold ascwo-text-[#616161]">{{ __("Description", "all-signs-customizer-for-woocommerce") }}</th>
+              <th class="ascwo-p-5 ascwo-text-center ascwo-text-[13px] ascwo-font-bold ascwo-text-[#616161]">{{ __("Icon", "all-signs-customizer-for-woocommerce") }}</th>
+              <th class="ascwo-p-5 ascwo-text-center ascwo-text-[13px] ascwo-font-bold ascwo-text-[#616161]">{{ __("Product Type", "all-signs-customizer-for-woocommerce") }}</th>
+              <th class="ascwo-p-5 ascwo-text-center ascwo-text-[13px] ascwo-font-bold ascwo-text-[#616161]">{{ __("Pricing mode", "all-signs-customizer-for-woocommerce") }}</th>
+              <th class="ascwo-p-5 ascwo-text-right ascwo-text-[13px] ascwo-font-bold ascwo-text-[#616161]">{{ __("Action", "all-signs-customizer-for-woocommerce") }}</th>
             </tr>
           </thead>
           <tbody>
@@ -64,7 +64,7 @@
                     <div class="ascwo-text-[14px] ascwo-font-semibold ascwo-text-[#1a1a1a] ascwo-truncate">{{ config.name }}</div>
                     <span v-if="managingConfigId === config.id" class="ascwo-inline-flex ascwo-items-center ascwo-gap-1 ascwo-text-[12px] ascwo-font-semibold ascwo-text-[#006e52]">
                       <Loader2Icon class="ascwo-w-3.5 ascwo-h-3.5 ascwo-animate-spin" />
-                      {{ __('Opening...', 'all-signs-customizer-for-woocommerce-pro') }}
+                      {{ __('Opening...', 'all-signs-customizer-for-woocommerce') }}
                     </span>
                   </div>
                 </div>
@@ -86,7 +86,7 @@
               </td>
               <td class="ascwo-p-5 ascwo-text-center">
                 <span class="ascwo-ui-badge ascwo-ui-badge--info">
-                  {{ (config.materialType || 'simple') === 'advance' ? 'Advanced' : 'Frame fit' }}
+                  {{ 'Frame fit' }}
                 </span>
               </td>
               <td class="ascwo-p-5 ascwo-text-right" @click.stop>
@@ -120,20 +120,20 @@
   <div v-if="showActionMenu" class="ascwo-fixed ascwo-inset-0 ascwo-z-[1000]" @click="showActionMenu = false">
      <div :style="{ top: menuY + 'px', left: menuX + 'px' }" class="ascwo-absolute ascwo-w-48 ascwo-bg-white ascwo-rounded-xl ascwo-shadow-xl ascwo-border ascwo-border-solid ascwo-border-[#e1e3e5] ascwo-py-2 ascwo-overflow-hidden">
         <button @click="goToMaterial(selectedConfig)" class="ascwo-w-full ascwo-px-4 ascwo-py-2 ascwo-text-left ascwo-text-[13px] ascwo-font-semibold ascwo-text-[#202223] ascwo-bg-transparent ascwo-border-none hover:ascwo-bg-[#f9fafb] ascwo-cursor-pointer ascwo-flex ascwo-items-center ascwo-gap-3">
-          <SettingsIcon class="ascwo-w-4 ascwo-h-4" /> {{ __('Manage', 'all-signs-customizer-for-woocommerce-pro') }}
+          <SettingsIcon class="ascwo-w-4 ascwo-h-4" /> {{ __('Manage', 'all-signs-customizer-for-woocommerce') }}
         </button>
         <button @click="goToPreview(selectedConfig)" class="ascwo-w-full ascwo-px-4 ascwo-py-2 ascwo-text-left ascwo-text-[13px] ascwo-bg-transparent ascwo-border-none hover:ascwo-bg-[#f9fafb] ascwo-cursor-pointer ascwo-flex ascwo-items-center ascwo-gap-3">
-          <EyeIcon class="ascwo-w-4 ascwo-h-4" /> {{ __('Preview', 'all-signs-customizer-for-woocommerce-pro') }}
+          <EyeIcon class="ascwo-w-4 ascwo-h-4" /> {{ __('Preview', 'all-signs-customizer-for-woocommerce') }}
         </button>
         <button @click="openEditModalFor(selectedConfig)" class="ascwo-w-full ascwo-px-4 ascwo-py-2 ascwo-text-left ascwo-text-[13px] ascwo-bg-transparent ascwo-border-none hover:ascwo-bg-[#f9fafb] ascwo-cursor-pointer ascwo-flex ascwo-items-center ascwo-gap-3">
-          <Edit2Icon class="ascwo-w-4 ascwo-h-4" /> {{ __('Edit', 'all-signs-customizer-for-woocommerce-pro') }}
+          <Edit2Icon class="ascwo-w-4 ascwo-h-4" /> {{ __('Edit', 'all-signs-customizer-for-woocommerce') }}
         </button>
         <button @click="openDuplicateModalFor(selectedConfig)" class="ascwo-w-full ascwo-px-4 ascwo-py-2 ascwo-text-left ascwo-text-[13px] ascwo-bg-transparent ascwo-border-none hover:ascwo-bg-[#f9fafb] ascwo-cursor-pointer ascwo-flex ascwo-items-center ascwo-gap-3">
-          <CopyIcon class="ascwo-w-4 ascwo-h-4" /> {{ __('Duplicate', 'all-signs-customizer-for-woocommerce-pro') }}
+          <CopyIcon class="ascwo-w-4 ascwo-h-4" /> {{ __('Duplicate', 'all-signs-customizer-for-woocommerce') }}
         </button>
         <div class="ascwo-h-px ascwo-bg-[#f1f1f1] ascwo-my-1"></div>
         <button @click="selectDeleteConfig(selectedConfig.id, selectedConfig.name)" class="ascwo-w-full ascwo-px-4 ascwo-py-2 ascwo-text-left ascwo-text-[13px] ascwo-text-[#8e1f0b] ascwo-bg-transparent ascwo-border-none hover:ascwo-bg-[#fff1f0] ascwo-cursor-pointer ascwo-flex ascwo-items-center ascwo-gap-3">
-          <Trash2Icon class="ascwo-w-4 ascwo-h-4" /> {{ __('Delete', 'all-signs-customizer-for-woocommerce-pro') }}
+          <Trash2Icon class="ascwo-w-4 ascwo-h-4" /> {{ __('Delete', 'all-signs-customizer-for-woocommerce') }}
         </button>
      </div>
   </div>
@@ -145,11 +145,11 @@
       <div class="ascwo-w-14 ascwo-h-14 ascwo-bg-[#fff1f0] ascwo-text-[#8e1f0b] ascwo-rounded-full ascwo-flex ascwo-items-center ascwo-justify-center ascwo-mx-auto ascwo-mb-4">
         <Trash2Icon class="ascwo-w-7 ascwo-h-7" />
       </div>
-      <h3 class="ascwo-text-[18px] ascwo-font-bold ascwo-text-[#1a1a1a] ascwo-mb-2">{{ __('Delete configuration?', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
-      <p class="ascwo-text-[14px] ascwo-text-[#616161] ascwo-mb-6">{{ sprintf(__('Are you sure you want to delete "%s"?', 'all-signs-customizer-for-woocommerce-pro'), deleteConfig.name) }}</p>
+      <h3 class="ascwo-text-[18px] ascwo-font-bold ascwo-text-[#1a1a1a] ascwo-mb-2">{{ __('Delete configuration?', 'all-signs-customizer-for-woocommerce') }}</h3>
+      <p class="ascwo-text-[14px] ascwo-text-[#616161] ascwo-mb-6">{{ sprintf(__('Are you sure you want to delete "%s"?', 'all-signs-customizer-for-woocommerce'), deleteConfig.name) }}</p>
       <div class="ascwo-flex ascwo-gap-3">
-        <button @click="openModal = false" class="ascwo-flex-1 ascwo-py-2.5 ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c1c4c7] ascwo-rounded-xl ascwo-text-[13px] ascwo-font-bold ascwo-cursor-pointer">{{ __('Cancel', 'all-signs-customizer-for-woocommerce-pro') }}</button>
-        <button @click="delConfig" class="ascwo-flex-1 ascwo-py-2.5 ascwo-bg-[#8e1f0b] ascwo-text-white ascwo-border-none ascwo-rounded-xl ascwo-text-[13px] ascwo-font-bold ascwo-cursor-pointer">{{ __('Delete', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+        <button @click="openModal = false" class="ascwo-flex-1 ascwo-py-2.5 ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c1c4c7] ascwo-rounded-xl ascwo-text-[13px] ascwo-font-bold ascwo-cursor-pointer">{{ __('Cancel', 'all-signs-customizer-for-woocommerce') }}</button>
+        <button @click="delConfig" class="ascwo-flex-1 ascwo-py-2.5 ascwo-bg-[#8e1f0b] ascwo-text-white ascwo-border-none ascwo-rounded-xl ascwo-text-[13px] ascwo-font-bold ascwo-cursor-pointer">{{ __('Delete', 'all-signs-customizer-for-woocommerce') }}</button>
       </div>
     </div>
   </div>
@@ -261,14 +261,14 @@ const getProductFamilySlug = (config) => {
 };
 const getProductFamilyLabel = (config) => {
   const ncpcProductType = getNcpcProductType(config);
-  if (ncpcProductType === 'neon') return __('Neon', 'all-signs-customizer-for-woocommerce-pro');
-  if (ncpcProductType === 'channel') return __('Channel', 'all-signs-customizer-for-woocommerce-pro');
+  if (ncpcProductType === 'neon') return __('Neon', 'all-signs-customizer-for-woocommerce');
+  if (ncpcProductType === 'channel') return __('Channel', 'all-signs-customizer-for-woocommerce');
 
   const slug = getProductFamilySlug(config);
-  if (slug === 'banners') return __('Banners', 'all-signs-customizer-for-woocommerce-pro');
-  if (slug === 'stickers') return __('Stickers', 'all-signs-customizer-for-woocommerce-pro');
-  if (slug === 'signs-panels') return __('Signs & Panels', 'all-signs-customizer-for-woocommerce-pro');
-  return __('Not set', 'all-signs-customizer-for-woocommerce-pro');
+  if (slug === 'banners') return __('Banners', 'all-signs-customizer-for-woocommerce');
+  if (slug === 'stickers') return __('Stickers', 'all-signs-customizer-for-woocommerce');
+  if (slug === 'signs-panels') return __('Signs & Panels', 'all-signs-customizer-for-woocommerce');
+  return __('Not set', 'all-signs-customizer-for-woocommerce');
 };
 const getNcpcProductType = (config) => {
   const data = getConfigData(config);
@@ -288,14 +288,11 @@ const getProductBadgeTone = (config) => {
   const data = getConfigData(config);
   const materialType = normalizeValue(config?.materialType || data?.materialType);
   if (materialType === 'simple') return 'info';
-  if (materialType === 'advance' || materialType === 'advanced') return 'success';
   return 'attention';
 };
 
 const isAdvancedConfig = (config) => {
-  const data = getConfigData(config);
-  const materialType = normalizeValue(config?.materialType || data?.materialType);
-  return materialType === 'advance' || materialType === 'advanced';
+  return false;
 };
 
 const goToMaterial = async (c) => {
@@ -304,7 +301,7 @@ const goToMaterial = async (c) => {
   managingConfigId.value = c.id;
   try {
     await router.push({
-      name: isAdvancedConfig(c) ? 'required-components' : 'sizes',
+      name: 'sizes',
       params: { configId: c.id },
     });
   } finally {
@@ -334,7 +331,7 @@ const delConfig = async () => {
   isLoading.value = true;
   try {
     await api.deleteConfig(deleteConfig.value.id);
-    toastMessage(__('Configuration deleted', 'all-signs-customizer-for-woocommerce-pro'));
+    toastMessage(__('Configuration deleted', 'all-signs-customizer-for-woocommerce'));
     openModal.value = false;
     fetchConfigs();
   } finally { isLoading.value = false; }

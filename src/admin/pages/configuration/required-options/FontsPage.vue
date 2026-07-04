@@ -4,23 +4,23 @@
       <section class="ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-shadow-sm">
         <div class="ascwo-p-4 ascwo-flex ascwo-items-center ascwo-justify-between ascwo-gap-4">
           <div>
-            <h2 class="ascwo-text-[16px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ __('Fonts', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
-            <p class="ascwo-text-[12px] ascwo-leading-4 ascwo-text-[#616161] ascwo-m-0">{{ __('These are the fonts available to customers in this config.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+            <h2 class="ascwo-text-[16px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ __('Fonts', 'all-signs-customizer-for-woocommerce') }}</h2>
+            <p class="ascwo-text-[12px] ascwo-leading-4 ascwo-text-[#616161] ascwo-m-0">{{ __('These are the fonts available to customers in this config.', 'all-signs-customizer-for-woocommerce') }}</p>
           </div>
           <div class="ascwo-flex ascwo-items-center ascwo-gap-2">
-            <span class="ascwo-selected-badge">{{ sprintf(__('%s selected', 'all-signs-customizer-for-woocommerce-pro'), selectedFontRows.length) }}</span>
+            <span class="ascwo-selected-badge">{{ sprintf(__('%s selected', 'all-signs-customizer-for-woocommerce'), selectedFontRows.length) }}</span>
             <button
               @click="openAddForm"
               class="ascwo-inline-flex ascwo-items-center ascwo-gap-2 ascwo-px-3 ascwo-py-1.5 ascwo-bg-[#007a72] ascwo-text-white ascwo-text-[12px] ascwo-leading-4 ascwo-font-[900] ascwo-border-none ascwo-rounded-md ascwo-cursor-pointer hover:ascwo-bg-[#00645f]"
             >
               <PlusIcon class="ascwo-w-4 ascwo-h-4" />
-              {{ __('Add fonts', 'all-signs-customizer-for-woocommerce-pro') }}
+              {{ __('Add fonts', 'all-signs-customizer-for-woocommerce') }}
             </button>
             <button
               @click="goToManageFonts"
               class="ascwo-inline-flex ascwo-items-center ascwo-px-3 ascwo-py-1.5 ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-rounded-md ascwo-text-[12px] ascwo-leading-4 ascwo-font-[900] ascwo-text-[#303030] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7]"
             >
-              {{ __('Manage fonts', 'all-signs-customizer-for-woocommerce-pro') }}
+              {{ __('Manage fonts', 'all-signs-customizer-for-woocommerce') }}
             </button>
           </div>
         </div>
@@ -28,18 +28,18 @@
 
       <section class="ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-shadow-sm">
         <div class="ascwo-p-4">
-          <h3 class="ascwo-text-[14px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-3">{{ __('Fonts List', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
+          <h3 class="ascwo-text-[14px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-3">{{ __('Fonts List', 'all-signs-customizer-for-woocommerce') }}</h3>
 
           <div v-if="isFetching" class="ascwo-table-loader-cell ascwo-py-8 ascwo-text-center">
             <Loader2Icon class="ascwo-table-loader-icon ascwo-w-7 ascwo-h-7" />
           </div>
 
           <div v-else-if="selectedFontRows.length === 0" class="ascwo-py-8 ascwo-text-center ascwo-border ascwo-border-dashed ascwo-border-[#dfe3e8] ascwo-rounded-lg">
-            <p class="ascwo-text-[13px] ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ __('No fonts added to this config yet', 'all-signs-customizer-for-woocommerce-pro') }}</p>
-            <p class="ascwo-text-[12px] ascwo-text-[#616161] ascwo-mt-1 ascwo-mb-3">{{ __('Add only the fonts this config should expose to customers.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+            <p class="ascwo-text-[13px] ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ __('No fonts added to this config yet', 'all-signs-customizer-for-woocommerce') }}</p>
+            <p class="ascwo-text-[12px] ascwo-text-[#616161] ascwo-mt-1 ascwo-mb-3">{{ __('Add only the fonts this config should expose to customers.', 'all-signs-customizer-for-woocommerce') }}</p>
             <button @click="openAddForm" class="ascwo-inline-flex ascwo-items-center ascwo-gap-1 ascwo-px-3 ascwo-py-1.5 ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-rounded-md ascwo-text-[12px] ascwo-font-[900] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7]">
               <PlusIcon class="ascwo-w-4 ascwo-h-4" />
-              {{ __('Add fonts', 'all-signs-customizer-for-woocommerce-pro') }}
+              {{ __('Add fonts', 'all-signs-customizer-for-woocommerce') }}
             </button>
           </div>
 
@@ -48,10 +48,10 @@
               <thead class="ascwo-bg-[#f6f6f7]">
                 <tr>
                   <th class="ascwo-w-10 ascwo-py-2 ascwo-px-3"></th>
-                  <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Preview', 'all-signs-customizer-for-woocommerce-pro') }}</th>
-                  <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Label', 'all-signs-customizer-for-woocommerce-pro') }}</th>
-                  <th class="ascwo-py-2 ascwo-px-3 ascwo-text-center ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Default', 'all-signs-customizer-for-woocommerce-pro') }}</th>
-                  <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Actions', 'all-signs-customizer-for-woocommerce-pro') }}</th>
+                  <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Preview', 'all-signs-customizer-for-woocommerce') }}</th>
+                  <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Label', 'all-signs-customizer-for-woocommerce') }}</th>
+                  <th class="ascwo-py-2 ascwo-px-3 ascwo-text-center ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Default', 'all-signs-customizer-for-woocommerce') }}</th>
+                  <th class="ascwo-py-2 ascwo-px-3 ascwo-text-left ascwo-text-[11px] ascwo-font-bold ascwo-text-[#6b7280]">{{ __('Actions', 'all-signs-customizer-for-woocommerce') }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -80,23 +80,23 @@
                   </td>
                   <td class="ascwo-py-2.5 ascwo-px-3 ascwo-text-center">
                     <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
-                      <span class="ascwo-text-[12px] ascwo-text-[#616161]">{{ __('No', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                      <span class="ascwo-text-[12px] ascwo-text-[#616161]">{{ __('No', 'all-signs-customizer-for-woocommerce') }}</span>
                       <button
                         type="button"
                         :disabled="isLoading"
                         @click="setDefaultFont(font.id)"
                         :class="['ascwo-toggle', font.isDefault ? 'is-active' : '', defaultActionId === String(font.id) ? 'is-loading' : '']"
-                        :aria-label="__('Set default font', 'all-signs-customizer-for-woocommerce-pro')"
+                        :aria-label="__('Set default font', 'all-signs-customizer-for-woocommerce')"
                       >
                         <span></span>
                       </button>
-                      <span class="ascwo-text-[12px] ascwo-text-[#616161]">{{ __('Yes', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                      <span class="ascwo-text-[12px] ascwo-text-[#616161]">{{ __('Yes', 'all-signs-customizer-for-woocommerce') }}</span>
                     </div>
                   </td>
                   <td class="ascwo-py-2.5 ascwo-px-3 ascwo-text-left">
                     <button @click="removeFont(font.id)" class="ascwo-remove-button">
                       <TrashIcon class="ascwo-w-4 ascwo-h-4" />
-                      {{ __('Remove', 'all-signs-customizer-for-woocommerce-pro') }}
+                      {{ __('Remove', 'all-signs-customizer-for-woocommerce') }}
                     </button>
                   </td>
                 </tr>
@@ -108,21 +108,21 @@
 
       <section class="ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-shadow-sm">
         <div class="ascwo-p-4">
-          <h3 class="ascwo-text-[14px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-0">{{ __('Fonts Settings', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
-          <p class="ascwo-text-[12px] ascwo-leading-4 ascwo-text-[#616161] ascwo-mt-0 ascwo-mb-3">{{ __('Keep the title and description used for the fonts section.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+          <h3 class="ascwo-text-[14px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-0">{{ __('Fonts Settings', 'all-signs-customizer-for-woocommerce') }}</h3>
+          <p class="ascwo-text-[12px] ascwo-leading-4 ascwo-text-[#616161] ascwo-mt-0 ascwo-mb-3">{{ __('Keep the title and description used for the fonts section.', 'all-signs-customizer-for-woocommerce') }}</p>
           <div class="ascwo-space-y-3">
             <label class="ascwo-block">
-              <span class="ascwo-form-label">{{ __('Title', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span class="ascwo-form-label">{{ __('Title', 'all-signs-customizer-for-woocommerce') }}</span>
               <input v-model="textSettings.fontsLabel" class="ascwo-form-input" autocomplete="off" />
             </label>
             <label class="ascwo-block">
-              <span class="ascwo-form-label">{{ __('Description', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span class="ascwo-form-label">{{ __('Description', 'all-signs-customizer-for-woocommerce') }}</span>
               <input v-model="textSettings.fontsDescription" class="ascwo-form-input" autocomplete="off" />
             </label>
           </div>
           <div class="ascwo-flex ascwo-justify-end ascwo-mt-4">
             <button @click="saveFonts" :disabled="isLoading" class="ascwo-primary-button">
-              {{ isLoading ? __('Saving...', 'all-signs-customizer-for-woocommerce-pro') : __('Save fonts', 'all-signs-customizer-for-woocommerce-pro') }}
+              {{ isLoading ? __('Saving...', 'all-signs-customizer-for-woocommerce') : __('Save fonts', 'all-signs-customizer-for-woocommerce') }}
             </button>
           </div>
         </div>
@@ -133,42 +133,42 @@
       <section class="ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-shadow-sm">
         <div class="ascwo-p-4 ascwo-flex ascwo-items-center ascwo-justify-between ascwo-gap-4">
           <div>
-            <h2 class="ascwo-text-[20px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ __('Add Fonts', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
-            <p class="ascwo-text-[12px] ascwo-leading-4 ascwo-text-[#616161] ascwo-m-0">{{ __('Add an existing font from the shared library or create a new one here.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+            <h2 class="ascwo-text-[20px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ __('Add Fonts', 'all-signs-customizer-for-woocommerce') }}</h2>
+            <p class="ascwo-text-[12px] ascwo-leading-4 ascwo-text-[#616161] ascwo-m-0">{{ __('Add an existing font from the shared library or create a new one here.', 'all-signs-customizer-for-woocommerce') }}</p>
           </div>
-          <button @click="resetForm" class="ascwo-secondary-button">{{ __('Back to fonts', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+          <button @click="resetForm" class="ascwo-secondary-button">{{ __('Back to fonts', 'all-signs-customizer-for-woocommerce') }}</button>
         </div>
       </section>
 
       <section class="ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-shadow-sm">
         <div class="ascwo-p-4 ascwo-space-y-5">
           <div v-if="formMode !== 'edit'">
-            <h3 class="ascwo-text-[14px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-3">{{ __('Add existing fonts', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
+            <h3 class="ascwo-text-[14px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-3">{{ __('Add existing fonts', 'all-signs-customizer-for-woocommerce') }}</h3>
             <label class="ascwo-block">
-              <span class="ascwo-form-label">{{ __('Fonts', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span class="ascwo-form-label">{{ __('Fonts', 'all-signs-customizer-for-woocommerce') }}</span>
               <select v-model="selectedExistingFontId" class="ascwo-form-input">
-                <option value="">{{ __('Select fonts', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                <option value="">{{ __('Select fonts', 'all-signs-customizer-for-woocommerce') }}</option>
                 <option v-for="font in availableFontRows" :key="`${font.source || 'managed'}:${font.id}`" :value="`${font.source || 'managed'}:${font.source === 'google' ? font.key : font.id}`">
                   {{ font.label }}
                 </option>
               </select>
-              <span class="ascwo-help-text">{{ __('Add one or many fonts already available in your shared library.', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span class="ascwo-help-text">{{ __('Add one or many fonts already available in your shared library.', 'all-signs-customizer-for-woocommerce') }}</span>
             </label>
             <div class="ascwo-flex ascwo-justify-end ascwo-mt-3">
-              <button @click="addExistingFont" :disabled="selectedExistingFontId === ''" class="ascwo-primary-button">{{ __('Add selected fonts', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+              <button @click="addExistingFont" :disabled="selectedExistingFontId === ''" class="ascwo-primary-button">{{ __('Add selected fonts', 'all-signs-customizer-for-woocommerce') }}</button>
             </div>
           </div>
 
           <div :class="formMode !== 'edit' ? 'ascwo-create-font-section' : ''">
-            <h3 class="ascwo-text-[14px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-3">{{ formMode === 'edit' ? __('Font details', 'all-signs-customizer-for-woocommerce-pro') : __('Create and add a new font', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
+            <h3 class="ascwo-text-[14px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-3">{{ formMode === 'edit' ? __('Font details', 'all-signs-customizer-for-woocommerce') : __('Create and add a new font', 'all-signs-customizer-for-woocommerce') }}</h3>
             <div class="ascwo-space-y-3">
               <div class="ascwo-flex ascwo-items-center ascwo-gap-5">
                 <label class="ascwo-inline-flex ascwo-items-center ascwo-gap-2 ascwo-text-[13px] ascwo-text-[#303030]">
-                  {{ __('Google font', 'all-signs-customizer-for-woocommerce-pro') }}
+                  {{ __('Google font', 'all-signs-customizer-for-woocommerce') }}
                   <button @click="setAddMode('google')" :class="['ascwo-toggle', fontForm.isGoogleFont ? 'is-active' : '']"><span></span></button>
                 </label>
                 <label class="ascwo-inline-flex ascwo-items-center ascwo-gap-2 ascwo-text-[13px] ascwo-text-[#303030]">
-                  {{ __('Upload font', 'all-signs-customizer-for-woocommerce-pro') }}
+                  {{ __('Upload font', 'all-signs-customizer-for-woocommerce') }}
                   <button @click="setAddMode('upload')" :class="['ascwo-toggle', !fontForm.isGoogleFont ? 'is-active' : '']"><span></span></button>
                 </label>
               </div>
@@ -184,23 +184,23 @@
                       {{ font.family }}
                     </button>
                     <div v-if="filteredGoogleFonts.length === 0" class="ascwo-google-empty">
-                      {{ __('No fonts found', 'all-signs-customizer-for-woocommerce-pro') }}
+                      {{ __('No fonts found', 'all-signs-customizer-for-woocommerce') }}
                     </div>
                   </div>
-                  <span class="ascwo-form-label">{{ __('Search Google Fonts', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                  <span class="ascwo-form-label">{{ __('Search Google Fonts', 'all-signs-customizer-for-woocommerce') }}</span>
                   <div class="ascwo-search-input">
                     <SearchIcon class="ascwo-w-4 ascwo-h-4 ascwo-text-[#6b7280]" />
                     <input
                       v-model="googleFontSearch"
                       @focus="showGoogleDropdown = true"
-                      :placeholder="__('Search font', 'all-signs-customizer-for-woocommerce-pro')"
+                      :placeholder="__('Search font', 'all-signs-customizer-for-woocommerce')"
                       autocomplete="off"
                     />
                   </div>
                 </label>
 
                 <label v-if="selectedGoogleFont?.variants?.length" class="ascwo-block">
-                  <span class="ascwo-form-label">{{ __('Font Variant', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                  <span class="ascwo-form-label">{{ __('Font Variant', 'all-signs-customizer-for-woocommerce') }}</span>
                   <select v-model="selectedGoogleVariant" @change="applyGoogleVariant" class="ascwo-form-input">
                     <option v-for="variant in selectedGoogleFont.variants" :key="variant" :value="variant">{{ variant }}</option>
                   </select>
@@ -208,15 +208,15 @@
               </div>
 
               <label v-else class="ascwo-block">
-                <span class="ascwo-form-label">{{ __('Upload font file', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                <span class="ascwo-form-label">{{ __('Upload font file', 'all-signs-customizer-for-woocommerce') }}</span>
                 <div class="ascwo-file-input">
-                  <button @click.prevent="selectFontFile" class="ascwo-file-button">{{ __('Upload font file', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                  <button @click.prevent="selectFontFile" class="ascwo-file-button">{{ __('Upload font file', 'all-signs-customizer-for-woocommerce') }}</button>
                   <input v-model="fontForm.url" autocomplete="off" />
                 </div>
-                <span class="ascwo-help-text">{{ __('.ttf or .otf font file.', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                <span class="ascwo-help-text">{{ __('.ttf or .otf font file.', 'all-signs-customizer-for-woocommerce') }}</span>
               </label>
               <label class="ascwo-block">
-                <span class="ascwo-form-label">{{ __('Label', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                <span class="ascwo-form-label">{{ __('Label', 'all-signs-customizer-for-woocommerce') }}</span>
                 <input v-model="fontForm.label" class="ascwo-form-input" autocomplete="off" />
               </label>
             </div>
@@ -224,10 +224,10 @@
               <button @click="saveFontForm" :disabled="isSavingFontForm || !fontForm.label.trim() || !fontForm.url.trim()" class="ascwo-primary-button">
                 {{
                   isSavingFontForm
-                    ? __('Creating...', 'all-signs-customizer-for-woocommerce-pro')
+                    ? __('Creating...', 'all-signs-customizer-for-woocommerce')
                     : formMode === 'edit'
-                      ? __('Update font', 'all-signs-customizer-for-woocommerce-pro')
-                      : __('Create and add font', 'all-signs-customizer-for-woocommerce-pro')
+                      ? __('Update font', 'all-signs-customizer-for-woocommerce')
+                      : __('Create and add font', 'all-signs-customizer-for-woocommerce')
                 }}
               </button>
             </div>
@@ -503,10 +503,10 @@ const saveFonts = async () => {
       })),
     });
     if (result?.success) {
-      toastMessage(result.message || __("Fonts saved", "all-signs-customizer-for-woocommerce-pro"));
+      toastMessage(result.message || __("Fonts saved", "all-signs-customizer-for-woocommerce"));
       await fetchSelectedFonts();
     } else {
-      toastMessage(result?.message || __("Unable to save fonts", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(result?.message || __("Unable to save fonts", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -548,7 +548,7 @@ const addExistingFont = async () => {
   } else if (source === "google") {
     const googleFont = googleFonts.value.find((font) => String(font?.family || "") === rawId);
     if (!googleFont) {
-      toastMessage(__("Font not found", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(__("Font not found", "all-signs-customizer-for-woocommerce"), "warning");
       return;
     }
 
@@ -561,7 +561,7 @@ const addExistingFont = async () => {
 
     const created = await api.addManagefont({ many: false, font: payload });
     if (!created?.success) {
-      toastMessage(created?.message || __("Unable to add Google font to manage fonts", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(created?.message || __("Unable to add Google font to manage fonts", "all-signs-customizer-for-woocommerce"), "warning");
       return;
     }
 
@@ -577,14 +577,14 @@ const addExistingFont = async () => {
   if (!targetKey) return;
   const alreadySelected = selectedFontRows.value.some((font) => getFontIdentity(font) === targetKey);
   if (alreadySelected) {
-    toastMessage(__("This font is already added to this configuration", "all-signs-customizer-for-woocommerce-pro"));
+    toastMessage(__("This font is already added to this configuration", "all-signs-customizer-for-woocommerce"));
     resetForm();
     return;
   }
 
   const result = await api.addRequiredOptionFontItem(configID.value, targetIndex);
   if (result?.success) {
-    toastMessage(result.message || __("Font successfully added", "all-signs-customizer-for-woocommerce-pro"));
+    toastMessage(result.message || __("Font successfully added", "all-signs-customizer-for-woocommerce"));
   }
   await fetchSelectedFonts();
   resetForm();
@@ -634,20 +634,20 @@ const saveFontForm = async () => {
       const targetKey = getFontIdentity(targetFont);
       const alreadySelected = selectedFontRows.value.some((font) => getFontIdentity(font) === targetKey);
       if (alreadySelected) {
-        toastMessage(__("This font is already added to this configuration", "all-signs-customizer-for-woocommerce-pro"));
+        toastMessage(__("This font is already added to this configuration", "all-signs-customizer-for-woocommerce"));
         resetForm();
         return;
       }
       const result = await api.addRequiredOptionFontItem(configID.value, targetIndex);
       if (result?.success) {
-        toastMessage(result.message || __("Font successfully added", "all-signs-customizer-for-woocommerce-pro"));
+        toastMessage(result.message || __("Font successfully added", "all-signs-customizer-for-woocommerce"));
       }
       await fetchSelectedFonts();
       resetForm();
       return;
     }
 
-    toastMessage(__("Unable to create this font", "all-signs-customizer-for-woocommerce-pro"), "error");
+    toastMessage(__("Unable to create this font", "all-signs-customizer-for-woocommerce"), "error");
   } finally {
     isSavingFontForm.value = false;
   }
@@ -668,7 +668,7 @@ const editSelectedFont = (font) => {
 const removeFont = async (itemId) => {
   const result = await api.deleteRequiredOptionFontItem(configID.value, itemId);
   if (result?.success) {
-    toastMessage(result.message || __("Font successfully deleted", "all-signs-customizer-for-woocommerce-pro"));
+    toastMessage(result.message || __("Font successfully deleted", "all-signs-customizer-for-woocommerce"));
   }
   await fetchSelectedFonts();
 };
@@ -680,10 +680,10 @@ const setDefaultFont = async (itemId) => {
   try {
     const result = await api.setRequiredOptionFontDefault(configID.value, itemId);
     if (result?.success) {
-      toastMessage(result.message || __("Default font successfully updated", "all-signs-customizer-for-woocommerce-pro"));
+      toastMessage(result.message || __("Default font successfully updated", "all-signs-customizer-for-woocommerce"));
       await fetchSelectedFonts();
     } else {
-      toastMessage(result?.message || __("Unable to update default font", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(result?.message || __("Unable to update default font", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -702,7 +702,7 @@ const dropFont = async (targetIndex) => {
   draggedFontIndex.value = null;
   const result = await api.updateRequiredOptionFontItem(configID.value, movedFont?.id ?? movedIndex, targetIndex);
   if (result?.success) {
-    toastMessage(result.message || __("Font successfully updated", "all-signs-customizer-for-woocommerce-pro"));
+    toastMessage(result.message || __("Font successfully updated", "all-signs-customizer-for-woocommerce"));
   }
   await fetchSelectedFonts();
 };
@@ -739,8 +739,8 @@ const goToManageFonts = () => {
 const selectFontFile = () => {
   if (!window.wp?.media) return;
   const uploader = window.wp.media({
-    title: __("Upload font file", "all-signs-customizer-for-woocommerce-pro"),
-    button: { text: __("Use font file", "all-signs-customizer-for-woocommerce-pro") },
+    title: __("Upload font file", "all-signs-customizer-for-woocommerce"),
+    button: { text: __("Use font file", "all-signs-customizer-for-woocommerce") },
     multiple: false,
   });
 

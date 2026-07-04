@@ -4,27 +4,27 @@
       <section class="ascwo-card">
         <div class="ascwo-card-inner ascwo-flex ascwo-items-center ascwo-justify-between ascwo-gap-4">
           <div>
-            <h2 class="ascwo-title">{{ __("Colors", "all-signs-customizer-for-woocommerce-pro") }}</h2>
-            <p class="ascwo-subtitle">{{ __("Manage the classic color records, then exclude them from materials when needed.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+            <h2 class="ascwo-title">{{ __("Colors", "all-signs-customizer-for-woocommerce") }}</h2>
+            <p class="ascwo-subtitle">{{ __("Manage the classic color records, then exclude them from materials when needed.", "all-signs-customizer-for-woocommerce") }}</p>
           </div>
           <button type="button" @click="newColor" class="ascwo-primary-button">
             <PlusIcon class="ascwo-w-4 ascwo-h-4" />
-            {{ __("Add new color", "all-signs-customizer-for-woocommerce-pro") }}
+            {{ __("Add new color", "all-signs-customizer-for-woocommerce") }}
           </button>
         </div>
       </section>
 
       <section class="ascwo-card">
         <div class="ascwo-card-inner">
-          <h3 class="ascwo-section-title">{{ __("Colors List", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+          <h3 class="ascwo-section-title">{{ __("Colors List", "all-signs-customizer-for-woocommerce") }}</h3>
           <table class="ascwo-colors-table ascwo-w-full ascwo-border-collapse">
             <thead class="ascwo-bg-[#f3f3f3]">
               <tr>
-                <th>{{ __("Preview", "all-signs-customizer-for-woocommerce-pro") }}</th>
-                <th>{{ __("Name", "all-signs-customizer-for-woocommerce-pro") }}</th>
-                <th>{{ __("Background color", "all-signs-customizer-for-woocommerce-pro") }}</th>
-                <th>{{ __("Default", "all-signs-customizer-for-woocommerce-pro") }}</th>
-                <th>{{ __("Actions", "all-signs-customizer-for-woocommerce-pro") }}</th>
+                <th>{{ __("Preview", "all-signs-customizer-for-woocommerce") }}</th>
+                <th>{{ __("Name", "all-signs-customizer-for-woocommerce") }}</th>
+                <th>{{ __("Background color", "all-signs-customizer-for-woocommerce") }}</th>
+                <th>{{ __("Default", "all-signs-customizer-for-woocommerce") }}</th>
+                <th>{{ __("Actions", "all-signs-customizer-for-woocommerce") }}</th>
               </tr>
             </thead>
             <tbody>
@@ -35,7 +35,7 @@
               </tr>
               <tr v-else-if="colors.items.length === 0">
                 <td colspan="5" class="ascwo-text-center ascwo-py-8 ascwo-text-[13px] ascwo-text-[#616161]">
-                  {{ __("No colors configured.", "all-signs-customizer-for-woocommerce-pro") }}
+                  {{ __("No colors configured.", "all-signs-customizer-for-woocommerce") }}
                 </td>
               </tr>
               <tr v-for="(col, key) in colors.items" :key="col.id || key">
@@ -48,20 +48,20 @@
                 <td class="ascwo-font-mono">{{ inferColorHex(col) }}</td>
                 <td>
                   <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
-                    <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                    <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce") }}</span>
                     <button type="button" :disabled="isLoading" @click="selectDefault(col.id || key)" :class="['ascwo-toggle', col.isDefault ? 'is-active' : '', defaultActionId === String(col.id || key) ? 'is-loading' : '']"><span></span></button>
-                    <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                    <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce") }}</span>
                   </div>
                 </td>
                 <td>
                   <div class="ascwo-flex ascwo-items-center ascwo-gap-3">
                     <button type="button" @click="selectMaterialColor(col.id || key, col)" class="ascwo-outline-button">
                       <Edit2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
-                      {{ __("Edit", "all-signs-customizer-for-woocommerce-pro") }}
+                      {{ __("Edit", "all-signs-customizer-for-woocommerce") }}
                     </button>
                     <button type="button" @click="selectMaterialColor(col.id || key, col, true)" class="ascwo-link-danger">
                       <Trash2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
-                      {{ __("Delete", "all-signs-customizer-for-woocommerce-pro") }}
+                      {{ __("Delete", "all-signs-customizer-for-woocommerce") }}
                     </button>
                   </div>
                 </td>
@@ -73,37 +73,37 @@
 
       <section class="ascwo-card">
         <div class="ascwo-card-inner">
-          <h3 class="ascwo-section-title ascwo-mb-0">{{ __("Custom Colors", "all-signs-customizer-for-woocommerce-pro") }}</h3>
-          <p class="ascwo-subtitle ascwo-mb-4">{{ __("Keep the same classic fields used for custom color settings.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+          <h3 class="ascwo-section-title ascwo-mb-0">{{ __("Custom Colors", "all-signs-customizer-for-woocommerce") }}</h3>
+          <p class="ascwo-subtitle ascwo-mb-4">{{ __("Keep the same classic fields used for custom color settings.", "all-signs-customizer-for-woocommerce") }}</p>
 
           <div class="ascwo-setting-row ascwo-border-t">
             <div>
-              <h4 class="ascwo-setting-title">{{ __("Enable custom colors", "all-signs-customizer-for-woocommerce-pro") }}</h4>
+              <h4 class="ascwo-setting-title">{{ __("Enable custom colors", "all-signs-customizer-for-woocommerce") }}</h4>
             </div>
             <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
-              <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce") }}</span>
               <button type="button" @click="handleChangeCustomColorsActive" :class="['ascwo-toggle', colors.customColors.active ? 'is-active' : '']"><span></span></button>
-              <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce") }}</span>
             </div>
           </div>
 
           <label class="ascwo-block ascwo-mt-3">
-            <span class="ascwo-form-label">{{ __("Label", "all-signs-customizer-for-woocommerce-pro") }}</span>
+            <span class="ascwo-form-label">{{ __("Label", "all-signs-customizer-for-woocommerce") }}</span>
             <input v-model="colors.customColors.label" class="ascwo-form-input" autocomplete="off" />
           </label>
 
           <label class="ascwo-block ascwo-mt-3">
-            <span class="ascwo-form-label">{{ __("Preview image", "all-signs-customizer-for-woocommerce-pro") }}</span>
+            <span class="ascwo-form-label">{{ __("Preview image", "all-signs-customizer-for-woocommerce") }}</span>
             <div class="ascwo-file-input">
-              <button type="button" @click.prevent="selectCustomPrevImage" class="ascwo-file-button">{{ __("Preview image", "all-signs-customizer-for-woocommerce-pro") }}</button>
+              <button type="button" @click.prevent="selectCustomPrevImage" class="ascwo-file-button">{{ __("Preview image", "all-signs-customizer-for-woocommerce") }}</button>
               <input v-model="colors.customColors.prevImg" autocomplete="off" />
             </div>
-            <span class="ascwo-help-text">{{ __("Preview image for the custom colors option.", "all-signs-customizer-for-woocommerce-pro") }}</span>
+            <span class="ascwo-help-text">{{ __("Preview image for the custom colors option.", "all-signs-customizer-for-woocommerce") }}</span>
           </label>
 
           <div class="ascwo-flex ascwo-justify-end ascwo-mt-5">
             <button type="button" @click="updateMaterialColor" :disabled="isLoading" class="ascwo-primary-button">
-              {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce-pro") : __("Save settings", "all-signs-customizer-for-woocommerce-pro") }}
+              {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce") : __("Save settings", "all-signs-customizer-for-woocommerce") }}
             </button>
           </div>
         </div>
@@ -113,71 +113,71 @@
     <template v-else>
       <section class="ascwo-card">
         <div class="ascwo-card-inner ascwo-flex ascwo-justify-end">
-          <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Back to colors", "all-signs-customizer-for-woocommerce-pro") }}</button>
+          <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Back to colors", "all-signs-customizer-for-woocommerce") }}</button>
         </div>
         <div class="ascwo-card-inner ascwo-form-body">
           <div class="ascwo-grid ascwo-grid-cols-1 lg:ascwo-grid-cols-2 ascwo-gap-4">
             <label class="ascwo-block">
-              <span class="ascwo-form-label">{{ __("Name", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <span class="ascwo-form-label">{{ __("Name", "all-signs-customizer-for-woocommerce") }}</span>
               <input v-model.trim="color.name" class="ascwo-form-input" autocomplete="off" />
-              <span class="ascwo-help-text">{{ __("Customer-facing color name.", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <span class="ascwo-help-text">{{ __("Customer-facing color name.", "all-signs-customizer-for-woocommerce") }}</span>
             </label>
             <label class="ascwo-block">
-              <span class="ascwo-form-label">{{ __("Preview image", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <span class="ascwo-form-label">{{ __("Preview image", "all-signs-customizer-for-woocommerce") }}</span>
               <div class="ascwo-file-input">
-                <button type="button" @click.prevent="selectColorPreviewImage" class="ascwo-file-button">{{ __("Preview image", "all-signs-customizer-for-woocommerce-pro") }}</button>
+                <button type="button" @click.prevent="selectColorPreviewImage" class="ascwo-file-button">{{ __("Preview image", "all-signs-customizer-for-woocommerce") }}</button>
                 <input v-model="color.prevImg" autocomplete="off" />
               </div>
-              <span class="ascwo-help-text">{{ __("Optional preview image used for this color.", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <span class="ascwo-help-text">{{ __("Optional preview image used for this color.", "all-signs-customizer-for-woocommerce") }}</span>
             </label>
           </div>
 
           <div class="ascwo-setting-row ascwo-mt-4">
             <div>
-              <h3 class="ascwo-setting-title">{{ __("Pattern", "all-signs-customizer-for-woocommerce-pro") }}</h3>
-              <p class="ascwo-help-text ascwo-m-0">{{ __("Choose between a flat background color or a pattern image.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+              <h3 class="ascwo-setting-title">{{ __("Pattern", "all-signs-customizer-for-woocommerce") }}</h3>
+              <p class="ascwo-help-text ascwo-m-0">{{ __("Choose between a flat background color or a pattern image.", "all-signs-customizer-for-woocommerce") }}</p>
             </div>
             <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
-              <span class="ascwo-toggle-label">{{ __("Flat color", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <span class="ascwo-toggle-label">{{ __("Flat color", "all-signs-customizer-for-woocommerce") }}</span>
               <button type="button" @click="color.pattern.active = !color.pattern.active" :class="['ascwo-toggle', color.pattern.active ? 'is-active' : '']"><span></span></button>
-              <span class="ascwo-toggle-label">{{ __("Pattern image", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <span class="ascwo-toggle-label">{{ __("Pattern image", "all-signs-customizer-for-woocommerce") }}</span>
             </div>
           </div>
 
           <label v-if="!color.pattern.active" class="ascwo-block ascwo-mt-3">
-            <span class="ascwo-form-label">{{ __("Material background color", "all-signs-customizer-for-woocommerce-pro") }}</span>
+            <span class="ascwo-form-label">{{ __("Material background color", "all-signs-customizer-for-woocommerce") }}</span>
             <div class="ascwo-color-input-row">
               <input type="color" v-model="color.pattern.codeHex" class="ascwo-native-color" />
               <input v-model="color.pattern.codeHex" class="ascwo-form-input" autocomplete="off" />
             </div>
           </label>
           <label v-else class="ascwo-block ascwo-mt-3">
-            <span class="ascwo-form-label">{{ __("Pattern image", "all-signs-customizer-for-woocommerce-pro") }}</span>
+            <span class="ascwo-form-label">{{ __("Pattern image", "all-signs-customizer-for-woocommerce") }}</span>
             <div class="ascwo-file-input">
-              <button type="button" @click.prevent="selectColorBackgroundImage" class="ascwo-file-button">{{ __("Pattern image", "all-signs-customizer-for-woocommerce-pro") }}</button>
+              <button type="button" @click.prevent="selectColorBackgroundImage" class="ascwo-file-button">{{ __("Pattern image", "all-signs-customizer-for-woocommerce") }}</button>
               <input v-model="color.pattern.url" autocomplete="off" />
             </div>
           </label>
 
           <div class="ascwo-setting-row ascwo-mt-4">
             <div>
-              <h3 class="ascwo-setting-title">{{ __("Text color", "all-signs-customizer-for-woocommerce-pro") }}</h3>
-              <p class="ascwo-help-text ascwo-m-0">{{ __("Enable a dedicated text color for this color option.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+              <h3 class="ascwo-setting-title">{{ __("Text color", "all-signs-customizer-for-woocommerce") }}</h3>
+              <p class="ascwo-help-text ascwo-m-0">{{ __("Enable a dedicated text color for this color option.", "all-signs-customizer-for-woocommerce") }}</p>
             </div>
             <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
-              <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce") }}</span>
               <button type="button" @click="color.textColor.active = !color.textColor.active" :class="['ascwo-toggle', color.textColor.active ? 'is-active' : '']"><span></span></button>
-              <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce") }}</span>
             </div>
           </div>
 
           <div v-if="color.textColor.active" class="ascwo-grid ascwo-grid-cols-1 lg:ascwo-grid-cols-2 ascwo-gap-4 ascwo-mt-3">
             <label class="ascwo-block">
-              <span class="ascwo-form-label">{{ __("Text color name", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <span class="ascwo-form-label">{{ __("Text color name", "all-signs-customizer-for-woocommerce") }}</span>
               <input v-model="color.textColor.name" class="ascwo-form-input" autocomplete="off" />
             </label>
             <label class="ascwo-block">
-              <span class="ascwo-form-label">{{ __("Text color", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <span class="ascwo-form-label">{{ __("Text color", "all-signs-customizer-for-woocommerce") }}</span>
               <div class="ascwo-color-input-row">
                 <input type="color" v-model="color.textColor.codeHex" class="ascwo-native-color" />
                 <input v-model="color.textColor.codeHex" class="ascwo-form-input" autocomplete="off" />
@@ -187,18 +187,18 @@
 
           <div v-if="color.textColor.active" class="ascwo-setting-row ascwo-mt-4">
             <div>
-              <h3 class="ascwo-setting-title">{{ __("Use the same color for border", "all-signs-customizer-for-woocommerce-pro") }}</h3>
-              <p class="ascwo-help-text ascwo-m-0">{{ __("Apply the text color to the border for this color option.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+              <h3 class="ascwo-setting-title">{{ __("Use the same color for border", "all-signs-customizer-for-woocommerce") }}</h3>
+              <p class="ascwo-help-text ascwo-m-0">{{ __("Apply the text color to the border for this color option.", "all-signs-customizer-for-woocommerce") }}</p>
             </div>
             <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
-              <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce") }}</span>
               <button type="button" @click="color.textColor.sameForBorder = !color.textColor.sameForBorder" :class="['ascwo-toggle', color.textColor.sameForBorder ? 'is-active' : '']"><span></span></button>
-              <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce-pro") }}</span>
+              <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce") }}</span>
             </div>
           </div>
 
           <label class="ascwo-block ascwo-mt-3">
-            <span class="ascwo-form-label">{{ __("Additional price", "all-signs-customizer-for-woocommerce-pro") }}</span>
+            <span class="ascwo-form-label">{{ __("Additional price", "all-signs-customizer-for-woocommerce") }}</span>
             <div class="ascwo-price-input">
               <input type="number" v-model="color.additionalPrice" class="ascwo-form-input" />
               <span>$</span>
@@ -206,9 +206,9 @@
           </label>
         </div>
         <div class="ascwo-form-footer">
-          <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Cancel", "all-signs-customizer-for-woocommerce-pro") }}</button>
+          <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Cancel", "all-signs-customizer-for-woocommerce") }}</button>
           <button type="button" @click="isEdit ? updateColorInMaterialColor() : addMaterialColor()" :disabled="isLoading || !color.name.trim()" class="ascwo-primary-button">
-            {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce-pro") : isEdit ? __("Update color", "all-signs-customizer-for-woocommerce-pro") : __("Save color", "all-signs-customizer-for-woocommerce-pro") }}
+            {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce") : isEdit ? __("Update color", "all-signs-customizer-for-woocommerce") : __("Save color", "all-signs-customizer-for-woocommerce") }}
           </button>
         </div>
       </section>
@@ -217,11 +217,11 @@
     <div v-if="openModal" class="ascwo-fixed ascwo-inset-0 ascwo-z-[20000] ascwo-flex ascwo-items-center ascwo-justify-center">
       <div class="ascwo-absolute ascwo-inset-0 ascwo-bg-black/45" @click="closeModal"></div>
       <div class="ascwo-delete-modal">
-        <h3 class="ascwo-text-[16px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-2">{{ __("Delete color?", "all-signs-customizer-for-woocommerce-pro") }}</h3>
-        <p class="ascwo-text-[13px] ascwo-text-[#616161] ascwo-mt-0 ascwo-mb-5">{{ sprintf(__('Are you sure you want to delete "%s"?', "all-signs-customizer-for-woocommerce-pro"), color.name) }}</p>
+        <h3 class="ascwo-text-[16px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-2">{{ __("Delete color?", "all-signs-customizer-for-woocommerce") }}</h3>
+        <p class="ascwo-text-[13px] ascwo-text-[#616161] ascwo-mt-0 ascwo-mb-5">{{ sprintf(__('Are you sure you want to delete "%s"?', "all-signs-customizer-for-woocommerce"), color.name) }}</p>
         <div class="ascwo-flex ascwo-justify-end ascwo-gap-2">
-          <button type="button" @click="closeModal" class="ascwo-secondary-button">{{ __("Cancel", "all-signs-customizer-for-woocommerce-pro") }}</button>
-          <button type="button" @click="deleteMaterialColor" :disabled="isLoading" class="ascwo-danger-button">{{ __("Delete", "all-signs-customizer-for-woocommerce-pro") }}</button>
+          <button type="button" @click="closeModal" class="ascwo-secondary-button">{{ __("Cancel", "all-signs-customizer-for-woocommerce") }}</button>
+          <button type="button" @click="deleteMaterialColor" :disabled="isLoading" class="ascwo-danger-button">{{ __("Delete", "all-signs-customizer-for-woocommerce") }}</button>
         </div>
       </div>
     </div>
@@ -383,7 +383,7 @@ const updateMaterialColor = async () => {
       isNewColor.value = false;
       isEdit.value = false;
     } else {
-      toastMessage(res?.message || __("Unable to save colors", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(res?.message || __("Unable to save colors", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -401,7 +401,7 @@ const addMaterialColor = async () => {
       isEdit.value = false;
       await fetchMaterialColors();
     } else {
-      toastMessage(res?.message || __("Unable to add color", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(res?.message || __("Unable to add color", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -419,7 +419,7 @@ const updateColorInMaterialColor = async () => {
       isEdit.value = false;
       await fetchMaterialColors();
     } else {
-      toastMessage(res?.message || __("Unable to update color", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(res?.message || __("Unable to update color", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -437,7 +437,7 @@ const deleteMaterialColor = async () => {
       isEdit.value = false;
       await fetchMaterialColors();
     } else {
-      toastMessage(res?.message || __("Unable to delete color", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(res?.message || __("Unable to delete color", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -461,10 +461,10 @@ const selectDefault = async (key) => {
   try {
     const res = await api.setRequiredOptionDefault(configID.value, "colors", key);
     if (res?.success) {
-      toastMessage(res.message || __("Default color updated", "all-signs-customizer-for-woocommerce-pro"));
+      toastMessage(res.message || __("Default color updated", "all-signs-customizer-for-woocommerce"));
       await fetchMaterialColors();
     } else {
-      toastMessage(res?.message || __("Unable to update default color", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(res?.message || __("Unable to update default color", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -496,7 +496,7 @@ const openMedia = (title, callback) => {
   if (!window.wp?.media) return;
   const uploader = window.wp.media({
     title,
-    button: { text: __("Select image", "all-signs-customizer-for-woocommerce-pro") },
+    button: { text: __("Select image", "all-signs-customizer-for-woocommerce") },
     multiple: false,
   });
   uploader.on("select", () => {
@@ -507,15 +507,15 @@ const openMedia = (title, callback) => {
 };
 
 const selectColorBackgroundImage = () => openMedia(
-  __("Select pattern image", "all-signs-customizer-for-woocommerce-pro"),
+  __("Select pattern image", "all-signs-customizer-for-woocommerce"),
   (url) => color.value.pattern.url = url
 );
 const selectColorPreviewImage = () => openMedia(
-  __("Select color preview image", "all-signs-customizer-for-woocommerce-pro"),
+  __("Select color preview image", "all-signs-customizer-for-woocommerce"),
   (url) => color.value.prevImg = url
 );
 const selectCustomPrevImage = () => openMedia(
-  __("Select custom color preview image", "all-signs-customizer-for-woocommerce-pro"),
+  __("Select custom color preview image", "all-signs-customizer-for-woocommerce"),
   (url) => colors.value.customColors.prevImg = url
 );
 

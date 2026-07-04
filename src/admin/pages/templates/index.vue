@@ -6,14 +6,14 @@
         :class="{ 'is-active': route.name === 'templates-main' }"
         @click="router.push('/templates/main')"
       >
-        {{ __("Templates", "all-signs-customizer-for-woocommerce-pro") }}
+        {{ __("Templates", "all-signs-customizer-for-woocommerce") }}
       </button>
       <button
         type="button"
         :class="{ 'is-active': route.name === 'templates-categories' }"
         @click="router.push('/templates/categories')"
       >
-        {{ __("Categories", "all-signs-customizer-for-woocommerce-pro") }}
+        {{ __("Categories", "all-signs-customizer-for-woocommerce") }}
       </button>
     </nav>
 

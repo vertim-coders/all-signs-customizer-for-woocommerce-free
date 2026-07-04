@@ -76,10 +76,10 @@
 
 import { __ } from "@wordpress/i18n";
 const labels = {
-  manageFonts: __('Manage Fonts', "all-signs-customizer-for-woocommerce-pro"),
-  manageCliparts: __('Manage Cliparts', "all-signs-customizer-for-woocommerce-pro"),
-  configurations: __('Configurations', "all-signs-customizer-for-woocommerce-pro"),
-  globalSettings: __('Global Settings', "all-signs-customizer-for-woocommerce-pro"),
+  manageFonts: __('Manage Fonts', "all-signs-customizer-for-woocommerce"),
+  manageCliparts: __('Manage Cliparts', "all-signs-customizer-for-woocommerce"),
+  configurations: __('Configurations', "all-signs-customizer-for-woocommerce"),
+  globalSettings: __('Global Settings', "all-signs-customizer-for-woocommerce"),
 };
 </script>
 

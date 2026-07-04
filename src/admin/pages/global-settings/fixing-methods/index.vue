@@ -4,22 +4,22 @@
       <section class="ascwo-card">
         <div class="ascwo-card-inner ascwo-flex ascwo-items-center ascwo-justify-between ascwo-gap-4">
           <div>
-            <h2 class="ascwo-page-title">{{ __("Fixing Methods", "all-signs-customizer-for-woocommerce-pro") }}</h2>
-            <p class="ascwo-subtitle">{{ __("Manage the fixing methods available globally across configurations.", "all-signs-customizer-for-woocommerce-pro") }}</p>
+            <h2 class="ascwo-page-title">{{ __("Fixing Methods", "all-signs-customizer-for-woocommerce") }}</h2>
+            <p class="ascwo-subtitle">{{ __("Manage the fixing methods available globally across configurations.", "all-signs-customizer-for-woocommerce") }}</p>
           </div>
         </div>
       </section>
 
       <section class="ascwo-card">
         <div class="ascwo-card-inner">
-          <h3 class="ascwo-section-title">{{ __("Fixing Methods List", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+          <h3 class="ascwo-section-title">{{ __("Fixing Methods List", "all-signs-customizer-for-woocommerce") }}</h3>
           <table class="ascwo-fixing-table ascwo-w-full ascwo-border-collapse">
             <thead class="ascwo-bg-[#f3f3f3]">
               <tr>
-                <th>{{ __("Fixing method", "all-signs-customizer-for-woocommerce-pro") }}</th>
-                <th>{{ __("Description", "all-signs-customizer-for-woocommerce-pro") }}</th>
-                <th>{{ __("Preview", "all-signs-customizer-for-woocommerce-pro") }}</th>
-                <th>{{ __("Actions", "all-signs-customizer-for-woocommerce-pro") }}</th>
+                <th>{{ __("Fixing method", "all-signs-customizer-for-woocommerce") }}</th>
+                <th>{{ __("Description", "all-signs-customizer-for-woocommerce") }}</th>
+                <th>{{ __("Preview", "all-signs-customizer-for-woocommerce") }}</th>
+                <th>{{ __("Actions", "all-signs-customizer-for-woocommerce") }}</th>
               </tr>
             </thead>
             <tbody>
@@ -31,8 +31,8 @@
               <tr v-else-if="fixingMethods.length === 0">
                 <td colspan="4" class="ascwo-empty">
                   <SearchIcon class="ascwo-w-14 ascwo-h-14 ascwo-text-[#8c9196]" />
-                  <strong>{{ __("No fixing methods found", "all-signs-customizer-for-woocommerce-pro") }}</strong>
-                  <span>{{ __("Create a fixing method to use it inside configurations.", "all-signs-customizer-for-woocommerce-pro") }}</span>
+                  <strong>{{ __("No fixing methods found", "all-signs-customizer-for-woocommerce") }}</strong>
+                  <span>{{ __("Create a fixing method to use it inside configurations.", "all-signs-customizer-for-woocommerce") }}</span>
                 </td>
               </tr>
               <tr v-for="(method, key) in fixingMethods" :key="method.id || method.type || key">
@@ -49,7 +49,7 @@
                   <div class="ascwo-flex ascwo-items-center ascwo-gap-3">
                     <button type="button" @click="selectFixingMethod(method.id || method.type || key, method)" class="ascwo-outline-button">
                       <Edit2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
-                      {{ __("Edit", "all-signs-customizer-for-woocommerce-pro") }}
+                      {{ __("Edit", "all-signs-customizer-for-woocommerce") }}
                     </button>
                   </div>
                 </td>
@@ -62,25 +62,25 @@
 
     <section v-else class="ascwo-card">
       <div class="ascwo-card-inner ascwo-flex ascwo-justify-end">
-        <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Back to fixing methods", "all-signs-customizer-for-woocommerce-pro") }}</button>
+        <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Back to fixing methods", "all-signs-customizer-for-woocommerce") }}</button>
       </div>
       <div class="ascwo-card-inner ascwo-form-body">
-        <h3 class="ascwo-section-title">{{ isEdit ? __("Edit Fixing Method", "all-signs-customizer-for-woocommerce-pro") : __("Add new Fixing Method", "all-signs-customizer-for-woocommerce-pro") }}</h3>
+        <h3 class="ascwo-section-title">{{ isEdit ? __("Edit Fixing Method", "all-signs-customizer-for-woocommerce") : __("Add new Fixing Method", "all-signs-customizer-for-woocommerce") }}</h3>
         <div class="ascwo-grid ascwo-grid-cols-1 lg:ascwo-grid-cols-2 ascwo-gap-4">
           <label class="ascwo-block">
-            <span class="ascwo-form-label">{{ __("Label", "all-signs-customizer-for-woocommerce-pro") }}</span>
+            <span class="ascwo-form-label">{{ __("Label", "all-signs-customizer-for-woocommerce") }}</span>
             <input v-model.trim="fixingMethod.name" class="ascwo-form-input" autocomplete="off" />
           </label>
           <label class="ascwo-block">
-            <span class="ascwo-form-label">{{ __("Description", "all-signs-customizer-for-woocommerce-pro") }}</span>
+            <span class="ascwo-form-label">{{ __("Description", "all-signs-customizer-for-woocommerce") }}</span>
             <input v-model.trim="fixingMethod.description" class="ascwo-form-input" autocomplete="off" />
           </label>
         </div>
 
         <label class="ascwo-block ascwo-mt-3">
-          <span class="ascwo-form-label">{{ __("Upload icon", "all-signs-customizer-for-woocommerce-pro") }}</span>
+          <span class="ascwo-form-label">{{ __("Upload icon", "all-signs-customizer-for-woocommerce") }}</span>
           <div class="ascwo-file-input">
-            <button type="button" @click.prevent="selectFixingMethodIcon" class="ascwo-file-button">{{ __("Upload Icon", "all-signs-customizer-for-woocommerce-pro") }}</button>
+            <button type="button" @click.prevent="selectFixingMethodIcon" class="ascwo-file-button">{{ __("Upload Icon", "all-signs-customizer-for-woocommerce") }}</button>
             <input v-model="fixingMethod.icon" autocomplete="off" />
             <div class="ascwo-upload-preview">
               <img v-if="fixingMethod.icon" :src="fixingMethod.icon" :alt="fixingMethod.name" />
@@ -89,9 +89,9 @@
         </label>
       </div>
       <div class="ascwo-form-footer">
-        <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Cancel", "all-signs-customizer-for-woocommerce-pro") }}</button>
+        <button type="button" @click="back" class="ascwo-secondary-button">{{ __("Cancel", "all-signs-customizer-for-woocommerce") }}</button>
         <button type="button" @click="updateFixingMethod" :disabled="isLoading || !fixingMethod.name.trim()" class="ascwo-primary-button">
-          {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce-pro") : __("Save fixing method", "all-signs-customizer-for-woocommerce-pro") }}
+          {{ isLoading ? __("Saving...", "all-signs-customizer-for-woocommerce") : __("Save fixing method", "all-signs-customizer-for-woocommerce") }}
         </button>
       </div>
     </section>
@@ -143,7 +143,7 @@ const updateFixingMethod = async () => {
       await fetchFixingMethods();
       back();
     } else {
-      toastMessage(result?.message || __("Unable to save fixing method", "all-signs-customizer-for-woocommerce-pro"), "warning");
+      toastMessage(result?.message || __("Unable to save fixing method", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;
@@ -153,8 +153,8 @@ const updateFixingMethod = async () => {
 const selectFixingMethodIcon = () => {
   if (!window.wp?.media) return;
   const uploader = window.wp.media({
-    title: __("Select Fixing Method icon", "all-signs-customizer-for-woocommerce-pro"),
-    button: { text: __("Select Icon", "all-signs-customizer-for-woocommerce-pro") },
+    title: __("Select Fixing Method icon", "all-signs-customizer-for-woocommerce"),
+    button: { text: __("Select Icon", "all-signs-customizer-for-woocommerce") },
     multiple: false,
   });
   uploader.on("select", () => {

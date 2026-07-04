@@ -274,16 +274,11 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
     if (!is_array($data)) {
       $data = array();
     }
-    if (!is_array($data)) {
-      return rest_ensure_response(["message" => __("ASO Product Pro not found", "all-signs-customizer-for-woocommerce-pro")]);
-    }
-
     $has_product = isset($data["product"]);
     $has_auto_update = array_key_exists('auto_update', $data);
-    $should_activate_license = !empty($data['activate_license']);
 
     if (!$has_product && !$has_auto_update) {
-      return rest_ensure_response(["message" => __("ASO Product Pro not found", "all-signs-customizer-for-woocommerce-pro")]);
+      return rest_ensure_response(["message" => __("Settings not found", "all-signs-customizer-for-woocommerce")]);
     }
 
     if ($has_auto_update) {
@@ -291,164 +286,20 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
     }
 
     if ($has_product) {
-      $product = get_option("ascwo_product_pro", false);
       $next_product = sanitize_text_field((string) $data["product"]);
 
-      if (!empty($next_product) && $product !== $next_product) {
+      if (!empty($next_product)) {
         update_option("ascwo_product_pro", $next_product);
-        $this->clear_license_data();
-      } elseif (empty($next_product)) {
+      } else {
         delete_option("ascwo_product_pro");
-        $this->clear_license_data();
-      }
-
-      if ($should_activate_license && !empty($next_product)) {
-        $activation = $this->activate_remote_license($next_product);
-
-        if (is_wp_error($activation)) {
-          return rest_ensure_response([
-            "success" => false,
-            "message" => $activation->get_error_message(),
-            "auto_update" => $this->get_auto_update_enabled(),
-          ]);
-        }
-
-        if (isset($activation['key'])) {
-          $timestamp = (int) $activation['key'];
-          if ($timestamp > 0) {
-            $license_data = $this->process_license_validity($timestamp);
-            $this->save_license_data_robust($license_data);
-          } else {
-            $this->clear_license_data();
-          }
-        } elseif (isset($activation['message'])) {
-          return rest_ensure_response([
-            "success" => false,
-            "message" => sanitize_text_field((string) $activation['message']),
-            "auto_update" => $this->get_auto_update_enabled(),
-          ]);
-        }
-      }
-
-      if (isset($data["valid"])) {
-        $timestamp = (int) $data["valid"];
-        if ($timestamp > 0) {
-          $license_data = $this->process_license_validity($timestamp);
-          $this->save_license_data_robust($license_data);
-        } else {
-          $this->clear_license_data();
-        }
-      }
-
-      if (empty($next_product) && !$has_auto_update) {
-        return rest_ensure_response(["message" => __("ASO Product Pro not found", "all-signs-customizer-for-woocommerce-pro")]);
       }
     }
 
     return rest_ensure_response([
-      "success" => $should_activate_license ? __("Activation successful! Your product is ready to use", "all-signs-customizer-for-woocommerce-pro") : __("ASO Product Pro saved successfully", "all-signs-customizer-for-woocommerce-pro"),
-      "message" => $should_activate_license ? __("Activation successful! Your product is ready to use", "all-signs-customizer-for-woocommerce-pro") : __("ASO Product Pro saved successfully", "all-signs-customizer-for-woocommerce-pro"),
+      "success" => __("Settings saved successfully", "all-signs-customizer-for-woocommerce"),
+      "message" => __("Settings saved successfully", "all-signs-customizer-for-woocommerce"),
       "auto_update" => $this->get_auto_update_enabled(),
     ]);
-  }
-
-  /**
-   * Activate a license key against the remote server from PHP.
-   *
-   * This keeps the license check server-side so the browser does not need to
-   * hit the remote WP REST endpoint directly and avoids cookie/nonce issues.
-   *
-   * @param string $product License key.
-   *
-   * @return array|WP_Error Decoded response data or error.
-   */
-  private function activate_remote_license($product)
-  {
-    $site_url = get_site_url();
-    $url = add_query_arg(
-      array(
-        'lcde' => $product,
-        'siteurl' => $site_url,
-        'vertim' => ASCWO_ID,
-      ),
-      'https://signsdesigner.us/wp-json/vlc/license/'
-    );
-
-    $response = wp_remote_get(
-      $url,
-      array(
-        'timeout' => 8,
-        'user-agent' => 'ASCWO/' . ASCWO_VERSION . '; ' . home_url('/'),
-      )
-    );
-
-    if (is_wp_error($response)) {
-      return $response;
-    }
-
-    $status_code = (int) wp_remote_retrieve_response_code($response);
-    if ($status_code < 200 || $status_code >= 300) {
-      return new WP_Error(
-        'ascwo_license_http_error',
-        wp_remote_retrieve_response_message($response)
-      );
-    }
-
-    $body = wp_remote_retrieve_body($response);
-    if ('' === trim((string) $body)) {
-      return new WP_Error('ascwo_license_empty_body', __('Empty response received from the license server.', 'all-signs-customizer-for-woocommerce-pro'));
-    }
-
-    $decoded = json_decode($body, true);
-    if (!is_array($decoded)) {
-      return new WP_Error('ascwo_license_invalid_json', __('Invalid response received from the license server.', 'all-signs-customizer-for-woocommerce-pro'));
-    }
-
-    if (isset($decoded['message'])) {
-      $decoded['message'] = sanitize_text_field((string) $decoded['message']);
-    }
-
-    return $decoded;
-  }
-
-  /**
-   * Persist the license expiry timestamp returned by the remote checker.
-   *
-   * The stored payload keeps both the raw timestamp and the site timezone so
-   * the admin UI can compare values using server-side time only.
-   *
-   * @param int|string $timestamp Remote expiry timestamp.
-   *
-   * @return void
-   */
-  private function process_license_validity($timestamp)
-  {
-    $expiryTimestamp = (int) $timestamp;
-    $timezone = function_exists('wp_timezone') ? wp_timezone() : new DateTimeZone('UTC');
-    $date = new DateTime("@$expiryTimestamp");
-    $date->setTimezone($timezone);
-
-    $secondsUntil = max(0, $expiryTimestamp - time());
-
-    return [
-      'timestamp' => $expiryTimestamp,
-      'date' => $date->format('Y-m-d H:i:s'),
-      'seconds_until' => $secondsUntil,
-      'last_checked' => current_time('mysql'),
-      'timezone' => function_exists('wp_timezone_string') ? wp_timezone_string() : get_option('timezone_string', 'UTC'),
-    ];
-  }
-
-  private function save_license_data_robust($license_data)
-  {
-    update_option('ascwo_license_data', $license_data);
-    wp_cache_delete('ascwo_license_data', 'options');
-  }
-
-  private function clear_license_data()
-  {
-    delete_option('ascwo_license_data');
-    wp_cache_delete('ascwo_license_data', 'options');
   }
 
   /**
@@ -466,11 +317,11 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
     ];
 
     if (false === $option || empty($option)) {
-      $response["message"] = __("No ASO Product Pro available", "all-signs-customizer-for-woocommerce-pro");
+      $response["message"] = __("No ASO Product Pro available", "all-signs-customizer-for-woocommerce");
       return rest_ensure_response($response);
     } else {
-      return rest_ensure_response($response);
-    }
+    return rest_ensure_response($response);
+  }
   }
 
   private function get_auto_update_enabled()
@@ -543,12 +394,12 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
 
       if ($config_page !== $data || $clean_config_page !== $data) {
         update_option("ascwo_config_page", $data);
-        return rest_ensure_response(["success" => true, "message" => __("Data updated successfully", "all-signs-customizer-for-woocommerce-pro")]);
+        return rest_ensure_response(["success" => true, "message" => __("Data updated successfully", "all-signs-customizer-for-woocommerce")]);
       } else {
-        return rest_ensure_response(["success" => "same", "message" => __("No change observed", "all-signs-customizer-for-woocommerce-pro")]);
+        return rest_ensure_response(["success" => "same", "message" => __("No change observed", "all-signs-customizer-for-woocommerce")]);
       }
     }
-    return rest_ensure_response(["message" => __("Config page not found", "all-signs-customizer-for-woocommerce-pro")]);
+    return rest_ensure_response(["message" => __("Config page not found", "all-signs-customizer-for-woocommerce")]);
   }
 
   /**
@@ -563,7 +414,7 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
     $option = get_option("ascwo_config_page");
 
     if (false === $option || empty($option)) {
-      return rest_ensure_response(["message" => __("Config page not found", "all-signs-customizer-for-woocommerce-pro")]);
+      return rest_ensure_response(["message" => __("Config page not found", "all-signs-customizer-for-woocommerce")]);
     } else {
       return rest_ensure_response(is_array($option) ? $this->sanitize_config_page_settings($option) : $option);
     }
@@ -581,7 +432,7 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
 
     if (isset($settings['buttons']) && is_array($settings['buttons'])) {
       if (
-        ! isset($settings['buttons']['productDesignButton'])
+        !isset($settings['buttons']['productDesignButton'])
         || '' === trim((string) $settings['buttons']['productDesignButton'])
         || 'Customize The Product' === $settings['buttons']['productDesignButton']
         || 'Make It Yours' === $settings['buttons']['productDesignButton']
@@ -624,7 +475,7 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
 
     $existing_pages = get_posts($args);
     $pages = [];
-    $pages[] = ["id" => 0, "title" => esc_html_x("None", "none page option", "all-signs-customizer-for-woocommerce-pro")];
+    $pages[] = ["id" => 0, "title" => esc_html_x("None", "none page option", "all-signs-customizer-for-woocommerce")];
 
     foreach ($existing_pages as $page) {
       $pages[] = ["id" => $page->ID, "title" => esc_html($page->post_title)];
@@ -656,13 +507,13 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
       $page_id = wp_insert_post($new_page);
 
       if (!is_wp_error($page_id)) {
-        return rest_ensure_response(["id" => $page_id, "message" => __("Page created successfully", "all-signs-customizer-for-woocommerce-pro")]);
+        return rest_ensure_response(["id" => $page_id, "message" => __("Page created successfully", "all-signs-customizer-for-woocommerce")]);
       } else {
-        return rest_ensure_response(["message" => __("Page was not created", "all-signs-customizer-for-woocommerce-pro")]);
+        return rest_ensure_response(["message" => __("Page was not created", "all-signs-customizer-for-woocommerce")]);
       }
 
     } else {
-      return rest_ensure_response(["message" => __("Page was not created", "all-signs-customizer-for-woocommerce-pro")]);
+      return rest_ensure_response(["message" => __("Page was not created", "all-signs-customizer-for-woocommerce")]);
     }
   }
   /**
@@ -678,7 +529,7 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
       return rest_ensure_response($outputOptions);
     }
 
-    return rest_ensure_response(["message" => __("No output options found", "all-signs-customizer-for-woocommerce-pro")]);
+    return rest_ensure_response(["message" => __("No output options found", "all-signs-customizer-for-woocommerce")]);
   }
   public function update_output_options_globals_settings($request)
   {
@@ -690,12 +541,12 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
     if ($data !== $outputOptions) {
       $update = update_option("ascwo_output_options", $data);
       if ($update) {
-        return rest_ensure_response(array('success' => true, "message" => __("The ouput settings has been updated with success", "all-signs-customizer-for-woocommerce-pro")));
+        return rest_ensure_response(array('success' => true, "message" => __("The ouput settings has been updated with success", "all-signs-customizer-for-woocommerce")));
       } else {
-        return rest_ensure_response(array('success' => false, "message" => __("The ouput settings update failed", "all-signs-customizer-for-woocommerce-pro")));
+        return rest_ensure_response(array('success' => false, "message" => __("The ouput settings update failed", "all-signs-customizer-for-woocommerce")));
       }
     } else {
-      return rest_ensure_response(array('success' => "same", "message" => __("No change observed in the ouput settings", "all-signs-customizer-for-woocommerce-pro")));
+      return rest_ensure_response(array('success' => "same", "message" => __("No change observed in the ouput settings", "all-signs-customizer-for-woocommerce")));
 
     }
   }
@@ -733,16 +584,16 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
         $all_shapes[$shape_index] = $shape;
         $update = update_option("ascwo_all_shapes", $all_shapes);
         if ($update) {
-          return rest_ensure_response(array('success' => true, "message" => __("The Shape has been updated with success", "all-signs-customizer-for-woocommerce-pro")));
+          return rest_ensure_response(array('success' => true, "message" => __("The Shape has been updated with success", "all-signs-customizer-for-woocommerce")));
         } else {
-          return rest_ensure_response(array('success' => false, "message" => __("Shape update failed", "all-signs-customizer-for-woocommerce-pro")));
+          return rest_ensure_response(array('success' => false, "message" => __("Shape update failed", "all-signs-customizer-for-woocommerce")));
         }
       } else {
-        return rest_ensure_response(array('success' => "same", "message" => __("No change observed in shape", "all-signs-customizer-for-woocommerce-pro")));
+        return rest_ensure_response(array('success' => "same", "message" => __("No change observed in shape", "all-signs-customizer-for-woocommerce")));
 
       }
     } else {
-      return rest_ensure_response(["success" => false, "message" => __('Shape not found', "all-signs-customizer-for-woocommerce-pro")]);
+      return rest_ensure_response(["success" => false, "message" => __('Shape not found', "all-signs-customizer-for-woocommerce")]);
     }
   }
   /**
@@ -779,15 +630,15 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
         $all_fixingMethods[$targetIndex] = $fixingMethod;
         $update = update_option("ascwo_all_fixingMethods", $all_fixingMethods);
         if ($update) {
-          return rest_ensure_response(array('success' => true, "message" => __("The Fixing Method has been updated with success", "all-signs-customizer-for-woocommerce-pro")));
+          return rest_ensure_response(array('success' => true, "message" => __("The Fixing Method has been updated with success", "all-signs-customizer-for-woocommerce")));
         } else {
-          return rest_ensure_response(array('success' => false, "message" => __("FixingMethod update failed", "all-signs-customizer-for-woocommerce-pro")));
+          return rest_ensure_response(array('success' => false, "message" => __("FixingMethod update failed", "all-signs-customizer-for-woocommerce")));
         }
       } else {
-        return rest_ensure_response(array('success' => "same", "message" => __("No change observed in fixing Method", "all-signs-customizer-for-woocommerce-pro")));
+        return rest_ensure_response(array('success' => "same", "message" => __("No change observed in fixing Method", "all-signs-customizer-for-woocommerce")));
       }
     } else {
-      return rest_ensure_response(["success" => false, "message" => __('FixingMethod not found', "all-signs-customizer-for-woocommerce-pro")]);
+      return rest_ensure_response(["success" => false, "message" => __('FixingMethod not found', "all-signs-customizer-for-woocommerce")]);
     }
   }
 
@@ -862,15 +713,15 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
         $all_borders[$border_index] = $border;
         $update = update_option("ascwo_all_borders", $all_borders);
         if ($update) {
-          return rest_ensure_response(array('success' => true, "message" => __("The Border has been updated with success", "all-signs-customizer-for-woocommerce-pro")));
+          return rest_ensure_response(array('success' => true, "message" => __("The Border has been updated with success", "all-signs-customizer-for-woocommerce")));
         } else {
-          return rest_ensure_response(array('success' => false, "message" => __("Border update failed", "all-signs-customizer-for-woocommerce-pro")));
+          return rest_ensure_response(array('success' => false, "message" => __("Border update failed", "all-signs-customizer-for-woocommerce")));
         }
       } else {
-        return rest_ensure_response(array('success' => "same", "message" => __("No change observed in border", "all-signs-customizer-for-woocommerce-pro")));
+        return rest_ensure_response(array('success' => "same", "message" => __("No change observed in border", "all-signs-customizer-for-woocommerce")));
       }
     } else {
-      return rest_ensure_response(["success" => false, "message" => __('Border not found', "all-signs-customizer-for-woocommerce-pro")]);
+      return rest_ensure_response(["success" => false, "message" => __('Border not found', "all-signs-customizer-for-woocommerce")]);
     }
   }
   /**

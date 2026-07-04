@@ -19,11 +19,11 @@
  *    - Also ensures WP import exists and removes t import.
  *
  * Usage:
- *   node i18n-wrapper.js <path> --domain=all-signs-customizer-for-woocommerce-pro [--dry-run] [--no-backup]
+ *   node i18n-wrapper.js <path> --domain=all-signs-customizer-for-woocommerce [--dry-run] [--no-backup]
  *
  * Examples:
- *   node i18n-wrapper.js ./src --domain=all-signs-customizer-for-woocommerce-pro --dry-run
- *   node i18n-wrapper.js ./src --domain=all-signs-customizer-for-woocommerce-pro
+ *   node i18n-wrapper.js ./src --domain=all-signs-customizer-for-woocommerce --dry-run
+ *   node i18n-wrapper.js ./src --domain=all-signs-customizer-for-woocommerce
  *   node i18n-wrapper.js ./src --domain=my-new-domain        (updates domain everywhere)
  */
 
@@ -34,7 +34,7 @@ class I18nWrapper {
   constructor(options = {}) {
     this.dryRun = !!options.dryRun;
     this.backup = options.backup !== false;
-    this.domain = options.domain || "all-signs-customizer-for-woocommerce-pro";
+    this.domain = options.domain || "all-signs-customizer-for-woocommerce";
 
     this.stats = {
       filesProcessed: 0,
@@ -431,7 +431,7 @@ Usage:
   node i18n-wrapper.js <chemin-dossier-ou-fichier> --domain=your-text-domain [--dry-run] [--no-backup]
 
 Options:
-  --domain=xxx   Text-domain WordPress (ex: all-signs-customizer-for-woocommerce-pro)
+  --domain=xxx   Text-domain WordPress (ex: all-signs-customizer-for-woocommerce)
   --dry-run      Afficher les changements sans modifier les fichiers
   --no-backup    Ne pas créer de .backup
 

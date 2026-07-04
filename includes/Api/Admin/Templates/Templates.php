@@ -269,13 +269,13 @@ class ASCWO_Api_Templates extends WP_REST_Controller
                     $template["data"] = isset( $template["data_file"]) ? ascwo_get_large_data($template["data_file"])  : $template["data"] ;
                     return rest_ensure_response($template);
                 } else {
-                    return rest_ensure_response(array("message" => __("No template found", "all-signs-customizer-for-woocommerce-pro")));
+                    return rest_ensure_response(array("message" => __("No template found", "all-signs-customizer-for-woocommerce")));
                 }
             } else {
-                return rest_ensure_response(["message" => __("No data found", "all-signs-customizer-for-woocommerce-pro")]);
+                return rest_ensure_response(["message" => __("No data found", "all-signs-customizer-for-woocommerce")]);
             }
         } else {
-            return rest_ensure_response(["message" => __("template ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
+            return rest_ensure_response(["message" => __("template ID invalid", "all-signs-customizer-for-woocommerce")]);
         }
 
     }
@@ -310,15 +310,15 @@ class ASCWO_Api_Templates extends WP_REST_Controller
                 $response = update_post_meta($config_id, 'ascwo-templates', $meta_value);
 
                 if ($response) {
-                    return rest_ensure_response(["success" => true, "message" => __("Template added successfuly", "all-signs-customizer-for-woocommerce-pro")]);
+                    return rest_ensure_response(["success" => true, "message" => __("Template added successfuly", "all-signs-customizer-for-woocommerce")]);
                 } else {
-                    return rest_ensure_response(["message" => __("Add template failed", "all-signs-customizer-for-woocommerce-pro")]);
+                    return rest_ensure_response(["message" => __("Add template failed", "all-signs-customizer-for-woocommerce")]);
                 }
             } else {
-                return rest_ensure_response(["message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
+                return rest_ensure_response(["message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce")]);
             }
         } else {
-            return rest_ensure_response(["message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
+            return rest_ensure_response(["message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce")]);
         }
     }
 
@@ -353,7 +353,7 @@ class ASCWO_Api_Templates extends WP_REST_Controller
                         $template = $this->normalize_show_on_frontend($template);
                         $template = $this->maybe_apply_auto_preview($template);
                         if ($meta_value[$template_id] == $template) {
-                            return rest_ensure_response(["success" => "same", "message" => __("No change observed in template", "all-signs-customizer-for-woocommerce-pro")]);
+                            return rest_ensure_response(["success" => "same", "message" => __("No change observed in template", "all-signs-customizer-for-woocommerce")]);
                         } else {
                             if(isset( $template["data"]["templateData"]['sign'])) {
 
@@ -380,25 +380,25 @@ class ASCWO_Api_Templates extends WP_REST_Controller
                             $response = update_post_meta($config_id, 'ascwo-templates', $meta_value);
 
                             if ($response || $template["data_file"]) {
-                                return rest_ensure_response(["success" => true, "message" => __("Template updated successfully", "all-signs-customizer-for-woocommerce-pro")]);
+                                return rest_ensure_response(["success" => true, "message" => __("Template updated successfully", "all-signs-customizer-for-woocommerce")]);
                             } else {
-                                return rest_ensure_response(["message" => __("update template failed", "all-signs-customizer-for-woocommerce-pro")]);
+                                return rest_ensure_response(["message" => __("update template failed", "all-signs-customizer-for-woocommerce")]);
                             }
                         }
                     } else {
-                        return rest_ensure_response(["message" => __("update template failed", "all-signs-customizer-for-woocommerce-pro")]);
+                        return rest_ensure_response(["message" => __("update template failed", "all-signs-customizer-for-woocommerce")]);
                     }
 
 
                 } else {
-                    return rest_ensure_response(["message" => __("No template setting found", "all-signs-customizer-for-woocommerce-pro")]);
+                    return rest_ensure_response(["message" => __("No template setting found", "all-signs-customizer-for-woocommerce")]);
                 }
 
             } else {
-                return rest_ensure_response(["message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
+                return rest_ensure_response(["message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce")]);
             }
         } else {
-            return rest_ensure_response(["message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
+            return rest_ensure_response(["message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce")]);
         }
     }
 
@@ -421,19 +421,19 @@ class ASCWO_Api_Templates extends WP_REST_Controller
                     $response = update_post_meta($config_id, 'ascwo-templates', $meta_value);
 
                     if ($response) {
-                        return rest_ensure_response(["success" => true, "message" => __("Template deleted successfully", "all-signs-customizer-for-woocommerce-pro")]);
+                        return rest_ensure_response(["success" => true, "message" => __("Template deleted successfully", "all-signs-customizer-for-woocommerce")]);
                     } else {
-                        return rest_ensure_response(["message" => __("Delete template failed", "all-signs-customizer-for-woocommerce-pro")]);
+                        return rest_ensure_response(["message" => __("Delete template failed", "all-signs-customizer-for-woocommerce")]);
                     }
                 } else {
-                    return rest_ensure_response(["message" => __("No template setting found", "all-signs-customizer-for-woocommerce-pro")]);
+                    return rest_ensure_response(["message" => __("No template setting found", "all-signs-customizer-for-woocommerce")]);
                 }
 
             } else {
-                return rest_ensure_response(["message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
+                return rest_ensure_response(["message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce")]);
             }
         } else {
-            return rest_ensure_response(["message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce-pro")]);
+            return rest_ensure_response(["message" => __("Custom ID invalid", "all-signs-customizer-for-woocommerce")]);
         }
     }
 

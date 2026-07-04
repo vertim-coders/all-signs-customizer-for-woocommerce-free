@@ -156,7 +156,7 @@ class ASCWO_Api_WooCommerce_Products extends WP_REST_Controller
         if (!function_exists('wc_get_product')) {
             return new WP_Error(
                 'ascwo_woocommerce_missing',
-                __('WooCommerce is required to list products.', 'all-signs-customizer-for-woocommerce-pro'),
+                __('WooCommerce is required to list products.', 'all-signs-customizer-for-woocommerce'),
                 array('status' => 400)
             );
         }

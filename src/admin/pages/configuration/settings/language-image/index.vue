@@ -7,14 +7,14 @@
     <div v-else class="ascwo-language-layout">
       <div class="ascwo-language-main">
         <header class="ascwo-language-card ascwo-language-hero">
-          <h1>{{ __('Language & Images', 'all-signs-customizer-for-woocommerce-pro') }}</h1>
-          <p>{{ __('Configure upload texts, visualizer wording and system images in one page, without switching between legacy child screens.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+          <h1>{{ __('Language & Images', 'all-signs-customizer-for-woocommerce') }}</h1>
+          <p>{{ __('Configure upload texts, visualizer wording and system images in one page, without switching between legacy child screens.', 'all-signs-customizer-for-woocommerce') }}</p>
         </header>
 
         <section id="ascwo-language-upload-design" class="ascwo-language-card ascwo-language-section">
           <SectionHead
-            :title="__('Upload Design', 'all-signs-customizer-for-woocommerce-pro')"
-            :description="__('Texts and help content used for the upload design flow.', 'all-signs-customizer-for-woocommerce-pro')"
+            :title="__('Upload Design', 'all-signs-customizer-for-woocommerce')"
+            :description="__('Texts and help content used for the upload design flow.', 'all-signs-customizer-for-woocommerce')"
             :open="openSections.uploadDesign"
             @toggle="toggleSection('uploadDesign')"
           />
@@ -22,34 +22,34 @@
           <div v-show="openSections.uploadDesign" class="ascwo-section-body">
             <div class="ascwo-toggle-block">
               <div>
-                <h3>{{ __('Enable custom design link', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
-                <p>{{ __('Enable this to display a link redirecting customers to another page on your store for more complex design requests.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                <h3>{{ __('Enable custom design link', 'all-signs-customizer-for-woocommerce') }}</h3>
+                <p>{{ __('Enable this to display a link redirecting customers to another page on your store for more complex design requests.', 'all-signs-customizer-for-woocommerce') }}</p>
               </div>
               <div class="ascwo-toggle-line">
-                <span>{{ __('No', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                <span>{{ __('No', 'all-signs-customizer-for-woocommerce') }}</span>
                 <label class="ascwo-switch">
                   <input type="checkbox" v-model="uploadDesign.activate" />
                   <span></span>
                 </label>
-                <span>{{ __('Yes', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                <span>{{ __('Yes', 'all-signs-customizer-for-woocommerce') }}</span>
               </div>
             </div>
 
             <div v-if="uploadDesign.activate" class="ascwo-form-grid ascwo-form-grid-single">
               <label class="ascwo-field">
-                <span>{{ __('Custom Design Link', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                <span>{{ __('Custom Design Link', 'all-signs-customizer-for-woocommerce') }}</span>
                 <input v-model="uploadDesign.link" type="text" class="ascwo-ui-input" :class="{ 'is-invalid': isUploadDesignLinkInvalid }" />
-                <small>{{ isUploadDesignLinkInvalid ? __('Please enter a valid URL starting with http:// or https://.', 'all-signs-customizer-for-woocommerce-pro') : __('URL to redirect customers on your store that will allow for more complex graphic design quote submissions.', 'all-signs-customizer-for-woocommerce-pro') }}</small>
+                <small>{{ isUploadDesignLinkInvalid ? __('Please enter a valid URL starting with http:// or https://.', 'all-signs-customizer-for-woocommerce') : __('URL to redirect customers on your store that will allow for more complex graphic design quote submissions.', 'all-signs-customizer-for-woocommerce') }}</small>
               </label>
 
               <label class="ascwo-field">
-                <span>{{ __('Phrase for link to submit custom design page', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                <span>{{ __('Phrase for link to submit custom design page', 'all-signs-customizer-for-woocommerce') }}</span>
                 <input v-model="uploadDesign.phraseSubmitCustom" type="text" class="ascwo-ui-input" />
               </label>
             </div>
 
             <div class="ascwo-field">
-              <span>{{ __('Help content', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span>{{ __('Help content', 'all-signs-customizer-for-woocommerce') }}</span>
               <div class="ascwo-editor-wrap">
                 <textarea id="ascwo-language-help-content"></textarea>
               </div>
@@ -57,7 +57,7 @@
 
             <SectionSave
               :loading="savingSection === 'uploadDesign'"
-              :label="__('Save Upload Design', 'all-signs-customizer-for-woocommerce-pro')"
+              :label="__('Save Upload Design', 'all-signs-customizer-for-woocommerce')"
               @save="saveUploadDesign"
             />
           </div>
@@ -65,22 +65,22 @@
 
         <section id="ascwo-language-visualizer" class="ascwo-language-card ascwo-language-section">
           <SectionHead
-            :title="__('Visualizer', 'all-signs-customizer-for-woocommerce-pro')"
-            :description="__('Texts and labels used inside the visualizer interface.', 'all-signs-customizer-for-woocommerce-pro')"
+            :title="__('Visualizer', 'all-signs-customizer-for-woocommerce')"
+            :description="__('Texts and labels used inside the visualizer interface.', 'all-signs-customizer-for-woocommerce')"
             :open="openSections.visualizer"
             @toggle="toggleSection('visualizer')"
           />
 
           <div v-show="openSections.visualizer" class="ascwo-section-body">
-            <FieldGroup :title="__('Content Header', 'all-signs-customizer-for-woocommerce-pro')" :fields="visualizerHeaderFields" :values="visualizer" @change="setVisualizerField" />
-            <FieldGroup :title="__('Content Text', 'all-signs-customizer-for-woocommerce-pro')" :fields="visualizerContentFields" :values="visualizer" @change="setVisualizerField" />
-            <FieldGroup :title="__('Action on selected object in canvas', 'all-signs-customizer-for-woocommerce-pro')" :fields="visualizerCanvasFields" :values="visualizer" @change="setVisualizerField" />
-            <FieldGroup :title="__('Content Sidebar', 'all-signs-customizer-for-woocommerce-pro')" :fields="visualizerSidebarFields" :values="visualizer" @change="setVisualizerField" />
-            <FieldGroup :title="__('Button Options', 'all-signs-customizer-for-woocommerce-pro')" :fields="visualizerOptionFields" :values="visualizer" @change="setVisualizerField" />
+            <FieldGroup :title="__('Content Header', 'all-signs-customizer-for-woocommerce')" :fields="visualizerHeaderFields" :values="visualizer" @change="setVisualizerField" />
+            <FieldGroup :title="__('Content Text', 'all-signs-customizer-for-woocommerce')" :fields="visualizerContentFields" :values="visualizer" @change="setVisualizerField" />
+            <FieldGroup :title="__('Action on selected object in canvas', 'all-signs-customizer-for-woocommerce')" :fields="visualizerCanvasFields" :values="visualizer" @change="setVisualizerField" />
+            <FieldGroup :title="__('Content Sidebar', 'all-signs-customizer-for-woocommerce')" :fields="visualizerSidebarFields" :values="visualizer" @change="setVisualizerField" />
+            <FieldGroup :title="__('Button Options', 'all-signs-customizer-for-woocommerce')" :fields="visualizerOptionFields" :values="visualizer" @change="setVisualizerField" />
 
             <SectionSave
               :loading="savingSection === 'visualizer'"
-              :label="__('Save Visualizer', 'all-signs-customizer-for-woocommerce-pro')"
+              :label="__('Save Visualizer', 'all-signs-customizer-for-woocommerce')"
               @save="saveVisualizer"
             />
           </div>
@@ -88,20 +88,20 @@
 
         <section id="ascwo-language-images" class="ascwo-language-card ascwo-language-section">
           <SectionHead
-            :title="__('Images', 'all-signs-customizer-for-woocommerce-pro')"
-            :description="__('Icons and system images used across the configurator UI.', 'all-signs-customizer-for-woocommerce-pro')"
+            :title="__('Images', 'all-signs-customizer-for-woocommerce')"
+            :description="__('Icons and system images used across the configurator UI.', 'all-signs-customizer-for-woocommerce')"
             :open="openSections.images"
             @toggle="toggleSection('images')"
           />
 
           <div v-show="openSections.images" class="ascwo-section-body">
-            <ImageGroup :title="__('Custom design link', 'all-signs-customizer-for-woocommerce-pro')" :fields="imageCustomDesignFields" :values="images" @upload="selectImage" @clear="clearImage" />
-            <ImageGroup :title="__('Side bar', 'all-signs-customizer-for-woocommerce-pro')" :fields="imageSidebarFields" :values="images" @upload="selectImage" @clear="clearImage" />
-            <ImageGroup :title="__('Menu', 'all-signs-customizer-for-woocommerce-pro')" :fields="imageMenuFields" :values="images" @upload="selectImage" @clear="clearImage" />
+            <ImageGroup :title="__('Custom design link', 'all-signs-customizer-for-woocommerce')" :fields="imageCustomDesignFields" :values="images" @upload="selectImage" @clear="clearImage" />
+            <ImageGroup :title="__('Side bar', 'all-signs-customizer-for-woocommerce')" :fields="imageSidebarFields" :values="images" @upload="selectImage" @clear="clearImage" />
+            <ImageGroup :title="__('Menu', 'all-signs-customizer-for-woocommerce')" :fields="imageMenuFields" :values="images" @upload="selectImage" @clear="clearImage" />
 
             <SectionSave
               :loading="savingSection === 'images'"
-              :label="__('Save Images', 'all-signs-customizer-for-woocommerce-pro')"
+              :label="__('Save Images', 'all-signs-customizer-for-woocommerce')"
               @save="saveImages"
             />
           </div>
@@ -110,7 +110,7 @@
 
       <div class="ascwo-section-menu-wrap">
         <aside class="ascwo-section-menu ascwo-language-card">
-          <h2>{{ __('Section Menu', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
+          <h2>{{ __('Section Menu', 'all-signs-customizer-for-woocommerce') }}</h2>
           <div class="ascwo-section-menu-links">
             <a v-for="item in sectionMenu" :key="item.id" :href="`#${item.id}`" @click.prevent="scrollToSection(item.id)">
               {{ item.label }}
@@ -146,7 +146,7 @@ const SectionHead = defineComponent({
         h('p', props.description),
       ]),
       h('button', { type: 'button', class: 'ascwo-collapse-button', onClick: () => emit('toggle') }, [
-        props.open ? __('Show less', 'all-signs-customizer-for-woocommerce-pro') : __('Show more', 'all-signs-customizer-for-woocommerce-pro'),
+        props.open ? __('Show less', 'all-signs-customizer-for-woocommerce') : __('Show more', 'all-signs-customizer-for-woocommerce'),
         h(props.open ? ChevronUpIcon : ChevronDownIcon),
       ]),
     ]);
@@ -205,10 +205,10 @@ const ImageGroup = defineComponent({
       h('div', { class: 'ascwo-image-grid' }, props.fields.map((field) => h('div', { class: 'ascwo-image-field', key: field.key }, [
         h('span', field.title),
         h('div', { class: 'ascwo-image-control' }, [
-          h('button', { type: 'button', class: 'ascwo-upload-button', onClick: () => emit('upload', field.key) }, __('Upload icon', 'all-signs-customizer-for-woocommerce-pro')),
+          h('button', { type: 'button', class: 'ascwo-upload-button', onClick: () => emit('upload', field.key) }, __('Upload icon', 'all-signs-customizer-for-woocommerce')),
           h('div', { class: 'ascwo-image-preview' }, [
             props.values[field.key] ? h('img', { src: props.values[field.key], alt: '' }) : null,
-            props.values[field.key] ? h('button', { type: 'button', class: 'ascwo-image-clear', onClick: () => emit('clear', field.key), 'aria-label': __('Remove image', 'all-signs-customizer-for-woocommerce-pro') }, [h(Trash2Icon)]) : null,
+            props.values[field.key] ? h('button', { type: 'button', class: 'ascwo-image-clear', onClick: () => emit('clear', field.key), 'aria-label': __('Remove image', 'all-signs-customizer-for-woocommerce') }, [h(Trash2Icon)]) : null,
           ]),
         ]),
       ]))),
@@ -487,12 +487,12 @@ const handleSaveResponse = async (result) => {
     return;
   }
 
-  toastMessage(result?.message || __('Unable to save settings', 'all-signs-customizer-for-woocommerce-pro'), 'error');
+  toastMessage(result?.message || __('Unable to save settings', 'all-signs-customizer-for-woocommerce'), 'error');
 };
 
 const saveUploadDesign = async () => {
   if (isUploadDesignLinkInvalid.value) {
-    toastMessage(__('Please enter a valid custom design link.', 'all-signs-customizer-for-woocommerce-pro'), 'error');
+    toastMessage(__('Please enter a valid custom design link.', 'all-signs-customizer-for-woocommerce'), 'error');
     return;
   }
 
@@ -501,7 +501,7 @@ const saveUploadDesign = async () => {
   try {
     await handleSaveResponse(await api.updateLanguageImagesUploadDesign(configId.value, uploadDesign.value));
   } catch (error) {
-    toastMessage(error?.response?.data?.message || __('Unable to save upload design settings', 'all-signs-customizer-for-woocommerce-pro'), 'error');
+    toastMessage(error?.response?.data?.message || __('Unable to save upload design settings', 'all-signs-customizer-for-woocommerce'), 'error');
   } finally {
     savingSection.value = '';
   }
@@ -512,7 +512,7 @@ const saveVisualizer = async () => {
   try {
     await handleSaveResponse(await api.updateLanguageImagesVisualizer(configId.value, visualizer.value));
   } catch (error) {
-    toastMessage(error?.response?.data?.message || __('Unable to save visualizer settings', 'all-signs-customizer-for-woocommerce-pro'), 'error');
+    toastMessage(error?.response?.data?.message || __('Unable to save visualizer settings', 'all-signs-customizer-for-woocommerce'), 'error');
   } finally {
     savingSection.value = '';
   }
@@ -523,7 +523,7 @@ const saveImages = async () => {
   try {
     await handleSaveResponse(await api.updateLanguageImagesImgs(configId.value, images.value));
   } catch (error) {
-    toastMessage(error?.response?.data?.message || __('Unable to save image settings', 'all-signs-customizer-for-woocommerce-pro'), 'error');
+    toastMessage(error?.response?.data?.message || __('Unable to save image settings', 'all-signs-customizer-for-woocommerce'), 'error');
   } finally {
     savingSection.value = '';
   }
@@ -531,13 +531,13 @@ const saveImages = async () => {
 
 const selectImage = (key) => {
   if (!window.wp?.media) {
-    toastMessage(__('WordPress media library is not available.', 'all-signs-customizer-for-woocommerce-pro'), 'error');
+    toastMessage(__('WordPress media library is not available.', 'all-signs-customizer-for-woocommerce'), 'error');
     return;
   }
 
   const uploader = window.wp.media({
-    title: __('Select Image', 'all-signs-customizer-for-woocommerce-pro'),
-    button: { text: __('Select Image', 'all-signs-customizer-for-woocommerce-pro') },
+    title: __('Select Image', 'all-signs-customizer-for-woocommerce'),
+    button: { text: __('Select Image', 'all-signs-customizer-for-woocommerce') },
     multiple: false,
   });
 

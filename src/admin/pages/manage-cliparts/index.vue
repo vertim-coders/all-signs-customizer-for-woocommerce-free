@@ -2,32 +2,32 @@
   <div class="ascwo-space-y-3">
     <section v-if="!createGroup" class="ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#d1d5db] ascwo-rounded-xl ascwo-shadow-sm ascwo-px-5 ascwo-py-4 ascwo-flex ascwo-items-center ascwo-justify-between ascwo-gap-4">
       <div>
-        <h1 class="ascwo-m-0 ascwo-text-[20px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030]">{{ __('Clipart Groups', 'all-signs-customizer-for-woocommerce-pro') }}</h1>
+        <h1 class="ascwo-m-0 ascwo-text-[20px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030]">{{ __('Clipart Groups', 'all-signs-customizer-for-woocommerce') }}</h1>
         <p class="ascwo-m-0 ascwo-mt-1 ascwo-text-[13px] ascwo-leading-4 ascwo-text-[#616161]">
-          {{ __('Manage the reusable clipart groups used across configurations.', 'all-signs-customizer-for-woocommerce-pro') }}
+          {{ __('Manage the reusable clipart groups used across configurations.', 'all-signs-customizer-for-woocommerce') }}
         </p>
       </div>
       <button type="button" @click="goToCreateGroup" class="ascwo-h-8 ascwo-px-3 ascwo-rounded-lg ascwo-bg-[#00796b] ascwo-border ascwo-border-solid ascwo-border-[#005f55] ascwo-text-white ascwo-text-[13px] ascwo-font-[800] ascwo-cursor-pointer hover:ascwo-bg-[#00695f] hover:ascwo-text-white ascwo-inline-flex ascwo-items-center ascwo-gap-2">
         <PlusIcon class="ascwo-w-4 ascwo-h-4" />
-        {{ __('Add new clipart group', 'all-signs-customizer-for-woocommerce-pro') }}
+        {{ __('Add new clipart group', 'all-signs-customizer-for-woocommerce') }}
       </button>
     </section>
 
     <section v-if="!createGroup" class="ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#d1d5db] ascwo-rounded-xl ascwo-shadow-sm ascwo-px-5 ascwo-py-4">
       <div v-if="isFetching" class="ascwo-min-h-[200px] ascwo-flex ascwo-items-center ascwo-justify-center ascwo-text-[13px] ascwo-text-[#616161]">
-        {{ __('Loading...', 'all-signs-customizer-for-woocommerce-pro') }}
+        {{ __('Loading...', 'all-signs-customizer-for-woocommerce') }}
       </div>
       <div v-else-if="clipartsGroups.length === 0" class="ascwo-min-h-[220px] ascwo-flex ascwo-flex-col ascwo-items-center ascwo-justify-center ascwo-text-center">
         <SearchIcon class="ascwo-w-16 ascwo-h-16 ascwo-text-[#8c9196] ascwo-mb-5" />
-        <h2 class="ascwo-m-0 ascwo-text-[20px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030]">{{ __('No Clipart Groups found', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
-        <p class="ascwo-m-0 ascwo-mt-3 ascwo-text-[13px] ascwo-text-[#616161]">{{ __('Try changing the filters or search term', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+        <h2 class="ascwo-m-0 ascwo-text-[20px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030]">{{ __('No Clipart Groups found', 'all-signs-customizer-for-woocommerce') }}</h2>
+        <p class="ascwo-m-0 ascwo-mt-3 ascwo-text-[13px] ascwo-text-[#616161]">{{ __('Try changing the filters or search term', 'all-signs-customizer-for-woocommerce') }}</p>
       </div>
       <table v-else class="ascwo-cliparts-table ascwo-w-full ascwo-border-collapse ascwo-text-left">
         <thead class="ascwo-bg-[#f6f6f7]">
           <tr>
-            <th class="ascwo-px-3 ascwo-py-2.5 ascwo-text-[12px] ascwo-font-[800] ascwo-text-[#616161]">{{ __('Title', 'all-signs-customizer-for-woocommerce-pro') }}</th>
-            <th class="ascwo-px-3 ascwo-py-2.5 ascwo-text-[12px] ascwo-font-[800] ascwo-text-[#616161]">{{ __('Description', 'all-signs-customizer-for-woocommerce-pro') }}</th>
-            <th class="ascwo-px-3 ascwo-py-2.5 ascwo-text-[12px] ascwo-font-[800] ascwo-text-[#616161]">{{ __('Actions', 'all-signs-customizer-for-woocommerce-pro') }}</th>
+            <th class="ascwo-px-3 ascwo-py-2.5 ascwo-text-[12px] ascwo-font-[800] ascwo-text-[#616161]">{{ __('Title', 'all-signs-customizer-for-woocommerce') }}</th>
+            <th class="ascwo-px-3 ascwo-py-2.5 ascwo-text-[12px] ascwo-font-[800] ascwo-text-[#616161]">{{ __('Description', 'all-signs-customizer-for-woocommerce') }}</th>
+            <th class="ascwo-px-3 ascwo-py-2.5 ascwo-text-[12px] ascwo-font-[800] ascwo-text-[#616161]">{{ __('Actions', 'all-signs-customizer-for-woocommerce') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -36,9 +36,9 @@
             <td class="ascwo-px-3 ascwo-py-2.5 ascwo-text-[13px] ascwo-text-[#303030]">{{ group.description || '-' }}</td>
             <td class="ascwo-px-3 ascwo-py-3">
               <div class="ascwo-flex ascwo-items-center ascwo-gap-2">
-                <button type="button" @click="goToGroup(key)" class="ascwo-h-7 ascwo-px-2.5 ascwo-rounded-lg ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-text-[13px] ascwo-font-[700] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7] hover:ascwo-text-[#202223]">{{ __('Manage', 'all-signs-customizer-for-woocommerce-pro') }}</button>
-                <button type="button" @click="goToEditGroup(key)" class="ascwo-h-7 ascwo-px-2.5 ascwo-rounded-lg ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-text-[13px] ascwo-font-[700] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7] hover:ascwo-text-[#202223]">{{ __('Edit', 'all-signs-customizer-for-woocommerce-pro') }}</button>
-                <button type="button" @click="selectGroup(key, group, true)" class="ascwo-h-7 ascwo-px-2.5 ascwo-rounded-lg ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-text-[#8a0f00] ascwo-text-[13px] ascwo-font-[700] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7] hover:ascwo-text-[#8a0f00]">{{ __('Delete', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                <button type="button" @click="goToGroup(key)" class="ascwo-h-7 ascwo-px-2.5 ascwo-rounded-lg ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-text-[13px] ascwo-font-[700] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7] hover:ascwo-text-[#202223]">{{ __('Manage', 'all-signs-customizer-for-woocommerce') }}</button>
+                <button type="button" @click="goToEditGroup(key)" class="ascwo-h-7 ascwo-px-2.5 ascwo-rounded-lg ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-text-[13px] ascwo-font-[700] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7] hover:ascwo-text-[#202223]">{{ __('Edit', 'all-signs-customizer-for-woocommerce') }}</button>
+                <button type="button" @click="selectGroup(key, group, true)" class="ascwo-h-7 ascwo-px-2.5 ascwo-rounded-lg ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-text-[#8a0f00] ascwo-text-[13px] ascwo-font-[700] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7] hover:ascwo-text-[#8a0f00]">{{ __('Delete', 'all-signs-customizer-for-woocommerce') }}</button>
               </div>
             </td>
           </tr>
@@ -48,25 +48,25 @@
 
     <section v-if="createGroup" class="ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#d1d5db] ascwo-rounded-xl ascwo-shadow-sm ascwo-px-5 ascwo-py-4">
       <h1 class="ascwo-m-0 ascwo-text-[20px] ascwo-leading-6 ascwo-font-[900] ascwo-text-[#303030]">
-        {{ isEdit ? __('Edit clipart group', 'all-signs-customizer-for-woocommerce-pro') : __('Add clipart group', 'all-signs-customizer-for-woocommerce-pro') }}
+        {{ isEdit ? __('Edit clipart group', 'all-signs-customizer-for-woocommerce') : __('Add clipart group', 'all-signs-customizer-for-woocommerce') }}
       </h1>
     </section>
 
     <section v-if="createGroup" class="ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#d1d5db] ascwo-rounded-xl ascwo-shadow-sm ascwo-px-5 ascwo-py-4">
       <div class="ascwo-grid md:ascwo-grid-cols-2 ascwo-gap-4">
         <label class="ascwo-block ascwo-text-[13px] ascwo-text-[#303030]">
-          {{ __('Title', 'all-signs-customizer-for-woocommerce-pro') }}
+          {{ __('Title', 'all-signs-customizer-for-woocommerce') }}
           <input v-model="newGroup.title" type="text" :class="['ascwo-mt-2 ascwo-box-border ascwo-w-full ascwo-h-9 ascwo-rounded-lg ascwo-border ascwo-border-solid ascwo-border-[#8c9196] ascwo-px-3 ascwo-text-[13px] ascwo-outline-none focus:ascwo-border-[#008060]', emptyLabel ? 'ascwo-border-[#d72c0d]' : '']">
         </label>
         <label class="ascwo-block ascwo-text-[13px] ascwo-text-[#303030]">
-          {{ __('Description', 'all-signs-customizer-for-woocommerce-pro') }}
+          {{ __('Description', 'all-signs-customizer-for-woocommerce') }}
           <input v-model="newGroup.description" type="text" class="ascwo-mt-2 ascwo-box-border ascwo-w-full ascwo-h-9 ascwo-rounded-lg ascwo-border ascwo-border-solid ascwo-border-[#8c9196] ascwo-px-3 ascwo-text-[13px] ascwo-outline-none focus:ascwo-border-[#008060]">
         </label>
       </div>
       <div class="ascwo-mt-5 ascwo-flex ascwo-justify-end ascwo-gap-3">
-        <button type="button" @click="back" :disabled="isLoading" class="ascwo-h-8 ascwo-px-3 ascwo-rounded-lg ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-text-[#202223] ascwo-text-[13px] ascwo-font-[700] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7] hover:ascwo-text-[#202223]">{{ __('Back', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+        <button type="button" @click="back" :disabled="isLoading" class="ascwo-h-8 ascwo-px-3 ascwo-rounded-lg ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-text-[#202223] ascwo-text-[13px] ascwo-font-[700] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7] hover:ascwo-text-[#202223]">{{ __('Back', 'all-signs-customizer-for-woocommerce') }}</button>
         <button type="button" @click="isEdit ? updateGroup() : addNewGroup()" :disabled="isLoading || !newGroup.title.trim()" class="ascwo-h-8 ascwo-px-3 ascwo-rounded-lg ascwo-bg-[#00796b] ascwo-border ascwo-border-solid ascwo-border-[#005f55] ascwo-text-white ascwo-text-[13px] ascwo-font-[800] ascwo-cursor-pointer hover:ascwo-bg-[#00695f] hover:ascwo-text-white disabled:ascwo-bg-[#d1d1d1] disabled:ascwo-border-[#d1d1d1] disabled:ascwo-cursor-not-allowed">
-          {{ isLoading ? __('Saving...', 'all-signs-customizer-for-woocommerce-pro') : __('Save', 'all-signs-customizer-for-woocommerce-pro') }}
+          {{ isLoading ? __('Saving...', 'all-signs-customizer-for-woocommerce') : __('Save', 'all-signs-customizer-for-woocommerce') }}
         </button>
       </div>
     </section>
@@ -74,11 +74,11 @@
     <div v-if="openModal" class="ascwo-fixed ascwo-inset-0 ascwo-z-[20000] ascwo-flex ascwo-items-center ascwo-justify-center">
       <div class="ascwo-absolute ascwo-inset-0 ascwo-bg-black/40" @click="closeModal"></div>
       <div class="ascwo-relative ascwo-w-[min(460px,95vw)] ascwo-bg-white ascwo-rounded-xl ascwo-shadow-2xl ascwo-p-5">
-        <h2 class="ascwo-m-0 ascwo-text-[20px] ascwo-font-[900] ascwo-text-[#303030]">{{ __('Delete clipart group?', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
-        <p class="ascwo-mt-3 ascwo-text-[13px] ascwo-text-[#616161]">{{ __('This action cannot be undone.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+        <h2 class="ascwo-m-0 ascwo-text-[20px] ascwo-font-[900] ascwo-text-[#303030]">{{ __('Delete clipart group?', 'all-signs-customizer-for-woocommerce') }}</h2>
+        <p class="ascwo-mt-3 ascwo-text-[13px] ascwo-text-[#616161]">{{ __('This action cannot be undone.', 'all-signs-customizer-for-woocommerce') }}</p>
         <div class="ascwo-mt-6 ascwo-flex ascwo-justify-end ascwo-gap-3">
-          <button type="button" @click="closeModal" class="ascwo-h-8 ascwo-px-3 ascwo-rounded-lg ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-text-[13px] ascwo-font-[700] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7]">{{ __('Cancel', 'all-signs-customizer-for-woocommerce-pro') }}</button>
-          <button type="button" @click="deleteGroup" :disabled="isLoading" class="ascwo-h-8 ascwo-px-3 ascwo-rounded-lg ascwo-bg-[#8a0f00] ascwo-border-none ascwo-text-white ascwo-text-[13px] ascwo-font-[800] ascwo-cursor-pointer hover:ascwo-bg-[#731000] hover:ascwo-text-white">{{ __('Delete', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+          <button type="button" @click="closeModal" class="ascwo-h-8 ascwo-px-3 ascwo-rounded-lg ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-text-[13px] ascwo-font-[700] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7]">{{ __('Cancel', 'all-signs-customizer-for-woocommerce') }}</button>
+          <button type="button" @click="deleteGroup" :disabled="isLoading" class="ascwo-h-8 ascwo-px-3 ascwo-rounded-lg ascwo-bg-[#8a0f00] ascwo-border-none ascwo-text-white ascwo-text-[13px] ascwo-font-[800] ascwo-cursor-pointer hover:ascwo-bg-[#731000] hover:ascwo-text-white">{{ __('Delete', 'all-signs-customizer-for-woocommerce') }}</button>
         </div>
       </div>
     </div>
@@ -147,7 +147,7 @@ const goToEditGroup = (id) => {
 const addNewGroup = async () => {
   if (newGroup.value.title.trim() === '') {
     emptyLabel.value = true;
-    toastMessage(__("Label must not be empty", "all-signs-customizer-for-woocommerce-pro"), "warning");
+    toastMessage(__("Label must not be empty", "all-signs-customizer-for-woocommerce"), "warning");
     return;
   }
 
@@ -178,7 +178,7 @@ const selectGroup = (id, group, isDeleting = false) => {
 const updateGroup = async () => {
   if (newGroup.value.title.trim() === '') {
     emptyLabel.value = true;
-    toastMessage(__("Label must not be empty", "all-signs-customizer-for-woocommerce-pro"), "warning");
+    toastMessage(__("Label must not be empty", "all-signs-customizer-for-woocommerce"), "warning");
     return;
   }
 

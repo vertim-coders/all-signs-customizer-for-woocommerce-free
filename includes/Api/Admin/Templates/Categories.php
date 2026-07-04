@@ -97,7 +97,7 @@ class ASCWO_Api_Templates_Categories extends WP_REST_Controller
         $all_categories[$key] = isset($data['title']) ? sanitize_text_field(wp_unslash($data['title'])) : '';
         $update = update_option("ascwo-templates-categories", $all_categories);
         if ($update) {
-            return rest_ensure_response(["success" => true, "message" => __("Category created with success", "all-signs-customizer-for-woocommerce-pro"), "categories" => $all_categories, "key" => $key]);
+            return rest_ensure_response(["success" => true, "message" => __("Category created with success", "all-signs-customizer-for-woocommerce"), "categories" => $all_categories, "key" => $key]);
         } else {
             return rest_ensure_response(["success" => false, "message" => "Registration failed"]);
         }
@@ -115,7 +115,7 @@ class ASCWO_Api_Templates_Categories extends WP_REST_Controller
         if (count($all_categories) != 0) {
             return rest_ensure_response($all_categories);
         } else {
-            return rest_ensure_response(["message" => __("No Category Found", "all-signs-customizer-for-woocommerce-pro")]);
+            return rest_ensure_response(["message" => __("No Category Found", "all-signs-customizer-for-woocommerce")]);
         }
     }
     /**
@@ -130,7 +130,7 @@ class ASCWO_Api_Templates_Categories extends WP_REST_Controller
         if (isset($all_categories[$category_id])) {
             return rest_ensure_response($all_categories[$category_id]);
         } else {
-            return rest_ensure_response(["success" => false, "message" => __('Category not found', "all-signs-customizer-for-woocommerce-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __('Category not found', "all-signs-customizer-for-woocommerce")]);
         }
 
     }
@@ -154,15 +154,15 @@ class ASCWO_Api_Templates_Categories extends WP_REST_Controller
                 $all_categories[$category_id] = isset($category['title']) ? sanitize_text_field(wp_unslash($category['title'])) : '';
                 $update = update_option("ascwo-templates-categories", $all_categories);
                 if ($update) {
-                    return rest_ensure_response(array('success' => true, "message" => __("The category has been updated with success", "all-signs-customizer-for-woocommerce-pro"), "categories" => $all_categories));
+                    return rest_ensure_response(array('success' => true, "message" => __("The category has been updated with success", "all-signs-customizer-for-woocommerce"), "categories" => $all_categories));
                 } else {
-                    return rest_ensure_response(array('success' => false, "message" => __("Category update failed", "all-signs-customizer-for-woocommerce-pro")));
+                    return rest_ensure_response(array('success' => false, "message" => __("Category update failed", "all-signs-customizer-for-woocommerce")));
                 }
             } else {
-                return rest_ensure_response(array('success' => "same", "message" => __("No change observed in category", "all-signs-customizer-for-woocommerce-pro"), "categories" => $all_categories));
+                return rest_ensure_response(array('success' => "same", "message" => __("No change observed in category", "all-signs-customizer-for-woocommerce"), "categories" => $all_categories));
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __('Category not found', "all-signs-customizer-for-woocommerce-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __('Category not found', "all-signs-customizer-for-woocommerce")]);
         }
 
     }
@@ -181,12 +181,12 @@ class ASCWO_Api_Templates_Categories extends WP_REST_Controller
             unset($all_categories[$category_id]);
             $update = update_option("ascwo-templates-categories", $all_categories);
             if ($update) {
-                return rest_ensure_response(["success" => true, "message" => __("The category was well removed", "all-signs-customizer-for-woocommerce-pro"), "categories" => $all_categories]);
+                return rest_ensure_response(["success" => true, "message" => __("The category was well removed", "all-signs-customizer-for-woocommerce"), "categories" => $all_categories]);
             } else {
-                return rest_ensure_response(["success" => false, "message" => __("Deleting the category failed", "all-signs-customizer-for-woocommerce-pro")]);
+                return rest_ensure_response(["success" => false, "message" => __("Deleting the category failed", "all-signs-customizer-for-woocommerce")]);
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __('Category not found', "all-signs-customizer-for-woocommerce-pro")]);
+            return rest_ensure_response(["success" => false, "message" => __('Category not found', "all-signs-customizer-for-woocommerce")]);
         }
     }
 

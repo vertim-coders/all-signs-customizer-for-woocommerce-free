@@ -7,18 +7,18 @@
     <div v-else class="ascwo-general-layout">
       <div class="ascwo-general-main">
         <header class="ascwo-general-card ascwo-general-hero">
-          <h1>{{ __('General', 'all-signs-customizer-for-woocommerce-pro') }}</h1>
-          <p>{{ __('Work with the classic configuration settings in one page. Each block writes directly into the existing classic settings data.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+          <h1>{{ __('General', 'all-signs-customizer-for-woocommerce') }}</h1>
+          <p>{{ __('Work with the classic configuration settings in one page. Each block writes directly into the existing classic settings data.', 'all-signs-customizer-for-woocommerce') }}</p>
         </header>
 
         <section id="ascwo-general-product" class="ascwo-general-card ascwo-general-section">
           <div class="ascwo-general-section-head">
             <div>
-              <h2>{{ __('Product', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
-              <p>{{ __('Storefront and add-to-cart behavior, aligned with the standard ASO product settings.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+              <h2>{{ __('Product', 'all-signs-customizer-for-woocommerce') }}</h2>
+              <p>{{ __('Storefront and add-to-cart behavior, aligned with the standard ASO product settings.', 'all-signs-customizer-for-woocommerce') }}</p>
             </div>
             <button type="button" class="ascwo-general-collapse" @click="toggleSection('product')">
-              {{ openSections.product ? __('Show less', 'all-signs-customizer-for-woocommerce-pro') : __('Show more', 'all-signs-customizer-for-woocommerce-pro') }}
+              {{ openSections.product ? __('Show less', 'all-signs-customizer-for-woocommerce') : __('Show more', 'all-signs-customizer-for-woocommerce') }}
               <ChevronUpIcon v-if="openSections.product" />
               <ChevronDownIcon v-else />
             </button>
@@ -39,7 +39,7 @@
             <div class="ascwo-save-row">
               <button type="button" class="ascwo-ui-button-primary ascwo-general-save" :disabled="savingSection === 'product'" @click="saveProduct">
                 <Loader2Icon v-if="savingSection === 'product'" class="ascwo-spin" />
-                {{ __('Save Product', 'all-signs-customizer-for-woocommerce-pro') }}
+                {{ __('Save Product', 'all-signs-customizer-for-woocommerce') }}
               </button>
             </div>
           </div>
@@ -48,11 +48,11 @@
         <section id="ascwo-general-mode" class="ascwo-general-card ascwo-general-section">
           <div class="ascwo-general-section-head">
             <div>
-              <h2>{{ __('Mode', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
-              <p>{{ __('Single or multi-selection behavior and share/save capabilities.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+              <h2>{{ __('Mode', 'all-signs-customizer-for-woocommerce') }}</h2>
+              <p>{{ __('Single or multi-selection behavior and share/save capabilities.', 'all-signs-customizer-for-woocommerce') }}</p>
             </div>
             <button type="button" class="ascwo-general-collapse" @click="toggleSection('mode')">
-              {{ openSections.mode ? __('Show less', 'all-signs-customizer-for-woocommerce-pro') : __('Show more', 'all-signs-customizer-for-woocommerce-pro') }}
+              {{ openSections.mode ? __('Show less', 'all-signs-customizer-for-woocommerce') : __('Show more', 'all-signs-customizer-for-woocommerce') }}
               <ChevronUpIcon v-if="openSections.mode" />
               <ChevronDownIcon v-else />
             </button>
@@ -61,11 +61,11 @@
           <div v-if="openSections.mode" class="ascwo-nested-card">
             <div class="ascwo-general-section-head ascwo-nested-head">
               <div>
-                <h3>{{ __('Mode', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
-                <p>{{ __('Control customization mode and customer share/save capabilities.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                <h3>{{ __('Mode', 'all-signs-customizer-for-woocommerce') }}</h3>
+                <p>{{ __('Control customization mode and customer share/save capabilities.', 'all-signs-customizer-for-woocommerce') }}</p>
               </div>
               <button type="button" class="ascwo-general-collapse" @click="toggleNested('mode')">
-                {{ nestedSections.mode ? __('Show less', 'all-signs-customizer-for-woocommerce-pro') : __('Show more', 'all-signs-customizer-for-woocommerce-pro') }}
+                {{ nestedSections.mode ? __('Show less', 'all-signs-customizer-for-woocommerce') : __('Show more', 'all-signs-customizer-for-woocommerce') }}
                 <ChevronUpIcon v-if="nestedSections.mode" />
                 <ChevronDownIcon v-else />
               </button>
@@ -73,29 +73,29 @@
             <div v-if="nestedSections.mode">
               <div class="ascwo-toggle-row">
                 <div>
-                  <strong>{{ __('Allow Share', 'all-signs-customizer-for-woocommerce-pro') }}</strong>
-                  <p>{{ __('Let customers share the configured sign.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                  <strong>{{ __('Allow Share', 'all-signs-customizer-for-woocommerce') }}</strong>
+                  <p>{{ __('Let customers share the configured sign.', 'all-signs-customizer-for-woocommerce') }}</p>
                 </div>
                 <label class="ascwo-switch"><input type="checkbox" v-model="mode.shareAndSave.allowShare"><span></span></label>
               </div>
               <div class="ascwo-toggle-row">
                 <div>
-                  <strong>{{ __('Allow Save', 'all-signs-customizer-for-woocommerce-pro') }}</strong>
-                  <p>{{ __('Let customers save their configuration for later.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                  <strong>{{ __('Allow Save', 'all-signs-customizer-for-woocommerce') }}</strong>
+                  <p>{{ __('Let customers save their configuration for later.', 'all-signs-customizer-for-woocommerce') }}</p>
                 </div>
                 <label class="ascwo-switch"><input type="checkbox" v-model="mode.shareAndSave.allowSave"><span></span></label>
               </div>
               <label class="ascwo-field">
-                <span>{{ __('Share Sign Location', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                <span>{{ __('Share Sign Location', 'all-signs-customizer-for-woocommerce') }}</span>
                 <select v-model="mode.shareAndSave.shareSignLocation" class="ascwo-ui-input">
-                  <option value="options_review">{{ __('Options + Review', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-                  <option value="review_only">{{ __('Review only', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                  <option value="options_review">{{ __('Options + Review', 'all-signs-customizer-for-woocommerce') }}</option>
+                  <option value="review_only">{{ __('Review only', 'all-signs-customizer-for-woocommerce') }}</option>
                 </select>
               </label>
               <div class="ascwo-save-row">
                 <button type="button" class="ascwo-ui-button-primary ascwo-general-save" :disabled="savingSection === 'mode'" @click="saveGenericSection('mode', mode)">
                   <Loader2Icon v-if="savingSection === 'mode'" class="ascwo-spin" />
-                  {{ __('Save Mode', 'all-signs-customizer-for-woocommerce-pro') }}
+                  {{ __('Save Mode', 'all-signs-customizer-for-woocommerce') }}
                 </button>
               </div>
             </div>
@@ -105,11 +105,11 @@
         <section id="ascwo-general-output" class="ascwo-general-card ascwo-general-section">
           <div class="ascwo-general-section-head">
             <div>
-              <h2>{{ __('Output', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
-              <p>{{ __('Output formats, watermark and generated file settings.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+              <h2>{{ __('Output', 'all-signs-customizer-for-woocommerce') }}</h2>
+              <p>{{ __('Output formats, watermark and generated file settings.', 'all-signs-customizer-for-woocommerce') }}</p>
             </div>
             <button type="button" class="ascwo-general-collapse" @click="toggleSection('output')">
-              {{ openSections.output ? __('Show less', 'all-signs-customizer-for-woocommerce-pro') : __('Show more', 'all-signs-customizer-for-woocommerce-pro') }}
+              {{ openSections.output ? __('Show less', 'all-signs-customizer-for-woocommerce') : __('Show more', 'all-signs-customizer-for-woocommerce') }}
               <ChevronUpIcon v-if="openSections.output" />
               <ChevronDownIcon v-else />
             </button>
@@ -117,7 +117,7 @@
 
           <div v-if="openSections.output" class="ascwo-form-stack">
             <label class="ascwo-field">
-              <span>{{ __('Output files format', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span>{{ __('Output files format', 'all-signs-customizer-for-woocommerce') }}</span>
               <select v-model="output.filesFormat" class="ascwo-ui-input">
                 <option value="png">PNG</option>
                 <option value="jpeg">JPEG</option>
@@ -128,7 +128,7 @@
               </select>
             </label>
             <label class="ascwo-field">
-              <span>{{ __('PDF Quality (DPI)', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span>{{ __('PDF Quality (DPI)', 'all-signs-customizer-for-woocommerce') }}</span>
               <select v-model="output.pdfQuality" class="ascwo-ui-input">
                 <option value="150">150 DPI</option>
                 <option value="300">300 DPI (Quality Print)</option>
@@ -136,9 +136,9 @@
               </select>
             </label>
             <div class="ascwo-field">
-              <span>{{ __('Watermark', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span>{{ __('Watermark', 'all-signs-customizer-for-woocommerce') }}</span>
               <div class="ascwo-upload-control">
-                <button type="button" class="ascwo-ui-button-primary" @click="selectWaterMarkImage">{{ __('Upload image', 'all-signs-customizer-for-woocommerce-pro') }}</button>
+                <button type="button" class="ascwo-ui-button-primary" @click="selectWaterMarkImage">{{ __('Upload image', 'all-signs-customizer-for-woocommerce') }}</button>
                 <div class="ascwo-upload-preview">
                   <img v-if="output.waterMark" :src="output.waterMark" alt="">
                   <button v-if="output.waterMark" type="button" @click="output.waterMark = ''">x</button>
@@ -147,26 +147,26 @@
             </div>
             <div class="ascwo-toggle-row">
               <div>
-                <strong>{{ __('Zip output files', 'all-signs-customizer-for-woocommerce-pro') }}</strong>
-                <p>{{ __('Package generated output files into a zip archive.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                <strong>{{ __('Zip output files', 'all-signs-customizer-for-woocommerce') }}</strong>
+                <p>{{ __('Package generated output files into a zip archive.', 'all-signs-customizer-for-woocommerce') }}</p>
               </div>
               <label class="ascwo-switch"><input type="checkbox" v-model="output.zipOutputFiles.active"><span></span></label>
             </div>
             <label class="ascwo-field">
-              <span>{{ __('Zip output folder prefix', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span>{{ __('Zip output folder prefix', 'all-signs-customizer-for-woocommerce') }}</span>
               <input v-model="output.zipOutputFiles.zipOutFolderPrefix" class="ascwo-ui-input" type="text">
             </label>
             <div class="ascwo-toggle-row">
               <div>
-                <strong>{{ __('Design composition', 'all-signs-customizer-for-woocommerce-pro') }}</strong>
-                <p>{{ __('Include design composition details in the order output.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                <strong>{{ __('Design composition', 'all-signs-customizer-for-woocommerce') }}</strong>
+                <p>{{ __('Include design composition details in the order output.', 'all-signs-customizer-for-woocommerce') }}</p>
               </div>
               <label class="ascwo-switch"><input type="checkbox" v-model="output.designComposition"><span></span></label>
             </div>
             <div class="ascwo-save-row">
               <button type="button" class="ascwo-ui-button-primary ascwo-general-save" :disabled="savingSection === 'output'" @click="saveOutput">
                 <Loader2Icon v-if="savingSection === 'output'" class="ascwo-spin" />
-                {{ __('Save Output', 'all-signs-customizer-for-woocommerce-pro') }}
+                {{ __('Save Output', 'all-signs-customizer-for-woocommerce') }}
               </button>
             </div>
           </div>
@@ -175,11 +175,11 @@
         <section id="ascwo-general-upload" class="ascwo-general-card ascwo-general-section">
           <div class="ascwo-general-section-head">
             <div>
-              <h2>{{ __('Upload Design', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
-              <p>{{ __('Allowed upload formats, size limits and archive rules.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+              <h2>{{ __('Upload Design', 'all-signs-customizer-for-woocommerce') }}</h2>
+              <p>{{ __('Allowed upload formats, size limits and archive rules.', 'all-signs-customizer-for-woocommerce') }}</p>
             </div>
             <button type="button" class="ascwo-general-collapse" @click="toggleSection('upload')">
-              {{ openSections.upload ? __('Show less', 'all-signs-customizer-for-woocommerce-pro') : __('Show more', 'all-signs-customizer-for-woocommerce-pro') }}
+              {{ openSections.upload ? __('Show less', 'all-signs-customizer-for-woocommerce') : __('Show more', 'all-signs-customizer-for-woocommerce') }}
               <ChevronUpIcon v-if="openSections.upload" />
               <ChevronDownIcon v-else />
             </button>
@@ -187,37 +187,37 @@
 
           <div v-if="openSections.upload" class="ascwo-form-stack">
             <div class="ascwo-field">
-              <span>{{ __('Allowed upload formats', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span>{{ __('Allowed upload formats', 'all-signs-customizer-for-woocommerce') }}</span>
               <div class="ascwo-chip-box">
                 <span v-for="format in upload.allowedFormats" :key="format" class="ascwo-chip">{{ format }} <button type="button" @click="removeChip(upload.allowedFormats, format)">x</button></span>
                 <select class="ascwo-chip-select" @change="addChip(upload.allowedFormats, $event)">
-                  <option value="">{{ __('Select allowed upload formats', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                  <option value="">{{ __('Select allowed upload formats', 'all-signs-customizer-for-woocommerce') }}</option>
                   <option v-for="format in uploadFormatOptions" :key="format" :value="format">{{ format }}</option>
                 </select>
               </div>
-              <p>{{ __('Choose the upload formats allowed for customer files.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+              <p>{{ __('Choose the upload formats allowed for customer files.', 'all-signs-customizer-for-woocommerce') }}</p>
             </div>
             <div class="ascwo-two-columns">
               <label class="ascwo-field">
-                <span>{{ __('Maximum upload size (MB)', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                <span>{{ __('Maximum upload size (MB)', 'all-signs-customizer-for-woocommerce') }}</span>
                 <input v-model.number="upload.maxUploadSize" class="ascwo-ui-input" type="number">
               </label>
               <label class="ascwo-field">
-                <span>{{ __('Maximum upload number', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+                <span>{{ __('Maximum upload number', 'all-signs-customizer-for-woocommerce') }}</span>
                 <input v-model.number="upload.maxUploadNumber" class="ascwo-ui-input" type="number">
               </label>
             </div>
             <div class="ascwo-toggle-row">
               <div>
-                <strong>{{ __('Zip output files', 'all-signs-customizer-for-woocommerce-pro') }}</strong>
-                <p>{{ __('Package customer uploads in a zip file when needed.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                <strong>{{ __('Zip output files', 'all-signs-customizer-for-woocommerce') }}</strong>
+                <p>{{ __('Package customer uploads in a zip file when needed.', 'all-signs-customizer-for-woocommerce') }}</p>
               </div>
               <label class="ascwo-switch"><input type="checkbox" v-model="upload.zipFiles.active"><span></span></label>
             </div>
             <div class="ascwo-save-row">
               <button type="button" class="ascwo-ui-button-primary ascwo-general-save" :disabled="savingSection === 'upload'" @click="saveUpload">
                 <Loader2Icon v-if="savingSection === 'upload'" class="ascwo-spin" />
-                {{ __('Save Upload', 'all-signs-customizer-for-woocommerce-pro') }}
+                {{ __('Save Upload', 'all-signs-customizer-for-woocommerce') }}
               </button>
             </div>
           </div>
@@ -226,11 +226,11 @@
         <section id="ascwo-general-quantity" class="ascwo-general-card ascwo-general-section">
           <div class="ascwo-general-section-head">
             <div>
-              <h2>{{ __('Quantity Limits', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
-              <p>{{ __('Minimum and maximum quantities allowed for this configuration.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+              <h2>{{ __('Quantity Limits', 'all-signs-customizer-for-woocommerce') }}</h2>
+              <p>{{ __('Minimum and maximum quantities allowed for this configuration.', 'all-signs-customizer-for-woocommerce') }}</p>
             </div>
             <button type="button" class="ascwo-general-collapse" @click="toggleSection('quantity')">
-              {{ openSections.quantity ? __('Show less', 'all-signs-customizer-for-woocommerce-pro') : __('Show more', 'all-signs-customizer-for-woocommerce-pro') }}
+              {{ openSections.quantity ? __('Show less', 'all-signs-customizer-for-woocommerce') : __('Show more', 'all-signs-customizer-for-woocommerce') }}
               <ChevronUpIcon v-if="openSections.quantity" />
               <ChevronDownIcon v-else />
             </button>
@@ -238,19 +238,19 @@
           <div v-if="openSections.quantity" class="ascwo-form-stack">
             <div class="ascwo-toggle-row">
               <div>
-                <strong>{{ __('Enable quantity limits', 'all-signs-customizer-for-woocommerce-pro') }}</strong>
-                <p>{{ __('Restrict customer orders to a minimum and maximum quantity.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                <strong>{{ __('Enable quantity limits', 'all-signs-customizer-for-woocommerce') }}</strong>
+                <p>{{ __('Restrict customer orders to a minimum and maximum quantity.', 'all-signs-customizer-for-woocommerce') }}</p>
               </div>
               <label class="ascwo-switch"><input type="checkbox" v-model="quantityLimits.enabled"><span></span></label>
             </div>
             <div v-if="quantityLimits.enabled" class="ascwo-two-columns">
-              <label class="ascwo-field"><span>{{ __('Minimum quantity', 'all-signs-customizer-for-woocommerce-pro') }}</span><input v-model.number="quantityLimits.minimum" class="ascwo-ui-input" type="number"></label>
-              <label class="ascwo-field"><span>{{ __('Maximum quantity', 'all-signs-customizer-for-woocommerce-pro') }}</span><input v-model.number="quantityLimits.maximum" class="ascwo-ui-input" type="number"></label>
+              <label class="ascwo-field"><span>{{ __('Minimum quantity', 'all-signs-customizer-for-woocommerce') }}</span><input v-model.number="quantityLimits.minimum" class="ascwo-ui-input" type="number"></label>
+              <label class="ascwo-field"><span>{{ __('Maximum quantity', 'all-signs-customizer-for-woocommerce') }}</span><input v-model.number="quantityLimits.maximum" class="ascwo-ui-input" type="number"></label>
             </div>
             <div class="ascwo-save-row">
               <button type="button" class="ascwo-ui-button-primary ascwo-general-save" :disabled="savingSection === 'quantityLimits'" @click="saveGenericSection('quantityLimits', quantityLimits)">
                 <Loader2Icon v-if="savingSection === 'quantityLimits'" class="ascwo-spin" />
-                {{ __('Save Quantity Limits', 'all-signs-customizer-for-woocommerce-pro') }}
+                {{ __('Save Quantity Limits', 'all-signs-customizer-for-woocommerce') }}
               </button>
             </div>
           </div>
@@ -259,11 +259,11 @@
         <section id="ascwo-general-discount" class="ascwo-general-card ascwo-general-section">
           <div class="ascwo-general-section-head">
             <div>
-              <h2>{{ __('Discount', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
-              <p>{{ __('Choose between a simple discount or quantity-based discount lots.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+              <h2>{{ __('Discount', 'all-signs-customizer-for-woocommerce') }}</h2>
+              <p>{{ __('Choose between a simple discount or quantity-based discount lots.', 'all-signs-customizer-for-woocommerce') }}</p>
             </div>
             <button type="button" class="ascwo-general-collapse" @click="toggleSection('discount')">
-              {{ openSections.discount ? __('Show less', 'all-signs-customizer-for-woocommerce-pro') : __('Show more', 'all-signs-customizer-for-woocommerce-pro') }}
+              {{ openSections.discount ? __('Show less', 'all-signs-customizer-for-woocommerce') : __('Show more', 'all-signs-customizer-for-woocommerce') }}
               <ChevronUpIcon v-if="openSections.discount" />
               <ChevronDownIcon v-else />
             </button>
@@ -271,23 +271,23 @@
           <div v-if="openSections.discount" class="ascwo-form-stack">
             <div class="ascwo-toggle-row">
               <div>
-                <strong>{{ __('Discount by quantity', 'all-signs-customizer-for-woocommerce-pro') }}</strong>
-                <p>{{ __('Turn this on if discounts should depend on ordered quantity.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                <strong>{{ __('Discount by quantity', 'all-signs-customizer-for-woocommerce') }}</strong>
+                <p>{{ __('Turn this on if discounts should depend on ordered quantity.', 'all-signs-customizer-for-woocommerce') }}</p>
               </div>
               <label class="ascwo-switch"><input type="checkbox" v-model="discount.byQuantity"><span></span></label>
             </div>
             <label class="ascwo-field">
-              <span>{{ __('Discount type', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span>{{ __('Discount type', 'all-signs-customizer-for-woocommerce') }}</span>
               <select v-model="discount.type" class="ascwo-ui-input">
-                <option value="none">{{ __('None', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-                <option value="percent">{{ __('Percentage', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-                <option value="fixed">{{ __('Fixed', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                <option value="none">{{ __('None', 'all-signs-customizer-for-woocommerce') }}</option>
+                <option value="percent">{{ __('Percentage', 'all-signs-customizer-for-woocommerce') }}</option>
+                <option value="fixed">{{ __('Fixed', 'all-signs-customizer-for-woocommerce') }}</option>
               </select>
             </label>
             <div class="ascwo-save-row">
               <button type="button" class="ascwo-ui-button-primary ascwo-general-save" :disabled="savingSection === 'discount'" @click="saveGenericSection('discount', discount)">
                 <Loader2Icon v-if="savingSection === 'discount'" class="ascwo-spin" />
-                {{ __('Save Discount', 'all-signs-customizer-for-woocommerce-pro') }}
+                {{ __('Save Discount', 'all-signs-customizer-for-woocommerce') }}
               </button>
             </div>
           </div>
@@ -296,44 +296,44 @@
         <section id="ascwo-general-mobile" class="ascwo-general-card ascwo-general-section">
           <div class="ascwo-general-section-head">
             <div>
-              <h2>{{ __('Mobile Option', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
-              <p>{{ __('Mobile navigation and selection display preferences.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+              <h2>{{ __('Mobile Option', 'all-signs-customizer-for-woocommerce') }}</h2>
+              <p>{{ __('Mobile navigation and selection display preferences.', 'all-signs-customizer-for-woocommerce') }}</p>
             </div>
             <button type="button" class="ascwo-general-collapse" @click="toggleSection('mobile')">
-              {{ openSections.mobile ? __('Show less', 'all-signs-customizer-for-woocommerce-pro') : __('Show more', 'all-signs-customizer-for-woocommerce-pro') }}
+              {{ openSections.mobile ? __('Show less', 'all-signs-customizer-for-woocommerce') : __('Show more', 'all-signs-customizer-for-woocommerce') }}
               <ChevronUpIcon v-if="openSections.mobile" />
               <ChevronDownIcon v-else />
             </button>
           </div>
           <div v-if="openSections.mobile" class="ascwo-form-stack">
             <label class="ascwo-field">
-              <span>{{ __('Show Navigation Menu on Mobile', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span>{{ __('Show Navigation Menu on Mobile', 'all-signs-customizer-for-woocommerce') }}</span>
               <select v-model="mobile.showNavigatorMenu" class="ascwo-ui-input">
-                <option value="off">{{ __('Off', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-                <option value="on">{{ __('On', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                <option value="off">{{ __('Off', 'all-signs-customizer-for-woocommerce') }}</option>
+                <option value="on">{{ __('On', 'all-signs-customizer-for-woocommerce') }}</option>
               </select>
-              <p>{{ __('Display a navigation menu of the selections on mobile.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+              <p>{{ __('Display a navigation menu of the selections on mobile.', 'all-signs-customizer-for-woocommerce') }}</p>
             </label>
             <label class="ascwo-field">
-              <span>{{ __('Show Navigation Menu First', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span>{{ __('Show Navigation Menu First', 'all-signs-customizer-for-woocommerce') }}</span>
               <select v-model="mobile.showNavigationMenuFirst" class="ascwo-ui-input">
-                <option value="yes">{{ __('Yes', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-                <option value="no">{{ __('No', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                <option value="yes">{{ __('Yes', 'all-signs-customizer-for-woocommerce') }}</option>
+                <option value="no">{{ __('No', 'all-signs-customizer-for-woocommerce') }}</option>
               </select>
-              <p>{{ __('Allow customers to jump to a selection from the mobile menu before seeing the first option block.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+              <p>{{ __('Allow customers to jump to a selection from the mobile menu before seeing the first option block.', 'all-signs-customizer-for-woocommerce') }}</p>
             </label>
             <label class="ascwo-field">
-              <span>{{ __('Mobile Selection Options Display', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span>{{ __('Mobile Selection Options Display', 'all-signs-customizer-for-woocommerce') }}</span>
               <select v-model="mobile.mobileSelectionOptionsDisplay" class="ascwo-ui-input">
-                <option value="horizontally-stack">{{ __('Horizontally Stack', 'all-signs-customizer-for-woocommerce-pro') }}</option>
-                <option value="scroll">{{ __('Scroll', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                <option value="horizontally-stack">{{ __('Horizontally Stack', 'all-signs-customizer-for-woocommerce') }}</option>
+                <option value="scroll">{{ __('Scroll', 'all-signs-customizer-for-woocommerce') }}</option>
               </select>
-              <p>{{ __('Choose whether selection options are shown as horizontal stacks or scrollable items.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+              <p>{{ __('Choose whether selection options are shown as horizontal stacks or scrollable items.', 'all-signs-customizer-for-woocommerce') }}</p>
             </label>
             <div class="ascwo-save-row">
               <button type="button" class="ascwo-ui-button-primary ascwo-general-save" :disabled="savingSection === 'mobile'" @click="saveMobile">
                 <Loader2Icon v-if="savingSection === 'mobile'" class="ascwo-spin" />
-                {{ __('Save Mobile', 'all-signs-customizer-for-woocommerce-pro') }}
+                {{ __('Save Mobile', 'all-signs-customizer-for-woocommerce') }}
               </button>
             </div>
           </div>
@@ -342,11 +342,11 @@
         <section id="ascwo-general-request" class="ascwo-general-card ascwo-general-section">
           <div class="ascwo-general-section-head">
             <div>
-              <h2>{{ __('Request Quote', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
-              <p>{{ __('Quote request workflow, recipient emails and upload rules.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+              <h2>{{ __('Request Quote', 'all-signs-customizer-for-woocommerce') }}</h2>
+              <p>{{ __('Quote request workflow, recipient emails and upload rules.', 'all-signs-customizer-for-woocommerce') }}</p>
             </div>
             <button type="button" class="ascwo-general-collapse" @click="toggleSection('request')">
-              {{ openSections.request ? __('Show less', 'all-signs-customizer-for-woocommerce-pro') : __('Show more', 'all-signs-customizer-for-woocommerce-pro') }}
+              {{ openSections.request ? __('Show less', 'all-signs-customizer-for-woocommerce') : __('Show more', 'all-signs-customizer-for-woocommerce') }}
               <ChevronUpIcon v-if="openSections.request" />
               <ChevronDownIcon v-else />
             </button>
@@ -354,54 +354,54 @@
           <div v-if="openSections.request" class="ascwo-nested-card ascwo-form-stack">
             <div class="ascwo-general-section-head ascwo-nested-head">
               <div>
-                <h3>{{ __('Request A Quote', 'all-signs-customizer-for-woocommerce-pro') }}</h3>
-                <p>{{ __('Configure the request quote flow, recipient emails and file upload restrictions.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                <h3>{{ __('Request A Quote', 'all-signs-customizer-for-woocommerce') }}</h3>
+                <p>{{ __('Configure the request quote flow, recipient emails and file upload restrictions.', 'all-signs-customizer-for-woocommerce') }}</p>
               </div>
             </div>
             <div class="ascwo-toggle-row">
               <div>
-                <strong>{{ __('Enable Request Quote', 'all-signs-customizer-for-woocommerce-pro') }}</strong>
-                <p>{{ __('Turn this on to let customers submit quote requests instead of going straight to purchase.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                <strong>{{ __('Enable Request Quote', 'all-signs-customizer-for-woocommerce') }}</strong>
+                <p>{{ __('Turn this on to let customers submit quote requests instead of going straight to purchase.', 'all-signs-customizer-for-woocommerce') }}</p>
               </div>
               <label class="ascwo-switch"><input type="checkbox" v-model="requestQuote.enableRequestQuote"><span></span></label>
             </div>
             <div class="ascwo-two-columns">
-              <label class="ascwo-field"><span>{{ __('Receiver Email(s)', 'all-signs-customizer-for-woocommerce-pro') }}</span><input :value="requestQuote.receiversEmail.join(', ')" class="ascwo-ui-input" type="text" @input="requestQuote.receiversEmail = splitList($event.target.value)"><p>{{ __('Separate multiple email addresses with commas.', 'all-signs-customizer-for-woocommerce-pro') }}</p></label>
-              <label class="ascwo-field"><span>{{ __('Email Subject', 'all-signs-customizer-for-woocommerce-pro') }}</span><input v-model="requestQuote.emailSubject" class="ascwo-ui-input" type="text"></label>
+              <label class="ascwo-field"><span>{{ __('Receiver Email(s)', 'all-signs-customizer-for-woocommerce') }}</span><input :value="requestQuote.receiversEmail.join(', ')" class="ascwo-ui-input" type="text" @input="requestQuote.receiversEmail = splitList($event.target.value)"><p>{{ __('Separate multiple email addresses with commas.', 'all-signs-customizer-for-woocommerce') }}</p></label>
+              <label class="ascwo-field"><span>{{ __('Email Subject', 'all-signs-customizer-for-woocommerce') }}</span><input v-model="requestQuote.emailSubject" class="ascwo-ui-input" type="text"></label>
             </div>
             <div class="ascwo-toggle-row">
               <div>
-                <strong>{{ __('Allow Upload Files', 'all-signs-customizer-for-woocommerce-pro') }}</strong>
-                <p>{{ __('Allow the customer to attach files to a request quote submission.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                <strong>{{ __('Allow Upload Files', 'all-signs-customizer-for-woocommerce') }}</strong>
+                <p>{{ __('Allow the customer to attach files to a request quote submission.', 'all-signs-customizer-for-woocommerce') }}</p>
               </div>
               <label class="ascwo-switch"><input type="checkbox" v-model="requestQuote.allowUploadFiles"><span></span></label>
             </div>
             <div class="ascwo-field">
-              <span>{{ __('Accepted Extensions', 'all-signs-customizer-for-woocommerce-pro') }}</span>
+              <span>{{ __('Accepted Extensions', 'all-signs-customizer-for-woocommerce') }}</span>
               <div class="ascwo-chip-box">
                 <span v-for="extension in requestQuote.acceptExtensions" :key="extension" class="ascwo-chip">{{ extension.replace('.', '').toUpperCase() }} <button type="button" @click="removeChip(requestQuote.acceptExtensions, extension)">x</button></span>
                 <select class="ascwo-chip-select" @change="addChip(requestQuote.acceptExtensions, $event)">
-                  <option value="">{{ __('Select file extensions', 'all-signs-customizer-for-woocommerce-pro') }}</option>
+                  <option value="">{{ __('Select file extensions', 'all-signs-customizer-for-woocommerce') }}</option>
                   <option v-for="extension in quoteExtensionOptions" :key="extension" :value="extension">{{ extension.replace('.', '').toUpperCase() }}</option>
                 </select>
               </div>
-              <p>{{ __('Choose the file extensions customers are allowed to upload.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+              <p>{{ __('Choose the file extensions customers are allowed to upload.', 'all-signs-customizer-for-woocommerce') }}</p>
             </div>
             <div class="ascwo-two-columns">
-              <label class="ascwo-field"><span>{{ __('Max File Size (MB)', 'all-signs-customizer-for-woocommerce-pro') }}</span><input v-model.number="requestQuote.maxFileSize" class="ascwo-ui-input" type="number"><p>{{ __('Maximum file size allowed for one uploaded file.', 'all-signs-customizer-for-woocommerce-pro') }}</p></label>
-              <label class="ascwo-field"><span>{{ __('Max Files Number', 'all-signs-customizer-for-woocommerce-pro') }}</span><input v-model.number="requestQuote.maxFilesNumber" class="ascwo-ui-input" type="number"><p>{{ __('Maximum number of files allowed per quote request.', 'all-signs-customizer-for-woocommerce-pro') }}</p></label>
+              <label class="ascwo-field"><span>{{ __('Max File Size (MB)', 'all-signs-customizer-for-woocommerce') }}</span><input v-model.number="requestQuote.maxFileSize" class="ascwo-ui-input" type="number"><p>{{ __('Maximum file size allowed for one uploaded file.', 'all-signs-customizer-for-woocommerce') }}</p></label>
+              <label class="ascwo-field"><span>{{ __('Max Files Number', 'all-signs-customizer-for-woocommerce') }}</span><input v-model.number="requestQuote.maxFilesNumber" class="ascwo-ui-input" type="number"><p>{{ __('Maximum number of files allowed per quote request.', 'all-signs-customizer-for-woocommerce') }}</p></label>
             </div>
             <div class="ascwo-toggle-row">
               <div>
-                <strong>{{ __('Send To Customer', 'all-signs-customizer-for-woocommerce-pro') }}</strong>
-                <p>{{ __('Send a copy or acknowledgement of the request quote to the customer.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                <strong>{{ __('Send To Customer', 'all-signs-customizer-for-woocommerce') }}</strong>
+                <p>{{ __('Send a copy or acknowledgement of the request quote to the customer.', 'all-signs-customizer-for-woocommerce') }}</p>
               </div>
               <label class="ascwo-switch"><input type="checkbox" v-model="requestQuote.sendToCustomer"><span></span></label>
             </div>
             <div class="ascwo-save-row">
               <button type="button" class="ascwo-ui-button-primary ascwo-general-save" :disabled="savingSection === 'requestQuote'" @click="saveGenericSection('requestQuote', requestQuote)">
                 <Loader2Icon v-if="savingSection === 'requestQuote'" class="ascwo-spin" />
-                {{ __('Save Request Quote', 'all-signs-customizer-for-woocommerce-pro') }}
+                {{ __('Save Request Quote', 'all-signs-customizer-for-woocommerce') }}
               </button>
             </div>
           </div>
@@ -410,11 +410,11 @@
         <section id="ascwo-general-simple" class="ascwo-general-card ascwo-general-section">
           <div class="ascwo-general-section-head">
             <div>
-              <h2>{{ __('Simple Options', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
-              <p>{{ __('Replace the full customizer with native product option groups when needed.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+              <h2>{{ __('Simple Options', 'all-signs-customizer-for-woocommerce') }}</h2>
+              <p>{{ __('Replace the full customizer with native product option groups when needed.', 'all-signs-customizer-for-woocommerce') }}</p>
             </div>
             <button type="button" class="ascwo-general-collapse" @click="toggleSection('simple')">
-              {{ openSections.simple ? __('Show less', 'all-signs-customizer-for-woocommerce-pro') : __('Show more', 'all-signs-customizer-for-woocommerce-pro') }}
+              {{ openSections.simple ? __('Show less', 'all-signs-customizer-for-woocommerce') : __('Show more', 'all-signs-customizer-for-woocommerce') }}
               <ChevronUpIcon v-if="openSections.simple" />
               <ChevronDownIcon v-else />
             </button>
@@ -422,15 +422,15 @@
           <div v-if="openSections.simple" class="ascwo-form-stack">
             <div class="ascwo-toggle-row">
               <div>
-                <strong>{{ __('Enable Simple Product Options', 'all-signs-customizer-for-woocommerce-pro') }}</strong>
-                <p>{{ __('When enabled, the product page will show simple option selectors instead of the full customizer.', 'all-signs-customizer-for-woocommerce-pro') }}</p>
+                <strong>{{ __('Enable Simple Product Options', 'all-signs-customizer-for-woocommerce') }}</strong>
+                <p>{{ __('When enabled, the product page will show simple option selectors instead of the full customizer.', 'all-signs-customizer-for-woocommerce') }}</p>
               </div>
               <label class="ascwo-switch"><input type="checkbox" v-model="simpleOptions.enabled"><span></span></label>
             </div>
             <div class="ascwo-save-row">
               <button type="button" class="ascwo-ui-button-primary ascwo-general-save" :disabled="savingSection === 'simpleOptions'" @click="saveGenericSection('simpleOptions', simpleOptions)">
                 <Loader2Icon v-if="savingSection === 'simpleOptions'" class="ascwo-spin" />
-                {{ __('Save Simple Options', 'all-signs-customizer-for-woocommerce-pro') }}
+                {{ __('Save Simple Options', 'all-signs-customizer-for-woocommerce') }}
               </button>
             </div>
           </div>
@@ -439,7 +439,7 @@
 
       <div class="ascwo-section-menu-wrap">
         <aside class="ascwo-section-menu ascwo-general-card">
-          <h2>{{ __('Section Menu', 'all-signs-customizer-for-woocommerce-pro') }}</h2>
+          <h2>{{ __('Section Menu', 'all-signs-customizer-for-woocommerce') }}</h2>
           <div class="ascwo-section-menu-links">
             <a v-for="item in sectionMenu" :key="item.id" :href="`#${item.id}`" @click.prevent="scrollToSection(item.id)">
               {{ item.label }}
@@ -747,7 +747,7 @@ const handleSaveResponse = async (result) => {
     toastMessage(result.message);
     return;
   }
-  toastMessage(result?.message || __('Unable to save settings', 'all-signs-customizer-for-woocommerce-pro'), 'error');
+  toastMessage(result?.message || __('Unable to save settings', 'all-signs-customizer-for-woocommerce'), 'error');
 };
 
 const saveProduct = async () => {
@@ -802,9 +802,9 @@ const saveGenericSection = async (section, data) => {
 const selectWaterMarkImage = async (event) => {
   event.preventDefault();
   const uploader = wp.media({
-    title: __('Select WaterMark Image', 'all-signs-customizer-for-woocommerce-pro'),
+    title: __('Select WaterMark Image', 'all-signs-customizer-for-woocommerce'),
     button: {
-      text: __('Select Image', 'all-signs-customizer-for-woocommerce-pro'),
+      text: __('Select Image', 'all-signs-customizer-for-woocommerce'),
     },
     multiple: false,
   }).on('select', () => {

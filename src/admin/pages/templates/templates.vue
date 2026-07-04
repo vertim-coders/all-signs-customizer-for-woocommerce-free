@@ -5,14 +5,14 @@
         <div>
           <div class="ascwo-template-heading-row">
             <h1>
-              {{ __("Templates", "all-signs-customizer-for-woocommerce-pro") }}
+              {{ __("Templates", "all-signs-customizer-for-woocommerce") }}
             </h1>
             <span class="ascwo-template-count-pill">
               {{ filteredTemplates.length }}
               {{
                 filteredTemplates.length > 1
-                  ? __("templates", "all-signs-customizer-for-woocommerce-pro")
-                  : __("template", "all-signs-customizer-for-woocommerce-pro")
+                  ? __("templates", "all-signs-customizer-for-woocommerce")
+                  : __("template", "all-signs-customizer-for-woocommerce")
               }}
             </span>
           </div>
@@ -20,7 +20,7 @@
             {{
               __(
                 "Manage your saved template library, import JSON files and open the public template packs.",
-                "all-signs-customizer-for-woocommerce-pro",
+                "all-signs-customizer-for-woocommerce",
               )
             }}
           </p>
@@ -32,9 +32,7 @@
             class="ascwo-template-input ascwo-template-select"
           >
             <option value="all">
-              {{
-                __("All categories", "all-signs-customizer-for-woocommerce-pro")
-              }}
+              {{ __("All categories", "all-signs-customizer-for-woocommerce") }}
             </option>
             <option
               v-for="cat in categories"
@@ -51,10 +49,7 @@
               v-model="search"
               type="search"
               :placeholder="
-                __(
-                  'Search templates',
-                  'all-signs-customizer-for-woocommerce-pro',
-                )
+                __('Search templates', 'all-signs-customizer-for-woocommerce')
               "
               @keyup.enter="handleSearchChange"
               @input="searchInputEmpty"
@@ -67,9 +62,7 @@
             @click="startCreateTemplate"
           >
             <PlusIcon />
-            {{
-              __("Create Template", "all-signs-customizer-for-woocommerce-pro")
-            }}
+            {{ __("Create Template", "all-signs-customizer-for-woocommerce") }}
           </button>
           <button
             type="button"
@@ -77,7 +70,7 @@
             @click="openImportView"
           >
             <DownloadIcon />
-            {{ __("Import", "all-signs-customizer-for-woocommerce-pro") }}
+            {{ __("Import", "all-signs-customizer-for-woocommerce") }}
           </button>
           <button
             type="button"
@@ -85,7 +78,7 @@
             @click="openExportView"
           >
             <UploadIcon />
-            {{ __("Export", "all-signs-customizer-for-woocommerce-pro") }}
+            {{ __("Export", "all-signs-customizer-for-woocommerce") }}
           </button>
           <button
             type="button"
@@ -94,10 +87,7 @@
           >
             <PanelTopIcon />
             {{
-              __(
-                "Browse our template",
-                "all-signs-customizer-for-woocommerce-pro",
-              )
+              __("Browse our template", "all-signs-customizer-for-woocommerce")
             }}
           </button>
           <button
@@ -106,10 +96,7 @@
             @click="openThemeBlockModal = true"
           >
             {{
-              __(
-                "Add template theme",
-                "all-signs-customizer-for-woocommerce-pro",
-              )
+              __("Add template theme", "all-signs-customizer-for-woocommerce")
             }}
           </button>
         </div>
@@ -117,17 +104,14 @@
 
       <section class="ascwo-template-list-card">
         <h2>
-          {{ __("Templates List", "all-signs-customizer-for-woocommerce-pro") }}
+          {{ __("Templates List", "all-signs-customizer-for-woocommerce") }}
         </h2>
 
         <div v-if="isFetching" class="ascwo-template-empty">
           <img :src="asoLogo" alt="" />
           <h3>
             {{
-              __(
-                "Loading templates...",
-                "all-signs-customizer-for-woocommerce-pro",
-              )
+              __("Loading templates...", "all-signs-customizer-for-woocommerce")
             }}
           </h3>
         </div>
@@ -139,17 +123,14 @@
           <img :src="asoLogo" alt="" />
           <h3>
             {{
-              __(
-                "No templates found",
-                "all-signs-customizer-for-woocommerce-pro",
-              )
+              __("No templates found", "all-signs-customizer-for-woocommerce")
             }}
           </h3>
           <p>
             {{
               __(
                 "There is currently no template matching this filter. You can create one, import a JSON file, or open template packs.",
-                "all-signs-customizer-for-woocommerce-pro",
+                "all-signs-customizer-for-woocommerce",
               )
             }}
           </p>
@@ -158,9 +139,7 @@
             class="ascwo-template-primary-button is-compact"
             @click="startCreateTemplate"
           >
-            {{
-              __("Create template", "all-signs-customizer-for-woocommerce-pro")
-            }}
+            {{ __("Create template", "all-signs-customizer-for-woocommerce") }}
           </button>
         </div>
 
@@ -185,17 +164,14 @@
                     tpl.name ||
                     __(
                       "Untitled template",
-                      "all-signs-customizer-for-woocommerce-pro",
+                      "all-signs-customizer-for-woocommerce",
                     )
                   }}
                 </h3>
                 <p>
                   {{
                     categoryMap[tpl.categoryId] ||
-                    __(
-                      "Uncategorized",
-                      "all-signs-customizer-for-woocommerce-pro",
-                    )
+                    __("Uncategorized", "all-signs-customizer-for-woocommerce")
                   }}
                 </p>
               </div>
@@ -225,10 +201,10 @@
         <h1>
           {{
             isEdit
-              ? __("Edit template", "all-signs-customizer-for-woocommerce-pro")
+              ? __("Edit template", "all-signs-customizer-for-woocommerce")
               : __(
                   "Create new template",
-                  "all-signs-customizer-for-woocommerce-pro",
+                  "all-signs-customizer-for-woocommerce",
                 )
           }}
         </h1>
@@ -238,27 +214,24 @@
         <div class="ascwo-template-form-grid">
           <label class="ascwo-template-field">
             <span>{{
-              __("Name", "all-signs-customizer-for-woocommerce-pro")
+              __("Name", "all-signs-customizer-for-woocommerce")
             }}</span>
             <input v-model="template.name" type="text" />
             <small v-if="isEmptyName">{{
-              __("Name is required", "all-signs-customizer-for-woocommerce-pro")
+              __("Name is required", "all-signs-customizer-for-woocommerce")
             }}</small>
           </label>
 
           <label class="ascwo-template-field">
             <span>{{
-              __(
-                "Select configuration",
-                "all-signs-customizer-for-woocommerce-pro",
-              )
+              __("Select configuration", "all-signs-customizer-for-woocommerce")
             }}</span>
             <select v-model="template.configId">
               <option value="0" disabled>
                 {{
                   __(
                     "Search configuration",
-                    "all-signs-customizer-for-woocommerce-pro",
+                    "all-signs-customizer-for-woocommerce",
                   )
                 }}
               </option>
@@ -273,23 +246,20 @@
             <small v-if="isEmptyConfig">{{
               __(
                 "Configuration is required",
-                "all-signs-customizer-for-woocommerce-pro",
+                "all-signs-customizer-for-woocommerce",
               )
             }}</small>
           </label>
 
           <label class="ascwo-template-field">
             <span>{{
-              __(
-                "Upload preview image",
-                "all-signs-customizer-for-woocommerce-pro",
-              )
+              __("Upload preview image", "all-signs-customizer-for-woocommerce")
             }}</span>
             <ImageUploadControl
               :label="
                 __(
                   'Upload preview image',
-                  'all-signs-customizer-for-woocommerce-pro',
+                  'all-signs-customizer-for-woocommerce',
                 )
               "
               :image="template.prevImg"
@@ -299,17 +269,11 @@
 
           <label class="ascwo-template-field">
             <span>{{
-              __(
-                "Upload real image",
-                "all-signs-customizer-for-woocommerce-pro",
-              )
+              __("Upload real image", "all-signs-customizer-for-woocommerce")
             }}</span>
             <ImageUploadControl
               :label="
-                __(
-                  'Upload real image',
-                  'all-signs-customizer-for-woocommerce-pro',
-                )
+                __('Upload real image', 'all-signs-customizer-for-woocommerce')
               "
               :image="template.realImg"
               @choose="selectTemplateRealImg"
@@ -318,7 +282,7 @@
 
           <label class="ascwo-template-field">
             <span>{{
-              __("Base price", "all-signs-customizer-for-woocommerce-pro")
+              __("Base price", "all-signs-customizer-for-woocommerce")
             }}</span>
             <input
               v-model.number="template.basePrice"
@@ -334,24 +298,21 @@
               :label="
                 __(
                   'Enable auto-update for the preview image',
-                  'all-signs-customizer-for-woocommerce-pro',
+                  'all-signs-customizer-for-woocommerce',
                 )
               "
             />
             <ToggleRow
               v-model="template.enableAddToCart"
               :label="
-                __(
-                  'Enable add to cart',
-                  'all-signs-customizer-for-woocommerce-pro',
-                )
+                __('Enable add to cart', 'all-signs-customizer-for-woocommerce')
               "
             />
           </div>
 
           <label class="ascwo-template-field">
             <span>{{
-              __("Select category", "all-signs-customizer-for-woocommerce-pro")
+              __("Select category", "all-signs-customizer-for-woocommerce")
             }}</span>
             <div class="ascwo-template-inline-field">
               <select v-model="template.categoryId">
@@ -359,7 +320,7 @@
                   {{
                     __(
                       "Search category",
-                      "all-signs-customizer-for-woocommerce-pro",
+                      "all-signs-customizer-for-woocommerce",
                     )
                   }}
                 </option>
@@ -376,7 +337,7 @@
                 class="ascwo-template-primary-button is-compact"
                 @click="openCategoryModal = true"
               >
-                {{ __("Add new", "all-signs-customizer-for-woocommerce-pro") }}
+                {{ __("Add new", "all-signs-customizer-for-woocommerce") }}
               </button>
             </div>
           </label>
@@ -390,7 +351,7 @@
           @click="back"
         >
           <ArrowLeftIcon />
-          {{ __("Back", "all-signs-customizer-for-woocommerce-pro") }}
+          {{ __("Back", "all-signs-customizer-for-woocommerce") }}
         </button>
         <button
           type="button"
@@ -401,8 +362,8 @@
           <SaveIcon />
           {{
             isLoading
-              ? __("Saving...", "all-signs-customizer-for-woocommerce-pro")
-              : __("Save", "all-signs-customizer-for-woocommerce-pro")
+              ? __("Saving...", "all-signs-customizer-for-woocommerce")
+              : __("Save", "all-signs-customizer-for-woocommerce")
           }}
         </button>
       </section>
@@ -410,13 +371,11 @@
 
     <template v-else-if="view === 'import'">
       <ActionHeader
-        :title="
-          __('Import Templates', 'all-signs-customizer-for-woocommerce-pro')
-        "
+        :title="__('Import Templates', 'all-signs-customizer-for-woocommerce')"
         :description="
           __(
             'Import a templates JSON file into a selected configuration and category.',
-            'all-signs-customizer-for-woocommerce-pro',
+            'all-signs-customizer-for-woocommerce',
           )
         "
         @cancel="view = 'list'"
@@ -427,15 +386,12 @@
             <span>{{
               __(
                 "Upload template JSON file",
-                "all-signs-customizer-for-woocommerce-pro",
+                "all-signs-customizer-for-woocommerce",
               )
             }}</span>
             <ImageUploadControl
               :label="
-                __(
-                  'Choose JSON file',
-                  'all-signs-customizer-for-woocommerce-pro',
-                )
+                __('Choose JSON file', 'all-signs-customizer-for-woocommerce')
               "
               :image="''"
               @choose="selectJsonFile"
@@ -444,14 +400,14 @@
               {{
                 __(
                   "Select a .json file exported from the templates module.",
-                  "all-signs-customizer-for-woocommerce-pro",
+                  "all-signs-customizer-for-woocommerce",
                 )
               }}
             </p>
           </label>
           <label class="ascwo-template-field">
             <span>{{
-              __("Select category", "all-signs-customizer-for-woocommerce-pro")
+              __("Select category", "all-signs-customizer-for-woocommerce")
             }}</span>
             <div class="ascwo-template-inline-field">
               <select v-model="importForm.categoryId">
@@ -459,7 +415,7 @@
                   {{
                     __(
                       "Search category",
-                      "all-signs-customizer-for-woocommerce-pro",
+                      "all-signs-customizer-for-woocommerce",
                     )
                   }}
                 </option>
@@ -476,23 +432,20 @@
                 class="ascwo-template-primary-button is-compact"
                 @click="openCategoryModal = true"
               >
-                {{ __("Add new", "all-signs-customizer-for-woocommerce-pro") }}
+                {{ __("Add new", "all-signs-customizer-for-woocommerce") }}
               </button>
             </div>
           </label>
           <label class="ascwo-template-field">
             <span>{{
-              __(
-                "Select configuration",
-                "all-signs-customizer-for-woocommerce-pro",
-              )
+              __("Select configuration", "all-signs-customizer-for-woocommerce")
             }}</span>
             <select v-model="importForm.configId">
               <option value="0">
                 {{
                   __(
                     "Search configuration",
-                    "all-signs-customizer-for-woocommerce-pro",
+                    "all-signs-customizer-for-woocommerce",
                   )
                 }}
               </option>
@@ -514,7 +467,7 @@
               {{
                 __(
                   "Available JSON files",
-                  "all-signs-customizer-for-woocommerce-pro",
+                  "all-signs-customizer-for-woocommerce",
                 )
               }}
             </h2>
@@ -522,21 +475,20 @@
               {{
                 __(
                   "Quick access to JSON files already present in this shop library.",
-                  "all-signs-customizer-for-woocommerce-pro",
+                  "all-signs-customizer-for-woocommerce",
                 )
               }}
             </p>
           </div>
           <span class="ascwo-template-count-pill"
-            >0
-            {{ __("file", "all-signs-customizer-for-woocommerce-pro") }}</span
+            >0 {{ __("file", "all-signs-customizer-for-woocommerce") }}</span
           >
         </div>
         <p class="ascwo-template-muted">
           {{
             __(
               "No JSON file is currently available in the upload library for this shop.",
-              "all-signs-customizer-for-woocommerce-pro",
+              "all-signs-customizer-for-woocommerce",
             )
           }}
         </p>
@@ -547,9 +499,7 @@
           class="ascwo-template-primary-button is-wide"
           @click="notifyUnavailable"
         >
-          {{
-            __("Import templates", "all-signs-customizer-for-woocommerce-pro")
-          }}
+          {{ __("Import templates", "all-signs-customizer-for-woocommerce") }}
         </button>
       </section>
     </template>
@@ -557,26 +507,21 @@
     <template v-else-if="view === 'export'">
       <section class="ascwo-template-form-card is-title-only">
         <h1>
-          {{
-            __("Export Templates", "all-signs-customizer-for-woocommerce-pro")
-          }}
+          {{ __("Export Templates", "all-signs-customizer-for-woocommerce") }}
         </h1>
       </section>
       <section class="ascwo-template-form-card">
         <div class="ascwo-template-form-grid">
           <label class="ascwo-template-field">
             <span>{{
-              __(
-                "Select configuration",
-                "all-signs-customizer-for-woocommerce-pro",
-              )
+              __("Select configuration", "all-signs-customizer-for-woocommerce")
             }}</span>
             <select v-model="exportForm.configId">
               <option value="0">
                 {{
                   __(
                     "Search configuration",
-                    "all-signs-customizer-for-woocommerce-pro",
+                    "all-signs-customizer-for-woocommerce",
                   )
                 }}
               </option>
@@ -593,22 +538,19 @@
             <span>{{
               __(
                 "Export all templates of selected configuration",
-                "all-signs-customizer-for-woocommerce-pro",
+                "all-signs-customizer-for-woocommerce",
               )
             }}</span>
             <ToggleRow v-model="exportForm.allTemplates" label="" />
           </div>
           <label class="ascwo-template-field ascwo-template-field-wide">
             <span>{{
-              __("Templates", "all-signs-customizer-for-woocommerce-pro")
+              __("Templates", "all-signs-customizer-for-woocommerce")
             }}</span>
             <select v-model="exportForm.templateId">
               <option value="">
                 {{
-                  __(
-                    "select template",
-                    "all-signs-customizer-for-woocommerce-pro",
-                  )
+                  __("select template", "all-signs-customizer-for-woocommerce")
                 }}
               </option>
               <option
@@ -629,7 +571,7 @@
           @click="view = 'list'"
         >
           <ArrowLeftIcon />
-          {{ __("Back", "all-signs-customizer-for-woocommerce-pro") }}
+          {{ __("Back", "all-signs-customizer-for-woocommerce") }}
         </button>
         <button
           type="button"
@@ -637,9 +579,7 @@
           @click="notifyUnavailable"
         >
           <SaveIcon />
-          {{
-            __("Export templates", "all-signs-customizer-for-woocommerce-pro")
-          }}
+          {{ __("Export templates", "all-signs-customizer-for-woocommerce") }}
         </button>
       </section>
     </template>
@@ -648,34 +588,31 @@
       <div class="ascwo-template-library-layout">
         <aside class="ascwo-template-library-sidebar">
           <h2>
-            {{ __("Categories", "all-signs-customizer-for-woocommerce-pro") }}
+            {{ __("Categories", "all-signs-customizer-for-woocommerce") }}
           </h2>
           <button type="button" class="is-active">
-            {{ __("All", "all-signs-customizer-for-woocommerce-pro") }}
+            {{ __("All", "all-signs-customizer-for-woocommerce") }}
           </button>
         </aside>
         <div class="ascwo-template-library-main">
           <section class="ascwo-template-library-header">
             <h1>
               {{
-                __(
-                  "Template Library",
-                  "all-signs-customizer-for-woocommerce-pro",
-                )
+                __("Template Library", "all-signs-customizer-for-woocommerce")
               }}
             </h1>
             <div>
               <button type="button" class="ascwo-template-filter is-active">
-                {{ __("All", "all-signs-customizer-for-woocommerce-pro") }}
+                {{ __("All", "all-signs-customizer-for-woocommerce") }}
               </button>
               <button type="button" class="ascwo-template-filter">
-                {{ __("Free", "all-signs-customizer-for-woocommerce-pro") }}
+                {{ __("Free", "all-signs-customizer-for-woocommerce") }}
               </button>
               <button type="button" class="ascwo-template-filter">
-                {{ __("Basic", "all-signs-customizer-for-woocommerce-pro") }}
+                {{ __("Basic", "all-signs-customizer-for-woocommerce") }}
               </button>
               <button type="button" class="ascwo-template-filter">
-                {{ __("Pro", "all-signs-customizer-for-woocommerce-pro") }}
+                {{ __("Pro", "all-signs-customizer-for-woocommerce") }}
               </button>
               <button
                 type="button"
@@ -685,7 +622,7 @@
                 {{
                   __(
                     "Back to Templates",
-                    "all-signs-customizer-for-woocommerce-pro",
+                    "all-signs-customizer-for-woocommerce",
                   )
                 }}
               </button>
@@ -696,7 +633,7 @@
               {{
                 __(
                   "No template packs available",
-                  "all-signs-customizer-for-woocommerce-pro",
+                  "all-signs-customizer-for-woocommerce",
                 )
               }}
             </h2>
@@ -704,7 +641,7 @@
               {{
                 __(
                   "There are no template packs available at the moment.",
-                  "all-signs-customizer-for-woocommerce-pro",
+                  "all-signs-customizer-for-woocommerce",
                 )
               }}
             </p>
@@ -714,10 +651,7 @@
               @click="view = 'list'"
             >
               {{
-                __(
-                  "Back to Templates",
-                  "all-signs-customizer-for-woocommerce-pro",
-                )
+                __("Back to Templates", "all-signs-customizer-for-woocommerce")
               }}
             </button>
           </section>
@@ -866,10 +800,7 @@ const fetchTemplates = async (searchTerm = "") => {
     categories.value = normalizeCategories(result?.categories);
   } catch (error) {
     toastMessage(
-      __(
-        "Unable to load templates.",
-        "all-signs-customizer-for-woocommerce-pro",
-      ),
+      __("Unable to load templates.", "all-signs-customizer-for-woocommerce"),
       "error",
     );
   }
@@ -928,7 +859,7 @@ const notifyUnavailable = () => {
   toastMessage(
     __(
       "This action is not connected to a WordPress endpoint yet.",
-      "all-signs-customizer-for-woocommerce-pro",
+      "all-signs-customizer-for-woocommerce",
     ),
     "warning",
   );
@@ -957,10 +888,10 @@ const selectTemplatePrevImg = (e) => {
     .media({
       title: __(
         "Select Template Preview Image",
-        "all-signs-customizer-for-woocommerce-pro",
+        "all-signs-customizer-for-woocommerce",
       ),
       button: {
-        text: __("Select Image", "all-signs-customizer-for-woocommerce-pro"),
+        text: __("Select Image", "all-signs-customizer-for-woocommerce"),
       },
       multiple: false,
     })
@@ -977,10 +908,10 @@ const selectTemplateRealImg = (e) => {
     .media({
       title: __(
         "Select Template Usage Image",
-        "all-signs-customizer-for-woocommerce-pro",
+        "all-signs-customizer-for-woocommerce",
       ),
       button: {
-        text: __("Select Image", "all-signs-customizer-for-woocommerce-pro"),
+        text: __("Select Image", "all-signs-customizer-for-woocommerce"),
       },
       multiple: false,
     })
@@ -995,12 +926,9 @@ const selectJsonFile = (e) => {
   e?.preventDefault?.();
   const uploader = wp
     .media({
-      title: __("Select JSON file", "all-signs-customizer-for-woocommerce-pro"),
+      title: __("Select JSON file", "all-signs-customizer-for-woocommerce"),
       button: {
-        text: __(
-          "Select JSON file",
-          "all-signs-customizer-for-woocommerce-pro",
-        ),
+        text: __("Select JSON file", "all-signs-customizer-for-woocommerce"),
       },
       multiple: false,
     })
@@ -1029,10 +957,7 @@ const saveCategory = async () => {
     closeCategoryModal();
   } catch (error) {
     toastMessage(
-      __(
-        "Unable to create category.",
-        "all-signs-customizer-for-woocommerce-pro",
-      ),
+      __("Unable to create category.", "all-signs-customizer-for-woocommerce"),
       "error",
     );
   } finally {
@@ -1065,10 +990,7 @@ const saveTemplate = async () => {
     toastMessage(result.message, "error");
   } catch (error) {
     toastMessage(
-      __(
-        "Unable to create template.",
-        "all-signs-customizer-for-woocommerce-pro",
-      ),
+      __("Unable to create template.", "all-signs-customizer-for-woocommerce"),
       "error",
     );
   } finally {
@@ -1121,10 +1043,7 @@ const updateTemplate = async () => {
     toastMessage(result.message, "error");
   } catch (error) {
     toastMessage(
-      __(
-        "Unable to update template.",
-        "all-signs-customizer-for-woocommerce-pro",
-      ),
+      __("Unable to update template.", "all-signs-customizer-for-woocommerce"),
       "error",
     );
   } finally {
@@ -1158,10 +1077,7 @@ const deleteTemplate = async () => {
   } catch (error) {
     closeModal();
     toastMessage(
-      __(
-        "Unable to delete template.",
-        "all-signs-customizer-for-woocommerce-pro",
-      ),
+      __("Unable to delete template.", "all-signs-customizer-for-woocommerce"),
       "error",
     );
   } finally {
@@ -1258,7 +1174,7 @@ const ActionHeader = defineComponent({
           h(
             "button",
             { type: "button", onClick: () => emit("cancel") },
-            __("Cancel", "all-signs-customizer-for-woocommerce-pro"),
+            __("Cancel", "all-signs-customizer-for-woocommerce"),
           ),
         ],
       );

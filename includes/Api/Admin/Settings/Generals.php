@@ -14,112 +14,114 @@ use WP_REST_Controller;
 /**
  * REST controller for generals settings.
  */
-class ASCWO_Api_General_Settings extends WP_REST_Controller {
+class ASCWO_Api_General_Settings extends WP_REST_Controller
+{
 
 	/**
 	 * Constructor.
 	 */
-	public function __construct() {
+	public function __construct()
+	{
 		$this->namespace = 'ascwo/v1';
 		$this->rest_base = 'configs/(?P<config_id>\d+)/settings/generals';
 	}
-    /**
-     * Register the routes
-     *
-     * @return void
-     */
-    public function register_routes()
-    {
-        register_rest_route(
-            $this->namespace,
-            '/' . $this->rest_base,
-            array(
-                array(
-                    'methods' => \WP_REST_Server::READABLE,
-                    'callback' => array($this, 'get_generals_settings'),
-                    'permission_callback' => array($this, 'get_permissions_check'),
-                    'args' => array(
-                        'config_id' => array(
-                            'type' => 'integer',
-                            'required' => true,
-                        )
-                    ),
-                )
-            )
-        );
-        register_rest_route(
-            $this->namespace,
-            '/' . $this->rest_base . "/product",
-            array(
-                array(
-                    'methods' => \WP_REST_Server::EDITABLE,
-                    'callback' => array($this, 'update_product_options_generals_settings'),
-                    'permission_callback' => array($this, 'get_permissions_check'),
-                    'args' => array(
-                        'config_id' => array(
-                            'type' => 'integer',
-                            'required' => true,
-                        )
-                    ),
-                )
-            )
-        );
-        register_rest_route(
-            $this->namespace,
-            '/' . $this->rest_base . "/output",
-            array(
-                array(
-                    'methods' => \WP_REST_Server::EDITABLE,
-                    'callback' => array($this, 'update_output_options_generals_settings'),
-                    'permission_callback' => array($this, 'get_permissions_check'),
-                    'args' => array(
-                        'config_id' => array(
-                            'type' => 'integer',
-                            'required' => true,
-                        )
-                    ),
-                )
-            )
-        );
-        register_rest_route(
-            $this->namespace,
-            '/' . $this->rest_base . "/mobile",
-            array(
-                array(
-                    'methods' => \WP_REST_Server::EDITABLE,
-                    'callback' => array($this, 'update_mobile_options_generals_settings'),
-                    'permission_callback' => array($this, 'get_permissions_check'),
-                    'args' => array(
-                        'config_id' => array(
-                            'type' => 'integer',
-                            'required' => true,
-                        )
-                    ),
-                )
-            )
-        );
-        register_rest_route(
-            $this->namespace,
-            '/' . $this->rest_base . "/(?P<section>[a-zA-Z0-9_-]+)",
-            array(
-                array(
-                    'methods' => \WP_REST_Server::EDITABLE,
-                    'callback' => array($this, 'update_section_options_generals_settings'),
-                    'permission_callback' => array($this, 'get_permissions_check'),
-                    'args' => array(
-                        'config_id' => array(
-                            'type' => 'integer',
-                            'required' => true,
-                        ),
-                        'section' => array(
-                            'type' => 'string',
-                            'required' => true,
-                        )
-                    ),
-                )
-            )
-        );
-    }
+	/**
+	 * Register the routes
+	 *
+	 * @return void
+	 */
+	public function register_routes()
+	{
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base,
+			array(
+				array(
+					'methods' => \WP_REST_Server::READABLE,
+					'callback' => array($this, 'get_generals_settings'),
+					'permission_callback' => array($this, 'get_permissions_check'),
+					'args' => array(
+						'config_id' => array(
+							'type' => 'integer',
+							'required' => true,
+						)
+					),
+				)
+			)
+		);
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base . "/product",
+			array(
+				array(
+					'methods' => \WP_REST_Server::EDITABLE,
+					'callback' => array($this, 'update_product_options_generals_settings'),
+					'permission_callback' => array($this, 'get_permissions_check'),
+					'args' => array(
+						'config_id' => array(
+							'type' => 'integer',
+							'required' => true,
+						)
+					),
+				)
+			)
+		);
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base . "/output",
+			array(
+				array(
+					'methods' => \WP_REST_Server::EDITABLE,
+					'callback' => array($this, 'update_output_options_generals_settings'),
+					'permission_callback' => array($this, 'get_permissions_check'),
+					'args' => array(
+						'config_id' => array(
+							'type' => 'integer',
+							'required' => true,
+						)
+					),
+				)
+			)
+		);
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base . "/mobile",
+			array(
+				array(
+					'methods' => \WP_REST_Server::EDITABLE,
+					'callback' => array($this, 'update_mobile_options_generals_settings'),
+					'permission_callback' => array($this, 'get_permissions_check'),
+					'args' => array(
+						'config_id' => array(
+							'type' => 'integer',
+							'required' => true,
+						)
+					),
+				)
+			)
+		);
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base . "/(?P<section>[a-zA-Z0-9_-]+)",
+			array(
+				array(
+					'methods' => \WP_REST_Server::EDITABLE,
+					'callback' => array($this, 'update_section_options_generals_settings'),
+					'permission_callback' => array($this, 'get_permissions_check'),
+					'args' => array(
+						'config_id' => array(
+							'type' => 'integer',
+							'required' => true,
+						),
+						'section' => array(
+							'type' => 'string',
+							'required' => true,
+						)
+					),
+				)
+			)
+		);
+	}
 
 	/**
 	 * Get normalized meta.
@@ -127,15 +129,16 @@ class ASCWO_Api_General_Settings extends WP_REST_Controller {
 	 * @param int $config_id Config post ID.
 	 * @return array
 	 */
-	private function get_normalized_meta( $config_id ) {
-		$meta = get_post_meta( (int) $config_id, 'ascwo-configs-meta', true );
-		$meta = is_array( $meta ) ? $meta : array();
-		$meta['data'] = isset( $meta['data'] ) && is_array( $meta['data'] ) ? $meta['data'] : array();
-		$meta['settings'] = isset( $meta['settings'] ) && is_array( $meta['settings'] ) ? $meta['settings'] : array();
-		if ( isset( $meta['data']['settings'] ) && is_array( $meta['data']['settings'] ) ) {
+	private function get_normalized_meta($config_id)
+	{
+		$meta = get_post_meta((int) $config_id, 'ascwo-configs-meta', true);
+		$meta = is_array($meta) ? $meta : array();
+		$meta['data'] = isset($meta['data']) && is_array($meta['data']) ? $meta['data'] : array();
+		$meta['settings'] = isset($meta['settings']) && is_array($meta['settings']) ? $meta['settings'] : array();
+		if (isset($meta['data']['settings']) && is_array($meta['data']['settings'])) {
 			$meta['settings'] = $meta['data']['settings'];
 		}
-		if ( ! isset( $meta['data']['settings'] ) || ! is_array( $meta['data']['settings'] ) ) {
+		if (!isset($meta['data']['settings']) || !is_array($meta['data']['settings'])) {
 			$meta['data']['settings'] = $meta['settings'];
 		}
 
@@ -148,8 +151,9 @@ class ASCWO_Api_General_Settings extends WP_REST_Controller {
 	 * @param array $meta Config meta.
 	 * @return array
 	 */
-	private function get_generals_from_meta( array $meta ) {
-		return isset( $meta['settings']['generals'] ) && is_array( $meta['settings']['generals'] ) ? $meta['settings']['generals'] : array();
+	private function get_generals_from_meta(array $meta)
+	{
+		return isset($meta['settings']['generals']) && is_array($meta['settings']['generals']) ? $meta['settings']['generals'] : array();
 	}
 
 	/**
@@ -160,35 +164,36 @@ class ASCWO_Api_General_Settings extends WP_REST_Controller {
 	 * @param array  $section_options Section options.
 	 * @return bool|string
 	 */
-	private function save_general_section( $config_id, $section, array $section_options ) {
-		$meta = $this->get_normalized_meta( $config_id );
+	private function save_general_section($config_id, $section, array $section_options)
+	{
+		$meta = $this->get_normalized_meta($config_id);
 
-		if ( ! isset( $meta['settings'] ) || ! is_array( $meta['settings'] ) ) {
+		if (!isset($meta['settings']) || !is_array($meta['settings'])) {
 			$meta['settings'] = array();
 		}
 
-		if ( ! isset( $meta['settings']['generals'] ) || ! is_array( $meta['settings']['generals'] ) ) {
+		if (!isset($meta['settings']['generals']) || !is_array($meta['settings']['generals'])) {
 			$meta['settings']['generals'] = array();
 		}
 
-		if ( isset( $meta['settings']['generals'][ $section ] ) && $meta['settings']['generals'][ $section ] === $section_options ) {
+		if (isset($meta['settings']['generals'][$section]) && $meta['settings']['generals'][$section] === $section_options) {
 			return 'same';
 		}
 
-		$meta['settings']['generals'][ $section ] = $section_options;
-		if ( ! isset( $meta['data'] ) || ! is_array( $meta['data'] ) ) {
+		$meta['settings']['generals'][$section] = $section_options;
+		if (!isset($meta['data']) || !is_array($meta['data'])) {
 			$meta['data'] = array();
 		}
-		if ( ! isset( $meta['data']['settings'] ) || ! is_array( $meta['data']['settings'] ) ) {
+		if (!isset($meta['data']['settings']) || !is_array($meta['data']['settings'])) {
 			$meta['data']['settings'] = array();
 		}
-		if ( ! isset( $meta['data']['settings']['generals'] ) || ! is_array( $meta['data']['settings']['generals'] ) ) {
+		if (!isset($meta['data']['settings']['generals']) || !is_array($meta['data']['settings']['generals'])) {
 			$meta['data']['settings']['generals'] = array();
 		}
-		$meta['data']['settings']['generals'][ $section ] = $section_options;
-		unset( $meta['settings'] );
+		$meta['data']['settings']['generals'][$section] = $section_options;
+		unset($meta['settings']);
 
-		return update_post_meta( (int) $config_id, 'ascwo-configs-meta', $meta );
+		return update_post_meta((int) $config_id, 'ascwo-configs-meta', $meta);
 	}
 
 	/**
@@ -197,13 +202,14 @@ class ASCWO_Api_General_Settings extends WP_REST_Controller {
 	 * @param int $config_id Config post ID.
 	 * @return WP_Post|false
 	 */
-	private function get_config_post( $config_id ) {
+	private function get_config_post($config_id)
+	{
 		$config_id = (int) $config_id;
-		if ( 0 === $config_id ) {
+		if (0 === $config_id) {
 			return false;
 		}
 
-		$post = get_post( $config_id );
+		$post = get_post($config_id);
 
 		return $post instanceof WP_Post ? $post : false;
 	}
@@ -214,10 +220,11 @@ class ASCWO_Api_General_Settings extends WP_REST_Controller {
 	 * @param \WP_REST_Request $request Request object.
 	 * @return array
 	 */
-	private function get_request_data( $request ) {
+	private function get_request_data($request)
+	{
 		$data = $request->get_json_params();
 
-		return is_array( $data ) ? $data : array();
+		return is_array($data) ? $data : array();
 	}
 
 	/**
@@ -226,34 +233,35 @@ class ASCWO_Api_General_Settings extends WP_REST_Controller {
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return \WP_REST_Response|WP_Error
 	 */
-	public function get_generals_settings( $request ) {
-		$post = $this->get_config_post( $request->get_param( 'config_id' ) );
+	public function get_generals_settings($request)
+	{
+		$post = $this->get_config_post($request->get_param('config_id'));
 
-		if ( false === $post ) {
+		if (false === $post) {
 			return rest_ensure_response(
 				array(
-					'message' => __( 'Custom ID invalid', 'all-signs-customizer-for-woocommerce-pro' ),
+					'message' => __('Custom ID invalid', 'all-signs-customizer-for-woocommerce'),
 				)
 			);
 		}
 
-		$meta_value = $this->get_normalized_meta( (int) $post->ID );
-		if ( empty( $meta_value ) ) {
+		$meta_value = $this->get_normalized_meta((int) $post->ID);
+		if (empty($meta_value)) {
 			return rest_ensure_response(
 				array(
-					'message' => __( 'No Settings found', 'all-signs-customizer-for-woocommerce-pro' ),
+					'message' => __('No Settings found', 'all-signs-customizer-for-woocommerce'),
 				)
 			);
 		}
 
-		$generals = $this->get_generals_from_meta( $meta_value );
-		if ( ! empty( $generals ) ) {
-			return rest_ensure_response( $generals );
+		$generals = $this->get_generals_from_meta($meta_value);
+		if (!empty($generals)) {
+			return rest_ensure_response($generals);
 		}
 
 		return rest_ensure_response(
 			array(
-				'message' => __( 'No generals Settings found', 'all-signs-customizer-for-woocommerce-pro' ),
+				'message' => __('No generals Settings found', 'all-signs-customizer-for-woocommerce'),
 			)
 		);
 	}
@@ -263,35 +271,36 @@ class ASCWO_Api_General_Settings extends WP_REST_Controller {
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return \WP_REST_Response|WP_Error
 	 */
-	public function update_product_options_generals_settings( $request ) {
-		$post = $this->get_config_post( $request->get_param( 'config_id' ) );
+	public function update_product_options_generals_settings($request)
+	{
+		$post = $this->get_config_post($request->get_param('config_id'));
 
-		if ( false === $post ) {
+		if (false === $post) {
 			return rest_ensure_response(
 				array(
 					'success' => false,
-					'message' => __( 'Custom ID invalid', 'all-signs-customizer-for-woocommerce-pro' ),
+					'message' => __('Custom ID invalid', 'all-signs-customizer-for-woocommerce'),
 				)
 			);
 		}
 
-		$product_options = $this->get_request_data( $request );
-		$response        = $this->save_general_section( (int) $post->ID, 'product', $product_options );
+		$product_options = $this->get_request_data($request);
+		$response = $this->save_general_section((int) $post->ID, 'product', $product_options);
 
-		if ( 'same' === $response ) {
+		if ('same' === $response) {
 			return rest_ensure_response(
 				array(
 					'success' => 'same',
-					'message' => __( 'No change observed in product options in generals settings failed', 'all-signs-customizer-for-woocommerce-pro' ),
+					'message' => __('No change observed in product options in generals settings failed', 'all-signs-customizer-for-woocommerce'),
 				)
 			);
 		}
 
-		if ( $response ) {
+		if ($response) {
 			return rest_ensure_response(
 				array(
 					'success' => true,
-					'message' => __( 'Product options in generals settings updated successfully', 'all-signs-customizer-for-woocommerce-pro' ),
+					'message' => __('Product options in generals settings updated successfully', 'all-signs-customizer-for-woocommerce'),
 				)
 			);
 		}
@@ -299,45 +308,46 @@ class ASCWO_Api_General_Settings extends WP_REST_Controller {
 		return rest_ensure_response(
 			array(
 				'success' => false,
-				'message' => __( 'Update product options in generals settings failed', 'all-signs-customizer-for-woocommerce-pro' ),
+				'message' => __('Update product options in generals settings failed', 'all-signs-customizer-for-woocommerce'),
 			)
 		);
 	}
 
-    /**
-     * Update Mobile options of generals settings
-     * @param \WP_REST_Request $request Full details about the request.
-     * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
-     */
-	public function update_mobile_options_generals_settings( $request ) {
-		$post = $this->get_config_post( $request->get_param( 'config_id' ) );
+	/**
+	 * Update Mobile options of generals settings
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 */
+	public function update_mobile_options_generals_settings($request)
+	{
+		$post = $this->get_config_post($request->get_param('config_id'));
 
-		if ( false === $post ) {
+		if (false === $post) {
 			return rest_ensure_response(
 				array(
 					'success' => false,
-					'message' => __( 'Custom ID invalid', 'all-signs-customizer-for-woocommerce-pro' ),
+					'message' => __('Custom ID invalid', 'all-signs-customizer-for-woocommerce'),
 				)
 			);
 		}
 
-		$mobile_options = $this->get_request_data( $request );
-		$response       = $this->save_general_section( (int) $post->ID, 'mobile', $mobile_options );
+		$mobile_options = $this->get_request_data($request);
+		$response = $this->save_general_section((int) $post->ID, 'mobile', $mobile_options);
 
-		if ( 'same' === $response ) {
+		if ('same' === $response) {
 			return rest_ensure_response(
 				array(
 					'success' => 'same',
-					'message' => __( 'No change observed in mobile options in generals settings failed', 'all-signs-customizer-for-woocommerce-pro' ),
+					'message' => __('No change observed in mobile options in generals settings failed', 'all-signs-customizer-for-woocommerce'),
 				)
 			);
 		}
 
-		if ( $response ) {
+		if ($response) {
 			return rest_ensure_response(
 				array(
 					'success' => true,
-					'message' => __( 'Mobile options in generals settings updated successfully', 'all-signs-customizer-for-woocommerce-pro' ),
+					'message' => __('Mobile options in generals settings updated successfully', 'all-signs-customizer-for-woocommerce'),
 				)
 			);
 		}
@@ -345,44 +355,45 @@ class ASCWO_Api_General_Settings extends WP_REST_Controller {
 		return rest_ensure_response(
 			array(
 				'success' => false,
-				'message' => __( 'Update mobile options in generals settings failed', 'all-signs-customizer-for-woocommerce-pro' ),
+				'message' => __('Update mobile options in generals settings failed', 'all-signs-customizer-for-woocommerce'),
 			)
 		);
 	}
-    /**
-     * Update Output options of generals settings
-     * @param \WP_REST_Request $request Full details about the request.
-     * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
-     */
-	public function update_output_options_generals_settings( $request ) {
-		$post = $this->get_config_post( $request->get_param( 'config_id' ) );
+	/**
+	 * Update Output options of generals settings
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 */
+	public function update_output_options_generals_settings($request)
+	{
+		$post = $this->get_config_post($request->get_param('config_id'));
 
-		if ( false === $post ) {
+		if (false === $post) {
 			return rest_ensure_response(
 				array(
 					'success' => false,
-					'message' => __( 'Custom ID invalid', 'all-signs-customizer-for-woocommerce-pro' ),
+					'message' => __('Custom ID invalid', 'all-signs-customizer-for-woocommerce'),
 				)
 			);
 		}
 
-		$output_options = $this->get_request_data( $request );
-		$response       = $this->save_general_section( (int) $post->ID, 'output', $output_options );
+		$output_options = $this->get_request_data($request);
+		$response = $this->save_general_section((int) $post->ID, 'output', $output_options);
 
-		if ( 'same' === $response ) {
+		if ('same' === $response) {
 			return rest_ensure_response(
 				array(
 					'success' => 'same',
-					'message' => __( 'No change observed in output options in generals settings failed', 'all-signs-customizer-for-woocommerce-pro' ),
+					'message' => __('No change observed in output options in generals settings failed', 'all-signs-customizer-for-woocommerce'),
 				)
 			);
 		}
 
-		if ( $response ) {
+		if ($response) {
 			return rest_ensure_response(
 				array(
 					'success' => true,
-					'message' => __( 'Output options in generals settings updated successfully', 'all-signs-customizer-for-woocommerce-pro' ),
+					'message' => __('Output options in generals settings updated successfully', 'all-signs-customizer-for-woocommerce'),
 				)
 			);
 		}
@@ -390,19 +401,20 @@ class ASCWO_Api_General_Settings extends WP_REST_Controller {
 		return rest_ensure_response(
 			array(
 				'success' => false,
-				'message' => __( 'Update output options in generals settings failed', 'all-signs-customizer-for-woocommerce-pro' ),
+				'message' => __('Update output options in generals settings failed', 'all-signs-customizer-for-woocommerce'),
 			)
 		);
 	}
 
-    /**
-     * Update a supported general settings section.
-     *
-     * @param \WP_REST_Request $request Full details about the request.
-     * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
-     */
-	public function update_section_options_generals_settings( $request ) {
-		$section         = (string) $request->get_param( 'section' );
+	/**
+	 * Update a supported general settings section.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 */
+	public function update_section_options_generals_settings($request)
+	{
+		$section = (string) $request->get_param('section');
 		$allowed_sections = array(
 			'product',
 			'output',
@@ -416,42 +428,42 @@ class ASCWO_Api_General_Settings extends WP_REST_Controller {
 			'simpleOptions',
 		);
 
-		if ( ! in_array( $section, $allowed_sections, true ) ) {
+		if (!in_array($section, $allowed_sections, true)) {
 			return rest_ensure_response(
 				array(
 					'success' => false,
-					'message' => __( 'General settings section invalid', 'all-signs-customizer-for-woocommerce-pro' ),
+					'message' => __('General settings section invalid', 'all-signs-customizer-for-woocommerce'),
 				)
 			);
 		}
 
-		$post = $this->get_config_post( $request->get_param( 'config_id' ) );
-		if ( false === $post ) {
+		$post = $this->get_config_post($request->get_param('config_id'));
+		if (false === $post) {
 			return rest_ensure_response(
 				array(
 					'success' => false,
-					'message' => __( 'Custom ID invalid', 'all-signs-customizer-for-woocommerce-pro' ),
+					'message' => __('Custom ID invalid', 'all-signs-customizer-for-woocommerce'),
 				)
 			);
 		}
 
-		$section_options = $this->get_request_data( $request );
-		$response        = $this->save_general_section( (int) $post->ID, $section, $section_options );
+		$section_options = $this->get_request_data($request);
+		$response = $this->save_general_section((int) $post->ID, $section, $section_options);
 
-		if ( 'same' === $response ) {
+		if ('same' === $response) {
 			return rest_ensure_response(
 				array(
 					'success' => 'same',
-					'message' => __( 'No change observed in general settings', 'all-signs-customizer-for-woocommerce-pro' ),
+					'message' => __('No change observed in general settings', 'all-signs-customizer-for-woocommerce'),
 				)
 			);
 		}
 
-		if ( $response ) {
+		if ($response) {
 			return rest_ensure_response(
 				array(
 					'success' => true,
-					'message' => __( 'General settings updated successfully', 'all-signs-customizer-for-woocommerce-pro' ),
+					'message' => __('General settings updated successfully', 'all-signs-customizer-for-woocommerce'),
 				)
 			);
 		}
@@ -459,7 +471,7 @@ class ASCWO_Api_General_Settings extends WP_REST_Controller {
 		return rest_ensure_response(
 			array(
 				'success' => false,
-				'message' => __( 'Update general settings failed', 'all-signs-customizer-for-woocommerce-pro' ),
+				'message' => __('Update general settings failed', 'all-signs-customizer-for-woocommerce'),
 			)
 		);
 	}
@@ -470,7 +482,8 @@ class ASCWO_Api_General_Settings extends WP_REST_Controller {
 	 * @param \WP_REST_Request $request Request object.
 	 * @return bool
 	 */
-	public function get_permissions_check( $request ) {
-		return current_user_can( 'manage_options' );
+	public function get_permissions_check($request)
+	{
+		return current_user_can('manage_options');
 	}
 }

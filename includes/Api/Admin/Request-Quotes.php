@@ -15,34 +15,37 @@ use WP_REST_Request;
 /**
  * REST controller for quote requests.
  */
-class ASCWO_Api_Request_Quotes extends WP_REST_Controller {
+class ASCWO_Api_Request_Quotes extends WP_REST_Controller
+{
 
-	/**
-	 * Constructor.
-	 */
-	public function __construct() {
-		$this->namespace = 'ascwo/v1';
-		$this->rest_base  = 'request-quotes';
-	}
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->namespace = 'ascwo/v1';
+        $this->rest_base = 'request-quotes';
+    }
 
-	/**
-	 * Register routes.
-	 *
-	 * @return void
-	 */
-	public function register_routes() {
+    /**
+     * Register routes.
+     *
+     * @return void
+     */
+    public function register_routes()
+    {
         register_rest_route(
             $this->namespace,
             '/' . $this->rest_base,
             array(
                 array(
                     'methods' => \WP_REST_Server::READABLE,
-                    'callback' => array( $this, 'get_request_quotes' ),
-                    'permission_callback' => array( $this, 'admin_permissions_check' ),
+                    'callback' => array($this, 'get_request_quotes'),
+                    'permission_callback' => array($this, 'admin_permissions_check'),
                 ),
                 array(
                     'methods' => \WP_REST_Server::CREATABLE,
-                    'callback' => array( $this, 'create_request_quote' ),
+                    'callback' => array($this, 'create_request_quote'),
                     'permission_callback' => '__return_true',
                 ),
             )
@@ -54,18 +57,18 @@ class ASCWO_Api_Request_Quotes extends WP_REST_Controller {
             array(
                 array(
                     'methods' => \WP_REST_Server::READABLE,
-                    'callback' => array( $this, 'get_request_quote' ),
-                    'permission_callback' => array( $this, 'admin_permissions_check' ),
+                    'callback' => array($this, 'get_request_quote'),
+                    'permission_callback' => array($this, 'admin_permissions_check'),
                 ),
                 array(
                     'methods' => \WP_REST_Server::EDITABLE,
-                    'callback' => array( $this, 'update_request_quote' ),
-                    'permission_callback' => array( $this, 'admin_permissions_check' ),
+                    'callback' => array($this, 'update_request_quote'),
+                    'permission_callback' => array($this, 'admin_permissions_check'),
                 ),
                 array(
                     'methods' => \WP_REST_Server::DELETABLE,
-                    'callback' => array( $this, 'delete_request_quote' ),
-                    'permission_callback' => array( $this, 'admin_permissions_check' ),
+                    'callback' => array($this, 'delete_request_quote'),
+                    'permission_callback' => array($this, 'admin_permissions_check'),
                 ),
             )
         );
@@ -76,103 +79,107 @@ class ASCWO_Api_Request_Quotes extends WP_REST_Controller {
             array(
                 array(
                     'methods' => \WP_REST_Server::READABLE,
-                    'callback' => array( $this, 'download_quote_file' ),
-                    'permission_callback' => array( $this, 'admin_permissions_check' ),
+                    'callback' => array($this, 'download_quote_file'),
+                    'permission_callback' => array($this, 'admin_permissions_check'),
                 ),
             )
         );
     }
 
-	/**
-	 * Check whether the current user can manage quotes.
-	 *
-	 * @return bool
-	 */
-	public function admin_permissions_check() {
-		return current_user_can( 'manage_options' );
-	}
+    /**
+     * Check whether the current user can manage quotes.
+     *
+     * @return bool
+     */
+    public function admin_permissions_check()
+    {
+        return current_user_can('manage_options');
+    }
 
-	/**
-	 * Get all quote requests.
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return \WP_REST_Response|WP_Error
-	 */
-	public function get_request_quotes( $request ) {
-		$query = new WP_Query(
-			array(
-				'post_type'      => 'ascwo-request-quote',
-				'post_status'    => array( 'publish', 'private' ),
-				'posts_per_page' => 100,
-				'orderby'        => 'date',
-				'order'          => 'DESC',
-				'no_found_rows'  => true,
-			)
-		);
-
-		$quotes = array();
-		foreach ( $query->posts as $post ) {
-			$quotes[] = $this->format_quote( (int) $post->ID );
-		}
-
-		return rest_ensure_response(
-			array(
-				'quotes'     => array_values( array_filter( $quotes ) ),
-				'totalCount' => count( $quotes ),
-			)
-		);
-	}
-
-	/**
-	 * Get one quote request.
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return \WP_REST_Response|WP_Error
-	 */
-	public function get_request_quote( $request ) {
-		$quote_id = absint( $request['quote_id'] );
-		$quote    = $this->format_quote( $quote_id );
-
-		if ( ! $quote ) {
-			return new WP_Error( 'ascwo_quote_not_found', __( 'Quote not found', 'all-signs-customizer-for-woocommerce-pro' ), array( 'status' => 404 ) );
-		}
-
-		return rest_ensure_response( $quote );
-	}
-
-	/**
-	 * Create a quote request.
-	 *
-	 * @param \WP_REST_Request $request Full details about the request.
-	 * @return \WP_REST_Response|WP_Error
-	 */
-	public function create_request_quote( WP_REST_Request $request ) {
-        $payload = $this->normalize_request_payload($request);
-        $post_id = wp_insert_post(
-        	array(
-	            'post_type'   => 'ascwo-request-quote',
-	            'post_status' => 'private',
-	            'post_title'  => $this->build_quote_title( $payload ),
-        	),
-        	true
+    /**
+     * Get all quote requests.
+     *
+     * @param \WP_REST_Request $request Full details about the request.
+     * @return \WP_REST_Response|WP_Error
+     */
+    public function get_request_quotes($request)
+    {
+        $query = new WP_Query(
+            array(
+                'post_type' => 'ascwo-request-quote',
+                'post_status' => array('publish', 'private'),
+                'posts_per_page' => 100,
+                'orderby' => 'date',
+                'order' => 'DESC',
+                'no_found_rows' => true,
+            )
         );
 
-        if ( is_wp_error( $post_id ) ) {
+        $quotes = array();
+        foreach ($query->posts as $post) {
+            $quotes[] = $this->format_quote((int) $post->ID);
+        }
+
+        return rest_ensure_response(
+            array(
+                'quotes' => array_values(array_filter($quotes)),
+                'totalCount' => count($quotes),
+            )
+        );
+    }
+
+    /**
+     * Get one quote request.
+     *
+     * @param \WP_REST_Request $request Full details about the request.
+     * @return \WP_REST_Response|WP_Error
+     */
+    public function get_request_quote($request)
+    {
+        $quote_id = absint($request['quote_id']);
+        $quote = $this->format_quote($quote_id);
+
+        if (!$quote) {
+            return new WP_Error('ascwo_quote_not_found', __('Quote not found', 'all-signs-customizer-for-woocommerce'), array('status' => 404));
+        }
+
+        return rest_ensure_response($quote);
+    }
+
+    /**
+     * Create a quote request.
+     *
+     * @param \WP_REST_Request $request Full details about the request.
+     * @return \WP_REST_Response|WP_Error
+     */
+    public function create_request_quote(WP_REST_Request $request)
+    {
+        $payload = $this->normalize_request_payload($request);
+        $post_id = wp_insert_post(
+            array(
+                'post_type' => 'ascwo-request-quote',
+                'post_status' => 'private',
+                'post_title' => $this->build_quote_title($payload),
+            ),
+            true
+        );
+
+        if (is_wp_error($post_id)) {
             return $post_id;
         }
 
         $payload['id'] = (string) $post_id;
-        $payload['createdAt'] = current_time( 'c' );
-        $payload['files'] = $this->store_uploaded_files( $request, (int) $post_id, $payload['files'] );
+        $payload['createdAt'] = current_time('c');
+        $payload['files'] = $this->store_uploaded_files($request, (int) $post_id, $payload['files']);
 
-        update_post_meta( (int) $post_id, 'ascwo-request-quote-payload', $payload );
+        update_post_meta((int) $post_id, 'ascwo-request-quote-payload', $payload);
 
         return rest_ensure_response(
             array(
                 'success' => true,
-                'id'      => (int) $post_id,
-                'message' => __( 'Quote request saved', 'all-signs-customizer-for-woocommerce-pro' ),
-                'recap'   => $payload['recaps'],
+                'id' => (int) $post_id,
+                'message' => __('Quote request saved', 'all-signs-customizer-for-woocommerce'),
+                'recap' => $payload['recaps'],
             )
         );
     }
@@ -183,41 +190,42 @@ class ASCWO_Api_Request_Quotes extends WP_REST_Controller {
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error
      */
-    public function update_request_quote( $request ) {
-        $quote_id = absint( $request['quote_id'] );
-        $payload  = $this->get_quote_payload( $quote_id );
+    public function update_request_quote($request)
+    {
+        $quote_id = absint($request['quote_id']);
+        $payload = $this->get_quote_payload($quote_id);
 
-        if ( ! $payload ) {
-            return new WP_Error( 'ascwo_quote_not_found', __( 'Quote not found', 'all-signs-customizer-for-woocommerce-pro' ), array( 'status' => 404 ) );
+        if (!$payload) {
+            return new WP_Error('ascwo_quote_not_found', __('Quote not found', 'all-signs-customizer-for-woocommerce'), array('status' => 404));
         }
 
         $params = $request->get_json_params();
-        if ( ! is_array( $params ) ) {
+        if (!is_array($params)) {
             $params = $request->get_params();
         }
 
-        $status = isset( $params['status'] ) ? sanitize_text_field( (string) $params['status'] ) : '';
-        $intent = isset( $params['intent'] ) ? sanitize_text_field( (string) $params['intent'] ) : '';
+        $status = isset($params['status']) ? sanitize_text_field((string) $params['status']) : '';
+        $intent = isset($params['intent']) ? sanitize_text_field((string) $params['intent']) : '';
 
-        if ( 'mark-notified' === $intent ) {
+        if ('mark-notified' === $intent) {
             $status = 'notified';
         }
 
-        if ( '' === $status ) {
-            return new WP_Error( 'ascwo_quote_missing_status', __( 'Missing quote status', 'all-signs-customizer-for-woocommerce-pro' ), array( 'status' => 400 ) );
+        if ('' === $status) {
+            return new WP_Error('ascwo_quote_missing_status', __('Missing quote status', 'all-signs-customizer-for-woocommerce'), array('status' => 400));
         }
 
         $payload['status'] = $status;
-        if ( 'notified' === $status ) {
-            $payload['notifiedAt'] = current_time( 'c' );
+        if ('notified' === $status) {
+            $payload['notifiedAt'] = current_time('c');
         }
 
-        update_post_meta( $quote_id, 'ascwo-request-quote-payload', $payload );
+        update_post_meta($quote_id, 'ascwo-request-quote-payload', $payload);
 
         return rest_ensure_response(
             array(
                 'success' => true,
-                'quote'   => $this->format_quote( $quote_id ),
+                'quote' => $this->format_quote($quote_id),
             )
         );
     }
@@ -228,16 +236,17 @@ class ASCWO_Api_Request_Quotes extends WP_REST_Controller {
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error
      */
-    public function delete_request_quote( $request ) {
-        $quote_id = absint( $request['quote_id'] );
+    public function delete_request_quote($request)
+    {
+        $quote_id = absint($request['quote_id']);
 
-        if ( ! $this->is_valid_quote( $quote_id ) ) {
-            return new WP_Error( 'ascwo_quote_not_found', __( 'Quote not found', 'all-signs-customizer-for-woocommerce-pro' ), array( 'status' => 404 ) );
+        if (!$this->is_valid_quote($quote_id)) {
+            return new WP_Error('ascwo_quote_not_found', __('Quote not found', 'all-signs-customizer-for-woocommerce'), array('status' => 404));
         }
 
-        $deleted = wp_delete_post( $quote_id, true );
+        $deleted = wp_delete_post($quote_id, true);
 
-        return rest_ensure_response( array( 'success' => (bool) $deleted ) );
+        return rest_ensure_response(array('success' => (bool) $deleted));
     }
 
     /**
@@ -246,32 +255,33 @@ class ASCWO_Api_Request_Quotes extends WP_REST_Controller {
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error
      */
-    public function download_quote_file( $request ) {
-        $quote_id   = absint( $request['quote_id'] );
-        $file_index = absint( $request['file_index'] );
-        $payload    = $this->get_quote_payload( $quote_id );
+    public function download_quote_file($request)
+    {
+        $quote_id = absint($request['quote_id']);
+        $file_index = absint($request['file_index']);
+        $payload = $this->get_quote_payload($quote_id);
 
-        if ( ! $payload || empty( $payload['files'][ $file_index ] ) || ! is_array( $payload['files'][ $file_index ] ) ) {
-            return new WP_Error( 'ascwo_quote_file_not_found', __( 'Quote file not found', 'all-signs-customizer-for-woocommerce-pro' ), array( 'status' => 404 ) );
+        if (!$payload || empty($payload['files'][$file_index]) || !is_array($payload['files'][$file_index])) {
+            return new WP_Error('ascwo_quote_file_not_found', __('Quote file not found', 'all-signs-customizer-for-woocommerce'), array('status' => 404));
         }
 
-        $file      = $payload['files'][ $file_index ];
-        $path      = isset( $file['path'] ) ? wp_normalize_path( (string) $file['path'] ) : '';
-        $uploads   = wp_get_upload_dir();
-        $base_dir  = wp_normalize_path( $uploads['basedir'] );
+        $file = $payload['files'][$file_index];
+        $path = isset($file['path']) ? wp_normalize_path((string) $file['path']) : '';
+        $uploads = wp_get_upload_dir();
+        $base_dir = wp_normalize_path($uploads['basedir']);
 
-        if ( '' === $path || ! file_exists( $path ) || strpos( $path, $base_dir ) !== 0 ) {
-            return new WP_Error( 'ascwo_quote_file_not_found', __( 'Quote file not found', 'all-signs-customizer-for-woocommerce-pro' ), array( 'status' => 404 ) );
+        if ('' === $path || !file_exists($path) || strpos($path, $base_dir) !== 0) {
+            return new WP_Error('ascwo_quote_file_not_found', __('Quote file not found', 'all-signs-customizer-for-woocommerce'), array('status' => 404));
         }
 
-        $name = isset( $file['name'] ) ? sanitize_file_name( (string) $file['name'] ) : basename( $path );
-        $type = isset( $file['type'] ) && '' !== $file['type'] ? (string) $file['type'] : 'application/octet-stream';
+        $name = isset($file['name']) ? sanitize_file_name((string) $file['name']) : basename($path);
+        $type = isset($file['type']) && '' !== $file['type'] ? (string) $file['type'] : 'application/octet-stream';
 
         nocache_headers();
-        header( 'Content-Type: ' . $type );
-        header( 'Content-Disposition: attachment; filename="' . $name . '"' );
-        header( 'Content-Length: ' . filesize( $path ) );
-        readfile( $path ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_readfile
+        header('Content-Type: ' . $type);
+        header('Content-Disposition: attachment; filename="' . $name . '"');
+        header('Content-Length: ' . filesize($path));
+        readfile($path); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_readfile
         exit;
     }
 
@@ -281,23 +291,24 @@ class ASCWO_Api_Request_Quotes extends WP_REST_Controller {
      * @param \WP_REST_Request $request Full details about the request.
      * @return array
      */
-    private function normalize_request_payload( WP_REST_Request $request ): array {
-        $content_type = isset( $_SERVER['CONTENT_TYPE'] ) ? sanitize_text_field( (string) $_SERVER['CONTENT_TYPE'] ) : '';
-        $json         = $request->get_json_params();
-        $params       = is_array( $json ) ? $json : $request->get_params();
+    private function normalize_request_payload(WP_REST_Request $request): array
+    {
+        $content_type = isset($_SERVER['CONTENT_TYPE']) ? sanitize_text_field((string) $_SERVER['CONTENT_TYPE']) : '';
+        $json = $request->get_json_params();
+        $params = is_array($json) ? $json : $request->get_params();
 
-        if ( ! is_array( $params ) ) {
+        if (!is_array($params)) {
             $params = array();
         }
 
-        $fields         = $this->normalize_fields( $params );
-        $customer_source = isset( $params['customer'] ) && is_array( $params['customer'] ) ? $params['customer'] : array();
-        $customer       = array(
-            'firstName' => $this->clean_string( $params['firstName'] ?? $fields['firstName'] ?? $customer_source['firstName'] ?? '' ),
-            'lastName'  => $this->clean_string( $params['lastName'] ?? $fields['lastName'] ?? $customer_source['lastName'] ?? '' ),
-            'email'     => sanitize_email( (string) ( $params['email'] ?? $fields['email'] ?? $customer_source['email'] ?? '' ) ),
-            'phone'     => $this->clean_string( $params['phone'] ?? $fields['phone'] ?? $customer_source['phone'] ?? '' ),
-            'message'   => sanitize_textarea_field( (string) ( $params['message'] ?? $fields['message'] ?? $customer_source['message'] ?? '' ) ),
+        $fields = $this->normalize_fields($params);
+        $customer_source = isset($params['customer']) && is_array($params['customer']) ? $params['customer'] : array();
+        $customer = array(
+            'firstName' => $this->clean_string($params['firstName'] ?? $fields['firstName'] ?? $customer_source['firstName'] ?? ''),
+            'lastName' => $this->clean_string($params['lastName'] ?? $fields['lastName'] ?? $customer_source['lastName'] ?? ''),
+            'email' => sanitize_email((string) ($params['email'] ?? $fields['email'] ?? $customer_source['email'] ?? '')),
+            'phone' => $this->clean_string($params['phone'] ?? $fields['phone'] ?? $customer_source['phone'] ?? ''),
+            'message' => sanitize_textarea_field((string) ($params['message'] ?? $fields['message'] ?? $customer_source['message'] ?? '')),
         );
 
         return array(
@@ -431,10 +442,10 @@ class ASCWO_Api_Request_Quotes extends WP_REST_Controller {
             $name = $customer['email'] ?? '';
         }
         if ($name === '') {
-            $name = __('Anonymous customer', 'all-signs-customizer-for-woocommerce-pro');
+            $name = __('Anonymous customer', 'all-signs-customizer-for-woocommerce');
         }
 
-        return sprintf(__('Request quote - %s', 'all-signs-customizer-for-woocommerce-pro'), $name);
+        return sprintf(__('Request quote - %s', 'all-signs-customizer-for-woocommerce'), $name);
     }
 
     private function format_quote(int $quote_id)
