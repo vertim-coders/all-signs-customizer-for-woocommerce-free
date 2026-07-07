@@ -223,7 +223,7 @@
           </div>
         </section>
 
-        <section id="ascwo-general-quantity" class="ascwo-general-card ascwo-general-section">
+        <section v-if="showQuantityLimitsUi" id="ascwo-general-quantity" class="ascwo-general-card ascwo-general-section">
           <div class="ascwo-general-section-head">
             <div>
               <h2>{{ __('Quantity Limits', 'all-signs-customizer-for-woocommerce') }}</h2>
@@ -339,7 +339,7 @@
           </div>
         </section>
 
-        <section id="ascwo-general-request" class="ascwo-general-card ascwo-general-section">
+        <section v-if="showRequestQuoteUi" id="ascwo-general-request" class="ascwo-general-card ascwo-general-section">
           <div class="ascwo-general-section-head">
             <div>
               <h2>{{ __('Request Quote', 'all-signs-customizer-for-woocommerce') }}</h2>
@@ -452,7 +452,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue';
+import { computed, onMounted, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { ChevronDownIcon, ChevronUpIcon, Loader2Icon } from 'lucide-vue-next';
 import api from '@/admin/Api/api';
@@ -465,6 +465,10 @@ const route = useRoute();
 const configId = ref(route.params.configId);
 const isFetching = ref(false);
 const savingSection = ref('');
+
+// Free version: keep the logic available, but hide these unfinished UI sections.
+const showQuantityLimitsUi = false;
+const showRequestQuoteUi = false;
 
 const defaultProduct = () => ({
   designFromScratch: true,
@@ -568,17 +572,17 @@ const nestedSections = reactive({
   mode: true,
 });
 
-const sectionMenu = [
+const sectionMenu = computed(() => [
   { id: 'ascwo-general-product', label: 'Product' },
   { id: 'ascwo-general-mode', label: 'Mode' },
   { id: 'ascwo-general-output', label: 'Output' },
   { id: 'ascwo-general-upload', label: 'Upload Design' },
-  { id: 'ascwo-general-quantity', label: 'Quantity Limits' },
+  ...(showQuantityLimitsUi ? [{ id: 'ascwo-general-quantity', label: 'Quantity Limits' }] : []),
   { id: 'ascwo-general-discount', label: 'Discount' },
   { id: 'ascwo-general-mobile', label: 'Mobile Option' },
-  { id: 'ascwo-general-request', label: 'Request Quote' },
+  ...(showRequestQuoteUi ? [{ id: 'ascwo-general-request', label: 'Request Quote' }] : []),
   { id: 'ascwo-general-simple', label: 'Simple Options' },
-];
+]);
 
 const productCards = [
   {

@@ -186,7 +186,7 @@ export const RequiredOptionsShapes = {
       label: "Oval",
       shapeId: "shape-oval",
       surface: 0,
-      isDefault: false,
+      isDefault: true,
       shapeSize: {
         large: 0,
         small: 0,

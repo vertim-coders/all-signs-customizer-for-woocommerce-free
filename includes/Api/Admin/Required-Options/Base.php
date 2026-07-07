@@ -613,7 +613,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             : array('success' => false, 'message' => __('Default option has not been updated', 'all-signs-customizer-for-woocommerce')));
     }
 
-    protected function find_section_item_index_by_id(array $items, string $item_id, array $keys = array('id', 'value'))
+    protected function find_section_item_index_by_id(array $items, string $item_id, array $keys = array('id', 'value', 'shapeId'))
     {
         $item_id = sanitize_text_field((string) $item_id);
         if ($item_id === '') {
@@ -766,10 +766,15 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
                     return array();
                 }
 
+                if (empty($shape['id'])) {
+                    $shape['id'] = $this->generate_shape_id($shape);
+                }
+
                 unset($shape['enablePricingBySurface']);
                 return $shape;
             }, $value['items']));
         }
+        $items = $this->ensure_single_default_item($items);
 
         return array(
             'items' => $items,

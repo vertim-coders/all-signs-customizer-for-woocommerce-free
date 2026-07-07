@@ -46,7 +46,7 @@
               </tr>
               <tr
                 v-for="(sh, key) in shapes"
-                :key="`${sh.shapeId}-${key}`"
+                :key="`${getShapeItemId(sh)}-${key}`"
                 draggable="true"
                 @dragstart="onDragStart(key)"
                 @dragover.prevent
@@ -66,17 +66,17 @@
                 <td>
                   <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
                     <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce") }}</span>
-                    <button type="button" :disabled="isLoading" @click="selectDefault(sh.id)" :class="['ascwo-toggle', sh.isDefault ? 'is-active' : '', defaultActionId === sh.id ? 'is-loading' : '']"><span></span></button>
+                    <button type="button" :disabled="isLoading" @click="selectDefault(getShapeItemId(sh))" :class="['ascwo-toggle', sh.isDefault ? 'is-active' : '', defaultActionId === getShapeItemId(sh) ? 'is-loading' : '']"><span></span></button>
                     <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce") }}</span>
                   </div>
                 </td>
                 <td>
                   <div class="ascwo-flex ascwo-items-center ascwo-gap-3">
-                    <button type="button" @click="selectMaterialShape(sh.shapeId, sh)" class="ascwo-outline-button">
+                    <button type="button" @click="selectMaterialShape(getShapeItemId(sh), sh)" class="ascwo-outline-button">
                       <Edit2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
                       {{ __("Edit", "all-signs-customizer-for-woocommerce") }}
                     </button>
-                    <button type="button" @click="selectMaterialShape(sh.shapeId, sh, true)" class="ascwo-link-danger">
+                    <button type="button" @click="selectMaterialShape(getShapeItemId(sh), sh, true)" class="ascwo-link-danger">
                       <Trash2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
                       {{ __("Delete", "all-signs-customizer-for-woocommerce") }}
                     </button>
@@ -187,6 +187,8 @@ function createShape(shapeIdValue = "") {
 
 const getManagedShape = (sh) => manageShapes.value.find((item) => String(item?.id ?? item?.value ?? "") === String(sh?.shapeId)) || null;
 
+const getShapeItemId = (sh) => String(sh?.id || sh?.shapeId || "");
+
 const selectedManagedShape = computed(() => manageShapes.value.find((item) => String(item?.id ?? item?.value ?? "") === String(shape.value.shapeId)) || null);
 
 const availableManagedShapes = computed(() => manageShapes.value
@@ -202,6 +204,7 @@ const availableManagedShapes = computed(() => manageShapes.value
 const normalizeShape = (item) => ({
   ...createShape(),
   ...item,
+  id: String(item?.id ?? item?.shapeId ?? ""),
   isDefault: Boolean(item?.isDefault),
   shapeId: String(item?.shapeId ?? ""),
   additionalPrice: Number(item?.additionalPrice || 0),

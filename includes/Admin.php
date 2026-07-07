@@ -69,7 +69,8 @@ class ASCWO_Admin
             $hook = add_menu_page(__('All Sign Customizer for WooCommerce', 'all-signs-customizer-for-woocommerce'), __('All Sign Customizer for WooCommerce', 'all-signs-customizer-for-woocommerce'), $capability, $slug, [$this, 'plugin_page'], ASCWO_ASSETS . '/images/im_icon_ascwo.png');
             add_submenu_page($slug, __('Home', 'all-signs-customizer-for-woocommerce'), __('Home', 'all-signs-customizer-for-woocommerce'), $capability, 'admin.php?page=' . $slug . '#/');
             add_submenu_page($slug, __('Configurations', 'all-signs-customizer-for-woocommerce'), __('Configurations', 'all-signs-customizer-for-woocommerce'), $capability, 'admin.php?page=' . $slug . '#/configuration');
-            add_submenu_page($slug, __('Request quotes', 'all-signs-customizer-for-woocommerce'), __('Request quotes', 'all-signs-customizer-for-woocommerce'), $capability, 'admin.php?page=' . $slug . '#/request-quotes');
+            // Free version: Request Quotes logic is kept, but the unfinished UI entry is hidden.
+            // add_submenu_page($slug, __('Request quotes', 'all-signs-customizer-for-woocommerce'), __('Request quotes', 'all-signs-customizer-for-woocommerce'), $capability, 'admin.php?page=' . $slug . '#/request-quotes');
             add_submenu_page($slug, __('Global Settings', 'all-signs-customizer-for-woocommerce'), __('Global Settings', 'all-signs-customizer-for-woocommerce'), $capability, 'admin.php?page=' . $slug . '#/settings/output');
             add_submenu_page($slug, __('Manage Fonts', 'all-signs-customizer-for-woocommerce'), __('Manage Fonts', 'all-signs-customizer-for-woocommerce'), $capability, 'admin.php?page=' . $slug . '#/manage-font');
             add_submenu_page($slug, __('Manage Cliparts', 'all-signs-customizer-for-woocommerce'), __('Manage Cliparts', 'all-signs-customizer-for-woocommerce'), $capability, 'admin.php?page=' . $slug . '#/manage-cliparts');

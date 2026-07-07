@@ -39,14 +39,29 @@ class ASCWO_Design
 	 */
 	public function get_forced_download_url($file_url)
 	{
-		$file_url = (string) $file_url;
+		$file_url = trim((string) $file_url);
 		$base_url = trailingslashit(ASCWO_IMAGE_URL);
+		$relative_path = '';
 
-		if (0 !== strpos($file_url, $base_url)) {
+		if (0 === strpos($file_url, $base_url)) {
+			$relative_path = ltrim(substr($file_url, strlen($base_url)), '/');
+		} else {
+			$file_url_path = wp_parse_url($file_url, PHP_URL_PATH);
+			$base_url_path = wp_parse_url($base_url, PHP_URL_PATH);
+
+			if ($file_url_path && $base_url_path) {
+				$base_url_path = trailingslashit($base_url_path);
+				if (0 === strpos($file_url_path, $base_url_path)) {
+					$relative_path = ltrim(substr($file_url_path, strlen($base_url_path)), '/');
+				}
+			}
+		}
+
+		if ('' === $relative_path) {
 			return $file_url;
 		}
 
-		$relative_path = ltrim(substr($file_url, strlen($base_url)), '/');
+		$relative_path = rawurldecode($relative_path);
 
 		return add_query_arg(
 			array(
@@ -81,8 +96,10 @@ class ASCWO_Design
 		$base_path = realpath(ASCWO_IMAGE_PATH);
 		$file_path = ASCWO_IMAGE_PATH . DIRECTORY_SEPARATOR . $relative_path;
 		$real_file_path = realpath($file_path);
+		$normalized_base_path = $base_path ? trailingslashit(wp_normalize_path($base_path)) : '';
+		$normalized_file_path = $real_file_path ? wp_normalize_path($real_file_path) : '';
 
-		if (!$base_path || !$real_file_path || 0 !== strpos($real_file_path, trailingslashit($base_path)) || !is_file($real_file_path)) {
+		if (!$normalized_base_path || !$normalized_file_path || 0 !== strpos($normalized_file_path, $normalized_base_path) || !is_file($real_file_path)) {
 			wp_die(esc_html__('File not found.', 'all-signs-customizer-for-woocommerce'), 404);
 		}
 
