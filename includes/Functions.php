@@ -327,7 +327,7 @@ function ascwo_get_custom_products()
  *
  * @param mixed  $data  Données à sauvegarder.
  * @param string $name  Nom du fichier (sans extension).
- * @param string $path  Chemin relatif du dossier (ex: 'ascwo-templates').
+ * @param string $path  Chemin relatif du dossier.
  *
  * @return string|null URL du fichier JSON si succès, null si erreur.
  */

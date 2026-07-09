@@ -598,7 +598,6 @@ class ASCWO_Api_Configs extends WP_REST_Controller
                     "data" => $data_payload,
                 );
                 update_post_meta((int) $post_id, 'ascwo-configs-meta', $meta);
-                update_post_meta($post_id, "ascwo-templates", []);
                 if (!empty($product_ids)) {
                     $conflicts = $this->sync_config_products((int) $post_id, $product_ids);
                     if (!empty($conflicts)) {
@@ -725,10 +724,6 @@ class ASCWO_Api_Configs extends WP_REST_Controller
             'fixing_methods_url' => ASCWO_ASSETS . '/images/fixing-methodes',
             "filters_url" => ASCWO_ASSETS . '/images/filters',
             'borders_url' => ASCWO_ASSETS . '/images/borders',
-            'templates' => array(
-                'designFromTemplate' => false,
-                'template' => array(),
-            ),
             'frontend_nonce' => wp_create_nonce('ascwo_add_to_cart_after_custom'),
         );
         return rest_ensure_response($preview_data);

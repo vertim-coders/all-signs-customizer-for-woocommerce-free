@@ -259,7 +259,6 @@ const fetchData = async () => {
     if(!confPages.message){
         configPages.value = {...configPages.value,...confPages};
     }
-    cleanupTemplateSettings();
     ensureButtonStyleDefaults();
     pages.value = pgs;
     isFetching.value = false;
@@ -267,7 +266,6 @@ const fetchData = async () => {
 
 const saveConfigPage = async () => {
     isLoading.value = true;
-    cleanupTemplateSettings();
     ensureButtonStyleDefaults();
     const op = await api.saveGlobalSettingsConfigPage(configPages.value);
     if(op.success){
@@ -275,7 +273,6 @@ const saveConfigPage = async () => {
         if(!confPages.message){
             configPages.value = {...configPages.value,...confPages};
         }
-        cleanupTemplateSettings();
         isLoading.value = false;
         if(op.success == true){
             toastMessage(op.message);
@@ -386,30 +383,6 @@ const ensureButtonStyleDefaults = () => {
             }
         };
     });
-};
-
-const cleanupTemplateSettings = () => {
-    delete configPages.value.templatePage;
-
-    if (configPages.value.buttons) {
-        if (
-            !configPages.value.buttons.productDesignButton
-            || ['Customize The Product', 'Make It Yours'].includes(configPages.value.buttons.productDesignButton)
-        ) {
-            configPages.value.buttons.productDesignButton = defaultProductDesignButtonText;
-        }
-        delete configPages.value.buttons.productTemplateButton;
-        delete configPages.value.buttons.templateAddToCartButton;
-        delete configPages.value.buttons.templateDesignButton;
-        delete configPages.value.buttons.allTemplatesText;
-    }
-
-    if (configPages.value.buttonStyles) {
-        delete configPages.value.buttonStyles.productTemplate;
-        delete configPages.value.buttonStyles.templateAddToCart;
-        delete configPages.value.buttonStyles.templateDesign;
-        delete configPages.value.buttonStyles.templatesFilter;
-    }
 };
 
 const activeButtonLabel = computed(() => buttonMeta[activeButtonKey.value]?.label || '');

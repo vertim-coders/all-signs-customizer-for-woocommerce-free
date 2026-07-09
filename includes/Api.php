@@ -12,7 +12,6 @@ use ASCWO\Api\Admin\ASCWO_Api_Configs;
 use ASCWO\Api\Admin\ASCWO_Api_GoogleFonts;
 use ASCWO\Api\Admin\ASCWO_Api_Manage_cliparts;
 use ASCWO\Api\Admin\ASCWO_Api_Manage_fonts;
-use ASCWO\Api\Admin\ASCWO_Api_Templates_Categories;
 use ASCWO\Api\Admin\ASCWO_Api_WooCommerce_Products;
 use ASCWO\Api\Admin\ASCWO_Api_Home_Stats;
 use ASCWO\Api\Admin\ASCWO_Api_Request_Quotes;
@@ -22,7 +21,6 @@ use ASCWO\Api\Admin\Settings\ASCWO_Api_Customizer_Sign_Settings;
 use ASCWO\Api\Admin\Settings\ASCWO_Api_General_Settings;
 use ASCWO\Api\Admin\Settings\ASCWO_Api_Language_Images_Settings;
 use ASCWO\Api\Admin\Settings\ASCWO_Api_Theme_color_Settings;
-use ASCWO\Api\Admin\Templates\ASCWO_Api_Templates;
 use WP_REST_Controller;
 
 /**
@@ -90,12 +88,6 @@ class Api extends WP_REST_Controller
         if (!class_exists(ASCWO_Api_Theme_color_Settings::class)) {
             require_once __DIR__ . '/Api/Admin/Settings/Theme-color.php';
         }
-        if (!class_exists(ASCWO_Api_Templates_Categories::class)) {
-            require_once __DIR__ . '/Api/Admin/Templates/Categories.php';
-        }
-        if (!class_exists(ASCWO_Api_Templates::class)) {
-            require_once __DIR__ . '/Api/Admin/Templates/Templates.php';
-        }
     }
 
     /**
@@ -119,8 +111,6 @@ class Api extends WP_REST_Controller
         (new ASCWO_Api_Customizer_Sign_Settings())->register_routes();
         (new ASCWO_Api_Language_Images_Settings())->register_routes();
         (new ASCWO_Api_Theme_color_Settings())->register_routes();
-        (new ASCWO_Api_Templates_Categories())->register_routes();
-        (new ASCWO_Api_Templates())->register_routes();
     }
 
 }

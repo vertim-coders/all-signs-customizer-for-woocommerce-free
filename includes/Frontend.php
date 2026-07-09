@@ -526,18 +526,6 @@ class ASCWO_Frontend
 
                         $product_price = $product->get_price();
 
-                        $templates = [];
-                        if ($tplid !== false) {
-                            $templates = get_post_meta($configId, "ascwo-templates", true);
-                            if (isset($templates[$tplid])) {
-                                $template = $templates[$tplid];
-                                $template['data'] = isset($template['data_file']) ? ascwo_get_large_data($template['data_file']) : $template['data'];
-                                $product_price = $templates[$tplid]['basePrice'];
-                            } else {
-                                $template = '';
-                            }
-                        }
-
                         $ASO = array(
                             'skin' => isset($frontend_data['settings']['themeColors']['skin']) ? $frontend_data['settings']['themeColors']['skin'] : 'default',
                             'productID' => $productid,
@@ -554,10 +542,6 @@ class ASCWO_Frontend
                             'fixing_methods_url' => ASCWO_ASSETS . '/images/fixing-methodes',
                             'borders_url' => ASCWO_ASSETS . '/images/borders',
                             "filters_url" => ASCWO_ASSETS . '/images/filters',
-                            'templates' => array(
-                                'designFromTemplate' => isset($template) && !is_string($template),
-                                'template' => isset($template) && !is_string($template) ? $template : array(),
-                            ),
                             'frontend_nonce' => wp_create_nonce('ascwo_add_to_cart_after_custom')
                         );
 
