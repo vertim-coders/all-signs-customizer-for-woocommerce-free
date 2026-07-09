@@ -420,16 +420,8 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
     }
   }
 
-  /**
-   * Remove template-page settings that are no longer exposed by the plugin.
-   *
-   * @param array $settings Stored configuration page settings.
-   * @return array
-   */
   private function sanitize_config_page_settings(array $settings): array
   {
-    unset($settings['templatePage']);
-
     if (isset($settings['buttons']) && is_array($settings['buttons'])) {
       if (
         !isset($settings['buttons']['productDesignButton'])
@@ -439,22 +431,6 @@ class ASCWO_Api_Globals_Settings extends WP_REST_Controller
       ) {
         $settings['buttons']['productDesignButton'] = 'Start Designing';
       }
-
-      unset(
-        $settings['buttons']['productTemplateButton'],
-        $settings['buttons']['templateAddToCartButton'],
-        $settings['buttons']['templateDesignButton'],
-        $settings['buttons']['allTemplatesText']
-      );
-    }
-
-    if (isset($settings['buttonStyles']) && is_array($settings['buttonStyles'])) {
-      unset(
-        $settings['buttonStyles']['productTemplate'],
-        $settings['buttonStyles']['templateAddToCart'],
-        $settings['buttonStyles']['templateDesign'],
-        $settings['buttonStyles']['templatesFilter']
-      );
     }
 
     return $settings;

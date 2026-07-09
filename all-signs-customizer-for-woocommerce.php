@@ -254,13 +254,8 @@ final class ASCWO_All_Signs_Options_Pro
     {
         $pages_settings = [
             "configuratorPage" => 0,
-            "templatePage" => 0,
             "buttons" => [
                 "productDesignButton" => 'Customize The Product',
-                "productTemplateButton" => 'Design From Example',
-                "templateAddToCartButton" => 'Add To Cart',
-                "templateDesignButton" => 'Customize',
-                "allTemplatesText" => 'All',
                 "recapsButtonOnCart" => 'Sign Recaps'
             ],
             "others" => [
