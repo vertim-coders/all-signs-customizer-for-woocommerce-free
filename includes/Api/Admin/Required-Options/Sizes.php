@@ -5,6 +5,8 @@ use WP_REST_Server;
 
 class ASCWO_Api_Required_Options_Sizes extends ASCWO_Api_Required_Options_Base
 {
+    private const MAX_SIZE_ITEMS = 5;
+
     public function register_routes()
     {
         $config_route = $this->rest_base . '/(?P<config_id>\d+)/required-options';
@@ -247,6 +249,9 @@ class ASCWO_Api_Required_Options_Sizes extends ASCWO_Api_Required_Options_Base
         $required_options = $this->get_required_options($config_id);
         $sizes_section = $this->section_value($required_options, 'sizes', $this->simple_section_default('sizes'));
         $sizes = $this->section_item_list($required_options, 'sizes');
+        if (count($sizes) >= self::MAX_SIZE_ITEMS) {
+            return rest_ensure_response(array('success' => false, 'message' => __('You can only add up to 5 sizes in the free version.', 'all-signs-customizer-for-woocommerce')));
+        }
         $sizes[] = $this->normalize_size_item($payload, count($sizes), $config_id);
         $sizes = $this->ensure_single_default_item($sizes);
         $sizes_section = $this->section_value_with_items($required_options, 'sizes', $sizes);

@@ -10,11 +10,16 @@
         </div>
         <button
           @click="addPricing"
+          :disabled="!canAddMorePricing"
           class="ascwo-inline-flex ascwo-items-center ascwo-gap-2 ascwo-px-3 ascwo-py-1.5 ascwo-bg-[#007a72] ascwo-text-white ascwo-text-[12px] ascwo-leading-4 ascwo-font-[900] ascwo-border-none ascwo-rounded-md ascwo-cursor-pointer hover:ascwo-bg-[#00645f]"
         >
           <PlusIcon class="ascwo-w-3.5 ascwo-h-3.5" />
           {{ __('Add new pricing', 'all-signs-customizer-for-woocommerce') }}
         </button>
+      </div>
+
+      <div v-if="!canAddMorePricing" class="ascwo-bg-[#fff7ed] ascwo-border ascwo-border-solid ascwo-border-[#f59e0b] ascwo-rounded-xl ascwo-p-4 ascwo-text-[13px] ascwo-leading-5 ascwo-text-[#92400e]">
+        {{ __('The free version supports only one pricing profile. Upgrade to Pro at https://signsdesigner.us/all-signs-customizer-product/ to add more.', 'all-signs-customizer-for-woocommerce') }}
       </div>
 
       <div class="ascwo-pricing-card ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-p-5">
@@ -58,10 +63,6 @@
                         <button @click="editPricing(getPricingItemId(item, key))">
                           <Edit2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
                           {{ __('Edit', 'all-signs-customizer-for-woocommerce') }}
-                        </button>
-                        <button @click="duplicatePricing(getPricingItemId(item, key))">
-                          <CopyIcon class="ascwo-w-3.5 ascwo-h-3.5" />
-                          {{ __('Duplicate', 'all-signs-customizer-for-woocommerce') }}
                         </button>
                         <button class="is-danger" @click="deletePricing(getPricingItemId(item, key))">
                           <Trash2Icon class="ascwo-w-3.5 ascwo-h-3.5" />
@@ -257,7 +258,7 @@ import api from "@/admin/Api/api";
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import toastMessage from "@/admin/utils/functions";
-import { CopyIcon, Edit2Icon, Loader2Icon, MoreHorizontalIcon, PlusIcon, Trash2Icon, XIcon } from "lucide-vue-next";
+import { Edit2Icon, Loader2Icon, MoreHorizontalIcon, PlusIcon, Trash2Icon, XIcon } from "lucide-vue-next";
 import { __, sprintf } from "@wordpress/i18n";
 
 const route = useRoute();
@@ -275,6 +276,7 @@ const openActionIndex = ref(null);
 const measurementUnit = ref("mm");
 const currencySymbol = ref("$");
 const pricingSettings = ref({ label: "Pricing", description: "", items: [] });
+const MAX_PRICING_ITEMS = 1;
 
 const emptyPricing = () => ({
   label: "",
@@ -293,6 +295,7 @@ const rangeDraft = ref(emptyRange());
 
 const surfaceUnitLabel = computed(() => `${measurementUnit.value}²`);
 const canSavePricing = computed(() => editingPricing.value.label.trim().length > 0);
+const canAddMorePricing = computed(() => Array.isArray(pricingSettings.value.items) && pricingSettings.value.items.length < MAX_PRICING_ITEMS);
 
 const rangeStart = (index) => index === 0 ? 0 : Number(editingPricing.value.customPricing.range[index - 1]?.surface || 0);
 const rangeSurface = (surface) => Number(surface || 0);
@@ -392,6 +395,10 @@ const fetchPricing = async () => {
 };
 
 const addPricing = () => {
+  if (!canAddMorePricing.value) {
+    toastMessage(__("The free version supports only one pricing profile. Upgrade to Pro to add more.", "all-signs-customizer-for-woocommerce"), "warning");
+    return;
+  }
   editingIndex.value = null;
   editingPricingId.value = null;
   editingPricing.value = emptyPricing();
@@ -434,27 +441,6 @@ const savePricing = async () => {
       closeForm();
     } else {
       toastMessage(result?.message || __("Unable to save pricing", "all-signs-customizer-for-woocommerce"), "warning");
-    }
-  } finally {
-    isLoading.value = false;
-  }
-};
-
-const duplicatePricing = async (itemId) => {
-  openActionIndex.value = null;
-  const index = pricingSettings.value.items.findIndex((item, key) => getPricingItemId(item, key) === String(itemId));
-  if (index < 0) return;
-  const copy = JSON.parse(JSON.stringify(pricingSettings.value.items[index]));
-  delete copy.id;
-  copy.label = copy.label ? `${copy.label} (copy)` : sprintf(__('Pricing %d', 'all-signs-customizer-for-woocommerce'), pricingSettings.value.items.length + 1);
-  isLoading.value = true;
-  try {
-    const result = await api.addRequiredOptionPricingItem(configID.value, copy);
-    if (result?.success) {
-      toastMessage(result.message);
-      await fetchPricing();
-    } else {
-      toastMessage(result?.message || __("Unable to duplicate pricing", "all-signs-customizer-for-woocommerce"), "warning");
     }
   } finally {
     isLoading.value = false;

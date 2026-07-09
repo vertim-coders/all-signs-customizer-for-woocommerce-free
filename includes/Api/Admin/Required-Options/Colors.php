@@ -5,6 +5,8 @@ use WP_REST_Server;
 
 class ASCWO_Api_Required_Options_Colors extends ASCWO_Api_Required_Options_Base
 {
+    private const MAX_COLOR_ITEMS = 10;
+
     public function register_routes()
     {
         $config_route = $this->rest_base . '/(?P<config_id>\d+)/required-options';
@@ -189,6 +191,9 @@ class ASCWO_Api_Required_Options_Colors extends ASCWO_Api_Required_Options_Base
         $required_options = $this->get_required_options($config_id);
         $colors_section = $this->section_value($required_options, 'colors', $this->simple_section_default('colors'));
         $colors = $this->section_item_list($required_options, 'colors');
+        if (count($colors) >= self::MAX_COLOR_ITEMS) {
+            return rest_ensure_response(array('success' => false, 'message' => __('You can only add up to 10 colors in the free version.', 'all-signs-customizer-for-woocommerce')));
+        }
         $colors[] = $payload;
         $colors = $this->ensure_single_default_item($colors);
         $required_options = $this->set_section_items($required_options, 'colors', $this->section_value_with_items($required_options, 'colors', $colors));

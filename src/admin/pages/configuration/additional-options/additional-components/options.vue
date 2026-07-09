@@ -160,7 +160,7 @@ const isLoading = ref(false);
 const expandedOption = ref(0);
 const materialColors = ref([]);
 const MAX_OPTIONS_PER_COMPONENT = 5;
-const proUpgradeUrl = 'https://signsdesigner.us/all-signs-customizer-for-woocommerce/';
+const proUpgradeUrl = 'https://signsdesigner.us/all-signs-customizer-product/';
 const additionalOption = ref({
   title: '',
   description: '',

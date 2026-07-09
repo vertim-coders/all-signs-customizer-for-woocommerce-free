@@ -135,29 +135,18 @@
               </article>
             </div>
 
-            <button type="button" class="ascwo-secondary-button ascwo-small-button" @click="addNewColor">
+            <button type="button" class="ascwo-secondary-button ascwo-small-button" @click="addNewColor" :disabled="text.colors.length >= MAX_TEXT_COLORS">
               {{ __("Add text color", "all-signs-customizer-for-woocommerce") }}
             </button>
 
+            <div v-if="text.colors.length >= MAX_TEXT_COLORS" class="ascwo-mt-3 ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#f59e0b] ascwo-bg-[#fff7ed] ascwo-p-4 ascwo-text-[13px] ascwo-leading-5 ascwo-text-[#92400e]">
+              {{ __("The free version supports up to 10 text colors only. Upgrade to Pro at https://signsdesigner.us/all-signs-customizer-for-woocommerce/ to add more.", "all-signs-customizer-for-woocommerce") }}
+            </div>
+
             <div class="ascwo-custom-color-row">
               <div class="ascwo-custom-toggle">
-                <strong>{{ __("Enable Custom color", "all-signs-customizer-for-woocommerce") }}</strong>
-                <ToggleRow v-model="text.enableCustomColor" />
+                <strong>{{ __("Custom colors are locked in the free version.", "all-signs-customizer-for-woocommerce") }}</strong>
               </div>
-              <label class="ascwo-field ascwo-upload-field">
-                <span>{{ __("Custom color preview image", "all-signs-customizer-for-woocommerce") }}</span>
-                <span class="ascwo-file-control">
-                  <button type="button" class="ascwo-primary-button ascwo-file-button" @click.prevent="selectColorPrevImage">
-                    {{ __("upload image", "all-signs-customizer-for-woocommerce") }}
-                  </button>
-                  <span class="ascwo-file-preview">
-                    <img v-if="text.colorsPrevImg" :src="text.colorsPrevImg" alt="" />
-                    <button v-if="text.colorsPrevImg" type="button" @click="text.colorsPrevImg = ''">
-                      <Trash2Icon class="ascwo-icon" />
-                    </button>
-                  </span>
-                </span>
-              </label>
             </div>
           </div>
         </div>
@@ -289,6 +278,7 @@ const route = useRoute();
 const configId = ref(route.params.configId);
 const isLoading = ref(false);
 const isFetching = ref(true);
+const MAX_TEXT_COLORS = 10;
 
 const openPanels = ref({
   access: true,
@@ -310,7 +300,6 @@ const defaultTextColors = [
   { name: "Grey", codeHex: "#AF5758" },
   { name: "Orange", codeHex: "#E5610E" },
   { name: "Purple", codeHex: "#554585" },
-  { name: "Brown", codeHex: "#523C2A" },
 ];
 
 const defaultText = () => ({
@@ -319,7 +308,7 @@ const defaultText = () => ({
   selectedFonts: [],
   colorsLabel: "Text Colors",
   colors: defaultTextColors.map((color) => ({ ...color })),
-  enableCustomColor: true,
+  enableCustomColor: false,
   colorsPrevImg: "",
   enableFontSize: {
     active: true,
@@ -357,6 +346,7 @@ const mergeTextData = (data) => {
     ...(data || {}),
     active: typeof data?.active === "boolean" ? data.active : defaults.active,
     enableQrCode: typeof data?.enableQrCode === "boolean" ? data.enableQrCode : defaults.enableQrCode,
+    enableCustomColor: false,
     colors: loadedColors,
     enableFontSize: {
       ...defaults.enableFontSize,
@@ -426,6 +416,10 @@ const normalizeColor = (index) => {
 };
 
 const addNewColor = () => {
+  if (text.value.colors.length >= MAX_TEXT_COLORS) {
+    toastMessage(__("The free version supports up to 10 text colors only. Upgrade to Pro to add more.", "all-signs-customizer-for-woocommerce"), "warning");
+    return;
+  }
   text.value.colors.push({ name: "", codeHex: "#FFFFFF", additionalPrice: 0 });
 };
 

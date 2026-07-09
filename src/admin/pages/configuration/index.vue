@@ -7,11 +7,21 @@
       </h1>
       <RouterLink
         to="/configuration/create"
-        class="ascwo-primary-action ascwo-inline-flex ascwo-items-center ascwo-gap-2 ascwo-text-white ascwo-no-underline"
+        :aria-disabled="hasConfigLimitReached"
+        :tabindex="hasConfigLimitReached ? -1 : 0"
+        :class="[
+          'ascwo-primary-action ascwo-inline-flex ascwo-items-center ascwo-gap-2 ascwo-text-white ascwo-no-underline',
+          hasConfigLimitReached ? 'ascwo-opacity-50 ascwo-cursor-not-allowed' : '',
+        ]"
+        @click="onCreateConfigClick"
       >
         <PlusIcon class="ascwo-w-4 ascwo-h-4" />
         {{ __("Add new configuration", "all-signs-customizer-for-woocommerce") }}
       </RouterLink>
+    </div>
+
+    <div v-if="hasConfigLimitReached" class="ascwo-mb-4 ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#f1c24b] ascwo-bg-[#fff9e6] ascwo-px-4 ascwo-py-3 ascwo-text-[#664d03]">
+      {{ __("The free version allows only one configuration. Upgrade to Pro at https://signsdesigner.us/all-signs-customizer-product/ to create more.", "all-signs-customizer-for-woocommerce") }}
     </div>
 
     <!-- Table Main Card -->
@@ -128,7 +138,7 @@
         <button @click="openEditModalFor(selectedConfig)" class="ascwo-w-full ascwo-px-4 ascwo-py-2 ascwo-text-left ascwo-text-[13px] ascwo-bg-transparent ascwo-border-none hover:ascwo-bg-[#f9fafb] ascwo-cursor-pointer ascwo-flex ascwo-items-center ascwo-gap-3">
           <Edit2Icon class="ascwo-w-4 ascwo-h-4" /> {{ __('Edit', 'all-signs-customizer-for-woocommerce') }}
         </button>
-        <button @click="openDuplicateModalFor(selectedConfig)" class="ascwo-w-full ascwo-px-4 ascwo-py-2 ascwo-text-left ascwo-text-[13px] ascwo-bg-transparent ascwo-border-none hover:ascwo-bg-[#f9fafb] ascwo-cursor-pointer ascwo-flex ascwo-items-center ascwo-gap-3">
+        <button v-if="!hasConfigLimitReached" @click="openDuplicateModalFor(selectedConfig)" class="ascwo-w-full ascwo-px-4 ascwo-py-2 ascwo-text-left ascwo-text-[13px] ascwo-bg-transparent ascwo-border-none hover:ascwo-bg-[#f9fafb] ascwo-cursor-pointer ascwo-flex ascwo-items-center ascwo-gap-3">
           <CopyIcon class="ascwo-w-4 ascwo-h-4" /> {{ __('Duplicate', 'all-signs-customizer-for-woocommerce') }}
         </button>
         <div class="ascwo-h-px ascwo-bg-[#f1f1f1] ascwo-my-1"></div>
@@ -199,6 +209,8 @@ const selectedConfig = ref(null);
 const menuX = ref(0);
 const menuY = ref(0);
 const managingConfigId = ref(null);
+const hasConfigLimitReached = computed(() => totalConfigsFound.value >= 1);
+const proUpgradeUrl = 'https://signsdesigner.us/all-signs-customizer-product/';
 
 const fetchConfigs = async (p = page.value) => {
   isFetching.value = true;
@@ -326,6 +338,19 @@ const openActions = (config, event) => {
   showActionMenu.value = true;
 };
 
+const showLimitNotice = () => {
+  toastMessage(
+    sprintf(__('Only one configuration is allowed in the free version. Upgrade to Pro at %s.', 'all-signs-customizer-for-woocommerce'), proUpgradeUrl),
+    'warning'
+  );
+};
+
+const onCreateConfigClick = (event) => {
+  if (!hasConfigLimitReached.value) return;
+  event?.preventDefault?.();
+  showLimitNotice();
+};
+
 const selectDeleteConfig = (id, name) => { deleteConfig.value = { id, name }; openModal.value = true; showActionMenu.value = false; };
 const delConfig = async () => {
   isLoading.value = true;
@@ -341,6 +366,11 @@ const openEditModalFor = (c) => {
   if (!c?.id) return;
   showActionMenu.value = false;
   router.push({ name: 'edit-configuration', params: { configId: c.id } });
+};
+
+const openDuplicateModalFor = () => {
+  showActionMenu.value = false;
+  showLimitNotice();
 };
 
 onMounted(() => fetchConfigs(Number(route.query.page) || 1));

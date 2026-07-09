@@ -15,7 +15,7 @@ All Signs Customizer helps store owners configure and sell custom sign products 
 
 <h4>About the All Signs Customizer</h4>
 <ul>
-	<li>Plugin site: <a href="https://signsdesigner.us/all-signs-customizer-product/?utm_source=wordpress.org&utm_medium=cpc&utm_campaign=All%20Signs%20Options%20Free" target="_blank">signsdesigner.us</a></li>
+	<li>Plugin site: <a href="https://signsdesigner.us/all-signs-customizer-product/?utm_source=wordpress.org&utm_medium=cpc&utm_campaign=All%20Sign%20Customizer%20For%20Woocommerce%20" target="_blank">signsdesigner.us</a></li>
 </ul>
 
 <h4>Overview</h4>
@@ -144,7 +144,7 @@ The repository also includes the build configuration in `package.json` and `webp
 == Developer Notes ==
 
 Source code (unminified assets included):  
-https://github.com/vertim-coders/all-sign-customizer-for-woocommerce
+https://github.com/vertim-coders/all-sign-customizer-for-woocommerce-free
 
 Actions/Filters and template overrides are documented in the developer section of the docs.
 

@@ -86,7 +86,7 @@ export const RequiredOptionsColors = {
       isDefault: true,
       textColor: {
         name: "White",
-        active: true,
+        active: false,
         codeHex: "#000000",
         sameForBorder: true,
       },
@@ -105,7 +105,7 @@ export const RequiredOptionsColors = {
       isDefault: false,
       textColor: {
         name: "Black",
-        active: true,
+        active: false,
         codeHex: "#ffffff",
         sameForBorder: true,
       },
@@ -124,7 +124,7 @@ export const RequiredOptionsColors = {
       isDefault: false,
       textColor: {
         name: "Blue",
-        active: true,
+        active: false,
         codeHex: "#ffffff",
         sameForBorder: true,
       },
@@ -143,7 +143,7 @@ export const RequiredOptionsColors = {
       isDefault: false,
       textColor: {
         name: "Red",
-        active: true,
+        active: false,
         codeHex: "#ffffff",
         sameForBorder: true,
       },
@@ -162,7 +162,7 @@ export const RequiredOptionsColors = {
       isDefault: false,
       textColor: {
         name: "Gold",
-        active: true,
+        active: false,
         codeHex: "#ffffff",
         sameForBorder: true,
       },
@@ -398,12 +398,6 @@ export const RequiredOptionsBorders = {
         codeHex: "#e15616",
         additionalPrice: 0,
       },
-      {
-        id: "border-color-brown",
-        name: "Brown",
-        codeHex: "#523d2a",
-        additionalPrice: 0,
-      },
     ],
     borderColorsLabel: "Borders Colors",
     enableBorderColor: true,
@@ -429,153 +423,6 @@ export const RequiredOptionsPricings = {
           charPrice: 0,
         },
         range: [],
-        shippingMethod: "per-surface",
-        divisorVolumetric: 5000,
-        rangePricingPerUnit: false,
-      },
-    },
-    {
-      id: "pricing-banner-standard",
-      label: "Standard banner pricing",
-      customPricing: {
-        type: "unit",
-        unit: {
-          surface: 80000,
-          basePrice: 18,
-          charPrice: 0,
-        },
-        range: [],
-        shippingMethod: "per-surface",
-        divisorVolumetric: 5000,
-        rangePricingPerUnit: false,
-      },
-    },
-    {
-      id: "pricing-banner-premium",
-      label: "Premium banner pricing",
-      customPricing: {
-        type: "unit",
-        unit: {
-          surface: 120000,
-          basePrice: 26,
-          charPrice: 0,
-        },
-        range: [],
-        shippingMethod: "per-surface",
-        divisorVolumetric: 5000,
-        rangePricingPerUnit: false,
-      },
-    },
-    {
-      id: "pricing-sticker-standard",
-      label: "Standard sticker pricing",
-      customPricing: {
-        type: "unit",
-        unit: {
-          surface: 20000,
-          basePrice: 12,
-          charPrice: 0,
-        },
-        range: [],
-        shippingMethod: "per-surface",
-        divisorVolumetric: 5000,
-        rangePricingPerUnit: false,
-      },
-    },
-    {
-      id: "pricing-sticker-premium",
-      label: "Premium sticker pricing",
-      customPricing: {
-        type: "unit",
-        unit: {
-          surface: 40000,
-          basePrice: 19,
-          charPrice: 0,
-        },
-        range: [],
-        shippingMethod: "per-surface",
-        divisorVolumetric: 5000,
-        rangePricingPerUnit: false,
-      },
-    },
-    {
-      id: "pricing-signs-acrylic",
-      label: "Premium acrylic pricing",
-      customPricing: {
-        type: "unit",
-        unit: {
-          surface: 80000,
-          basePrice: 38,
-          charPrice: 0,
-        },
-        range: [],
-        shippingMethod: "per-surface",
-        divisorVolumetric: 5000,
-        rangePricingPerUnit: false,
-      },
-    },
-    {
-      id: "pricing-signs-metal",
-      label: "Metal panel pricing",
-      customPricing: {
-        type: "unit",
-        unit: {
-          surface: 80000,
-          basePrice: 42,
-          charPrice: 0,
-        },
-        range: [],
-        shippingMethod: "per-surface",
-        divisorVolumetric: 5000,
-        rangePricingPerUnit: false,
-      },
-    },
-    {
-      id: "pricing-signs-wood",
-      label: "Wood panel pricing",
-      customPricing: {
-        type: "unit",
-        unit: {
-          surface: 70000,
-          basePrice: 34,
-          charPrice: 0,
-        },
-        range: [],
-        shippingMethod: "per-surface",
-        divisorVolumetric: 5000,
-        rangePricingPerUnit: false,
-      },
-    },
-    {
-      id: "pricing-signs-large",
-      label: "Large format panel pricing",
-      customPricing: {
-        type: "range",
-        unit: {
-          surface: 0,
-          basePrice: 0,
-          charPrice: 0,
-        },
-        range: [
-          {
-            length: 0,
-            surface: 60000,
-            basePrice: 28,
-            charPrice: 0,
-            shippingPrice: 0,
-            widthModifier: 0,
-            heightModifier: 0,
-          },
-          {
-            length: 0,
-            surface: 180000,
-            basePrice: 46,
-            charPrice: 0,
-            shippingPrice: 0,
-            widthModifier: 0,
-            heightModifier: 0,
-          },
-        ],
         shippingMethod: "per-surface",
         divisorVolumetric: 5000,
         rangePricingPerUnit: false,
@@ -896,55 +743,6 @@ export const AdditionalOptionsComponents = {
   description: "",
 };
 
-export const RequiredOptionsLightings = {
-  items: [
-    {
-      id: "lighting-panel-soft-white",
-      label: "Soft White",
-      hexCode: "#F5F5F4",
-      isDefault: true,
-      additionalPrice: 0,
-    },
-    {
-      id: "lighting-panel-amber",
-      label: "Amber Glow",
-      hexCode: "#F59E0B",
-      isDefault: false,
-      additionalPrice: 4,
-    },
-    {
-      id: "lighting-panel-warm-white",
-      label: "Warm White",
-      hexCode: "#FFF4D6",
-      isDefault: false,
-      additionalPrice: 2,
-    },
-    {
-      id: "lighting-panel-cool-white",
-      label: "Cool White",
-      hexCode: "#E8F1FF",
-      isDefault: false,
-      additionalPrice: 3,
-    },
-    {
-      id: "lighting-panel-rose",
-      label: "Rose Glow",
-      hexCode: "#F472B6",
-      isDefault: false,
-      additionalPrice: 5,
-    },
-    {
-      id: "lighting-panel-neon-blue",
-      label: "Neon Blue",
-      hexCode: "#38BDF8",
-      isDefault: false,
-      additionalPrice: 5,
-    },
-  ],
-  label: "Lighting",
-  description: "",
-};
-
 const createComponentOption = ({
   componentId,
   suffix,
@@ -988,26 +786,6 @@ const createComponentOption = ({
     ],
   },
   isDefault,
-  lightings: {
-    items: [
-      {
-        id: `${componentId}-${suffix}-glow-soft`,
-        label: "Soft Glow",
-        hexCode: "#F4F4F5",
-        isDefault: true,
-        additionalPrice: 0,
-      },
-      {
-        id: `${componentId}-${suffix}-glow-amber`,
-        label: "Amber Glow",
-        hexCode: "#F59E0B",
-        isDefault: false,
-        additionalPrice: 4,
-      },
-    ],
-    customColorLabel: "Custom Color",
-    enableCustomColor: false,
-  },
   overrides: {
     additionalPrice,
   },
@@ -1379,11 +1157,6 @@ export const configurationDemoData = [
                 name: "Purple",
                 codeHex: "#554585",
               },
-              {
-                id: "sign-text-color-brown",
-                name: "Brown",
-                codeHex: "#523d2a",
-              },
             ],
             textType: "normal",
             enableBold: true,
@@ -1404,20 +1177,11 @@ export const configurationDemoData = [
             enableOverline: true,
             enableUnderline: true,
             enableCurvedDown: false,
-            enableCustomColor: true,
+            enableCustomColor: false,
             enableTextAlignment: true,
           },
           images: {
             colors: [],
-            filter: {
-              active: true,
-              enableBlur: true,
-              enableSepia: true,
-              enableEmbross: true,
-              enableOpacity: true,
-              enableSharpen: true,
-              enableGreyscale: false,
-            },
             scenes: [],
             colorsLabel: "Image Colors",
             colorsPrevImg: "",
@@ -1432,18 +1196,9 @@ export const configurationDemoData = [
               enableSizeRestriction: false,
               allowedUploadsExtentions: ["png"],
             },
-            enableCustomColor: true,
+            enableCustomColor: false,
             enableUploadImage: true,
             enableDownloadImage: true,
-          },
-          signPart: {
-            doublePart: {
-              label: "Switch Face",
-              part1: "Face A",
-              part2: "Face B",
-              active: false,
-              enableCopyDesignFromSide: true,
-            },
           },
           configOptions: [
             {
@@ -1493,10 +1248,7 @@ export const configurationDemoData = [
             desktopColumnOrder: "right",
             finishButtonPosition: "bottom",
             showHideMeasurements: "both",
-            showThicknessPricing: false,
-            expandThicknessByDefault: false,
             decimalFormatMeasurements: "with-decimal",
-            expandPredefinedSizesByDefault: false,
           },
         },
         languageImages: {
@@ -1585,7 +1337,6 @@ export const configurationDemoData = [
         borders: RequiredOptionsBorders,
         pricings: RequiredOptionsPricings,
         fonts: RequiredOptionsFonts,
-        lightings: RequiredOptionsLightings,
       }),
       additionalOptions: clone({
         inputs: AdditionalOptionsInputs,

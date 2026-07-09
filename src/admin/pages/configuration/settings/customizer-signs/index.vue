@@ -134,19 +134,8 @@
               </select>
             </label>
 
-            <div class="ascwo-inline-toggle">
-              <span>{{ __('Show thickness pricing labels in configurator', 'all-signs-customizer-for-woocommerce') }}</span>
-              <label class="ascwo-switch"><input type="checkbox" v-model="customizerOptions.showThicknessPricing"><span></span></label>
-            </div>
-
-            <div class="ascwo-inline-toggle">
-              <span>{{ __('Expand thickness by default in configurator', 'all-signs-customizer-for-woocommerce') }}</span>
-              <label class="ascwo-switch"><input type="checkbox" v-model="customizerOptions.expandThicknessByDefault"><span></span></label>
-            </div>
-
-            <div class="ascwo-inline-toggle">
-              <span>{{ __('Expand predefined sizes by default in configurator', 'all-signs-customizer-for-woocommerce') }}</span>
-              <label class="ascwo-switch"><input type="checkbox" v-model="customizerOptions.expandPredefinedSizesByDefault"><span></span></label>
+            <div class="ascwo-inline-toggle ascwo-free-lock">
+              <span>{{ __('Thickness options are not available in the free version.', 'all-signs-customizer-for-woocommerce') }}</span>
             </div>
 
             <div class="ascwo-save-row ascwo-options-save">
@@ -230,9 +219,6 @@ const defaultCustomizerOptions = () => ({
   desktopColumnOrder: 'left',
   finishButtonPosition: 'bottom',
   allowNextButton: false,
-  showThicknessPricing: false,
-  expandThicknessByDefault: false,
-  expandPredefinedSizesByDefault: false,
 });
 
 const configOptions = ref(defaultConfigOptions());
@@ -282,9 +268,6 @@ const normalizeCustomizerOptions = (raw = {}) => ({
   desktopColumnOrder: raw.desktopColumnOrder || raw.destokColumnOrder || 'left',
   finishButtonPosition: raw.finishButtonPosition || 'bottom',
   allowNextButton: normalizeBoolean(raw.allowNextButton),
-  showThicknessPricing: normalizeBoolean(raw.showThicknessPricing),
-  expandThicknessByDefault: normalizeBoolean(raw.expandThicknessByDefault),
-  expandPredefinedSizesByDefault: normalizeBoolean(raw.expandPredefinedSizesByDefault),
 });
 
 const normalizeConfigOptions = (raw = []) => {

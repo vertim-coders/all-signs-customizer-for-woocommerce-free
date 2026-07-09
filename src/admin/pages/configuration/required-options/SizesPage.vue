@@ -12,11 +12,16 @@
         </div>
         <button
           @click="newSize"
+          :disabled="!canAddMoreSizes"
           class="ascwo-inline-flex ascwo-items-center ascwo-gap-2 ascwo-px-3 ascwo-py-1.5 ascwo-bg-[#007a72] ascwo-text-white ascwo-text-[12px] ascwo-leading-4 ascwo-font-[900] ascwo-border-none ascwo-rounded-md ascwo-cursor-pointer hover:ascwo-bg-[#00645f]"
         >
           <PlusIcon class="ascwo-w-3.5 ascwo-h-3.5" />
           {{ __('Add new size', 'all-signs-customizer-for-woocommerce') }}
         </button>
+      </div>
+
+      <div v-if="!canAddMoreSizes" class="ascwo-bg-[#fff7ed] ascwo-border ascwo-border-solid ascwo-border-[#f59e0b] ascwo-rounded-xl ascwo-p-4 ascwo-text-[13px] ascwo-leading-5 ascwo-text-[#92400e]">
+        {{ __('The free version supports up to 5 sizes only. Upgrade to Pro at https://signsdesigner.us/all-signs-customizer-product/ to add more.', 'all-signs-customizer-for-woocommerce') }}
       </div>
 
       <div class="ascwo-sizes-card ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-p-5">
@@ -101,117 +106,9 @@
         </div>
 
         <div class="ascwo-size-setting-toggles ascwo-mt-5 ascwo-border-t ascwo-border-solid ascwo-border-[#eceff2]">
-          <section class="ascwo-settings-section">
-            <div class="ascwo-flex ascwo-items-start ascwo-justify-between ascwo-gap-4">
-              <div>
-                <h4 class="ascwo-text-[13px] ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ __('Thickness', 'all-signs-customizer-for-woocommerce') }}</h4>
-                <p class="ascwo-text-[12px] ascwo-leading-4 ascwo-text-[#6b7280] ascwo-m-0">{{ __('Enable thickness choices for this configuration.', 'all-signs-customizer-for-woocommerce') }}</p>
-              </div>
-              <div
-                @click="sizes.thickness.active = !sizes.thickness.active"
-                :class="[
-                  'ascwo-w-9 ascwo-h-5 ascwo-rounded-full ascwo-relative ascwo-cursor-pointer ascwo-transition-colors ascwo-shrink-0 ascwo-mt-1',
-                  sizes.thickness.active ? 'ascwo-bg-[#007a72]' : 'ascwo-bg-[#d9dee8]'
-                ]"
-              >
-                <div :class="['ascwo-absolute ascwo-top-0.5 ascwo-w-4 ascwo-h-4 ascwo-rounded-full ascwo-bg-white ascwo-shadow ascwo-transition-all', sizes.thickness.active ? 'ascwo-right-0.5' : 'ascwo-left-0.5']"></div>
-              </div>
-            </div>
-
-            <div v-if="sizes.thickness.active" class="ascwo-mt-4 ascwo-space-y-3">
-              <div
-                v-for="(thick, key) in sizes.thickness.items"
-                :key="key"
-                class="ascwo-thickness-card ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-bg-white ascwo-p-4"
-              >
-                <div class="ascwo-flex ascwo-items-center ascwo-justify-between ascwo-mb-4">
-                  <h5 class="ascwo-text-[13px] ascwo-leading-5 ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ sprintf(__('Thickness %s', 'all-signs-customizer-for-woocommerce'), key + 1) }}</h5>
-                  <button
-                    @click="handleDeleteThickness(key)"
-                    class="ascwo-px-3 ascwo-py-1.5 ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-rounded-md ascwo-text-[12px] ascwo-leading-4 ascwo-font-[900] ascwo-text-[#8e1f0b] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7]"
-                  >
-                    {{ __('Remove', 'all-signs-customizer-for-woocommerce') }}
-                  </button>
-                </div>
-                <div class="ascwo-setting-grid ascwo-grid lg:ascwo-grid-cols-3 ascwo-gap-4">
-                  <div>
-                    <label>{{ __('Label', 'all-signs-customizer-for-woocommerce') }}</label>
-                    <input type="text" v-model="thick.label">
-                  </div>
-                  <div>
-                    <label>{{ __('Value', 'all-signs-customizer-for-woocommerce') }}</label>
-                    <input type="number" v-model.number="thick.value" @input="syncThicknessValue(key)">
-                  </div>
-                </div>
-              </div>
-              <button @click="handleAddNewThickness" class="ascwo-h-8 ascwo-px-3 ascwo-bg-white ascwo-border ascwo-border-solid ascwo-border-[#c9cccf] ascwo-rounded-md ascwo-text-[12px] ascwo-leading-4 ascwo-font-[900] ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7]">
-                {{ __('Add thickness', 'all-signs-customizer-for-woocommerce') }}
-              </button>
-            </div>
-          </section>
-
-          <section class="ascwo-settings-section ascwo-custom-size-section ascwo-border-t ascwo-border-solid ascwo-border-[#eceff2]">
-            <div class="ascwo-flex ascwo-items-start ascwo-justify-between ascwo-gap-4">
-              <div>
-                <h4 class="ascwo-text-[13px] ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ __('Custom Size', 'all-signs-customizer-for-woocommerce') }}</h4>
-                <p class="ascwo-text-[12px] ascwo-leading-4 ascwo-text-[#6b7280] ascwo-m-0">{{ __('Enable custom width and height entry with allowed limits.', 'all-signs-customizer-for-woocommerce') }}</p>
-              </div>
-              <div
-                @click="changeCustomSizeActive"
-                :class="[
-                  'ascwo-w-9 ascwo-h-5 ascwo-rounded-full ascwo-relative ascwo-cursor-pointer ascwo-transition-colors ascwo-shrink-0 ascwo-mt-1',
-                  sizes.customSize.active ? 'ascwo-bg-[#007a72]' : 'ascwo-bg-[#d9dee8]'
-                ]"
-              >
-                <div :class="['ascwo-absolute ascwo-top-0.5 ascwo-w-4 ascwo-h-4 ascwo-rounded-full ascwo-bg-white ascwo-shadow ascwo-transition-all', sizes.customSize.active ? 'ascwo-right-0.5' : 'ascwo-left-0.5']"></div>
-              </div>
-            </div>
-
-            <div v-if="sizes.customSize.active" class="ascwo-mt-4 ascwo-space-y-4">
-              <div class="ascwo-flex ascwo-items-start ascwo-justify-between ascwo-gap-4">
-                <div>
-                  <h4 class="ascwo-text-[13px] ascwo-font-[900] ascwo-text-[#303030] ascwo-m-0">{{ __('Predefined Sizes Visibility', 'all-signs-customizer-for-woocommerce') }}</h4>
-                  <p class="ascwo-text-[12px] ascwo-leading-4 ascwo-text-[#6b7280] ascwo-m-0">{{ __('Choose whether predefined sizes stay visible in the configurator when custom size is enabled.', 'all-signs-customizer-for-woocommerce') }}</p>
-                </div>
-                <div
-                  @click="sizes.customSize.showPredefinedSizes = !sizes.customSize.showPredefinedSizes"
-                  :class="[
-                    'ascwo-w-9 ascwo-h-5 ascwo-rounded-full ascwo-relative ascwo-cursor-pointer ascwo-transition-colors ascwo-shrink-0 ascwo-mt-1',
-                    sizes.customSize.showPredefinedSizes ? 'ascwo-bg-[#007a72]' : 'ascwo-bg-[#d9dee8]'
-                  ]"
-                >
-                  <div :class="['ascwo-absolute ascwo-top-0.5 ascwo-w-4 ascwo-h-4 ascwo-rounded-full ascwo-bg-white ascwo-shadow ascwo-transition-all', sizes.customSize.showPredefinedSizes ? 'ascwo-right-0.5' : 'ascwo-left-0.5']"></div>
-                </div>
-              </div>
-
-              <div class="ascwo-setting-grid ascwo-grid lg:ascwo-grid-cols-3 ascwo-gap-4">
-                <div>
-                  <label>{{ __('Width label', 'all-signs-customizer-for-woocommerce') }}</label>
-                  <input type="text" v-model="sizes.customSize.width.label">
-                </div>
-                <div>
-                  <label>{{ __('Width min', 'all-signs-customizer-for-woocommerce') }}</label>
-                  <input type="number" v-model="sizes.customSize.width.min">
-                </div>
-                <div>
-                  <label>{{ __('Width max', 'all-signs-customizer-for-woocommerce') }}</label>
-                  <input type="number" v-model="sizes.customSize.width.max">
-                </div>
-                <div>
-                  <label>{{ __('Height label', 'all-signs-customizer-for-woocommerce') }}</label>
-                  <input type="text" v-model="sizes.customSize.height.label">
-                </div>
-                <div>
-                  <label>{{ __('Height min', 'all-signs-customizer-for-woocommerce') }}</label>
-                  <input type="number" v-model="sizes.customSize.height.min">
-                </div>
-                <div>
-                  <label>{{ __('Height max', 'all-signs-customizer-for-woocommerce') }}</label>
-                  <input type="number" v-model="sizes.customSize.height.max">
-                </div>
-              </div>
-            </div>
-          </section>
+          <div class="ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#f59e0b] ascwo-bg-[#fff7ed] ascwo-p-4 ascwo-text-[13px] ascwo-leading-5 ascwo-text-[#92400e]">
+            {{ __('Thickness and custom size are available in Pro only.', 'all-signs-customizer-for-woocommerce') }}
+          </div>
         </div>
       </div>
       </template>
@@ -334,6 +231,8 @@ const sizes = ref({
 
 const size = ref({ isDefault: false, label: "", width: 0, height: 0, startPriceAtChar: 1, textNumber: 0, maxTextChar: -1, charPrice: 0, basePrice: 0 });
 const canSaveSize = computed(() => size.value.label.trim().length > 0);
+const MAX_SIZE_ITEMS = 5;
+const canAddMoreSizes = computed(() => Array.isArray(sizes.value.items) && sizes.value.items.length < MAX_SIZE_ITEMS);
 
 const normalizeThicknessPricingType = (type) => {
   if (type === 'multiplier') {
@@ -505,6 +404,11 @@ const updateSize = async () => {
 };
 
 const addSize = async () => {
+  if (!canAddMoreSizes.value && !isEdit.value) {
+    toastMessage(__('The free version supports up to 5 sizes only. Upgrade to Pro to add more.', 'all-signs-customizer-for-woocommerce'), 'warning');
+    return;
+  }
+
   if (size.value.label.trim()) {
     isLoading.value = true;
     try {
@@ -601,24 +505,16 @@ const dropSize = (targetIndex) => {
 };
 
 const newSize = () => {
+  if (!canAddMoreSizes.value) {
+    toastMessage(__('The free version supports up to 5 sizes only. Upgrade to Pro to add more.', 'all-signs-customizer-for-woocommerce'), 'warning');
+    return;
+  }
   isNewSize.value = true;
   isEdit.value = false;
   size.value = { isDefault: false, label: "", width: 100, height: 50, startPriceAtChar: 1, textNumber: -1, maxTextChar: -1, charPrice: 0, basePrice: 0 };
 };
 const back = () => { isNewSize.value = false; isEdit.value = false; };
 const closeModal = () => openModal.value = false;
-const changeCustomSizeActive = () => sizes.value.customSize.active = !sizes.value.customSize.active;
-const handleAddNewThickness = () => {
-  if (!Array.isArray(sizes.value.thickness.items)) {
-    sizes.value.thickness.items = [];
-  }
-  sizes.value.thickness.items.push(toThicknessItem(0));
-  syncThicknessValues();
-};
-const handleDeleteThickness = (k) => {
-  sizes.value.thickness.items.splice(k, 1);
-  syncThicknessValues();
-};
 
 onMounted(fetchSizes);
 </script>

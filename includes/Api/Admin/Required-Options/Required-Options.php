@@ -13,7 +13,6 @@ foreach (array(
     'Materials.php',
     'Components.php',
     'Fonts.php',
-    'Lightings.php',
 ) as $file) {
     $path = __DIR__ . '/' . $file;
     if (file_exists($path)) {
@@ -34,7 +33,6 @@ class ASCWO_Api_Required_Options extends ASCWO_Api_Required_Options_Base
         (new ASCWO_Api_Required_Options_Materials())->register_routes();
         (new ASCWO_Api_Required_Options_Components())->register_routes();
         (new ASCWO_Api_Required_Options_Fonts())->register_routes();
-        (new ASCWO_Api_Required_Options_Lightings())->register_routes();
 
         register_rest_route(
             $this->namespace,

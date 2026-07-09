@@ -5,6 +5,8 @@ use WP_REST_Server;
 
 class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Base
 {
+    private const MAX_PRICING_ITEMS = 1;
+
     public function register_routes()
     {
         $config_route = $this->rest_base . '/(?P<config_id>\d+)/required-options';
@@ -171,7 +173,7 @@ class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Bas
             $normalized[] = $this->normalize_pricing_item(is_array($item) ? $item : array(), $index);
         }
 
-        return $normalized;
+        return array_slice($normalized, 0, self::MAX_PRICING_ITEMS);
     }
 
     private function find_pricing_item_index(array $items, string $item_id): ?int
@@ -187,6 +189,7 @@ class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Bas
         foreach (array_values($items) as $index => $item) {
             $normalized_items[] = $this->normalize_pricing_item(is_array($item) ? $item : array(), $index);
         }
+        $normalized_items = array_slice($normalized_items, 0, self::MAX_PRICING_ITEMS);
 
         $pricing = $this->section_value($required_options, 'pricings', $this->pricing_section_default());
         if (!is_array($pricing)) {
@@ -238,6 +241,7 @@ class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Bas
         foreach (array_values($items) as $index => $item) {
             $pricing['items'][] = $this->normalize_pricing_item(is_array($item) ? $item : array(), $index);
         }
+        $pricing['items'] = array_slice($pricing['items'], 0, self::MAX_PRICING_ITEMS);
 
         $required_options = $this->get_required_options($config_id);
         $required_options['pricings'] = $pricing;
@@ -279,6 +283,9 @@ class ASCWO_Api_Required_Options_Pricings extends ASCWO_Api_Required_Options_Bas
 
         $required_options = $this->get_required_options($config_id);
         $items = $this->get_pricing_items($required_options);
+        if (count($items) >= self::MAX_PRICING_ITEMS) {
+            return rest_ensure_response(array('success' => false, 'message' => __('You can only create one pricing profile in the free version.', 'all-signs-customizer-for-woocommerce')));
+        }
         $items[] = $this->normalize_pricing_item($payload, count($items));
         $saved = $this->save_pricing_items($config_id, $items);
 

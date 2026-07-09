@@ -395,7 +395,6 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             'materials' => 'materials',
             'components' => 'components',
             'fonts' => 'fonts',
-            'lightings' => 'lightings',
         );
 
         return isset($map[$section]) ? $map[$section] : $section;
@@ -434,7 +433,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
                 );
             case 'colors':
                 return array(
-                    'customColors' => array('active' => true, 'label' => 'Custom Colors', 'prevImg' => ''),
+                    'customColors' => array('active' => false, 'label' => 'Custom Colors', 'prevImg' => ''),
                     'items' => array(),
                 );
             case 'shapes':
@@ -493,12 +492,6 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
                     'description' => '',
                     'items' => array(),
                 );
-            case 'lightings':
-                return array(
-                    'label' => 'Lighting',
-                    'description' => '',
-                    'items' => array(),
-                );
             default:
                 return array();
         }
@@ -525,7 +518,6 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             'fonts' => 'items',
             'pricing' => 'items',
             'borders' => 'items',
-            'lightings' => 'items',
         );
 
         return isset($map[$section]) ? $map[$section] : 'items';
@@ -704,6 +696,9 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
     {
         $required_options = $this->get_required_options($config_id);
         $current = $this->get_section_items($required_options, $section);
+        if ($section === 'sizes') {
+            $payload = $this->normalize_free_sizes_payload($payload);
+        }
         $next_value = $payload;
         if ($this->is_list_array($payload) && $this->section_items_key($section)) {
             $next_value = $this->section_value_with_items($required_options, $section, $payload);
@@ -742,9 +737,7 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             $items = array_values($value['items']);
         }
 
-        if (isset($value['customSize']) && is_array($value['customSize'])) {
-            unset($value['customSize']['pricings']);
-        }
+        $value = $this->normalize_free_sizes_payload($value);
         unset($value['measurementUnit']);
         $value['label'] = isset($value['label']) ? (string) $value['label'] : 'Sizes';
         $value['description'] = isset($value['description']) ? (string) $value['description'] : '';
@@ -753,6 +746,27 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
             'description' => $value['description'],
         );
         $value['items'] = $items;
+
+        return $value;
+    }
+
+    protected function normalize_free_sizes_payload(array $value): array
+    {
+        $value['customSize'] = isset($value['customSize']) && is_array($value['customSize']) ? $value['customSize'] : array();
+        $value['customSize']['active'] = false;
+        $value['customSize']['showPredefinedSizes'] = isset($value['customSize']['showPredefinedSizes']) ? (bool) $value['customSize']['showPredefinedSizes'] : true;
+        $value['customSize']['width'] = isset($value['customSize']['width']) && is_array($value['customSize']['width'])
+            ? $value['customSize']['width']
+            : array('label' => 'Width', 'min' => 0, 'max' => 0);
+        $value['customSize']['height'] = isset($value['customSize']['height']) && is_array($value['customSize']['height'])
+            ? $value['customSize']['height']
+            : array('label' => 'Height', 'min' => 0, 'max' => 0);
+        $value['customSize']['pricings'] = array();
+
+        $value['thickness'] = isset($value['thickness']) && is_array($value['thickness']) ? $value['thickness'] : array();
+        $value['thickness']['active'] = false;
+        $value['thickness']['values'] = isset($value['thickness']['values']) && is_array($value['thickness']['values']) ? array_values($value['thickness']['values']) : array();
+        $value['thickness']['items'] = isset($value['thickness']['items']) && is_array($value['thickness']['items']) ? array_values($value['thickness']['items']) : array();
 
         return $value;
     }
@@ -1010,7 +1024,6 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
                     'shapes' => isset($required_options['shapes']) && is_array($required_options['shapes']) ? $required_options['shapes'] : array('items' => array()),
                     'fixingMethods' => isset($required_options['fixingMethods']) && is_array($required_options['fixingMethods']) ? $required_options['fixingMethods'] : array('items' => array()),
                     'borders' => isset($required_options['borders']) && is_array($required_options['borders']) ? $required_options['borders'] : array('items' => array()),
-                    'lightings' => isset($required_options['lightings']) && is_array($required_options['lightings']) ? $required_options['lightings'] : array('items' => array()),
                     'fonts' => isset($required_options['fonts']) && is_array($required_options['fonts']) ? $required_options['fonts'] : array('items' => array()),
                     'pricings' => isset($required_options['pricings']) && is_array($required_options['pricings']) ? $required_options['pricings'] : array('items' => array()),
                 ),
@@ -1776,14 +1789,6 @@ class ASCWO_Api_Required_Options_Base extends WP_REST_Controller
         $fontId = isset($font['managedFontId']) ? $font['managedFontId'] : '';
 
         return 'font-' . $this->slugify($label ?: $fontId ?: "f-{$index}", "f-{$index}");
-    }
-
-    protected function generate_lighting_id(array $lighting): string
-    {
-        $label = isset($lighting['label']) ? (string) $lighting['label'] : '';
-        $hex = isset($lighting['hexCode']) ? (string) $lighting['hexCode'] : '';
-
-        return 'lighting-' . $this->slugify($label ?: $hex ?: 'lighting', 'lighting');
     }
 
     protected function generate_additional_input_id(array $option): string

@@ -7,12 +7,16 @@
             <h2 class="ascwo-title">{{ __("Colors", "all-signs-customizer-for-woocommerce") }}</h2>
             <p class="ascwo-subtitle">{{ __("Manage the classic color records, then exclude them from materials when needed.", "all-signs-customizer-for-woocommerce") }}</p>
           </div>
-          <button type="button" @click="newColor" class="ascwo-primary-button">
+          <button type="button" @click="newColor" :disabled="!canAddMoreColors" class="ascwo-primary-button">
             <PlusIcon class="ascwo-w-4 ascwo-h-4" />
             {{ __("Add new color", "all-signs-customizer-for-woocommerce") }}
           </button>
         </div>
       </section>
+
+      <div v-if="!canAddMoreColors" class="ascwo-card ascwo-card-inner ascwo-bg-[#fff7ed] ascwo-border-[#f59e0b] ascwo-text-[#92400e]">
+        {{ __("The free version supports up to 10 colors only. Upgrade to Pro at https://signsdesigner.us/all-signs-customizer-product/ to add more.", "all-signs-customizer-for-woocommerce") }}
+      </div>
 
       <section class="ascwo-card">
         <div class="ascwo-card-inner">
@@ -74,32 +78,9 @@
       <section class="ascwo-card">
         <div class="ascwo-card-inner">
           <h3 class="ascwo-section-title ascwo-mb-0">{{ __("Custom Colors", "all-signs-customizer-for-woocommerce") }}</h3>
-          <p class="ascwo-subtitle ascwo-mb-4">{{ __("Keep the same classic fields used for custom color settings.", "all-signs-customizer-for-woocommerce") }}</p>
-
-          <div class="ascwo-setting-row ascwo-border-t">
-            <div>
-              <h4 class="ascwo-setting-title">{{ __("Enable custom colors", "all-signs-customizer-for-woocommerce") }}</h4>
-            </div>
-            <div class="ascwo-inline-flex ascwo-items-center ascwo-gap-2">
-              <span class="ascwo-toggle-label">{{ __("No", "all-signs-customizer-for-woocommerce") }}</span>
-              <button type="button" @click="handleChangeCustomColorsActive" :class="['ascwo-toggle', colors.customColors.active ? 'is-active' : '']"><span></span></button>
-              <span class="ascwo-toggle-label">{{ __("Yes", "all-signs-customizer-for-woocommerce") }}</span>
-            </div>
+          <div class="ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#f59e0b] ascwo-bg-[#fff7ed] ascwo-p-4 ascwo-text-[13px] ascwo-leading-5 ascwo-text-[#92400e]">
+            {{ __("Custom colors are locked in the free version. Upgrade to Pro at https://signsdesigner.us/all-signs-customizer-product/ to enable them.", "all-signs-customizer-for-woocommerce") }}
           </div>
-
-          <label class="ascwo-block ascwo-mt-3">
-            <span class="ascwo-form-label">{{ __("Label", "all-signs-customizer-for-woocommerce") }}</span>
-            <input v-model="colors.customColors.label" class="ascwo-form-input" autocomplete="off" />
-          </label>
-
-          <label class="ascwo-block ascwo-mt-3">
-            <span class="ascwo-form-label">{{ __("Preview image", "all-signs-customizer-for-woocommerce") }}</span>
-            <div class="ascwo-file-input">
-              <button type="button" @click.prevent="selectCustomPrevImage" class="ascwo-file-button">{{ __("Preview image", "all-signs-customizer-for-woocommerce") }}</button>
-              <input v-model="colors.customColors.prevImg" autocomplete="off" />
-            </div>
-            <span class="ascwo-help-text">{{ __("Preview image for the custom colors option.", "all-signs-customizer-for-woocommerce") }}</span>
-          </label>
 
           <div class="ascwo-flex ascwo-justify-end ascwo-mt-5">
             <button type="button" @click="updateMaterialColor" :disabled="isLoading" class="ascwo-primary-button">
@@ -230,7 +211,7 @@
 
 <script setup>
 import api from "@/admin/Api/api";
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import toastMessage from "@/admin/utils/functions";
 import { Edit2Icon, Loader2Icon, PlusIcon, Trash2Icon } from "lucide-vue-next";
@@ -246,9 +227,10 @@ const defaultActionId = ref("");
 const isEdit = ref(false);
 const openModal = ref(false);
 const colorId = ref(null);
+const MAX_COLOR_ITEMS = 10;
 
 const defaultColors = () => ({
-  customColors: { active: true, label: "Custom Colors", prevImg: "" },
+  customColors: { active: false, label: "Custom Colors", prevImg: "" },
   items: [],
 });
 
@@ -263,6 +245,7 @@ const defaultColor = () => ({
 
 const colors = ref(defaultColors());
 const color = ref(defaultColor());
+const canAddMoreColors = computed(() => Array.isArray(colors.value.items) && colors.value.items.length < MAX_COLOR_ITEMS);
 
 const namedColorHex = {
   black: "#000000",
@@ -352,7 +335,7 @@ const normalizeColors = (raw) => {
     : [];
   return {
     changed,
-    customColors: { ...defaultColors().customColors, ...(source.customColors || {}) },
+    customColors: { ...defaultColors().customColors, ...(source.customColors || {}), active: false },
     items,
   };
 };
@@ -392,6 +375,10 @@ const updateMaterialColor = async () => {
 
 const addMaterialColor = async () => {
   if (!color.value.name.trim()) return;
+  if (!canAddMoreColors.value && !isEdit.value) {
+    toastMessage(__("The free version supports up to 10 colors only. Upgrade to Pro to add more.", "all-signs-customizer-for-woocommerce"), "warning");
+    return;
+  }
   isLoading.value = true;
   try {
     const res = await api.addRequiredOptionColorItem(configID.value, color.value);
@@ -473,6 +460,10 @@ const selectDefault = async (key) => {
 };
 
 const newColor = () => {
+  if (!canAddMoreColors.value) {
+    toastMessage(__("The free version supports up to 10 colors only. Upgrade to Pro to add more.", "all-signs-customizer-for-woocommerce"), "warning");
+    return;
+  }
   isNewColor.value = true;
   isEdit.value = false;
   colorId.value = null;
@@ -485,7 +476,6 @@ const back = () => {
 };
 
 const closeModal = () => openModal.value = false;
-const handleChangeCustomColorsActive = () => colors.value.customColors.active = !colors.value.customColors.active;
 
 const getPreviewStyle = (item) => {
   if (item.pattern?.active && item.pattern?.url) return {};

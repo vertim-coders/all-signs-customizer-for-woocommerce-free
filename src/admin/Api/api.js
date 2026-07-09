@@ -644,62 +644,6 @@ const api = {
     return del.data;
   },
 
-  //Function related to lightings
-  updateRequiredOptionLightings: async (configId, lightings) => {
-    const edit = await axios.put(
-      ascwo_api_url + "/configs/" + configId + "/required-options/lightings",
-      lightings,
-    );
-    return edit.data;
-  },
-  getRequiredOptionLightings: async (configId) => {
-    const result = await axios.get(
-      ascwo_api_url + "/configs/" + configId + "/required-options/lightings",
-    );
-    return result.data?.data?.lightings ?? result.data;
-  },
-  addRequiredOptionLightingItem: async (configId, lighting) => {
-    const add = await axios.post(
-      ascwo_api_url +
-        "/configs/" +
-        configId +
-        "/required-options/lightings/items",
-      lighting,
-    );
-    return add.data;
-  },
-  getRequiredOptionLightingItem: async (configId, itemId) => {
-    const result = await axios.get(
-      ascwo_api_url +
-        "/configs/" +
-        configId +
-        "/required-options/lightings/items/" +
-        itemId,
-    );
-    return result.data?.data?.lighting ?? result.data;
-  },
-  updateRequiredOptionLightingItem: async (configId, itemId, lighting) => {
-    const edit = await axios.put(
-      ascwo_api_url +
-        "/configs/" +
-        configId +
-        "/required-options/lightings/items/" +
-        itemId,
-      lighting,
-    );
-    return edit.data;
-  },
-  deleteRequiredOptionLightingItem: async (configId, itemId) => {
-    const del = await axios.delete(
-      ascwo_api_url +
-        "/configs/" +
-        configId +
-        "/required-options/lightings/items/" +
-        itemId,
-    );
-    return del.data;
-  },
-
   //Function related to borders
   updateRequiredOptionBorders: async (configId, borders) => {
     const edit = await axios.put(

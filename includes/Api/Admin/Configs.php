@@ -40,6 +40,19 @@ class ASCWO_Api_Configs extends WP_REST_Controller
         return is_array($data) ? $data : array();
     }
 
+    private function get_config_count(): int
+    {
+        $query = new WP_Query(array(
+            'post_type' => 'ascwo-configs',
+            'post_status' => 'publish',
+            'posts_per_page' => 1,
+            'fields' => 'ids',
+            'no_found_rows' => false,
+        ));
+
+        return (int) $query->found_posts;
+    }
+
     private function is_valid_config_id(int $config_id): bool
     {
         if (!$config_id) {
@@ -540,6 +553,13 @@ class ASCWO_Api_Configs extends WP_REST_Controller
      */
     public function create_config_post($request)
     {
+        if ($this->get_config_count() >= 1) {
+            return rest_ensure_response(array(
+                'success' => false,
+                'message' => __('Only one configuration is allowed in the free version.', 'all-signs-customizer-for-woocommerce'),
+            ));
+        }
+
         $params = $this->get_request_data($request);
         $product_ids = array();
         if (isset($params['product_ids']) && is_array($params['product_ids'])) {

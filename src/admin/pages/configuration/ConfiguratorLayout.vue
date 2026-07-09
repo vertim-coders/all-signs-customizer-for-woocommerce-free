@@ -268,14 +268,12 @@ const icons = {
   pricing: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 100 4h4a2 2 0 110 4h-6"/><path d="M12 18V6"/></svg>',
   fonts: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V4h16v16"/><path d="M8 16V8h8v8"/><path d="M10 12h4"/></svg>',
   colors: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>',
-  lighting: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M8 14a6 6 0 118 0c-.8.7-1.2 1.5-1.2 2.4H9.2c0-.9-.4-1.7-1.2-2.4z"/></svg>',
   fixing: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
   shapes: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 22h20L12 2z"/></svg>',
   materials: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M2 12h20"/></svg>',
   borders: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>',
   text: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>',
   image: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>',
-  signpart: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="12" y1="2" x2="12" y2="22"/></svg>',
   inputs: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>',
   cliparts: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8" cy="8" r="2"/><path d="M21 15l-5-5L5 21"/></svg>',
   general: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>',
@@ -296,7 +294,6 @@ const groups = computed(() => {
     { label: __('Pricings', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/required-options/pricings`, icon: icons.pricing },
     { label: __('Fonts', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/required-options/fonts`, icon: icons.fonts },
     { label: __('Colors', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/required-options/colors`, icon: icons.colors },
-    { label: __('Lighting', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/required-options/lightings`, icon: icons.lighting },
     { label: __('Fixing Methods', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/required-options/fixing-methods`, icon: icons.fixing },
     { label: __('Shapes', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/required-options/shapes`, icon: icons.shapes },
     { label: __('Materials', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/required-options/materials`, icon: icons.materials },
@@ -306,7 +303,6 @@ const groups = computed(() => {
   const editorItems = [
     { label: __('Text Setting', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/design-setup/text`, icon: icons.text },
     { label: __('Image Setup', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/design-setup/images`, icon: icons.image },
-    { label: __('Sign Part', 'all-signs-customizer-for-woocommerce'), path: `${basePath}/design-setup/sign-part`, icon: icons.signpart },
   ];
 
   const additionalItems = [

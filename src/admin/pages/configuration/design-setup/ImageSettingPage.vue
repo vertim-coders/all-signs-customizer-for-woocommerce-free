@@ -22,50 +22,6 @@
 
     <template v-if="image.active">
       <SettingSection
-        title="Image Colors"
-        description="Manage predefined image colors and the optional custom color preview."
-      >
-        <div class="ascwo-image-stack">
-          <div class="ascwo-image-field ascwo-image-field-sm">
-            <label>Label</label>
-            <input v-model="image.colorsLabel" type="text" />
-          </div>
-
-          <div v-if="image.colors.length" class="ascwo-image-color-grid">
-            <div v-for="(color, index) in image.colors" :key="`image-color-${index}`" class="ascwo-image-color-row">
-              <div class="ascwo-image-field">
-                <label>Name</label>
-                <input v-model="color.name" type="text" />
-              </div>
-              <label class="ascwo-image-swatch-field">
-                <span>Color</span>
-                <input v-model="color.codeHex" type="color" />
-              </label>
-              <button type="button" class="ascwo-image-icon-danger" @click="removeColor(index)" aria-label="Remove color">
-                <Trash2Icon :size="15" />
-              </button>
-            </div>
-          </div>
-
-          <button type="button" class="ascwo-image-secondary ascwo-image-fit" @click="addColor">Add more colors</button>
-
-          <div class="ascwo-image-custom-color">
-            <ToggleField label="Enable Custom color" v-model="image.enableCustomColor" />
-            <div class="ascwo-image-upload-field">
-              <label>Custom color preview image</label>
-              <div class="ascwo-image-upload-control">
-                <button type="button" class="ascwo-image-primary" @click="selectColorPrevImage">upload image</button>
-                <div class="ascwo-image-upload-preview">
-                  <img v-if="image.colorsPrevImg" :src="image.colorsPrevImg" alt="" />
-                  <button v-if="image.colorsPrevImg" type="button" @click="image.colorsPrevImg = ''">×</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </SettingSection>
-
-      <SettingSection
         title="Upload Script"
         description="Define the upload behavior, size limits and allowed extensions."
       >
@@ -125,83 +81,6 @@
       </SettingSection>
 
       <SettingSection
-        title="Cutlines"
-        description="Configure the first and second cutline only when they are enabled."
-      >
-        <div class="ascwo-image-stack">
-          <div class="ascwo-image-field">
-            <label>Cutline Type</label>
-            <select v-model="image.selectedCutline">
-              <option value="none">none</option>
-              <option value="1x">1x</option>
-              <option value="2x">2x</option>
-            </select>
-          </div>
-
-          <div v-if="image.selectedCutline === '1x' || image.selectedCutline === '2x'" class="ascwo-image-soft-card">
-            <strong>First Cutline</strong>
-            <div class="ascwo-image-grid ascwo-image-grid-2">
-              <div class="ascwo-image-field">
-                <label>Border Size (for print ready file)</label>
-                <input v-model.number="image.cutlines.first.borderSize" type="number" />
-              </div>
-              <label class="ascwo-image-swatch-field ascwo-image-top-label">
-                <span>Color</span>
-                <input v-model="image.cutlines.first.color" type="color" />
-              </label>
-            </div>
-          </div>
-
-          <div v-if="image.selectedCutline === '2x'" class="ascwo-image-soft-card">
-            <strong>Second Cutline</strong>
-            <div class="ascwo-image-grid ascwo-image-grid-2">
-              <div class="ascwo-image-field">
-                <label>Size between Two Cutlines border</label>
-                <input v-model.number="image.cutlines.second.size" type="number" />
-              </div>
-              <label class="ascwo-image-swatch-field ascwo-image-top-label">
-                <span>Color</span>
-                <input v-model="image.cutlines.second.color" type="color" />
-              </label>
-              <div class="ascwo-image-field">
-                <label>Border Size (for print ready file)</label>
-                <input v-model.number="image.cutlines.second.borderSize" type="number" />
-              </div>
-              <label class="ascwo-image-swatch-field ascwo-image-top-label">
-                <span>Border Color</span>
-                <input v-model="image.cutlines.second.borderColor" type="color" />
-              </label>
-            </div>
-          </div>
-        </div>
-      </SettingSection>
-
-      <SettingSection
-        title="Filters"
-        description="Control which image effects are available in the editor."
-      >
-        <div class="ascwo-image-stack">
-          <div class="ascwo-image-inline-toggle">
-            <strong>Filter</strong>
-            <SwitchControl v-model="image.filter.active" />
-          </div>
-
-          <div v-if="image.filter.active" class="ascwo-image-filter-row">
-            <FilterItem label="Greyscale" v-model="image.filter.enableGreyscale" />
-            <FilterItem label="Greenify" v-model="image.filter.enableGreenify" />
-            <FilterItem label="Pinkify" v-model="image.filter.enablePinkify" />
-            <FilterItem label="Orangeify" v-model="image.filter.enableOrangeify" />
-            <FilterItem label="Blueify" v-model="image.filter.enableBlueify" />
-            <FilterItem label="Opacity" v-model="image.filter.enableOpacity" />
-            <FilterItem label="Blur" v-model="image.filter.enableBlur" />
-            <FilterItem label="Sepia" v-model="image.filter.enableSepia" />
-            <FilterItem label="sharpen" v-model="image.filter.enableSharpen" />
-            <FilterItem label="Emboss" v-model="image.filter.enableEmbross" />
-          </div>
-        </div>
-      </SettingSection>
-
-      <SettingSection
         title="Scenes"
         description="Choose the background scenes used for image preview."
       >
@@ -235,7 +114,6 @@ import toastMessage from '@/admin/utils/functions';
 import { adminImageUrl } from '@/admin/utils/admin-assets';
 import { defineComponent, h, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { Trash2Icon } from 'lucide-vue-next';
 
 const props = defineProps({
   data: Object,
@@ -255,7 +133,7 @@ const defaultImageSettings = () => ({
   colorsLabel: 'Image Colors',
   colorsPrevImg: '',
   colors: [],
-  enableCustomColor: true,
+  enableCustomColor: false,
   fileUploadScript: {
     customWithGraphical: false,
     enableSizeRestriction: false,
@@ -263,30 +141,7 @@ const defaultImageSettings = () => ({
     uploadMaxWidth: 200,
     allowedUploadsExtentions: ['png'],
   },
-  selectedCutline: 'none',
-  cutlines: {
-    first: { borderSize: 4, color: '#FFF10E' },
-    second: {
-      color: '#5EEC92',
-      size: 10,
-      borderColor: '#4A65F9',
-      borderSize: 4,
-    },
-  },
   enableClipart: { active: true, selectedClipartGroups: [] },
-  filter: {
-    active: true,
-    enableGreyscale: false,
-    enableOpacity: true,
-    enableEmbross: true,
-    enableBlur: true,
-    enableSepia: true,
-    enableSharpen: true,
-    enableGreenify: false,
-    enablePinkify: false,
-    enableOrangeify: false,
-    enableBlueify: false,
-  },
   scenes: [],
 });
 
@@ -318,24 +173,11 @@ const mergeSettings = (loaded = {}) => {
         ? [...new Set(loaded.fileUploadScript.allowedUploadsExtentions)]
         : defaults.fileUploadScript.allowedUploadsExtentions,
     },
-    cutlines: {
-      first: {
-        ...defaults.cutlines.first,
-        ...(loaded.cutlines?.first || {}),
-      },
-      second: {
-        ...defaults.cutlines.second,
-        ...(loaded.cutlines?.second || {}),
-      },
-    },
     enableClipart: {
       ...defaults.enableClipart,
       ...(loaded.enableClipart || {}),
     },
-    filter: {
-      ...defaults.filter,
-      ...(loaded.filter || {}),
-    },
+    enableCustomColor: false,
     colors: Array.isArray(loaded.colors) ? loaded.colors : defaults.colors,
     scenes: Array.isArray(loaded.scenes) ? loaded.scenes : defaults.scenes,
   };
@@ -363,14 +205,6 @@ onMounted(async () => {
   }
 });
 
-const addColor = () => {
-  image.value.colors.push({ name: '', codeHex: '#FFFFFF' });
-};
-
-const removeColor = (index) => {
-  image.value.colors.splice(index, 1);
-};
-
 const addExtension = () => {
   if (selectedExtension.value && !image.value.fileUploadScript.allowedUploadsExtentions.includes(selectedExtension.value)) {
     image.value.fileUploadScript.allowedUploadsExtentions.push(selectedExtension.value);
@@ -382,21 +216,6 @@ const removeExtension = (extension) => {
   image.value.fileUploadScript.allowedUploadsExtentions = image.value.fileUploadScript.allowedUploadsExtentions.filter(
     (item) => item !== extension,
   );
-};
-
-const selectColorPrevImage = () => {
-  const uploader = wp.media({
-    title: 'Upload Image',
-    button: { text: 'Use this image' },
-    multiple: false,
-  });
-
-  uploader.on('select', () => {
-    const attachment = uploader.state().get('selection').first().toJSON();
-    image.value.colorsPrevImg = attachment.url;
-  });
-
-  uploader.open();
 };
 
 const addImage = () => {
@@ -438,7 +257,11 @@ const updateImageSettings = async () => {
   isLoading.value = true;
 
   try {
-    const result = await api.updateCustomizerSignsImage(configId.value, image.value);
+    const payload = {
+      ...image.value,
+      enableCustomColor: false,
+    };
+    const result = await api.updateCustomizerSignsImage(configId.value, payload);
     if (result.success) {
       await props.fetchSettings?.();
       toastMessage('Settings saved successfully', 'success');

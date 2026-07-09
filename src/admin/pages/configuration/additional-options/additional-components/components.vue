@@ -161,7 +161,7 @@ const isEdit = ref(false);
 const openModal = ref(false);
 const noAdditionalOptionsFound = ref('');
 const MAX_ADDITIONAL_COMPONENTS = 2;
-const proUpgradeUrl = 'https://signsdesigner.us/all-signs-customizer-for-woocommerce/';
+const proUpgradeUrl = 'https://signsdesigner.us/all-signs-customizer-product/';
 const additionalOption = ref({
   title: '',
   description: '',

@@ -14,12 +14,10 @@ import ShapesPage from "@/admin/pages/configuration/required-options/ShapesPage.
 import PricingsPage from "@/admin/pages/configuration/required-options/PricingsPage.vue";
 import FontsPage from "@/admin/pages/configuration/required-options/FontsPage.vue";
 import MaterialsPage from "@/admin/pages/configuration/required-options/MaterialsPage.vue";
-import LightingsPage from "@/admin/pages/configuration/required-options/LightingsPage.vue";
 
 // import design setup pages
 import TextSettingPage from "@/admin/pages/configuration/design-setup/TextSettingPage.vue";
 import ImageSettingPage from "@/admin/pages/configuration/design-setup/ImageSettingPage.vue";
-import SignPartSettingPage from "@/admin/pages/configuration/design-setup/SignPartSettingPage.vue";
 
 // import additional options pages
 import AdditionalInputs from "@/admin/pages/configuration/additional-options/inputs/index.vue";
@@ -115,11 +113,6 @@ const router = createRouter({
           component: ColorsPage,
         },
         {
-          path: "required-options/lightings",
-          name: "lightings",
-          component: LightingsPage,
-        },
-        {
           path: "required-options/fixing-methods",
           name: "fixing-methods",
           component: FixingMethodsPage,
@@ -157,11 +150,6 @@ const router = createRouter({
           path: "design-setup/images",
           name: "image-setting",
           component: ImageSettingPage,
-        },
-        {
-          path: "design-setup/sign-part",
-          name: "sign-part-setting",
-          component: SignPartSettingPage,
         },
         {
           path: "additional-options",

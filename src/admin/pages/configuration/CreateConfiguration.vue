@@ -603,7 +603,6 @@ import {
   RequiredOptionsColors,
   RequiredOptionsFixingMethods,
   RequiredOptionsFonts,
-  RequiredOptionsLightings,
   RequiredOptionsPricings,
   RequiredOptionsShapes,
   RequiredOptionsSizes,
@@ -639,7 +638,7 @@ const setupModelImage = (type) => adminImageUrl(
     ? '/images/create-config/setup-models/build-from-preset.webp'
     : '/images/create-config/setup-models/build-from-option.webp'
 );
-const proUpgradeUrl = 'https://signsdesigner.us/all-signs-customizer-for-woocommerce/';
+const proUpgradeUrl = 'https://signsdesigner.us/all-signs-customizer-product/';
 const showPresetUpgradeNotice = () => {
   toastMessage(
     sprintf(
@@ -849,13 +848,8 @@ const buildConfigData = (sourceFonts = []) => {
   const demoPricingId = Array.isArray(demo.requiredOptions?.pricings?.items) && demo.requiredOptions.pricings.items.length
     ? String(demo.requiredOptions.pricings.items[0]?.id || '')
     : '';
-  const pricingByFamily = {
-    signboard: 'pricing-signs-standard',
-    banner: 'pricing-banner-standard',
-    sticker: 'pricing-sticker-standard',
-  };
   const selectedPricingId = wizard.value.includeDemo
-    ? String(pricingByFamily[wizard.value.productType] || demoPricingId || '')
+    ? String(demoPricingId || '')
     : '';
   const resolvedFontsSection = buildFontsSection(sourceFonts);
 
