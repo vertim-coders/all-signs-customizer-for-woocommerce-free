@@ -7,11 +7,9 @@ class ASCWO_Post_Type
 		add_action('init', array($this, 'register_ascwo_post_type'));
 		add_action('init', array($this, 'register_ascwo_request_quote_post_type'));
 		add_action('init', array($this, 'register_ascwo_config_meta'));
-		add_action('init', array($this, 'register_ascwo_config_templates'));
 
 		add_filter('the_content', array($this, 'get_editor_shortcode_handler'));
 		add_filter('init', array($this, 'ascwo_add_design_page_rewrite_rules'), 99);
-		add_filter('init', array($this, 'ascwo_add_template_page_rewrite_rules'), 99);
 		add_filter('query_vars', array($this, 'ascwo_add_query_vars'));
 		add_filter('redirect_canonical', array($this, 'prevent_ascwo_canonical_redirect'), 10, 2);
 		add_action('template_redirect', array($this, 'redirect_if_no_product_id'));
@@ -115,32 +113,6 @@ class ASCWO_Post_Type
 	}
 
 	/**
-	 * Create meta data of ascwo-configs-meta
-	 */
-	public function register_ascwo_config_templates()
-	{
-		register_meta(
-			'ascwo-configs',
-			'ascwo-configs-templates',
-			array(
-				'show_in_rest' => array(
-					'schema' => array(
-						'type' => 'array',
-						'items' => array(
-							'type' => 'array',
-							'items' => array(
-								'type' => 'mixed'
-							)
-						)
-					)
-				),
-				'type' => 'array',
-				'single' => true,
-			)
-		);
-	}
-
-	/**
 	 * Add short code on config page
 	 */
 
@@ -149,22 +121,8 @@ class ASCWO_Post_Type
 		global $wp_query;
 		$page_settings = get_option("ascwo_config_page");
 		$design_product_id = $this->get_design_product_id_from_request();
-		$template_product_id = $this->get_template_product_id_from_request();
-		$design_template_id = is_array($design_product_id) ? $design_product_id['template_id'] : '';
-		$design_product_id = is_array($design_product_id) ? $design_product_id['product_id'] : $design_product_id;
-		$template_template_id = is_array($template_product_id) ? $template_product_id['template_id'] : '';
-		$template_product_id = is_array($template_product_id) ? $template_product_id['product_id'] : $template_product_id;
 		if ($design_product_id && !isset($wp_query->query_vars['ascwo-product-id'])) {
 			$wp_query->query_vars['ascwo-product-id'] = $design_product_id;
-		}
-		if (!empty($design_template_id) && !isset($wp_query->query_vars['ascwo-tplid'])) {
-			$wp_query->query_vars['ascwo-tplid'] = $design_template_id;
-		}
-		if ($template_product_id && !isset($wp_query->query_vars['ascwo-product-id'])) {
-			$wp_query->query_vars['ascwo-product-id'] = $template_product_id;
-		}
-		if (!empty($template_template_id) && !isset($wp_query->query_vars['ascwo-tplid'])) {
-			$wp_query->query_vars['ascwo-tplid'] = $template_template_id;
 		}
 		if ((get_the_ID() == $page_settings["configuratorPage"]) && is_page($page_settings["configuratorPage"])) {
 			if (!isset($wp_query->query_vars['ascwo-product-id'])) {
@@ -185,11 +143,7 @@ class ASCWO_Post_Type
 				<?php
 				$content .= ob_get_clean();
 			} else {
-				if (isset($wp_query->query_vars['ascwo-tplid'])) {
-					$content .= do_shortcode("[ascwo-configurator productid='" . $wp_query->query_vars['ascwo-product-id'] . "' tplid='" . $wp_query->query_vars['ascwo-tplid'] . "']");
-				} else {
-					$content .= do_shortcode("[ascwo-configurator productid='" . $wp_query->query_vars['ascwo-product-id'] . "']");
-				}
+				$content .= do_shortcode("[ascwo-configurator productid='" . $wp_query->query_vars['ascwo-product-id'] . "']");
 			}
 		}
 		return $content;
@@ -207,13 +161,8 @@ class ASCWO_Post_Type
 
 		$design_product_id = $this->get_design_product_id_from_request();
 		if ($design_product_id) {
-			$design_template_id = is_array($design_product_id) ? $design_product_id['template_id'] : '';
-			$design_product_id = is_array($design_product_id) ? $design_product_id['product_id'] : $design_product_id;
 			if (!isset($wp_query->query_vars['ascwo-product-id'])) {
 				$wp_query->query_vars['ascwo-product-id'] = $design_product_id;
-			}
-			if (!empty($design_template_id) && !isset($wp_query->query_vars['ascwo-tplid'])) {
-				$wp_query->query_vars['ascwo-tplid'] = $design_template_id;
 			}
 			return;
 		}
@@ -269,11 +218,6 @@ class ASCWO_Post_Type
 		return $this->get_product_id_from_request_segment('ascwo-design');
 	}
 
-	private function get_template_product_id_from_request()
-	{
-		return $this->get_product_id_from_request_segment('ascwo-templates');
-	}
-
 	private function get_product_id_from_request_segment($segment)
 	{
 		$request_uri = isset($_SERVER['REQUEST_URI']) ? (string) wp_unslash($_SERVER['REQUEST_URI']) : '';
@@ -282,7 +226,7 @@ class ASCWO_Post_Type
 			return 0;
 		}
 
-		$pattern = '#(?:^|/)' . preg_quote($segment, '#') . '/([^/]+)(?:/([^/]+))?/?$#';
+		$pattern = '#(?:^|/)' . preg_quote($segment, '#') . '/([^/]+)/?$#';
 		if (!preg_match($pattern, $path, $matches)) {
 			return 0;
 		}
@@ -292,23 +236,13 @@ class ASCWO_Post_Type
 			return 0;
 		}
 
-		if (!empty($matches[2])) {
-			return array(
-				'product_id' => $product_id,
-				'template_id' => sanitize_text_field($matches[2]),
-			);
-		}
-
 		return $product_id;
 	}
 
 	public function prevent_ascwo_canonical_redirect($redirect_url, $requested_url)
 	{
 		$path = trim((string) wp_parse_url((string) $requested_url, PHP_URL_PATH), '/');
-		if (
-			preg_match('#(?:^|/)ascwo-design/[^/]+(?:/[^/]+)?/?$#', $path)
-			|| preg_match('#(?:^|/)ascwo-templates/[^/]+(?:/[^/]+)?/?$#', $path)
-		) {
+		if (preg_match('#(?:^|/)ascwo-design/[^/]+/?$#', $path)) {
 			return false;
 		}
 
@@ -318,7 +252,6 @@ class ASCWO_Post_Type
 	public function ascwo_add_query_vars($a_vars)
 	{
 		$a_vars[] = 'ascwo-product-id';
-		$a_vars[] = 'ascwo-tplid';
 		$a_vars[] = 'edit';
 		$a_vars[] = 'design-index';
 		$a_vars[] = 'vcid';
@@ -336,14 +269,6 @@ class ASCWO_Post_Type
 				$slug = trim(get_page_uri($ascwo_page->ID), '/');
 				$match_slug = '(?:index\.php/)?' . preg_quote($slug, '#');
 
-
-				add_rewrite_rule(
-					$match_slug . '/ascwo-design/([^/]+)/([^/]+)/?$',
-					'index.php?pagename=' . $slug . '&ascwo-product-id=$matches[1]&ascwo-tplid=$matches[2]',
-					'top'
-				);
-
-
 				add_rewrite_rule(
 					$match_slug . '/ascwo-design/([^/]+)/?$',
 					'index.php?pagename=' . $slug . '&ascwo-product-id=$matches[1]',
@@ -354,12 +279,4 @@ class ASCWO_Post_Type
 		$wp_rewrite->flush_rules(false);
 
 	}
-
-	public function ascwo_add_template_page_rewrite_rules()
-	{
-		global $wp_rewrite;
-		$wp_rewrite->flush_rules(false);
-	}
-
-
 }

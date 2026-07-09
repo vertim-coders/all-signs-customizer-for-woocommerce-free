@@ -295,11 +295,6 @@ class ASCWO_Product_Config
 		return $output;
 	}
 
-	public function get_templates_buttons($with_upload = false)
-	{
-		return '';
-	}
-
 	/**
 	 * Returns the customization page URL
 	 *
@@ -307,7 +302,6 @@ class ASCWO_Product_Config
 	 * @param int   $design_index Saved design index to load
 	 * @param mixed $cart_item_key Cart item key to edit
 	 * @param int   $order_item_id Order item ID to load
-	 * @param int   $tpl_id ID of the template to load
 	 * @return string
 	 */
 	public function get_design_page_url($design_index = false, $cart_item_key = false, $order_item_id = false, $tpl_id = false)
@@ -354,9 +348,6 @@ class ASCWO_Product_Config
 						$ascwo_page_url = apply_filters('ascwo_customized_order_page_url', $ascwo_page_url);
 					} else {
 						$ascwo_page_url .= 'ascwo-design/' . $item_id . '/';
-						if ($tpl_id) {
-							$ascwo_page_url .= "$tpl_id/";
-						}
 					}
 				} else {
 					if ($design_index !== false) {
@@ -368,71 +359,6 @@ class ASCWO_Product_Config
 						$ascwo_page_url .= '&ascwo-product-id' . $item_id . '&vcid=' . $order_item_id;
 					} else {
 						$ascwo_page_url .= '&ascwo-product-id' . $item_id;
-						if ($tpl_id) {
-							$ascwo_page_url .= "&tpl=$tpl_id";
-						}
-					}
-				}
-			}
-		}
-
-		return $ascwo_page_url;
-	}
-	/**
-	 * Returns the customization page URL
-	 *
-	 * @global array $ascwo_settings
-	 * @param int   $design_index Saved design index to load
-	 * @param mixed $cart_item_key Cart item key to edit
-	 * @param int   $order_item_id Order item ID to load
-	 * @param int   $tpl_id ID of the template to load
-	 * @return string
-	 */
-	public function get_templates_page_url($design_index = false, $cart_item_key = false, $order_item_id = false, $tpl_id = false)
-	{
-
-		//global $wp_query;
-		if ($this->variation_id) {
-			$item_id = $this->variation_id;
-		} else {
-			$item_id = $this->root_product_id;
-		}
-
-
-		$ascwo_page_id = false;
-
-
-
-		$ascwo_page_url = '';
-		if ($ascwo_page_id) {
-
-			$ascwo_page_url = get_permalink($ascwo_page_id);
-
-			if ($item_id) {
-				$query = wp_parse_url($ascwo_page_url, PHP_URL_QUERY);
-				// Returns a string if the URL has parameters or NULL if not
-				if (get_option('permalink_structure')) {
-					if (substr($ascwo_page_url, -1) !== '/') {
-						$ascwo_page_url .= '/';
-					} else {
-						$ascwo_page_url .= 'ascwo-templates/' . $item_id . '/';
-						if ($tpl_id) {
-							$ascwo_page_url .= "$tpl_id/";
-						}
-					}
-				} else {
-					if ($design_index !== false) {
-						$ascwo_page_url .= '&ascwo-product-id' . $item_id . '&design_index=' . $design_index;
-					} elseif ($cart_item_key) {
-						$qty_key = 'qty_' . $cart_item_key . '_' . $item_id;
-						$ascwo_page_url .= '&ascwo-product-id' . $item_id . '&edit=' . $cart_item_key . '&custom_qty=' . get_option($qty_key, $this->get_purchase_properties()['min_to_purchase']);
-					} elseif ($order_item_id) {
-						$ascwo_page_url .= '&ascwo-product-id' . $item_id . '&vcid=' . $order_item_id;
-					} else {
-						$ascwo_page_url .= '&ascwo-product-id' . $item_id;
-						if ($tpl_id) {
-							$ascwo_page_url .= "&tpl=$tpl_id";
-						}
 					}
 				}
 			}
@@ -539,7 +465,6 @@ class ASCWO_Product_Config
 
 		if ($ascwo_product->is_ascwo_customizable()) {
 			$configs = get_post_meta($product_id, "product-ascwo-metas", true);
-			$meta_templates = get_post_meta($configs[$product_id]['config-id'], 'ascwo-templates', true);
 			$meta_design = get_post_meta($configs[$product_id]['config-id'], 'ascwo-configs-meta', true);
 			if ('simple' === $product->get_type() || 'variable' === $product->get_type()) {
 				ob_start(); ?>
@@ -548,9 +473,6 @@ class ASCWO_Product_Config
 					$general_product_options = $meta_design["data"]["settings"]["generals"]["product"] ?? null;
 					if ($general_product_options != null && $general_product_options["designFromScratch"] === true) {
 						echo wp_kses_post($ascwo_product->get_design_buttons(true));
-					}
-					if (is_array($meta_templates) && count($meta_templates) > 0) {
-						echo wp_kses_post($ascwo_product->get_templates_buttons());
 					}
 					?>
 				</div>
@@ -576,10 +498,6 @@ class ASCWO_Product_Config
 					if ($ascwo_product->is_ascwo_customizable()) {
 						if ($general_options["designFromScratch"]) {
 							$html .= wp_kses_post($ascwo_product->get_design_buttons());
-						}
-						$meta_value = get_post_meta($configs[$productId]['config-id'], 'ascwo-templates', true);
-						if (is_array($meta_value) && count($meta_value) > 0) {
-							$html .= wp_kses_post($ascwo_product->get_templates_buttons());
 						}
 					}
 				}
