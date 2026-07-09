@@ -67,7 +67,7 @@ final class ASCWO_All_Signs_Options_Pro
      *
      * @var string
      */
-    public $version = '1.5.4';
+    public $version = '1.0';
 
     /**
      * Holds various class instances
