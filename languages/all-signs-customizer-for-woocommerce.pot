@@ -1,0 +1,2569 @@
+# Copyright (C) 2026 Vertim Coders
+# This file is distributed under the GPL2.
+msgid ""
+msgstr ""
+"Project-Id-Version: All Sign Customizer for WooCommerce 1.0.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/all-signs-customizer-for-woocommerce\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-07-16T10:19:16+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: all-signs-customizer-for-woocommerce\n"
+
+#. Plugin Name of the plugin
+#: all-signs-customizer-for-woocommerce.php
+#: includes/Admin.php:69
+#: includes/ascwo-product-config.php:211
+msgid "All Sign Customizer for WooCommerce"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: all-signs-customizer-for-woocommerce.php
+msgid "https://signsdesigner.us/"
+msgstr ""
+
+#. Description of the plugin
+#: all-signs-customizer-for-woocommerce.php
+msgid "Add a sign configurator to WooCommerce products so customers can design and order custom signs directly from your store."
+msgstr ""
+
+#. Author of the plugin
+#: all-signs-customizer-for-woocommerce.php
+msgid "Vertim Coders"
+msgstr ""
+
+#. Author URI of the plugin
+#: all-signs-customizer-for-woocommerce.php
+msgid "https://vertimcoders.com"
+msgstr ""
+
+#: all-signs-customizer-for-woocommerce.php:125
+msgid "Go Docs!"
+msgstr ""
+
+#: all-signs-customizer-for-woocommerce.php:155
+msgid "This plugin requires WooCommerce to run. Please install or activate WooCommerce."
+msgstr ""
+
+#: all-signs-customizer-for-woocommerce.php:800
+#: all-signs-customizer-for-woocommerce.php:823
+msgid "Customization Page not found"
+msgstr ""
+
+#: all-signs-customizer-for-woocommerce.php:805
+#, php-format
+msgid "To display the configurator on a page without a short code, please select the page on which it should be displayed. Click <a href=\"%s\">here</a>"
+msgstr ""
+
+#: all-signs-customizer-for-woocommerce.php:828
+#, php-format
+msgid "Configuration page is not defined for ASO plugin. Click <a href=\"%s\">here</a>"
+msgstr ""
+
+#: all-signs-customizer-for-woocommerce.php:855
+msgid "Welcome to All Sign Customizer for WooCommerce. Let's get you started !!!"
+msgstr ""
+
+#: all-signs-customizer-for-woocommerce.php:857
+msgid "To avoid performance problems we recommend at least version 3.4 of Woocommerce."
+msgstr ""
+
+#: all-signs-customizer-for-woocommerce.php:859
+msgid "WooCommerce activated"
+msgstr ""
+
+#: all-signs-customizer-for-woocommerce.php:859
+msgid "Activate WooCommerce"
+msgstr ""
+
+#: all-signs-customizer-for-woocommerce.php:859
+msgid "Install WooCommerce"
+msgstr ""
+
+#: all-signs-customizer-for-woocommerce.php:886
+msgid "Activated"
+msgstr ""
+
+#: all-signs-customizer-for-woocommerce.php:899
+msgid "Activate"
+msgstr ""
+
+#. translators: conjunction of two alternative options user can choose (in missing plugin admin notice). Example: "Activate WooCommerce or learn more"
+#: all-signs-customizer-for-woocommerce.php:923
+msgid "or"
+msgstr ""
+
+#: all-signs-customizer-for-woocommerce.php:925
+msgid "learn more"
+msgstr ""
+
+#: all-signs-customizer-for-woocommerce.php:981
+msgid "We recommend setting your permalinks to \"/%postname%/\" to improve natural SEO.w! 🤘"
+msgstr ""
+
+#: all-signs-customizer-for-woocommerce.php:983
+msgid "To do this, go to"
+msgstr ""
+
+#: all-signs-customizer-for-woocommerce.php:984
+msgid "Settings > Permanent links"
+msgstr ""
+
+#: includes/Admin.php:70
+msgid "Home"
+msgstr ""
+
+#: includes/Admin.php:71
+#: assets/js/admin.js:1
+msgid "Configurations"
+msgstr ""
+
+#: includes/Admin.php:74
+#: assets/js/admin.js:1
+msgid "Global Settings"
+msgstr ""
+
+#: includes/Admin.php:75
+msgid "Manage Fonts"
+msgstr ""
+
+#: includes/Admin.php:76
+msgid "Manage Cliparts"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Components.php:260
+#: includes/Api/Admin/Additionals-Options/Materials.php:157
+#: includes/Api/Admin/Configs.php:650
+#: includes/Api/Admin/Settings/Customizer-sign.php:324
+#: includes/Api/Admin/Settings/Customizer-sign.php:373
+#: includes/Api/Admin/Settings/Customizer-sign.php:422
+#: includes/Api/Admin/Settings/Customizer-sign.php:471
+#: includes/Api/Admin/Settings/Customizer-sign.php:520
+#: includes/Api/Admin/Settings/Generals.php:243
+#: includes/Api/Admin/Settings/Generals.php:282
+#: includes/Api/Admin/Settings/Generals.php:329
+#: includes/Api/Admin/Settings/Generals.php:375
+#: includes/Api/Admin/Settings/Generals.php:445
+#: includes/Api/Admin/Settings/Language-Image.php:212
+#: includes/Api/Admin/Settings/Language-Image.php:251
+#: includes/Api/Admin/Settings/Language-Image.php:299
+#: includes/Api/Admin/Settings/Language-Image.php:347
+#: includes/Api/Admin/Settings/Language-Image.php:395
+msgid "Custom ID invalid"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Components.php:270
+msgid "No additional components found"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Components.php:284
+#: includes/Api/Admin/Additionals-Options/Components.php:406
+#: includes/Api/Admin/Additionals-Options/Components.php:446
+#: includes/Api/Admin/Required-Options/Base.php:1400
+msgid "No component found"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Components.php:307
+#: includes/Api/Admin/Required-Options/Base.php:1303
+msgid "Component successfully added"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Components.php:310
+#: includes/Api/Admin/Required-Options/Base.php:1310
+msgid "Component has not been added"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Components.php:337
+#: includes/Api/Admin/Required-Options/Base.php:1358
+msgid "Components successfully updated"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Components.php:340
+#: includes/Api/Admin/Required-Options/Base.php:1363
+msgid "Components have not been updated"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Components.php:356
+#: includes/Api/Admin/Additionals-Options/Components.php:383
+#: includes/Api/Admin/Additionals-Options/Components.php:421
+#: includes/Api/Admin/Additionals-Options/Components.php:471
+#: includes/Api/Admin/Additionals-Options/Components.php:501
+msgid "Component not found"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Components.php:369
+msgid "Component successfully updated"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Components.php:372
+msgid "Component has not been updated"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Components.php:389
+#: includes/Api/Admin/Required-Options/Base.php:1242
+#: includes/Api/Admin/Required-Options/Base.php:1459
+msgid "Component successfully deleted"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Components.php:392
+#: includes/Api/Admin/Required-Options/Base.php:1249
+#: includes/Api/Admin/Required-Options/Base.php:1464
+msgid "Component has not been deleted"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Components.php:431
+msgid "Option successfully added"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Components.php:434
+msgid "Option has not been added"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Components.php:455
+msgid "No option found"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Components.php:477
+#: includes/Api/Admin/Additionals-Options/Components.php:507
+msgid "Option not found"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Components.php:486
+msgid "Option successfully updated"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Components.php:489
+msgid "Option has not been updated"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Components.php:515
+msgid "Option successfully deleted"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Components.php:518
+msgid "Option has not been deleted"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Inputs.php:184
+#: includes/Api/Admin/Additionals-Options/Inputs.php:195
+#: assets/js/admin.js:1
+msgid "Inputs"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Inputs.php:223
+#: includes/Api/Admin/Additionals-Options/Inputs.php:225
+msgid "No Additonal Inputs found"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Inputs.php:228
+#: includes/Api/Admin/Additionals-Options/Inputs.php:258
+msgid "Inputs ID invalid"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Inputs.php:252
+msgid "No input found"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Inputs.php:255
+msgid "No data found"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Inputs.php:284
+msgid "Option added successfuly"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Inputs.php:286
+msgid "Add option failed"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Inputs.php:289
+#: includes/Api/Admin/Additionals-Options/Inputs.php:292
+#: includes/Api/Admin/Additionals-Options/Inputs.php:321
+#: includes/Api/Admin/Additionals-Options/Inputs.php:324
+#: includes/Api/Admin/Additionals-Options/Inputs.php:371
+#: includes/Api/Admin/Additionals-Options/Inputs.php:374
+#: includes/Api/Admin/Additionals-Options/Inputs.php:411
+#: includes/Api/Admin/Additionals-Options/Inputs.php:414
+msgid "Input ID invalid"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Inputs.php:308
+msgid "No change observe on additionnals options"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Inputs.php:315
+msgid "Additonnals Option successfully sorted"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Inputs.php:317
+msgid "Additonnals Option sort failed"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Inputs.php:349
+msgid "No change observed in option"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Inputs.php:356
+msgid "Option updated successfully"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Inputs.php:358
+#: includes/Api/Admin/Additionals-Options/Inputs.php:362
+msgid "update input additional failed"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Inputs.php:367
+msgid "No input additional setting found"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Inputs.php:402
+msgid "Option deleted successfully"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Inputs.php:404
+msgid "delete input additional failed"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Inputs.php:407
+msgid "No input setting found"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Materials.php:187
+msgid "No material found"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Materials.php:215
+msgid "Material successfully added"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Materials.php:224
+msgid "Material has not been added"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Materials.php:239
+#: includes/Api/Admin/Additionals-Options/Materials.php:278
+#: includes/Api/Admin/Additionals-Options/Materials.php:306
+#: includes/Api/Admin/Additionals-Options/Materials.php:368
+#: includes/Api/Admin/Required-Options/Materials.php:122
+msgid "Material not found"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Materials.php:258
+msgid "Material successfully updated"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Materials.php:267
+msgid "Material has not been updated"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Materials.php:286
+msgid "Material successfully deleted"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Materials.php:295
+msgid "Material has not been deleted"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Materials.php:314
+msgid "Material already default"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Materials.php:326
+msgid "Material default successfully updated"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Materials.php:335
+msgid "Material default has not been updated"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Materials.php:377
+msgid "Material colors successfully updated"
+msgstr ""
+
+#: includes/Api/Admin/Additionals-Options/Materials.php:386
+msgid "Material colors has not been updated"
+msgstr ""
+
+#: includes/Api/Admin/Configs.php:559
+msgid "Only one configuration is allowed in the free version."
+msgstr ""
+
+#: includes/Api/Admin/Configs.php:606
+#: includes/Api/Admin/Configs.php:793
+msgid "Some products are already assigned to another configuration."
+msgstr ""
+
+#: includes/Api/Admin/Configs.php:611
+msgid "Configuration created with success"
+msgstr ""
+
+#: includes/Api/Admin/Configs.php:646
+msgid "Not ASO Config Post"
+msgstr ""
+
+#: includes/Api/Admin/Configs.php:798
+msgid "The configuration has been updated with success"
+msgstr ""
+
+#: includes/Api/Admin/Configs.php:800
+msgid "Configuration update failed"
+msgstr ""
+
+#: includes/Api/Admin/Configs.php:825
+msgid "The configuration was well removed"
+msgstr ""
+
+#: includes/Api/Admin/Configs.php:827
+#: includes/Api/Admin/Configs.php:830
+msgid "Deleting the configuration failed"
+msgstr ""
+
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:281
+msgid "Settings not found"
+msgstr ""
+
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:299
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:300
+msgid "Settings saved successfully"
+msgstr ""
+
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:320
+msgid "No ASO Product Pro available"
+msgstr ""
+
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:397
+msgid "Data updated successfully"
+msgstr ""
+
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:399
+msgid "No change observed"
+msgstr ""
+
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:402
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:417
+msgid "Config page not found"
+msgstr ""
+
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:454
+msgctxt "none page option"
+msgid "None"
+msgstr ""
+
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:486
+msgid "Page created successfully"
+msgstr ""
+
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:488
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:492
+msgid "Page was not created"
+msgstr ""
+
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:508
+msgid "No output options found"
+msgstr ""
+
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:520
+msgid "The ouput settings has been updated with success"
+msgstr ""
+
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:522
+msgid "The ouput settings update failed"
+msgstr ""
+
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:525
+msgid "No change observed in the ouput settings"
+msgstr ""
+
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:563
+msgid "The Shape has been updated with success"
+msgstr ""
+
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:565
+msgid "Shape update failed"
+msgstr ""
+
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:568
+msgid "No change observed in shape"
+msgstr ""
+
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:572
+#: includes/Api/Admin/Required-Options/Shapes.php:163
+#: includes/Api/Admin/Required-Options/Shapes.php:180
+#: includes/Api/Admin/Required-Options/Shapes.php:229
+#: includes/Api/Admin/Required-Options/Shapes.php:254
+msgid "Shape not found"
+msgstr ""
+
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:609
+msgid "The Fixing Method has been updated with success"
+msgstr ""
+
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:611
+msgid "FixingMethod update failed"
+msgstr ""
+
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:614
+msgid "No change observed in fixing Method"
+msgstr ""
+
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:617
+msgid "FixingMethod not found"
+msgstr ""
+
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:692
+msgid "The Border has been updated with success"
+msgstr ""
+
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:694
+msgid "Border update failed"
+msgstr ""
+
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:697
+msgid "No change observed in border"
+msgstr ""
+
+#: includes/Api/Admin/Globals-Settings/Globals-Settings.php:700
+#: includes/Api/Admin/Required-Options/Borders.php:163
+#: includes/Api/Admin/Required-Options/Borders.php:180
+#: includes/Api/Admin/Required-Options/Borders.php:229
+#: includes/Api/Admin/Required-Options/Borders.php:254
+msgid "Border not found"
+msgstr ""
+
+#: includes/Api/Admin/Home-Stats.php:111
+msgid "WooCommerce is required to compute stats."
+msgstr ""
+
+#: includes/Api/Admin/Manage-cliparts.php:207
+msgid "Cliparts group created with success"
+msgstr ""
+
+#: includes/Api/Admin/Manage-cliparts.php:215
+#: includes/Api/Admin/Manage-fonts.php:125
+#: includes/Api/Admin/Manage-fonts.php:144
+#: assets/js/admin.js:1
+msgid "Registration failed"
+msgstr ""
+
+#: includes/Api/Admin/Manage-cliparts.php:237
+#: includes/Api/Admin/Manage-cliparts.php:258
+#: includes/Api/Admin/Manage-cliparts.php:312
+msgid "Not Cliparts data found"
+msgstr ""
+
+#: includes/Api/Admin/Manage-cliparts.php:272
+msgid "No change observed in clipart group"
+msgstr ""
+
+#: includes/Api/Admin/Manage-cliparts.php:285
+msgid "Cliparts group updated with success"
+msgstr ""
+
+#: includes/Api/Admin/Manage-cliparts.php:293
+#: assets/js/admin.js:1
+msgid "Update failed"
+msgstr ""
+
+#: includes/Api/Admin/Manage-cliparts.php:324
+msgid "Cliparts group deleted with success"
+msgstr ""
+
+#: includes/Api/Admin/Manage-cliparts.php:332
+msgid "Delete Cliparts group failed"
+msgstr ""
+
+#: includes/Api/Admin/Manage-cliparts.php:349
+msgid "No Cliparts Group Found"
+msgstr ""
+
+#: includes/Api/Admin/Manage-cliparts.php:381
+#: includes/Api/Admin/Manage-cliparts.php:407
+#: includes/Api/Admin/Manage-cliparts.php:431
+msgid "Clipart has not been added"
+msgstr ""
+
+#: includes/Api/Admin/Manage-cliparts.php:399
+msgid "Cliparts added with success"
+msgstr ""
+
+#: includes/Api/Admin/Manage-cliparts.php:451
+#: includes/Api/Admin/Manage-cliparts.php:470
+msgid "No cliparts found"
+msgstr ""
+
+#: includes/Api/Admin/Manage-cliparts.php:491
+#: includes/Api/Admin/Manage-cliparts.php:523
+msgid "Clipart has not been updated"
+msgstr ""
+
+#: includes/Api/Admin/Manage-cliparts.php:503
+msgid "No change observed in clipart"
+msgstr ""
+
+#: includes/Api/Admin/Manage-cliparts.php:515
+msgid "Cliparts updated with success"
+msgstr ""
+
+#: includes/Api/Admin/Manage-cliparts.php:544
+#: includes/Api/Admin/Manage-cliparts.php:564
+msgid "Clipart has not been deleted"
+msgstr ""
+
+#: includes/Api/Admin/Manage-cliparts.php:556
+msgid "Cliparts deleted with success"
+msgstr ""
+
+#: includes/Api/Admin/Manage-fonts.php:136
+msgid "Font created with success"
+msgstr ""
+
+#: includes/Api/Admin/Manage-fonts.php:165
+msgid "No Fonts Found"
+msgstr ""
+
+#: includes/Api/Admin/Manage-fonts.php:188
+#: includes/Api/Admin/Manage-fonts.php:210
+#: includes/Api/Admin/Manage-fonts.php:259
+#: includes/Api/Admin/Required-Options/Fonts.php:205
+#: includes/Api/Admin/Required-Options/Fonts.php:244
+#: includes/Api/Admin/Required-Options/Fonts.php:287
+#: includes/Api/Admin/Required-Options/Fonts.php:318
+#: assets/js/admin.js:1
+msgid "Font not found"
+msgstr ""
+
+#: includes/Api/Admin/Manage-fonts.php:219
+msgid "No change observed in font"
+msgstr ""
+
+#: includes/Api/Admin/Manage-fonts.php:231
+msgid "The font has been updated with success"
+msgstr ""
+
+#: includes/Api/Admin/Manage-fonts.php:239
+msgid "Font update failed"
+msgstr ""
+
+#: includes/Api/Admin/Manage-fonts.php:271
+msgid "The font was well removed"
+msgstr ""
+
+#: includes/Api/Admin/Manage-fonts.php:279
+msgid "Deleting the font failed"
+msgstr ""
+
+#: includes/Api/Admin/Request-Quotes.php:143
+#: includes/Api/Admin/Request-Quotes.php:199
+#: includes/Api/Admin/Request-Quotes.php:244
+msgid "Quote not found"
+msgstr ""
+
+#: includes/Api/Admin/Request-Quotes.php:181
+msgid "Quote request saved"
+msgstr ""
+
+#: includes/Api/Admin/Request-Quotes.php:215
+msgid "Missing quote status"
+msgstr ""
+
+#: includes/Api/Admin/Request-Quotes.php:265
+#: includes/Api/Admin/Request-Quotes.php:274
+msgid "Quote file not found"
+msgstr ""
+
+#: includes/Api/Admin/Request-Quotes.php:445
+#: assets/js/admin.js:1
+msgid "Anonymous customer"
+msgstr ""
+
+#: includes/Api/Admin/Request-Quotes.php:448
+#, php-format
+msgid "Request quote - %s"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Base.php:582
+#: includes/Api/Admin/Required-Options/Base.php:661
+#: includes/Api/Admin/Required-Options/Base.php:684
+#: includes/Api/Admin/Required-Options/Base.php:1051
+#: includes/Api/Admin/Required-Options/Base.php:1071
+#: includes/Api/Admin/Required-Options/Base.php:1096
+#: includes/Api/Admin/Required-Options/Base.php:1138
+#: includes/Api/Admin/Required-Options/Base.php:1204
+#: includes/Api/Admin/Required-Options/Base.php:1256
+#: includes/Api/Admin/Required-Options/Base.php:1277
+#: includes/Api/Admin/Required-Options/Base.php:1317
+#: includes/Api/Admin/Required-Options/Borders.php:138
+#: includes/Api/Admin/Required-Options/Borders.php:173
+#: includes/Api/Admin/Required-Options/Borders.php:190
+#: includes/Api/Admin/Required-Options/Borders.php:219
+#: includes/Api/Admin/Required-Options/Borders.php:247
+#: includes/Api/Admin/Required-Options/Colors.php:162
+#: includes/Api/Admin/Required-Options/Colors.php:179
+#: includes/Api/Admin/Required-Options/Colors.php:212
+#: includes/Api/Admin/Required-Options/Colors.php:247
+#: includes/Api/Admin/Required-Options/FixingMethods.php:138
+#: includes/Api/Admin/Required-Options/FixingMethods.php:173
+#: includes/Api/Admin/Required-Options/FixingMethods.php:190
+#: includes/Api/Admin/Required-Options/FixingMethods.php:223
+#: includes/Api/Admin/Required-Options/FixingMethods.php:252
+#: includes/Api/Admin/Required-Options/Fonts.php:123
+#: includes/Api/Admin/Required-Options/Fonts.php:155
+#: includes/Api/Admin/Required-Options/Fonts.php:199
+#: includes/Api/Admin/Required-Options/Fonts.php:232
+#: includes/Api/Admin/Required-Options/Fonts.php:280
+#: includes/Api/Admin/Required-Options/Fonts.php:311
+#: includes/Api/Admin/Required-Options/Pricings.php:214
+#: includes/Api/Admin/Required-Options/Pricings.php:230
+#: includes/Api/Admin/Required-Options/Pricings.php:261
+#: includes/Api/Admin/Required-Options/Pricings.php:278
+#: includes/Api/Admin/Required-Options/Pricings.php:302
+#: includes/Api/Admin/Required-Options/Pricings.php:329
+#: includes/Api/Admin/Required-Options/Shapes.php:138
+#: includes/Api/Admin/Required-Options/Shapes.php:173
+#: includes/Api/Admin/Required-Options/Shapes.php:190
+#: includes/Api/Admin/Required-Options/Shapes.php:219
+#: includes/Api/Admin/Required-Options/Shapes.php:247
+#: includes/Api/Admin/Required-Options/Sizes.php:140
+#: includes/Api/Admin/Required-Options/Sizes.php:153
+#: includes/Api/Admin/Required-Options/Sizes.php:220
+#: includes/Api/Admin/Required-Options/Sizes.php:243
+#: includes/Api/Admin/Required-Options/Sizes.php:276
+#: includes/Api/Admin/Required-Options/Sizes.php:312
+#: includes/Api/Admin/Required-Options/Sizes.php:341
+msgid "No Configuration found"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Base.php:605
+msgid "Default option has not been updated"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Base.php:709
+#: includes/Api/Admin/Required-Options/Base.php:1156
+#: includes/Api/Admin/Required-Options/Base.php:1420
+#: includes/Api/Admin/Required-Options/Base.php:1557
+#: includes/Api/Admin/Required-Options/Sizes.php:290
+msgid "No change was observed"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Base.php:722
+#, php-format
+msgid "Required option %s successfully updated"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Base.php:729
+#, php-format
+msgid "Required option %s has not been updated"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Base.php:1081
+#: includes/Api/Admin/Required-Options/Base.php:1215
+#: includes/Api/Admin/Required-Options/Base.php:1376
+#: includes/Api/Admin/Required-Options/Base.php:1449
+#: includes/Api/Admin/Required-Options/Base.php:1479
+#: includes/Api/Admin/Required-Options/Base.php:1519
+#: includes/Api/Admin/Required-Options/Base.php:1524
+#: includes/Api/Admin/Required-Options/Base.php:1585
+#: includes/Api/Admin/Required-Options/Base.php:1590
+msgid "No materials component found"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Base.php:1123
+msgid "Materiel component successfully added"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Base.php:1130
+msgid "Materiel component has not been added"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Base.php:1151
+#: includes/Api/Admin/Required-Options/Base.php:1196
+#: includes/Api/Admin/Required-Options/Base.php:1416
+msgid "Materiel component has not been edited"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Base.php:1172
+msgid "At least one material must remain active"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Base.php:1189
+msgid "Materiel component successfully edited"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Base.php:1219
+msgid "At least one material must remain"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Base.php:1233
+msgid "At least one active material must remain"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Base.php:1350
+msgid "No change observed in components"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Base.php:1431
+msgid "Component successfully edited"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Base.php:1436
+msgid "Component has not been edited"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Base.php:1503
+msgid "Component option successfully added"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Base.php:1506
+msgid "Component option has not been added"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Base.php:1548
+#: includes/Api/Admin/Required-Options/Base.php:1553
+msgid "Materiel component option has not been edited"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Base.php:1568
+msgid "Component option successfully edited"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Base.php:1571
+msgid "Component option has not been edited"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Base.php:1600
+msgid "Material Component option successfully deleted"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Base.php:1603
+msgid "Material Component option has not been deleted"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Borders.php:164
+msgid "Default border successfully updated"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Borders.php:210
+msgid "Border successfully added"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Borders.php:211
+msgid "Border has not been added"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Borders.php:238
+msgid "Border successfully edited"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Borders.php:239
+msgid "Border has not been edited"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Borders.php:263
+msgid "Border successfully deleted"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Borders.php:264
+msgid "Border has not been deleted"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Colors.php:152
+#: includes/Api/Admin/Required-Options/Colors.php:169
+#: includes/Api/Admin/Required-Options/Colors.php:225
+#: includes/Api/Admin/Required-Options/Colors.php:254
+msgid "Color not found"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Colors.php:153
+msgid "Default color successfully updated"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Colors.php:195
+msgid "You can only add up to 10 colors in the free version."
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Colors.php:203
+msgid "Color successfully added"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Colors.php:204
+msgid "Color has not been added"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Colors.php:238
+msgid "Color successfully edited"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Colors.php:239
+msgid "Color has not been edited"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Colors.php:263
+msgid "Color successfully deleted"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Colors.php:264
+msgid "Color has not been deleted"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/FixingMethods.php:163
+#: includes/Api/Admin/Required-Options/FixingMethods.php:180
+#: includes/Api/Admin/Required-Options/FixingMethods.php:234
+#: includes/Api/Admin/Required-Options/FixingMethods.php:259
+msgid "Fixing method not found"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/FixingMethods.php:164
+msgid "Default fixing method successfully updated"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/FixingMethods.php:214
+msgid "Fixing method successfully added"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/FixingMethods.php:215
+msgid "Fixing method has not been added"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/FixingMethods.php:243
+msgid "Fixing method successfully edited"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/FixingMethods.php:244
+msgid "Fixing method has not been edited"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/FixingMethods.php:268
+msgid "Fixing method successfully deleted"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/FixingMethods.php:269
+msgid "Fixing method has not been deleted"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Fonts.php:221
+#: assets/js/admin.js:1
+msgid "Font successfully added"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Fonts.php:224
+msgid "Font has not been added"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Fonts.php:269
+#: assets/js/admin.js:1
+msgid "Font successfully updated"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Fonts.php:272
+msgid "Font has not been updated"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Fonts.php:300
+#: assets/js/admin.js:1
+msgid "Default font successfully updated"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Fonts.php:303
+msgid "Default font has not been updated"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Fonts.php:330
+#: assets/js/admin.js:1
+msgid "Font successfully deleted"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Fonts.php:333
+msgid "Font has not been deleted"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Materials.php:123
+msgid "Default material successfully updated"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Pricings.php:252
+msgid "Pricing successfully saved"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Pricings.php:253
+msgid "Pricing has not been saved"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Pricings.php:271
+#: includes/Api/Admin/Required-Options/Pricings.php:313
+#: includes/Api/Admin/Required-Options/Pricings.php:336
+msgid "Pricing not found"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Pricings.php:287
+msgid "You can only create one pricing profile in the free version."
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Pricings.php:293
+msgid "Pricing successfully added"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Pricings.php:294
+msgid "Pricing has not been added"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Pricings.php:320
+msgid "Pricing successfully edited"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Pricings.php:321
+msgid "Pricing has not been edited"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Pricings.php:342
+msgid "Pricing successfully deleted"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Pricings.php:343
+msgid "Pricing has not been deleted"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Required-Options.php:76
+msgid "No configurations found"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Required-Options.php:197
+#, php-format
+msgid "Migration completed: %d configuration(s) updated out of %d"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Shapes.php:164
+msgid "Default shape successfully updated"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Shapes.php:210
+msgid "Shape successfully added"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Shapes.php:211
+msgid "Shape has not been added"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Shapes.php:238
+msgid "Shape successfully edited"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Shapes.php:239
+msgid "Shape has not been edited"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Shapes.php:263
+msgid "Shape successfully deleted"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Shapes.php:264
+msgid "Shape has not been deleted"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Sizes.php:228
+#: includes/Api/Admin/Required-Options/Sizes.php:286
+#: includes/Api/Admin/Required-Options/Sizes.php:319
+#: includes/Api/Admin/Required-Options/Sizes.php:348
+msgid "Size not found"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Sizes.php:253
+msgid "You can only add up to 5 sizes in the free version."
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Sizes.php:265
+msgid "Size successfully added"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Sizes.php:268
+msgid "Size has not been added"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Sizes.php:301
+msgid "Size successfully edited"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Sizes.php:304
+#: includes/Api/Admin/Required-Options/Sizes.php:364
+msgid "Size has not been edited"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Sizes.php:330
+msgid "Size successfully deleted"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Sizes.php:333
+msgid "Size has not been deleted"
+msgstr ""
+
+#: includes/Api/Admin/Required-Options/Sizes.php:361
+msgid "Default size successfully updated"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Customizer-sign.php:278
+msgid "Customizer ID invalid"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Customizer-sign.php:289
+#: includes/Api/Admin/Settings/Generals.php:252
+#: includes/Api/Admin/Settings/Language-Image.php:221
+#: includes/Api/Admin/Settings/Theme-color.php:153
+msgid "No Settings found"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Customizer-sign.php:303
+msgid "No Customizer Sign Settings found"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Customizer-sign.php:335
+msgid "No change observed in customizer options in customizer sign settings"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Customizer-sign.php:344
+msgid "Customizer in customizer sign settings updated successfully"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Customizer-sign.php:352
+msgid "Update customizer in customizer sign settings failed"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Customizer-sign.php:384
+msgid "No change observed in config options in customizer sign settings"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Customizer-sign.php:393
+msgid "Config options in customizer sign settings updated successfully"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Customizer-sign.php:401
+msgid "Update config options in customizer sign settings failed"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Customizer-sign.php:433
+msgid "No change observed in sign part in customizer sign settings"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Customizer-sign.php:442
+msgid "Sign part in customizer sign settings updated successfully"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Customizer-sign.php:450
+msgid "Update sign part in customizer sign settings failed"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Customizer-sign.php:482
+msgid "No change observed in text in customizer sign settings"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Customizer-sign.php:491
+msgid "Text in customizer sign settings updated successfully"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Customizer-sign.php:499
+msgid "Update text in customizer sign settings failed"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Customizer-sign.php:531
+msgid "No change observed in image in customizer sign settings"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Customizer-sign.php:540
+msgid "Image in customizer sign settings updated successfully"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Customizer-sign.php:548
+msgid "Update image in customizer sign settings failed"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Generals.php:264
+msgid "No generals Settings found"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Generals.php:294
+msgid "No change observed in product options in generals settings failed"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Generals.php:303
+msgid "Product options in generals settings updated successfully"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Generals.php:311
+msgid "Update product options in generals settings failed"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Generals.php:341
+msgid "No change observed in mobile options in generals settings failed"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Generals.php:350
+msgid "Mobile options in generals settings updated successfully"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Generals.php:358
+msgid "Update mobile options in generals settings failed"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Generals.php:387
+msgid "No change observed in output options in generals settings failed"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Generals.php:396
+msgid "Output options in generals settings updated successfully"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Generals.php:404
+msgid "Update output options in generals settings failed"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Generals.php:435
+msgid "General settings section invalid"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Generals.php:457
+msgid "No change observed in general settings"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Generals.php:466
+msgid "General settings updated successfully"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Generals.php:474
+msgid "Update general settings failed"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Language-Image.php:233
+msgid "No language Images Settings found"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Language-Image.php:264
+msgid "No change observed in main options in language images settings failed"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Language-Image.php:273
+msgid "Main options in language images settings updated successfully"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Language-Image.php:281
+msgid "Update main options in language images settings failed"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Language-Image.php:312
+msgid "No change observed in customizer design options in language images settings"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Language-Image.php:321
+msgid "Customizer design options in language images settings updated successfully"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Language-Image.php:329
+msgid "Update customizer design options in language images settings failed"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Language-Image.php:360
+msgid "No change observed in visualizer options in language images"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Language-Image.php:369
+msgid "Visualizer options in language images settings updated successfully"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Language-Image.php:377
+msgid "Update visualizer options in language images settings failed"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Language-Image.php:408
+msgid "No change observed in images options in language images settings"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Language-Image.php:417
+msgid "Images options in language images settings updated successfully"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Language-Image.php:425
+msgid "Update images options in language images settings failed"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Theme-color.php:144
+#: includes/Api/Admin/Settings/Theme-color.php:183
+msgid "Theme color ID invalid"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Theme-color.php:165
+msgid "No theme color settings found"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Theme-color.php:196
+msgid "No change observed in theme colors"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Theme-color.php:205
+msgid "Theme colors updated successfully"
+msgstr ""
+
+#: includes/Api/Admin/Settings/Theme-color.php:213
+msgid "Update theme colors failed"
+msgstr ""
+
+#: includes/Api/Admin/WooCommerce-Products.php:159
+msgid "WooCommerce is required to list products."
+msgstr ""
+
+#: includes/ascwo-design.php:89
+msgid "Invalid download path."
+msgstr ""
+
+#: includes/ascwo-design.php:93
+msgid "Invalid download token."
+msgstr ""
+
+#: includes/ascwo-design.php:103
+msgid "File not found."
+msgstr ""
+
+#: includes/ascwo-design.php:225
+msgid "Size"
+msgstr ""
+
+#: includes/ascwo-design.php:229
+msgid "Thickness"
+msgstr ""
+
+#: includes/ascwo-design.php:249
+msgid "Texts"
+msgstr ""
+
+#: includes/ascwo-design.php:388
+#: includes/ascwo-design.php:389
+msgid "Preview"
+msgstr ""
+
+#: includes/ascwo-design.php:544
+#: includes/ascwo-design.php:561
+msgid "file"
+msgstr ""
+
+#: includes/ascwo-design.php:593
+msgid "Previews"
+msgstr ""
+
+#: includes/ascwo-design.php:604
+#: includes/ascwo-design.php:618
+msgid "Download File"
+msgstr ""
+
+#: includes/ascwo-design.php:701
+msgid "Download Order Zip file"
+msgstr ""
+
+#: includes/ascwo-design.php:710
+msgid "Generate Order Item Zip file"
+msgstr ""
+
+#: includes/ascwo-design.php:834
+msgid "ZipArchive is not available on this server."
+msgstr ""
+
+#: includes/ascwo-design.php:879
+msgid "Unable to create the order ZIP file."
+msgstr ""
+
+#: includes/ascwo-design.php:884
+msgid "The order ZIP file was not created."
+msgstr ""
+
+#: includes/ascwo-post-type.php:133
+msgid "All Sign Customizer for WooCommerce Warning"
+msgstr ""
+
+#: includes/ascwo-post-type.php:137
+msgid ""
+"You are trying to access the personalization page without the personalized button of a product to be personalized. \n"
+"\t\t\t\t\t\tThis page should only be accessible using one of the customization buttons. \n"
+"\t\t\t\t\t\tIf you don't like this procedure, don't define this page as a personalization page and use the short code to display the configurator."
+msgstr ""
+
+#: includes/ascwo-product-config.php:104
+#: includes/ascwo-product-config.php:183
+msgid "Attach this product to All Sign Customizer for WooCommerce configuration"
+msgstr ""
+
+#: includes/ascwo-product-config.php:226
+#: includes/ascwo-product-config.php:231
+msgid "No"
+msgstr ""
+
+#: includes/ascwo-product-config.php:228
+msgid "Yes"
+msgstr ""
+
+#: includes/ascwo-product-config.php:279
+#: includes/Frontend.php:324
+msgid "Start Designing"
+msgstr ""
+
+#: includes/Frontend.php:405
+msgid "No configurable products found."
+msgstr ""
+
+#: includes/Functions.php:163
+msgid "Product successfully added to cart."
+msgstr ""
+
+#: includes/Functions.php:178
+msgid "A problem occured while adding the product to the cart. Please try again."
+msgstr ""
+
+#: includes/Functions.php:188
+msgid "Missing product ID"
+msgstr ""
+
+#: includes/purchase-email.php:153
+msgid "Files"
+msgstr ""
+
+#: includes/purchase-email.php:157
+msgid "Download order ZIP file"
+msgstr ""
+
+#: includes/purchase-email.php:163
+msgid "Download preview file"
+msgstr ""
+
+#: includes/purchase-email.php:171
+msgid "preview file"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Neon"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Channel"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Banners"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Stickers"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Signs & Panels"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Not set"
+msgstr ""
+
+#: assets/js/admin.js:1
+#, js-format
+msgid "Only one configuration is allowed in the free version. Upgrade to Pro at %s."
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Configuration deleted"
+msgstr ""
+
+#: assets/js/admin.js:1
+#, js-format
+msgid "Preset mode is available only in Pro. Go to %s to unlock it."
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Rigid signage products like office signs, plaques, engraved panels and general display boards."
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Flexible printed products for events, retail and promotional display."
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Adhesive products for windows, packaging, walls and floors."
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Letter signs"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Text-based illuminated or fabricated signs built around custom letter forms."
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "AI Signs"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "AI-assisted logo sign configurations for neon and channel style branded signage."
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Lightbox"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Illuminated lightbox sign configurations. This category is coming soon."
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "All"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Product title"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Product ID"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Barcode"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "SKU"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Material"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Product family"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Setup model"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Product info"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Start with the product family. We will narrow the experience in the next step."
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Choose the right material first, then define how the configurator should be structured."
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Pick the setup model now. The configuration is created from the selected setup only."
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Finish the configuration details, then create it and continue in the full editor."
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Select Config Image"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Select image"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Error"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Direct Options"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Loading..."
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Sizes"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Pricings"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Fonts"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Colors"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Fixing Methods"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Shapes"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Materials"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Borders"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Text Setting"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Image Setup"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Additional Components"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "General"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Customizer Setup"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Language & Images"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Theme & Color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Core Setup"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Editor Setup"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Additional Options"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Settings"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "The free version supports up to 5 sizes only. Upgrade to Pro to add more."
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to add size"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to update size"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to delete size"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to update default size"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to save borders"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to add border"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to update border"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to delete border"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Default border updated"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to update default border"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "No more borders available"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "excluded."
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Select custom color preview"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to save colors"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "The free version supports up to 10 colors only. Upgrade to Pro to add more."
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to add color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to update color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to delete color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Default color updated"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to update default color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Select pattern image"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Select color preview image"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Select custom color preview image"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to save fixing methods"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to add fixing method"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to update fixing method"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to delete fixing method"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Default fixing method updated"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to update default fixing method"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "No more fixing methods available"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to save shapes"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to add shape"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to update shape"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to delete shape"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Default shape updated"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to update default shape"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "No more shapes available"
+msgstr ""
+
+#: assets/js/admin.js:1
+#, js-format
+msgid "This range applies from %s to %s %s. Surface equivalent: %s to %s %s."
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Shipping price per kg"
+msgstr ""
+
+#: assets/js/admin.js:1
+#, js-format
+msgid "Shipping per %s"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Shipping price"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "The free version supports only one pricing profile. Upgrade to Pro to add more."
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to save pricing"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to delete pricing"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Fonts saved"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to save fonts"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to add Google font to manage fonts"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "This font is already added to this configuration"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to create this font"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to update default font"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Upload font file"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Use font file"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "No pricing selected"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Material added"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to add material"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Material updated"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to update material"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Material deleted"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to delete material"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Default material updated"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to update default material"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Select preview image"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Use image"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Select popup image"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "The free version supports up to 10 text colors only. Upgrade to Pro to add more."
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Select Custom Text Color Preview Image"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Select Image"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Text settings saved"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to save text settings"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "choose a picture"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Please set the picture"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Select picture(s)"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Label must not be empty"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "The Label must not be empty"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to save settings"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to save config options"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to save customizer options"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Select WaterMark Image"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Show less"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Show more"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Upload icon"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Remove image"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Please enter a valid custom design link."
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to save upload design settings"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to save visualizer settings"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to save image settings"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "WordPress media library is not available."
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Default Skin"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Couffo Skin"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Canvas, Header and Side Bars"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Canvas background color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Canvas border color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Bars Background color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Bars title color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Price Section"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Background color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Text before price"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Text after price"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Reset button"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Hover background color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Hover text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Border color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Hover border color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Modal background color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Container modal color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Modal text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Yes background color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Yes text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "No background color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "No text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Undo and redo buttons"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Disabled background color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Disabled text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Preview buttons"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Help buttons"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Options Sidebar"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Scroll button background color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Scroll hover button background color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Scroll button text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Scroll button text hover color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Options button background color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Options button hover background color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Options button text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Options button hover text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Options modals"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Modal header background color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Modal header text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Modal button background color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Modal button hover background color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Modal button text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Modal button hover text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Options in modals"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Modal option text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Modal option hover text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Modal option hover background color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Modal option active text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Objects options"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Edit button color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Hover Edit button color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Edit button text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Hover Edit button text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Clone button color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Hover Clone button color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Clone button text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Hover Clone button text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Delete button color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Hover Delete button color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Delete button text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Hover Delete button text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Center button color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Hover Center button color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Center button text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Hover Center button text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Recaps section"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Header background color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Header text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Recaps option hover background color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Recaps option hover text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Recaps option text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Recaps option border color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Recaps option border hover color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Button Finish background color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Button Finish hover background color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Button Finish text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Button Finish text hover color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Button AddToCart background color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Button AddToCart hover background color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Button AddToCart text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Button AddToCart text hover color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Button Edit background color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Button Edit hover background color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Button Edit text color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Button Edit text hover color"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Appearance"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Custom CSS"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to save theme settings."
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "This font already exists"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to save this font"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to delete this font"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Select Font File"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Select font"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Animals"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Arrows"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Decoration & Festivities"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Emojis & Flags"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Foods & Drinks"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Healthcare"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Household Tools"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Most Popular"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Peoples"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Plants & Nature"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Prohibitions & Warnings"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Sport & Activities"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Symbols & Markings"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Vehicles & Traffic"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Others"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Customize button on product"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Shown on product and product list pages."
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Recaps button in cart"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Customize button settings"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Recaps button settings"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Page title is empty"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "The output settings update failed"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to save shape"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Select Shape icon"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Select Icon"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to save fixing method"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Select Fixing Method icon"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Unable to save border"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Select Border icon"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Configuration page"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Output"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Fixing method"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Border"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Products Created"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Conversion Rate"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Orders"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Manage your sign configurations"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Manage your sign global setting"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Library"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Manage your sign library"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Request a feature"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Learning Center"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Pricing"
+msgstr ""
+
+#: assets/js/admin.js:1
+msgid "Get in touch"
+msgstr ""
