@@ -1,307 +1,204 @@
-=== All Signs Customizer for WooCommerce ===
+=== All Sign Customizer for WooCommerce ===
 Contributors: vertim, abokajr
 Donate link: https://signsdesigner.us/
-Tags: woocommerce, woocommerce product customizer, product designer, sign designer, product configurator, custom signs
+Tags: sign customizer, product customizer, product configurator, product designer, custom signs
 Requires at least: 5.0
 Requires PHP: 7.0
-Tested up to: 7.0
-Stable tag: 1.0.1
+Tested up to: 7.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Create and sell personalized signs with a visual WooCommerce product customizer, live preview, fonts, colors, sizes and pricing.
+
+Sign customizer for WooCommerce: customers design signs, stickers and banners on your product page with a live preview and a price.
 
 == Description ==
 
-= Create and Sell Custom Signs with WooCommerce =
+All Sign Customizer for WooCommerce adds a sign designer to your WooCommerce product pages. Customers type their text, pick a size, a font and a color, see the sign update as they go, and add it to the cart with the price already calculated. You get the design details with the order, instead of an email thread and a manual quote.
 
-Selling personalized signs shouldn't require dozens of emails, manual quotations or design confirmations.
+It is built for sign makers and print shops selling acrylic, PVC, metal, aluminium and plastic signs, door signs and name plates, stickers and banners.
 
-ASO – All Signs Customizer allows your customers to design their own products directly on your WooCommerce store using a modern visual configurator with live preview.
+* **[Try the live demo](https://demos.signsdesigner.us/aso-live-demo/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=aso-wp-free&utm_content=demo-top)**: design a sign the way your customers will.
+* **[Read the documentation](https://docs.signsdesigner.us/docs/aso-wp-documentation/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=aso-wp-free&utm_content=docs-top)**: set up your first product in a few minutes.
+* **[See All Sign Customizer Pro](https://signsdesigner.us/all-signs-customizer-product/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=aso-wp-free&utm_content=pro-top)**: more sizes, colors, materials and configurations.
 
-Instead of manually confirming fonts, colors, sizes or layouts, customers can personalize their products online and instantly preview the final result before placing an order.
+= What your customers can do =
 
-Whether you sell acrylic signs, PVC boards, metal signs, banners, stickers, lettering or other personalized products, ASO helps streamline your ordering process, reduce production mistakes and deliver a better buying experience.
+* Type their text and choose a font and a color
+* Choose a size and the options you offer (fixing method, finish and so on)
+* See a live preview of the sign while they design
+* See the price update with each choice
+* Add the designed sign to the cart; the design details follow the cart item
 
-Built specifically for sign makers, print shops and custom product businesses, ASO combines visual customization, dynamic pricing and WooCommerce integration in one easy-to-use solution.
+= What the free version includes =
 
-**Whether you sell a single personalized product or manage a large catalog of custom sign products, ASO helps simplify your workflow from product configuration to checkout.**
-
-
-
-= Why Store Owners Choose ASO =
-
-Running a custom sign business often involves repeated emails, manual artwork validation and time-consuming price calculations.
-
-ASO helps automate this workflow by allowing customers to configure their products before they purchase.
-
-
-
-Benefits include:
-
-* Reduce quotation requests
-* Reduce production mistakes
-* Save time during order processing
-* Improve customer confidence before checkout
-* Increase personalization possibilities
-* Offer a modern buying experience
-* Display live product previews
-* Sell more customizable products with WooCommerce
-
-
-= Perfect For = 
-
-ASO is ideal for WooCommerce stores selling personalized products such as:
- 
-* Acrylic signs 
-* Metal signs 
-* PVC signs 
-* Aluminium signs 
-* Brass signs 
-* Plastic signs 
-* Plexiglass signs 
-* Door signs 
-* Office signs 
-* Reception signs 
-* Name plates 
-* Wall signs 
-* Banner printing 
-* Vinyl stickers 
-* Window graphics 
-* Promotional displays
-
-= Customize Products With = 
-
-* Text 
-* Fonts 
-* Colors 
-* Live Preview
-* Dimensions 
-* Materials 
-* Shapes 
-* Images 
-* Sizes 
-* Fixing Methods 
-* Finishes
-
-
-= Key Features =
-
-** Live Product Customization**
-
-Customers can personalize products directly from the product page with an interactive and user-friendly configurator.
-
-Features include:
-
-* Live preview
-* Dynamic Pricing
-* Multiple text areas
-* Mobile friendly
-* WooCommerce Integration
-* Custom text editing
-* SVG Export
-* Image Upload
-* Google Fonts support
-* Custom TTF fonts
-
-
-** WooCommerce Integration **
-
-ASO integrates naturally into WooCommerce.
-
-* Works directly on WooCommerce product pages
-* Design information stored with cart items
-* Design information available in WooCommerce orders
-* Compatible with most WooCommerce themes
-* Translation ready
+* One sign configuration, linked to your WooCommerce products
+* Up to 5 sizes and up to 10 colors
+* One pricing profile, with the price calculated from the customer's choices
+* Up to 2 additional options (for example fixing method or finish), with up to 5 choices each
+* Google Fonts and your own TTF fonts
+* Automatic calculation of the text height
+* Design data stored in the cart
+* Shortcode to show the customizer where you need it
 * Responsive on desktop, tablet and mobile
+* Every text of the configurator can be rewritten or translated from the settings
+* Translation ready
 
-** Flexible Product Configuration **
+= All Sign Customizer Pro =
 
-Configure products with options adapted to sign making and printing businesses.
+When one configuration is no longer enough, Pro removes the limits of the free version and adds the production tools:
 
-Available configuration options include:
+* Unlimited configurations, sizes and colors
+* Advanced materials and additional material components
+* Preset setup model and more configurator options
+* Ready-made design templates customers start from
+* Customer image upload in the configurator
+* Quote requests from the configurator
+* Print-ready SVG and PDF export
+* Updates and support while subscribed
 
-* Text customization
-* Font management
-* Color selection
-* Product dimensions
-* Character limitations
-* Pricing calculation
-* Multiple predefined sizes
-* Custom fonts
-* Google Fonts
-* Product preview
+Pro is $39/month or $299/year, with a 7-day money-back guarantee. [Compare and upgrade on signsdesigner.us](https://signsdesigner.us/all-signs-customizer-product/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=aso-wp-free&utm_content=pro-section).
 
-= Built for Sign Makers and Print Shops =
+= Selling neon signs or channel letters? =
 
-ASO is ideal for:
+This plugin is not built for lettering. For neon, LED and channel letters, use [Neon Channel Product Customizer](https://wordpress.org/plugins/neon-channel-product-customizer-free/) from the same team: customers type their text and see it letter by letter, lit or unlit. The [comparison of our two WooCommerce plugins](https://allsigncustomizer.com/integrations/woocommerce/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=aso-wp-free&utm_content=compare) helps you pick the right one.
 
-* Print Shops
-* Sign Makers
-* Digital Printing Companies
-* Large Format Printing
-* Promotional Product Businesses
-* Marketing Agencies
-* Exhibition Companies
-* Interior Signage Companies
-* Custom Product Stores
-* WooCommerce Merchants selling personalized products
+= Selling on Shopify? =
 
-More advanced customization features are available in the premium version.
+The same team makes [All Sign Customizer for Shopify](https://allsigncustomizer.com/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=aso-wp-free&utm_content=shopify): signs, banners, stickers, neon and channel letters in one app, with a 15-day free trial.
 
-= Free Features =
-The free version of All Signs Customizer for WooCommerce provides the essential tools needed to create a visual sign customization experience.
-Free features include:
-* Live Preview
-* Text Customization
-* Pricing Calculation
-* Google Fonts
-* TTF Fonts
-* Cart Design Data
-* Responsive
-* Shortcode
-The available options depend on how each WooCommerce product is configured by the store administrator.
-= Upgrade to ASO Pro =
-ASO Pro extends the free product customizer with additional tools for stores that need more product options, materials and design capabilities.
-The Pro version includes:
-Additional size options
-Additional color options
-Advanced materials
-More product configurations
-Reusable design templates
-Customer image uploads in the configurator
-SVG export
-PDF export
-Additional material components
-Additional configurator options
-Premium updates and support
-Learn more about ASO Pro:
-https://signsdesigner.us/all-signs-customizer-product/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=aso-wp-free
-= Free and Pro Comparison =
-Product sizes
-Free: Basic size configuration
-Pro: Additional size options
-Pricing calculation
-Free: Included
-Pro: Extended product configuration capabilities
-Materials
-Free: Basic configuration
-Pro: Advanced materials and additional material components
-Customer image upload
-Free: Not included
-Pro: Included
-Reusable design templates
-Free: Not included
-Pro: Included
-SVG and PDF export
-Free: Not included
-Pro: Included
-= Live Demo =
-Try the customer-facing product customizer before installing the plugin:
-https://demos.signsdesigner.us/aso-live-demo/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=aso-wp-free
-The demonstration shows how customers can personalize a product and preview their choices before adding it to the WooCommerce cart.
-= Installation =
-Minimum requirements
-WordPress 5.0 or later
-WooCommerce 7.4 or later
-PHP 7.0 or later
-MySQL 5.0 or later
-Automatic installation
-Sign in to your WordPress dashboard.
-Go to Plugins > Add New Plugin.
-Search for All Signs Customizer for WooCommerce.
-Click Install Now.
-Click Activate when the installation is complete.
-Open the plugin settings and configure your first customizable WooCommerce product.
-Manual installation
-Download the plugin ZIP file.
-Go to Plugins > Add New Plugin in WordPress.
-Click Upload Plugin.
-Select the ZIP file from your computer.
-Click Install Now.
-Activate the plugin after installation.
-FTP installation
-Extract the plugin ZIP file on your computer.
-Upload the all-signs-customizer-for-woocommerce directory to /wp-content/plugins/.
-Open the Plugins page in WordPress.
-Activate All Signs Customizer for WooCommerce.
-Before configuring the customizer, make sure WooCommerce is installed and activated.
+= Guides for selling custom signs online =
+
+Pricing signs by size, preparing print-ready files, choosing materials: the [All Sign Customizer guides](https://allsigncustomizer.com/guides/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=aso-wp-free&utm_content=guides) cover the questions sign shops ask when they move their orders online. See also the [sign types](https://allsigncustomizer.com/sign-types/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=aso-wp-free&utm_content=sign-types) a customizer can sell.
+
+= External services =
+
+The plugin can load font files from Google Fonts, only when a Google Font is selected in its settings or used by a configured product.
+
+* Service: Google Fonts, to load the selected font files in the product customizer
+* Data sent: the visitor's browser sends standard request information (IP address, browser, referring page) to Google's font servers
+* Domains: fonts.googleapis.com and fonts.gstatic.com
+* Account required: no
+* [Privacy policy](https://policies.google.com/privacy) and [terms of service](https://policies.google.com/terms)
+
+== Installation ==
+
+= Minimum requirements =
+
+* WordPress 5.0 or later
+* WooCommerce 7.4 or later, installed and activated
+* PHP 7.0 or later
+* MySQL 5.0 or later
+
+= Automatic installation =
+
+1. In your WordPress dashboard, go to Plugins > Add New Plugin.
+2. Search for "All Sign Customizer for WooCommerce".
+3. Click Install Now, then Activate.
+4. Open the plugin menu and create your first configuration.
+
+= Manual installation =
+
+1. Download the plugin ZIP file.
+2. Go to Plugins > Add New Plugin > Upload Plugin.
+3. Select the ZIP file, click Install Now, then Activate.
+
+= FTP installation =
+
+1. Extract the ZIP file on your computer.
+2. Upload the `all-signs-customizer-for-woocommerce` folder to `/wp-content/plugins/`.
+3. Activate the plugin from the Plugins page.
+
+The [documentation](https://docs.signsdesigner.us/docs/aso-wp-documentation/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=aso-wp-free&utm_content=docs-install) walks through the setup step by step.
+
 == Frequently Asked Questions ==
-= What types of products can I create with the plugin? =
-The plugin is designed primarily for personalized sign products. It can be configured for acrylic signs, metal signs, aluminium signs, plastic signs, PVC signs, plexiglass signs, office signs, door signs, name plates and other products that use text, fonts, colors, sizes and visual customization.
-It may also be adapted to other personalized WooCommerce products depending on the options required.
-= Does the plugin require WooCommerce? =
-Yes. All Signs Customizer for WooCommerce works with WooCommerce products, so WooCommerce must be installed and activated.
-= Can customers preview their customization? =
-Yes. Customers can see a visual preview while changing the available text, font, color, size and other configured options.
+
+= Is there a free sign customizer for WooCommerce? =
+
+Yes, this plugin. The free version gives your customers a live sign designer with one configuration, up to 5 sizes, up to 10 colors and calculated prices. [Try the demo](https://demos.signsdesigner.us/aso-live-demo/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=aso-wp-free&utm_content=demo-faq) to see it from the customer side.
+
+= What products can I sell with it? =
+
+Signs and plates with text: acrylic, PVC, metal, aluminium, brass, plastic and plexiglass signs, door and office signs, name plates, as well as stickers and banners. For neon and channel letters, use [Neon Channel Product Customizer](https://wordpress.org/plugins/neon-channel-product-customizer-free/).
+
+= Does it require WooCommerce? =
+
+Yes. WooCommerce must be installed and activated.
+
+= Can customers see a preview? =
+
+Yes. The preview updates while customers change the text, font, color, size and the other options you configure.
+
+= How is the price calculated? =
+
+From the pricing profile you set up and the choices the customer makes. The free version includes one pricing profile; Pro allows more.
+
 = Can I upload my own fonts? =
-Yes. The plugin supports custom TTF fonts.
-Only upload font files that you are legally permitted to use and distribute on your website.
-= Does the plugin support Google Fonts? =
-Yes. Google Fonts support is optional. Font files are requested from Google only when a Google Font selected in the plugin is used.
-Store owners should review their local privacy requirements before enabling third-party font services.
-= Can customers upload their own artwork or logo? =
-Customer image upload is available in ASO Pro.
-= Does the plugin calculate product prices? =
-Yes. The free plugin includes pricing calculation functionality based on the product configuration supported by the plugin.
-More extensive product configurations are available in ASO Pro.
-= Is customization information saved in the cart? =
-Yes. The customer’s customization information is associated with the WooCommerce cart item so that the configured product can be identified during the purchasing process.
-= Does it work with every WordPress theme? =
-The plugin is designed to work with standard WooCommerce-compatible themes. A theme or extension that heavily replaces WooCommerce product templates may require additional integration or styling.
-This wording is more accurate than guaranteeing compatibility with every theme.
-= Is the product customizer responsive? =
-Yes. The configurator is designed for desktop, tablet and mobile displays. The final appearance may also depend on the active theme and the available space on the product page.
-= Is the plugin translation ready? =
-Yes. The plugin is prepared for translation using standard WordPress internationalization practices.
-= Can I display the customizer with a shortcode? =
-Yes. The free version includes shortcode support.
-= Where can I find the documentation? =
-Documentation is available here:
-https://docs.signsdesigner.us/docs/aso-wp-documentation/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=aso-wp-free
-= Where can I request support? =
-For issues with the free version, use the support forum available on the plugin’s WordPress.org page.
-Documentation and additional product assistance are also available from the plugin website.
-= Does the plugin use external services? =
-The plugin can optionally connect to Google Fonts when a Google Font is selected in its settings or used by a configured product.
-Service: Google Fonts
-Purpose: Loading the selected font files in the product customizer.
-Data sent: A visitor’s browser may send standard web request information, such as the IP address, browser information and referring page, directly to Google’s font servers.
-When it is used: Only when a configured Google Font is loaded.
-Account required: No.
-Service website:
-https://fonts.google.com/
-Privacy policy:
-https://policies.google.com/privacy
-Terms of service:
-https://policies.google.com/terms
-Google Fonts resources may be loaded from:
-https://fonts.googleapis.com/
-https://fonts.gstatic.com/
+
+Yes, in TTF format. Only upload fonts you are licensed to use on your website.
+
+= Can customers upload their own logo or image? =
+
+Customer image upload is available in [All Sign Customizer Pro](https://signsdesigner.us/all-signs-customizer-product/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=aso-wp-free&utm_content=faq-image).
+
+= Do I get print-ready files? =
+
+SVG and PDF export are available in [All Sign Customizer Pro](https://signsdesigner.us/all-signs-customizer-product/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=aso-wp-free&utm_content=faq-export).
+
+= Does it work with my theme? =
+
+It works with standard WooCommerce-compatible themes. A theme or extension that replaces the WooCommerce product templates may need extra styling.
+
+= Can I show the customizer with a shortcode? =
+
+Yes, a shortcode is included in the free version.
+
+= Is it translation ready? =
+
+Yes, it uses standard WordPress internationalization.
+
+= Where do I get help? =
+
+Read the [documentation](https://docs.signsdesigner.us/docs/aso-wp-documentation/?utm_source=wordpress.org&utm_medium=referral&utm_campaign=aso-wp-free&utm_content=docs-faq), or open a topic in the support forum of this plugin on WordPress.org.
 
 == Screenshots ==
-Create Your Product Configuration
-Choose Your Materials
-Choose Your Configuration Model
-Review Before Creating
-Configure Every Detail
-Customer Product Designer
-Finished Product
-	
+
+1. Create your product configuration
+2. Choose your materials
+3. Choose your configuration model
+4. Review before creating
+5. Configure every detail
+6. The product designer your customers use
+7. The finished product
+
 == Developer Notes ==
-Developers can customize the plugin through hooks, filters and template overrides.
-Source code (unminified assets included):  
-https://github.com/vertim-coders/all-sign-customizer-for-woocommerce-free
-Actions/Filters and template overrides are documented in the developer section of the docs.
+
+Developers can customize the plugin through hooks, filters and template overrides, documented in the developer section of the docs.
+
+The uncompiled JavaScript and CSS sources are in the `src/` folder of the public repository, with the webpack build configuration (`npm install`, then `npm run build`):
+https://github.com/vertim-coders/all-signs-customizer-for-woocommerce-free/tree/develop-free
 
 == Changelog ==
+
+= 1.0.2 =
+* 27/10/2026
+* New: sign configurator on the product page, now the same engine as the Pro version, with a layers panel and preview scenes
+* New: every text shown in the configurator can be rewritten or translated in the configuration settings (Language & Text)
+* New: configurations created from now on include all configurator texts by default
+* Improved: simpler admin menu, with Dashboard as the first entry and the Pro features (Templates, Request quotes) clearly marked
+* Improved: upgrade notices now show an "Upgrade to Pro" button that opens the Pro page in a new tab, including on the Shapes, Fixing methods and Borders global settings
+* Improved: the product list of a configuration shows variations and the products already linked to another configuration
+* Fixed: editing a configuration did not load its name, description, image and linked products
+* Fixed: the "Create configuration" buttons could open the creation screen after the one-configuration limit of the free version was reached
+* Fixed: the "Go Docs!" link on the Plugins page led to a missing page
+* Rewrote the plugin description: free version limits, Pro comparison, neon and Shopify alternatives
+
 = 1.0.1 =
 * 15/06/2026
--Improved plugin documentation and onboarding experience
--Updated screenshots to better demonstrate the product customization workflow
--Refreshed branding assets and plugin presentation
--Improved compatibility with the latest WooCommerce version
+* Improved plugin documentation and onboarding experience
+* Updated screenshots to better demonstrate the product customization workflow
+* Refreshed branding assets and plugin presentation
+* Improved compatibility with the latest WooCommerce version
 
 = 1.0 =
 * 23/03/2026
--First stable release submitted
+* First stable release
