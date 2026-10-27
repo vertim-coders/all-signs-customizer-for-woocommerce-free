@@ -1,2 +1,23 @@
+= 1.0.2 =
+* 27/10/2026
+* New: sign configurator on the product page, now the same engine as the Pro version, with a layers panel and preview scenes
+* New: every text shown in the configurator can be rewritten or translated in the configuration settings (Language & Text)
+* New: configurations created from now on include all configurator texts by default
+* Improved: simpler admin menu, with Dashboard as the first entry and the Pro features (Templates, Request quotes) clearly marked
+* Improved: upgrade notices now show an "Upgrade to Pro" button that opens the Pro page in a new tab, including on the Shapes, Fixing methods and Borders global settings
+* Improved: the product list of a configuration shows variations and the products already linked to another configuration
+* Fixed: editing a configuration did not load its name, description, image and linked products
+* Fixed: the "Create configuration" buttons could open the creation screen after the one-configuration limit of the free version was reached
+* Fixed: the "Go Docs!" link on the Plugins page led to a missing page
+* Rewrote the plugin description: free version limits, Pro comparison, neon and Shopify alternatives
+
+= 1.0.1 =
+* 15/06/2026
+* Improved plugin documentation and onboarding experience
+* Updated screenshots to better demonstrate the product customization workflow
+* Refreshed branding assets and plugin presentation
+* Improved compatibility with the latest WooCommerce version
+
 = 1.0 =
--First version stable
+* 23/03/2026
+* First stable release

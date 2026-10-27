@@ -5,24 +5,26 @@
       <h1 class="ascwo-text-[18px] ascwo-font-bold ascwo-text-[#1a1a1a] ascwo-m-0">
         {{ __("Configurations List", "all-signs-customizer-for-woocommerce") }}
       </h1>
-      <RouterLink
-        to="/configuration/create"
+      <button
+        type="button"
         :aria-disabled="hasConfigLimitReached"
-        :tabindex="hasConfigLimitReached ? -1 : 0"
         :class="[
           'ascwo-primary-action ascwo-inline-flex ascwo-items-center ascwo-gap-2 ascwo-text-white ascwo-no-underline',
-          hasConfigLimitReached ? 'ascwo-opacity-50 ascwo-cursor-not-allowed' : '',
+          hasConfigLimitReached ? 'ascwo-opacity-50 ascwo-cursor-not-allowed' : 'ascwo-cursor-pointer',
         ]"
         @click="onCreateConfigClick"
       >
         <PlusIcon class="ascwo-w-4 ascwo-h-4" />
         {{ __("Add new configuration", "all-signs-customizer-for-woocommerce") }}
-      </RouterLink>
+      </button>
     </div>
 
-    <div v-if="hasConfigLimitReached" class="ascwo-mb-4 ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#f1c24b] ascwo-bg-[#fff9e6] ascwo-px-4 ascwo-py-3 ascwo-text-[#664d03]">
-      {{ __("The free version allows only one configuration. Upgrade to Pro at https://signsdesigner.us/all-signs-customizer-product/ to create more.", "all-signs-customizer-for-woocommerce") }}
-    </div>
+    <ProUpgradeNotice
+      v-if="hasConfigLimitReached"
+      class="ascwo-mb-4"
+      :title="__('Free limit reached', 'all-signs-customizer-for-woocommerce')"
+      :message="__('The free version allows only one configuration. Upgrade to Pro to create more.', 'all-signs-customizer-for-woocommerce')"
+    />
 
     <!-- Table Main Card -->
     <div class="ascwo-config-list-card ascwo-bg-white ascwo-rounded-2xl ascwo-shadow-sm ascwo-border ascwo-border-solid ascwo-border-[#e1e3e5] ascwo-overflow-hidden">
@@ -167,9 +169,11 @@
 
 <script setup>
 import { computed, onMounted, ref, watch } from "vue";
-import { useRoute, useRouter, RouterLink } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import api from "@/admin/Api/api";
 import toastMessage from "@/admin/utils/functions";
+import ProUpgradeNotice from "@/admin/pages/components/ProUpgradeNotice.vue";
+import { isConfigLimitReached, showConfigLimitToast } from "@/admin/utils/config-limit";
 import { openAdminRouteWithReload } from "@/admin/utils/reload-route";
 import {
   PlusIcon,
@@ -209,8 +213,7 @@ const selectedConfig = ref(null);
 const menuX = ref(0);
 const menuY = ref(0);
 const managingConfigId = ref(null);
-const hasConfigLimitReached = computed(() => totalConfigsFound.value >= 1);
-const proUpgradeUrl = 'https://signsdesigner.us/all-signs-customizer-product/';
+const hasConfigLimitReached = computed(() => isConfigLimitReached(totalConfigsFound.value));
 
 const fetchConfigs = async (p = page.value) => {
   isFetching.value = true;
@@ -338,17 +341,13 @@ const openActions = (config, event) => {
   showActionMenu.value = true;
 };
 
-const showLimitNotice = () => {
-  toastMessage(
-    sprintf(__('Only one configuration is allowed in the free version. Upgrade to Pro at %s.', 'all-signs-customizer-for-woocommerce'), proUpgradeUrl),
-    'warning'
-  );
-};
-
-const onCreateConfigClick = (event) => {
-  if (!hasConfigLimitReached.value) return;
-  event?.preventDefault?.();
-  showLimitNotice();
+// Un bouton plutôt qu'un RouterLink : la navigation du RouterLink partait avant le preventDefault.
+const onCreateConfigClick = () => {
+  if (hasConfigLimitReached.value) {
+    showConfigLimitToast();
+    return;
+  }
+  router.push({ name: 'create-configuration' });
 };
 
 const selectDeleteConfig = (id, name) => { deleteConfig.value = { id, name }; openModal.value = true; showActionMenu.value = false; };
@@ -370,7 +369,7 @@ const openEditModalFor = (c) => {
 
 const openDuplicateModalFor = () => {
   showActionMenu.value = false;
-  showLimitNotice();
+  showConfigLimitToast();
 };
 
 onMounted(() => fetchConfigs(Number(route.query.page) || 1));

@@ -20,9 +20,10 @@
         </button>
       </div>
 
-      <div v-if="!canAddMoreSizes" class="ascwo-bg-[#fff7ed] ascwo-border ascwo-border-solid ascwo-border-[#f59e0b] ascwo-rounded-xl ascwo-p-4 ascwo-text-[13px] ascwo-leading-5 ascwo-text-[#92400e]">
-        {{ __('The free version supports up to 5 sizes only. Upgrade to Pro at https://signsdesigner.us/all-signs-customizer-product/ to add more.', 'all-signs-customizer-for-woocommerce') }}
-      </div>
+      <ProUpgradeNotice
+        v-if="!canAddMoreSizes"
+        :message="__('The free version supports up to 5 sizes only. Upgrade to Pro to add more.', 'all-signs-customizer-for-woocommerce')"
+      />
 
       <div class="ascwo-sizes-card ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-p-5">
         <h3 class="ascwo-text-[14px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-3">{{ __('Sizes List', 'all-signs-customizer-for-woocommerce') }}</h3>
@@ -106,9 +107,9 @@
         </div>
 
         <div class="ascwo-size-setting-toggles ascwo-mt-5 ascwo-border-t ascwo-border-solid ascwo-border-[#eceff2]">
-          <div class="ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#f59e0b] ascwo-bg-[#fff7ed] ascwo-p-4 ascwo-text-[13px] ascwo-leading-5 ascwo-text-[#92400e]">
-            {{ __('Thickness and custom size are available in Pro only.', 'all-signs-customizer-for-woocommerce') }}
-          </div>
+          <ProUpgradeNotice
+            :message="__('Thickness and custom size are available in Pro only.', 'all-signs-customizer-for-woocommerce')"
+          />
         </div>
       </div>
       </template>
@@ -201,6 +202,7 @@ import api from "@/admin/Api/api";
 import { computed, ref, onMounted } from "vue";
 import { useRoute } from 'vue-router';
 import toastMessage from "@/admin/utils/functions";
+import ProUpgradeNotice from "@/admin/pages/components/ProUpgradeNotice.vue";
 import {
   PlusIcon,
   Edit2Icon,

@@ -126,11 +126,12 @@
         <PlusIcon :size="14" />
         Add option
       </button>
-      <p v-if="additionalOption.options.length >= MAX_OPTIONS_PER_COMPONENT" class="ascwo-component-limit-note">
-        Free limit reached. Upgrade to Pro at
-        <a :href="proUpgradeUrl" target="_blank" rel="noopener noreferrer">{{ proUpgradeUrl }}</a>
-        to add more than 5 options.
-      </p>
+      <ProUpgradeNotice
+        v-if="additionalOption.options.length >= MAX_OPTIONS_PER_COMPONENT"
+        compact
+        :title="__('Free limit reached', 'all-signs-customizer-for-woocommerce')"
+        :message="__('Upgrade to Pro to add more than 5 options per component.', 'all-signs-customizer-for-woocommerce')"
+      />
     </div>
 
     <footer class="ascwo-component-footer">
@@ -147,6 +148,8 @@ import { defineComponent, h, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import api from '@/admin/Api/api';
 import toastMessage from '@/admin/utils/functions';
+import { __ } from '@wordpress/i18n';
+import ProUpgradeNotice from "@/admin/pages/components/ProUpgradeNotice.vue";
 import Multiselect from '@vueform/multiselect';
 import { ChevronDownIcon, ChevronUpIcon, Loader2Icon, PlusIcon, Trash2Icon } from 'lucide-vue-next';
 
@@ -160,7 +163,6 @@ const isLoading = ref(false);
 const expandedOption = ref(0);
 const materialColors = ref([]);
 const MAX_OPTIONS_PER_COMPONENT = 5;
-const proUpgradeUrl = 'https://signsdesigner.us/all-signs-customizer-product/';
 const additionalOption = ref({
   title: '',
   description: '',
@@ -222,7 +224,7 @@ const optionSummary = (item) => {
 const addOption = () => {
   if (additionalOption.value.options.length >= MAX_OPTIONS_PER_COMPONENT) {
     toastMessage(
-      `The free version supports only 5 options per additional component. Upgrade to Pro: ${proUpgradeUrl}`,
+      __('The free version supports only 5 options per additional component. Upgrade to Pro to add more.', 'all-signs-customizer-for-woocommerce'),
       'warning'
     );
     return;

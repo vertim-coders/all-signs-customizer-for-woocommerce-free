@@ -10,6 +10,11 @@
         </div>
       </section>
 
+      <ProUpgradeNotice
+        :title="__('Need more fixing methods?', 'all-signs-customizer-for-woocommerce')"
+        :message="__('The free version comes with a fixed set of fixing methods. Upgrade to Pro to add your own fixing methods.', 'all-signs-customizer-for-woocommerce')"
+      />
+
       <section class="ascwo-card">
         <div class="ascwo-card-inner">
           <h3 class="ascwo-section-title">{{ __("Fixing Methods List", "all-signs-customizer-for-woocommerce") }}</h3>
@@ -102,6 +107,7 @@
 import { onMounted, ref } from "vue";
 import api from "@/admin/Api/api";
 import toastMessage from "@/admin/utils/functions";
+import ProUpgradeNotice from "@/admin/pages/components/ProUpgradeNotice.vue";
 import { BanIcon, Edit2Icon, Loader2Icon, SearchIcon, WrenchIcon } from "lucide-vue-next";
 import { __ } from "@wordpress/i18n";
 

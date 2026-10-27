@@ -16,7 +16,11 @@ const api = {
   },
   getConfig: async (id) => {
     const config = await axios.get(ascwo_api_url + "/configs/" + id);
-    return config.data?.data ?? config.data;
+    // La réponse contient elle-même une clé "data" (données internes de la config) : on garde
+    // les champs de premier niveau (name, description, icon, product_ids…) en plus de ces données.
+    return config.data?.data && typeof config.data.data === "object"
+      ? { ...config.data.data, ...config.data, data: config.data.data }
+      : config.data;
   },
   getPreviewConfig: async (id) => {
     const config = await axios.get(

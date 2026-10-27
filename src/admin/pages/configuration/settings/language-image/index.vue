@@ -77,6 +77,7 @@
             <FieldGroup :title="__('Action on selected object in canvas', 'all-signs-customizer-for-woocommerce')" :fields="visualizerCanvasFields" :values="visualizer" @change="setVisualizerField" />
             <FieldGroup :title="__('Content Sidebar', 'all-signs-customizer-for-woocommerce')" :fields="visualizerSidebarFields" :values="visualizer" @change="setVisualizerField" />
             <FieldGroup :title="__('Button Options', 'all-signs-customizer-for-woocommerce')" :fields="visualizerOptionFields" :values="visualizer" @change="setVisualizerField" />
+            <FieldGroup :title="__('Modal and recap texts', 'all-signs-customizer-for-woocommerce')" :fields="visualizerModalFields" :values="visualizer" @change="setVisualizerField" />
 
             <SectionSave
               :loading="savingSection === 'visualizer'"
@@ -251,9 +252,32 @@ const defaultVisualizer = () => ({
   textButtonFinish: 'Finish',
   textAddToCart: 'Add To Cart',
   textPreview: 'Preview',
+  previewSubtitle: 'See how your sign will look.',
+  fitToScreen: 'Fit to screen',
+  scenesTitle: 'Scenes',
+  uploadImageLabel: 'Upload image',
+  noSceneLabel: 'No scene',
+  viewOptionsTitle: 'View options',
+  frontView: 'Front view',
+  angledView: 'Angled view',
+  sideView: 'Side view',
+  previewDisclaimer: 'This is a digital preview. Final product may vary slightly.',
+  textLayers: 'Layers',
+  layersSubtitle: 'Manage the order of objects on your sign (top to bottom).',
+  layerElementLabel: 'object',
+  layerElementsLabel: 'objects',
+  layerTopLabel: 'Top',
+  layerDragHint: 'Drag to reorder',
+  layerEmptyLabel: 'No elements added yet.',
   textShare: 'Share',
   textImport: 'Import',
   textDownload: 'Download',
+  textQrCode: 'Qr Code',
+  textQuantity: 'Quantity',
+  signSizeLabel: 'Sign size',
+  totalLabel: 'Total',
+  textMoveUp: 'Move Up',
+  textMoveDown: 'Move Down',
   textSave: 'Save',
   textHelp: 'Help',
   textMaterial: 'Material',
@@ -271,6 +295,17 @@ const defaultVisualizer = () => ({
   thickness: 'Thickness',
   textAdditonnalOptionsHeader: 'Additional Options',
   textButtonAdditonnalOptions: 'Add Option',
+  recapTitle: 'Your configuration',
+  recapSubtitle: 'Review your sign details before adding to cart.',
+  resetModalText: 'Reset all for real ??',
+  resetModalYes: 'Yes',
+  resetModalNo: 'No',
+  textNoTextModalTitle: 'Add text to continue',
+  textNoTextModalMessage: 'Please add a text to continue.',
+  textNoTextModalButton: 'Got it',
+  textNoFontModalTitle: 'No fonts available',
+  textNoFontModalMessage: 'Please add at least one font in configuration settings to continue.',
+  textNoFontModalButton: 'Got it',
 });
 
 const defaultImages = () => ({
@@ -313,6 +348,8 @@ const sectionMenu = [
 
 const visualizerHeaderFields = [
   { key: 'titleHeader', label: 'Title header' },
+  { key: 'recapTitle', label: 'Recap title' },
+  { key: 'recapSubtitle', label: 'Recap subtitle' },
   { key: 'textButtonRefresh', label: 'Text button refresh' },
   { key: 'textButtonBack', label: 'Text button back' },
   { key: 'textButtonNext', label: 'Text button next' },
@@ -339,10 +376,29 @@ const visualizerCanvasFields = [
   { key: 'textCanvasCenterH', label: 'Canvas selected object centerH button' },
   { key: 'textCanvasCenterV', label: 'Canvas selected object centerV button' },
   { key: 'textCanvasClone', label: 'Canvas selected object clone button' },
+  { key: 'textMoveUp', label: 'Canvas selected object move up button' },
+  { key: 'textMoveDown', label: 'Canvas selected object move down button' },
 ];
 
 const visualizerSidebarFields = [
   { key: 'textPreview', label: 'Preview text' },
+  { key: 'previewSubtitle', label: 'Preview subtitle' },
+  { key: 'fitToScreen', label: 'Preview fit to screen text' },
+  { key: 'scenesTitle', label: 'Preview scenes title' },
+  { key: 'uploadImageLabel', label: 'Preview upload image label' },
+  { key: 'noSceneLabel', label: 'Preview no scene label' },
+  { key: 'viewOptionsTitle', label: 'Preview view options title' },
+  { key: 'frontView', label: 'Preview front view text' },
+  { key: 'angledView', label: 'Preview angled view text' },
+  { key: 'sideView', label: 'Preview side view text' },
+  { key: 'previewDisclaimer', label: 'Preview disclaimer text' },
+  { key: 'textLayers', label: 'Layers text' },
+  { key: 'layersSubtitle', label: 'Layers subtitle' },
+  { key: 'layerElementLabel', label: 'Layer singular counter label' },
+  { key: 'layerElementsLabel', label: 'Layer plural counter label' },
+  { key: 'layerTopLabel', label: 'Layer top badge label' },
+  { key: 'layerDragHint', label: 'Layer drag hint' },
+  { key: 'layerEmptyLabel', label: 'Layer empty state text' },
   { key: 'textShare', label: 'Share text' },
   { key: 'textImport', label: 'Import text' },
   { key: 'textDownload', label: 'Download text' },
@@ -363,9 +419,25 @@ const visualizerOptionFields = [
   { key: 'textBorder', label: 'Text border' },
   { key: 'textProduct', label: 'Text product' },
   { key: 'textImage', label: 'Text image' },
+  { key: 'textQrCode', label: 'Text QR code' },
+  { key: 'textQuantity', label: 'Text quantity' },
+  { key: 'signSizeLabel', label: 'Recap sign size label' },
+  { key: 'totalLabel', label: 'Recap total label' },
   { key: 'phraseImageSizeRestrictionError', label: 'Error message for image size restriction' },
   { key: 'textButtonAdditonnalOptions', label: 'Text additonnal options' },
   { key: 'textAdditonnalOptionsHeader', label: 'Text additonnal options header' },
+];
+
+const visualizerModalFields = [
+  { key: 'resetModalText', label: 'Reset modal text' },
+  { key: 'resetModalYes', label: 'Reset modal yes button' },
+  { key: 'resetModalNo', label: 'Reset modal no button' },
+  { key: 'textNoTextModalTitle', label: 'No text modal title' },
+  { key: 'textNoTextModalMessage', label: 'No text modal message' },
+  { key: 'textNoTextModalButton', label: 'No text modal button' },
+  { key: 'textNoFontModalTitle', label: 'No font modal title' },
+  { key: 'textNoFontModalMessage', label: 'No font modal message' },
+  { key: 'textNoFontModalButton', label: 'No font modal button' },
 ];
 
 const imageCustomDesignFields = [
@@ -873,9 +945,9 @@ onBeforeUnmount(() => {
   width: 218px;
   min-height: 46px;
   padding: 4px;
-  border: 1px solid #202223;
+  border: 1px solid #c9cccf;
   border-radius: 5px;
-  background: #ffffff;
+  background: #f8fafc;
   box-sizing: border-box;
 }
 
@@ -884,10 +956,11 @@ onBeforeUnmount(() => {
   min-width: 116px;
   min-height: 34px;
   padding: 6px 14px;
-  border: 1px solid #005c5c;
+  border: 1px solid #006c67 !important;
   border-radius: 7px;
-  background: #007a76;
-  color: #ffffff;
+  background: #007a73 !important;
+  background-image: none !important;
+  color: #ffffff !important;
   font-size: 13px;
   line-height: 16px;
   font-weight: 700;
@@ -898,9 +971,10 @@ onBeforeUnmount(() => {
 
 .ascwo-upload-button:hover,
 .ascwo-upload-button:focus {
-  background: #007a76;
-  color: #ffffff;
-  border-color: #005c5c;
+  background: #006c67 !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  border-color: #005c5c !important;
   box-shadow: none;
   outline: none;
 }
@@ -934,8 +1008,9 @@ onBeforeUnmount(() => {
   justify-content: center;
   border: 0;
   border-radius: 6px 0 0 0;
-  background: #007a76;
-  color: #ffffff;
+  background: #007a73 !important;
+  background-image: none !important;
+  color: #ffffff !important;
   cursor: pointer;
 }
 
@@ -954,6 +1029,19 @@ onBeforeUnmount(() => {
   min-height: 32px;
   padding: 6px 14px;
   font-size: 13px;
+  color: #ffffff !important;
+  background-color: #007a73 !important;
+  background-image: none !important;
+  border-color: #006c67 !important;
+}
+
+.ascwo-language-save:disabled,
+.ascwo-language-save[disabled] {
+  color: #ffffff !important;
+  background-color: #94a3b8 !important;
+  background-image: none !important;
+  border-color: #94a3b8 !important;
+  opacity: 0.75;
 }
 
 .ascwo-language-save svg {
