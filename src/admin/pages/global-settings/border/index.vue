@@ -8,6 +8,11 @@
         </div>
       </section>
 
+      <ProUpgradeNotice
+        :title="__('Need more borders?', 'all-signs-customizer-for-woocommerce')"
+        :message="__('The free version comes with a fixed set of borders. Upgrade to Pro to add your own borders.', 'all-signs-customizer-for-woocommerce')"
+      />
+
       <section class="ascwo-card">
         <div class="ascwo-card-inner">
           <h3 class="ascwo-section-title">{{ __("Borders List", "all-signs-customizer-for-woocommerce") }}</h3>
@@ -99,6 +104,7 @@
 import { onMounted, ref } from "vue";
 import api from "@/admin/Api/api";
 import toastMessage from "@/admin/utils/functions";
+import ProUpgradeNotice from "@/admin/pages/components/ProUpgradeNotice.vue";
 import { Edit2Icon, Loader2Icon, SearchIcon, SquareIcon } from "lucide-vue-next";
 import { __ } from "@wordpress/i18n";
 

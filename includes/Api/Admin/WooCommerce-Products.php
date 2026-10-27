@@ -51,6 +51,11 @@ class ASCWO_Api_WooCommerce_Products extends WP_REST_Controller
                             'type' => 'integer',
                             'required' => false,
                         ),
+                        'include_assigned' => array(
+                            'type' => 'boolean',
+                            'required' => false,
+                            'default' => false,
+                        ),
                     ),
                 ),
             )
@@ -134,6 +139,34 @@ class ASCWO_Api_WooCommerce_Products extends WP_REST_Controller
         return $config_id;
     }
 
+    private function get_config_name(int $config_id): string
+    {
+        if (!$this->is_valid_config_id($config_id)) {
+            return '';
+        }
+
+        return html_entity_decode(get_the_title($config_id), ENT_QUOTES, get_bloginfo('charset'));
+    }
+
+    private function get_product_image_url($product): string
+    {
+        if (!$product || !is_object($product) || !method_exists($product, 'get_image_id')) {
+            return '';
+        }
+
+        $image_id = absint($product->get_image_id());
+        if (!$image_id && method_exists($product, 'get_parent_id')) {
+            $parent_id = absint($product->get_parent_id());
+            $parent = $parent_id ? wc_get_product($parent_id) : null;
+            if ($parent && method_exists($parent, 'get_image_id')) {
+                $image_id = absint($parent->get_image_id());
+            }
+        }
+
+        $image_url = $image_id ? wp_get_attachment_image_url($image_id, 'thumbnail') : '';
+        return is_string($image_url) ? $image_url : '';
+    }
+
     private function format_product(int $product_id): array
     {
         $product = function_exists('wc_get_product') ? wc_get_product($product_id) : null;
@@ -141,6 +174,7 @@ class ASCWO_Api_WooCommerce_Products extends WP_REST_Controller
         $type = $product ? $product->get_type() : get_post_type($product_id);
         $parent_id = $product ? absint($product->get_parent_id()) : absint(wp_get_post_parent_id($product_id));
         $sku = $product ? $product->get_sku() : '';
+        $assigned_config_id = $this->get_assigned_config_id($product_id);
 
         return array(
             'id' => $product_id,
@@ -148,6 +182,9 @@ class ASCWO_Api_WooCommerce_Products extends WP_REST_Controller
             'type' => $type,
             'parent_id' => $parent_id,
             'sku' => $sku,
+            'image' => $this->get_product_image_url($product),
+            'assigned_config_id' => $assigned_config_id,
+            'assigned_config_name' => $this->get_config_name($assigned_config_id),
         );
     }
 
@@ -166,6 +203,7 @@ class ASCWO_Api_WooCommerce_Products extends WP_REST_Controller
         $per_page = max(1, min(200, absint($request->get_param('per_page'))));
         $search = sanitize_text_field((string) $request->get_param('search'));
         $config_id = absint($request->get_param('config_id'));
+        $include_assigned = (bool) $request->get_param('include_assigned');
 
         $post_types = array('product');
         if ($include_variations) {
@@ -191,6 +229,11 @@ class ASCWO_Api_WooCommerce_Products extends WP_REST_Controller
         foreach ($ids as $product_id) {
             $assigned = $this->get_assigned_config_id($product_id);
 
+            if ($include_assigned) {
+                $result_ids[] = $product_id;
+                continue;
+            }
+
             if ($assigned === 0) {
                 $result_ids[] = $product_id;
                 continue;
@@ -209,7 +252,9 @@ class ASCWO_Api_WooCommerce_Products extends WP_REST_Controller
         $data = array();
         foreach ($paged_ids as $product_id) {
             $item = $this->format_product($product_id);
-            $item['assigned_config_id'] = $this->get_assigned_config_id($product_id);
+            $assigned_config_id = absint($item['assigned_config_id']);
+            $item['assigned_to_current_config'] = $config_id && $assigned_config_id === $config_id;
+            $item['assigned_to_other_config'] = $assigned_config_id && (!$config_id || $assigned_config_id !== $config_id);
             $data[] = $item;
         }
 

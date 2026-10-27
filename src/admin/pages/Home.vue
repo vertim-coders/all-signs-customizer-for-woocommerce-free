@@ -2,11 +2,16 @@
   <div class="ascwo-dashboard">
     <!-- Top Action Bar -->
     <div class="ascwo-dashboard-topbar ascwo-flex ascwo-justify-end ascwo-mb-5">
-      <RouterLink
-        to="/configuration/create"
-        class="ascwo-primary-action ascwo-dashboard-primary-action">
+      <button
+        type="button"
+        :aria-disabled="configLimitReached"
+        :class="[
+          'ascwo-primary-action ascwo-dashboard-primary-action',
+          configLimitReached ? 'ascwo-opacity-50 ascwo-cursor-not-allowed' : 'ascwo-cursor-pointer',
+        ]"
+        @click="onCreateConfigClick">
         {{ __('Create configuration', 'all-signs-customizer-for-woocommerce') }}
-      </RouterLink>
+      </button>
     </div>
 
     <!-- Info Banners -->
@@ -218,6 +223,7 @@ import { RouterLink, useRouter } from 'vue-router';
 import { onMounted, ref } from 'vue'
 import api from '@/admin/Api/api'
 import { __, sprintf } from "@wordpress/i18n";
+import { isConfigLimitReached, showConfigLimitToast } from "@/admin/utils/config-limit";
 import { Crisp } from "crisp-sdk-web";
 import {
   InfoIcon,
@@ -246,6 +252,15 @@ const recentConfigs = ref([])
 const showInstallConfigModal = ref(false)
 const copiedKey = ref(null)
 const router = useRouter();
+const configLimitReached = ref(false);
+
+const onCreateConfigClick = () => {
+  if (configLimitReached.value) {
+    showConfigLimitToast();
+    return;
+  }
+  router.push({ name: 'create-configuration' });
+};
 
 const goToMaterial = (config) => {
   if (!config?.id) return;
@@ -372,6 +387,7 @@ onMounted(async () => {
   try {
     const res = await api.getConfigs('?per_page=4&order=DESC&page=1')
     recentConfigs.value = Array.isArray(res?.items) ? res.items.slice(0, 4) : []
+    configLimitReached.value = isConfigLimitReached(res?.totalConfigsFound)
   } catch(_) {}
 })
 

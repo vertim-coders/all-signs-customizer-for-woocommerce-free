@@ -12,14 +12,11 @@
         </button>
       </header>
 
-      <div v-if="additionalOptions.length >= MAX_ADDITIONAL_COMPONENTS" class="ascwo-additional-pro-note">
-        <strong>Free limit reached.</strong>
-        <span>
-          You can create up to 2 additional components in the free version. Upgrade to Pro at
-          <a :href="proUpgradeUrl" target="_blank" rel="noopener noreferrer">{{ proUpgradeUrl }}</a>
-          to unlock more.
-        </span>
-      </div>
+      <ProUpgradeNotice
+        v-if="additionalOptions.length >= MAX_ADDITIONAL_COMPONENTS"
+        :title="__('Free limit reached', 'all-signs-customizer-for-woocommerce')"
+        :message="__('You can create up to 2 additional components in the free version. Upgrade to Pro to unlock more.', 'all-signs-customizer-for-woocommerce')"
+      />
 
       <div class="ascwo-additional-card">
         <table class="ascwo-additional-table">
@@ -147,6 +144,8 @@ import { computed, defineComponent, h, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import router from '@/admin/router';
 import toastMessage from '@/admin/utils/functions';
+import { __ } from '@wordpress/i18n';
+import ProUpgradeNotice from "@/admin/pages/components/ProUpgradeNotice.vue";
 import { Loader2Icon, PencilIcon, PlusIcon, Trash2Icon } from 'lucide-vue-next';
 
 const route = useRoute();
@@ -161,7 +160,6 @@ const isEdit = ref(false);
 const openModal = ref(false);
 const noAdditionalOptionsFound = ref('');
 const MAX_ADDITIONAL_COMPONENTS = 2;
-const proUpgradeUrl = 'https://signsdesigner.us/all-signs-customizer-product/';
 const additionalOption = ref({
   title: '',
   description: '',
@@ -294,7 +292,7 @@ const closeModal = () => {
 const newAdditionalOptions = () => {
   if (!canAddAdditionalOptions.value) {
     toastMessage(
-      `The free version supports only 2 additional components. Upgrade to Pro: ${proUpgradeUrl}`,
+      __('The free version supports only 2 additional components. Upgrade to Pro to unlock more.', 'all-signs-customizer-for-woocommerce'),
       'warning'
     );
     return;
@@ -379,21 +377,6 @@ const UploadField = defineComponent({
   justify-content: space-between;
   gap: 18px;
   padding: 24px 28px;
-}
-
-.ascwo-additional-pro-note {
-  display: grid;
-  gap: 4px;
-  padding: 12px 14px;
-  border: 1px solid #f1c24b;
-  border-radius: 8px;
-  background: #fff9e6;
-  color: #664d03;
-}
-
-.ascwo-additional-pro-note a {
-  color: inherit;
-  text-decoration: underline;
 }
 
 .ascwo-additional-header-simple {

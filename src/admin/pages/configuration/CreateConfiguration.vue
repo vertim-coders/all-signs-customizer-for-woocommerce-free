@@ -259,13 +259,14 @@
                </li>
                <li class="ascwo-flex ascwo-items-center ascwo-gap-3 ascwo-text-[13px] ascwo-text-[#1a1a1a]">
                   <div class="ascwo-w-2 ascwo-h-2 ascwo-rounded-full ascwo-bg-[#88bebb]"></div>
-                  {{ sprintf(__('Upgrade to Pro at %s to unlock this setup model.', 'all-signs-customizer-for-woocommerce'), proUpgradeUrl) }}
-               </li>
-               <li class="ascwo-flex ascwo-items-center ascwo-gap-3 ascwo-text-[13px] ascwo-text-[#1a1a1a]">
-                  <div class="ascwo-w-2 ascwo-h-2 ascwo-rounded-full ascwo-bg-[#88bebb]"></div>
                   {{ __('The free configuration stays on simple mode only.', 'all-signs-customizer-for-woocommerce') }}
                </li>
             </ul>
+            <ProUpgradeNotice
+              compact
+              class="ascwo-mt-4"
+              :message="__('Upgrade to Pro to unlock this setup model.', 'all-signs-customizer-for-woocommerce')"
+            />
           </div>
         </div>
       </div>
@@ -465,13 +466,44 @@
            </div>
 
            <div class="ascwo-h-[312px] ascwo-overflow-y-auto ascwo-border-t ascwo-border-solid ascwo-border-[#e1e3e5]">
-              <div v-for="p in filteredWooProducts" :key="p.value" class="ascwo-flex ascwo-items-center ascwo-gap-4 ascwo-min-h-[72px] ascwo-px-5 ascwo-py-2 ascwo-border-b ascwo-border-solid ascwo-border-[#e1e3e5] hover:ascwo-bg-[#f6f6f7]">
-                 <input type="checkbox" :value="p.value" v-model="selectedWooProductIds" class="ascwo-w-5 ascwo-h-5 ascwo-rounded ascwo-border-[#8c9196] ascwo-cursor-pointer">
+              <div
+                v-for="p in filteredWooProducts"
+                :key="p.value"
+                role="button"
+                :tabindex="p.assignedToOtherConfig ? -1 : 0"
+                :class="[
+                  'ascwo-flex ascwo-items-center ascwo-gap-4 ascwo-min-h-[72px] ascwo-px-5 ascwo-py-2 ascwo-border-b ascwo-border-solid ascwo-border-[#e1e3e5] focus:ascwo-outline-none focus:ascwo-ring-2 focus:ascwo-ring-inset focus:ascwo-ring-[#005bd3]',
+                  p.assignedToOtherConfig ? 'ascwo-bg-[#f9fafb] ascwo-opacity-75' : 'ascwo-cursor-pointer hover:ascwo-bg-[#f6f6f7]'
+                ]"
+                @click="toggleWooProductSelection(p)"
+                @keydown.enter.prevent="toggleWooProductSelection(p)"
+                @keydown.space.prevent="toggleWooProductSelection(p)"
+              >
+                 <input
+                   type="checkbox"
+                   :value="p.value"
+                   v-model="selectedWooProductIds"
+                   :disabled="p.assignedToOtherConfig"
+                   class="ascwo-w-5 ascwo-h-5 ascwo-rounded ascwo-border-[#8c9196] ascwo-cursor-pointer disabled:ascwo-cursor-not-allowed"
+                   @click.stop
+                 >
                  <div class="ascwo-w-[50px] ascwo-h-[50px] ascwo-bg-[#f6f6f7] ascwo-rounded-lg ascwo-overflow-hidden ascwo-flex ascwo-items-center ascwo-justify-center ascwo-flex-shrink-0 ascwo-border ascwo-border-solid ascwo-border-[#e1e3e5]">
                     <img v-if="p.image" :src="p.image" class="ascwo-w-full ascwo-h-full ascwo-object-cover">
                     <ImageIcon v-else class="ascwo-w-5 ascwo-h-5 ascwo-text-gray-300" />
                  </div>
-                 <span class="ascwo-text-[16px] ascwo-leading-6 ascwo-text-[#111827] ascwo-truncate">{{ p.label }}</span>
+                 <div class="ascwo-min-w-0 ascwo-flex-1">
+                   <div class="ascwo-flex ascwo-items-center ascwo-gap-2 ascwo-min-w-0">
+                     <span class="ascwo-text-[16px] ascwo-leading-6 ascwo-text-[#111827] ascwo-truncate">{{ p.label }}</span>
+                     <span v-if="p.typeLabel" class="ascwo-flex-shrink-0 ascwo-rounded-full ascwo-bg-[#eef2ff] ascwo-px-2 ascwo-py-0.5 ascwo-text-[11px] ascwo-font-[800] ascwo-text-[#3730a3]">{{ p.typeLabel }}</span>
+                   </div>
+                   <div v-if="p.sku || p.assignedConfigName || p.assignedToCurrentConfig" class="ascwo-mt-1 ascwo-flex ascwo-flex-wrap ascwo-gap-2 ascwo-text-[12px] ascwo-leading-4 ascwo-text-[#6b7280]">
+                     <span v-if="p.sku">{{ __('SKU:', 'all-signs-customizer-for-woocommerce') }} {{ p.sku }}</span>
+                     <span v-if="p.assignedToCurrentConfig" class="ascwo-rounded-full ascwo-bg-[#e6f4f1] ascwo-px-2 ascwo-py-0.5 ascwo-font-[800] ascwo-text-[#006c67]">{{ __('Linked to this configuration', 'all-signs-customizer-for-woocommerce') }}</span>
+                     <span v-else-if="p.assignedToOtherConfig" class="ascwo-rounded-full ascwo-bg-[#fff4e5] ascwo-px-2 ascwo-py-0.5 ascwo-font-[800] ascwo-text-[#8a6116]">
+                       {{ sprintf(__('Already linked to %s', 'all-signs-customizer-for-woocommerce'), p.assignedConfigName || __('another configuration', 'all-signs-customizer-for-woocommerce')) }}
+                     </span>
+                   </div>
+                 </div>
               </div>
            </div>
         </div>
@@ -594,9 +626,10 @@
 <script setup>
 /* global defineProps, defineEmits, wp */
 import { computed, onMounted, ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import api from "@/admin/Api/api";
 import toastMessage from "@/admin/utils/functions";
+import ProUpgradeNotice from "@/admin/pages/components/ProUpgradeNotice.vue";
 import {
   configurationDemoData,
   RequiredOptionsBorders,
@@ -629,6 +662,7 @@ const isEdit = computed(() => props.isEdit);
 
 const emit = defineEmits(['onFinish', 'onCancel']);
 const router = useRouter();
+const route = useRoute();
 
 const mediaSrc = (path) => {
   return resolveAdminImageUrl(getFirstImage(path));
@@ -638,15 +672,8 @@ const setupModelImage = (type) => adminImageUrl(
     ? '/images/create-config/setup-models/build-from-preset.webp'
     : '/images/create-config/setup-models/build-from-option.webp'
 );
-const proUpgradeUrl = 'https://signsdesigner.us/all-signs-customizer-product/';
 const showPresetUpgradeNotice = () => {
-  toastMessage(
-    sprintf(
-      __('Preset mode is available only in Pro. Go to %s to unlock it.', 'all-signs-customizer-for-woocommerce'),
-      proUpgradeUrl
-    ),
-    'warning'
-  );
+  toastMessage(__('Preset mode is available only in Pro.', 'all-signs-customizer-for-woocommerce'), 'warning');
 };
 const showGalleryPreview = ref(false);
 const showProductModal = ref(false);
@@ -769,6 +796,43 @@ const selectSearchBy = (value) => {
 
 const removeSelectedProduct = (productId) => {
   selectedWooProductIds.value = selectedWooProductIds.value.filter(id => String(id) !== String(productId));
+};
+
+const toggleWooProductSelection = (product) => {
+  if (!product || product.assignedToOtherConfig) {
+    return;
+  }
+
+  const productId = product.value;
+  const selected = selectedWooProductIds.value.some(id => String(id) === String(productId));
+
+  selectedWooProductIds.value = selected
+    ? selectedWooProductIds.value.filter(id => String(id) !== String(productId))
+    : [...selectedWooProductIds.value, productId];
+};
+
+const getAssignableProductIds = () => {
+  return selectedWooProductIds.value.filter((id) => {
+    const product = wooProductsOptions.value.find((option) => String(option.value) === String(id));
+    return !product || !product.assignedToOtherConfig;
+  });
+};
+
+const getProductConflictMessage = (response, fallback) => {
+  const conflicts = Array.isArray(response?.conflicts) ? response.conflicts : [];
+  if (!conflicts.length) {
+    return fallback;
+  }
+
+  const details = conflicts
+    .map((conflict) => {
+      const productName = conflict?.product_name || sprintf(__('Product #%s', 'all-signs-customizer-for-woocommerce'), conflict?.product_id || '');
+      const configName = conflict?.assigned_config_name || __('another configuration', 'all-signs-customizer-for-woocommerce');
+      return sprintf(__('%1$s is already linked to %2$s', 'all-signs-customizer-for-woocommerce'), productName, configName);
+    })
+    .join(' | ');
+
+  return `${fallback} ${details}`;
 };
 
 const cloneDeep = (value) => JSON.parse(JSON.stringify(value));
@@ -1071,8 +1135,9 @@ const finalCreate = async () => {
   try {
      if (props.isEdit) {
        const existing = editConfig.value || {};
+       const editConfigId = props.configId || route.params.configId;
        const response = await api.updateConfig({
-          id: props.configId,
+          id: editConfigId,
           name: newConfig.value.name,
           description: newConfig.value.description,
           productFamily: existing.productFamily || selectedFamilyTitle.value,
@@ -1081,7 +1146,7 @@ const finalCreate = async () => {
           pricingMode: existing.pricingMode || 'frame-fit',
           icon: newConfig.value.icon,
           popImg: existing.popImg || '',
-          product_ids: selectedWooProductIds.value,
+          product_ids: getAssignableProductIds(),
        });
 
        if (response.success) {
@@ -1089,7 +1154,8 @@ const finalCreate = async () => {
           router.push('/configuration');
           emit('onFinish');
        } else {
-          toastMessage(response.message || __('Update failed', 'all-signs-customizer-for-woocommerce'), 'error');
+          const fallback = response.message || __('Update failed', 'all-signs-customizer-for-woocommerce');
+          toastMessage(getProductConflictMessage(response, fallback), 'error');
        }
        return;
      }
@@ -1106,7 +1172,7 @@ const finalCreate = async () => {
         icon: newConfig.value.icon,
         popImg: '',
         data,
-        product_ids: selectedWooProductIds.value,
+        product_ids: getAssignableProductIds(),
      });
      if (response.success) {
         toastMessage(response.message, 'success');
@@ -1120,16 +1186,23 @@ const finalCreate = async () => {
         }
         emit('onFinish');
      } else {
-        toastMessage(response.message || __('Registration failed', 'all-signs-customizer-for-woocommerce'), 'error');
+        const fallback = response.message || __('Registration failed', 'all-signs-customizer-for-woocommerce');
+        toastMessage(getProductConflictMessage(response, fallback), 'error');
      }
-  } catch (e) { toastMessage(e?.response?.data?.message || __('Error', 'all-signs-customizer-for-woocommerce'), 'error'); }
+  } catch (e) {
+     const message = e?.response?.data?.message || e?.message || __('Error', 'all-signs-customizer-for-woocommerce');
+     toastMessage(message, 'error');
+  }
   finally { isLoading.value = false; }
 };
 
 const loadEditConfig = async () => {
-  if (!props.isEdit || !props.configId) return;
+  const editConfigId = props.configId || route.params.configId;
+  if (!props.isEdit || !editConfigId) return;
 
-  const config = await api.getConfig(props.configId);
+  const config = Object.keys(props.configToEdit || {}).length
+    ? props.configToEdit
+    : await api.getConfig(editConfigId);
   editConfig.value = config || {};
   const data = config?.data || {};
   const productType = String(config?.productType || data?.productType || data?.settings?.productType || '').trim();
@@ -1140,6 +1213,9 @@ const loadEditConfig = async () => {
     description: config?.description || data?.description || "",
     icon: config?.icon || data?.icon || data?.popImg || "",
   };
+  selectedWooProductIds.value = Array.isArray(config?.product_ids)
+    ? config.product_ids.map((id) => Number(id)).filter(Boolean)
+    : [];
   wizard.value.step = 4;
   wizard.value.materialType = 'simple';
   wizard.value.productType = normalizeEditorProductType(productType);
@@ -1150,8 +1226,13 @@ const loadEditConfig = async () => {
 
 onMounted(async () => {
   await loadEditConfig();
-  const productParams = { per_page: 100 };
-  if (props.isEdit && props.configId) productParams.config_id = props.configId;
+  const editConfigId = props.configId || route.params.configId;
+  const productParams = {
+    per_page: 200,
+    include_assigned: true,
+    include_variations: true,
+  };
+  if (props.isEdit && editConfigId) productParams.config_id = editConfigId;
   const res = await api.getUnassignedProducts(productParams);
   wooProductsOptions.value = (Array.isArray(res) ? res : []).map(p => ({
     value: p.id,
@@ -1160,10 +1241,15 @@ onMounted(async () => {
     sku: p.sku || '',
     barcode: p.barcode || '',
     assignedConfigId: p.assigned_config_id || 0,
+    assignedConfigName: p.assigned_config_name || '',
+    assignedToCurrentConfig: Boolean(p.assigned_to_current_config),
+    assignedToOtherConfig: Boolean(p.assigned_to_other_config),
+    type: p.type || '',
+    typeLabel: p.type === 'variation' ? __('Variation', 'all-signs-customizer-for-woocommerce') : '',
   }));
-  if (props.isEdit && props.configId) {
+  if (props.isEdit && editConfigId && selectedWooProductIds.value.length === 0) {
     selectedWooProductIds.value = wooProductsOptions.value
-      .filter((product) => String(product.assignedConfigId || '') === String(props.configId))
+      .filter((product) => String(product.assignedConfigId || '') === String(editConfigId))
       .map((product) => product.value);
   }
 });

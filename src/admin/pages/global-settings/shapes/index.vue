@@ -10,6 +10,11 @@
         </div>
       </section>
 
+      <ProUpgradeNotice
+        :title="__('Need more shapes?', 'all-signs-customizer-for-woocommerce')"
+        :message="__('The free version comes with a fixed set of shapes. Upgrade to Pro to add your own shapes.', 'all-signs-customizer-for-woocommerce')"
+      />
+
       <section class="ascwo-card">
         <div class="ascwo-card-inner">
           <h3 class="ascwo-section-title">{{ __("Shapes List", "all-signs-customizer-for-woocommerce") }}</h3>
@@ -98,6 +103,7 @@
 import { onMounted, ref } from "vue";
 import api from "@/admin/Api/api";
 import toastMessage from "@/admin/utils/functions";
+import ProUpgradeNotice from "@/admin/pages/components/ProUpgradeNotice.vue";
 import { Edit2Icon, Loader2Icon, SearchIcon, ShapesIcon } from "lucide-vue-next";
 import { __ } from "@wordpress/i18n";
 

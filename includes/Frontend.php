@@ -262,7 +262,6 @@ class ASCWO_Frontend
      */
     public function render_ascwo_products($atts, $content = '')
     {
-        wp_enqueue_style('ascwo-frontend', ASCWO_ASSETS . '/css/frontend.css', false, ASCWO_VERSION);
         wp_enqueue_style('ascwo-style', ASCWO_ASSETS . '/css/style.css', false, ASCWO_VERSION);
 
         $atts = shortcode_atts(
@@ -600,20 +599,44 @@ class ASCWO_Frontend
      */
     private function enqueue_frontend_app_assets()
     {
-        wp_enqueue_style('ascwo-frontend', ASCWO_ASSETS . '/css/frontend.css', false, ASCWO_VERSION);
-        wp_enqueue_style('ascwo-style', ASCWO_ASSETS . '/css/style.css', false, ASCWO_VERSION);
-        wp_enqueue_script('ascwo-runtime', ASCWO_ASSETS . '/js/runtime.js', [], ASCWO_VERSION, true);
-        wp_enqueue_script('ascwo-vendor', ASCWO_ASSETS . '/js/vendors.js', [], ASCWO_VERSION, true);
-        wp_enqueue_script('ascwo-fabric', ASCWO_ASSETS . '/utilities/fabric.min.js', [], ASCWO_VERSION, true);
+        // style.css : squelette de chargement et cartes produits. Le configurateur (assets/configurator) monte un
+        // Shadow DOM et charge lui-même sign-configurator.css, placé à côté de son script.
+        wp_enqueue_style('ascwo-style', ASCWO_ASSETS . '/css/style.css', false, $this->asset_version('/assets/css/style.css'));
         $this->enqueue_frontend_data_script();
+        $this->enqueue_configurator_script();
+    }
+
+    /**
+     * Configurateur d'enseignes : assets/configurator/sign-configurator.js (module ES), le même que la version Pro.
+     *
+     * @return void
+     */
+    private function enqueue_configurator_script()
+    {
+        $src = ASCWO_ASSETS . '/configurator/sign-configurator.js';
+        $version = $this->asset_version('/assets/configurator/sign-configurator.js');
 
         if (function_exists('wp_enqueue_script_module')) {
-            wp_enqueue_script_module('ascwo-frontend', ASCWO_ASSETS . '/js/frontend.js', array(), ASCWO_VERSION, array('in_footer' => true));
+            wp_enqueue_script_module('ascwo-configurator', $src, array(), $version, array('in_footer' => true));
             return;
         }
 
-        wp_enqueue_script('ascwo-frontend', ASCWO_ASSETS . '/js/frontend.js', ['jquery', 'ascwo-vendor', 'ascwo-runtime', 'wp-i18n'], ASCWO_VERSION, true);
-        wp_script_add_data('ascwo-frontend', 'type', 'module');
+        wp_enqueue_script('ascwo-configurator', $src, array('ascwo-frontend-data'), $version, true);
+        wp_script_add_data('ascwo-configurator', 'type', 'module');
+    }
+
+    /**
+     * Version d'une ressource = date de modification du fichier : le navigateur recharge le configurateur à chaque build.
+     *
+     * @param string $relative_path Chemin depuis la racine du plugin.
+     *
+     * @return string
+     */
+    private function asset_version($relative_path)
+    {
+        $path = ASCWO_PATH . '/' . ltrim($relative_path, '/');
+
+        return file_exists($path) ? (string) filemtime($path) : ASCWO_VERSION;
     }
 
     /**

@@ -891,3 +891,92 @@ input[type="radio"] {
     transform: rotate(360deg);
   }
 }
+
+// Notice d'upgrade vers la version Pro (composant ProUpgradeNotice).
+// Le nom de classe ne doit pas contenir "notice" : la règle [class*="notice"] en tête de fichier le masquerait.
+.ascwo-pro-upsell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid #f5d48a;
+  border-radius: 10px;
+  background: #fffaeb;
+  color: #7a4f01;
+  font-size: 13px;
+  line-height: 1.45;
+  box-sizing: border-box;
+
+  &__icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    background: #fdecc8;
+    color: #b45309;
+  }
+
+  &__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  &__title {
+    color: #5c3b00;
+    font-weight: 700;
+  }
+
+  &__link,
+  &__link:visited {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border-radius: 7px;
+    background: #007a73;
+    color: #ffffff !important;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 16px;
+    text-decoration: none !important;
+    white-space: nowrap;
+    box-shadow: none;
+  }
+
+  &__link:hover,
+  &__link:focus {
+    background: #006c67;
+    color: #ffffff !important;
+  }
+
+  &__link:focus-visible {
+    outline: 2px solid #005bd3;
+    outline-offset: 2px;
+  }
+
+  &--compact {
+    gap: 10px;
+    padding: 8px 12px;
+    font-size: 12px;
+
+    .ascwo-pro-upsell__icon {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    flex-wrap: wrap;
+
+    &__link {
+      margin-left: 42px;
+    }
+  }
+}

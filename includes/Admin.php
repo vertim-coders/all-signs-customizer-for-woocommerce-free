@@ -62,15 +62,24 @@ class ASCWO_Admin
      */
     public function admin_menu()
     {
-        if (is_plugin_active('woocommerce/woocommerce.php')) {
+        if (!function_exists('is_plugin_active')) {
+            include_once ABSPATH . 'wp-admin/includes/plugin.php';
+        }
+
+        if (function_exists('is_plugin_active') && is_plugin_active('woocommerce/woocommerce.php')) {
             $capability = 'manage_options';
             $slug = 'ascwo';
 
-            $hook = add_menu_page(__('All Sign Customizer for WooCommerce', 'all-signs-customizer-for-woocommerce'), __('All Sign Customizer for WooCommerce', 'all-signs-customizer-for-woocommerce'), $capability, $slug, [$this, 'plugin_page'], ASCWO_ASSETS . '/images/im_icon_ascwo.png');
-            add_submenu_page($slug, __('Home', 'all-signs-customizer-for-woocommerce'), __('Home', 'all-signs-customizer-for-woocommerce'), $capability, 'admin.php?page=' . $slug . '#/');
+            $hook = add_menu_page(__('All Sign Customizer', 'all-signs-customizer-for-woocommerce'), __('All Sign Customizer', 'all-signs-customizer-for-woocommerce'), $capability, $slug, [$this, 'plugin_page'], ASCWO_ASSETS . '/images/im_icon_ascwo.png');
+            // Reusing the parent slug for the first submenu keeps WordPress from adding
+            // an extra entry repeating the plugin name above "Dashboard".
+            add_submenu_page($slug, __('Dashboard', 'all-signs-customizer-for-woocommerce'), __('Dashboard', 'all-signs-customizer-for-woocommerce'), $capability, $slug, [$this, 'plugin_page']);
             add_submenu_page($slug, __('Configurations', 'all-signs-customizer-for-woocommerce'), __('Configurations', 'all-signs-customizer-for-woocommerce'), $capability, 'admin.php?page=' . $slug . '#/configuration');
-            // Free version: Request Quotes logic is kept, but the unfinished UI entry is hidden.
-            // add_submenu_page($slug, __('Request quotes', 'all-signs-customizer-for-woocommerce'), __('Request quotes', 'all-signs-customizer-for-woocommerce'), $capability, 'admin.php?page=' . $slug . '#/request-quotes');
+            // Free version: Templates and Request quotes are Pro features, so their entries link to the Pro product page.
+            $pro_url = 'https://signsdesigner.us/all-signs-customizer-product/';
+            $pro_badge = ' <span class="ascwo-menu-pro-badge" style="display:inline-block;margin-left:4px;padding:0 6px;border-radius:9px;background:#35b747;color:#fff;font-size:9px;font-weight:600;line-height:17px;vertical-align:middle;">' . esc_html__('Pro', 'all-signs-customizer-for-woocommerce') . '</span>';
+            add_submenu_page($slug, __('Templates', 'all-signs-customizer-for-woocommerce'), __('Templates', 'all-signs-customizer-for-woocommerce') . $pro_badge, $capability, $pro_url);
+            add_submenu_page($slug, __('Request quotes', 'all-signs-customizer-for-woocommerce'), __('Request quotes', 'all-signs-customizer-for-woocommerce') . $pro_badge, $capability, $pro_url . '#request-quotes');
             add_submenu_page($slug, __('Global Settings', 'all-signs-customizer-for-woocommerce'), __('Global Settings', 'all-signs-customizer-for-woocommerce'), $capability, 'admin.php?page=' . $slug . '#/settings/output');
             add_submenu_page($slug, __('Manage Fonts', 'all-signs-customizer-for-woocommerce'), __('Manage Fonts', 'all-signs-customizer-for-woocommerce'), $capability, 'admin.php?page=' . $slug . '#/manage-font');
             add_submenu_page($slug, __('Manage Cliparts', 'all-signs-customizer-for-woocommerce'), __('Manage Cliparts', 'all-signs-customizer-for-woocommerce'), $capability, 'admin.php?page=' . $slug . '#/manage-cliparts');
@@ -104,17 +113,19 @@ class ASCWO_Admin
         wp_enqueue_script('ascwo-vendor', ASCWO_ASSETS . '/js/vendors.js', [], $this->asset_version('/assets/js/vendors.js'), true);
 
         wp_enqueue_style('ascwo-admin', ASCWO_ASSETS . '/css/admin.css', false, $this->asset_version('/assets/css/admin.css'));
-        wp_enqueue_style('ascwo-frontend', ASCWO_ASSETS . '/css/frontend.css', false, $this->asset_version('/assets/css/frontend.css'));
 
         wp_enqueue_script('ascwo-admin', ASCWO_ASSETS . '/js/admin.js', ['jquery', 'ascwo-vendor', 'ascwo-runtime', 'wp-i18n', 'editor'], $this->asset_version('/assets/js/admin.js'), true);
         wp_set_script_translations('ascwo-admin', 'all-signs-customizer-for-woocommerce');
-        wp_enqueue_script('ascwo-fabric', ASCWO_ASSETS . '/utilities/fabric.min.js', [], $this->asset_version('/assets/utilities/fabric.min.js'), true);
+        // Configurateur d'enseignes (aperçu de l'admin) : il se monte dès que l'application d'admin insère
+        // #ascwo-frontend-app ; l'identifiant de la configuration est lu dans l'adresse (#/configuration/{id}/preview).
         $this->enqueue_frontend_data_script();
+        $configurator_src = ASCWO_ASSETS . '/configurator/sign-configurator.js';
+        $configurator_version = $this->asset_version('/assets/configurator/sign-configurator.js');
         if (function_exists('wp_enqueue_script_module')) {
-            wp_enqueue_script_module('ascwo-frontend', ASCWO_ASSETS . '/js/frontend.js', array(), $this->asset_version('/assets/js/frontend.js'), array('in_footer' => true));
+            wp_enqueue_script_module('ascwo-configurator', $configurator_src, array(), $configurator_version, array('in_footer' => true));
         } else {
-            wp_enqueue_script('ascwo-frontend', ASCWO_ASSETS . '/js/frontend.js', ['jquery', 'ascwo-vendor', 'ascwo-runtime', 'ascwo-fabric'], $this->asset_version('/assets/js/frontend.js'), true);
-            wp_script_add_data('ascwo-frontend', 'type', 'module');
+            wp_enqueue_script('ascwo-configurator', $configurator_src, array(), $configurator_version, true);
+            wp_script_add_data('ascwo-configurator', 'type', 'module');
         }
 
         wp_enqueue_style('ascwo-toast', ASCWO_ASSETS . '/utilities/toast.min.css', false, $this->asset_version('/assets/utilities/toast.min.css'));

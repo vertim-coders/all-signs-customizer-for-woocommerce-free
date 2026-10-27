@@ -134,9 +134,9 @@
               </select>
             </label>
 
-            <div class="ascwo-inline-toggle ascwo-free-lock">
-              <span>{{ __('Thickness options are not available in the free version.', 'all-signs-customizer-for-woocommerce') }}</span>
-            </div>
+            <ProUpgradeNotice
+              :message="__('Thickness options are not available in the free version. Upgrade to Pro to enable them.', 'all-signs-customizer-for-woocommerce')"
+            />
 
             <div class="ascwo-save-row ascwo-options-save">
               <button type="button" class="ascwo-ui-button-primary ascwo-customizer-save" :disabled="savingSection === 'customizerOptions'" @click="saveCustomizerOptions">
@@ -188,6 +188,7 @@ import {
 } from 'lucide-vue-next';
 import api from '@/admin/Api/api';
 import toastMessage from '@/admin/utils/functions';
+import ProUpgradeNotice from "@/admin/pages/components/ProUpgradeNotice.vue";
 import { __ } from "@wordpress/i18n";
 
 const loadingIcon = `${String(window?.ascwo_data?.assets_url || "").replace(/\/$/, "")}/icons/ic_loading.svg`;
@@ -546,8 +547,7 @@ onMounted(async () => {
   gap: 6px;
 }
 
-.ascwo-field > span,
-.ascwo-inline-toggle > span {
+.ascwo-field > span {
   color: #303030;
   font-size: 13px;
   line-height: 18px;
@@ -571,13 +571,6 @@ onMounted(async () => {
 .ascwo-ui-input:focus {
   border-color: #8c9196;
   box-shadow: none !important;
-}
-
-.ascwo-inline-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 36px;
 }
 
 .ascwo-switch {

@@ -424,6 +424,35 @@ class ASCWO_Api_Configs extends WP_REST_Controller
         return $assigned;
     }
 
+    private function get_config_name(int $config_id): string
+    {
+        if (!$this->is_valid_config_id($config_id)) {
+            return '';
+        }
+
+        return html_entity_decode(get_the_title($config_id), ENT_QUOTES, get_bloginfo('charset'));
+    }
+
+    private function format_product_assignment_conflicts(array $product_ids): array
+    {
+        $conflicts = array();
+        foreach (array_values(array_unique(array_map('absint', $product_ids))) as $product_id) {
+            if (!$product_id) {
+                continue;
+            }
+
+            $assigned_config_id = $this->get_product_assigned_config_id($product_id);
+            $conflicts[] = array(
+                'product_id' => $product_id,
+                'product_name' => html_entity_decode(get_the_title($product_id), ENT_QUOTES, get_bloginfo('charset')),
+                'assigned_config_id' => $assigned_config_id,
+                'assigned_config_name' => $this->get_config_name($assigned_config_id),
+            );
+        }
+
+        return $conflicts;
+    }
+
     private function sync_config_products(int $config_id, array $product_ids): array
     {
         $product_ids = array_values(array_unique(array_filter(array_map('absint', $product_ids))));
@@ -604,7 +633,7 @@ class ASCWO_Api_Configs extends WP_REST_Controller
                         return rest_ensure_response([
                             "success" => false,
                             "message" => __("Some products are already assigned to another configuration.", "all-signs-customizer-for-woocommerce"),
-                            "conflicts" => $conflicts,
+                            "conflicts" => $this->format_product_assignment_conflicts($conflicts),
                         ]);
                     }
                 }
@@ -638,6 +667,7 @@ class ASCWO_Api_Configs extends WP_REST_Controller
                     'productType' => isset($data['productType']) ? $data['productType'] : (isset($meta_value['productType']) ? $meta_value['productType'] : ''),
                     'productFamily' => isset($data['productFamily']) ? $data['productFamily'] : (isset($meta_value['productFamily']) ? $meta_value['productFamily'] : ''),
                     'pricingMode' => isset($data['pricingMode']) ? $data['pricingMode'] : (isset($meta_value['pricingMode']) ? $meta_value['pricingMode'] : ''),
+                    'product_ids' => $this->get_products_assigned_to_config((int) $id),
                     'data' => $data,
                 );
 
@@ -791,7 +821,7 @@ class ASCWO_Api_Configs extends WP_REST_Controller
                     return rest_ensure_response(array(
                         'success' => false,
                         "message" => __("Some products are already assigned to another configuration.", "all-signs-customizer-for-woocommerce"),
-                        "conflicts" => $conflicts,
+                        "conflicts" => $this->format_product_assignment_conflicts($conflicts),
                     ));
                 }
             }
@@ -908,6 +938,7 @@ class ASCWO_Api_Configs extends WP_REST_Controller
                         'productType' => isset($data['productType']) ? $data['productType'] : (isset($meta['productType']) ? $meta['productType'] : ''),
                         'productFamily' => isset($data['productFamily']) ? $data['productFamily'] : (isset($meta['productFamily']) ? $meta['productFamily'] : ''),
                         'pricingMode' => isset($data['pricingMode']) ? $data['pricingMode'] : (isset($meta['pricingMode']) ? $meta['pricingMode'] : ''),
+                        'product_ids' => $this->get_products_assigned_to_config((int) $id),
                         'data' => $data,
                     )
                 );

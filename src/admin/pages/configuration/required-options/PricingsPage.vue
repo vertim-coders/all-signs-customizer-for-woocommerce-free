@@ -18,9 +18,10 @@
         </button>
       </div>
 
-      <div v-if="!canAddMorePricing" class="ascwo-bg-[#fff7ed] ascwo-border ascwo-border-solid ascwo-border-[#f59e0b] ascwo-rounded-xl ascwo-p-4 ascwo-text-[13px] ascwo-leading-5 ascwo-text-[#92400e]">
-        {{ __('The free version supports only one pricing profile. Upgrade to Pro at https://signsdesigner.us/all-signs-customizer-product/ to add more.', 'all-signs-customizer-for-woocommerce') }}
-      </div>
+      <ProUpgradeNotice
+        v-if="!canAddMorePricing"
+        :message="__('The free version supports only one pricing profile. Upgrade to Pro to add more.', 'all-signs-customizer-for-woocommerce')"
+      />
 
       <div class="ascwo-pricing-card ascwo-bg-white ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#dfe3e8] ascwo-p-5">
         <h3 class="ascwo-text-[14px] ascwo-font-[900] ascwo-text-[#303030] ascwo-mt-0 ascwo-mb-3">{{ __('Pricing List', 'all-signs-customizer-for-woocommerce') }}</h3>
@@ -258,6 +259,7 @@ import api from "@/admin/Api/api";
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import toastMessage from "@/admin/utils/functions";
+import ProUpgradeNotice from "@/admin/pages/components/ProUpgradeNotice.vue";
 import { Edit2Icon, Loader2Icon, MoreHorizontalIcon, PlusIcon, Trash2Icon, XIcon } from "lucide-vue-next";
 import { __, sprintf } from "@wordpress/i18n";
 

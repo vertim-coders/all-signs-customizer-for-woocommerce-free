@@ -45,6 +45,8 @@ import Preview from "@/admin/pages/preview/index.vue";
 import NotFound from "@/admin/pages/NotFound/index.vue";
 import Home from "@/admin/pages/Home.vue";
 
+import { fetchConfigLimitReached, showConfigLimitToast } from "@/admin/utils/config-limit";
+
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
@@ -74,6 +76,18 @@ const router = createRouter({
       path: "/configuration/create",
       name: "create-configuration",
       component: CreateConfiguration,
+      // Version free : bloque aussi l'accès direct par l'URL une fois la limite de configurations atteinte.
+      beforeEnter: async () => {
+        try {
+          if (await fetchConfigLimitReached()) {
+            showConfigLimitToast();
+            return { name: "configurations" };
+          }
+        } catch (_) {
+          // En cas d'erreur réseau, l'API refuse de toute façon la création au-delà de la limite.
+        }
+        return true;
+      },
     },
     {
       path: "/configuration/:configId/edit",

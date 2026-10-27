@@ -14,9 +14,10 @@
         </div>
       </section>
 
-      <div v-if="!canAddMoreColors" class="ascwo-card ascwo-card-inner ascwo-bg-[#fff7ed] ascwo-border-[#f59e0b] ascwo-text-[#92400e]">
-        {{ __("The free version supports up to 10 colors only. Upgrade to Pro at https://signsdesigner.us/all-signs-customizer-product/ to add more.", "all-signs-customizer-for-woocommerce") }}
-      </div>
+      <ProUpgradeNotice
+        v-if="!canAddMoreColors"
+        :message="__('The free version supports up to 10 colors only. Upgrade to Pro to add more.', 'all-signs-customizer-for-woocommerce')"
+      />
 
       <section class="ascwo-card">
         <div class="ascwo-card-inner">
@@ -78,9 +79,9 @@
       <section class="ascwo-card">
         <div class="ascwo-card-inner">
           <h3 class="ascwo-section-title ascwo-mb-0">{{ __("Custom Colors", "all-signs-customizer-for-woocommerce") }}</h3>
-          <div class="ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#f59e0b] ascwo-bg-[#fff7ed] ascwo-p-4 ascwo-text-[13px] ascwo-leading-5 ascwo-text-[#92400e]">
-            {{ __("Custom colors are locked in the free version. Upgrade to Pro at https://signsdesigner.us/all-signs-customizer-product/ to enable them.", "all-signs-customizer-for-woocommerce") }}
-          </div>
+          <ProUpgradeNotice
+            :message="__('Custom colors are locked in the free version. Upgrade to Pro to enable them.', 'all-signs-customizer-for-woocommerce')"
+          />
 
           <div class="ascwo-flex ascwo-justify-end ascwo-mt-5">
             <button type="button" @click="updateMaterialColor" :disabled="isLoading" class="ascwo-primary-button">
@@ -214,6 +215,7 @@ import api from "@/admin/Api/api";
 import { computed, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import toastMessage from "@/admin/utils/functions";
+import ProUpgradeNotice from "@/admin/pages/components/ProUpgradeNotice.vue";
 import { Edit2Icon, Loader2Icon, PlusIcon, Trash2Icon } from "lucide-vue-next";
 import { __, sprintf } from "@wordpress/i18n";
 

@@ -139,15 +139,16 @@
               {{ __("Add text color", "all-signs-customizer-for-woocommerce") }}
             </button>
 
-            <div v-if="text.colors.length >= MAX_TEXT_COLORS" class="ascwo-mt-3 ascwo-rounded-xl ascwo-border ascwo-border-solid ascwo-border-[#f59e0b] ascwo-bg-[#fff7ed] ascwo-p-4 ascwo-text-[13px] ascwo-leading-5 ascwo-text-[#92400e]">
-              {{ __("The free version supports up to 10 text colors only. Upgrade to Pro at https://signsdesigner.us/all-signs-customizer-for-woocommerce/ to add more.", "all-signs-customizer-for-woocommerce") }}
-            </div>
+            <ProUpgradeNotice
+              v-if="text.colors.length >= MAX_TEXT_COLORS"
+              class="ascwo-mt-3"
+              :message="__('The free version supports up to 10 text colors only. Upgrade to Pro to add more.', 'all-signs-customizer-for-woocommerce')"
+            />
 
-            <div class="ascwo-custom-color-row">
-              <div class="ascwo-custom-toggle">
-                <strong>{{ __("Custom colors are locked in the free version.", "all-signs-customizer-for-woocommerce") }}</strong>
-              </div>
-            </div>
+            <ProUpgradeNotice
+              class="ascwo-mt-3"
+              :message="__('Custom colors are locked in the free version. Upgrade to Pro to enable them.', 'all-signs-customizer-for-woocommerce')"
+            />
           </div>
         </div>
       </section>
@@ -232,6 +233,7 @@
 <script setup>
 import api from "@/admin/Api/api";
 import toastMessage from "@/admin/utils/functions";
+import ProUpgradeNotice from "@/admin/pages/components/ProUpgradeNotice.vue";
 import {
   ChevronDownIcon,
   ChevronUpIcon,
@@ -651,8 +653,7 @@ const updateTextSettings = async () => {
 }
 
 .ascwo-type-card strong,
-.ascwo-block-toggle strong,
-.ascwo-custom-toggle strong {
+.ascwo-block-toggle strong {
   color: #303030;
   font-size: 12px;
   line-height: 16px;
@@ -750,15 +751,6 @@ const updateTextSettings = async () => {
   cursor: pointer;
 }
 
-.ascwo-custom-color-row {
-  display: grid;
-  grid-template-columns: 210px minmax(0, 1fr);
-  gap: 16px;
-  align-items: end;
-  margin-top: 12px;
-}
-
-.ascwo-custom-toggle,
 .ascwo-block-toggle {
   display: grid;
   gap: 6px;
@@ -922,10 +914,6 @@ const updateTextSettings = async () => {
   .ascwo-color-grid,
   .ascwo-text-type-grid,
   .ascwo-three-cols {
-    grid-template-columns: 1fr;
-  }
-
-  .ascwo-custom-color-row {
     grid-template-columns: 1fr;
   }
 }
