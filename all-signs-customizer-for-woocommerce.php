@@ -9,10 +9,10 @@ use ASCWO\ASCWO_Post_Type;
 
 /*
 Plugin Name: All Sign Customizer for WooCommerce
-Plugin URI: https://signsdesigner.us/
+Plugin URI: https://signsdesigner.us/all-signs-customizer-product/
 Description: Add a sign configurator to WooCommerce products so customers can design and order custom signs directly from your store.
 Requires Plugins: woocommerce
-Version: 1.0.1
+Version: 1.0.2
 Author: Vertim Coders
 Author URI: https://vertimcoders.com
 License: GPL2
@@ -67,7 +67,7 @@ final class ASCWO_All_Signs_Options_Pro
      *
      * @var string
      */
-    public $version = '1.0.1';
+    public $version = '1.0.2';
 
     /**
      * Holds various class instances
@@ -122,7 +122,7 @@ final class ASCWO_All_Signs_Options_Pro
                 if (isset($actions['activate'])) {
                     unset($actions['activate']);
                 }
-                $actions['go_docs'] = sprintf('<a href="%s" style="%s">%s</a>', 'https://docs.signsdesigner.us/docs/ascwo-wp-documentation/', 'color:#35b747;font-weight:bold', __('Go Docs!', 'all-signs-customizer-for-woocommerce'));
+                $actions['go_docs'] = sprintf('<a href="%s" style="%s">%s</a>', 'https://docs.signsdesigner.us/docs/aso-wp-documentation/', 'color:#35b747;font-weight:bold', __('Go Docs!', 'all-signs-customizer-for-woocommerce'));
             }
         }
         return $actions;
@@ -797,7 +797,9 @@ final class ASCWO_All_Signs_Options_Pro
                         <img src="<?php echo esc_url(ASCWO_ASSETS . '/images/im_ascwo-icon2.png') ?>" alt="" width="250" />
                     </span>
                     <div>
-                        <h2><?php esc_html_e("Customization Page not found", "all-signs-customizer-for-woocommerce") ?></h2>
+                        <h2>
+                            <?php esc_html_e("Customization Page not found", "all-signs-customizer-for-woocommerce") ?>
+                        </h2>
                         <p>
                             <?php
                             echo wp_kses_post(
@@ -820,7 +822,9 @@ final class ASCWO_All_Signs_Options_Pro
                             <img src="<?php echo esc_url(ASCWO_ASSETS . '/images/im_ascwo-icon2.png') ?>" alt="" width="250" />
                         </span>
                         <div>
-                            <h2><?php esc_html_e("Customization Page not found", "all-signs-customizer-for-woocommerce") ?></h2>
+                            <h2>
+                                <?php esc_html_e("Customization Page not found", "all-signs-customizer-for-woocommerce") ?>
+                            </h2>
                             <p>
                                 <?php
                                 echo wp_kses_post(
@@ -852,11 +856,14 @@ final class ASCWO_All_Signs_Options_Pro
                         <img src="<?php echo esc_url(ASCWO_ASSETS . '/images/im_ascwo-icon2.png') ?>" alt="" width="250" />
                     </span>
                     <div>
-                        <h2><?php esc_html_e("Welcome to All Sign Customizer for WooCommerce. Let's get you started !!!", "all-signs-customizer-for-woocommerce") ?>
+                        <h2>
+                            <?php esc_html_e("Welcome to All Sign Customizer for WooCommerce. Let's get you started !!!", "all-signs-customizer-for-woocommerce") ?>
                         </h2>
-                        <p><?php esc_html_e('To avoid performance problems we recommend at least version 3.4 of Woocommerce.', "all-signs-customizer-for-woocommerce"); ?>
+                        <p>
+                            <?php esc_html_e('To avoid performance problems we recommend at least version 3.4 of Woocommerce.', "all-signs-customizer-for-woocommerce"); ?>
                         </p>
-                        <p><?php $this->install_plugin_button('woocommerce', 'woocommerce.php', 'WooCommerce', array(), __('WooCommerce activated', "all-signs-customizer-for-woocommerce"), __('Activate WooCommerce', "all-signs-customizer-for-woocommerce"), __('Install WooCommerce', "all-signs-customizer-for-woocommerce")); ?>
+                        <p>
+                            <?php $this->install_plugin_button('woocommerce', 'woocommerce.php', 'WooCommerce', array(), __('WooCommerce activated', "all-signs-customizer-for-woocommerce"), __('Activate WooCommerce', "all-signs-customizer-for-woocommerce"), __('Install WooCommerce', "all-signs-customizer-for-woocommerce")); ?>
                         </p>
                     </div>
                 </div>
@@ -918,11 +925,14 @@ final class ASCWO_All_Signs_Options_Pro
                     <a href="<?php echo esc_url($button['url']); ?>" class="<?php echo esc_attr($button['classes']); ?>"
                         data-originaltext="<?php echo esc_attr($button['message']); ?>"
                         data-name="<?php echo esc_attr($plugin_name); ?>" data-slug="<?php echo esc_attr($plugin_slug); ?>"
-                        aria-label="<?php echo esc_attr($button['message']); ?>"><?php echo esc_html($button['message']); ?></a>
+                        aria-label="<?php echo esc_attr($button['message']); ?>">
+                        <?php echo esc_html($button['message']); ?>
+                    </a>
                 </span>
                 <?php echo /* translators: conjunction of two alternative options user can choose (in missing plugin admin notice). Example: "Activate WooCommerce or learn more" */ esc_html__('or', "all-signs-customizer-for-woocommerce"); ?>
-                <a href="https://docs.signsdesigner.us"
-                    target="_blank"><?php esc_html_e('learn more', "all-signs-customizer-for-woocommerce"); ?></a>
+                <a href="https://docs.signsdesigner.us" target="_blank">
+                    <?php esc_html_e('learn more', "all-signs-customizer-for-woocommerce"); ?>
+                </a>
                 <?php
             }
         }
@@ -978,10 +988,14 @@ final class ASCWO_All_Signs_Options_Pro
                         <img src='<?php echo esc_url(ASCWO_ASSETS . '/images/im_ascwo-icon2.png') ?>' alt="" width="250" />
                     </span>
                     <div>
-                        <h2><?php esc_html_e('We recommend setting your permalinks to "/%postname%/" to improve natural SEO.w! 🤘', "all-signs-customizer-for-woocommerce") ?>
+                        <h2>
+                            <?php esc_html_e('We recommend setting your permalinks to "/%postname%/" to improve natural SEO.w! 🤘', "all-signs-customizer-for-woocommerce") ?>
                         </h2>
-                        <p><?php esc_html_e('To do this, go to', "all-signs-customizer-for-woocommerce") ?> <a
-                                href="<?php echo esc_url(admin_url('options-permalink.php')); ?>"><?php esc_html_e('Settings > Permanent links', 'all-signs-customizer-for-woocommerce'); ?></a>
+                        <p>
+                            <?php esc_html_e('To do this, go to', "all-signs-customizer-for-woocommerce") ?> <a
+                                href="<?php echo esc_url(admin_url('options-permalink.php')); ?>">
+                                <?php esc_html_e('Settings > Permanent links', 'all-signs-customizer-for-woocommerce'); ?>
+                            </a>
                         </p>
                     </div>
                 </div>
