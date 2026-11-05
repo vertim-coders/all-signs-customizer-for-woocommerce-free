@@ -5,7 +5,7 @@ Tags: sign customizer, product customizer, product configurator, product designe
 Requires at least: 5.0
 Requires PHP: 7.0
 Tested up to: 7.1
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -178,6 +178,14 @@ The uncompiled JavaScript and CSS sources are in the `src/` folder of the public
 https://github.com/vertim-coders/all-signs-customizer-for-woocommerce-free/tree/develop-free
 
 == Changelog ==
+
+= 1.0.3 =
+* 06/11/2026
+* Improved: on two-layer materials, the text color follows the background color chosen by the customer
+* Improved: the orientation icons match the real proportions of each size
+* Improved: cut-to-shape outline redrawn, smoother and with an even margin around the design
+* Improved: changing the shape fits the text and images back inside the sign
+* Improved: the price "Details" lists every choice with its amount or "Included"
 
 = 1.0.2 =
 * 27/10/2026

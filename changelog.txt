@@ -1,3 +1,11 @@
+= 1.0.3 =
+* 06/11/2026
+* Improved: on two-layer materials, the text color follows the background color chosen by the customer
+* Improved: the orientation icons match the real proportions of each size
+* Improved: cut-to-shape outline redrawn, smoother and with an even margin around the design
+* Improved: changing the shape fits the text and images back inside the sign
+* Improved: the price "Details" lists every choice with its amount or "Included"
+
 = 1.0.2 =
 * 27/10/2026
 * New: sign configurator on the product page, now the same engine as the Pro version, with a layers panel and preview scenes
