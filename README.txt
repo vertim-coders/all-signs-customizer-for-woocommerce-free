@@ -168,7 +168,7 @@ Read the [documentation](https://docs.signsdesigner.us/docs/aso-wp-documentation
 4. Review before creating
 5. Configure every detail
 6. The product designer your customers use
-7. The finished product
+7. Customers review their sign in 3D before adding it to the cart
 
 == Developer Notes ==
 
