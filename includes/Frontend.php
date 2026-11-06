@@ -456,31 +456,8 @@ class ASCWO_Frontend
                         $frontend_data = isset($config['data']) && is_array($config['data']) ? $config['data'] : array();
                         $frontend_data = $this->enrich_component_option_items($frontend_data, $all_fixingMethods, $all_borders);
                         $this->enqueue_frontend_app_assets();
-                        ?>
-                        <div id="ascwo-configurator-loader" class="ascwo-configurator-skeleton">
-                            <div class="ascwo-configurator-skeleton__top">
-                                <div class="ascwo-skeleton ascwo-skeleton-pill"></div>
-                                <div class="ascwo-skeleton ascwo-skeleton-pill"></div>
-                                <div class="ascwo-skeleton ascwo-skeleton-pill"></div>
-                                <div class="ascwo-skeleton ascwo-skeleton-pill"></div>
-                            </div>
-                            <div class="ascwo-configurator-skeleton__main">
-                                <div class="ascwo-skeleton ascwo-skeleton-canvas"></div>
-                                <div class="ascwo-configurator-skeleton__sidebar">
-                                    <div class="ascwo-skeleton ascwo-skeleton-panel"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-panel"></div>
-                                    <div class="ascwo-skeleton ascwo-skeleton-panel"></div>
-                                </div>
-                            </div>
-                            <div class="ascwo-configurator-skeleton__bottom">
-                                <div class="ascwo-skeleton ascwo-skeleton-chip"></div>
-                                <div class="ascwo-skeleton ascwo-skeleton-chip"></div>
-                                <div class="ascwo-skeleton ascwo-skeleton-chip"></div>
-                                <div class="ascwo-skeleton ascwo-skeleton-chip"></div>
-                                <div class="ascwo-skeleton ascwo-skeleton-chip"></div>
-                            </div>
-                        </div>
-                        <?php
+                        $loader_skin = isset($frontend_data['settings']['themeColors']['skin']) && 'couffo' === $frontend_data['settings']['themeColors']['skin'] ? 'couffo' : 'default';
+                        $this->render_configurator_skeleton($loader_skin);
                         $configData = array(
                             'name' => get_post_field('post_title', $configId),
                             'description' => get_post_field('post_content', $configId),
@@ -574,6 +551,103 @@ class ASCWO_Frontend
 
         $content .= ob_get_clean();
         return $content;
+    }
+
+    /**
+     * Squelette de chargement du configurateur, à la mise en page du skin (styles : _configurator-skeleton.scss).
+     * Le configurateur retire #ascwo-configurator-loader une fois monté.
+     *
+     * @param string $skin 'default' ou 'couffo'.
+     * @return void
+     */
+    private function render_configurator_skeleton($skin = 'default')
+    {
+        $is_couffo = 'couffo' === $skin;
+        ?>
+        <div id="ascwo-configurator-loader" class="ascwo-sk ascwo-sk--inline<?php echo $is_couffo ? ' ascwo-sk--couffo' : ''; ?>" role="status" aria-busy="true">
+            <span class="ascwo-sk__sr"><?php esc_html_e('Loading configurator…', 'all-signs-customizer-for-woocommerce'); ?></span>
+            <?php if (!$is_couffo) { ?>
+                <div class="ascwo-sk__top" aria-hidden="true">
+                    <span class="ascwo-sk__b ascwo-sk__icon"></span>
+                    <span class="ascwo-sk__b ascwo-sk__icon"></span>
+                    <span class="ascwo-sk__b ascwo-sk__line" style="width: 180px"></span>
+                </div>
+            <?php } ?>
+            <div class="ascwo-sk__body" aria-hidden="true">
+                <?php if (!$is_couffo) { ?>
+                    <div class="ascwo-sk__rail">
+                        <?php for ($i = 0; $i < 6; $i++) { ?>
+                            <div class="ascwo-sk__railitem">
+                                <span class="ascwo-sk__b ascwo-sk__icon"></span>
+                                <span class="ascwo-sk__b ascwo-sk__line" style="width: 48px"></span>
+                            </div>
+                        <?php } ?>
+                    </div>
+                <?php } ?>
+                <div class="ascwo-sk__stage">
+                    <div class="ascwo-sk__sign">
+                        <span class="ascwo-sk__b ascwo-sk__line ascwo-sk__line--lg"></span>
+                    </div>
+                    <div class="ascwo-sk__toolbar">
+                        <span class="ascwo-sk__b ascwo-sk__pill"></span>
+                        <span class="ascwo-sk__b ascwo-sk__icon"></span>
+                        <span class="ascwo-sk__b ascwo-sk__icon"></span>
+                        <span class="ascwo-sk__b ascwo-sk__icon"></span>
+                    </div>
+                </div>
+                <?php if ($is_couffo) { ?>
+                    <div class="ascwo-sk__panel">
+                        <div class="ascwo-sk__panelbody">
+                            <div class="ascwo-sk__step ascwo-sk__step--open">
+                                <div class="ascwo-sk__stephead">
+                                    <span class="ascwo-sk__b ascwo-sk__num"></span>
+                                    <span class="ascwo-sk__b ascwo-sk__line ascwo-sk__line--title" style="width: 35%"></span>
+                                </div>
+                                <div class="ascwo-sk__cards">
+                                    <span class="ascwo-sk__b ascwo-sk__card"></span>
+                                    <span class="ascwo-sk__b ascwo-sk__card"></span>
+                                </div>
+                            </div>
+                            <?php for ($i = 0; $i < 6; $i++) { ?>
+                                <div class="ascwo-sk__step">
+                                    <span class="ascwo-sk__b ascwo-sk__num"></span>
+                                    <span class="ascwo-sk__b ascwo-sk__line" style="width: 40%"></span>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                <?php } else { ?>
+                    <div class="ascwo-sk__panel">
+                        <div class="ascwo-sk__panelbody">
+                            <span class="ascwo-sk__b ascwo-sk__line" style="width: 32px"></span>
+                            <span class="ascwo-sk__b ascwo-sk__line ascwo-sk__line--title"></span>
+                            <div class="ascwo-sk__swatches">
+                                <?php for ($i = 0; $i < 6; $i++) { ?>
+                                    <span class="ascwo-sk__b ascwo-sk__swatch"></span>
+                                <?php } ?>
+                            </div>
+                            <span class="ascwo-sk__b ascwo-sk__line" style="width: 40%"></span>
+                            <span class="ascwo-sk__b ascwo-sk__card"></span>
+                            <span class="ascwo-sk__b ascwo-sk__card"></span>
+                        </div>
+                        <div class="ascwo-sk__panelfoot">
+                            <span class="ascwo-sk__b ascwo-sk__btn"></span>
+                            <span class="ascwo-sk__b ascwo-sk__btn"></span>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
+            <?php if ($is_couffo) { ?>
+                <div class="ascwo-sk__bar" aria-hidden="true">
+                    <span class="ascwo-sk__b ascwo-sk__btn" style="width: 140px"></span>
+                    <div class="ascwo-sk__barend">
+                        <span class="ascwo-sk__b ascwo-sk__line" style="width: 90px; height: 20px"></span>
+                        <span class="ascwo-sk__b ascwo-sk__btn"></span>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
+        <?php
     }
 
     /**

@@ -242,61 +242,6 @@ td.is_ascwo_customizable.column-is_ascwo_customizable {
   border-radius: 8px;
 }
 
-.ascwo-configurator-skeleton {
-  min-height: 90vh;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 16px;
-}
-
-.ascwo-configurator-skeleton__top {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.ascwo-skeleton-pill {
-  height: 24px;
-  border-radius: 999px;
-}
-
-.ascwo-configurator-skeleton__main {
-  display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: 16px;
-  align-items: stretch;
-}
-
-.ascwo-skeleton-canvas {
-  height: 60vh;
-  border-radius: 16px;
-}
-
-.ascwo-configurator-skeleton__sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.ascwo-skeleton-panel {
-  height: 120px;
-  border-radius: 12px;
-}
-
-.ascwo-configurator-skeleton__bottom {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.ascwo-skeleton-chip {
-  width: 70px;
-  height: 24px;
-  border-radius: 999px;
-}
-
 .ascwo-grid-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -446,12 +391,6 @@ td.is_ascwo_customizable.column-is_ascwo_customizable {
   .ascwo-skeleton-image {
     height: 200px;
   }
-  .ascwo-configurator-skeleton__main {
-    grid-template-columns: 1fr;
-  }
-  .ascwo-configurator-skeleton__top {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
   .ascwo-grid-container {
     grid-template-columns: 1fr;
     grid-gap: 15px;
@@ -461,3 +400,5 @@ td.is_ascwo_customizable.column-is_ascwo_customizable {
     gap: 16px;
   }
 }
+
+@import "configurator-skeleton";
