@@ -12,7 +12,7 @@ Plugin Name: All Sign Customizer for WooCommerce
 Plugin URI: https://signsdesigner.us/all-signs-customizer-product/
 Description: Add a sign configurator to WooCommerce products so customers can design and order custom signs directly from your store.
 Requires Plugins: woocommerce
-Version: 1.0.2
+Version: 1.0.3
 Author: Vertim Coders
 Author URI: https://vertimcoders.com
 License: GPL2
@@ -67,7 +67,7 @@ final class ASCWO_All_Signs_Options_Pro
      *
      * @var string
      */
-    public $version = '1.0.2';
+    public $version = '1.0.3';
 
     /**
      * Holds various class instances
