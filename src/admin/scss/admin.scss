@@ -35,7 +35,8 @@
   width: calc(100% - 100px) !important;
 }
 .ascwo-preview-configurator {
-  height: calc(100vh - 50px) !important;
+  height: 100% !important;
+  min-height: 0;
 }
 .folded .ascwo-header {
   width: calc(100% - 36px) !important;
